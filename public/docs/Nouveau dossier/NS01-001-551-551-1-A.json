@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "551",
+    "alinéa": "551.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-551-551-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités L es générateurs d’énergie électrique peuvent être des machines tournantes ou des machines convertissant une énergie mécanique, chimique ou solaire en énergie électrique, avec une interface statique. Leur mise en œuvre doit être conforme aux prescriptions réglementaires concernant le raccordement des installations comportant des moyens de production, qui prévoient, le cas échéant, l'accord préalable du service local de distribution. La protection contre les court-circuits et la protection contre les contacts indirects doivent être assurées aussi bien lorsque l'installation est alimentée par une source quelconque (générateur ou réseau de distribution publique) que, le cas échéant, par les différentes sources en parallèle. NOTE – Des précautions peuvent être nécessaires pour limiter le courant circulant dans les liaisons entre les points neutres des sources, en particulier en ce qui concerne l'effet de l'harmonique 3. 551.1.1 Prescriptions supplémentaires pour les générateurs d’énergie électrique constituant une alimentation de remplacement du réseau de distribution publique (systèmes en attente) Des dispositions satisfaisant aux prescriptions de sectionnement de la partie 4-46 doivent être prises de façon que le générateur ne puisse en aucun cas fonctionner en parallèle avec le réseau de distribution publique. Des dispositions appropriées peuvent être : – un verrouillage électrique et mécanique entre les mécanismes de fonctionnement ou les circuits de commande des dispositifs d'inversion ; – un système de blocage avec une seule clef de transfert ; – un commutateur à trois positions, à deux directions, sans chevauchement ; – un dispositif automatique de commutation avec un verrouillage approprié ; – tout autre moyen fournissant un degré équivalent de sécurité de fonctionnement. 551.1.2 Prescriptions supplémentaires pour les générateurs d’énergie électrique pouvant fonctionner en parallèle avec le réseau de distribution publique Lors du choix d'un générateur d’énergie électrique destiné à fonctionner en parallèle avec le réseau de distribution publique, toutes dispositions doivent être prises pour éviter des effets nuisibles sur le réseau de distribution publique ou sur d'autres installations du fait du facteur de puissance, des variations de tension, des distorsions harmoniques, des déséquilibres, des démarrages, des effets de fluctuation de tension ou de synchronisation. Lorsqu'une synchronisation est nécessaire, il est préférable d'utiliser des systèmes automatiques de synchronisation prenant en compte la fréquence, la phase et la tension. Une protection, dite de découplage, doit être prévue pour déconnecter le générateur d’énergie électrique, en cas de disparition de l’alimentation du réseau de distribution publique, de variations de la tension ou de la fréquence supérieures à celles déclarées pour l'alimentation normale. Le type de protection, sa sensibilité et le temps de réponse dépendent de la protection du réseau de distribution publique et doivent être agréés par le distributeur. Son réglage est rendu inaccessible à l'utilisateur par des scellés ou toute autre disposition. Le cas échéant, sont aussi rendus inaccessibles à l'utilisateur les circuits de déclenchement issus de cette protection ainsi que les circuits de mesure s'ils sont raccordés en amont de l'appareil général de commande et de protection. - 290 - Des moyens doivent être prévus pour éviter la connexion d'un générateur d’énergie électrique sur le réseau de distribution publique si la tension et la fréquence du réseau sont en dehors des limites de fonctionnement de la protection de découplage. Des moyens de sectionnement doivent être prévus pour permettre au générateur d’énergie électrique ou à l'installation d'être séparé du réseau de distribution publique. Ces moyens doivent être accessibles aux agents du distributeur à tout moment. Lorsqu'un générateur d’énergie électrique peut également fonctionner comme remplacement du réseau de distribution publique, l'installation doit satisfaire à 551.1.1",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "551"
+        ]
+    }
+}

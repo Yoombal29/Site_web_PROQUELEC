@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "521",
+    "alinéa": "521.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-521-521-4-A",
+        "type": "obligation",
+        "texte_normatif": "Canalisations préfabriquées H Les canalisations préfabriquées doivent être conformes à la norme en vigueur (12) et mises en œuvres suivant les instructions du constructeur. Leur installation doit satisfaire aux prescriptions des articles 522, 525, 526, 527 et 528. Le guide UTE C 15-107 contient des informations permettant d'effectuer les différents calculs destinés à choisir les canalisations préfabriquées leur permettant d'assurer les différentes conditions de protection définies par les règles de la présente norme. Les dispositions de cet article s'appliquent également aux systèmes de distribution électrique par canalisation préfabriquée équipée de socles de prises de courant 16A conformes à la norme en vigueur (12).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "521"
+        ]
+    }
+}

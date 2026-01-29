@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les surintensités",
+    "article": "424",
+    "alinéa": "424.17",
+    "regle_atomique": {
+        "id_unique": "NS01-001-424-424-17-A",
+        "type": "obligation",
+        "texte_normatif": "Certaines installations doivent être protégées contre les effets de la foudre. Il peut être procédé à une évaluation du risque conformément aux normes NF C 17-100 et NF C 17-102. Lorsqu’un paratonnerre est mis en œuvre, la norme NF C 17-100 donne des indications pour la réalisation de l’équipotentialité nécessaire pour éviter la formation d’étincelles. La protection contre les surtensions fait l'objet des articles 443 et 534. - 107 - Annexe (7) - Réaction au feu - Classements conventionnels I Matériaux a priori M0 Verre, verre cellulaire. Béton. Brique. Plâtre, stuc. Plâtre armé de fibres de verre ou à armatures métalliques. Bétons et mortiers de ciments et de chaux. Vermiculite, perlite. Amiante-ciment. Sillico-calcaire. Pierre, ardoise. Fer, fonte, acier, aluminium, cuivre, zinc, plomb. Produits céramiques. II Matériaux à base de bois 1. Bois massif non résineux. Épaisseurs supérieures ou égales à 14 mm : M3. Épaisseurs inférieures à 14 mm : M4. 2. Bois massif résineux. Épaisseurs supérieures ou égales à 18 mm. M3. Épaisseurs inférieures à 18 mm : M4. 3. Panneaux dérivés du bois. Contre-plaqués, lattés, particules, fibres. Épaisseurs supérieures ou égales à 18 mm : M3 Épaisseurs inférieures à 18 mm : M4 4. Parquets en bois massif collés. Épaisseurs supérieures ou égales à 6 mm avant ponçage : M3. Épaisseurs inférieures à 6 mm avant ponçage : M4. Les classements conventionnels M3 et M4 des bois et des panneaux dérivés du bois ne sont pas modifiés par les revêtements de surface bien adhérents suivants : a) Placage de bois épaisseurs inférieures ou égales à 0,5 mm ; b) Tout autre revêtement dont le dégagement calorifique surfacique ne dépasse pas 4,18 MJ/m2 (1000 kcal/m2). Les plaques de stratifiés décoratifs haute pression conformes à la norme NF T 54-301 et d'épaisseur inférieure à 1,5 mm sont classées en catégorie M3. (7) Cette annexe constitue l'annexe 21 à l'arrêté du 30 juin 1983 modifié du Ministère de l'Intérieur - 108 - III Matériaux peints 1. Supports non isolants classés M0 selon le paragraphe I : a) Revêtus de peinture appliquée en quantités inférieures à 0,35 kg/m2 humide pour les peintures brillantes et à 0,75 kg/m2 humide pour les peintures mates et satinées, sans prendre en compte les apprêts, impressions ou bouche-pores : classement M1. b) Revêtus de peinture épaisse ou d'enduit pelliculaire de finition appliqué en quantités comprises entre 0,5 et 1,5 kg/m2 humide : classement M2. c) Revêtus de revêtements plastiques épais, définis par le DTU 59.2, utilisés en quantités comprises entre 0,5 et 3,5 kg/m2 humide : classement M2. 2. Supports inertes revêtus en utilisation intérieure de peinture brillante en quantité inférieure à 0,10 kg/m² humide ou de peinture mate ou satinée en quantité inférieure à 0,40 kg/m² humide, et en utilisation extérieure de peinture brillante en quantité inférieure à 0,15 kg/m² humide ou de peinture mate ou satine en quantité inférieure à 0,65 kg//m² humide : classement M0. 3. Supports non isolants classés M1 ou M2 : Revêtus de peinture appliquée en quantités inférieures à 0,35 kg/m2 humide pour les peintures brillantes et à 0,50 kg/m2 humide pour les peintures mates et satinées, sans prendre en compte les apprêts, impressions, ou bouche-pores : classement M2. Dans le cas non prévu ci-dessus où un fabricant souhaite démontrer que sa peinture ne déclasse pas les supports désignés ci-dessus, il y a lieu de procéder à un essai de classement en réaction au feu. ______________ - 109 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "424"
+        ]
+    }
+}

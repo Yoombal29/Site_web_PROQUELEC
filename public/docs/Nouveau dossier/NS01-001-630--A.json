@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "630",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-630--A",
+        "type": "obligation",
+        "texte_normatif": "711 808 899 996 NOTES - 1 les valeurs des courants admissibles indiquées dans ce tableau sont applicables aux câbles souples utilisés dans les installations fixes. 2 les conducteurs et câbles dont la température admissible sur âme est inférieure à 70 °C (par exemple HO7RN-F, voir tableau 52A) doivent être considérés du point de vue du courant admissible comme étant de la \"famille PVC\". Le chiffre 2 après PR (polyéthylène réticulé) ou PVC (polychlorure de vinyle) est relatif à un circuit monophasé. Le chiffre 3 après PR ou PVC est relatif à un circuit triphasé. - 210 - Tableau 52J - Courants admissibles (en ampères) dans les canalisations enterrées H (méthode de référence D) SECTION DES ISOLANT ET NOMBRE DE CONDUCTEURS CHARGES CONDUCTEURS PVC 3 PVC 2 PR 3 PR 2 (mm²) CUIVRE 1,5 26 32 31 37 2,5 34 42 41 48 4 44 54 53 63 6 56 67 66 80 10 74 90 87 104 16 96 116 113 136 25 123 148 144 173 35 147 178 174 208 50 174 211 206 247 70 216 261 254 304 95 256 308 301 360",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "630"
+        ]
+    }
+}

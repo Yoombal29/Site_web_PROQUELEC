@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "442",
+    "alinéa": "534.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-442-534-2-A",
+        "type": "obligation",
+        "texte_normatif": "Limiteurs surtensions à fréquence industrielle 612.6.1 c) Vérifications et mesures Schéma ITR/ITS ........................................... 442.2.4.3 Mise à la terre Schéma courant continu ............................... 312.2.4 Liaisons à la terre *Sèches (conditions) (BB1) ........................... 512.2.17 Caractéristiques Section des conducteurs ............................... 132.6 Conception",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "442"
+        ]
+    }
+}

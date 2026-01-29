@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles communes à tous les matériels",
+    "article": "514",
+    "alinéa": "514.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-514-514-5-A",
+        "type": "obligation",
+        "texte_normatif": "Schémas 514.5.1 Pour toute installation électrique, il y a lieu d'établir des schémas, diagrammes ou tableaux (2) conformes aux normes indiquant notamment : - la nature et la constitution des circuits (points d'utilisation desservis, nombre et section des conducteurs, nature des canalisations) ; - les caractéristiques nécessaires à l'identification des dispositifs assurant les fonctions de protection, de sectionnement et de commande et leur emplacement. Les indications que doivent comporter les schémas et documents annexés sont les suivants : - type et section des conducteurs, - longueur du circuit, - nature et type des dispositifs de protection, - courant assigné ou de réglage des dispositifs de protection, - courants présumés de court-circuit et pouvoirs de coupure des dispositifs. Ces indications doivent être mentionnées pour chaque circuit de l'installation. Il est recommandé de les mettre à jour lors de toute modification de l'installation. Des plans doivent indiquer, le cas échéant, l'emplacement des appareils non visibles. (3). H 514.5.2 Les symboles utilisés doivent être choisis parmi ceux des normes",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "514"
+        ]
+    }
+}

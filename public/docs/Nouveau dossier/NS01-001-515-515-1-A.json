@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles communes à tous les matériels",
+    "article": "515",
+    "alinéa": "515.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-515-515-1-A",
+        "type": "obligation",
+        "texte_normatif": "Les matériels doivent être choisis et disposés de manière à empêcher toute influence nuisible entre les installations électriques et les installations non électriques. Les matériels ne présentant pas de face arrière ne doivent pas être installés sur la paroi d’un bâtiment sauf si les prescriptions suivantes sont satisfaites : - toute propagation de potentiel sur la paroi du bâtiment est empêchée ; - une séparation contre le feu est prévue entre le matériel et la paroi combustible du bâtiment. Si la paroi du bâtiment n’est pas métallique et est non combustible, aucune disposition complémentaire n’est prescrite. Dans le cas contraire, ces prescriptions peuvent être satisfaites par l’une des dispositions suivantes : - si la surface de montage est métallique, elle doit être reliée à un conducteur de protection (PE). - si la surface de montage est combustible, le matériel doit en être séparé par une couche intermédiaire au matériau isolant de catégorie d’inflammabilité au moins M2 (voir l'annexe à la partie 4-42).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "515"
+        ]
+    }
+}

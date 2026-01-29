@@ -1,0 +1,34 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "411",
+  "alinéa": "411.6.1",
+  "regle_atomique": {
+    "id_unique": "NS01-001-411-6-1-A",
+    "type": "obligation",
+    "texte_normatif": "En schéma IT, l'installation doit être isolée de la terre ou reliée via une impédance élevée, sans coupure automatique obligatoire au premier défaut si conditions de 411.6.2 satisfaites.",
+    "acteurs_concernes": ["installateur", "controleur"],
+    "conditions_application": {
+      "schema_terre": ["IT"],
+      "tension": "<=1000V",
+      "lieu": ["installations nécessitant continuité de service"]
+    },
+    "exceptions": [],
+    "risques_couverts": [
+      "tension de contact lors de deux défauts sur phases différentes"
+    ],
+    "gravite_non_conformite": "critique",
+    "mesure_corrective": "Installer surveillance d'isolement, impédance de terre 1000Ω typique.",
+    "justification": {
+      "physique": "Courant de premier défaut faible (capacitif), continuité de service",
+      "biologique": "Éviter effets pathophysiologiques au deuxième défaut",
+      "sécurité": "Protection renforcée par surveillance"
+    },
+    "verification": {
+      "moyen": "Mesure d'isolement et test contrôleur",
+      "seuils": "RA x If ≤ 50V AC / 120V DC"
+    },
+    "liens_normatifs": ["411.6.2", "411.6.3", "411.6.4", "532.4"]
+  }
+}

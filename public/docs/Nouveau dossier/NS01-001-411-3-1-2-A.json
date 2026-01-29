@@ -1,0 +1,35 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "411",
+  "alinéa": "411.3.1.2",
+  "regle_atomique": {
+    "id_unique": "NS01-001-411-3-1-2-A",
+    "type": "obligation",
+    "texte_normatif": "Toute masse doit être reliée à un conducteur de protection selon les conditions des divers schémas des liaisons à la terre (TN, TT ou IT).",
+    "acteurs_concernes": ["installateur", "controleur"],
+    "conditions_application": {
+      "schema_terre": ["TN", "TT", "IT"],
+      "tension": "<=1000V",
+      "lieu": ["habitation", "ERP", "industriel"]
+    },
+    "exceptions": [],
+    "risques_couverts": [
+      "électrocution par contact indirect",
+      "incendie par arc électrique"
+    ],
+    "gravite_non_conformite": "critique",
+    "mesure_corrective": "Raccorder la masse au PE via un conducteur de protection conforme aux sections minimales (voir 543).",
+    "justification": {
+      "physique": "Formation d'une boucle de défaut pour écoulement du courant de défaut",
+      "biologique": "Réduction de la tension de contact à des valeurs sûres (<50V AC)",
+      "sécurité": "Coupure automatique de l'alimentation en cas de défaut"
+    },
+    "verification": {
+      "moyen": "Mesure de continuité du PE (ohmmètre)",
+      "seuils": "Résistance < 0,5Ω selon NS 01-001"
+    },
+    "liens_normatifs": ["411.4", "411.5", "411.6", "543.1", "542"]
+  }
+}

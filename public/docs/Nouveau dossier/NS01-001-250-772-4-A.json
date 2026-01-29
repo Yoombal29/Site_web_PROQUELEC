@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux ou emplacements de service électrique",
+    "article": "250",
+    "alinéa": "772.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-250-772-4-A",
+        "type": "obligation",
+        "texte_normatif": "Installation d'alarme et de signalisation 772.4.1 Les installations d'alarme et/ou de signalisation sont demandées soit par un texte réglementaire ou normatif, soit par un texte contractuel. Elles sont soit du domaine de la sécurité, soit du domaine du confort. Les installations d'alarme sont destinées à prévenir les personnes chargées de prendre les mesures nécessaires en cas d'incident ou de défaut de fonctionnement du matériel ou des installations, afin d'en limiter les effets et de rétablir la situation normale dans les meilleurs délais. Les installations de détection d'incendie doivent être conformes aux normes en vigueur. 772.4.2 Les alarmes et signalisations du domaine de la sécurité nécessitent, en général, une source autonome (batteries, etc.). Ces alimentations peuvent être spécifiques ou communes à plusieurs installations. - 466 - Les reports de signalisation éventuels sont généralement regroupés sur un tableau dans le local de gardiennage. Annexe – (normative) – Installation de mise à la terre 1 2 2 2 2 B P 3 4 T 1 Conducteur principal de protection (colonne montante de terre) 2 Conducteur de protection de la dérivation individuelle 3 Conducteur de la liaison équipotentielle principale 4 Conducteur de terre B Borne principale P Canalisations métalliques, par exemple eau, gaz, chauffage central T Prise de terre Figure 772B – Exemple d’installation de mise à la terre a) conducteur de terre : sa section minimale doit être de : 2 - 25 mm en cuivre nu, 2 - 35 mm en aluminium (voir NF C 15-100, 542.3.1), b) conducteur principal de protection : sa section est donnée dans le tableau 54C de la NF C 15-100 : 2 Si Sph ≤ 16 mm , SPE = Sph Si 16 mm2 < Sph ≤ 35 mm 2 , SPE = 16 mm 2 2 Si Sph > 35 mm , SPE ≥ Sph/2. c) conducteur de protection de la dérivation individuelle : sa section est égale à celle des conducteurs actifs du branchement. Toutefois, en schéma TT, la section du conducteur de protection peut être limitée à : 2 - 25 mm en cuivre nu, 2 - 35 mm en aluminium. ____________ - 467 - - 468 - Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100. Les numéros suivant le numéro particulier de la partie 7-773 sont ceux des parties, articles ou paragraphes correspondants de la présente norme. L'absence de référence à une partie, à un article ou à un paragraphe signifie que les prescriptions générales correspondantes sont applicables. -469- 773.411.3 Protection contre les contacts indirects L a protection contre les contacts indirects d'installations non surveillées en permanence et alimentées par le réseau de distribution publique à basse tension, est assurée par l'une des mesures suivantes : a) Alimentation de l'installation ou partie d'installation par l'intermédiaire d’un transformateur de séparation conforme à la norme en vigueur (*). Le transformateur de séparation, qui doit être de classe 2, est alimenté immédiatement en aval du disjoncteur de branchement qui ne comporte pas de fonction différentielle. L a partie d'installation située en aval du transformateur de séparation est protégée : - soit suivant la mesure par séparation électrique conformément aux règles du 413, si cette partie n'alimente qu'un seul matériel d’utilisation, - soit suivant les règles du schéma TN ou IT. L a protection différentielle des autres parties de l'installation est assurée suivant le schéma de la sélection des circuits définie en 535.4.2. La liaison entre le disjoncteur de branchement et le transformateur de séparation est protégée par isolation double ou renforcée. b) Protection par un disjoncteur de branchement du type «S» (voir 531.2.4.2.2). La partie d'installation ou l'équipement dont l'alimentation doit être maintenue est relié directement au disjoncteur de branchement. Tout ou partie du reste de l'installation est protégé si nécessaire par un ou plusieurs dispositifs différentiels placés en aval du disjoncteur de branchement selon le schéma de la sélection des circuits définie en 535.4.2. c) Dans le cas d'installations autres que celles des locaux à usage d'habitation, protection par un disjoncteur à réenclenchement automatique, à condition que le dispositif de réenclenchement puisse être neutralisé pendant la présence de personnes dans les locaux desservis, afin de maintenir les conditions de protection contre les contacts indirects. L e nombre et l'espacement des réenclenchements dépendent des conditions d'exploitation et de mise en œuvre, toutefois, il y a lieu de limiter le nombre de réenclenchements dont les conséquences pourraient être fâcheuses pour le matériel présentant un défaut permanent. L es conditions dans lesquelles ce dispositif peut être neutralisé et rétabli font l'objet d'un avertissement placé à proximité du dispositif. L'arrêt de certains appareils ou équipements, à la suite du fonctionnement d’un dispositif différentiel, peut avoir des conséquences fâcheuses ; il en est notamment ainsi pour : - les congélateurs et armoires frigorifiques, - les installations de chauffage hors-gel, - les équipements de télécommunications dans des ouvrages isolés, - les relais de transmission d'émission de radiodiffusion ou de télévision, - les passages à niveau automatiques, - les dispositifs d'alarme contre le vol ou de détection d'incendie, - les radiophares. L e fonctionnement du dispositif différentiel peut être dû à un défaut dans un autre équipement protégé par le même dispositif différentiel, ou à des phénomènes extérieurs (par exemple surtensions atmosphériques). ______________ ——————— (*) NF EN 61-558-2-1 (C 52-558-2-1) - 470 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "250"
+        ]
+    }
+}

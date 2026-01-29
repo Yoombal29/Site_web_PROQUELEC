@@ -1,0 +1,83 @@
+<html>
+<head>
+  <title>Guide Technique – Gestion des risques et prévention incendie</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.5em;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>GUIDE TECHNIQUE<br>Gestion des risques et prévention incendie</h1>
+  <h2>1. Introduction : contexte et importance</h2>
+  <p>La gestion des risques électriques et la prévention des incendies sont des enjeux majeurs pour la sécurité des personnes et des biens.</p>
+  <h2>2. Références normatives</h2>
+  <ul>
+    <li>NS 01-001</li>
+    <li>NF C 15-100</li>
+    <li>Textes sur la prévention incendie</li>
+  </ul>
+  <h2>3. Exigences techniques et réglementaires</h2>
+  <ul>
+    <li>Installation de dispositifs de détection</li>
+    <li>Protection contre les surcharges</li>
+    <li>Contrôle des points chauds</li>
+  </ul>
+  <h2>4. Anomalies et risques associés</h2>
+  <ul>
+    <li>Défaut d’isolation</li>
+    <li>Surchauffe des câbles</li>
+    <li>Absence de détecteurs</li>
+  </ul>
+  <h2>5. Procédure de diagnostic et de vérification</h2>
+  <ol>
+    <li>Inspection visuelle</li>
+    <li>Test des dispositifs de détection</li>
+    <li>Contrôle des températures</li>
+  </ol>
+  <h2>6. Méthodes d’installation et de mise en conformité</h2>
+  <ul>
+    <li>Installation de détecteurs de fumée</li>
+    <li>Remplacement des câbles défectueux</li>
+    <li>Formation à la prévention incendie</li>
+  </ul>
+  <h2>7. Recommandations pratiques</h2>
+  <ul>
+    <li>Contrôler régulièrement les installations</li>
+    <li>Éduquer les occupants</li>
+    <li>Prévoir des exercices de sécurité</li>
+  </ul>
+  <h2>8. Études de cas / exemples d’application</h2>
+  <ul>
+    <li>Installation de détecteurs dans un immeuble</li>
+    <li>Remplacement d’un câble surchauffé</li>
+  </ul>
+    <h2>9. Tableau des causes fréquentes d’incendie électrique</h2>
+    <table style="width:100%;border-collapse:collapse;margin-top:1em;">
+      <tr style="background:#e0e7ff;"><th>Cause</th><th>Conséquence</th><th>Prévention</th></tr>
+      <tr><td>Surcharge des circuits</td><td>Surchauffe, incendie</td><td>Respecter les calibres et sections</td></tr>
+      <tr><td>Défaut d’isolation</td><td>Arc électrique, feu</td><td>Contrôler et remplacer les câbles</td></tr>
+      <tr><td>Absence de détecteurs</td><td>Retard d’alerte</td><td>Installer des détecteurs de fumée</td></tr>
+      <tr><td>Matériel non certifié</td><td>Risque accru d’incident</td><td>Utiliser du matériel conforme</td></tr>
+      <tr><td>Entretien négligé</td><td>Accumulation de risques</td><td>Contrôler et entretenir régulièrement</td></tr>
+    </table>
+    <h2>10. Erreurs à éviter</h2>
+    <ul>
+      <li>Ignorer les signes de surchauffe ou d’usure</li>
+      <li>Oublier d’installer des détecteurs</li>
+      <li>Utiliser du matériel non certifié</li>
+      <li>Ne pas former les occupants à la prévention</li>
+    </ul>
+    <h2>11. Ressources utiles</h2>
+    <ul>
+      <li><a href="https://www.promotelec.com/prevention-incendie/" target="_blank">Guide Promotelec : Prévention incendie</a></li>
+      <li><a href="https://www.afnor.org/" target="_blank">Normes et prévention (AFNOR)</a></li>
+      <li><a href="https://www.legrand.fr/pro/actualites/prevention-incendie" target="_blank">Legrand : Risques et prévention</a></li>
+    </ul>
+    <div class="encadre">
+      <b>Conformité PROQUELEC :</b> Respecter les normes et entretenir les installations pour garantir la sécurité incendie. Documenter chaque contrôle et intervention.
+    </div>
+  <div class="encadre">
+    <b>Conseils PROQUELEC :</b> La prévention incendie passe par la vigilance et l’entretien. Installer des détecteurs et sensibiliser les usagers.
+  </div>
+  <footer>
+    © PROQUELEC – Guide technique Gestion des risques. Version détaillée pour professionnels et gestionnaires.
+  </footer>
+</body>
+</html>

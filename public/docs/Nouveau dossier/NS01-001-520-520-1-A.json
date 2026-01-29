@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "520",
+    "alinéa": "520.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-520-520-1-A",
+        "type": "obligation",
+        "texte_normatif": "Le choix et la mise en œuvre des canalisations doivent tenir compte des principes fondamentaux de la partie 1, applicables aux conducteurs et câbles, à leurs connexions et à leurs extrémités, à leurs supports et leurs enveloppes ou méthodes de protection contre les influences externes. NOTE - En général, la présente partie s'applique également aux conducteurs de protection, mais la partie 5-54 contient H d'autres prescriptions pour ces conducteurs.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "520"
+        ]
+    }
+}

@@ -1,0 +1,99 @@
+<html>
+<head>
+  <title>Mémento – Schémas électriques</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    h1 { color: #1d4ed8; }
+    h2 { color: #2563eb; margin-top: 1.2em; }
+    h3 { color: #1e293b; margin-top: 1em; }
+    ul { margin-left: 1em; }
+    table { border-collapse: collapse; margin-top: 1em; }
+    th, td { border: 1px solid #2563eb; padding: 6px 12px; }
+    th { background: #e0e7ff; }
+    .schema { background: #f3f4f6; padding: 1em; border-radius: 6px; margin-top: 1em; font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <h1>Mémento – Schémas électriques</h1>
+  <div style="background:#dbeafe;padding:1em;border-radius:6px;margin-bottom:1em;">
+    <b>Résumé :</b> Ce mémento explique l’utilité, les types et les bonnes pratiques pour réaliser et lire des schémas électriques dans le bâtiment.
+  </div>
+  <h2>1. Types de schémas</h2>
+  <table>
+    <tr><th>Type</th><th>Utilité</th></tr>
+    <tr><td>Schéma unifilaire</td><td>Vue simplifiée des circuits, indispensable pour le contrôle et la maintenance</td></tr>
+    <tr><td>Schéma multifilaire</td><td>Représentation détaillée de chaque conducteur et connexion</td></tr>
+    <tr><td>Schéma architectural</td><td>Intégration des circuits dans le plan du bâtiment</td></tr>
+  </table>
+  <h2>2. Bonnes pratiques de réalisation</h2>
+  <ul>
+    <li>Utiliser des symboles normalisés (NF C 03-001)</li>
+    <li>Indiquer les sections, calibres et couleurs des conducteurs</li>
+    <li>Documenter chaque modification ou extension</li>
+    <li>Joindre le schéma à la documentation technique de l’installation</li>
+    <li>Vérifier la lisibilité et la cohérence du schéma</li>
+  </ul>
+  <h2>3. Exemple de schéma unifilaire (texte)</h2>
+  <div class="schema">
+    [Tableau principal]---(Disjoncteur 16A)---[Prises salon]<br>
+    [Tableau principal]---(Disjoncteur 10A)---[Éclairage cuisine]<br>
+    [Tableau principal]---(Disjoncteur 20A)---[Plaque cuisson]<br>
+    [Tableau principal]---(Disjoncteur 30mA)---[Salle d’eau]<br>
+  </div>
+  <h2>4. Erreurs à éviter</h2>
+  <ul>
+    <li>Oublier d’actualiser le schéma après modification</li>
+    <li>Utiliser des symboles non conformes</li>
+    <li>Ne pas indiquer les calibres et sections</li>
+    <li>Schéma illisible ou incomplet</li>
+  </ul>
+  <h2>5. Ressources utiles</h2>
+  <ul>
+    <li>Guide PROQUELEC sur les schémas électriques</li>
+    <li>Norme NF C 03-001 (symboles électriques)</li>
+    <li>Formations PROQUELEC</li>
+  </ul>
+  <footer style="margin-top:2em;font-size:0.9em;color:#555;">© PROQUELEC – Mémento Schémas électriques. Version 2025.</footer>
+</body>
+</html>
+<html>
+<head>
+  <title>Mémento Technique – Schémas électriques normalisés</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>MÉMENTO TECHNIQUE<br>Schémas électriques normalisés (lecture, application)</h1>
+  <h2>1. Objet du mémento</h2>
+  <p>Rappel des règles de lecture et d’application des schémas électriques normalisés.</p>
+  <h2>2. Principes essentiels (NS 01-001 & NF C 15-100)</h2>
+  <ul>
+    <li>Utiliser les symboles normalisés</li>
+    <li>Respecter les conventions de représentation</li>
+    <li>Contrôler la conformité des schémas avant exécution</li>
+  </ul>
+  <h2>3. Définitions clés</h2>
+  <ul>
+    <li><b>Schéma unifilaire :</b> Représentation simplifiée d’un circuit</li>
+    <li><b>Schéma architectural :</b> Vue d’ensemble de l’installation</li>
+    <li><b>Symbole électrique :</b> Graphique représentant un composant</li>
+  </ul>
+  <h2>4. Règles pratiques à retenir</h2>
+  <ul>
+    <li>Vérifier la légende et les symboles utilisés</li>
+    <li>Contrôler la cohérence entre schéma et réalité</li>
+    <li>Documenter toute modification</li>
+  </ul>
+  <h2>5. Tableau récapitulatif</h2>
+  <table>
+    <tr><th>Symptôme</th><th>Cause possible</th><th>Action à mener</th></tr>
+    <tr><td>Erreur de câblage</td><td>Schéma mal interprété</td><td>Revoir la légende et le schéma</td></tr>
+    <tr><td>Non-conformité</td><td>Symboles non normalisés</td><td>Utiliser les symboles officiels</td></tr>
+  </table>
+  <div class="encadre">
+    <b>À retenir PROQUELEC :</b> Un schéma bien lu = une installation conforme et sécurisée. Toujours vérifier avant exécution.
+  </div>
+  <footer>
+    © PROQUELEC – Mémento technique Schémas électriques. Version condensée pour techniciens.
+  </footer>
+</body>
+</html>

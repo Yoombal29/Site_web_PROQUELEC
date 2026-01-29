@@ -1,0 +1,140 @@
+<html>
+<head>
+  <title>Mémento – Conformité et mise sous tension</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    h1 { color: #1d4ed8; }
+    h2 { color: #2563eb; margin-top: 1.2em; }
+    h3 { color: #1e293b; margin-top: 1em; }
+    ul { margin-left: 1em; }
+    .encadre { background: #dbeafe; padding: 1em; border-radius: 6px; margin-top: 1em; }
+    table { border-collapse: collapse; margin-top: 1em; }
+    th, td { border: 1px solid #2563eb; padding: 6px 12px; }
+    th { background: #e0e7ff; }
+  </style>
+</head>
+<body>
+  <h1>Mémento – Conformité et mise sous tension</h1>
+  <div class="encadre">
+    <b>Résumé :</b> Ce mémento détaille les étapes et contrôles nécessaires pour garantir la conformité d’une installation électrique avant sa mise sous tension par le distributeur (Senelec ou autre).
+  </div>
+  <h2>1. Contrôle de conformité obligatoire</h2>
+  <ul>
+    <li>Inspection réalisée par un organisme agréé (ex : COSSUEL)</li>
+    <li>Vérification du respect des normes (NF C 15-100, NS 01-001)</li>
+    <li>Remise d’un certificat de conformité</li>
+    <li>Obligation avant toute mise sous tension</li>
+  </ul>
+  <h2>2. Points de contrôle principaux</h2>
+  <table>
+    <tr><th>Élément</th><th>Contrôle</th></tr>
+    <tr><td>Prise de terre</td><td>Présence, continuité, valeur de résistance</td></tr>
+    <tr><td>Protection différentielle</td><td>Test de déclenchement, calibre adapté</td></tr>
+    <tr><td>Section des câbles</td><td>Conformité au tableau de dimensionnement</td></tr>
+    <tr><td>Tableau électrique</td><td>Identification, accessibilité, schéma unifilaire</td></tr>
+    <tr><td>Appareillage</td><td>Matériel certifié, absence de contrefaçon</td></tr>
+    <tr><td>Raccordements</td><td>Qualité des connexions, absence de défauts</td></tr>
+  </table>
+  <h2>3. Étapes de la mise sous tension</h2>
+  <ul>
+    <li>Demande de contrôle auprès du COSSUEL</li>
+    <li>Inspection sur site et tests techniques</li>
+    <li>Remise du certificat de conformité</li>
+    <li>Transmission du certificat au distributeur</li>
+    <li>Mise sous tension par Senelec ou opérateur</li>
+  </ul>
+  <h2>4. Bonnes pratiques</h2>
+  <ul>
+    <li>Préparer tous les documents techniques (schémas, plans, certificats)</li>
+    <li>Vérifier la conformité avant la visite de contrôle</li>
+    <li>Utiliser du matériel certifié et adapté</li>
+    <li>Documenter toute modification ou extension</li>
+  </ul>
+  <h2>5. Erreurs à éviter</h2>
+  <ul>
+    <li>Oublier la protection différentielle</li>
+    <li>Utiliser des câbles sous-dimensionnés</li>
+    <li>Absence de schéma unifilaire</li>
+    <li>Matériel non certifié ou contrefait</li>
+    <li>Connexions mal réalisées</li>
+  </ul>
+  <h2>6. Ressources utiles</h2>
+  <ul>
+    <li>Site du COSSUEL : <a href="https://www.cossuel.sn">www.cossuel.sn</a></li>
+    <li>Guide PROQUELEC sur la conformité</li>
+    <li>Contact technique : <a href="mailto:proquelec@proquelec.sn">proquelec@proquelec.sn</a></li>
+  </ul>
+  <footer style="margin-top:2em;font-size:0.9em;color:#555;">© PROQUELEC – Mémento Conformité et mise sous tension. Version 2025.</footer>
+</body>
+</html>
+<html>
+<head>
+  <title>Mémento Technique – Obligations de conformité avant mise sous tension</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>MÉMENTO TECHNIQUE<br>Obligations de conformité avant mise sous tension</h1>
+  <h2>1. Objet du mémento</h2>
+  <p>Liste des vérifications à effectuer avant la mise sous tension d’une installation électrique.</p>
+  <h2>2. Principes essentiels (NS 01-001 & NF C 15-100)</h2>
+  <ul>
+    <li>Respecter toutes les étapes de contrôle</li>
+    <li>Documenter les vérifications</li>
+    <li>Prioriser la sécurité des personnes</li>
+  </ul>
+  <h2>3. Définitions clés</h2>
+  <ul>
+    <li><b>Mise sous tension :</b> Passage de l’installation à l’état actif</li>
+    <li><b>Conformité :</b> Respect des exigences normatives</li>
+    <li><b>Contrôle :</b> Ensemble des vérifications techniques</li>
+  </ul>
+  <h2>4. Règles pratiques à retenir</h2>
+  <ul>
+    <li>Vérifier la continuité des conducteurs de terre</li>
+    <li>Contrôler la présence des dispositifs de protection</li>
+    <li>Tester le bon fonctionnement des appareils</li>
+    <li>Remplir le rapport de conformité</li>
+  </ul>
+  <h2>5. Tableau récapitulatif</h2>
+  <table>
+    <tr><th>Symptôme</th><th>Cause possible</th><th>Action à mener</th></tr>
+    <tr><td>Défaut de terre</td><td>Oubli de raccordement</td><td>Vérifier et corriger</td></tr>
+    <tr><td>Dispositif absent</td><td>Erreur d’installation</td><td>Installer le matériel manquant</td></tr>
+    <tr><td>Non-conformité</td><td>Non-respect des normes</td><td>Revoir l’installation</td></tr>
+  </table>
+  <h2>6. Tableau des contrôles essentiels</h2>
+  <table>
+    <tr><th>Contrôle</th><th>Outil</th><th>Critère de conformité</th></tr>
+    <tr><td>Prise de terre</td><td>Testeur de terre</td><td>&lt; 50 Ω, continuité assurée</td></tr>
+    <tr><td>Protection différentielle</td><td>Testeur différentiel</td><td>Présente, calibre correct</td></tr>
+    <tr><td>Section des câbles</td><td>Mesure, schéma</td><td>Adaptée à la puissance</td></tr>
+    <tr><td>Tableau électrique</td><td>Inspection visuelle</td><td>Identification, schéma unifilaire</td></tr>
+    <tr><td>Appareillage</td><td>Inspection visuelle</td><td>Certifié, conforme</td></tr>
+    <tr><td>Raccordements</td><td>Contrôle visuel</td><td>Connexions solides, pas de défauts</td></tr>
+  </table>
+  <h2>7. Erreurs à éviter</h2>
+  <ul>
+    <li>Oublier la protection différentielle</li>
+    <li>Utiliser des câbles sous-dimensionnés</li>
+    <li>Absence de schéma unifilaire</li>
+    <li>Matériel non certifié ou contrefait</li>
+    <li>Connexions mal réalisées</li>
+    <li>Ne pas préparer les documents techniques</li>
+  </ul>
+  <h2>8. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.cossuel.sn" target="_blank">Site du COSSUEL</a></li>
+    <li><a href="https://www.promotelec.com/conformite-installations/" target="_blank">Guide Promotelec : Conformité</a></li>
+    <li><a href="mailto:proquelec@proquelec.sn">Contact technique PROQUELEC</a></li>
+  </ul>
+  <div class="encadre">
+    <b>Conformité PROQUELEC :</b> La conformité est la clé de la sécurité. Ne jamais négliger les contrôles et la documentation avant mise sous tension.
+  </div>
+  <div class="encadre">
+    <b>À retenir PROQUELEC :</b> La conformité est la clé de la sécurité. Ne jamais négliger les contrôles avant mise sous tension.
+  </div>
+  <footer>
+    © PROQUELEC – Mémento technique Conformité. Version condensée pour techniciens.
+  </footer>
+</body>
+</html>

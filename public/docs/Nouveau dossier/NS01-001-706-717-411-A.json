@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Unités mobiles ou transportables",
+    "article": "706",
+    "alinéa": "717.411",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-717-411-A",
+        "type": "obligation",
+        "texte_normatif": "Protection par coupure automatique de l'alimentation a) pour les alimentations conformes à 717.313 a) et 717.313 c), seuls les schémas TN et IT sont autorisés et la protection par coupure automatique de l’alimentation doit être assurée : - en schéma TN, conformément aux dispositions de 717.411.4, les dispositifs de protection étant des DDR ; - en schéma IT, conformément aux dispositions de 717.411.6. ——————— (1) NF EN 60204-1 (C 79-130) - 404 - b) pour les alimentations conformes à 717.313 b), seuls les schémas TN ou TT sont autorisés C et la coupure automatique de l’alimentation doit être assurée par un DDR. Tout matériel en amont des dispositifs assurant la coupure automatique de l'alimentation dans l’unité, y compris ces dispositifs de protection eux-mêmes, doit être protégé par utilisation de matériels de la classe II ou présentant une isolation équivalente. 717.411.3.1 Liaisons équipotentielles 717.411.3.1.1 Liaison équipotentielle principale Les parties conductrices accessibles des unités telles que châssis, enveloppe conductrice, structure d'ensemble ou tubulaire doivent être interconnectées et reliées au conducteur principal de protection de l’unité par la liaison équipotentielle principale. Cette liaison doit être à âme souple. 717.411.3.1.2 Equipotentialité des masses Les masses des matériels électriques des unités doivent être interconnectées et reliées au conducteur principal de protection de l’unité, lui-même relié à la liaison équipotentielle principale. 717.411.3.1.3 Si plusieurs unités sont électriquement interconnectées et alimentées par la même source, les liaisons équipotentielles principales doivent aussi être interconnectées. 711.411.3.1.4 Si un groupe générateur BT situé à l’extérieur est utilisé, sa masse doit être reliée à la liaison équipotentielle principale. 717.411.4 Schéma TN C Dans le cas d’alimentation par un groupe générateur à basse tension [717.313 a) ] ou par l’intermédiaire d’un transformateur assurant une séparation simple [717.313 c) ], si le schéma TN est choisi, le point neutre ou, si cela n'est pas possible, un conducteur de phase, doit être relié à la liaison équipotentielle principale (voir figures 717A.1 et 717C.1). 717.411.6 Schéma IT Dans le cas d’alimentation par un groupe générateur à basse tension [717.313 a) ] ou par l’intermédiaire d’un transformateur assurant une séparation simple [717.313 c) ], si le schéma IT est choisi, la borne « terre » du CPI doit être connectée à la liaison équipotentielle principale (voir figure 717 C.2). 717.415.1 Protection complémentaire par DDR C Une protection complémentaire par des dispositifs de protection à courant différentiel résiduel assigné au plus égal à 30 mA est nécessaire pour les matériels utilisés à l’extérieur de l’unité et pour tous les socles de prise de courant, à l'exception des socles de prises alimentés par des circuits protégés par : - TBTS, ou - TBTP, ou - séparation électrique.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

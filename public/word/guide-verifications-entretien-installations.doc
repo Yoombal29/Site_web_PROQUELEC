@@ -1,0 +1,85 @@
+<html>
+<head>
+  <title>Guide Technique – Vérifications et entretien des installations électriques</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.5em;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>GUIDE TECHNIQUE<br>Vérifications et entretien des installations électriques</h1>
+  <h2>1. Introduction : contexte et importance</h2>
+  <p>Un entretien régulier des installations électriques permet de prévenir les pannes, les accidents et d’optimiser la durée de vie des équipements.</p>
+  <h2>2. Références normatives</h2>
+  <ul>
+    <li>NS 01-001</li>
+    <li>NF C 15-100</li>
+    <li>Textes sur la maintenance préventive</li>
+  </ul>
+  <h2>3. Exigences techniques et réglementaires</h2>
+  <ul>
+    <li>Contrôles périodiques obligatoires</li>
+    <li>Test des dispositifs de protection</li>
+    <li>Vérification de la continuité de la terre</li>
+    <li>Remplacement des matériels défectueux</li>
+  </ul>
+  <h2>4. Anomalies et risques associés</h2>
+  <ul>
+    <li>Usure des câbles</li>
+    <li>Défaillance des protections</li>
+    <li>Corrosion des équipements</li>
+  </ul>
+  <h2>5. Procédure de diagnostic et de vérification</h2>
+  <ol>
+    <li>Inspection visuelle</li>
+    <li>Test des protections</li>
+    <li>Contrôle de la terre</li>
+    <li>Remplacement des pièces usées</li>
+  </ol>
+  <h2>6. Méthodes d’installation et de mise en conformité</h2>
+  <ul>
+    <li>Planification de la maintenance</li>
+    <li>Utilisation de pièces certifiées</li>
+    <li>Documentation des interventions</li>
+  </ul>
+  <h2>7. Recommandations pratiques</h2>
+  <ul>
+    <li>Tenir un registre d’entretien</li>
+    <li>Former le personnel</li>
+    <li>Prévoir des contrôles annuels</li>
+  </ul>
+  <h2>8. Études de cas / exemples d’application</h2>
+  <ul>
+    <li>Maintenance préventive dans un immeuble collectif</li>
+    <li>Remplacement d’un disjoncteur défectueux</li>
+  </ul>
+    <h2>9. Tableau des opérations périodiques recommandées</h2>
+    <table style="width:100%;border-collapse:collapse;margin-top:1em;">
+      <tr style="background:#e0e7ff;"><th>Opération</th><th>Périodicité</th><th>Outil/Action</th></tr>
+      <tr><td>Test des différentiels</td><td>Annuel</td><td>Bouton test, mesure</td></tr>
+      <tr><td>Contrôle de la terre</td><td>Annuel</td><td>Testeur de terre</td></tr>
+      <tr><td>Inspection visuelle des câbles</td><td>Semestriel</td><td>Observation, remplacement si usure</td></tr>
+      <tr><td>Vérification des connexions</td><td>Annuel</td><td>Serrage, contrôle thermique</td></tr>
+      <tr><td>Remplacement des pièces défectueuses</td><td>À la détection</td><td>Pièces certifiées</td></tr>
+    </table>
+    <h2>10. Erreurs à éviter</h2>
+    <ul>
+      <li>Reporter les contrôles périodiques</li>
+      <li>Utiliser des pièces non certifiées</li>
+      <li>Oublier de documenter les interventions</li>
+      <li>Ne pas former le personnel</li>
+    </ul>
+    <h2>11. Ressources utiles</h2>
+    <ul>
+      <li><a href="https://www.promotelec.com/entretien-installations/" target="_blank">Guide Promotelec : Entretien des installations</a></li>
+      <li><a href="https://www.afnor.org/" target="_blank">Normes et maintenance (AFNOR)</a></li>
+      <li><a href="https://www.legrand.fr/pro/actualites/entretien-installations" target="_blank">Legrand : Vérifications et entretien</a></li>
+    </ul>
+    <div class="encadre">
+      <b>Conformité PROQUELEC :</b> Planifier et documenter les opérations d’entretien pour garantir la sécurité et la conformité des installations électriques.
+    </div>
+  <div class="encadre">
+    <b>Conseils PROQUELEC :</b> Un entretien régulier garantit la sécurité et la performance des installations. Ne pas attendre la panne pour agir.
+  </div>
+  <footer>
+    © PROQUELEC – Guide technique Vérifications et entretien. Version détaillée pour professionnels et gestionnaires.
+  </footer>
+</body>
+</html>

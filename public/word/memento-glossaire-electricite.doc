@@ -1,0 +1,110 @@
+<html>
+<head>
+  <title>Mémento – Glossaire de l’électricité</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    h1 { color: #1d4ed8; }
+    h2 { color: #2563eb; margin-top: 1.2em; }
+    table { border-collapse: collapse; margin-top: 1em; }
+    th, td { border: 1px solid #2563eb; padding: 6px 12px; }
+    th { background: #e0e7ff; }
+  </style>
+</head>
+<body>
+  <h1>Mémento – Glossaire de l’électricité</h1>
+  <p>Ce glossaire regroupe les principaux termes et définitions utilisés dans le domaine de l’électricité et des installations électriques. Il est destiné aux professionnels, étudiants et usagers souhaitant mieux comprendre le vocabulaire technique.</p>
+  <table>
+    <tr><th>Terme</th><th>Définition</th></tr>
+    <tr><td>Courant alternatif (AC)</td><td>Type de courant électrique dont la direction varie périodiquement.</td></tr>
+    <tr><td>Courant continu (DC)</td><td>Type de courant électrique dont la direction reste constante.</td></tr>
+    <tr><td>Conducteur</td><td>Matériau permettant le passage du courant électrique (ex : cuivre, aluminium).</td></tr>
+    <tr><td>Disjoncteur</td><td>Appareil de protection qui coupe le circuit en cas de surintensité.</td></tr>
+    <tr><td>Différentiel</td><td>Dispositif de protection contre les fuites de courant vers la terre.</td></tr>
+    <tr><td>Mise à la terre</td><td>Connexion d’une installation à la terre pour évacuer les courants de défaut.</td></tr>
+    <tr><td>Section</td><td>Dimension du conducteur exprimée en mm².</td></tr>
+    <tr><td>Tableau électrique</td><td>Ensemble regroupant les dispositifs de protection et de commande d’une installation.</td></tr>
+    <tr><td>Schéma unifilaire</td><td>Représentation simplifiée d’un circuit électrique.</td></tr>
+    <tr><td>Parafoudre</td><td>Appareil protégeant contre les surtensions dues à la foudre.</td></tr>
+    <tr><td>Prise de terre</td><td>Point de connexion à la terre d’une installation électrique.</td></tr>
+    <tr><td>Réseau BT/HT</td><td>Basse Tension / Haute Tension, selon le niveau de tension du réseau.</td></tr>
+    <tr><td>Consignation</td><td>Procédure de mise hors tension et de sécurisation d’un circuit avant intervention.</td></tr>
+    <tr><td>Norme</td><td>Ensemble de règles techniques à respecter pour la sécurité et la conformité.</td></tr>
+    <tr><td>Équipement de protection individuelle (EPI)</td><td>Matériel destiné à protéger l’intervenant (gants, lunettes, chaussures isolantes, etc.).</td></tr>
+    <tr><td>Chute de tension</td><td>Perte de tension entre le départ et l’arrivée d’un circuit, à limiter pour la sécurité.</td></tr>
+    <tr><td>Installation triphasée</td><td>Installation utilisant trois phases électriques pour alimenter des équipements puissants.</td></tr>
+    <tr><td>Appareillage</td><td>Ensemble des dispositifs de commande et de protection (interrupteurs, prises, etc.).</td></tr>
+    <tr><td>Contrefaçon</td><td>Matériel non certifié ou falsifié, à proscrire pour la sécurité.</td></tr>
+  </table>
+  <footer style="margin-top:2em;font-size:0.9em;color:#555;">© PROQUELEC – Glossaire de l’électricité. Version 2025.</footer>
+</body>
+</html>
+<html>
+<head>
+  <title>Mémento Technique – Glossaire et définitions clés de l’électricité</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>MÉMENTO TECHNIQUE<br>Glossaire et définitions clés de l’électricité</h1>
+  <h2>1. Objet du mémento</h2>
+  <p>Glossaire simplifié pour faciliter la compréhension des termes essentiels en électricité.</p>
+  <h2>2. Principes essentiels (NS 01-001 & NF C 15-100)</h2>
+  <ul>
+    <li>Utiliser un vocabulaire précis pour éviter les erreurs</li>
+    <li>Respecter les définitions normatives</li>
+    <li>Former les équipes à la terminologie</li>
+  </ul>
+  <h2>3. Définitions clés</h2>
+  <ul>
+    <li><b>Courant :</b> Mouvement des électrons dans un conducteur</li>
+    <li><b>Tension :</b> Différence de potentiel entre deux points</li>
+    <li><b>Puissance :</b> Énergie consommée par unité de temps (Watt)</li>
+    <li><b>Disjoncteur :</b> Appareil de protection contre les surintensités</li>
+    <li><b>Différentiel :</b> Dispositif de protection contre les fuites de courant</li>
+  </ul>
+  <h2>4. Règles pratiques à retenir</h2>
+  <ul>
+    <li>Vérifier la compréhension des termes avant intervention</li>
+    <li>Utiliser les schémas pour illustrer les définitions</li>
+    <li>Consulter la norme en cas de doute</li>
+  </ul>
+  <h2>5. Tableau récapitulatif</h2>
+  <table>
+    <tr><th>Symptôme</th><th>Cause possible</th><th>Action à mener</th></tr>
+    <tr><td>Erreur de branchement</td><td>Mauvaise interprétation du schéma</td><td>Revoir le glossaire et le schéma</td></tr>
+    <tr><td>Matériel inadapté</td><td>Mauvaise définition du besoin</td><td>Clarifier les termes techniques</td></tr>
+  </table>
+  <h2>6. Tableau des abréviations courantes</h2>
+  <table>
+    <tr><th>Abréviation</th><th>Signification</th></tr>
+    <tr><td>AC</td><td>Courant alternatif</td></tr>
+    <tr><td>DC</td><td>Courant continu</td></tr>
+    <tr><td>BT</td><td>Basse tension</td></tr>
+    <tr><td>HT</td><td>Haute tension</td></tr>
+    <tr><td>EPI</td><td>Équipement de protection individuelle</td></tr>
+    <tr><td>NF</td><td>Norme française</td></tr>
+    <tr><td>CE</td><td>Conformité européenne</td></tr>
+  </table>
+  <h2>7. Erreurs à éviter</h2>
+  <ul>
+    <li>Confondre les termes techniques proches (ex : tension/courant)</li>
+    <li>Utiliser des abréviations non expliquées</li>
+    <li>Oublier de consulter le glossaire avant intervention</li>
+    <li>Employer du matériel non certifié</li>
+  </ul>
+  <h2>8. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/glossaire-electricite/" target="_blank">Guide Promotelec : Glossaire électricité</a></li>
+    <li><a href="https://www.afnor.org/" target="_blank">Normes et définitions (AFNOR)</a></li>
+    <li><a href="https://www.legrand.fr/pro/actualites/glossaire-electricite" target="_blank">Legrand : Glossaire technique</a></li>
+  </ul>
+  <div class="encadre">
+    <b>Conformité PROQUELEC :</b> Maîtriser le vocabulaire et les abréviations pour garantir la sécurité et la conformité des interventions électriques.
+  </div>
+  <div class="encadre">
+    <b>À retenir PROQUELEC :</b> Un vocabulaire maîtrisé = sécurité et efficacité sur le chantier.
+  </div>
+  <footer>
+    © PROQUELEC – Mémento technique Glossaire. Version condensée pour techniciens.
+  </footer>
+</body>
+</html>

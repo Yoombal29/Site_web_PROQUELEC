@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "536",
+    "alinéa": "536.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-536-536-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités Tout dispositif de sectionnement ou de commande doit satisfaire aux règles de la partie 4-46. Pour l'application des règles énoncées en 511.1, les normes à considérer sont indiquées dans le tableau 53E. L'attention est appelée sur le fait que pour certaines applications, telles que la commande des moteurs, les dispositifs de commande doivent pouvoir supporter les courants de démarrage. Les dispositifs de protection ou de commande peuvent assurer la fonction de sectionnement sous réserve qu'ils répondent aux conditions énoncées en 536.2 Si un dispositif est utilisé pour plus d'une fonction, il doit satisfaire aux prescriptions de chacune de ces fonctions. Le tableau 53E indique les fonctions que peuvent assurer les dispositifs de protection, de commande et de sectionnement. Dans certains cas, des prescriptions complémentaires peuvent être nécessaires pour des fonctions combinées. Pour le choix du courant assigné de ces dispositifs, les prescriptions du paragraphe 535.3.2 s’appliquent, sauf pour les dispositifs assurant seulement une commande fonctionnelle. Les dispositifs assurant seulement une commande fonctionnelle sont principalement ceux installés sur les circuits terminaux pour la commande d’éclairage, VMC,… - 257 - Tableau 53E – Fonctions assurées par les dispositifs de protection, de commande et de sectionnement Dispositif Norme Sectionnement Coupure Commande d’urgence fonctionnelle interrupteurs C 63-130 S 0 0 C 61-150 et C 61-151 C 63-140 à C 63-145 contacteurs C 63-110, C 63-111 S 0 0 Disjoncteurs domestiques C 61-410, C 61-440 0 0 0 Disjoncteurs industriels C 63-120 S 0 0 télérupteurs C 61-800 X X 0 Prises de courant 0 0(4) 0 (≤ 32 A) Prises de courant 0 X(3) X (> 32 A) ACP (2) C 63-161 S 0 0 Coupe-circuit à fusibles C 61-203 0 X X C 63-213 A semi-conducteurs X X 0 0 Fonction assurée. X Fonction non assurée. S Fonction assurée si le dispositif est reconnu apte au sectionnement par sa norme. (2) Appareil de connexion, de commande et de protection. (3) L’article 20 du Décret du 14.11.88 exige que la réunion ou la séparation des deux constituants des prises de courant assigné supérieur à 32 A ne puisse s’effectuer que hors charge. (4) Si accessibles.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "536"
+        ]
+    }
+}

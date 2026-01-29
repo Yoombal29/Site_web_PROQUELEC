@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de données des caractéristiques des matériaux électriques</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .category-section {
+            margin-bottom: 3rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .category-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-header h2 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        
+        .category-content {
+            padding: 1.5rem;
+            display: none;
+        }
+        
+        .category-content.active {
+            display: block;
+        }
+        
+        .material-item {
+            margin-bottom: 2rem;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .material-header {
+            background-color: var(--light-color);
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .material-header h3 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: var(--dark-color);
+        }
+        
+        .material-content {
+            padding: 1.5rem;
+            display: none;
+        }
+        
+        .material-content.active {
+            display: block;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e1e4e8;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-icon.rotated {
+            transform: rotate(90deg);
+        }
+        
+        .search-container {
+            margin-bottom: 2rem;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .no-results {
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            th, td {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Base de données des caractéristiques des matériaux électriques</h1>
+        <p class="subtitle">Sélectionnez une catégorie pour consulter les caractéristiques techniques</p>
+    </header>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Rechercher un matériel...">
+        </div>
+        
+        <div id="categoriesContainer">
+            <!-- Les catégories seront générées dynamiquement par JavaScript -->
+        </div>
+        
+        <div class="no-results" id="noResults">
+            Aucun résultat trouvé pour votre recherche.
+        </div>
+    </div>
+
+    <script>
+        // Données structurées des matériaux électriques
+        const materialsData = {
+            "Câbles": [
+                {
+                    "name": "Cable préas 2x16mm²",
+                    "type": "CABLE BT TORSADE DE BRANCHEMENT 2X16 mm²",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "à indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Type", "unite": "_", "valeur_specifiee": "Conducteurs isolés en faisceau torsadé", "valeur_garantie": ""},
+                        {"caracteristique": "Installation", "unite": "_", "valeur_specifiee": "Réseau aérien", "valeur_garantie": ""},
+                        {"caracteristique": "Montage", "unite": "_", "valeur_specifiee": "Suspendu sur support", "valeur_garantie": ""},
+                        {"caracteristique": "Fréquence", "unite": "Hz", "valeur_specifiee": "50", "valeur_garantie": ""},
+                        {"caracteristique": "Section", "unite": "mm²", "valeur_specifiee": "2 X 16", "valeur_garantie": ""},
+                        {"caracteristique": "Nombre de conducteurs", "unite": "_", "valeur_specifiee": "2", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre extérieur approximatif du câble 2x16mm²", "unite": "mm", "valeur_specifiee": "15", "valeur_garantie": ""},
+                        {"caracteristique": "Masse approximative du câble", "unite": "kg/km", "valeur_specifiee": "140", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance linéique à 20 ° C", "unite": "Ω / km", "valeur_specifiee": "1.91", "valeur_garantie": ""},
+                        {"caracteristique": "Intensité en régime permanent", "unite": "A", "valeur_specifiee": "93", "valeur_garantie": ""},
+                        {"caracteristique": "Nature de l'âme", "unite": "_", "valeur_specifiee": "Aluminium, âme rigide circulaire câblée, classe 2", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre minimal de l'âme", "unite": "mm", "valeur_specifiee": "4.6", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre maximal de l'âme", "unite": "mm", "valeur_specifiee": "5.1", "valeur_garantie": ""},
+                        {"caracteristique": "épaisseur moyenne de la gaine isolante", "unite": "mm", "valeur_specifiee": "1.2", "valeur_garantie": ""},
+                        {"caracteristique": "diamètre extérieur minimal d'un conducteur", "unite": "mm", "valeur_specifiee": "7", "valeur_garantie": ""},
+                        {"caracteristique": "diamètre extérieur maximal d'un conducteur", "unite": "mm", "valeur_specifiee": "7.8", "valeur_garantie": ""},
+                        {"caracteristique": "Isolation", "unite": "_", "valeur_specifiee": "Polyéthylène réticulé (PR/XLPE) noir", "valeur_garantie": ""},
+                        {"caracteristique": "Identification des conducteurs", "unite": "_", "valeur_specifiee": "Par numérotation 1 – 2 sur phases", "valeur_garantie": ""},
+                        {"caracteristique": "Marquage", "unite": "_", "valeur_specifiee": "Norme - Fabricant- année fabrication", "valeur_garantie": ""},
+                        {"caracteristique": "Tension de service nominale Uo/ U (KV)", "unite": "kV", "valeur_specifiee": "0,6/ 1 KV", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme", "unite": "°C", "valeur_specifiee": "90", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale en court-circuit (°C)", "unite": "°C", "valeur_specifiee": "250", "valeur_garantie": ""},
+                        {"caracteristique": "Norme de référence", "unite": "-", "valeur_specifiee": "NF C33-209", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "Cable préas 4x16mm²",
+                    "type": "CABLE BT TORSADE DE BRANCHEMENT 4X16 mm²",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "à indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Type", "unite": "_", "valeur_specifiee": "Conducteurs isolés en faisceau torsadé", "valeur_garantie": ""},
+                        {"caracteristique": "Installation", "unite": "_", "valeur_specifiee": "Réseau aérien", "valeur_garantie": ""},
+                        {"caracteristique": "Montage", "unite": "_", "valeur_specifiee": "Suspendu sur support", "valeur_garantie": ""},
+                        {"caracteristique": "Fréquence", "unite": "Hz", "valeur_specifiee": "50", "valeur_garantie": ""},
+                        {"caracteristique": "Section", "unite": "mm²", "valeur_specifiee": "4 X 16", "valeur_garantie": ""},
+                        {"caracteristique": "Nombre de conducteurs", "unite": "_", "valeur_specifiee": "4", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre extérieur approximatif du câble 4x16mm²", "unite": "mm", "valeur_specifiee": "18", "valeur_garantie": ""},
+                        {"caracteristique": "Masse approximative du câble", "unite": "kg/km", "valeur_specifiee": "280", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance linéique à 20 ° C", "unite": "Ω / km", "valeur_specifiee": "1.91", "valeur_garantie": ""},
+                        {"caracteristique": "Intensité en régime permanent", "unite": "A", "valeur_specifiee": "83", "valeur_garantie": ""},
+                        {"caracteristique": "Nature de l'âme", "unite": "_", "valeur_specifiee": "Aluminium, âme rigide circulaire câblée, classe 2", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre minimal de l'âme", "unite": "mm", "valeur_specifiee": "4.6", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre maximal de l'âme", "unite": "mm", "valeur_specifiee": "5.1", "valeur_garantie": ""},
+                        {"caracteristique": "épaisseur moyenne de la gaine isolante", "unite": "mm", "valeur_specifiee": "1.2", "valeur_garantie": ""},
+                        {"caracteristique": "diamètre extérieur minimal d'un conducteur", "unite": "mm", "valeur_specifiee": "7", "valeur_garantie": ""},
+                        {"caracteristique": "diamètre extérieur maximal d'un conducteur", "unite": "mm", "valeur_specifiee": "7.8", "valeur_garantie": ""},
+                        {"caracteristique": "Isolation", "unite": "_", "valeur_specifiee": "Polyéthylène réticulé (PR/XLPE) noir", "valeur_garantie": ""},
+                        {"caracteristique": "Identification des conducteurs", "unite": "_", "valeur_specifiee": "Par numérotation 1 – 2 – 3 sur phases", "valeur_garantie": ""},
+                        {"caracteristique": "Marquage", "unite": "_", "valeur_specifiee": "Norme - Fabricant- année fabrication", "valeur_garantie": ""},
+                        {"caracteristique": "Tension de service nominale Uo/ U (KV)", "unite": "kV", "valeur_specifiee": "0,6/ 1 KV", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme", "unite": "°C", "valeur_specifiee": "90", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale en court-circuit (°C)", "unite": "°C", "valeur_specifiee": "250", "valeur_garantie": ""},
+                        {"caracteristique": "Norme de référence", "unite": "-", "valeur_specifiee": "NF C33-209", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "Cable préas 3x35+54,6+16mm²",
+                    "type": "CABLE BT TORSADE DE RESEAU 3X35+54,6+1X16 mm² A NEUTRE PORTEUR",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "à indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Type", "unite": "_", "valeur_specifiee": "Conducteurs isolés en faisceau torsadé", "valeur_garantie": ""},
+                        {"caracteristique": "Installation", "unite": "_", "valeur_specifiee": "Réseau aérien", "valeur_garantie": ""},
+                        {"caracteristique": "Montage", "unite": "_", "valeur_specifiee": "Suspendu sur support", "valeur_garantie": ""},
+                        {"caracteristique": "Fréquence", "unite": "Hz", "valeur_specifiee": "50", "valeur_garantie": ""},
+                        {"caracteristique": "Section", "unite": "mm²", "valeur_specifiee": "3 X 35 + 54,6 +16", "valeur_garantie": ""},
+                        {"caracteristique": "Nombre de conducteurs", "unite": "_", "valeur_specifiee": "5", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre extérieur approximatif du câble 3 X 35 + 54,6 +16mm²", "unite": "mm", "valeur_specifiee": "33", "valeur_garantie": ""},
+                        {"caracteristique": "Masse approximative du câble", "unite": "kg/km", "valeur_specifiee": "780", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance linéique à 20 ° C", "unite": "Ω / km", "valeur_specifiee": "Ph = 0,868 neutre = 0,63 EP=1,91", "valeur_garantie": ""},
+                        {"caracteristique": "Intensité admissible en régime permanent", "unite": "A", "valeur_specifiee": "138", "valeur_garantie": ""},
+                        {"caracteristique": "Intensité admissible en régime permanent du conducteur l'Eclairage public", "unite": "A", "valeur_specifiee": "83", "valeur_garantie": ""},
+                        {"caracteristique": "Nature de l'âme", "unite": "_", "valeur_specifiee": "Aluminium, âme rigide circulaire câblée, classe 2", "valeur_garantie": ""},
+                        {"caracteristique": "Nature de l'âme neutre porteur", "unite": "_", "valeur_specifiee": "Alliage d'aluminium, âme rigide circulaire câblée, section 54,6 mm2", "valeur_garantie": ""},
+                        {"caracteristique": "Nature de l'âme éclairage public", "unite": "_", "valeur_specifiee": "Aluminium, âme rigide circulaire câblée, section 16 mm²", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre minimal de l'âme", "unite": "mm", "valeur_specifiee": "Ph = 6,8 neutre = 9,2 EP=4,6", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre maximal de l'âme", "unite": "mm", "valeur_specifiee": "Ph = 7,3 neutre = 9,6 EP=5,1", "valeur_garantie": ""},
+                        {"caracteristique": "épaisseur moyenne de la gaine isolante", "unite": "mm", "valeur_specifiee": "Ph = 1,6 neutre = 1,6 EP=1,2", "valeur_garantie": ""},
+                        {"caracteristique": "diamètre extérieur minimal d'un conducteur", "unite": "mm", "valeur_specifiee": "Ph = 10 neutre = 12,3 EP=7", "valeur_garantie": ""},
+                        {"caracteristique": "diamètre extérieur maximal d'un conducteur", "unite": "mm", "valeur_specifiee": "Ph = 10,9 neutre = 13 EP=7,8", "valeur_garantie": ""},
+                        {"caracteristique": "Isolation", "unite": "_", "valeur_specifiee": "Polyéthylène réticulé (PR/XLPE) noir", "valeur_garantie": ""},
+                        {"caracteristique": "Identification des conducteurs", "unite": "_", "valeur_specifiee": "Par numérotation 1 – 2 – 3 sur phases EP1 sur conducteurs d'éclairage", "valeur_garantie": ""},
+                        {"caracteristique": "Marquage", "unite": "_", "valeur_specifiee": "Norme - Fabricant- année fabrication", "valeur_garantie": ""},
+                        {"caracteristique": "Tension de service nominale Uo/ U (KV)", "unite": "kV", "valeur_specifiee": "0,6/ 1 KV", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme", "unite": "°C", "valeur_specifiee": "90", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale en court-circuit (°C)", "unite": "°C", "valeur_specifiee": "250", "valeur_garantie": ""},
+                        {"caracteristique": "Norme de référence", "unite": "-", "valeur_specifiee": "NF C33-209", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "U1000 ARVFV 4x35mm²",
+                    "type": "CABLE SOUTERRAIN BT RIGIDE ARME U1000 ARVFV 4X35 mm²",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "à indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Type", "unite": "_", "valeur_specifiee": "Conducteurs isolés", "valeur_garantie": ""},
+                        {"caracteristique": "Installation", "unite": "_", "valeur_specifiee": "Remontée aéro-sout BT; départ BT", "valeur_garantie": ""},
+                        {"caracteristique": "Montage", "unite": "_", "valeur_specifiee": "Enterré", "valeur_garantie": ""},
+                        {"caracteristique": "Fréquence", "unite": "Hz", "valeur_specifiee": "50", "valeur_garantie": ""},
+                        {"caracteristique": "Section", "unite": "mm²", "valeur_specifiee": "4 X 35", "valeur_garantie": ""},
+                        {"caracteristique": "Nombre de conducteurs", "unite": "_", "valeur_specifiee": "4", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance linéique à 20 ° C", "unite": "Ω / km", "valeur_specifiee": "0.868", "valeur_garantie": ""},
+                        {"caracteristique": "Poids approximatif du câble", "unite": "kg/km", "valeur_specifiee": "1070", "valeur_garantie": ""},
+                        {"caracteristique": "Intensité admissible en terre à 20°C", "unite": "A", "valeur_specifiee": "134", "valeur_garantie": ""},
+                        {"caracteristique": "Intensité admissible à l'air à 30°C", "unite": "A", "valeur_specifiee": "120", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre extérieur minimal du câble en tout point", "unite": "mm", "valeur_specifiee": "28", "valeur_garantie": ""},
+                        {"caracteristique": "Nature de l'âme", "unite": "_", "valeur_specifiee": "Âme en alu, classe 2", "valeur_garantie": ""},
+                        {"caracteristique": "Isolation", "unite": "_", "valeur_specifiee": "Polyéthylène réticulé (PR/XLPE)", "valeur_garantie": ""},
+                        {"caracteristique": "épaisseur minimale en tout point de l'isolant", "unite": "mm", "valeur_specifiee": "0.9", "valeur_garantie": ""},
+                        {"caracteristique": "Bourrage", "unite": "_", "valeur_specifiee": "PVC", "valeur_garantie": ""},
+                        {"caracteristique": "Gaine d'étanchéité", "unite": "_", "valeur_specifiee": "PVC", "valeur_garantie": ""},
+                        {"caracteristique": "Armure", "unite": "_", "valeur_specifiee": "Deux rubans d'acier galvanisé", "valeur_garantie": ""},
+                        {"caracteristique": "Gaine extérieure", "unite": "_", "valeur_specifiee": "PVC de couleur noire", "valeur_garantie": ""},
+                        {"caracteristique": "Marquage", "unite": "_", "valeur_specifiee": "Fabricant-section - désignation - norme - année fabrication", "valeur_garantie": ""},
+                        {"caracteristique": "Identification des conducteurs", "unite": "_", "valeur_specifiee": "Brun - Noir - Gris - bleu", "valeur_garantie": ""},
+                        {"caracteristique": "Tension de service nominale Uo/ U (KV)", "unite": "kV", "valeur_specifiee": "0,6/ 1 KV", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme", "unite": "°C", "valeur_specifiee": "90", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale en court-circuit (°C)", "unite": "°C", "valeur_specifiee": "250", "valeur_garantie": ""},
+                        {"caracteristique": "Norme de référence", "unite": "_", "valeur_specifiee": "NFC 32-322, CEI 60228", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "U1000 RO2V 2X6 mm²",
+                    "type": "U 1000 RO2V 2 X 6 mm²",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A préciser", "valeur_garantie": ""},
+                        {"caracteristique": "Type de câble", "unite": "_", "valeur_specifiee": "U 1000 RO2V 2 X 6 mm²", "valeur_garantie": ""},
+                        {"caracteristique": "Ame conductrice rigide", "unite": "_", "valeur_specifiee": "cuivre nu massif", "valeur_garantie": ""},
+                        {"caracteristique": "Isolant", "unite": "_", "valeur_specifiee": "XLPE / PR", "valeur_garantie": ""},
+                        {"caracteristique": "Gaine de bourrage", "unite": "_", "valeur_specifiee": "PVC (Polychlorure de vinyle)", "valeur_garantie": ""},
+                        {"caracteristique": "Gaine extérieure", "unite": "_", "valeur_specifiee": "PVC (Polychlorure de vinyle)", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur de gaine", "unite": "_", "valeur_specifiee": "Gris ou Noir", "valeur_garantie": ""},
+                        {"caracteristique": "Tension nominale de service", "unite": "V", "valeur_specifiee": "600/1000", "valeur_garantie": ""},
+                        {"caracteristique": "Courant admissible à l'air libre 30°C", "unite": "A", "valeur_specifiee": "63", "valeur_garantie": ""},
+                        {"caracteristique": "Courant admissible enterré 20°C", "unite": "A", "valeur_specifiee": "80", "valeur_garantie": ""},
+                        {"caracteristique": "Mode de pose", "unite": "_", "valeur_specifiee": "A l'air libre, en extérieur : fixation sur supports", "valeur_garantie": ""},
+                        {"caracteristique": "1 Câble de 2 conducteurs", "unite": "_", "valeur_specifiee": "Bleu claire et Rouge ou Noir", "valeur_garantie": ""},
+                        {"caracteristique": "Conditions", "unite": "_", "valeur_specifiee": "sans protection supplémentaire", "valeur_garantie": ""},
+                        {"caracteristique": "Repérage des conducteurs", "unite": "_", "valeur_specifiee": "Par coloration dans la masse", "valeur_garantie": ""},
+                        {"caracteristique": "Section des conducteurs", "unite": "mm²", "valeur_specifiee": "2 X 6", "valeur_garantie": ""},
+                        {"caracteristique": "souplesse de l'ame", "unite": "_", "valeur_specifiee": "cablé classe 1 selon EN 60228", "valeur_garantie": ""},
+                        {"caracteristique": "résistance aux chocs", "unite": "_", "valeur_specifiee": "AG3 selon NFC 15100", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance aux intempéries", "unite": "_", "valeur_specifiee": "AN3 selon NFC15100", "valeur_garantie": ""},
+                        {"caracteristique": "Non propagateur de flamme", "unite": "_", "valeur_specifiee": "C2 selon NFC32070", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Régime permanent", "unite": "°C", "valeur_specifiee": "90", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Court Circuit", "unite": "°C", "valeur_specifiee": "250", "valeur_garantie": ""},
+                        {"caracteristique": "Normes de fabrication", "unite": "_", "valeur_specifiee": "NFC 32-321", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "U1000 RO2V 4x10 mm²",
+                    "type": "U 1000 RO2V 4 X 10 mm²",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A préciser", "valeur_garantie": ""},
+                        {"caracteristique": "Type de câble", "unite": "_", "valeur_specifiee": "U 1000 RO2V 4 X 10 mm²", "valeur_garantie": ""},
+                        {"caracteristique": "Ame conductrice rigide", "unite": "_", "valeur_specifiee": "cuivre nu massif", "valeur_garantie": ""},
+                        {"caracteristique": "Isolant", "unite": "_", "valeur_specifiee": "XLPE / PR", "valeur_garantie": ""},
+                        {"caracteristique": "Gaine de bourrage", "unite": "_", "valeur_specifiee": "PVC (Polychlorure de vinyle)", "valeur_garantie": ""},
+                        {"caracteristique": "Gaine extérieure", "unite": "_", "valeur_specifiee": "PVC (Polychlorure de vinyle)", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur de gaine", "unite": "_", "valeur_specifiee": "Gris ou Noir", "valeur_garantie": ""},
+                        {"caracteristique": "Tension nominale de service", "unite": "V", "valeur_specifiee": "600/1000", "valeur_garantie": ""},
+                        {"caracteristique": "Courant admissible à l'air libre 30°C", "unite": "A", "valeur_specifiee": "75", "valeur_garantie": ""},
+                        {"caracteristique": "Courant admissible enterré 20°C", "unite": "A", "valeur_specifiee": "87", "valeur_garantie": ""},
+                        {"caracteristique": "Mode de pose", "unite": "_", "valeur_specifiee": "A l'air libre, en extérieur : fixation sur supports", "valeur_garantie": ""},
+                        {"caracteristique": "1 Câble de 4 conducteurs", "unite": "_", "valeur_specifiee": "Bleu claire , Rouge , Noir, Marron", "valeur_garantie": ""},
+                        {"caracteristique": "Conditions", "unite": "_", "valeur_specifiee": "sans protection supplémentaire", "valeur_garantie": ""},
+                        {"caracteristique": "Repérage des conducteurs", "unite": "_", "valeur_specifiee": "Par coloration dans la masse", "valeur_garantie": ""},
+                        {"caracteristique": "Section des conducteurs", "unite": "mm²", "valeur_specifiee": "4x10", "valeur_garantie": ""},
+                        {"caracteristique": "souplesse de l'ame", "unite": "_", "valeur_specifiee": "cablé classe 1 selon EN 60228", "valeur_garantie": ""},
+                        {"caracteristique": "résistance aux chocs", "unite": "_", "valeur_specifiee": "AG3 selon NFC 15100", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance aux intempéries", "unite": "_", "valeur_specifiee": "AN3 selon NFC15100", "valeur_garantie": ""},
+                        {"caracteristique": "Non propagateur de flamme", "unite": "_", "valeur_specifiee": "C2 selon NFC32070", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Régime permanent", "unite": "°C", "valeur_specifiee": "90", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Court Circuit", "unite": "°C", "valeur_specifiee": "250", "valeur_garantie": ""},
+                        {"caracteristique": "Normes de fabrication", "unite": "_", "valeur_specifiee": "NFC 32-321", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "U1000 RVFV 2x6 mm²",
+                    "type": "U 1000 RVFV 2 X 6 mm²",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A préciser", "valeur_garantie": ""},
+                        {"caracteristique": "Type de câble", "unite": "_", "valeur_specifiee": "U 1000 RVFV 2 X 6 mm²", "valeur_garantie": ""},
+                        {"caracteristique": "Ame conductrice rigide", "unite": "_", "valeur_specifiee": "cuivre nu massif", "valeur_garantie": ""},
+                        {"caracteristique": "Forme de l'ame", "unite": "_", "valeur_specifiee": "circulaire", "valeur_garantie": ""},
+                        {"caracteristique": "Isolant", "unite": "_", "valeur_specifiee": "XLPE / PR", "valeur_garantie": ""},
+                        {"caracteristique": "Gaine de bourrage", "unite": "_", "valeur_specifiee": "PVC (Polychlorure de vinyle)", "valeur_garantie": ""},
+                        {"caracteristique": "Armures", "unite": "_", "valeur_specifiee": "Deux(2) feuillard d'acier", "valeur_garantie": ""},
+                        {"caracteristique": "Gaine extérieure", "unite": "_", "valeur_specifiee": "PVC (Polychlorure de vinyle)", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur de gaine", "unite": "_", "valeur_specifiee": "Noir", "valeur_garantie": ""},
+                        {"caracteristique": "Sans plomb", "unite": "_", "valeur_specifiee": "oui", "valeur_garantie": ""},
+                        {"caracteristique": "Tension nominale de service", "unite": "V", "valeur_specifiee": "600/1000", "valeur_garantie": ""},
+                        {"caracteristique": "Courant admissible à l'air libre 30°C", "unite": "A", "valeur_specifiee": "63", "valeur_garantie": ""},
+                        {"caracteristique": "Courant admissible enterré 20°C", "unite": "A", "valeur_specifiee": "80", "valeur_garantie": ""},
+                        {"caracteristique": "Mode de pose", "unite": "_", "valeur_specifiee": "Enterré, A l'air libre, en extérieur : fixation sur supports", "valeur_garantie": ""},
+                        {"caracteristique": "1 Câble de 2 conducteurs", "unite": "_", "valeur_specifiee": "Bleu claire et Rouge ou Noir", "valeur_garantie": ""},
+                        {"caracteristique": "Conditions", "unite": "_", "valeur_specifiee": "sans protection supplémentaire", "valeur_garantie": ""},
+                        {"caracteristique": "Repérage des conducteurs", "unite": "_", "valeur_specifiee": "Par coloration dans la masse", "valeur_garantie": ""},
+                        {"caracteristique": "Section des conducteurs", "unite": "mm²", "valeur_specifiee": "2 x 6", "valeur_garantie": ""},
+                        {"caracteristique": "souplesse de l'ame", "unite": "_", "valeur_specifiee": "classe 2 selon EN 60228", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance aux chocs", "unite": "_", "valeur_specifiee": "AG3 selon NFC15100", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance aux intempéries", "unite": "_", "valeur_specifiee": "AN3 selon NFC15100", "valeur_garantie": ""},
+                        {"caracteristique": "Non propagateur de flamme", "unite": "_", "valeur_specifiee": "C2 selon NFC 32070", "valeur_garantie": ""},
+                        {"caracteristique": "Etanchéité", "unite": "_", "valeur_specifiee": "AD7 selon NFC15100", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Régime permanent", "unite": "°C", "valeur_specifiee": "90", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Court Circuit", "unite": "°C", "valeur_specifiee": "250", "valeur_garantie": ""},
+                        {"caracteristique": "Normes de fabrication", "unite": "_", "valeur_specifiee": "NFC 32-322", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "U1000 RVFV 4x10mm2",
+                    "type": "U 1000 RVFV 4X10 mm²",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A préciser", "valeur_garantie": ""},
+                        {"caracteristique": "Type de câble", "unite": "_", "valeur_specifiee": "U 1000 RVFV 4X10 mm²", "valeur_garantie": ""},
+                        {"caracteristique": "Ame conductrice rigide", "unite": "_", "valeur_specifiee": "cuivre nu massif", "valeur_garantie": ""},
+                        {"caracteristique": "Forme de l'ame", "unite": "_", "valeur_specifiee": "circulaire", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre exterieur approximatif du cable", "unite": "mm", "valeur_specifiee": "18", "valeur_garantie": ""},
+                        {"caracteristique": "Isolant", "unite": "_", "valeur_specifiee": "XLPE / PR", "valeur_garantie": ""},
+                        {"caracteristique": "Gaine de bourrage", "unite": "_", "valeur_specifiee": "PVC (Polychlorure de vinyle)", "valeur_garantie": ""},
+                        {"caracteristique": "Armures", "unite": "_", "valeur_specifiee": "Deux(2) feuillard d'acier", "valeur_garantie": ""},
+                        {"caracteristique": "Gaine extérieure", "unite": "_", "valeur_specifiee": "PVC (Polychlorure de vinyle)", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur de gaine", "unite": "_", "valeur_specifiee": "Noir", "valeur_garantie": ""},
+                        {"caracteristique": "Sans plomb", "unite": "_", "valeur_specifiee": "oui", "valeur_garantie": ""},
+                        {"caracteristique": "Tension nominale de service", "unite": "V", "valeur_specifiee": "600/1000", "valeur_garantie": ""},
+                        {"caracteristique": "Courant admissible à l'air libre 30°C", "unite": "A", "valeur_specifiee": "71", "valeur_garantie": ""},
+                        {"caracteristique": "Courant admissible enterré 20°C", "unite": "A", "valeur_specifiee": "87", "valeur_garantie": ""},
+                        {"caracteristique": "Mode de pose", "unite": "_", "valeur_specifiee": "Enterré, A l'air libre, en extérieur : fixation sur supports", "valeur_garantie": ""},
+                        {"caracteristique": "1 Câble de 2 conducteurs", "unite": "_", "valeur_specifiee": "Bleu claire et Rouge ou Noir", "valeur_garantie": ""},
+                        {"caracteristique": "Conditions", "unite": "_", "valeur_specifiee": "sans protection supplémentaire", "valeur_garantie": ""},
+                        {"caracteristique": "Repérage des conducteurs", "unite": "_", "valeur_specifiee": "Par coloration dans la masse", "valeur_garantie": ""},
+                        {"caracteristique": "Section des conducteurs", "unite": "mm²", "valeur_specifiee": "4 x10", "valeur_garantie": ""},
+                        {"caracteristique": "souplesse de l'ame", "unite": "_", "valeur_specifiee": "classe 2 selon EN 60228", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance aux chocs", "unite": "_", "valeur_specifiee": "AG3 selon NFC15100", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance aux intempéries", "unite": "_", "valeur_specifiee": "AN3 selon NFC15100", "valeur_garantie": ""},
+                        {"caracteristique": "Non propagateur de flamme", "unite": "_", "valeur_specifiee": "C2 selon NFC 32070", "valeur_garantie": ""},
+                        {"caracteristique": "Etanchéité", "unite": "_", "valeur_specifiee": "AD7 selon NFC15100", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Régime permanent", "unite": "°C", "valeur_specifiee": "90", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Court Circuit", "unite": "°C", "valeur_specifiee": "250", "valeur_garantie": ""},
+                        {"caracteristique": "Normes de fabrication", "unite": "_", "valeur_specifiee": "NFC 32-322", "valeur_garantie": ""}
+                    ]
+                }
+            ],
+            "Fils": [
+                {
+                    "name": "FIL TH 2,5 mm² Vert-Jaune (2)",
+                    "type": "Conducteur de protection 2,5 mm²",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A préciser", "valeur_garantie": ""},
+                        {"caracteristique": "Forme", "unite": "_", "valeur_specifiee": "Ronde", "valeur_garantie": ""},
+                        {"caracteristique": "Ame constitution", "unite": "_", "valeur_specifiee": "cuivre nu massif - classe 1", "valeur_garantie": ""},
+                        {"caracteristique": "Isolant", "unite": "_", "valeur_specifiee": "PVC (Polychlorure de vinyle)", "valeur_garantie": ""},
+                        {"caracteristique": "Tension nominale de service", "unite": "V", "valeur_specifiee": "450/750", "valeur_garantie": ""},
+                        {"caracteristique": "Mode de pose courant", "unite": "_", "valeur_specifiee": "sous conduit", "valeur_garantie": ""},
+                        {"caracteristique": "Serie", "unite": "_", "valeur_specifiee": "H07 V-U ou R", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur", "unite": "_", "valeur_specifiee": "Vert-jaune", "valeur_garantie": ""},
+                        {"caracteristique": "Section des conducteurs", "unite": "mm²", "valeur_specifiee": "2,5", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Régime permanent", "unite": "°C", "valeur_specifiee": "70", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Court Circuit", "unite": "°C", "valeur_specifiee": "160", "valeur_garantie": ""},
+                        {"caracteristique": "Normes de fabrication", "unite": "_", "valeur_specifiee": "NFC 32-201-3", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "Conducteur nu 25mm2",
+                    "type": "Conducteur de terre en cuivre nu 25 mm²",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A préciser", "valeur_garantie": ""},
+                        {"caracteristique": "Forme", "unite": "_", "valeur_specifiee": "Ronde", "valeur_garantie": ""},
+                        {"caracteristique": "Constitution de l'ame", "unite": "_", "valeur_specifiee": "cuivre nu recuit - classe 2", "valeur_garantie": ""},
+                        {"caracteristique": "Isolant", "unite": "_", "valeur_specifiee": "Non", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre exterieur", "unite": "mm", "valeur_specifiee": "5.98", "valeur_garantie": ""},
+                        {"caracteristique": "Tension nominale de service", "unite": "_", "valeur_specifiee": "Non applicable", "valeur_garantie": ""},
+                        {"caracteristique": "Mode de pose", "unite": "_", "valeur_specifiee": "sous conduit", "valeur_garantie": ""},
+                        {"caracteristique": "Section des conducteurs", "unite": "mm²", "valeur_specifiee": "25", "valeur_garantie": ""},
+                        {"caracteristique": "Métal", "unite": "_", "valeur_specifiee": "Cuivre nu recuit", "valeur_garantie": ""},
+                        {"caracteristique": "Souplesse", "unite": "_", "valeur_specifiee": "Classe 2 câblée", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Régime permanent", "unite": "°C", "valeur_specifiee": "70", "valeur_garantie": ""},
+                        {"caracteristique": "Température maximale de l'âme - Court Circuit", "unite": "°C", "valeur_specifiee": "160", "valeur_garantie": ""},
+                        {"caracteristique": "Normes de fabrication", "unite": "_", "valeur_specifiee": "NFC 32017 CEI 60228", "valeur_garantie": ""}
+                    ]
+                }
+            ],
+            "Coffrets": [
+                {
+                    "name": "Coffret comptage mono",
+                    "type": "Coffret Comptage monophase",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A préciser", "valeur_garantie": ""},
+                        {"caracteristique": "Type de Coffret", "unite": "_", "valeur_specifiee": "Coffret Comptage monophase", "valeur_garantie": ""},
+                        {"caracteristique": "Physiques", "unite": "_", "valeur_specifiee": "Coffret en polyester renforcé de fibres de verre résistants à la corrosion et aux UV avec gravure logo et nom de la Senelec, équipé de coupe circuits 2 poles (P+ N) avec fusibles type AD calibre 32 A Taille 14x51 sur la phase et barrette Taille 14x51 pour le neutre.", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur", "unite": "_", "valeur_specifiee": "GRIS, BLANC ou BEIGE", "valeur_garantie": ""},
+                        {"caracteristique": "Dimensions Hauteur", "unite": "mm", "valeur_specifiee": "350< H <450", "valeur_garantie": ""},
+                        {"caracteristique": "Dimensions Longueur", "unite": "mm", "valeur_specifiee": "175< L <225", "valeur_garantie": ""},
+                        {"caracteristique": "Dimensions Profondeur", "unite": "mm", "valeur_specifiee": "150< P <190", "valeur_garantie": ""},
+                        {"caracteristique": "Compositions", "unite": "_", "valeur_specifiee": "Hublot de lecture transparent en polycarbonate anti UV", "valeur_garantie": ""},
+                        {"caracteristique": "Trous de passages de câbles", "unite": "_", "valeur_specifiee": "avec presse-étoupe en polyamide. Le passage des câbles se fera par la partie inférieure du coffret", "valeur_garantie": ""},
+                        {"caracteristique": "Equipements", "unite": "_", "valeur_specifiee": "Equipés de Coupe circuit monophasé avec barrette sur le neutre et fusible sur la phase", "valeur_garantie": ""},
+                        {"caracteristique": "Porte de fermeture", "unite": "_", "valeur_specifiee": "Porte de fermeture avec Logo et Sigle Senelec", "valeur_garantie": ""},
+                        {"caracteristique": "Fermeture", "unite": "_", "valeur_specifiee": "Fermeture par vis imperdable à 3 encoches plombable et cadenassable", "valeur_garantie": ""},
+                        {"caracteristique": "Niveau d'isolation électrique", "unite": "V", "valeur_specifiee": "1000", "valeur_garantie": ""},
+                        {"caracteristique": "Température d'utilisation", "unite": "°C", "valeur_specifiee": "+05 °C à +55 °C", "valeur_garantie": ""},
+                        {"caracteristique": "Tension assignée fusible", "unite": "V", "valeur_specifiee": "400", "valeur_garantie": ""},
+                        {"caracteristique": "Courant assigné fusible", "unite": "A", "valeur_specifiee": "30", "valeur_garantie": ""},
+                        {"caracteristique": "Fixation coffret", "unite": "_", "valeur_specifiee": "murale par vis-chevilles ou sur poteau par feuillard", "valeur_garantie": ""},
+                        {"caracteristique": "Minimum IP", "unite": "_", "valeur_specifiee": "IP 43", "valeur_garantie": ""},
+                        {"caracteristique": "Minimum IK", "unite": "_", "valeur_specifiee": "IK 09", "valeur_garantie": ""},
+                        {"caracteristique": "Fixation compteur", "unite": "_", "valeur_specifiee": "Fixation rail DIN ou BS réglable en hauteur et en largeur", "valeur_garantie": ""},
+                        {"caracteristique": "Auto-extinguible", "unite": "°C", "valeur_specifiee": "960", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance à la chaleur", "unite": "°C", "valeur_specifiee": "100", "valeur_garantie": ""},
+                        {"caracteristique": "Norme applicable", "unite": "_", "valeur_specifiee": "NF EN 60529, NF EN 60695-9-11, NFC 20030", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "Coffret Comptage TRI",
+                    "type": "Coffret Comptage TRIPHASE",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A préciser", "valeur_garantie": ""},
+                        {"caracteristique": "Type de Coffret", "unite": "_", "valeur_specifiee": "Coffret Comptage TRIPHASE", "valeur_garantie": ""},
+                        {"caracteristique": "Physiques", "unite": "_", "valeur_specifiee": "Coffret en polyester renforcé de fibres de verre résistants à la corrosion et aux UV avec gravure logo et nom de la Senelec, équipé de coupe circuits 3P + N avec fusibles type AD calibre 60 A Taille 22x58 sur les phases et barrettes Taille 22x58 pour le neutre.", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur", "unite": "_", "valeur_specifiee": "GRIS, BLANC ou BEIGE", "valeur_garantie": ""},
+                        {"caracteristique": "Dimensions Hauteur", "unite": "mm", "valeur_specifiee": "450 < H < 600", "valeur_garantie": ""},
+                        {"caracteristique": "Dimensions Longueur", "unite": "mm", "valeur_specifiee": "210 < L < 250", "valeur_garantie": ""},
+                        {"caracteristique": "Dimensions Profondeur", "unite": "mm", "valeur_specifiee": "150 < P < 200", "valeur_garantie": ""},
+                        {"caracteristique": "Compositions", "unite": "_", "valeur_specifiee": "Hublot de lecture transparent en polycarbonate anti UV", "valeur_garantie": ""},
+                        {"caracteristique": "Trous de passages de câbles", "unite": "_", "valeur_specifiee": "avec presse-étoupe en polyamide. Le passage des câbles se fera par la partie inférieure du coffret", "valeur_garantie": ""},
+                        {"caracteristique": "Equipements", "unite": "_", "valeur_specifiee": "Equipés de Coupe circuit triphasé avec barrette sur le neutre et fusibles sur les phases", "valeur_garantie": ""},
+                        {"caracteristique": "Porte de fermeture", "unite": "_", "valeur_specifiee": "Porte de fermeture avec Logo et Sigle Senelec", "valeur_garantie": ""},
+                        {"caracteristique": "Fermeture", "unite": "_", "valeur_specifiee": "Fermeture par vis imperdable à 3 encoches plombable et cadenassable", "valeur_garantie": ""},
+                        {"caracteristique": "Niveau d'isolation électrique", "unite": "V", "valeur_specifiee": "1000", "valeur_garantie": ""},
+                        {"caracteristique": "Température d'utilisation", "unite": "°C", "valeur_specifiee": "5 °C à 55 °C", "valeur_garantie": ""},
+                        {"caracteristique": "Tension assignée fusible", "unite": "V", "valeur_specifiee": "400", "valeur_garantie": ""},
+                        {"caracteristique": "Courant assigné fusible", "unite": "A", "valeur_specifiee": "60", "valeur_garantie": ""},
+                        {"caracteristique": "Fixation coffret", "unite": "_", "valeur_specifiee": "murale par vis-chevilles ou sur poteau par feuillard", "valeur_garantie": ""},
+                        {"caracteristique": "Minimum IP", "unite": "_", "valeur_specifiee": "IP 43", "valeur_garantie": ""},
+                        {"caracteristique": "Minimum IK", "unite": "_", "valeur_specifiee": "IK 09", "valeur_garantie": ""},
+                        {"caracteristique": "Fixation compteur", "unite": "_", "valeur_specifiee": "Fixation BS réglable en hauteur et en largeur", "valeur_garantie": ""},
+                        {"caracteristique": "Auto-extinguible", "unite": "°C", "valeur_specifiee": "960", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance à la chaleur", "unite": "°C", "valeur_specifiee": "100", "valeur_garantie": ""},
+                        {"caracteristique": "Norme applicable", "unite": "_", "valeur_specifiee": "NF EN 60529, NF EN 60695-9-11, NFC 20030", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "Coffret 4 Compteurs DOM",
+                    "type": "Coffret Comptage pour 4 Compteurs monophasés",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A préciser", "valeur_garantie": ""},
+                        {"caracteristique": "Type de Coffret", "unite": "_", "valeur_specifiee": "Coffret Comptage pour 4 Compteurs monophasés", "valeur_garantie": ""},
+                        {"caracteristique": "Désignation", "unite": "_", "valeur_specifiee": "Coffret en polyester renforcé de fibres de verre résistants à la corrosion et aux UV avec gravure logo et nom de la Senelec, équipé de - borniers de répartition située au niveau supérieur - 4 compartiments pour les compteurs au milieu - 4 coupe circuits 2 poles (P+ N) au niveau inférieur avec fusibles type AD calibre 32 A de Taille 14x51 sur la phase et barrette de Taille 14x51 pour le neutre pour chaque coupe-circuit.", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur", "unite": "_", "valeur_specifiee": "GRIS, BLANC ou BEIGE", "valeur_garantie": ""},
+                        {"caracteristique": "Dimensions Hauteur", "unite": "mm", "valeur_specifiee": "350< H <450", "valeur_garantie": ""},
+                        {"caracteristique": "Dimensions Longueur", "unite": "mm", "valeur_specifiee": "175< L <225", "valeur_garantie": ""},
+                        {"caracteristique": "Dimensions Profondeur", "unite": "mm", "valeur_specifiee": "150< P <190", "valeur_garantie": ""},
+                        {"caracteristique": "Compositions", "unite": "_", "valeur_specifiee": "Hublot de lecture transparent en polycarbonate anti UV", "valeur_garantie": ""},
+                        {"caracteristique": "Trous de passages de câbles", "unite": "_", "valeur_specifiee": "avec presse-étoupe en polyamide. Le passage des câbles se fera par la partie inférieure du coffret", "valeur_garantie": ""},
+                        {"caracteristique": "Equipements", "unite": "_", "valeur_specifiee": "Equipés de Coupe circuit monophasé avec barrette sur le neutre et fusible sur la phase", "valeur_garantie": ""},
+                        {"caracteristique": "Porte de fermeture", "unite": "_", "valeur_specifiee": "Porte de fermeture avec Logo et Sigle Senelec", "valeur_garantie": ""},
+                        {"caracteristique": "Fermeture", "unite": "_", "valeur_specifiee": "Fermeture par vis imperdable à 3 encoches plombable et cadenassable", "valeur_garantie": ""},
+                        {"caracteristique": "Niveau d'isolation électrique", "unite": "V", "valeur_specifiee": "1000", "valeur_garantie": ""},
+                        {"caracteristique": "Température d'utilisation", "unite": "°C", "valeur_specifiee": "+05 °C à +55 °C", "valeur_garantie": ""},
+                        {"caracteristique": "Tension assignée fusible", "unite": "V", "valeur_specifiee": "400", "valeur_garantie": ""},
+                        {"caracteristique": "Courant assigné fusible", "unite": "A", "valeur_specifiee": "30", "valeur_garantie": ""},
+                        {"caracteristique": "Fixation coffret", "unite": "_", "valeur_specifiee": "murale par vis-chevilles ou sur poteau par feuillard", "valeur_garantie": ""},
+                        {"caracteristique": "Minimum IP", "unite": "_", "valeur_specifiee": "IP 43", "valeur_garantie": ""},
+                        {"caracteristique": "Minimum IK", "unite": "_", "valeur_specifiee": "IK 09", "valeur_garantie": ""},
+                        {"caracteristique": "Fixation compteur, Coupe Circuit et borniers", "unite": "_", "valeur_specifiee": "Fixation rail DIN ou BS réglable en hauteur et en largeur", "valeur_garantie": ""},
+                        {"caracteristique": "Auto-extinguible", "unite": "°C", "valeur_specifiee": "960", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance à la chaleur", "unite": "°C", "valeur_specifiee": "100", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "Cofrt de rgrmt de 6 branchement",
+                    "type": "coffret de regroupement de 06 branchements",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "à indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Norme", "unite": "_", "valeur_specifiee": "HN 62 - S - 33", "valeur_garantie": ""},
+                        {"caracteristique": "Entrée", "unite": "mm²", "valeur_specifiee": "35 - 150 AL/CU", "valeur_garantie": ""},
+                        {"caracteristique": "sortie (branchement)", "unite": "mm²", "valeur_specifiee": "6 - 35 AL/CU", "valeur_garantie": ""},
+                        {"caracteristique": "nombre de branchements", "unite": "_", "valeur_specifiee": "6", "valeur_garantie": ""},
+                        {"caracteristique": "Technologie", "unite": "_", "valeur_specifiee": "à dénudage ou à perforation", "valeur_garantie": ""},
+                        {"caracteristique": "Puissance de transit", "unite": "_", "valeur_specifiee": "à spécifier", "valeur_garantie": ""},
+                        {"caracteristique": "Les coffrets étanches de regroupement de branchement doivent être réalisés avec du polycarbonate en V0, auto extinguibles, résistants à la corrosion, conçus pour être à l'extérieur dans des environnements agressifs", "unite": "_", "valeur_specifiee": "OUI", "valeur_garantie": ""},
+                        {"caracteristique": "les entrées et les sorties en partie inférieures doivent être réalisés par des joints étanches en élastomère", "unite": "_", "valeur_specifiee": "OUI", "valeur_garantie": ""},
+                        {"caracteristique": "La fermeture du couvercle est réalisée par vis à tête triangulaire normalisée, encastrée et plombable, imperdable", "unite": "_", "valeur_specifiee": "oui", "valeur_garantie": ""},
+                        {"caracteristique": "Le coffret est composé de 4 blocs de connexion (1 neutre et 3 phases) . Il sera accompagné d'une platine de fixation en aluminium. Le coffret doit disposer d'une étiquette de repérage des branchements", "unite": "_", "valeur_specifiee": "OUI", "valeur_garantie": ""},
+                        {"caracteristique": "passage des câbles", "unite": "_", "valeur_specifiee": "tulipe d'étanchéité avec obturateur amovile", "valeur_garantie": ""},
+                        {"caracteristique": "Fixation", "unite": "_", "valeur_specifiee": "Sur façade ou sur poteau", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur", "unite": "_", "valeur_specifiee": "GRIS, BLANC ou BEIGE", "valeur_garantie": ""},
+                        {"caracteristique": "Minimum Eveloppe IP", "unite": "_", "valeur_specifiee": "IP 33D", "valeur_garantie": ""},
+                        {"caracteristique": "Minimum Partie active IP", "unite": "_", "valeur_specifiee": "IP 2X", "valeur_garantie": ""},
+                        {"caracteristique": "Minimum IK", "unite": "_", "valeur_specifiee": "IK 08", "valeur_garantie": ""},
+                        {"caracteristique": "Longueur", "unite": "_", "valeur_specifiee": "à préciser", "valeur_garantie": ""},
+                        {"caracteristique": "Largeur", "unite": "mm", "valeur_specifiee": "140 mm <= l <= 210 mm", "valeur_garantie": ""},
+                        {"caracteristique": "Hauteur", "unite": "mm", "valeur_specifiee": "100 mm <= H <= 370 mm", "valeur_garantie": ""},
+                        {"caracteristique": "autoextinguible", "unite": "°C", "valeur_specifiee": "960", "valeur_garantie": ""},
+                        {"caracteristique": "résistance à la chaleur", "unite": "°C", "valeur_specifiee": "100", "valeur_garantie": ""},
+                        {"caracteristique": "Marquage", "unite": "_", "valeur_specifiee": "oui", "valeur_garantie": ""},
+                        {"caracteristique": "plans", "unite": "_", "valeur_specifiee": "à fournir", "valeur_garantie": ""}
+                    ]
+                }
+            ],
+            "Connecteurs": [
+                {
+                    "name": "CB1 Serrage independant",
+                    "type": "Connecteurs de branchement à serrage indépendant (à un dérivé)",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "à indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Norme", "unite": "_", "valeur_specifiee": "NFC33-020; EN 50483", "valeur_garantie": ""},
+                        {"caracteristique": "Enveloppe", "unite": "_", "valeur_specifiee": "moulée résistant aux UV", "valeur_garantie": ""},
+                        {"caracteristique": "Technologie Principal", "unite": "_", "valeur_specifiee": "perforation d'isolant", "valeur_garantie": ""},
+                        {"caracteristique": "Technologie Dérivé", "unite": "_", "valeur_specifiee": "A dénudage", "valeur_garantie": ""},
+                        {"caracteristique": "Plage d'utilisation Principal", "unite": "mm²", "valeur_specifiee": "25 à 95", "valeur_garantie": ""},
+                        {"caracteristique": "Plage d'utilisation Dérivé", "unite": "mm²", "valeur_specifiee": "6 à 35", "valeur_garantie": ""},
+                        {"caracteristique": "Nombre de dérivés", "unite": "_", "valeur_specifiee": "1", "valeur_garantie": ""},
+                        {"caracteristique": "Couple de serrage Principal", "unite": "N.m", "valeur_specifiee": "<=20", "valeur_garantie": ""},
+                        {"caracteristique": "Couple de serrage Dérivé", "unite": "N.m", "valeur_specifiee": "<=20", "valeur_garantie": ""},
+                        {"caracteristique": "lame de contact nature", "unite": "_", "valeur_specifiee": "cuivre étamé ou laiton étamé", "valeur_garantie": ""},
+                        {"caracteristique": "lame de contact protection", "unite": "_", "valeur_specifiee": "graisse", "valeur_garantie": ""},
+                        {"caracteristique": "Tenue diélectrique dans l'eau", "unite": "_", "valeur_specifiee": "6 kV pendant 1 min", "valeur_garantie": ""},
+                        {"caracteristique": "Imperdabilité", "unite": "_", "valeur_specifiee": "Tous les composants du connecteur doivent être imperdables", "valeur_garantie": ""},
+                        {"caracteristique": "Parties Métalliques", "unite": "_", "valeur_specifiee": "Toutes les parties métalliques accessibles pendant le montage et après installation du connecteur doivent par construction être hors potentiel.", "valeur_garantie": ""},
+                        {"caracteristique": "Marquage", "unite": "_", "valeur_specifiee": "Le marquage doit être indélébile. Il doit contenir : - Le nom du Fabricant - La référence du produit - La capacité et couple de serrage - Taille de la tête de vis - Numéro de lot - la longueur de dénudage pour le dérivé", "valeur_garantie": ""},
+                        {"caracteristique": "plans", "unite": "_", "valeur_specifiee": "à fournir", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "CB2 Serrage independant",
+                    "type": "Connecteurs de branchement à serrage indépendant (à deux dérivés)",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "à indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Norme", "unite": "_", "valeur_specifiee": "NFC33-020; EN 50483", "valeur_garantie": ""},
+                        {"caracteristique": "Enveloppe", "unite": "_", "valeur_specifiee": "moulée résistant aux UV", "valeur_garantie": ""},
+                        {"caracteristique": "Technologie Principal", "unite": "_", "valeur_specifiee": "perforation d'isolant", "valeur_garantie": ""},
+                        {"caracteristique": "Technologie Dérivé", "unite": "_", "valeur_specifiee": "A dénudage", "valeur_garantie": ""},
+                        {"caracteristique": "Plage d'utilisation Principal", "unite": "mm²", "valeur_specifiee": "25 à 95", "valeur_garantie": ""},
+                        {"caracteristique": "Plage d'utilisation Dérivé", "unite": "mm²", "valeur_specifiee": "2x(6 à 35)", "valeur_garantie": ""},
+                        {"caracteristique": "Nombre de dérivés", "unite": "_", "valeur_specifiee": "2", "valeur_garantie": ""},
+                        {"caracteristique": "Couple de serrage Principal", "unite": "N.m", "valeur_specifiee": "<=20", "valeur_garantie": ""},
+                        {"caracteristique": "Couple de serrage Dérivé", "unite": "N.m", "valeur_specifiee": "<=20", "valeur_garantie": ""},
+                        {"caracteristique": "lame de contact nature", "unite": "_", "valeur_specifiee": "cuivre étamé ou laiton étamé", "valeur_garantie": ""},
+                        {"caracteristique": "lame de contact protection", "unite": "_", "valeur_specifiee": "graisse", "valeur_garantie": ""},
+                        {"caracteristique": "Tenue diélectrique dans l'eau", "unite": "_", "valeur_specifiee": "6 kV pendant 1 min", "valeur_garantie": ""},
+                        {"caracteristique": "Imperdabilité", "unite": "_", "valeur_specifiee": "Tous les composants du connecteur doivent être imperdables", "valeur_garantie": ""},
+                        {"caracteristique": "Parties Métalliques", "unite": "_", "valeur_specifiee": "Toutes les parties métalliques accessibles pendant le montage et après installation du connecteur doivent par construction être hors potentiel.", "valeur_garantie": ""},
+                        {"caracteristique": "Marquage", "unite": "_", "valeur_specifiee": "Le marquage doit être indélébile. Il doit contenir : - Le nom du Fabricant - La référence du produit - La capacité et couple de serrage - Taille de la tête de vis - Numéro de lot - la longueur de dénudage pour le dérivé", "valeur_garantie": ""},
+                        {"caracteristique": "plans", "unite": "_", "valeur_specifiee": "à fournir", "valeur_garantie": ""}
+                    ]
+                }
+            ],
+            "Accessoires": [
+                {
+                    "name": "Tuyau isolant noir de brancheme",
+                    "type": "Tuyau isolant",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Fournisseur", "unite": "_", "valeur_specifiee": "A indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Norme", "unite": "_", "valeur_specifiee": "NF EN 61386-22", "valeur_garantie": ""},
+                        {"caracteristique": "Tenue mécanique", "unite": "_", "valeur_specifiee": "IK8", "valeur_garantie": ""},
+                        {"caracteristique": "Protection anti-UV", "unite": "_", "valeur_specifiee": "Oui", "valeur_garantie": ""},
+                        {"caracteristique": "Classement au feu", "unite": "_", "valeur_specifiee": "C2", "valeur_garantie": ""},
+                        {"caracteristique": "Ø Extérieur", "unite": "mm", "valeur_specifiee": "16", "valeur_garantie": ""},
+                        {"caracteristique": "Ø Intérieur mini", "unite": "mm", "valeur_specifiee": "10.7", "valeur_garantie": ""},
+                        {"caracteristique": "Tire-fils", "unite": "_", "valeur_specifiee": "Non", "valeur_garantie": ""},
+                        {"caracteristique": "Indice de protection conduit seul", "unite": "_", "valeur_specifiee": "IP68", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance à écrasement à +23°C", "unite": "N", "valeur_specifiee": "750", "valeur_garantie": ""},
+                        {"caracteristique": "Tenue aux chocs à -5°C", "unite": "Joules", "valeur_specifiee": "6", "valeur_garantie": ""},
+                        {"caracteristique": "Rigidité diélectrique", "unite": "V", "valeur_specifiee": "2000", "valeur_garantie": ""},
+                        {"caracteristique": "Température de fonctionnement plage", "unite": "°C", "valeur_specifiee": "10 à +55", "valeur_garantie": ""},
+                        {"caracteristique": "Tenue à la flamme", "unite": "_", "valeur_specifiee": "Non propagateur selon NF EN 61386", "valeur_garantie": ""},
+                        {"caracteristique": "Rayon de courbure mini", "unite": "mm", "valeur_specifiee": "96", "valeur_garantie": ""},
+                        {"caracteristique": "Matériau", "unite": "_", "valeur_specifiee": "Polyoléfines additivés", "valeur_garantie": ""},
+                        {"caracteristique": "Sans halogène", "unite": "_", "valeur_specifiee": "Oui", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur", "unite": "_", "valeur_specifiee": "Noir", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "TUBE IRO 25 NON TULIPE",
+                    "type": "TUBE IRO 25 NON TULIPE",
+                    "specifications": [
+                        {"caracteristique": "Type de Tube", "unite": "_", "valeur_specifiee": "TUBE IRO 25 NON TULIPE", "valeur_garantie": ""},
+                        {"caracteristique": "Longueur", "unite": "m", "valeur_specifiee": "3", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre extérieur", "unite": "mm", "valeur_specifiee": "25", "valeur_garantie": ""},
+                        {"caracteristique": "Diamètre intérieur mini", "unite": "mm", "valeur_specifiee": "21,4", "valeur_garantie": ""},
+                        {"caracteristique": "Mode de pose", "unite": "_", "valeur_specifiee": "Intérieur en apparent", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur", "unite": "_", "valeur_specifiee": "Blanc RAL 9010", "valeur_garantie": ""},
+                        {"caracteristique": "Tenue aux chocs", "unite": "_", "valeur_specifiee": "2 J à -5 °C", "valeur_garantie": ""},
+                        {"caracteristique": "Tenue à l'écrasement", "unite": "_", "valeur_specifiee": "750 N à 23 °C", "valeur_garantie": ""},
+                        {"caracteristique": "Fixation", "unite": "_", "valeur_specifiee": "Par Lyre par simple clipsage", "valeur_garantie": ""},
+                        {"caracteristique": "Protection Minimun", "unite": "_", "valeur_specifiee": "IP 42", "valeur_garantie": ""},
+                        {"caracteristique": "IK", "unite": "_", "valeur_specifiee": "IK 07", "valeur_garantie": ""},
+                        {"caracteristique": "matières", "unite": "_", "valeur_specifiee": "PVC non propagateur de flamme", "valeur_garantie": ""},
+                        {"caracteristique": "Tenue au fil à incandescence", "unite": "°C", "valeur_specifiee": "960", "valeur_garantie": ""},
+                        {"caracteristique": "Température régime permanent", "unite": "°C", "valeur_specifiee": "10 °C à +55 °C", "valeur_garantie": ""}
+                    ]
+                },
+                {
+                    "name": "Grillage avertisseur",
+                    "type": "Grillage avertisseur",
+                    "specifications": [
+                        {"caracteristique": "Fabricant", "unite": "_", "valeur_specifiee": "A indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Fournisseur", "unite": "_", "valeur_specifiee": "A indiquer", "valeur_garantie": ""},
+                        {"caracteristique": "Norme", "unite": "_", "valeur_specifiee": "NF EN 12613, EN ISO 846", "valeur_garantie": ""},
+                        {"caracteristique": "Résistance à la traction mécanique", "unite": "N", "valeur_specifiee": ">300", "valeur_garantie": ""},
+                        {"caracteristique": "Matière", "unite": "_", "valeur_specifiee": "Polyoléfine mono orienté", "valeur_garantie": ""},
+                        {"caracteristique": "Couleur", "unite": "_", "valeur_specifiee": "Rouge", "valeur_garantie": ""},
+                        {"caracteristique": "Largeur", "unite": "mm", "valeur_specifiee": "300", "valeur_garantie": ""},
+                        {"caracteristique": "Dimension de maille", "unite": "mm", "valeur_specifiee": "30 x 16", "valeur_garantie": ""}
+                    ]
+                }
+            ]
+        };
+
+        // Fonction pour générer l'interface
+        function generateInterface() {
+            const container = document.getElementById('categoriesContainer');
+            let html = '';
+
+            for (const [category, materials] of Object.entries(materialsData)) {
+                html += `
+                    <div class="category-section">
+                        <div class="category-header">
+                            <h2>${category}</h2>
+                            <span class="toggle-icon">▶</span>
+                        </div>
+                        <div class="category-content">
+                            ${materials.map(material => `
+                                <div class="material-item">
+                                    <div class="material-header">
+                                        <h3>${material.name}</h3>
+                                        <span class="toggle-icon">▶</span>
+                                    </div>
+                                    <div class="material-content">
+                                        <h4>${material.type}</h4>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Caractéristique</th>
+                                                    <th>Unité</th>
+                                                    <th>Valeur spécifiée</th>
+                                                    <th>Valeur garantie</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${material.specifications.map(spec => `
+                                                    <tr>
+                                                        <td>${spec.caracteristique}</td>
+                                                        <td>${spec.unite}</td>
+                                                        <td>${spec.valeur_specifiee}</td>
+                                                        <td>${spec.valeur_garantie}</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+
+            // Ajouter les événements pour l'ouverture/fermeture
+            document.querySelectorAll('.category-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('.toggle-icon');
+                    
+                    content.classList.toggle('active');
+                    icon.classList.toggle('rotated');
+                    
+                    // Fermer tous les matériaux quand on ferme une catégorie
+                    if (!content.classList.contains('active')) {
+                        content.querySelectorAll('.material-content').forEach(materialContent => {
+                            materialContent.classList.remove('active');
+                            materialContent.previousElementSibling.querySelector('.toggle-icon').classList.remove('rotated');
+                        });
+                    }
+                });
+            });
+
+            document.querySelectorAll('.material-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('.toggle-icon');
+                    
+                    content.classList.toggle('active');
+                    icon.classList.toggle('rotated');
+                });
+            });
+        }
+
+        // Fonction de recherche
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const noResults = document.getElementById('noResults');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                let hasResults = false;
+                
+                // Parcourir toutes les catégories et matériaux
+                document.querySelectorAll('.category-section').forEach(categorySection => {
+                    const categoryHeader = categorySection.querySelector('.category-header h2');
+                    const categoryName = categoryHeader.textContent.toLowerCase();
+                    let categoryHasResults = false;
+                    
+                    // Parcourir tous les matériaux de cette catégorie
+                    categorySection.querySelectorAll('.material-item').forEach(materialItem => {
+                        const materialHeader = materialItem.querySelector('.material-header h3');
+                        const materialName = materialHeader.textContent.toLowerCase();
+                        const materialType = materialItem.querySelector('.material-content h4').textContent.toLowerCase();
+                        
+                        // Vérifier si le matériau correspond à la recherche
+                        if (materialName.includes(searchTerm) || materialType.includes(searchTerm) || categoryName.includes(searchTerm)) {
+                            materialItem.style.display = '';
+                            categoryHasResults = true;
+                            hasResults = true;
+                        } else {
+                            materialItem.style.display = 'none';
+                        }
+                    });
+                    
+                    // Afficher/masquer la catégorie en fonction des résultats
+                    if (categoryHasResults || searchTerm === '') {
+                        categorySection.style.display = '';
+                        // Ouvrir la catégorie si elle contient des résultats
+                        if (searchTerm !== '') {
+                            categorySection.querySelector('.category-content').classList.add('active');
+                            categorySection.querySelector('.category-header .toggle-icon').classList.add('rotated');
+                        }
+                    } else {
+                        categorySection.style.display = 'none';
+                    }
+                });
+                
+                // Afficher/masquer le message "Aucun résultat"
+                if (hasResults || searchTerm === '') {
+                    noResults.style.display = 'none';
+                } else {
+                    noResults.style.display = 'block';
+                }
+            });
+        }
+
+        // Initialiser l'interface
+        document.addEventListener('DOMContentLoaded', function() {
+            generateInterface();
+            setupSearch();
+        });
+    </script>
+</body>
+</html>

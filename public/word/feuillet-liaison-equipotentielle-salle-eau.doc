@@ -1,0 +1,83 @@
+<html>
+<head>
+  <title>Feuillet Technique – Liaison équipotentielle dans la salle d’eau</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>FEUILLET TECHNIQUE<br>Liaison équipotentielle dans la salle d’eau</h1>
+  <h2>1. Définition simple et rôle</h2>
+  <p>La liaison équipotentielle relie toutes les parties métalliques pour éviter les différences de potentiel et garantir la sécurité dans les locaux humides.</p>
+  <h2>2. Schéma visuel / description pratique</h2>
+  <p>Schéma : <em>Conducteurs reliant tuyaux, robinetterie, et équipements à la terre.</em></p>
+  <h2>3. Problèmes fréquents</h2>
+  <ul>
+    <li>Oubli de raccordement</li>
+    <li>Section de câble insuffisante</li>
+    <li>Corrosion des connexions</li>
+  </ul>
+  <h2>4. Diagnostic associé</h2>
+  <ul>
+    <li>Contrôle de la continuité</li>
+    <li>Inspection visuelle des connexions</li>
+  </ul>
+  <h2>5. Risques encourus</h2>
+  <ul>
+    <li>Électrocution</li>
+    <li>Non-conformité</li>
+  </ul>
+  <h2>6. Recommandations pratiques</h2>
+  <ul>
+    <li>Vérifier la continuité à chaque intervention</li>
+    <li>Utiliser des connecteurs certifiés</li>
+    <li>Contrôler l’absence de corrosion</li>
+    <li>Respecter la section minimale (2,5 mm² sous gaine, 4 mm² sans gaine)</li>
+    <li>Faire réaliser le contrôle par un professionnel certifié</li>
+  </ul>
+
+  <h2>7. Étapes de vérification lors d’une installation ou rénovation</h2>
+  <ul>
+    <li>Contrôler la continuité entre toutes les parties métalliques</li>
+    <li>Vérifier la section et la qualité des conducteurs</li>
+    <li>Inspecter les connexions pour détecter la corrosion</li>
+    <li>Valider la conformité avec la norme NF C 15-100</li>
+    <li>Faire réaliser un diagnostic par un professionnel certifié</li>
+  </ul>
+
+  <h2>8. Tableau des points de contrôle essentiels</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#fef9c3;font-weight:bold;">
+      <td>Point de contrôle</td>
+      <td>Fréquence</td>
+      <td>Responsable</td>
+    </tr>
+    <tr><td>Continuité équipotentielle</td><td>À chaque intervention</td><td>Électricien certifié</td></tr>
+    <tr><td>Section des conducteurs</td><td>À l’installation</td><td>Installateur</td></tr>
+    <tr><td>Absence de corrosion</td><td>Annuel</td><td>Syndic / gestionnaire</td></tr>
+    <tr><td>Conformité NF C 15-100</td><td>À chaque rénovation</td><td>Entreprise spécialisée</td></tr>
+  </table>
+
+  <h2>9. Erreurs à éviter</h2>
+  <ul>
+    <li>Oublier le raccordement d’un élément métallique</li>
+    <li>Utiliser une section de câble insuffisante</li>
+    <li>Ignorer la corrosion des connexions</li>
+    <li>Ne pas faire appel à un professionnel certifié</li>
+  </ul>
+
+  <h2>10. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/">Promotelec – Liaison équipotentielle</a></li>
+    <li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+    <li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Faites toujours vérifier la continuité et la conformité de la liaison équipotentielle en salle d’eau. La sécurité dépend du respect des normes et du contrôle des connexions.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </div>
+  <footer>
+    © PROQUELEC – Feuillet technique Liaison équipotentielle. Fiche pratique pour syndics et gérants.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </footer>
+</body>
+</html>

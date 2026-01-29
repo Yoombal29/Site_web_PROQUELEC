@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "525",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-525--A",
+        "type": "obligation",
+        "texte_normatif": "Chutes de tension H La chute de tension entre l'origine d'une installation et tout point d'utilisation ne doit pas être supérieure aux valeurs du tableau 52V exprimées par rapport à la valeur de la tension nominale de l'installation. Tableau 52V - Chutes de tension dans les installations EclairageAutres usages Type A - Installations alimentées directement par un branchement à basse tension, à partir d'un réseau de 3 % 5 % distribution publique à basse tension Type B - Installations alimentées par un poste de livraison ou par un poste de transformation à partir d'une installation à haute tension et installations de 6 % 8 % type A dont le point de livraison se situe dans le tableau général BT d’un poste de distribution publique. Lorsque les canalisations principales de l'installation ont une longueur supérieure à 100 m, ces chutes de tension peuvent être augmentées de 0,005 % par mètre de canalisation au-delà de 100 m, sans toutefois que ce supplément soit supérieur à 0,5 %. Les chutes de tension sont déterminées d'après les puissances absorbées par les appareils d'utilisation, en appliquant le cas échéant des facteurs de simultanéité, ou, à défaut, d'après les valeurs des courants d'emploi des circuits. NOTES - 1 - Une chute de tension plus grande peut être acceptée : - pour les moteurs, pendant les périodes de démarrage ; - pour les autres matériels ayant des appels de courant importants, pourvu qu'il soit assuré que les variations de tension demeurent dans les limites spécifiées par la norme correspondante. 2 - Il n'est pas tenu compte des conditions temporaires suivantes : - surtensions transitoires ; - variations de tension dues à un fonctionnement anormal. Les chutes de tension sont déterminées à l'aide de la formule : L u = b p cos + Lsin I 1 S B u étant la chute de tension, en volts, b étant un coefficient égal à 1 pour les circuits triphasés, et égal à 2 pour les circuits monophasés. NOTE - Les circuits triphasés avec neutre complètement déséquilibrés (une seule phase chargée) sont considérés comme des circuits monophasés. ρ étant la résistivité des conducteurs en service normal, prise égale à la résistivité à la 1 température en service normal, soit 1,25 fois la résistivité à 20°C, soit 0,023 Ωmm²/m pour le cuivre et 0,037 Ωmm²/m pour l'aluminium ; L étant la longueur simple de la canalisation, en mètres ; S étant la section des conducteurs, en mm²; cosϕétant le facteur de puissance ; en l'absence d'indications précises, le facteur de puissance est pris égal à 0,8 (sin ϕ = 0, 6) ; λ étant la réactance linéique des conducteurs, prise égale, en l'absence d'autres indications, à 0,08 mΩ/m ; I étant le courant d'emploi, en ampères ; B La chute de tension relative (en pour-cent) est égale à : u u =100 U 0 U étant la tension entre phase et neutre, en volts. 0 Voir aussi le guide UTE C 15-105. Dans les circuits à très basse tension, les limites de chutes de tension du tableau 52V peuvent ne pas être respectées pour les utilisations autres que l'éclairage (par exemple, sonnerie, commande, ouverture de porte, ...) sous réserve de vérifier que les appareils fonctionnent correctement Dans les mêmes conditions, la section minimale des conducteurs utilisés peut être réduite à 0,19 mm² lorsque ceux-ci sont en cuivre. Voir aussi le guide UTE C 15-559.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "525"
+        ]
+    }
+}

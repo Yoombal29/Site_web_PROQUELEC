@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux d’habitation",
+    "article": "100",
+    "alinéa": "772.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-100-772-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités 772.1.1 Domaine d'application La présente partie s'applique aux installations électriques des locaux des parties communes et des services généraux d'immeubles collectifs. La partie cahier des clauses spéciales (CCS) de l’ancien DTU 70.1 est la norme NF P 80-201- 2. Toutefois, dans le cas d'un bâtiment individuel d'une importance telle que certains services généraux existent, les règles de 772.3 sont applicables. Lorsque le bâtiment est un immeuble de grande hauteur, les prescriptions de l’arrêté du 18 octobre 1977 modifié (publication C 12-061 de l’UTE) sont applicables. 772.1.2 Structure des installations Les parties communes et les services généraux peuvent, le cas échéant, comprendre : - les services d'éclairage, - les services \"ascenseur\", - les services chauffage des locaux, de l'eau chaude sanitaire (ECS), - les services contrôle commande, Exemples : les systèmes d'alarme, les portiers, la domotique, etc. - les services \"autres usages\". Exemples : les locaux surpresseurs d'eau, poste de détente, gaz, relevage des eaux, alimentation d'antennes, etc. Les locaux des parties communes comprennent : - les surfaces de circulation : halls d'entrée, couloirs, coursives, escaliers, etc., (1) - les loges de concierges , - les locaux mis à la disposition collective des occupants des immeubles, les pièces de service, les dépôts, les remises à bicyclettes, à cyclomoteurs et à voitures d'enfant, les (2) locaux collectifs résidentiels, les salles de réunion , les locaux de vide-ordures, les buanderies et séchoirs collectifs, etc. Les locaux des services généraux comprennent : - les locaux servant au fonctionnement et à l'entretien des services des immeubles, - les chaufferies, sous-stations, les locaux pour machineries d'ascenseurs, ainsi qu'éventuellement les locaux de poulies, - les locaux pour conditionnement d'air, pour branchements d'eau, de gaz et d'électricité, les divers autres locaux techniques. ll est rappelé que l'ensemble des installations électriques des services généraux est soumis aux dispositions du décret du 14 novembre 1988 relatif à la protection des travailleurs dans les établissements qui mettent en œuvre des courants électriques. Chaque service comporte un dispositif de commande et de protection et des dispositifs de répartition, de protection et de sectionnement des différents circuits. ——————— (1) La loge de concierge ne comprend pas la partie logement à traiter comme une partie privative. (2) Les locaux collectifs résidentiels, les locaux de réunion, de jeux, les locaux collectifs des foyers logements sont soumis aux prescriptions des établissements recevant du public généralement de 5ème catégorie lorsque leur 2 surface est supérieure à 50 m (article 9 de l'arrêté du 31/01/1986). - 458 - Les ensembles d'appareillage sont : - soit placés dans un local fermé à clé, et accessibles seulement aux personnes autorisées ; - soit placés dans un coffret ou une armoire fermant à clé, abritant les commandes, de façon qu'elles ne soient accessibles qu'aux personnes autorisées. Dans l'un ou l'autre cas, la face de service sur laquelle sont placées les commandes doit répondre au moins au degré de protection IP2X ou IPXXB.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "100"
+        ]
+    }
+}

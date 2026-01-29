@@ -1,0 +1,83 @@
+<html>
+<head>
+  <title>Feuillet Technique – Installation électrique triphasée</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>FEUILLET TECHNIQUE<br>Installation électrique triphasée</h1>
+  <h2>1. Définition simple et rôle</h2>
+  <p>Le triphasé permet d’alimenter des équipements puissants et d’équilibrer les charges dans une installation.</p>
+  <h2>2. Schéma visuel / description pratique</h2>
+  <p>Schéma : <em>Trois conducteurs de phase + neutre + terre, répartis sur les équipements.</em></p>
+  <h2>3. Problèmes fréquents</h2>
+  <ul>
+    <li>Déséquilibre des phases</li>
+    <li>Erreur de raccordement</li>
+    <li>Absence de protection adaptée</li>
+  </ul>
+  <h2>4. Diagnostic associé</h2>
+  <ul>
+    <li>Contrôle de l’équilibrage</li>
+    <li>Test des protections triphasées</li>
+  </ul>
+  <h2>5. Risques encourus</h2>
+  <ul>
+    <li>Surchauffe des câbles</li>
+    <li>Arrêt des équipements</li>
+  </ul>
+  <h2>6. Recommandations pratiques</h2>
+  <ul>
+    <li>Vérifier l’équilibrage des charges</li>
+    <li>Installer des protections différentielles triphasées</li>
+    <li>Faire appel à un professionnel</li>
+    <li>Contrôler la section des câbles pour chaque phase</li>
+    <li>Étiqueter clairement les circuits triphasés</li>
+  </ul>
+
+  <h2>7. Étapes de vérification lors d’une installation ou rénovation</h2>
+  <ul>
+    <li>Contrôler la répartition des charges sur chaque phase</li>
+    <li>Tester les protections différentielles et disjoncteurs triphasés</li>
+    <li>Vérifier la continuité de la terre</li>
+    <li>Valider la conformité avec la norme NF C 15-100</li>
+    <li>Faire réaliser un diagnostic par un professionnel certifié</li>
+  </ul>
+
+  <h2>8. Tableau des anomalies et solutions en triphasé</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#fef9c3;font-weight:bold;">
+      <td>Anomalie</td>
+      <td>Conséquence</td>
+      <td>Solution</td>
+    </tr>
+    <tr><td>Déséquilibre des phases</td><td>Surchauffe, panne</td><td>Répartir les charges, contrôler la puissance</td></tr>
+    <tr><td>Erreur de raccordement</td><td>Non-conformité, danger</td><td>Vérifier le schéma et les connexions</td></tr>
+    <tr><td>Absence de protection adaptée</td><td>Risque d’électrocution</td><td>Installer des dispositifs différentielles triphasés</td></tr>
+    <tr><td>Section de câble insuffisante</td><td>Surchauffe, incendie</td><td>Adapter la section selon la puissance</td></tr>
+  </table>
+
+  <h2>9. Erreurs à éviter</h2>
+  <ul>
+    <li>Ignorer l’équilibrage des phases</li>
+    <li>Utiliser des câbles sous-dimensionnés</li>
+    <li>Oublier la protection différentielle triphasée</li>
+    <li>Ne pas faire appel à un professionnel certifié</li>
+  </ul>
+
+  <h2>10. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/">Promotelec – Installation triphasée</a></li>
+    <li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+    <li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Faites toujours vérifier l’équilibrage et la conformité de votre installation triphasée. La sécurité dépend du respect des normes et du contrôle des charges.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </div>
+  <footer>
+    © PROQUELEC – Feuillet technique Triphasé. Fiche pratique pour syndics et gérants.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </footer>
+</body>
+</html>

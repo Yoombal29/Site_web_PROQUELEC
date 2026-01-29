@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "363",
+    "alinéa": "414.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-363-414-4-A",
+        "type": "obligation",
+        "texte_normatif": "Installation des circuits - TBTF ........................................................... 411.7 Règles générales Types de DDR .............................................. 531.2.1.5 Mise en œuvre U Unités mobiles .............................................. 717 Règles particulières Urgence (coupure) ........................................ 463 Voir coupue - XXII - Index V Vapeur (canalisations de) ............................. 528.2.2 Voisinage avec canalisations électriques Véhicules automobiles (alimentation de) ...... 717 Règles particulières *Vent (AR) ..................................................... 512.2.15 Caractéristiques *Vibrations (AH) ............................................ 512.2.7.2 Caractéristiques Vides de construction .................................... 262.11 Définition",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "363"
+        ]
+    }
+}

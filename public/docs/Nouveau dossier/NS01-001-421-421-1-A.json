@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre l’incendie, les brûlures et l’explosion",
+    "article": "421",
+    "alinéa": "421.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-421-421-1-A",
+        "type": "obligation",
+        "texte_normatif": "Les matériels électriques ne doivent pas présenter de danger d'incendie pour les matériaux voisins. Les instructions correspondantes du constructeur doivent être observées en plus des prescriptions de la présente norme. La protection contre les surintensités fait l'objet de la partie 4-43. Les appareils d'utilisation doivent être disposés de façon à ne pas gêner leur dissipation de chaleur. H 421.2 Lorsque les températures extérieures des matériels fixes peuvent atteindre des valeurs susceptibles de provoquer un incendie de matériaux voisins, les matériels doivent être : - soit installés sur ou à l'intérieur de matériaux supportant de telles températures et de faible conductivité thermique ; - soit séparés des éléments de construction par des matériaux supportant de telles températures et de faible conductivité thermique. Les matériaux non-métalliques des catégories M0, M1 ou M2 conviennent pour l'application des dispositions ci-dessus. H - soit installés à une distance suffisante de tout matériau dont la conservation pourrait être compromise par de telles températures, en permettant une dissipation sûre de la chaleur, les supports des matériels ayant une faible conductivité thermique. Les matériaux de catégories M3, M4 ou non classés sont visés par ce tiret. En France, la classification M0 à M4 est celle qui résulte de l'arrêté du 30 juin 1983 modifié du Ministère de l'intérieur portant classification des matériaux de construction et d'aménagement selon leur réaction au feu et définition des méthodes d'essai. L'annexe de cette partie donne un classement conventionnel des matériaux de construction du point de vue de leur réaction au feu. H 421.3 Les matériels fixes, susceptibles de produire des arcs ou des étincelles en service normal, doivent être : - soit complètement enfermés dans des matériaux résistant aux arcs ; - soit séparés des éléments de construction sur lesquels les arcs pourraient avoir des effets nuisibles, par des écrans en matériau résistant aux arcs ; - soit installés à une distance suffisante des éléments de construction sur lesquels les arcs et étincelles pourraient avoir des effets nuisibles, en permettant une extinction sûre de l'arc et des étincelles. Dans le cas des arcs, les matériaux résistant aux arcs utilisés pour cette mesure de protection doivent être incombustibles, avoir une faible conductivité thermique et présenter une épaisseur appropriée pour assurer une stabilité mécanique.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "421"
+        ]
+    }
+}

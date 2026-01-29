@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Mémento - Symboles électriques</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;margin:28px;color:#0f172a}h1{color:#2563eb}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.item{padding:10px;border:1px solid #e6eefc;border-radius:6px}.small{font-size:0.95rem;color:#334155}.footer{margin-top:18px;color:#64748b}</style>
+</head>
+<body>
+<h1>Mémento — Symboles électriques</h1>
+<p class="small">Référence rapide des symboles généralement utilisés sur les plans électriques. Utiliser ces symboles pour un repérage clair et uniforme.</p>
+<div class="grid" style="margin-top:8px">
+  <div class="item"><strong>Prise 2P+T</strong><div class="small">Symbole courant : prise avec terre</div></div>
+  <div class="item"><strong>Interrupteur</strong><div class="small">Commande manuelle d'éclairage</div></div>
+  <div class="item"><strong>Disjoncteur</strong><div class="small">Protection contre surcharge / court-circuit</div></div>
+  <div class="item"><strong>Interrupteur différentiel</strong><div class="small">Protection personnes (fuite de courant)</div></div>
+  <div class="item"><strong>Lampe</strong><div class="small">Source d'éclairage (symbole rond avec croix)</div></div>
+  <div class="item"><strong>Va-et-vient</strong><div class="small">Commande d'un même point lumineux depuis deux endroits</div></div>
+  <div class="item"><strong>Prise RJ45</strong><div class="small">Prise réseau informatique</div></div>
+  <div class="item"><strong>Prise TV</strong><div class="small">Prise antenne télévision</div></div>
+  <div class="item"><strong>Tableau électrique</strong><div class="small">Regroupement des protections et commandes</div></div>
+  <div class="item"><strong>Parafoudre</strong><div class="small">Protection contre les surtensions</div></div>
+  <div class="item"><strong>Contacteur</strong><div class="small">Commande automatique d'un circuit (chauffe-eau, etc.)</div></div>
+</div>
+<h2 style="color:#2563eb;margin-top:2em;">Tableau récapitulatif des symboles</h2>
+<table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+  <tr style="background:#e0e7ff;"><th>Symbole</th><th>Représentation graphique</th><th>Fonction</th></tr>
+  <tr><td>Prise 2P+T</td><td>⏚</td><td>Alimentation avec terre</td></tr>
+  <tr><td>Interrupteur</td><td>⎋</td><td>Commande manuelle</td></tr>
+  <tr><td>Disjoncteur</td><td>⏚⎋</td><td>Protection circuit</td></tr>
+  <tr><td>Différentiel</td><td>⏚Δ</td><td>Protection personnes</td></tr>
+  <tr><td>Lampe</td><td>⦿</td><td>Éclairage</td></tr>
+  <tr><td>Va-et-vient</td><td>⎋⎋</td><td>Commande double</td></tr>
+  <tr><td>Prise RJ45</td><td>🖧</td><td>Réseau informatique</td></tr>
+  <tr><td>Prise TV</td><td>📺</td><td>Antenne télévision</td></tr>
+  <tr><td>Tableau électrique</td><td>☰</td><td>Regroupement protections</td></tr>
+  <tr><td>Parafoudre</td><td>⚡</td><td>Protection surtension</td></tr>
+  <tr><td>Contacteur</td><td>⏚⏚</td><td>Commande automatique</td></tr>
+</table>
+<h2 style="color:#2563eb;margin-top:2em;">Exemples visuels</h2>
+<ul class="small">
+  <li>⏚ : Prise de terre</li>
+  <li>⎋ : Interrupteur</li>
+  <li>⦿ : Lampe</li>
+  <li>⚡ : Parafoudre</li>
+</ul>
+<h2 style="color:#2563eb;margin-top:2em;">Erreurs à éviter</h2>
+<ul class="small">
+  <li>Utiliser des symboles non normalisés ou ambigus</li>
+  <li>Oublier la légende sur les plans</li>
+  <li>Confondre les symboles proches (prise/lampe, interrupteur/va-et-vient)</li>
+  <li>Ne pas vérifier la cohérence entre documents</li>
+</ul>
+<h2 style="color:#2563eb;margin-top:2em;">Ressources utiles</h2>
+<ul class="small">
+  <li><a href="https://www.promotelec.com/symboles-electriques/" target="_blank">Guide Promotelec : Symboles électriques</a></li>
+  <li><a href="https://www.afnor.org/" target="_blank">Norme NF C 03-001 (AFNOR)</a></li>
+  <li><a href="https://www.legrand.fr/pro/actualites/symboles-electriques" target="_blank">Legrand : Symboles sur plans</a></li>
+</ul>
+<div style="background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;">
+  <b>Conformité PROQUELEC :</b> Utiliser exclusivement les symboles normalisés pour garantir la sécurité, la clarté et la conformité des plans électriques.
+</div>
+</div>
+<div style="margin-top:12px" class="small">Remarque : adapter les symboles aux conventions de la documentation projet et ajouter une légende sur chaque plan.</div>
+<h2 style="color:#2563eb;margin-top:2em;">Conseils d'utilisation</h2>
+<ul class="small">
+  <li>Utiliser les symboles normalisés NF C 03-001 pour garantir la compréhension universelle.</li>
+  <li>Ajouter une légende sur chaque plan pour faciliter le repérage.</li>
+  <li>Vérifier la cohérence des symboles entre les différents documents du projet.</li>
+  <li>Adapter les symboles aux spécificités du chantier si besoin.</li>
+</ul>
+<div class="footer">PROQUELEC — Mémento • 2025</div>
+</body>
+</html>

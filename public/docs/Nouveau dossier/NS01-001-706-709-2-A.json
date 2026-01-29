@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques des marinas",
+    "article": "706",
+    "alinéa": "709.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-709-2-A",
+        "type": "obligation",
+        "texte_normatif": "Définitions 709.2.1 Bateau de plaisance Tout bateau, vaisseau, yacht, maison flottante ou unité flottante motorisée utilisée exclusivement pour les sports et loisirs. 709.2.2 Marina Installation pour le mouillage des bateaux de plaisance avec des appontements, des jetées et des quais fixes ou des pontons permettant l'amarrage de plus d'un bateau de plaisance. 709.2.3 Point d'amarrage Endroit où un bateau peut être mouillé.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

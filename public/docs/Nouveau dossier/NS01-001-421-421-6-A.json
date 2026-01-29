@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre l’incendie, les brûlures et l’explosion",
+    "article": "421",
+    "alinéa": "421.6",
+    "regle_atomique": {
+        "id_unique": "NS01-001-421-421-6-A",
+        "type": "obligation",
+        "texte_normatif": "Les matériaux des enveloppes disposées autour des matériels électriques lors de leur mise H en œuvre doivent pouvoir supporter les températures les plus élevées susceptibles d'être produites par le matériel électrique. Lorsqu'il est envisagé de mettre en œuvre une enveloppe autour d'un matériel électrique, il convient généralement de consulter le constructeur du matériel. H Des matériaux combustibles ne conviennent pas pour la construction de ces enveloppes, à moins que des mesures préventives contre l'inflammation ne soient prises, telles que le revêtement par une matière incombustible ou difficilement combustible et de faible conductivité thermique. Des matériaux M3, M4 ou non classés ne conviennent pas pour la construction de ces enveloppes, à moins que des mesures préventives contre l'inflammation ne soient prises, telles que le revêtement par une matière M0, M1 ou M2 de faible conductivité thermique. Cette règle ne s'applique pas aux enveloppes des matériels qui en font partie intégrante lorsque ces matériels satisfont aux normes qui leur sont applicables. Elle s'applique aux enveloppes des ensembles d'appareillage autres que ceux conformes aux (1) normes spécifiques (voir 558.2). H 422 Règles complémentaires de protection contre l'incendie",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "421"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "534",
+    "alinéa": "534.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-534-534-2-A",
+        "type": "obligation",
+        "texte_normatif": "Dispositifs de protection contre les surtensions à fréquence industrielle 534.2.1 Nature et rôle des limiteurs de surtension Les dispositifs assurant la protection contre les surtensions à fréquence industrielle sont des limiteurs de surtension. Ils sont destinés à limiter le niveau des surtensions à fréquence industrielle à un niveau compatible avec la tension de tenue à fréquence industrielle des matériels de l'installation et des matériels alimentés par cette installation. Pour l'application des règles énoncées en 511.1, la norme à considérer est la suivante : - Limiteurs de surtension, Règles (17). 534.2.2 Choix des limiteurs de surtension Le choix des limiteurs de surtension doit tenir compte des critères suivants : - tension nominale de l'installation ; - niveau d'isolement de l'installation ; - mode de connexion du limiteur de surtension ; - courant de court-circuit présumé à l'origine de l'installation. 534.2.3 Niveau de protection effectif assuré par un limiteur de surtension suivant son mode de connexion Lorsque le limiteur de surtension est connecté entre le neutre de l'installation à basse tension et la terre, le niveau de protection effectif assuré par le limiteur est égal à la somme de la tension nominale d'amorçage 100 % à fréquence industrielle du limiteur et de la tension entre phase et neutre de l'installation. Lorsque le limiteur de surtension est connecté entre une phase de l'installation à basse tension et la terre, le niveau de protection assuré par le limiteur est égal à la somme de la tension nominale d'amorçage 100 % à fréquence industrielle du limiteur et de la tension entre phases de l'installation. Le conducteur reliant la borne d'entrée du limiteur de surtension aux conducteurs actifs doit être isolé au même titre que ceux-ci. La borne doit être protégée contre les contacts directs. 534.2.4 Installation des limiteurs de surtension Les conducteurs reliant le limiteur de surtension d'une part aux conducteurs actifs et, d'autre part, soit à la prise de terre des masses d'installation, soit à une prise de terre distincte, doivent pouvoir supporter l'ensemble des courants susceptibles de traverser le limiteur. La section de ces conducteurs est déterminée conformément aux indications données pour la section des conducteurs de protection (voir 543.1). La borne d'entrée des limiteurs de surtensions doit être reliée au conducteur actif approprié de l'installation entre la borne de sortie du transformateur et tout dispositif de coupure. Lorsqu'une installation est alimentée par plusieurs transformateurs fonctionnant en parallèle, un limiteur de surtension doit être prévu pour chaque transformateur. Si les caractéristiques du courant de court-circuit susceptible de traverser le limiteur de surtension risquent d'être supérieures à celles qu'il peut supporter, une impédance de faible valeur peut être insérée entre la borne de terre du limiteur et la terre. Cette impédance peut être insérée dans la mise à la terre commune à plusieurs limiteurs de surtension. Le tableau 53C indique, pour chaque modèle normalisé de limiteur de surtension, les conditions dans lesquelles les installations triphasées à basse tension sont protégées lorsqu'en schéma IT, un limiteur de surtension est installé soit entre le neutre et la terre soit entre une phase et la terre. ——————— (17) NF C 63-150 - 249 - - 250 - Tableau 53D – Niveau de protection effectif assuré par un limiteur de surtension LIMITEUR CONNECTE ENTRE LIMITEUR CONNECTE ENTRE TENSION NEUTRE ET TERRE PHASE ET TERRE NOMINALE Contrainte Tension Niveau de Contrainte Tension Niveau de DE de tension nominale protection de tension nominale protection L'INSTALLATION admissible du effectif admissible du effectif limiteur limiteur (V) (V) (V) (V) (V) (V) (V) 127/220 1 330 250 880 1 330 250 970 230/400 1 430 440 1 330 1 430 440 1 320 400/690 1 600 440 1 500 1 600 250 1 440 580/1 000 1780 440 1 680 - - - 534.2.5 Liaisons à la terre La borne de terre des limiteurs de surtension doit être reliée : a) soit à la prise de terre des masses de l'installation ; b) soit à une prise de terre distincte présentant une résistance R satisfaisant la condition de B 442.2.6.1. Les dispositions de ce sous-paragraphe sont destinées à éviter l'apparition de tensions dangereuses. Lorsque se produit un défaut d'isolement entre les circuits de l'installation et des circuits à tension plus élevée, le passage du courant correspondant dans la prise de terre du limiteur de surtension porte les matériels de l'installation à un potentiel risquant de compromettre leur isolation.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "534"
+        ]
+    }
+}

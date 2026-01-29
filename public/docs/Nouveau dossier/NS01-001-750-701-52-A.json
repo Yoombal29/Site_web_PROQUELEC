@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux contenant une baignoire ou une douche",
+    "article": "750",
+    "alinéa": "701.52",
+    "regle_atomique": {
+        "id_unique": "NS01-001-750-701-52-A",
+        "type": "obligation",
+        "texte_normatif": "Canalisations C 701.520.01 Les canalisations doivent présenter une isolation satisfaisant aux règles de la protection par isolation double ou renforcée et ne comporter aucun revêtement métallique. Ces canalisations sont, par exemple, constituées par des conducteurs isolés dans des conduits ou des systèmes de goulottes isolants ou par des câbles multiconducteurs avec une gaine isolante. Lorsque la traversée d'une paroi de salle d'eau nécessite une protection mécanique supplémentaire, il peut être fait usage de tronçons de conduits métalliques rigides (MRL), mais il n'est pas nécessaire de les relier à la liaison équipotentielle de la salle d'eau du fait de leur courte longueur. 701.520.02 Dans le volume 0, aucune canalisation n'est admise, sauf TBTS limitée à 12 V en C courant alternatif ou 30 V en courant continu. Dans les volumes 1 et 2, les canalisations doivent être limitées à celles nécessaires à l'alimentation des appareils situés dans ces volumes. 701.520.03 Les boîtes de connexion ne sont pas admises dans les volumes 0, 1 et 2. Par dérogation, dans le volume 2, les boîtes de connexion permettant le raccordement des appareils d’utilisation, sont admises à condition d’être disposées derrière ces appareils.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "750"
+        ]
+    }
+}

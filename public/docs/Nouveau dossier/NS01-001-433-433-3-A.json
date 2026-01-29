@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les surintensités",
+    "article": "433",
+    "alinéa": "433.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-433-433-3-A",
+        "type": "obligation",
+        "texte_normatif": "Dispense de protection contre les surcharges C Les différents cas énoncés ci-après ne sont pas valables dans les installations situées dans les locaux (ou emplacements) présentant des risques d'incendie ou d'explosion (condition BE2 ou BE3) et lorsque les règles particulières à certains locaux spécifient des conditions différentes. Il est admis de ne pas prévoir de dispositif de protection contre les surcharges : a) sur une canalisation située en aval d'un changement de section, de nature, de mode de pose ou de constitution, et effectivement protégée contre les surcharges par un dispositif de protection placé en amont, Exemple de réalisation : Figure 433D – Exemple de dispense de dispositif de protection contre les surcharges Le dispositif P protège la dérivation OB contre les surcharges C b) sur une canalisation qui n'est pas susceptible d'être parcourue par des courants de surcharge, à condition que cette canalisation soit protégée contre les courts-circuits conformément aux règles énoncées en 434 et qu'elle ne comporte ni dérivation ni prise de courant. - 117 - 2002 Exemple de réalisation : i) canalisation alimentant un appareil d'utilisation comportant sa protection incorporée contre les surcharges, sous réserve que le dispositif de protection de l'appareil soit approprié à la canalisation (figure 433E). Figure 433E – Exemple de dispense de protection contre les surcharges L'appareil d'utilisation comporte sa protection incorporée contre les surcharges ii) canalisation alimentant un appareil d'utilisation raccordé à demeure, non susceptible de produire de surcharges et non protégé contre les surcharges, le courant d'emploi de cet appareil n'étant pas supérieur au courant admissible dans la canalisation (figure 433F). Figure 433F – Exemple de dispense de protection contre les surcharges Les appareils M n'étant pas susceptibles de donner lieu à des surcharges, les canalisations OB n'ont pas besoin de protection Un moteur dont le courant à rotor calé n'est pas supérieur au courant admissible dans la canalisation est considéré comme non susceptible de produire des surcharges. iii) canalisation alimentant plusieurs dérivations protégées individuellement contre les surcharges, sous réserve que la somme des courants nominaux des dispositifs de protection des dérivations soit inférieure au courant nominal du dispositif qui protégerait contre les surcharges la canalisation considérée (figure 433G). Figure 433G – Exemple de dispense du dispositif de protection contre les surcharges Les canalisations OB ne peuvent pas être soumises à des courants de surcharges, la section S 2 étant déterminée en fonction de la somme des courants absorbés par les dérivations en B. - 118 - iv) canalisation alimentée par une source dont le courant maximal qu'elle peut fournir ne peut pas être supérieur au courant admissible dans la canalisation (par exemple, certains transformateurs de sonnerie, certains transformateurs de soudage, certaines génératrices entraînées par moteur thermique). c) sur les circuits des installations de communication, commande, signalisation et analogues. C d) sur certains circuits de distribution comportant des câbles enterrés ou des lignes aériennes par lesquels la surcharge des circuits ne présente aucun danger. e) sur les canalisations d’alimentation de moteurs électriques de certaines installations de sécurité Lorsque pour des raisons de sécurité, il est nécessaire qu'un moteur puisse assurer son service même dans des conditions de défaut mécanique ou autre, il est admis de ne pas protéger la canalisation d'alimentation correspondante contre les surcharges mais seulement contre les courts- circuits, à condition que les conducteurs de la canalisation puissent supporter les courants de surcharge résultant de tels défauts. Sauf indication précise fournie par le constructeur de moteurs, on peut considérer que cette dernière condition est satisfaite si la section des conducteurs de la canalisation est déterminée pour un courant admissible égal à 1,5 fois le courant nominal du moteur. Cette disposition est notamment imposée pour l'alimentation des moteurs de désenfumage des établissements recevant du public.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "433"
+        ]
+    }
+}

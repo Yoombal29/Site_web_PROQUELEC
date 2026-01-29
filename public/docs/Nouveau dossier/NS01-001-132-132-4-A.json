@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "132",
+    "alinéa": "132.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-132-132-4-A",
+        "type": "obligation",
+        "texte_normatif": "Alimentation de sécurité ou de remplacement H - sources (nature, caractéristiques) ; - circuits alimentés par la source de sécurité. Les règles relatives aux alimentations de sécurité ou de remplacement sont données en 313.2 et en 35 et 56. H 132.5 Conditions d'environnement Voir 512 de la présente norme. Les conditions d'environnement dans les différents locaux (ou emplacements) sont données dans le guide UTE C 15-103. - 8 - H 132.6 Section des conducteurs La section des conducteurs doit être déterminée en fonction : a) de leur température maximale admissible ; b) de la chute de tension admissible ; c) des contraintes électromécaniques susceptibles de se produire en cas de court-circuit ; d) des autres contraintes mécaniques auxquelles les conducteurs peuvent être soumis ; e) de la valeur maximale de l'impédance permettant d'assurer le fonctionnement de la protection contre les défauts et les courts-circuits. NOTE – Les points énumérés ci-dessus concernent, en premier lieu, la sécurité des installations électriques. Des valeurs de section plus grandes que celles qui sont exigées par la sécurité peuvent être souhaitables pour une exploitation économique. Les conditions de détermination des sections des conducteurs sont données dans les articles suivants : - 523 pour les courants admissibles en fonction de la température maximale admissible ; - 533 pour les contraintes en cas de court-circuit ; - 532 et 543 pour les contraintes dues aux courants de défaut ; - 525 pour la chute de tension. L'application pratique de ces conditions est donnée dans les guides UTE C 15-105 pour les conducteurs et câbles isolés et UTE C 15-107 pour les circuits comportant des canalisations préfabriquées. H 132.7 Modes de pose et types de canalisations Le choix du mode de pose des canalisations dépend : - de la nature des locaux ou emplacements ; - de la nature des parois et des autres éléments de construction supportant les canalisations ; - de l'accessibilité des canalisations aux personnes et aux animaux domestiques ; - de la tension ; - des contraintes électromécaniques susceptibles de se produire en cas de court-circuit ; - des autres contraintes (par exemple mécaniques, thermiques et associées à l’incendie, etc.) auxquelles les canalisations peuvent être soumises pendant la réalisation de l'installation électrique ou en service. Les règles relatives aux modes de pose des canalisations sont développées en 52. Des indications pratiques de réalisation des différents modes de pose sont en outre données dans le guide UTE C 15-520. H 132.8 Dispositifs de protection Les caractéristiques des dispositifs de protection doivent être déterminées d'après leur fonction qui peut être, par exemple, la protection contre les effets : - des surintensités (surcharges, courts-circuits) ; - des courants de défaut à la terre ; - des surtensions ; - des baisses ou de l'absence de tension. - 9 - H Les dispositifs de protection doivent fonctionner à des valeurs de courant, de tension et de temps adaptées aux caractéristiques des circuits et aux dangers possibles. Les règles relatives au choix des dispositifs de protection sont développées en 53. Les indications pratiques d'application sont en outre données dans les guides UTE C 15-105 et UTE C 15-107. H 132.9 Dispositifs de coupure d'urgence S'il est nécessaire, en cas de danger, de mettre immédiatement un circuit hors tension, un dispositif de coupure doit être installé de manière à être facilement reconnaissable et rapidement manœuvrable. Les règles relatives à la coupure d'urgence sont données en 463 et pour le choix des dispositifs en 536.3. H 132.10 Dispositifs de sectionnement Des dispositifs de sectionnement doivent être prévus pour permettre le sectionnement de l'installation électrique, des circuits ou des appareils individuels, afin de permettre l'entretien, la vérification, la localisation des défauts et les réparations. Les règles relatives au sectionnement sont données en 462 et, pour le choix des dispositifs de sectionnement, en 536.2. H",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "132"
+        ]
+    }
+}

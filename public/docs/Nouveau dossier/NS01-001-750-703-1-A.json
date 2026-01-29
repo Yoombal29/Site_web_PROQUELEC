@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux contenant des radiateurs pour saunas",
+    "article": "750",
+    "alinéa": "703.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-750-703-1-A",
+        "type": "obligation",
+        "texte_normatif": "Domaine d'application Les prescriptions particulières de la présente partie s'appliquent aux locaux dans lesquels sont (*) installés des équipements de saunas à air chaud conformément à la norme en vigueur . Les règles de cette partie s'appliquent aux saunas dont l'humidité est maintenue élevée pendant de longues périodes. Les bains turcs sont des exemples de locaux auxquels les règles de la présente partie sont applicables. H 703.2 Définitions 703.2.09.01 Sauna à air chaud : Local ou emplacement dans lequel l'air est chauffé en service à haute température et où l'humidité relative est normalement faible, s'élevant seulement pendant une courte période lorsque de l'eau est versée sur le radiateur.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "750"
+        ]
+    }
+}

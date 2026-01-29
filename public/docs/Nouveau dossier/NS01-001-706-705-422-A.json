@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques dans les établissements agricoles",
+    "article": "706",
+    "alinéa": "705.422",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-705-422-A",
+        "type": "obligation",
+        "texte_normatif": "Règles complémentaires de protection contre l'incendie Dans les locaux ou emplacements à risques d’incendie (BE2), la protection doit être assurée par des DDR de courant différentiel-résiduel assigné au plus égal à 300 mA. Ces locaux ou emplacements sont définis dans le guide UTE C 15-103. H Losque la continuité de service est requise, ces dispositifs doivent être soit de type S, soit retardés. Les appareils de chauffage utilisés dans les locaux d'élevage des animaux doivent être fixes et maintenus à une distance appropriée des animaux et des matériaux combustibles pour éviter tout risque de brûlures aux animaux ou d'incendie. Pour les appareils radiants, la distance doit être d'au moins 0,5 m, à moins qu'une distance plus grande ne soit spécifiée par le constructeur de l'appareil dans la notice d'emploi.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

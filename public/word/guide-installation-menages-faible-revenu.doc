@@ -1,0 +1,87 @@
+<html>
+<head>
+  <title>Guide Technique – Installation électrique des ménages à faible revenu</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.5em;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>GUIDE TECHNIQUE<br>Installation électrique des ménages à faible revenu</h1>
+  <h2>1. Introduction : contexte et importance</h2>
+  <p>Garantir la sécurité et la conformité des installations électriques dans les ménages à faible revenu est essentiel pour prévenir les accidents et optimiser la consommation d’énergie.</p>
+  <h2>2. Références normatives</h2>
+  <ul>
+    <li>NS 01-001</li>
+    <li>NF C 15-100</li>
+    <li>Textes locaux sur l’habitat social</li>
+  </ul>
+  <h2>3. Exigences techniques et réglementaires</h2>
+  <ul>
+    <li>Utilisation de matériels certifiés</li>
+    <li>Protection différentielle obligatoire</li>
+    <li>Section minimale des câbles</li>
+    <li>Présence d’une prise de terre</li>
+  </ul>
+  <h2>4. Anomalies et risques associés</h2>
+  <ul>
+    <li>Branchement sauvage</li>
+    <li>Absence de protection</li>
+    <li>Matériel de récupération non conforme</li>
+    <li>Risque d’incendie et d’électrocution</li>
+  </ul>
+  <h2>5. Procédure de diagnostic et de vérification</h2>
+  <ol>
+    <li>Inspection visuelle</li>
+    <li>Test des protections</li>
+    <li>Contrôle de la terre</li>
+    <li>Vérification des sections de câbles</li>
+  </ol>
+  <h2>6. Méthodes d’installation et de mise en conformité</h2>
+  <ul>
+    <li>Remplacement des câbles sous-dimensionnés</li>
+    <li>Installation de dispositifs de protection</li>
+    <li>Formation des occupants</li>
+  </ul>
+  <h2>7. Recommandations pratiques</h2>
+  <ul>
+    <li>Limiter les multiprises</li>
+    <li>Éviter les rallonges</li>
+    <li>Faire appel à un professionnel agréé</li>
+  </ul>
+  <h2>8. Études de cas / exemples d’application</h2>
+  <ul>
+    <li>Remise en conformité d’un logement social</li>
+    <li>Installation d’un différentiel dans une maison ancienne</li>
+  </ul>
+    <h2>9. Tableau des solutions économiques et sécurisées</h2>
+    <table style="width:100%;border-collapse:collapse;margin-top:1em;">
+      <tr style="background:#e0e7ff;"><th>Solution</th><th>Avantage</th><th>Conseil</th></tr>
+      <tr><td>Matériel certifié d’entrée de gamme</td><td>Prix abordable, sécurité</td><td>Vérifier la conformité CE/NF</td></tr>
+      <tr><td>Disjoncteur différentiel unique</td><td>Protection globale</td><td>Adapté aux petits logements</td></tr>
+      <tr><td>Section minimale respectée</td><td>Réduction des risques</td><td>1,5 mm² pour éclairage, 2,5 mm² pour prises</td></tr>
+      <tr><td>Prise de terre commune</td><td>Coût réduit</td><td>Test de continuité obligatoire</td></tr>
+      <tr><td>Formation des occupants</td><td>Prévention des accidents</td><td>Informer sur les gestes à risque</td></tr>
+    </table>
+    <h2>10. Erreurs à éviter</h2>
+    <ul>
+      <li>Utiliser du matériel de récupération non certifié</li>
+      <li>Ignorer la protection différentielle</li>
+      <li>Sous-dimensionner les câbles</li>
+      <li>Multiplier les rallonges et multiprises</li>
+      <li>Ne pas faire appel à un professionnel</li>
+    </ul>
+    <h2>11. Ressources utiles</h2>
+    <ul>
+      <li><a href="https://www.promotelec.com/installations-sociales/" target="_blank">Guide Promotelec : Installations sociales</a></li>
+      <li><a href="https://www.afnor.org/" target="_blank">Normes et sécurité (AFNOR)</a></li>
+      <li><a href="https://www.legrand.fr/pro/actualites/installations-sociales" target="_blank">Legrand : Solutions économiques</a></li>
+    </ul>
+    <div class="encadre">
+      <b>Conformité PROQUELEC :</b> Même avec un budget limité, respecter les normes et privilégier la sécurité pour protéger les occupants.
+    </div>
+  <div class="encadre">
+    <b>Conseils PROQUELEC :</b> La sécurité électrique ne doit pas être négligée, même avec un budget limité. Priorité à la protection des personnes.
+  </div>
+  <footer>
+    © PROQUELEC – Guide technique Installation ménages à faible revenu. Version détaillée pour professionnels et gestionnaires.
+  </footer>
+</body>
+</html>

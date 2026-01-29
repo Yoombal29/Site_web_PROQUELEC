@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les perturbations de tension et",
+    "article": "444",
+    "alinéa": "444.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-444-444-3-A",
+        "type": "obligation",
+        "texte_normatif": "Dispositions à prendre contre les influences électriques et magnétiques sur les matériels électriques Tout matériel électrique doit satisfaire aux prescriptions appropriées de la compatibilité électromagnétique (CEM) et être conforme aux normes CEM le concernant. Voir aussi 545. Des règles particulières relatives à la cohabitation des réseaux de puissance et de communication sont données dans le guide UTE C 15-900. Les points suivants doivent être pris en considération pour la conception et la mise en œuvre des installations électriques. H 444.3.1 Emplacement des sources potentielles de perturbation par rapport aux matériels sensibles. 444.3.2 Emplacement des matériels sensibles par rapport à de fortes intensités présentes, par exemple dans les barres de distribution ou des matériels tels que les ascenseurs. 444.3.3 Mise en œuvre de filtres et/ou de parafoudres dans les circuits alimentant les matériels électriques sensibles. 444.3.4 Choix de dispositifs de protection avec des retards appropriés pour éviter des déclenchements indésirables dus à des transitoires. 444.3.5 Equipotentialité des enveloppes métalliques et des écrans. 444.3.6 Séparation appropriée (éloignement ou blindage) des câbles de puissance et de communication y compris aux changements de direction et aux traversées de parois, croisements à angle droit. 444.3.6.1 Dans les parties entre les répartiteurs, les câbles de puissance et de communication doivent cheminer sur des supports métalliques ou isolants distincts. La distance minimale entre les parois les plus proches des supports est de 30 cm. 444.3.6.2 Dans les parties terminales entre les répartiteurs et les points d'utilisation, les câbles des réseaux de puissance et de communication peuvent cheminer sur ou dans des supports communs. Les distances de séparation sont fonction du mode de pose concerné : - câbles apparents, en faux plancher ou en faux plafonds : séparation minimale de 5 cm ; - mode de pose en goulottes et conduits profilés, installer les réseaux dans les différents compartiments dans l'ordre décroissant de sensibilité par rapport au plan de masse (le réseau le plus sensible étant le plus proche du plan de masse) ; - conduits encastrés ou apparents : conduits séparés sauf spécifications contraires du fournisseur. - 138 - H 444.3.7 Séparation appropriée (éloignement ou blindage) des câbles de puissance et de communication, par rapport aux conducteurs de descente des systèmes de protection contre la foudre (voir NF C 17-100 et figure 444C). 444.3.8 Réduction des boucles d'induction par le choix d'un cheminement commun pour les canalisations des divers systèmes (voir aussi 444.4.4). 444.3.9 Utilisation de câbles blindés et/ou à paires torsadées pour les circuits de communication. 444.3.10 Connexions équipotentielles les plus courtes possibles. 444.3.11 Mise en œuvre sous enveloppes métalliques mises à la terre ou équivalent des canalisations constituées par des conducteurs séparés. 444.3.12 Eviter le schéma TN-C dans les installations comportant des matériels sensibles (voir 545.4). Pour les bâtiments qui comportent ou sont susceptibles de comporter de manière significative, des matériels de traitement de l'information, le schéma TN-C n’est admis qu’entre le point de pénétration et le tableau général de distribution (TGBT). En aval, le schéma est TN-S. Conducteur de liaison équipotentielle, N L si nécessaire PE Equipement 1 1) U Circuit de communication 2) Equipement 2 1) La chute de tension ∆U est évitée le long du PE 2) Boucle de surface restreinte Figure 444A −−−− Mise en œuvre d’un schéma TN-S dans un bâtiment - 139 - Le schéma TT peut conduire à des surtensions plus élevées qu'en schéma TN entre les parties actives des matériels et leurs masses. En effet, ces parties actives et les masses peuvent être reliées chacune à des prises de terre distinctes dont les potentiels évoluent séparément (voir en 443). En schéma IT, un premier défaut d'isolement peut faire apparaître la tension composée entre un conducteur de phase et la masse des matériels. Cette contrainte n'est pas acceptable pour les matériels électroniques alimentés directement entre phase et neutre et dont la conception ne prévoit pas cette tension composée entre phase et masse (voir les prescriptions correspondantes dans l'EN 60950 pour les matériels de traitement de l'information). H 444.3.13 Il convient que les canalisations métalliques (par exemple pour l'eau, le gaz ou le chauffage) et les câbles d'alimentation du bâtiment pénètrent dans le bâtiment au même endroit. Les blindages, les écrans, les tuyauteries métalliques et leurs connexions doivent être reliés entre eux et à la liaison équipotentielle principale (LEP) du bâtiment (fig ure 444B), à l'aide de conducteurs de basse impédance. 444.3.14 Dans le cas de zones ou de bâtiments distincts réalisés avec des liaisons équipotentielles principales séparées, il est recommandé d'utiliser pour les liaisons de communication des câbles en fibre optique sans partie métallique ou tout autre système non conducteur. NOTE − Le problème des terres portées à des tensions différentes dans de grands réseaux publics de télécommunication est de la responsabilité du distributeur qui peut utiliser d'autres méthodes.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "444"
+        ]
+    }
+}

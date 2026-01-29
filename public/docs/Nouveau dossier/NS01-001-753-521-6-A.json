@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "753",
+    "alinéa": "521.6",
+    "regle_atomique": {
+        "id_unique": "NS01-001-753-521-6-A",
+        "type": "obligation",
+        "texte_normatif": "Pose Câbles en parallèle ................................. 523.6 Règles Câbles chauffants ................................... 753.4 Règles particulières Câbles classe II ....................................... 412.2.1 Définition Tableau 52A Liste des câbles de classe II Câbles (chemins de) ............................... 262.3 Définition",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "753"
+        ]
+    }
+}

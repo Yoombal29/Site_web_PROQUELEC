@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Mémento - Protections électriques</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;margin:28px;color:#0f172a}h1{color:#2563eb}.table{width:100%;border-collapse:collapse}.table th,.table td{border:1px solid #e6eefc;padding:8px}.footer{margin-top:18px;color:#64748b}.small{font-size:0.95rem;color:#334155}</style>
+</head>
+<body>
+<h1>Mémento — Protections & seuils</h1>
+<p class="small">Repères rapides pour choisir les protections adaptées à chaque circuit.</p>
+<table class="table">
+<tr><th>Protection</th><th>Rôle</th><th>Remarque</th></tr>
+<tr><td>Disjoncteur modulaire</td><td>Protection contre surcharge / court-circuit</td><td>Choisir courbe B/C selon type de charge</td></tr>
+<tr><td>Interrupteur différentiel 30 mA</td><td>Protection personnes</td><td>Obligatoire en tête de tableau pour habitation</td></tr>
+<tr><td>Parafoudre</td><td>Protection contre surtensions transitoires</td><td>Utiliser si exposition importante aux orages ou surtensions réseau</td></tr>
+<tr><td>Fusible</td><td>Protection locale simple</td><td>Remplacé généralement par disjoncteur modulaire</td></tr>
+</table>
+<h2 style="color:#2563eb;margin-top:2em;">Tableau des calibres recommandés</h2>
+<table class="table">
+	<tr><th>Circuit</th><th>Calibre disjoncteur</th><th>Section câble</th></tr>
+	<tr><td>Prises 16A</td><td>16A</td><td>1,5 mm²</td></tr>
+	<tr><td>Prises 20A</td><td>20A</td><td>2,5 mm²</td></tr>
+	<tr><td>Éclairage</td><td>10A</td><td>1,5 mm²</td></tr>
+	<tr><td>Lave-linge</td><td>20A</td><td>2,5 mm²</td></tr>
+	<tr><td>Four</td><td>32A</td><td>6 mm²</td></tr>
+	<tr><td>Chauffe-eau</td><td>20A</td><td>2,5 mm²</td></tr>
+	<tr><td>VMC</td><td>2A</td><td>1,5 mm²</td></tr>
+</table>
+<h2 style="color:#2563eb;margin-top:2em;">Erreurs à éviter</h2>
+<ul class="small">
+	<li>Utiliser un calibre de disjoncteur inadapté au circuit</li>
+	<li>Oublier la protection différentielle 30 mA pour les personnes</li>
+	<li>Ignorer la section minimale des câbles</li>
+	<li>Ne pas installer de parafoudre en zone exposée</li>
+</ul>
+<h2 style="color:#2563eb;margin-top:2em;">Ressources utiles</h2>
+<ul class="small">
+	<li><a href="https://www.promotelec.com/protections-electriques/" target="_blank">Guide Promotelec : Protections électriques</a></li>
+	<li><a href="https://www.afnor.org/" target="_blank">Norme NF C 15-100 (AFNOR)</a></li>
+	<li><a href="https://www.legrand.fr/pro/actualites/protections-electriques" target="_blank">Legrand : Protections et calibres</a></li>
+</ul>
+<div style="background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;">
+	<b>Conformité PROQUELEC :</b> Respecter les calibres et sections recommandés pour garantir la sécurité et la conformité de l’installation électrique.
+</div>
+<div class="footer">PROQUELEC — Mémento rapide • 2025</div>
+</body>
+</html>

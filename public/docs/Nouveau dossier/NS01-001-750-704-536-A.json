@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de chantier",
+    "article": "750",
+    "alinéa": "704.536",
+    "regle_atomique": {
+        "id_unique": "NS01-001-750-704-536-A",
+        "type": "obligation",
+        "texte_normatif": "Dispositifs de commande et de sectionnement.......................................................377 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100. Les numéros suivant le numéro particulier de la partie 7-704 sont ceux des parties, articles ou paragraphes correspondants de la présente norme. L'absence de référence à une partie, à un article ou à un paragraphe signifie que les prescriptions générales correspondantes sont applicables. - 373 - . H 704.1 Domaine d'application Les prescriptions particulières de la présente partie s’appliquent aux installations temporaires destinées : - aux travaux de construction de nouveaux bâtiments ; - aux travaux de réparation, de modification, d’extension ou de démolition de bâtiments existants ; - aux travaux publics ; - aux travaux de terrassement ; - et aux travaux analogues. Les parties de bâtiments qui subissent des transformations telles que agrandissements, réparations importantes ou démolitions, sont considérées comme des chantiers pendant la durée des travaux correspondants, dans la mesure où ces travaux nécessitent la réalisation d’une installation temporaire. Les prescriptions de cette partie ne sont pas applicables aux installations électriques des mines à ciel ouvert et des carrières. H Les règles de cette partie ne sont pas applicables aux locaux administratifs des chantiers (par exemple bureaux, vestiaires, salles de réunion, cantines, restaurants, dortoirs, locaux sanitaires, etc.) pour lesquels les règles générales des titres 1 à 6 de la présente norme sont applicables. NOTE - Pour des situations particulières, des prescriptions plus sévères sont applicables, par exemple la partie 7-",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "750"
+        ]
+    }
+}

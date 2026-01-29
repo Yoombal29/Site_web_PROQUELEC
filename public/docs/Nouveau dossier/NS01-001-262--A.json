@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "262",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-262--A",
+        "type": "obligation",
+        "texte_normatif": "Modes de pose Les références figurant entre parenthèses après le terme défini indiquent les numéros des modes de pose correspondants décrits dans la partie 5-52 (voir notamment le tableau 52C). 262.1 canalisation fixée aux parois canalisation posée à la surface d'une paroi ou à sa proximité immédiate, cette paroi constituant un moyen de fixation et éventuellement un élément de protection. C 262.2 caniveau (Réf. 41, 42, 43) (826-06-06) élément de canalisation situé au-dessus ou dans le sol ou le plancher, ouvert, ventilé ou fermé, ayant des dimensions ne permettant pas aux personnes d'y circuler, mais dans lequel les conduits ou câbles sont accessibles sur toute leur longueur, pendant et après installation. NOTE - Un caniveau peut ou non faire partie de la construction du bâtiment. Des valeurs différentes de courants admissibles sont applicables suivant que les caniveaux sont ouverts ou fermés (voir 523). C 262.3 chemin de câbles (ou tablette) (Réf. 12, 13, 14) (826-06-08) support de câbles constitué d'une base continue et de rebords, et ne comportant pas de couvercle. NOTE - Un chemin de câbles peut être perforé ou non. Si un chemin de câbles est muni d'un couvercle lors de son installation, il est alors considéré comme une goulotte (262.8) pour la détermination des courants admissibles. 262.4 conduit (circulaire) (Réf. 1, 2, 3, 5, 22) enveloppe fermée, de section droite circulaire, destinée à la mise en place ou au remplacement de conducteurs isolés ou de câbles par tirage, dans les installations électriques. 262.5 conduit-profilé (Réf. 4, 23, 24) enveloppe fermée, de section non circulaire, destinée à la mise en place ou au remplacement de conducteurs isolés ou de câbles par tirage, dans les installations électriques. Le terme \"conduit-profilé\", défini dans les normes internationales, désigne un produit analogue à un conduit, mais de section non circulaire. Un conduit profilé peut être cloisonné. - 35 - 262.6 fourreau (ou buse) (Réf. 61) élément entourant une canalisation et lui conférant une protection complémentaire dans des traversées de paroi (mur, cloison, plancher, plafond) ou dans des parcours enterrés. C 262.7 galerie (826-06-06) couloir dont les dimensions permettent aux personnes d'y circuler librement sur toute sa longueur, contenant des supports pour les câbles et leurs jonctions ou d'autres éléments de canalisation. 262.8 goulotte (Réf. 31 à 34) enveloppe fermée, munie d'un couvercle amovible et destinée à la protection complète de conducteurs isolés ou de câbles, ainsi qu'à l'installation d'autres matériels électriques. Une goulotte peut comporter ou non des séparations. Suivant ses dimensions et son emplacement; une goulotte peut être dénommée \"moulure\", \"plinthe\" ou \"cimaise\". C 262.9 corbeaux (Réf. 14) (826-06-10) supports horizontaux de câbles, disposés de place en place, fixés à une seule extrémité et sur lesquels les câbles sont posés. 262.10 tranchée ouverture réalisée dans un terrain pour y poser des câbles, et rebouchée après leur pose. C 262.11 vide de construction (Réf. 21, 22, 23) (826-06-02) espace existant dans la structure ou les éléments d'un bâtiment et accessible seulement à certains emplacements. NOTES - 1 - Des espaces dans des parois. des planchers supportés. des plafonds et certains types d'huisseries de fenêtres ou de portes et des chambranles sont des exemples de vides de construction. 2 - Des vides de construction spécialement construits sont généralement dénommés \" alvéoles \". Les gaines, galeries et caniveaux ne sont pas considérés comme des vides de construction. Il en est de même des espaces au-dessus des faux plafonds suspendus démontables pour lesquels les conditions de pose sont celles du montage apparent, les canalisations étant fixées ou supportées indépendamment des panneaux démontables. 262.12 C échelle à câbles (Réf. 16) (826-06-09) support de câbles constitué d'une série d'éléments transversaux rigidement fixés à des montants principaux longitudinaux. 262.13 colliers (Réf. 3, 11) (826-06-11) supports disposés de place en place et qui retiennent mécaniquement un câble ou un conduit. 262.14 canalisation préfabriquée ensemble d’appareillage de série sous la forme d’un réseau conducteur comprenant, dans un conduit, une gaine ou une enveloppe, des jeux de barres séparés et supportés par des matériaux isolants [VE1 441-12-07 modifié]. - 36 - Cet ensemble peut être constitué d’éléments tels que : - éléments de canalisation avec ou sans possibilité de dérivation ; - éléments de transposition de phase, de dilatation, éléments flexibles, éléments d’alimentation et d’adaptation ; - éléments de dérivation ; - conducteurs additionnels à usage de communication et/ou de contrôle. NOTE - Le terme «jeu de barres» ne préjuge pas de la forme géométrique, de la taille et des dimensions du conducteur. 27 TERMES RELATIFS AUX MATERIELS",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "262"
+        ]
+    }
+}

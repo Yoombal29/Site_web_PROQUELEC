@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "553",
+    "alinéa": "553.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-553-553-3-A",
+        "type": "obligation",
+        "texte_normatif": "Alimentations statiques sans interruption (ASI) de type statique Une alimentation statique sans interruption (ASI) de type statique est un ensemble de convertisseurs, d’interrupteurs et de dispositifs d’accumulation d’énergie, par exemple des batteries, capable d’assurer la permanence d’alimentation de la charge, en cas de défaut de la source d’alimentation. Le guide UTE C 15-402 traite des règles d’installation des alimentations statiques sans interruption.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "553"
+        ]
+    }
+}

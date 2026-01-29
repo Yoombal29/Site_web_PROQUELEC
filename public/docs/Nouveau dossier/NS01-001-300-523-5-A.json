@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "300",
+    "alinéa": "523.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-300-523-5-A",
+        "type": "obligation",
+        "texte_normatif": "Nombre de conducteurs chargés dans un circuit 523.5.1 Le nombre de conducteurs à considérer dans un circuit est celui des conducteurs effectivement parcourus par le courant. Lorsque dans un circuit polyphasé les courants sont supposés équilibrés, il n'y a pas lieu de tenir compte du conducteur neutre correspondant. Les valeurs de courants admissibles indiquées pour trois conducteurs chargés sont également valables dans un circuit triphasé avec neutre équilibré. 523.5.2 Lorsque le conducteur neutre transporte un courant sans réduction correspondante de la charge des conducteurs de phase, le conducteur neutre doit être pris en compte pour la détermination du nombre de conducteurs chargés. Ce cas est rencontré lors de la présence de courants harmoniques dans le conducteur neutre des circuits triphasés, notamment pour un taux d’harmoniques de rang 3 et multiple de 3 en courant, supérieur à 15 % dans les conducteurs de phase. Les matériels et phénomènes décrits dans le commentaire 330.1.1d) sont à l’origine des courants harmoniques dans le conducteur neutre des circuits triphasés. Lorsque le conducteur neutre est chargé, un facteur de réduction de 0,84 est à appliquer aux valeurs de courants admissibles pour les câbles à 3 ou 4 conducteurs. Le paragraphe 524.2 traite de la détermination de la section du conducteur neutre. 523.5.3 Les conducteurs utilisés uniquement comme conducteurs de protection ne sont pas pris en compte. Les conducteurs PEN sont considérés de la même manière que les conducteurs neutres. - 218 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "300"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "526",
+    "alinéa": "526.8",
+    "regle_atomique": {
+        "id_unique": "NS01-001-526-526-8-A",
+        "type": "obligation",
+        "texte_normatif": "Le repiquage des conducteurs - c'est-à-dire la connexion sur les bornes d'un appareil des conducteurs servant à l'alimentation d'autres appareils - n'est admis que sur les bornes de socles de prises de courant, des luminaires de tout type (y compris les blocs autonomes d'éclairage de sécurité) et des chemins lumineux (559.2.5) et si les deux conditions suivantes sont simultanément remplies : - les bornes sont spécialement prévues à cet effet (par exemple certains socles de prises de courant) ou sont dimensionnées de façon à pouvoir recevoir la section totale des conducteurs connectés ; - leur intensité nominale n'est pas inférieure au courant d'emploi du circuit en amont. Le repiquage n'est pas admis sur les bornes des appareils d'utilisation (autres que ceux cités ci- dessus), notamment sur les appareils de chauffage et de cuisson.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "526"
+        ]
+    }
+}

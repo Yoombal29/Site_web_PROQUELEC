@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de sécurité",
+    "article": "562",
+    "alinéa": "562.7",
+    "regle_atomique": {
+        "id_unique": "NS01-001-562-562-7-A",
+        "type": "obligation",
+        "texte_normatif": "Une source de sécurité peut être utilisée pour des installations autres que les installations de sécurité dans la mesure où sa disponibilité pour ces dernières n’est pas compromise. En complément aux prescriptions de 562.2, un défaut apparaissant dans un circuit non destiné à l’alimentation des installations de sécurité ne doit pas entraîner l’ouverture d’un quelconque circuit alimentant des installations de sécurité. Cela exige la sélectivité entre les dispositifs de protection et cela peut nécessiter le délestage automatique des circuits alimentant des installations autres que de sécurité. Un bâtiment ou un établissement peut comporter un ou plusieurs groupes électrogènes de remplacement pour alimenter, pour des raisons autres que de sécurité, selon la décision du maître d’ouvrage ou du chef d’établissement , tout ou partie des installations électriques de ce bâtiment ou de cet établissement. Ce ou ces groupes de remplacement peuvent être utilisés comme source(s) de sécurité sous les conditions suivantes : - le ou les groupes satisfont aux règles s’appliquant aux groupes de sécurité ; - lorsqu’il y a plusieurs groupes électrogènes, en cas de défaillance de l’un deux, la puissance encore disponible doit rester suffisante pour assurer le démarrage et le fonctionnement de toutes les installations de sécurité ; - lorsque le groupe électrogène de remplacement est unique : • sa puissance doit être telle qu’elle permette le démarrage et le fonctionnement de toutes les installations de sécurité dans les conditions les plus défavorables ; • l’éclairage de sécurité doit être alimenté par une ou plusieurs sources de sécurité spécifique (batteries d’accumulateurs, blocs autonomes), ce qui est généralement le cas, car les groupes électrogènes conviennent mal à l’alimentation de l’éclairage de sécurité. C 562.7 Les paragraphes 562.1 à 562.7 ne s'appliquent pas aux blocs autonomes.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "562"
+        ]
+    }
+}

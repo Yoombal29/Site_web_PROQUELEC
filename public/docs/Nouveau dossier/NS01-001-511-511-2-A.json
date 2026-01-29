@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles communes à tous les matériels",
+    "article": "511",
+    "alinéa": "511.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-511-511-2-A",
+        "type": "obligation",
+        "texte_normatif": "Lorsque pour un matériel électrique donné, il n'existe pas de norme qui puisse lui être appliquée, le constructeur ou l'importateur doit pouvoir présenter un rapport établi par un organisme H accrédité pour la certification de produits. Les matériels dits à usage industriel font l'objet d'une déclaration délivrée par le constructeur ou l'importateur agissant en son nom, précisant qu'ils répondent aux exigences de sécurité dans les conditions d'emploi prévues. En cas de contestation, le constructeur ou l'importateur doit pouvoir présenter un rapport établi par un organisme accrédité.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "511"
+        ]
+    }
+}

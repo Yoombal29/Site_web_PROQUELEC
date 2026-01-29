@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles communes à tous les matériels",
+    "article": "512",
+    "alinéa": "512.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-512-512-1-A",
+        "type": "obligation",
+        "texte_normatif": "Conditions de fonctionnement 512.1.1 Tension Les matériels électriques doivent être adaptés à la valeur de la tension nominale (valeur efficace en courant alternatif) de l’installation. Si, dans une installation IT, le conducteur neutre est distribué, les matériels connectés entre une phase et le neutre doivent être isolés pour la tension entre phases. NOTE - Pour certains matériels, il peut être nécessaire de tenir compte de la tension la plus basse susceptible de se présenter. La tension assignée d'un matériel doit être au moins égale à la tension nominale de l'installation. Pour l'application de cette règle, il y a lieu de distinguer les matériels suivant que leur fonctionnement dépend ou non de la tension : - Cas des matériels dont le fonctionnement dépend de la tension. Pour ces matériels, la tension assignée est choisie en tenant compte de la nature des matériels et des indications pouvant être données à ce sujet dans les normes qui les concernent ainsi que des variations de la tension nominale de l'installation. - Cas des matériels dont le fonctionnement ne dépend pas de la tension. a) Conducteurs et câbles Trois tensions de référence sont définies pour les câbles : U Tension efficace assignée entre phase et terre, utilisée notamment comme valeur de base o pour les essais, U Tension efficace assignée entre phases utilisée notamment comme valeur de base pour les essais, (U = U 3 ) U Tension maxim0ale efficace entre phases pour laquelle le câble est conçu. C'est la valeur m efficace la plus élevée de la tension qui peut être supportée dans les conditions normales d'exploitation, à tout instant et en tout point de l'installation. L'ensemble de ces trois valeurs constitue la tension assignée du produit : U /U (U ). o m Les valeurs de tensions assignées existantes sont : 300/300 V, 300/500 V, 450/750 V, 600/1 000 V. Les conducteurs et câbles de tension assignée 600/1 000 volts peuvent être utilisés dans toutes les installations électriques à Basse Tension. Les conducteurs et câbles de tension assignée 300/500 ou 450/750 V ne peuvent être utilisés que dans les installations dont la tension nominale est au plus égale à 500 ou 750 V. Toutefois, par exception à la règle générale, les câbles 07RN-F peuvent être utilisés dans les installations fixes de tension nominale jusqu'à 1 000 volts. Les câbles souples de tension assignée 300/300 volts ne peuvent être utilisés que dans les parties d'installation où la tension nominale ne dépasse pas 300 volts en courant alternatif ou en courant continu. - 153 - Les câbles des séries FRN05 W-U, FRN05 WR et AR et des séries suivantes : H05W-F et A05 W-F (s'ils sont fixés à demeure) peuvent être utilisés dans les installations IT 230/400 V, du fait que les caractéristiques d'isolement entre le conducteur de protection et les autres conducteurs d'une part, et entre chaque conducteur et la surface extérieure d'autre part, est compatible avec la présence de la tension de 400 V entre phase et terre. b) Appareillage Les normes relatives à l'appareillage prévoient les valeurs suivantes de tensions assignées : - par exemple 250 et jusqu'à 440 volts pour l'appareillage pour installations domestiques et analogues, - par exemple 230 V, 400 V, 690 V et 1 000 V pour les autres appareillages. Certains matériels sont spécifiés par plusieurs tensions assignées, chacune étant caractéristique d'un circuit particulier. Il y a alors lieu de considérer séparément chacun de ces circuits en lui appliquant la règle convenable. Pour les appareillages autres que les dispositifs de protection, les matériels de tension assignée",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "512"
+        ]
+    }
+}

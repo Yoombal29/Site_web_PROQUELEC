@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles communes à tous les matériels",
+    "article": "510",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-510--A",
+        "type": "obligation",
+        "texte_normatif": "Domaine d’application H La présente partie traite du choix des matériels et de leur mise en œuvre. Il doit permettre de satisfaire aux mesures de protection pour assurer la sécurité, aux prescriptions pour assurer un fonctionnement satisfaisant de l’installation pour l’utilisation prévue et aux prescriptions appropriées aux conditions d’influences externes prévisibles. Les matériels doivent être choisis et installés de façon à satisfaire aux règles énoncées dans la présente partie et, pour autant qu’elles leur soient applicables, à celles des autres parties de cette norme.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "510"
+        ]
+    }
+}

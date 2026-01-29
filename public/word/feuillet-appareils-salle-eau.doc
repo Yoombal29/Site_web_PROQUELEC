@@ -1,0 +1,83 @@
+<html>
+<head>
+  <title>Feuillet Technique – Appareils électriques dans la salle d’eau</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>FEUILLET TECHNIQUE<br>Appareils électriques dans la salle d’eau</h1>
+  <h2>1. Définition simple et rôle</h2>
+  <p>Les appareils électriques en salle d’eau doivent respecter des règles strictes pour éviter tout risque d’électrocution.</p>
+  <h2>2. Schéma visuel / description pratique</h2>
+  <p>Schéma : <em>Volumes de sécurité, appareils protégés, prises et éclairages adaptés.</em></p>
+  <h2>3. Problèmes fréquents</h2>
+  <ul>
+    <li>Appareil non adapté au volume</li>
+    <li>Absence de protection différentielle</li>
+    <li>Installation trop proche de l’eau</li>
+  </ul>
+  <h2>4. Diagnostic associé</h2>
+  <ul>
+    <li>Contrôle du volume d’installation</li>
+    <li>Test du différentiel</li>
+  </ul>
+  <h2>5. Risques encourus</h2>
+  <ul>
+    <li>Électrocution</li>
+    <li>Non-conformité</li>
+  </ul>
+  <h2>6. Recommandations pratiques</h2>
+  <ul>
+    <li>Respecter les volumes de sécurité</li>
+    <li>Installer des appareils certifiés</li>
+    <li>Contrôler la protection différentielle</li>
+    <li>Utiliser des prises avec clapet et obturateur</li>
+    <li>Faire vérifier l’installation par un professionnel</li>
+  </ul>
+
+  <h2>7. Étapes de vérification lors d’une installation ou rénovation</h2>
+  <ul>
+    <li>Identifier les volumes réglementaires (0, 1, 2, hors volume)</li>
+    <li>Choisir des appareils adaptés à chaque volume</li>
+    <li>Tester le bon fonctionnement du différentiel 30mA</li>
+    <li>Contrôler la distance minimale entre appareil et point d’eau</li>
+    <li>Valider la conformité avec la norme NF C 15-100</li>
+  </ul>
+
+  <h2>8. Tableau des volumes de sécurité et appareils autorisés</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#fef9c3;font-weight:bold;">
+      <td>Volume</td>
+      <td>Appareils autorisés</td>
+      <td>Protection requise</td>
+    </tr>
+    <tr><td>Volume 0 (dans la baignoire/douche)</td><td>Aucun</td><td>Interdiction totale</td></tr>
+    <tr><td>Volume 1 (au-dessus de la baignoire/douche)</td><td>Éclairage TBTS (12V)</td><td>IPx7, classe III</td></tr>
+    <tr><td>Volume 2 (60 cm autour)</td><td>Éclairage, lave-linge</td><td>IPx4, différentiel 30mA</td></tr>
+    <tr><td>Hors volume</td><td>Prises, radiateurs, sèche-serviettes</td><td>IPx1, différentiel 30mA</td></tr>
+  </table>
+
+  <h2>9. Erreurs à éviter</h2>
+  <ul>
+    <li>Installer des appareils non adaptés au volume</li>
+    <li>Oublier la protection différentielle</li>
+    <li>Placer des prises trop près de l’eau</li>
+    <li>Ignorer la norme NF C 15-100</li>
+  </ul>
+
+  <h2>10. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/">Promotelec – Salle d’eau et sécurité</a></li>
+    <li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+    <li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Faites toujours vérifier la conformité de votre installation en salle d’eau. La sécurité dépend du respect des volumes et des protections.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </div>
+  <footer>
+    © PROQUELEC – Feuillet technique Appareils salle d’eau. Fiche pratique pour syndics et gérants.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </footer>
+</body>
+</html>

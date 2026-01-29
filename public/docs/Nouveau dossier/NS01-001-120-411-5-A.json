@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "120",
+    "alinéa": "411.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-120-411-5-A",
+        "type": "obligation",
+        "texte_normatif": "Schéma TT 411.5.1 Toutes les masses protégées par un même dispositif de protection doivent être connectées à des conducteurs de protection reliés à une même prise de terre. Si plusieurs dispositifs de protection sont montés en série, cette prescription s'applique séparément à toutes les masses protégées par le même dispositif. Généralement, le point de l’alimentation mis à la terre est le point neutre. Si le neutre n’existe pas ou n’est pas accessible, un conducteur actif doit être mis à la terre. Les installations alimentées directement par un réseau de distribution publique à basse tension sont réalisées selon le schéma TT. Il est toutefois possible de réaliser une installation en schéma TN selon les indications de l’annexe D. - 72 - L1 C L2 L3 N Masse Défaut PE R R B A I f Figure 411B – Boucle de défaut en schéma TT L'impédance de la boucle de défaut est celle de la boucle constituée par le conducteur de phase, le conducteur de protection assurant la liaison de la masse à la prise de terre des masses, la prise de terre des masses, la prise de terre du neutre et l'enroulement secondaire du transformateur d'alimentation. En général, la somme des résistances des prises de terre des masses et du point neutre (R + R ) est prépondérante devant l'impédance des autres A B éléments de la boucle, de sorte que l'impédance totale de la boucle diffère peu de la somme (R + R ). L’impédance de cette boucle de défaut limite donc la valeur du courant de défaut. A B Lorsque les prises de terre du neutre et des masses sont confondues ou interconnectées, le schéma demeure un schéma TT si toutes les conditions du schéma TN ne sont pas respectées (voir 411.4), mais le courant de défaut phase-masse est un courant de court- circuit comme en schéma TN-S et, dans ce cas, la section des conducteurs de protection est calculée comme en schéma TN-S. En pratique, le schéma TT n’est pas utilisé en courant continu. 411.5.2 En schéma TT, les dispositifs de protection sont des dispositifs différentiels Le conducteur neutre ne doit pas être relié à la terre en aval d'un dispositif différentiel. La précédente édition de la norme NF C 15-100 prévoyait la possibilité d’utiliser des dispositifs de protection contre les surintensités, tout en expliquant dans les commentaires que ce mode de protection ne convenait généralement pas. L’introduction dans la présente norme de temps de coupure maximaux pour le schéma TT (voir 411.3.2.2) a rendu définitivement impossible ce mode de protection, le fonctionnement dans le temps maximal des dispositifs de protection contre les surintensités conduisant presque systématiquement à des valeurs de prise de terre inférieures à 1 ohm, donc très difficilement réalisables et non mesurables. C 411.5.3 En courant alternatif, la condition suivante doit être satisfaite : R A x I∆n ≤ 50 V où R est la résistance de la prise de terre des masses A I∆n est le courant différentiel-résiduel assigné du dispositif de protection NOTE - Si une sélectivité entre dispositifs différentiels est nécessaire, voir 535.4. Lorsque plusieurs dispositifs différentiels sont mis en œuvre pour protéger des masses reliées à la même prise de terre, la valeur de I∆n à prendre en considération est le plus grand courant différentiel-résiduel des dispositifs intéressés. - 73 - 2002 Cette condition détermine la valeur maximale de la résistance de la prise de terre des masses en fonction des caractéristiques de fonctionnement des dispositifs de coupure automatique. Pour l'application de la condition, on peut prendre en considération l'impédance de la boucle de défaut au lieu de la résistance R de la prise de terre des masses. A Cette pratique qui va dans le sens de la sécurité conduit à des exigences peu différentes de celles basées sur la résistance de la prise de terre des masses, du fait que cette résistance constitue en général la partie la plus importante de l'impédance de la boucle de défaut. En outre, c'est le plus souvent cette condition qui est vérifiée effectivement, notamment lorsqu'il n'est pas possible, sinon très difficile, de mesurer la résistance de la prise de terre des masses, alors qu'il est possible de mesurer l’impédance de la boucle de défaut par une méthode simple. Les conditions d'utilisation des dispositifs différentiels sont indiquées au 531.2. C",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "120"
+        ]
+    }
+}

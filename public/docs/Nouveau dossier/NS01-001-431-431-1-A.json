@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les surintensités",
+    "article": "431",
+    "alinéa": "431.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-431-431-1-A",
+        "type": "obligation",
+        "texte_normatif": "Protection des conducteurs de phase 431.1.1 La détection de surintensité doit être prévue sur tous les conducteurs de phase ; elle doit provoquer la coupure du conducteur dans lequel la surintensité est détectée, mais ne provoque pas nécessairement la coupure des autres conducteurs actifs. 431.1.2 Toutefois, dans les schémas TT et TN, sur les circuits alimentés entre phases et dans lesquels le conducteur neutre n'est pas distribué, la détection de surintensité peut ne pas être prévue sur l'un des conducteurs de phase, sous réserve que les conditions suivantes soient simultanément remplies : a) il existe, en amont ou au même niveau, une protection différentielle devant provoquer la coupure de tous les conducteurs de phase ; b) il ne doit pas être distribué de conducteur neutre à partir d'un point neutre artificiel sur les circuits situés en aval du dispositif de protection différentielle visé en a).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "431"
+        ]
+    }
+}

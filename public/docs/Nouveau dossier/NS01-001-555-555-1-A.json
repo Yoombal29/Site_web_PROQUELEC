@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "555",
+    "alinéa": "555.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-555-555-1-A",
+        "type": "obligation",
+        "texte_normatif": "Socles de prises de courant 555.1.1 Un nombre approprié de socles de prises de courant doit être installé afin de répondre aux besoins des utilisateurs en toute sécurité, et de limiter l'emploi de socles multiprises. 555.1.2 Les socles de prise de courant doivent comporter autant d'organes de contact électriquement distincts et mécaniquement solidaires que les canalisations présentent de conducteurs. - 296 - Pour l'application des règles énoncées en 511.1, les normes à considérer sont les suivantes : a) matériel pour installations domestiques et analogues : (14) - Prises de courant et prolongateurs de courant nominal 20 A et 32 A. Règles ; (15) - Prises de courant et prolongateurs 16 A 250V ; - Socles de prises de courant 16 A 250V pour plinthes ou chambranles rainurés en (16) bois ; - Prises de courant et prolongateurs de courant nominal 20 A et 32 A. (17) Caractéristiques ; b) appareillage industriel à basse tension : (18) - Prises de courant, prolongateurs et connecteurs. Règles ; - Prises de courant, prolongateurs et connecteurs utilisant des contacts à broches et à (19) alvéoles. Cotes d'interchangeabilité . 555.1.3 Lorsque les canalisations comportent un conducteur de protection, il doit être fait usage de prises de courant uniques pour les conducteurs actifs et le conducteur de protection. Les prises de courant comportent un contact de mise à la terre ne devant pas entrer en contact avec les organes principaux ; ce contact doit assurer la liaison avant l'établissement des contacts principaux et rompre cette liaison après leur séparation. 555.1.4 Lorsqu'il est fait usage de tensions ou de courants de natures différentes, il est nécessaire d'utiliser des appareils de modèles distincts et non interchangeables. 555.1.5 Lorsqu'il est nécessaire d'empêcher la permutation des pôles ou des phases, des appareils dits « irréversibles » doivent être utilisés. 555.1.6 Les socles de prise de courant doivent être disposés de façon que les parties actives dangereuses ne soient pas accessibles au toucher, aussi bien lorsque leurs éléments sont assemblés que lorsqu'ils sont séparés. 555.1.7 Les socles de prise de courant 16 A - 250 V doivent être d'un type à obturation. Dans les conditions BA2, les socles de prise de courant sans obturation sont interdits. Le type à obturation est constitué d'un système intégré au socle de prise de courant et destiné à empêcher l'introduction d'un objet dans une seule alvéole, en assurant ainsi la (20) protection des enfants. Ce type est défini dans la norme en vigueur . Les prises industrielles ne sont pas concernées par cette mesure. 555.1.8 Les socles de prise de courant fixés sur les parois des locaux doivent être disposés de telle manière que l'axe de leurs alvéoles se trouve à une hauteur d'au moins 50 mm au- dessus du sol fini pour un courant assigné inférieur ou égal à 20 A. Cette hauteur est portée à 120 mm pour les socles de prise de courant de courant assigné supérieur à 20 A. Ces hauteurs minimales de 50 et de 120 mm sont applicables quel que soit le mode de pose et quelle que soit la classe d'influence externe AD. 555.1.9 Les socles de prise de courant installés dans les sols doivent posséder les degrés de protection IP24 et IK08. ——————— (14) NF C 61-300 (15) NF C 61-303 (16) NF C 61-305 (17) NF C 61-316 (18) NF EN 60309-1 (C 63-300) (19) NF EN 60309-2 (C 63-310) (20) NF C 61-303 - 297 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "555"
+        ]
+    }
+}

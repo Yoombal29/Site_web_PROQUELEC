@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "558",
+    "alinéa": "558.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-558-558-4-A",
+        "type": "obligation",
+        "texte_normatif": "Montage 558.4.1 Les appareillages doivent être mis en œuvre conformément aux instructions fournies par le constructeur des appareillages (conditions d'emploi, distances à observer pour les arcs de coupure, etc.). En outre, les dispositions des articles 512, 513 et 515 doivent être respectées. 558.4.2 Les conducteurs et câbles installés dans les ensembles doivent satisfaire aux règles de la partie 5-52. En particulier, les connexions doivent satisfaire aux règles de l'article 526 et les conducteurs et câbles doivent être protégés contre les influences externes comme spécifié en 522. Les conducteurs d'alimentation des appareils et des instruments de mesure fixés dans les couvercles ou portes doivent être posés de telle manière que les mouvements du couvercle ou de la porte ne puissent pas donner lieu à une détérioration de ces conducteurs. Les conducteurs isolés et les câbles disposés dans des ensembles sont considérés comme posés dans des goulottes (mode de pose 31 ou 32 suivant le tableau 52C). Les conducteurs et câbles sont protégés contre les surintensités conformément aux règles de la partie 4-43 Les conducteurs isolés et câbles sont disposés de façon à exclure que leur isolant puisse être blessé par des arêtes vives, le mouvement d'un couvercle, des vibrations, etc. Lorsque des conducteurs nus sont utilisés, les dispositions de l'article 529.7 sont applicables. - 306 - 558.4.3 Les distances minimales suivantes doivent être respectées : - entre parties actives nues de polarités différentes : 10 mm ; - entre parties actives nues et autres parties conductrices (masses, enveloppes extérieures) : 20 mm, cette distance étant portée à 100 mm lorsque les enveloppes extérieures considérées comportent des ouvertures dont la plus petite dimension est comprise entre 12 et 50 mm.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "558"
+        ]
+    }
+}

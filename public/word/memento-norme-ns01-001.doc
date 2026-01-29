@@ -1,0 +1,141 @@
+<html>
+<head>
+  <title>Mémento – Norme NS 01-001</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    h1 { color: #1d4ed8; }
+    h2 { color: #2563eb; margin-top: 1.2em; }
+    h3 { color: #1e293b; margin-top: 1em; }
+    ul { margin-left: 1em; }
+    .important { color: #dc2626; font-weight: bold; }
+    .encadre { background: #dbeafe; padding: 1em; border-radius: 6px; margin-top: 1em; }
+    table { border-collapse: collapse; margin-top: 1em; }
+    th, td { border: 1px solid #2563eb; padding: 6px 12px; }
+    th { background: #e0e7ff; }
+  </style>
+</head>
+<body>
+  <h1>Mémento – Norme NS 01-001</h1>
+  <div class="encadre">
+    <b>Résumé :</b> Ce mémento synthétise les principes essentiels de la norme NS 01-001 pour la sécurité et la conformité des installations électriques au Sénégal. Il s’adresse aux électriciens, installateurs, contrôleurs et maîtres d’ouvrage.
+  </div>
+  <h2>1. Domaine d’application</h2>
+  <ul>
+    <li>Bâtiments résidentiels, tertiaires, industriels, agricoles</li>
+    <li>Installations neuves, rénovations, extensions</li>
+    <li>Conformité obligatoire avant mise sous tension</li>
+  </ul>
+  <h2>2. Principes fondamentaux</h2>
+  <ul>
+    <li>Protection des personnes contre les risques d’électrocution</li>
+    <li>Protection des biens contre les incendies d’origine électrique</li>
+    <li>Qualité et fiabilité du fonctionnement des équipements</li>
+    <li>Respect des prescriptions techniques et réglementaires</li>
+  </ul>
+  <h2>3. Points clés de la norme</h2>
+  <table>
+    <tr><th>Exigence</th><th>Description</th></tr>
+    <tr><td>Section des conducteurs</td><td>Dimensionnement selon la puissance et la longueur du circuit</td></tr>
+    <tr><td>Protection différentielle</td><td>Obligatoire sur tous les circuits, calibre adapté</td></tr>
+    <tr><td>Mise à la terre</td><td>Présence d’une prise de terre conforme, testée</td></tr>
+    <tr><td>Disjoncteurs/fusibles</td><td>Protection contre les surintensités, sélectivité assurée</td></tr>
+    <tr><td>Appareillage certifié</td><td>Matériel conforme aux normes, pas de contrefaçon</td></tr>
+    <tr><td>Schéma unifilaire</td><td>Document obligatoire pour contrôle et maintenance</td></tr>
+  </table>
+  <h2>4. Bonnes pratiques</h2>
+  <ul>
+    <li>Vérifier la continuité de la terre à chaque intervention</li>
+    <li>Respecter les couleurs normalisées des conducteurs</li>
+    <li>Utiliser des équipements de protection individuelle (EPI)</li>
+    <li>Documenter chaque modification ou extension</li>
+    <li>Contrôler la sélectivité et le déclenchement des protections</li>
+  </ul>
+  <h2>5. Erreurs fréquentes à éviter</h2>
+  <ul>
+    <li>Oublier la protection différentielle sur un circuit</li>
+    <li>Utiliser des câbles sous-dimensionnés</li>
+    <li>Ne pas tester la prise de terre</li>
+    <li>Employer du matériel non certifié</li>
+    <li>Absence de schéma unifilaire</li>
+  </ul>
+  <h2>6. Ressources utiles</h2>
+  <ul>
+    <li>Guide PROQUELEC sur la conformité électrique</li>
+    <li>Site du COSSUEL : <a href="https://www.cossuel.sn">www.cossuel.sn</a></li>
+    <li>Formations PROQUELEC pour artisans et professionnels</li>
+    <li>Contact technique : <a href="mailto:proquelec@proquelec.sn">proquelec@proquelec.sn</a></li>
+  </ul>
+  <footer style="margin-top:2em;font-size:0.9em;color:#555;">© PROQUELEC – Mémento NS 01-001. Version 2025.</footer>
+</body>
+</html>
+<html>
+<head>
+  <title>Mémento Technique – Domaine, objet et principes de la norme NS 01-001</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>MÉMENTO TECHNIQUE<br>Domaine, objet et principes de la norme NS 01-001</h1>
+  <h2>1. Objet du mémento</h2>
+  <p>Rappel des principes fondamentaux de la norme NS 01-001 pour garantir la sécurité et la conformité des installations électriques.</p>
+  <h2>2. Principes essentiels (NS 01-001 & NF C 15-100)</h2>
+  <ul>
+    <li>Protection des personnes et des biens</li>
+    <li>Respect des distances et des sections de câbles</li>
+    <li>Conformité des matériels installés</li>
+    <li>Contrôle et vérification systématique</li>
+  </ul>
+  <h2>3. Définitions clés</h2>
+  <ul>
+    <li><b>Installation électrique :</b> Ensemble des équipements assurant la distribution de l’électricité</li>
+    <li><b>Norme :</b> Document de référence fixant les règles techniques</li>
+    <li><b>Conformité :</b> Respect des exigences réglementaires</li>
+  </ul>
+  <h2>4. Règles pratiques à retenir</h2>
+  <ul>
+    <li>Vérifier la présence de dispositifs de protection</li>
+    <li>Contrôler la continuité des conducteurs de terre</li>
+    <li>Respecter les schémas de câblage normalisés</li>
+    <li>Documenter toute intervention</li>
+  </ul>
+  <h2>5. Tableau récapitulatif</h2>
+  <table>
+    <tr><th>Symptôme</th><th>Cause possible</th><th>Action à mener</th></tr>
+    <tr><td>Disjoncteur déclenché</td><td>Surcharge ou défaut d’isolement</td><td>Identifier le circuit, contrôler les appareils</td></tr>
+    <tr><td>Absence de terre</td><td>Oubli de raccordement</td><td>Vérifier et corriger la connexion</td></tr>
+    <tr><td>Non-conformité visuelle</td><td>Matériel inadapté</td><td>Remplacer selon la norme</td></tr>
+  </table>
+  <h2>6. Tableau des contrôles essentiels</h2>
+  <table>
+    <tr><th>Contrôle</th><th>Outil</th><th>Critère de conformité</th></tr>
+    <tr><td>Section des conducteurs</td><td>Mesure, schéma</td><td>Adaptée à la puissance et longueur</td></tr>
+    <tr><td>Protection différentielle</td><td>Testeur différentiel</td><td>Présente, calibre correct</td></tr>
+    <tr><td>Mise à la terre</td><td>Testeur de terre</td><td>&lt; 50 Ω</td></tr>
+    <tr><td>Appareillage certifié</td><td>Inspection visuelle</td><td>Marquage CE, conformité</td></tr>
+    <tr><td>Schéma unifilaire</td><td>Contrôle documentaire</td><td>Présent et à jour</td></tr>
+  </table>
+  <h2>7. Erreurs à éviter</h2>
+  <ul>
+    <li>Oublier la protection différentielle sur un circuit</li>
+    <li>Utiliser des câbles sous-dimensionnés</li>
+    <li>Ne pas tester la prise de terre</li>
+    <li>Employer du matériel non certifié</li>
+    <li>Absence de schéma unifilaire</li>
+  </ul>
+  <h2>8. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.cossuel.sn" target="_blank">Site du COSSUEL</a></li>
+    <li><a href="https://www.promotelec.com/normes/" target="_blank">Guide Promotelec : Normes électriques</a></li>
+    <li><a href="https://www.afnor.org/" target="_blank">Norme NF C 15-100 (AFNOR)</a></li>
+    <li><a href="mailto:proquelec@proquelec.sn">Contact technique PROQUELEC</a></li>
+  </ul>
+  <div class="encadre">
+    <b>Conformité PROQUELEC :</b> Toujours vérifier la conformité à la norme NS 01-001 avant toute mise sous tension. Priorité à la sécurité et à la traçabilité documentaire.
+  </div>
+  <div class="encadre">
+    <b>À retenir PROQUELEC :</b> Toujours vérifier la conformité avant toute mise sous tension. Priorité à la sécurité !
+  </div>
+  <footer>
+    © PROQUELEC – Mémento technique NS 01-001. Version condensée pour techniciens.
+  </footer>
+</body>
+</html>

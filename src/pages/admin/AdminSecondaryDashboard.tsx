@@ -1,0 +1,66 @@
+
+import { useSession } from "@/hooks/useSession";
+import { useUserRole } from "@/hooks/useUserRole";
+import { useState } from "react";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { AdminSidebar } from "@/components/AdminSidebar";
+import DashboardHome from "@/components/admin/DashboardHome";
+import AdminPagesPanel from "@/components/admin/AdminPagesPanel";
+import AdminBlogPanel from "@/components/admin/AdminBlogPanel";
+import { EventCalendar } from "@/components/EventCalendar";
+import { AdminElectricalCertificationsPanel } from "@/components/admin/AdminElectricalCertificationsPanel";
+import { AdminProfessionalTrainingPanel } from "@/components/admin/AdminProfessionalTrainingPanel";
+import { Loader2 } from "lucide-react";
+
+export default function AdminSecondaryDashboard() {
+    const { user } = useSession();
+    const { role, isLoading } = useUserRole();
+    const [activeTab, setActiveTab] = useState("overview");
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center font-roboto italic">
+                <Loader2 className="animate-spin w-10 h-10 text-blue-600" />
+            </div>
+        );
+    }
+
+    const renderTabContent = () => {
+        switch (activeTab) {
+            case "overview":
+                return <DashboardHome />;
+            case "pages":
+                return <AdminPagesPanel />;
+            case "blog":
+                return <AdminBlogPanel />;
+            case "events":
+                return <EventCalendar />;
+            case "certifications":
+                return <AdminElectricalCertificationsPanel />;
+            case "training":
+                return <AdminProfessionalTrainingPanel />;
+            default:
+                return <DashboardHome />;
+        }
+    };
+
+    return (
+        <div className="bg-slate-50 min-h-screen">
+            <Header />
+            <main className="flex pt-28">
+                <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} role={role} />
+
+                <div className="flex-1 container mx-auto px-6 py-8 font-roboto">
+                    <div className="mb-8">
+                        <h1 className="text-4xl font-black text-slate-900 mb-2">Administration Adjointe</h1>
+                        <p className="text-slate-600 italic">Bienvenue au sein de l'équipe de gestion, <span className="font-bold underline">{user?.email}</span></p>
+                    </div>
+
+                    {renderTabContent()}
+                </div>
+            </main>
+            <Footer />
+        </div>
+    );
+}

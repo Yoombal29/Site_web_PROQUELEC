@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de sécurité",
+    "article": "559",
+    "alinéa": "559.6",
+    "regle_atomique": {
+        "id_unique": "NS01-001-559-559-6-A",
+        "type": "obligation",
+        "texte_normatif": "Moteurs La puissance assignée d'un moteur est la puissance mécanique disponible sur l'arbre, il en résulte que la puissance d'alimentation d'un moteur est toujours supérieure à sa puissance assignée. Pour le calcul de la section des conducteurs d’alimentation des ascenseurs, il convient de se reporter à 772.3.2.3c). 559.6.1 Limitation des troubles dus au démarrage des moteurs Le courant absorbé par tout moteur lors de son démarrage doit rester limité à une valeur qui ne soit pas préjudiciable à l'installation qui l'alimente et n'apporte pas de troubles inacceptables au fonctionnement des autres appareils reliés à la même source. - 314 - Dans le cas des moteurs alimentés directement par un réseau de distribution publique, leurs démarrages n'entraînent en général pas de perturbations excessives si l'intensité de démarrage n'est pas supérieure aux valeurs du tableau 55A. Tableau 55A – Intensités maximales de démarrage des moteurs LOCAUX INTENSITÉ MAXIMALE DE DÉMARRAGE Réseau aérien Réseau souterrain Moteur raccordé d’habitation (branchement 45 A 45 A à puissance limitée) en monophasé autres (branchement à 100 A 200 A puissance surveillée) Moteur raccordé d’habitation (branchement 60 A 60 A à puissance limitée) en triphasé autres (branchement à 125 A 250 A puissance surveillée) Au-delà de ces intensités, l'alimentation des moteurs est subordonnée à l'accord préalable du distributeur d'énergie afin que des dispositions soient prises pour que leur utilisation reste compatible avec la conservation des installations de distribution et la desserte sans troubles graves des usagers. Pour la conservation de l'installation, il convient que soit évité tout échauffement notable des canalisations, tout en s'assurant que les dispositifs de protection n'interviennent pas pendant le démarrage. Les troubles apportés au fonctionnement des autres appareils reliés à la même source sont dus à la chute de tension provoquée par l'appel de courant qui, au démarrage, peut être un multiple important du courant absorbé par le moteur à pleine charge. Les valeurs du tableau 55A permettent, avec les moteurs utilisés le plus couramment, les valeurs suivantes de puissance assignée du tableau 55B. Tableau 55B – Puissance maximale des moteurs alimentés directement (kVA) TYPES DE MOTEURS Monophasé 230 V Triphasé 400 V à démarrage direct autres modes pleine puissance de démarrage LOCAUX Locaux d’habitation 1,4 5,5 11 Autres  réseau aérien 3 11 22  Locaux  réseau souterrain 5,5 22 45 Les autres locaux comprennent des locaux tels que ceux du secteur tertiaire, du secteur industriel, des services généraux des bâtiments d'habitation, du secteur agricole, etc. L'examen préalable par le distributeur d'énergie est nécessaire dans les cas de moteurs entraînant une machine à forte inertie, de moteurs à lent démarrage, de moteurs à freinage ou inverseur de marche par contre-courant. ______________ - 315 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "559"
+        ]
+    }
+}

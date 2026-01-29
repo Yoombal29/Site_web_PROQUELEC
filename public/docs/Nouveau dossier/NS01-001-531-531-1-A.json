@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "531",
+    "alinéa": "531.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-531-531-1-A",
+        "type": "obligation",
+        "texte_normatif": "Dispositifs de protection à maximum de courant 531.1.1 Sc héma TN (411.4) C Dans le schéma TN, les dispositifs de protection contre les surintensités doivent être choisis et mis en œuvre dans les conditions indiquées en 434.2, 431 et 533.3 pour la protection contre les courts- circuits et doivent satisfaire aux prescriptions de 413.1.3.3 pour la protection contre les chocs électriques. 531.1.2 Schéma TT (411.5) L’emploi de dispositifs de protection à maximum de courant dans le schéma TT n’est pas admis pour la protection contre les chocs électriques. L’emploi de dispositifs de protection à maximum de courant dans le schéma TT nécessite des valeurs de résistance des prises de terre des masses difficilement mesurables et sans garantie dans le temps (inférieures à 1 ohm). C 531.1.3 Schéma IT (411.6) Lorsque les masses sont interconnectées, les dispositifs de protection contre les surintensités assurant la protection au deuxième défaut doivent être choisis dans les conditions indiquées en 531.1.1, compte tenu des prescriptions de 413.1.5.5.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "531"
+        ]
+    }
+}

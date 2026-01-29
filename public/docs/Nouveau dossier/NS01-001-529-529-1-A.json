@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "529",
+    "alinéa": "529.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-529-529-1-A",
+        "type": "obligation",
+        "texte_normatif": "Conduits 529.1.1 Pose en montage apparent Les conduits qui ne possèdent pas la qualité de non propagation de la flamme et qui sont caractérisés par la couleur jaune-orange, ne sont pas admis en montage apparent. 529.1.2 Conduits en montage encastré 529.1.2.1 Les conduits de degré de protection au moins égal à IK07 ne peuvent être posés avant construction de la maçonnerie que s'ils sont à l'abri de toute contrainte mécanique importante pendant les travaux de construction. Les conduits de degré de protection supérieur à IK07 sont posés soit avant construction de la maçonnerie, soit après construction de la maçonnerie. Les conduits de degré de protection IK07 sont les conduits ICA 3321 et IRL 3321. Les conduits de degré de protection supérieur à IK07 sont les conduits de classification supérieure à 3321. 529.1.2.2 Les conduits qui ne possèdent pas la qualité de non propagation de la flamme et qui sont caractérisés par la couleur jaune-orange doivent être complètement enrobés dans des matériaux incombustibles.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "529"
+        ]
+    }
+}

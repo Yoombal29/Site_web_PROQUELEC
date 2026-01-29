@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les surintensités",
+    "article": "433",
+    "alinéa": "433.0",
+    "regle_atomique": {
+        "id_unique": "NS01-001-433-433-0-A",
+        "type": "obligation",
+        "texte_normatif": "Règle générale Des dispositifs de protection doivent être prévus pour interrompre tout courant de surcharge dans les conducteurs du circuit avant qu'il ne puisse provoquer un échauffement nuisible à l'isolation, aux connexions, aux extrémités ou à l'environnement des canalisations. Pour la détermination des sections de conducteurs et le choix des dispositifs de protection contre les surcharges, se reporter au paragraphe 533.2. (1) NF C 61-201, NF EN 60269-2 (C 63-210) (2) NF EN 60898 (C 61-410), NF EN 61009-1 (C 61-440), NF EN 60947-2 (C 63-120) (3) NF EN 60947-6-2 (C 63-161) - 114 - C 433.1 Coordination entre les conducteurs et les dispositifs de protection La caractéristique de fonctionnement d'un dispositif protégeant une canalisation contre les surcharges doit satisfaire aux deux conditions suivantes : 1) I ≤ I ≤ I B n z 2) I ≤ 1,45 I 2 z I Courant d'emploi du circuit, B I Courant admissible de la canalisation (voir 523), z I Courant assigné du dispositif de protection ; pour les dispositifs de protection réglables, I est le n n courant de réglage choisi (I ), r NOTE - Pour les dispositifs de protection réglables. Le courant de réglage choisi peut être I ou I. n r I Courant assurant effectivement le fonctionnement du dispositif de protection : en pratique I est 2 2 pris égal : - au courant de fonctionnement dans le temps conventionnel pour les disjoncteurs ; - au courant de fusion dans le temps conventionnel, pour les fusibles du type gG. Le courant I est donné dans la norme produit ou peut être obtenu auprès du constructeur. 2 NOTE - La protection prévue par ce paragraphe n'assure pas une protection complète dans certains cas, par exemple contre les surintensités prolongées inférieures à I , et ne conduit pas nécessairement à la solution la plus économique. 2 C'est pourquoi il est supposé que le circuit est conçu de telle façon que de faibles surcharges de longue durée ne se produisent pas fréquemment. Valeurs de référence des canalisations I B Courant admissible I Z Courant d’emploi 1,45 x I z O I Courant assigné I ou n de réglage I r Courant conventionnel de fonctionnement I 2 Caractéristiques du dispositif de protection Figure 433A – Références pour canalisations et dispositifs de protection La règle de 433.2 définit trois conditions à respecter pour qu'un dispositif de protection assure la protection d'une canalisation contre les surcharges : 1a) I ≤ I B n 1b) I ≤ l n z I 2) I ≤ 1,45.l qui peut s'écrire k .l ≤ 1,45 l ou k .l ≤ l ou I Z 2 z 2 n z 3 n z n k 3 I Courant d'emploi, B I Courant assigné du dispositif de protection ; pour les dispositifs de protection réglables, I est n n le courant de réglage choisi (I), r I Courant de fonctionnement du dispositif de protection dans le temps conventionnel, 2 - 115 - I Courant admissible dans la canalisation, compte tenu des facteurs de correction éventuels, z k Rapport du courant I assurant effectivement le fonctionnement du dispositif de protection à 2 2 son courant nominal I ou à son courant de réglage I, n r k = k /1,45. 3 2 Or, la valeur du rapport k est différente suivant la nature du dispositif de protection : 2 - pour les fusibles gG, ce rapport est de 1,6 ou 1,9; il en résulte que la condition 2) est plus sévère que la condition 1b), - pour les disjoncteurs, ce rapport est égal à 1,45 pour les petits disjoncteurs, et à 1,30 ou 1,25 pour les autres disjoncteurs suivant leur courant nominal; il en résulte que la condition 1b) est plus sévère que la condition 2). En pratique, il suffit donc dans tous les cas de vérifier seulement deux conditions : - pour les fusibles, les deux conditions à respecter sont les suivantes : 1a) I ≤ I B n I 2) I ≤ 1,45.l ou I Z 2 z n k 3 Le facteur k ayant les valeurs suivantes : 3 I < 16A, k = 1,31 n 3 Fusibles gG I ≥ 16A, k = 1,10 n 3 - pour les disjoncteurs, les deux conditions à respecter sont les suivantes : 1a) I ≤ I 1b) I ≤ l B n n z",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "433"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "528",
+    "alinéa": "528.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-528-528-2-A",
+        "type": "obligation",
+        "texte_normatif": "Voisinage avec des canalisations non électriques 528.2.1 Au voisinage des canalisations de chauffage ou d'air chaud et des conduits de fumée, les canalisations électriques ne doivent pas risquer de ce fait d'être portées à une température nuisible H et par suite être tenues à une distance suffisante ou être séparées de ces canalisations par un écran calorifuge. Les canalisations électriques ne doivent pas emprunter des gaines de fumée, de ventilation ou de désenfumage. Les conduits déformables noyés dans des planchers comportant des éléments chauffants sont éloignés le plus possible de ces éléments. En particulier aux croisements de conduits et d'éléments chauffants, les conduits sont fixes de manière à laisser une épaisseur de béton suffisante avec les éléments chauffants. 528.2.2 Les canalisations électriques ne doivent pas être placées parallèlement au-dessous des H canalisations pouvant donner lieu à des condensations (telles que canalisations d'eau, de vapeur ou de gaz, etc.) à moins que des dispositions ne soient prises pour protéger les canalisations électriques des effets de ces condensations. 528.2.3 Lorsque des canalisations électriques sont installées au voisinage de canalisations non électriques, elles doivent être disposées de sorte que toute intervention prévisible sur une canalisation ne risque pas d'endommager les autres. Ceci peut être réalisé par : - un espace approprié entre les canalisations ; - la mise en place d'écrans mécaniques ou thermiques. - 224 - 528.2.4 Lorsqu'une canalisation électrique est placée à proximité immédiate de canalisations non H électriques, elle doit être convenablement protégée contre les dangers pouvant résulter de la présence des autres canalisations. Les dangers pouvant résulter de la présence d'autres canalisations concernent notamment : - une élévation de la température pouvant résulter de la présence d'autres canalisations de vapeur, de chauffage ou plus généralement d'un fluide chaud ; - le danger d'inondation, en cas d'avarie à une conduite de liquide, toutes dispositions étant alors prises pour permettre aux liquides d'être évacués.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "528"
+        ]
+    }
+}

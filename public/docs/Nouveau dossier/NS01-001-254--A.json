@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "254",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-254--A",
+        "type": "obligation",
+        "texte_normatif": "Définitions relatives aux caractéristiques des dispositifs de protection 254.1 courant assigné d'un dispositif de protection (I ) n valeur du courant d'après laquelle sont déterminées les conditions de fonctionnement du dispositif de protection. Les dispositifs différentiels possèdent deux courants assignés désignés respectivement par I n et I∆n . 254.2 C courant conventionnel de fonctionnement (I ) (d'un dispositif de protection) (826-02-17) 2 v aleur spécifiée du courant électrique qui est prévue pour provoquer le fonctionnement du dispositif de protection en un temps spécifié. Le courant conventionnel de fonctionnement est supérieur au courant assigné ou de réglage et le temps conventionnel varie suivant le type et le courant assigné du dispositif de protection. - 33 - 254.3 courant de réglage (I ) r valeur de courant de déclenchement d’un dispositif de protection contre les surintensités exprimée en ampères ou en multiple du courant assigné (I ). n 254.4 pouvoir de coupure assigné ultime en court-circuit (Icu) valeur du courant maximal de court-circuit que peut couper un disjoncteur. Ce pouvoir de coupure est appelé I pour les disjoncteurs industriels et I pour les cu cn disjoncteurs domestiques. 254.5 pouvoir de coupure assigné en service (Ics) valeur de courant de court-circuit que peut couper un disjoncteur (exprimé en % du pouvoir de coupure assigné ultime Icu ou Icn) sans dégradation de ses performances. 26 TERMES RELATIFS AUX CANALISATIONS",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "254"
+        ]
+    }
+}

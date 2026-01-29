@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "415",
+    "alinéa": "410.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-415-410-3-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités 410.3.1 Une ou plusieurs des mesures de protection suivantes, constituées chacune d’une disposition de protection contre les contacts directs et d’une disposition de protection contre les contacts indirects, doivent être appliquées, sauf spécifications contraires indiquées en 410.3.2 et 410.3.4, dans chaque installation ou partie d’installation, en tenant compte des conditions d’influences externes et doivent être considérées lors du choix et de la mise en œuvre des matériels : - mesure de protection par coupure automatique de l’alimentation, - mesure de protection par isolation double ou renforcée, - mesure de protection par séparation électrique pour l’alimentation d’un seul matériel, - mesure de protection par très basse tension. En pratique, la plupart des installations font l’objet d’une mesure fondamentale de protection par coupure automatique de l’alimentation, certaines parties des installations pouvant faire l’objet d’une des autres mesures de protection. - 66 - 410.3.2 Pour des installations et des emplacements particuliers, les mesures de protection C prescrites dans la partie 7 doivent être appliquées. 410.3.3 Les mesures de protection, spécifiées en annexe B, par mise en œuvre d’ob stacles ou par mise hors de portée ne peuvent être mises en œuvre que sous la surveillance d’une personne qualifiée ou avertie. Au Senegal, seules les personnes habilitées au sens de la publication UTE C 18-510 sont autorisées à travailler dans les conditions BA4 et BA5 (voir aussi 512.2.16). C 410.3.4 Les mesures de protection, spécifiées en annexe C : - locaux ou emplacements non conducteurs ; - liaisons équipotentielles non reliées à la terre ; - séparation électrique pour l’alimentation de plus d’un matériel d’utilisation ; ne sont applicables que si l’installation est sous la surveillance d’une personne compétente, de manière que des modifications non permises par ces mesures de protection ne puissent être faites. 410.3.5 Si une mesure de protection n’est pas complètement satisfaite, des dispositions complémentaires doivent être prises pour s’assurer que l’association ainsi obtenue fournisse le même degré de protection que la conformité complète à cette mesure. NOTE – Un exemple d’application est donné en 411.7. 410.3.6 On doit s’assurer que des mesures de protection différentes appliquées dans la même installation ou la même partie d'installation, ou encore dans les matériels, ne puissent ni s'influencer ni s'annihiler mutuellement. 410.3.7 Il est permis de se dispenser de dispositions de protection contre les contacts indirects pour les matériels électriques et leurs supports dans les cas suivants : - conduits ou goulottes métalliques, ou autres enveloppes métalliques de protection des matériels présentant une isolation double ou renforcée ; - potelets et parties métalliques en liaison électrique avec eux lorsque ces parties ne sont pas dans le volume d’accessibilité au toucher ; - poteaux en béton armé dont les armatures ne sont pas accessibles ; - masses qui, du fait de leurs faibles dimensions (environ 50 mm X 50 mm) ou de leur emplacement, ne peuvent être saisies ou venir en contact avec une partie importante du corps humain, dans la mesure où la liaison avec un conducteur de protection serait difficilement réalisable ou peu fiable. NOTE – Cette prescription n’est applicable, par exemple qu’aux écrous, rivets, plaques d’identification et fixations de câbles.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "415"
+        ]
+    }
+}

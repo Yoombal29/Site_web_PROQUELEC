@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "535",
+    "alinéa": "535.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-535-535-2-A",
+        "type": "obligation",
+        "texte_normatif": "Protection d’accompagnement entre dispositifs de protection contre les surintensités Une protection d'accompagnement de deux dispositifs de protection à maximum de courant est une protection contre les surintensités, dans laquelle le dispositif de protection, qui est généralement, mais pas nécessairement, situé côté source, effectue la protection contre les surintensités avec ou sans l'aide de l'autre dispositif de protection et empêche toute contrainte excessive sur celui-ci (voir 434.5.1). Lorsque plusieurs dispositifs de protection sont placés en série, ils peuvent être coordonnés de façon qu’en cas de court-circuit en aval, le dispositif de protection amont agisse pour limiter l’énergie traversant les dispositifs situés en aval à une valeur inférieure à celle que peuvent supporter les dispositifs avals et les canalisations protégées par ces dispositifs en accord avec 434- 3. Lorsque le dispositif de protection en aval est un disjoncteur et le dispositif de protection amont est un fusible ou un disjoncteur, cette technique permet au disjoncteur aval d’avoir un pouvoir de coupure ultime I renforcé. cu Lorsque les dispositifs de protection en série sont des disjoncteurs, la protection d’accompagnement est appelée filiation. - 252 - I I I i cu cu Figure 535Ba - Courbes temps/courant Figure 535Bb - Courbes énergie/courant C = Disjoncteur non limiteur de courant (N) 1 C = Disjoncteur limiteur de courant (L) 2 I = Courant d’intersection i Le disjoncteur aval C , s'il était seul, aurait une courbe de limitation en énergie qui suivrait la 1 courbe C puis la courbe en trait mixte après le courant I : son pouvoir de coupure serait I . 1 i cu. Lorsqu'il est associé au disjoncteur amont C jusqu'au point I, l'énergie limitée par C étant 2 i 1 inférieure à l'énergie de déclenchement de C (courbe C en dessous de la courbe C ), seul C 2 1 2 1 s'ouvre. A partir du point d'intersection I, l'énergie limitée par C devient égale à l'énergie de déclenchement i 1 de C , les 2 disjoncteurs vont s'ouvrir simultanément et l'association va limiter plus fortement 2 l'énergie que le disjoncteur C seul ; de ce fait son pouvoir de coupure passe de I (C ) à I (C + 1 cu 1 cu 1 C ). 2 Pour déterminer les caractéristiques de la filiation, il n’est pas possible de comparer les caractéristiques des disjoncteurs : il est nécessaire de demander des tableaux de filiation au constructeur établis conformément aux essais prescrits dans les normes produit sur les disjoncteurs.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "535"
+        ]
+    }
+}

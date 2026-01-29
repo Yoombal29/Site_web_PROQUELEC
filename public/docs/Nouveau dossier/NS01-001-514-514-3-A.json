@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles communes à tous les matériels",
+    "article": "514",
+    "alinéa": "514.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-514-514-3-A",
+        "type": "obligation",
+        "texte_normatif": "Repérage des conducteurs isolés Les dispositions énoncées ci-après en a, b, c s'appliquent aux canalisations constituées de conducteurs isolés et aux câbles multiconducteurs, à âmes circulaires ou sectorales : a) Lorsque le circuit comporte un conducteur de protection, ce conducteur doit être repéré par la double coloration vert-et-jaune. Lorsque le circuit ne comporte pas de conducteur de protection : - dans le cas de câbles multiconducteurs, il ne doit pas être fait usage de câbles comportant un conducteur repéré par la double coloration vert-et-jaune. Toutefois, dans le cas où on ne dispose que de câbles comportant un conducteur repéré par la double coloration vert-et-jaune pour la section choisie, il est admis d'employer un tel câble sous réserve de ne pas utiliser le conducteur repéré par la double coloration vert-et-jaune : - dans le cas de conducteurs isolés, il ne doit pas être fait usage de conducteur repéré par la double coloration vert-et-jaune. b) Lorsque le circuit comporte un conducteur neutre, ce conducteur doit être repéré par la couleur bleu clair (ou pour les câbles de plus de 5 conducteurs, par le chiffre 1). Lorsque le circuit ne comporte pas de conducteur neutre : - dans le cas de câbles multiconducteurs, le conducteur repéré par la couleur bleu clair peut être utilise pour un autre usage, sauf comme conducteur de protection. - dans le cas de conducteurs isolés, il ne doit pas être fait usage de conducteur repéré par la couleur bleu clair. c) Les conducteurs repérés par des couleurs autres que la double coloration vert-et-jaune et la couleur bleu clair, ou par d'autres moyens (tels que chiffres), peuvent être utilisés pour tous usages sauf comme conducteur de protection ou comme conducteur neutre (à l'exception des câbles à plus de 5 conducteurs) (voir b) ci-dessus). Lorsque la canalisation est constituée de conducteurs isolés, dans les circuits autres que ceux servant exclusivement aux télécommunications ou aux mesures, il ne doit pas être fait usage de conducteurs repérés par des couleurs jaune ou vert. d) En cas d'utilisation de câbles monoconducteurs, le repérage par coloration continue de l'isolation n'est pas nécessaire. Toutefois, dans ce cas, les extrémités des conducteurs doivent être repérées de façon durable, lors de l'installation : - par la double coloration vert-et-jaune pour le conducteur de protection, - par la couleur bleu clair pour le conducteur neutre. Cependant, ce repérage n'est pas nécessaire pour les conducteurs neutres de section inférieure à celle des conducteurs de phase correspondants. Ces dispositions sont également applicables aux conducteurs nus. e) Lorsqu'il est fait usage de conducteurs et câbles non normalisés, le repérage doit être réalisé par tout moyen approprié (tel que bagues ou autres dispositifs de couleur) à tout endroit où l'enveloppe des conducteurs est apparente et, en tout cas, à proximité de chaque connexion. Les couleurs utilisées doivent être conformes à celles définies aux paragraphes a, b et c ci- dessus. - 185 - 514.3.1 Ces prescriptions concernent essentiellement le choix des moyens utilisés pour repérer le conducteur de protection et le conducteur neutre. Ces moyens sont : - pour le conducteur de protection, la double coloration vert-et-jaune (annexe B). - pour le conducteur neutre, la couleur bleu clair (ou, pour les câbles à plus de 5 conducteurs, le chiffre 1). Les couleurs retenues ont été choisies de telle manière qu'elles ne puissent prêter à confusion avec des couleurs utilisées dans certains pays pour des usages différents. Dans le schéma TN : - le conducteur neutre utilisé également comme conducteur de protection (PEN) doit être repéré comme le conducteur de protection, c'est-à-dire par la double coloration vert-et-jaune. - si le conducteur neutre et le conducteur de protection sont distincts, le conducteur neutre est repéré par la couleur bleu clair et le conducteur de protection est repéré par la double coloration vert-et-jaune. Les différents conducteurs constitutifs des câbles doivent être utilisés, suivant les fonctions des conducteurs du circuit, conformément aux règles du paragraphe 514.3, compte tenu de l'exception suivante : Lorsque le câble n'est pas disponible sur le marché, pour la section considérée, et lorsque le circuit comporte un conducteur de protection, il est admis d'utiliser comme conducteur de protection : - le conducteur bleu clair, si le circuit ne comporte pas de conducteur neutre, - un conducteur noir, si le circuit comporte un conducteur neutre, en repérant ce conducteur par des bagues ou repères de couleur vert/jaune disposés aux extrémités et sur toutes les longueurs apparentes du conducteur. En outre, si un même câble comporte deux conducteurs neutres (par exemple deux circuits monophasés empruntant le même câble), il est admis de repérer un conducteur noir par des bagues ou repères de couleur bleu clair. 514.3.2 L'exclusivité des moyens de repérage La règle d'exclusivité des moyens de repérage implique que les conducteurs comportant l'un des repérages définis soient utilisés exclusivement pour la fonction pour laquelle ce moyen de repérage a été prévu. Cette règle d'exclusivité doit être considérée différemment suivant qu'elle s'applique au conducteur de protection ou au conducteur neutre. a) Pour le conducteur de protection, en raison de la fonction de sécurité assurée par ce conducteur, les moyens de repérage de ce conducteur doivent être exclusifs. Il en résulte que le conducteur portant la double coloration vert-et-jaune doit être utilisé exclusivement comme conducteur de protection (annexe B). b) Pour le conducteur neutre son repérage ne présente qu'un caractère indicatif et l'utilisation du conducteur portant le repérage du conducteur neutre pour un conducteur de phase ne présente pas d'inconvénient grave, du fait que ces conducteurs sont tous actifs et que les mêmes mesures de protection contre les contacts directs s'appliquent à ces conducteurs. Il en résulte qu'un conducteur de couleur bleu clair dans un circuit n'implique pas qu'il s'agisse d'un conducteur neutre, il peut s'agir d'un conducteur de phase, le circuit correspondant ne comportant pas de conducteur neutre. c) Des erreurs étant toujours possibles, le repérage des conducteurs ne doit être considéré que comme une présomption et il est toujours nécessaire de vérifier la polarité des conducteurs avant toute intervention. 514.3.3 Dans le cas particulier d'une installation desservie par un branchement monophasé entre phases à deux conducteurs sous une tension assignée au plus égale à 250 volts, et alimentée directement par un réseau de distribution publique, l'un des deux conducteurs de l'installation est identifié par le marquage distinctif du conducteur neutre. Le conducteur ainsi repéré est assimilé au conducteur neutre notamment en ce qui concerne la disposition des appareillages de protection et de commande. - 186 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "514"
+        ]
+    }
+}

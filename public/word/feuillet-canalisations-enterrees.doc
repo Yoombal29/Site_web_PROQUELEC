@@ -1,0 +1,82 @@
+<html>
+<head>
+  <title>Feuillet Technique – Pose des canalisations enterrées</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>FEUILLET TECHNIQUE<br>Pose des canalisations enterrées</h1>
+  <h2>1. Définition simple et rôle</h2>
+  <p>Les canalisations enterrées assurent la protection des câbles électriques contre les agressions extérieures et les intempéries.</p>
+  <h2>2. Schéma visuel / description pratique</h2>
+  <p>Schéma : <em>Câble sous gaine, profondeur réglementaire, repérage en surface.</em></p>
+  <h2>3. Problèmes fréquents</h2>
+  <ul>
+    <li>Profondeur insuffisante</li>
+    <li>Absence de gaine de protection</li>
+    <li>Non-respect du repérage</li>
+  </ul>
+  <h2>4. Diagnostic associé</h2>
+  <ul>
+    <li>Contrôle de la profondeur</li>
+    <li>Inspection de la gaine</li>
+  </ul>
+  <h2>5. Risques encourus</h2>
+  <ul>
+    <li>Endommagement des câbles</li>
+    <li>Risque d’électrocution lors de travaux</li>
+  </ul>
+  <h2>6. Recommandations pratiques</h2>
+  <ul>
+    <li>Respecter la profondeur minimale</li>
+    <li>Utiliser des gaines certifiées</li>
+    <li>Repérer les canalisations en surface</li>
+    <li>Poser un grillage avertisseur au-dessus de la gaine</li>
+    <li>Contrôler l’étanchéité et la résistance mécanique</li>
+  </ul>
+
+  <h2>7. Étapes de vérification lors d’une installation ou rénovation</h2>
+  <ul>
+    <li>Mesurer la profondeur de la tranchée (norme NF C 15-100)</li>
+    <li>Vérifier la qualité et le type de gaine utilisée</li>
+    <li>Installer un grillage avertisseur à 20 cm au-dessus de la gaine</li>
+    <li>Contrôler le repérage en surface (plan, marquage)</li>
+    <li>Faire réaliser un diagnostic avant remblaiement</li>
+  </ul>
+
+  <h2>8. Tableau des profondeurs et types de gaines</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#fef9c3;font-weight:bold;">
+      <td>Type de canalisation</td>
+      <td>Profondeur minimale</td>
+      <td>Type de gaine</td>
+    </tr>
+    <tr><td>Alimentation principale</td><td>85 cm sous chaussée, 60 cm sous espace vert</td><td>Gaine TPC rouge ou verte</td></tr>
+    <tr><td>Branchement secondaire</td><td>50 cm</td><td>Gaine TPC adaptée</td></tr>
+    <tr><td>Passage sous dalle</td><td>30 cm</td><td>Gaine renforcée</td></tr>
+  </table>
+
+  <h2>9. Erreurs à éviter</h2>
+  <ul>
+    <li>Poser la gaine trop près de la surface</li>
+    <li>Oublier le grillage avertisseur</li>
+    <li>Utiliser une gaine non certifiée</li>
+    <li>Ne pas repérer la canalisation sur le plan</li>
+  </ul>
+
+  <h2>10. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/">Promotelec – Canalisations enterrées</a></li>
+    <li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+    <li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Toujours faire contrôler la pose par un professionnel et conserver le plan de repérage. La sécurité des canalisations enterrées dépend du respect des normes et du repérage.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </div>
+  <footer>
+    © PROQUELEC – Feuillet technique Canalisations enterrées. Fiche pratique pour syndics et gérants.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </footer>
+</body>
+</html>

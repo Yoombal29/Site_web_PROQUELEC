@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de sécurité",
+    "article": "611",
+    "alinéa": "512.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-611-512-2-A",
+        "type": "obligation",
+        "texte_normatif": "et 522) ; - identification des conducteurs neutres et des conducteurs de protection (voir 514.3) ; - présence de schémas, notices d'avertissement et informations analogues (voir 514.5) ; - identification des circuits, fusibles, interrupteurs, bornes, etc. (voir 514) ; - réalisation des connexions des conducteurs (voir 526) ; - 325 - Le but de cette vérification est de contrôler que les moyens de fixation sont appropriés aux conducteurs concernés et que ces connexions sont correctement effectuées. En cas de doute sur l'efficacité d'une connexion, il y a lieu de mesurer la résistance de contact au droit de cette connexion. Cette résistance ne doit pas être supérieure à la résistance d'un conducteur d'un mètre de longueur et ayant la plus faible section des conducteurs raccordés ; en aucun cas, cette résistance ne doit être supérieure à 0,02 ohm. - accessibilité et identification pour commodité de manœuvre et de maintenance des dispositifs de coupure d'urgence (voir 536.3) et des dispositifs de coupure pour entretien C mécanique (voir 536.4). Il doit être vérifié que les conditions d'utilisation de ces appareils ne sont pas modifiées par leur mise en œuvre.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "611"
+        ]
+    }
+}

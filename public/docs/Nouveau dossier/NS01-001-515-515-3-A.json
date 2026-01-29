@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "515",
+    "alinéa": "515.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-515-515-3-A",
+        "type": "obligation",
+        "texte_normatif": "Compatibilité électromagnétique (A l'étude). (2) NF C 03-151 à NF C 03-158 (3) NF C 03-201 - NF EN 60617-13 (C 03-213) - 187 - 2002 Annexe A – (normative) – Repérage des conducteurs de protection et de mise à la terre dans les installations fixes 1. - La double coloration vert-et-jaune est destinée au repérage d'un conducteur de protection assurant une fonction de sécurité. Par définition (241.1 de la NF C 15-100) un conducteur de protection est un conducteur utilisé dans certaines mesures de protection contre les contacts indirects et reliant des masses : - soit à d'autres masses ; - soit à des éléments conducteurs ; - soit à des prises de terre, à un conducteur relié à la terre ou à une partie active reliée à la terre. Les conducteurs de protection répondant à cette définition doivent être repérés par la double coloration vert-et-jaune. 2. - La double coloration vert-et-jaune a été définie pour repérer une fonction de sécurité. Les conducteurs assurant exclusivement une mise à la terre pour des raisons fonctionnelles ou pour éviter des perturbations n'ont pas de fonction de sécurité. Il convient donc d'interdire la double coloration vert-et-jaune pour de tels conducteurs, notamment afin d'éviter qu'ultérieurement on ne soit tenté de relier à un tel conducteur une masse pour des raisons de sécurité : une telle liaison ne pourrait qu’être la cause de situations dangereuses et de perturbations pour les matériels raccordés à ce conducteur. Tableau 51B - Application pratique En pratique, il y a lieu de distinguer les différents cas suivants : Conducteur de protection Repérage Marquage des bornes A. Assurant une fonction de sécurité - reliant une masse à une prise de terre dans le cadre de la mesure de protection contre les contacts indirects par coupure Vert-et-jaune E automatique de l'alimentation (413.1).......................................... - reliant deux masses entre elles : • au secondaire d'un transformateur de sé paration (4-41 C3).... Vert-et-jaune E - assurant une liaison équipotentielle : • principale générale (413.1.2 et UTE C 15-106, 2.1.1)............. Vert-et-jaune E • principale locale (UTE C 15-106, 2.1.2).................................. Vert-et-jaune E • supplémentaire (413.2)........................................................... Vert-et-jaune E • locale non reliée à la terre (4-41 C2) ...................................... Vert-et-jaune E B. N'assurant pas une fonction de sécurité - reliant une partie conductrice d'un matériel à la terre. • pour des raisons fonctionnelles.............................................. (*) TE • pour des raisons de perturbation............................................ (*) TE (*) La double coloration vert-et-jaune ne doit pas être utilisée. Aucune couleur n'est imposée, mais les bornes correspondantes doivent porter les symboles correspondants définis par la norme NF C 04-445 et rappelés dans le tableau. En variante, les bornes peuvent comporter le symbole - 188 - 2002 Annexe B – (informative) – Liste abrégée des influences externes A AA Température (°C) AG Impact AP Sismique AA1 –60 +5 AG1 Faibles AP1 Négligeable AA2 –40 +5 AG2 Moyens AP2 Faible AA3 –25 +5 AG3 Importants AP3 Moyen AA4 –5 +40 AG4 Très importants AP4 Fort AA5 +5 +40 AA6 +5 +60 AH Vibrations AQ Foudre AA7 -25 +55 AH1 Faibles AQ1 Négligeable AA8 -50 +40 AH2 Moyennes AQ2 Indirecte AH3 Importantes AQ3 Directe AB Température et humidité AK Flore AR Mouvement de l’air AC Altitude (m) AK1 Négligeable AR1 Faibles AC1 ≤ 2 000 AK2 Risque AR2 Moyens AC2 > 2 000 AR3 Forts AL Faune AD Eau AL1 Négligeables AS Vent AD1 Négligeable AL2 Risque AS1 Faible AD2 Gouttes AS2 Moyen AD3 Aspersion AM Influences AS3 Fort AD4 Projections électromagnétiques AD5 Jets AM1 Phénomènes à AD6 Paquets à basse fréquence AD7 Immersion AM9 AD8 Submersion AM21 Phénomènes à A haute fréquence AE Corps étrangers AM25 AE1 Négligeables AM31 Décharges AE2 Petits électrostatiques AE3 Très petits AM41 Ionisation AE4 Poussière légère AN Soleil AF Corrosion AN1 Faibles AF1 Négligeable AN2 Significatifs AF2 Atmosphérique AN3 Forts AF3 Intermittente AF4 Permanente B BA Compétence BC Contacts BE Matières BA1 Ordinaires BC1 Nuls BE1 Négligeables BA2 Enfants BC2 Faibles BE2 Incendie BA3 Handicapés BC3 Fréquents BE3 Explosion BA4 Avertis BC4 Continus BE4 Contamination BA5 Qualifiés BD Evacuation BB Résistance BD1 Normales BB1 Normale BD2 Difficiles BB2 Faible BD3 Encombrées BB3 Très faible BD4 Difficiles et encombrées C CA Matériaux CB Structure CA1 Non combustibles CB1 Négligeable CA2 Combustibles CB2 Propagation d’incendie CB3 Mouvements CB4 Flexible ______________ - 189 - 2002 stnemennorivnE noitasilitU stnemitâB C",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "515"
+        ]
+    }
+}

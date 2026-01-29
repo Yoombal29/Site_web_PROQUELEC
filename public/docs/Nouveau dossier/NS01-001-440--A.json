@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les perturbations de tension et",
+    "article": "440",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-440--A",
+        "type": "obligation",
+        "texte_normatif": "Introduction La partie 4-44 donne des règles pour la protection contre les effets des perturbations conduites et rayonnées sur les installations électriques. Les courants dus à la foudre, aux manœuvres, aux courts-circuits et aux autres phénomènes électromagnétiques peuvent générer des surtensions et des perturbations électromagnétiques. L'article 442 donne des règles destinées à assurer la sécurité des personnes et des matériels dans une installation à basse tension en cas de surtension temporaire à fréquence industrielle. L'article 443 a pour but de décrire les moyens qui permettent de limiter les surtensions transitoires d’origine atmosphérique ou dues à des manœuvres afin de réduire à un niveau acceptable le risque de défaillance dans l’installation, et dans les équipements qui lui sont raccordés. Cette approche est cohérente avec les principes de la coordination de l’isolement de la norme NF C 20-040 ; cette norme prescrit aux comités techniques de spécifier une catégorie de tenue aux surtensions appropriée pour leurs matériels, ce qui signifie un minimum de tenue aux ondes de tension pour les matériels, selon leur utilisation et leur catégorie de tenue aux surtensions correspondante. NOTE - Selon le paragraphe 9 de la norme NF C 20-040, il convient que les comités techniques indiquent l’information adéquate. Il est recommandé d’indiquer la valeur nominale de la tenue aux surtensions fournie avec les matériels. L'article 444 décrit les recommandations fondamentales permettant de limiter les effets des perturbations électromagnétiques. Actuellement les interférences électromagnétiques (IEM) peuvent perturber ou endommager les systèmes ou équipements des technologies de l’information, les équipements avec des composants ou des circuits électroniques. L'article 445 traite des précautions à prendre en cas de baisse de tension.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "440"
+        ]
+    }
+}

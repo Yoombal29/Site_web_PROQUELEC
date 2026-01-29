@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "216",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-216--A",
+        "type": "obligation",
+        "texte_normatif": "Influences externes 216.1 C température ambiante (826-01-03) température de l'air ou du milieu à l'emplacement où le matériel doit être utilisé. La température ambiante à considérer pour le matériel est la température à l'endroit où ce matériel doit être installé, résultant de l'influence de tous les autres matériels placés dans le même endroit et en fonctionnement, sans tenir compte de la contribution thermique du matériel considéré. 2 16.2 environnement non conducteur (826-03-36) C d isposition par laquelle une personne ou un animal domestique ou d'élevage touchant une partie conductrice accessible qui est devenue une partie active dangereuse est protégé par l'impédance élevée de son environnement (par exemple murs et sols isolants) et par l'absence de parties conductrices mises à la terre. 22 TENSIONS 221.1 tension nominale d'une installation (826-02-01) C t ension par laquelle une installation électrique ou une partie d'installation électrique est désignée. La valeur de la tension dans l'installation peut différer de la tension nominale dans les limites des tolérances spécifiées (voir 313.1.1). 221.2 tension assignée de tenue aux chocs des matériels valeur de crête d’une tension de choc de forme et de polarité prescrite que le matériel est susceptible de supporter sans dommage dans les conditions d’essais spécifiés et à laquelle on se réfère pour les valeurs des distances d’isolement. Le paragraphe 443.2 classe les matériels en quatre catégories de surtension selon la valeur de la tension assignée de tenue aux chocs des matériels.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "216"
+        ]
+    }
+}

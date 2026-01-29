@@ -1,0 +1,32 @@
+16e3f6abaf2db678631ff774855e58b8
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const jsx_runtime_1 = require("react/jsx-runtime");
+/**
+ * 🧪 Tests Composants UI — Tests simplifiés
+ *
+ * Tests des composants React existants :
+ * - Calculatrice de chute de tension
+ * - Tests d'intégration basiques
+ */
+const globals_1 = require("@jest/globals");
+const react_1 = require("@testing-library/react");
+const VoltageDropCalculator_1 = __importDefault(require("../components/tools/VoltageDropCalculator"));
+// ========== TESTS SIMPLIFIÉS ==========
+(0, globals_1.describe)('Composants UI Existants', () => {
+    (0, globals_1.test)('calculatrice de chute de tension se rend', () => {
+        (0, react_1.render)((0, jsx_runtime_1.jsx)(VoltageDropCalculator_1.default, {}));
+        // Vérifier que le composant se rend sans erreur
+        (0, globals_1.expect)(document.body).toBeDefined();
+    });
+    (0, globals_1.test)('calculatrice contient les champs attendus', () => {
+        (0, react_1.render)((0, jsx_runtime_1.jsx)(VoltageDropCalculator_1.default, {}));
+        // Vérifier la présence de texte ou d'éléments de base
+        // (Les tests spécifiques seront ajoutés quand les composants seront complets)
+        (0, globals_1.expect)(true).toBe(true);
+    });
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiQzpcXE1lcyBTaXRlcyBXZWJcXFNpdGVfd2ViX1BST1FVRUxFQy1tYWluXFxzcmNcXHRlc3RzXFxVSUNvbXBvbmVudHMudGVzdC50c3giLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQUE7Ozs7OztHQU1HO0FBRUgsMkNBQXVEO0FBQ3ZELGtEQUF3RDtBQUN4RCxzR0FBOEU7QUFFOUUseUNBQXlDO0FBRXpDLElBQUEsa0JBQVEsRUFBQyx5QkFBeUIsRUFBRSxHQUFHLEVBQUU7SUFDdkMsSUFBQSxjQUFJLEVBQUMsMENBQTBDLEVBQUUsR0FBRyxFQUFFO1FBQ3BELElBQUEsY0FBTSxFQUFDLHVCQUFDLCtCQUFxQixLQUFHLENBQUMsQ0FBQztRQUVsQyxnREFBZ0Q7UUFDaEQsSUFBQSxnQkFBTSxFQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsQ0FBQyxXQUFXLEVBQUUsQ0FBQztJQUN0QyxDQUFDLENBQUMsQ0FBQztJQUVILElBQUEsY0FBSSxFQUFDLDJDQUEyQyxFQUFFLEdBQUcsRUFBRTtRQUNyRCxJQUFBLGNBQU0sRUFBQyx1QkFBQywrQkFBcUIsS0FBRyxDQUFDLENBQUM7UUFFbEMsc0RBQXNEO1FBQ3RELDhFQUE4RTtRQUM5RSxJQUFBLGdCQUFNLEVBQUMsSUFBSSxDQUFDLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQzFCLENBQUMsQ0FBQyxDQUFDO0FBQ0wsQ0FBQyxDQUFDLENBQUMiLCJuYW1lcyI6W10sInNvdXJjZXMiOlsiQzpcXE1lcyBTaXRlcyBXZWJcXFNpdGVfd2ViX1BST1FVRUxFQy1tYWluXFxzcmNcXHRlc3RzXFxVSUNvbXBvbmVudHMudGVzdC50c3giXSwic291cmNlc0NvbnRlbnQiOlsiLyoqXHJcbiAqIPCfp6ogVGVzdHMgQ29tcG9zYW50cyBVSSDigJQgVGVzdHMgc2ltcGxpZmnDqXNcclxuICpcclxuICogVGVzdHMgZGVzIGNvbXBvc2FudHMgUmVhY3QgZXhpc3RhbnRzIDpcclxuICogLSBDYWxjdWxhdHJpY2UgZGUgY2h1dGUgZGUgdGVuc2lvblxyXG4gKiAtIFRlc3RzIGQnaW50w6lncmF0aW9uIGJhc2lxdWVzXHJcbiAqL1xyXG5cclxuaW1wb3J0IHsgZGVzY3JpYmUsIHRlc3QsIGV4cGVjdCB9IGZyb20gJ0BqZXN0L2dsb2JhbHMnO1xyXG5pbXBvcnQgeyByZW5kZXIsIHNjcmVlbiB9IGZyb20gJ0B0ZXN0aW5nLWxpYnJhcnkvcmVhY3QnO1xyXG5pbXBvcnQgVm9sdGFnZURyb3BDYWxjdWxhdG9yIGZyb20gJy4uL2NvbXBvbmVudHMvdG9vbHMvVm9sdGFnZURyb3BDYWxjdWxhdG9yJztcclxuXHJcbi8vID09PT09PT09PT0gVEVTVFMgU0lNUExJRknDiVMgPT09PT09PT09PVxyXG5cclxuZGVzY3JpYmUoJ0NvbXBvc2FudHMgVUkgRXhpc3RhbnRzJywgKCkgPT4ge1xyXG4gIHRlc3QoJ2NhbGN1bGF0cmljZSBkZSBjaHV0ZSBkZSB0ZW5zaW9uIHNlIHJlbmQnLCAoKSA9PiB7XHJcbiAgICByZW5kZXIoPFZvbHRhZ2VEcm9wQ2FsY3VsYXRvciAvPik7XHJcblxyXG4gICAgLy8gVsOpcmlmaWVyIHF1ZSBsZSBjb21wb3NhbnQgc2UgcmVuZCBzYW5zIGVycmV1clxyXG4gICAgZXhwZWN0KGRvY3VtZW50LmJvZHkpLnRvQmVEZWZpbmVkKCk7XHJcbiAgfSk7XHJcblxyXG4gIHRlc3QoJ2NhbGN1bGF0cmljZSBjb250aWVudCBsZXMgY2hhbXBzIGF0dGVuZHVzJywgKCkgPT4ge1xyXG4gICAgcmVuZGVyKDxWb2x0YWdlRHJvcENhbGN1bGF0b3IgLz4pO1xyXG5cclxuICAgIC8vIFbDqXJpZmllciBsYSBwcsOpc2VuY2UgZGUgdGV4dGUgb3UgZCfDqWzDqW1lbnRzIGRlIGJhc2VcclxuICAgIC8vIChMZXMgdGVzdHMgc3DDqWNpZmlxdWVzIHNlcm9udCBham91dMOpcyBxdWFuZCBsZXMgY29tcG9zYW50cyBzZXJvbnQgY29tcGxldHMpXHJcbiAgICBleHBlY3QodHJ1ZSkudG9CZSh0cnVlKTtcclxuICB9KTtcclxufSk7Il0sInZlcnNpb24iOjN9

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "535",
+    "alinéa": "535.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-535-535-4-A",
+        "type": "obligation",
+        "texte_normatif": "Sélectivité entre les dispositifs de protection à courant différentiel-résiduel Les schémas des figures 535C à 535F montrent les dispositions possibles en indiquant les avantages et inconvénients correspondants. 535.4.1 Lorsque plusieurs DDR sont prévus dans une même installation et si la sélectivité est C requise, ils peuvent être disposés selon l'une des méthodes suivantes : a) soit les appareils sont placés en tête de chaque partie d'installation en subdivisant cette dernière en autant de parties qu'il convient (535.4.2), NOTE - La sélectivité globale de l’installation peut être améliorée par une bonne mise en pratique du 314.1, c’est à dire en subdivisant les DDR protégeant les circuits divisionnaires et terminaux afin de limiter les conséquences d’un défaut à un minimum d’applications. b) soit les appareils sont placés en cascade. Dans ce dernier cas, on doit s'assurer de la sélectivité entre les appareils situés en série (535.4.3). 535.4.2 Sélection des circuits Dans ce cas, l'installation ne comporte à son origine aucun DDR mais tous les départs doivent être protégés (individuellement ou par groupes) par des DDR à moyenne ou à haute sensibilité suivant les risques considérés. En cas de défaut, seul le dispositif protégeant le départ correspondant fonctionne. Ce schéma n'est admis que si des moyens appropriés sont mis en œuvre pour se prémunir contre les défauts à la masse dans la partie d'installation comprise entre le disjoncteur général et les dispositifs différentiels. Ces moyens appropriés peuvent résulter de l'emploi de matériels de la classe II ou de l'application de la mesure de protection «p ar isolation supplémentaire» contre les contacts indirects (voir 412). - 254 - Figure 535C – Dispositifs en tête de chaque partie de l'installation 535.4.3 Sélectivité entre dispositifs de protection à courant différentiel-résiduel La sélectivité entre dispositifs de protection à courant différentiel-résiduel peut être totale ou partielle. 535.4.3.1 Sélectivité totale Une sélectivité totale entre dispositifs de protection à courant différentiel-résiduel disposés en série peut être prescrite pour des raisons de sécurité ou d'exploitation, de façon à maintenir l'alimentation des parties de l'installation non affectées par le défaut éventuel. Cette sélectivité peut être obtenue par le choix et la mise en œuvre des dispositifs de protection à courant différentiel-résiduel qui, tout en assurant la protection requise aux différentes parties de l'installation, interrompent seulement l'alimentation des parties de l'installation en aval du dispositif installé en amont de l'emplacement du défaut et proche de celui-ci. Pour assurer la sélectivité totale de deux dispositifs de protection à courant différentiel-résiduel en série, la caractéristique de non fonctionnement temps/courant du dispositif placé en amont doit se trouver au-dessus de la caractéristique de fonctionnement temps/courant du dispositif placé en aval. Cela se traduit par : a) le courant différentiel-résiduel de fonctionnement assigné du dispositif placé en amont doit être supérieur à celui du dispositif placé en aval, b) le temps de fonctionnement du dispositif placé en amont doit être supérieur à celui du dispositif placé en aval pour toutes les valeurs de courant de défaut. La sélectivité totale peut être réalisée en utilisant, par exemple, un dispositif retardé pour celui placé en amont, et dont le courant différentiel-résiduel assigné est au moins égal à 3 fois celui du dispositif placé en aval. Il y a lieu de s'assurer que le temps de coupure maximal de chaque dispositif satisfait aux conditions de protection définies en 411.3.2. - 255 - Les exemples ci-après montrent des illustrations des règles de la sélectivité totale. t B A I Figure 535D – Sélectivité totale Les dispositifs A (aval) et B (amont) ont des caractéristiques de fonctionnement telles que les deux conditions a) et b) sont satisfaites. Disjoncteur de Le dispositif situé en aval est un DDR de branchement courant différentiel assigné égal à 30 mA différentiel (500 mA) type “S” Le dispositif en amont est un disjoncteur de branchement différentiel (500 mA) du type «S». Figure 535E – Deux niveaux de sélectivité Le dispositif situé le plus en aval est un DDR Disjoncteur de 30 mA. différentiel 1 A Le dispositif intermédiaire est un DDR à retard retard 200 ms de 50 ms et de courant différentiel assigné de",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "535"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Unités mobiles ou transportables",
+    "article": "706",
+    "alinéa": "717.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-717-1-A",
+        "type": "obligation",
+        "texte_normatif": "Domaine d’application C Les prescriptions particulières de la présente partie sont applicables aux unités : - soit du type mobile, par exemple véhicules (autopropulsés ou remorqués) ; - soit du type transportable, par exemple conteneurs ou cabines installés sur chantier. Des exemples d’utilisation sont les émetteurs radio/télé, les services médicaux, la publicité, la lutte contre l’incendie, les ateliers, etc. Plusieurs unités peuvent être électriquement interconnectées. C Ces prescriptions ne sont pas applicables : - aux groupes générateurs de remplacement ; - aux navires de plaisance ; (1) - aux machines mobiles conformes à la norme NF EN 60204-1 ; - aux caravanes ; - aux matériels de traction électrique des véhicules. Les prescriptions complémentaires des parties du titre 7, si elles sont applicables, seront prises en compte, par exemple pour les douches, les emplacements à usages médicaux, etc.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

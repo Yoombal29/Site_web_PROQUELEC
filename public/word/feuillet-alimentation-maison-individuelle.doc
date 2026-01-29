@@ -1,0 +1,83 @@
+<html>
+<head>
+  <title>Feuillet Technique – Alimentation électrique de la maison individuelle</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>FEUILLET TECHNIQUE<br>Alimentation électrique de la maison individuelle</h1>
+  <h2>1. Définition simple et rôle</h2>
+  <p>L’alimentation électrique assure la distribution de l’énergie dans toute la maison, depuis le point de livraison jusqu’aux équipements.</p>
+  <h2>2. Schéma visuel / description pratique</h2>
+  <p>Schéma : <em>Tableau principal, câbles d’alimentation, protections, prises et éclairages.</em></p>
+  <h2>3. Problèmes fréquents</h2>
+  <ul>
+    <li>Sous-dimensionnement des câbles</li>
+    <li>Absence de protection</li>
+    <li>Branchement non conforme</li>
+  </ul>
+  <h2>4. Diagnostic associé</h2>
+  <ul>
+    <li>Contrôle de la section des câbles</li>
+    <li>Test des dispositifs de protection</li>
+  </ul>
+  <h2>5. Risques encourus</h2>
+  <ul>
+    <li>Incendie</li>
+    <li>Arrêt de l’alimentation</li>
+  </ul>
+  <h2>6. Recommandations pratiques</h2>
+  <ul>
+    <li>Respecter les sections minimales</li>
+    <li>Installer des protections adaptées</li>
+    <li>Faire vérifier par un professionnel</li>
+    <li>Étiqueter clairement le tableau électrique</li>
+    <li>Contrôler la continuité de la terre</li>
+  </ul>
+
+  <h2>7. Étapes de vérification lors d’une installation ou rénovation</h2>
+  <ul>
+    <li>Vérifier la conformité du point de livraison (ENEDIS, etc.)</li>
+    <li>Contrôler la section et la qualité des câbles</li>
+    <li>Tester les dispositifs différentiels et disjoncteurs</li>
+    <li>Valider la présence d’une prise de terre efficace</li>
+    <li>Faire réaliser un diagnostic par un professionnel certifié</li>
+  </ul>
+
+  <h2>8. Tableau des sections de câbles recommandées</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#fef9c3;font-weight:bold;">
+      <td>Usage</td>
+      <td>Section minimale</td>
+      <td>Longueur max. conseillée</td>
+    </tr>
+    <tr><td>Alimentation principale</td><td>16 mm²</td><td>30 m</td></tr>
+    <tr><td>Prises de courant</td><td>2,5 mm²</td><td>40 m</td></tr>
+    <tr><td>Éclairage</td><td>1,5 mm²</td><td>50 m</td></tr>
+    <tr><td>Appareils puissants (four, chauffe-eau)</td><td>6 mm²</td><td>20 m</td></tr>
+  </table>
+
+  <h2>9. Erreurs à éviter</h2>
+  <ul>
+    <li>Utiliser des câbles sous-dimensionnés</li>
+    <li>Oublier la protection différentielle</li>
+    <li>Ne pas contrôler la continuité de la terre</li>
+    <li>Faire des raccords non conformes</li>
+  </ul>
+
+  <h2>10. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/">Promotelec – Alimentation électrique</a></li>
+    <li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+    <li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Demandez toujours un diagnostic avant travaux et exigez un certificat de conformité à la fin du chantier.<br>
+    Une alimentation conforme, c’est la sécurité et la tranquillité pour toute la famille.
+  </div>
+  <footer>
+    © PROQUELEC – Feuillet technique Alimentation maison. Fiche pratique pour syndics et gérants.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </footer>
+</body>
+</html>

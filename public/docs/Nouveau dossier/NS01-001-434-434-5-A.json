@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les surintensités",
+    "article": "434",
+    "alinéa": "434.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-434-434-5-A",
+        "type": "obligation",
+        "texte_normatif": "Caractéristiques des dispositifs de protection contre les courts-circuits C Tout dispositif assurant la protection contre les courts-circuits doit répondre aux deux conditions suivantes : 434.5.1 Son pouvoir de coupure doit être au moins égal au courant de court-circuit présumé au point où il est installé, sauf dans le cas admis à l'alinéa suivant. Un dispositif possédant un pouvoir de coupure inférieur est admis, à condition qu'il soit doublé en amont par un dispositif ayant le pouvoir de coupure nécessaire. Dans ce cas, les caractéristiques des deux dispositifs doivent être coordonnées de telle manière que l'énergie que laissent passer les dispositifs ne soit pas supérieure à celle que peuvent supporter sans dommage le dispositif placé en aval et les canalisations protégées par ces dispositifs. NOTE - Dans certains cas particuliers, il peut être nécessaire de prendre en considération d'autres caractéristiques telles que contraintes dynamiques et énergie d'arc pour les dispositifs placés en aval. Les renseignements nécessaires doivent être obtenus auprès des constructeurs de ces dispositifs. En l'absence de règles sur la correspondance entre dispositifs de protection différents, les indications nécessaires doivent être demandées aux constructeurs de ces dispositifs. 434.5.2 Le temps de coupure de tout courant résultant d'un court-circuit se produisant en C un point quelconque du circuit ne doit pas être supérieur au temps portant la température des conducteurs à la limite admissible. Pour les courts-circuits d'une durée au plus égale à 5 s, la durée nécessaire pour qu'un courant de court-circuit élève la température des conducteurs de la température maximale admissible en service normal à la valeur limite, peut être calculée, en première approximation, à l'aide de la formule suivante : S t =k I où t est la durée en secondes, S est la section en mm2, I est le courant de court-circuit effectif en A, exprimé en valeur efficace (appelé I dans le guide k UTE C 15-105) k = facteur tenant compte de la résistivité, du coefficient de température et de la tenue d'échauffements du matériau du conducteur, ainsi que des températures initiales finales. Pour les isolations les plus communes des conducteurs, les valeurs de k pour les conducteurs de phase sont indiquées dans le tableau 43A. Tableau 43A - Valeurs de k pour un conducteur actif Isolation du conducteur PVC PVC PVC PVC PR/EPR Caout- 70 °C 70 °C 90°C 90°C chouc ≤ 300 mm² > 300 mm² ≤ 300 mm² > 300 mm² 60 °C Température initiale 70 70 90 90 90 60 ° C Température finale 160 140 160 140 250 200 ° C Matériau du Conducteur Cuivre",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "434"
+        ]
+    }
+}

@@ -1,0 +1,663 @@
+[
+  {
+    "index": "1",
+    "label": "Titre 1 – Domaine d’application, objet et principes fondamentaux",
+    "level": 1,
+    "children": [
+      {
+        "index": "11",
+        "label": "DOMAINE D’APPLICATION",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "12",
+        "label": "OBJET",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "13",
+        "label": "PRINCIPES FONDAMENTAUX",
+        "level": 2,
+        "children": [
+          {
+            "index": "131",
+            "label": "Protection pour assurer la sécurité",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "132",
+            "label": "Conception des installations électriques",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "133",
+            "label": "Choix des matériels électriques",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "134",
+            "label": "Réalisation des installations électriques et vérifications lors de la mise en service",
+            "level": 3,
+            "children": []
+          }
+        ]
+      },
+      {
+        "index": "14",
+        "label": "LIMITES DES INSTALLATIONS",
+        "level": 2,
+        "children": [
+          {
+            "index": "141",
+            "label": "Origine des installations",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "142",
+            "label": "Limite aval des installations",
+            "level": 3,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "index": "2",
+    "label": "Titre 2 – Définitions",
+    "level": 1,
+    "children": [
+      {
+        "index": "21",
+        "label": "TERMES RELATIFS AUX CARACTÉRISTIQUES DES INSTALLATIONS",
+        "level": 2,
+        "children": [
+          {
+            "index": "211",
+            "label": "Caractéristiques générales",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "212",
+            "label": "Grandeurs",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "213",
+            "label": "Installations diverses",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "214",
+            "label": "Isolement",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "215",
+            "label": "Facteurs",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "216",
+            "label": "Influences externes",
+            "level": 3,
+            "children": []
+          }
+        ]
+      },
+      {
+        "index": "22",
+        "label": "TENSIONS",
+        "level": 2,
+        "children": [
+          {
+            "index": "222",
+            "label": "Domaines de tensions en courant alternatif",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "223",
+            "label": "Domaines de tensions en courant continu",
+            "level": 3,
+            "children": []
+          }
+        ]
+      },
+      {
+        "index": "23",
+        "label": "TERMES RELATIFS A LA PROTECTION CONTRE LES CHOCS ÉLECTRIQUES",
+        "level": 2,
+        "children": [
+          {
+            "index": "231.1",
+            "label": "Généralités",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "231.2",
+            "label": "Protection contre les contacts directs",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "231.3",
+            "label": "Protection contre les contacts indirects",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "231.4",
+            "label": "Protection contre les effets thermiques",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "231.5",
+            "label": "Protection contre les surintensités",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "231.6",
+            "label": "Protection contre les courants de défaut",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "231.7",
+            "label": "Protection contre les surtensions",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "232",
+            "label": "Termes relatifs aux parties actives et aux masses",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "233",
+            "label": "Termes relatifs aux défauts",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "234",
+            "label": "Termes relatifs aux tensions de contact",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "235",
+            "label": "Termes relatifs aux isolations et aux enveloppes",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "236",
+            "label": "Isolations",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "237",
+            "label": "Classification des matériels en ce qui concerne la protection contre les chocs électriques",
+            "level": 3,
+            "children": []
+          }
+        ]
+      },
+      {
+        "index": "24",
+        "label": "TERMES RELATIFS AUX MISES A LA TERRE",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "25",
+        "label": "TERMES RELATIFS AUX CIRCUITS ÉLECTRIQUES",
+        "level": 2,
+        "children": [
+          {
+            "index": "251",
+            "label": "Termes généraux",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "252",
+            "label": "Termes relatifs aux courants",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "253",
+            "label": "Définitions relatives aux dispositifs de sectionnement, de commande et de protection",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "254",
+            "label": "Définitions relatives aux caractéristiques des dispositifs de protection",
+            "level": 3,
+            "children": []
+          }
+        ]
+      },
+      {
+        "index": "26",
+        "label": "TERMES RELATIFS AUX CANALISATIONS",
+        "level": 2,
+        "children": [
+          {
+            "index": "261",
+            "label": "Termes généraux",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "262",
+            "label": "Modes de pose",
+            "level": 3,
+            "children": []
+          }
+        ]
+      },
+      {
+        "index": "27",
+        "label": "TERMES RELATIFS AUX MATERIELS",
+        "level": 2,
+        "children": [
+          {
+            "index": "270",
+            "label": "Termes généraux",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "271",
+            "label": "Termes relatifs aux possibilités de déplacement",
+            "level": 3,
+            "children": []
+          }
+        ]
+      },
+      {
+        "index": "28",
+        "label": "SECTIONNEMENT ET COMMANDE",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "29",
+        "label": "COMPÉTENCE DES PERSONNES",
+        "level": 2,
+        "children": []
+      }
+    ]
+  },
+  {
+    "index": "3",
+    "label": "Titre 3 – Détermination des caractéristiques générales des Installations",
+    "level": 1,
+    "children": [
+      {
+        "index": "30",
+        "label": "GENERALITES",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "31",
+        "label": "ALIMENTATIONS ET STRUCTURES",
+        "level": 2,
+        "children": [
+          {
+            "index": "31.1",
+            "label": "Puissance d'alimentation et facteur de simultanéité",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "31.2",
+            "label": "Types de schémas de distribution",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "31.3",
+            "label": "Alimentation",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "31.4",
+            "label": "Division des installations",
+            "level": 3,
+            "children": []
+          }
+        ]
+      },
+      {
+        "index": "33",
+        "label": "COMPATIBILITE",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "34",
+        "label": "MAINTENABILITÉ",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "35",
+        "label": "INSTALLATIONS DE SÉCURITÉ",
+        "level": 2,
+        "children": [
+          {
+            "index": "35.1",
+            "label": "Généralités",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "35.3",
+            "label": "Sources de sécurité ou de remplacement",
+            "level": 3,
+            "children": []
+          }
+        ]
+      },
+      {
+        "index": "36",
+        "label": "INSTALLATIONS TEMPORAIRES",
+        "level": 2,
+        "children": [
+          {
+            "index": "36.1",
+            "label": "Conditions générales",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "36.2",
+            "label": "Installations de dépannage",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "36.3",
+            "label": "Installations de travaux",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "36.4",
+            "label": "Installations semi-permanentes",
+            "level": 3,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "index": "4",
+    "label": "Titre 4 – Protection pour assurer la sécurité",
+    "level": 1,
+    "children": [
+      {
+        "index": "41",
+        "label": "PROTECTION CONTRE LES CHOCS ÉLECTRIQUES",
+        "level": 2,
+        "children": [
+          {
+            "index": "411",
+            "label": "Protection contre les contacts directs",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "412",
+            "label": "Protection contre les contacts indirects",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "413",
+            "label": "Protection contre les effets thermiques",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "414",
+            "label": "Protection contre les surintensités",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "415",
+            "label": "Protection contre les courants de défaut",
+            "level": 3,
+            "children": []
+          },
+          {
+            "index": "416",
+            "label": "Protection contre les surtensions",
+            "level": 3,
+            "children": []
+          }
+        ]
+      },
+      {
+        "index": "42",
+        "label": "PROTECTION CONTRE LES EFFETS THERMIQUES",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "43",
+        "label": "PROTECTION CONTRE LES SURINTENSITÉS",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "44",
+        "label": "PROTECTION CONTRE LES SURTENSIONS",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "45",
+        "label": "PROTECTION CONTRE LES DÉFAUTS",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "46",
+        "label": "SECTIONNEMENT ET COMMANDE",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "47",
+        "label": "INSTALLATIONS DE SÉCURITÉ",
+        "level": 2,
+        "children": []
+      }
+    ]
+  },
+  {
+    "index": "5",
+    "label": "Titre 5 – Choix et mise en œuvre des matériels",
+    "level": 1,
+    "children": [
+      {
+        "index": "51",
+        "label": "DISPOSITIONS GÉNÉRALES",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "52",
+        "label": "CANALISATIONS",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "53",
+        "label": "DISPOSITIFS DE PROTECTION",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "54",
+        "label": "MISES À LA TERRE",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "55",
+        "label": "MATÉRIELS ÉLECTRIQUES",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "56",
+        "label": "INSTALLATIONS DE SÉCURITÉ",
+        "level": 2,
+        "children": []
+      }
+    ]
+  },
+  {
+    "index": "6",
+    "label": "Titre 6 – Vérifications et entretien des installations",
+    "level": 1,
+    "children": [
+      {
+        "index": "61",
+        "label": "VÉRIFICATIONS",
+        "level": 2,
+        "children": []
+      },
+      {
+        "index": "62",
+        "label": "ENTRETIEN",
+        "level": 2,
+        "children": []
+      }
+    ]
+  },
+  {
+    "index": "7",
+    "label": "Titre 7 – Règles pour les installations et emplacements spécifiques",
+    "level": 1,
+    "children": [
+      {
+        "index": "701",
+        "label": "Salles d'eau",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "702",
+        "label": "Piscines",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "703",
+        "label": "Saunas",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "704",
+        "label": "Chantiers",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "705",
+        "label": "Établissements agricoles et horticoles",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "706",
+        "label": "Enceintes conductrices",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "708",
+        "label": "Caravanes et parcs pour caravanes",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "709",
+        "label": "Marinas et bateaux de plaisance",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "711",
+        "label": "Foires et expositions",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "717",
+        "label": "Unités mobiles",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "752",
+        "label": "Garages et stations-service",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "753",
+        "label": "Chauffage électrique",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "771",
+        "label": "Locaux d'habitation",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "772",
+        "label": "Immeubles à usage d'habitation",
+        "level": 3,
+        "children": []
+      },
+      {
+        "index": "781",
+        "label": "Locaux de service électrique",
+        "level": 3,
+        "children": []
+      }
+    ]
+  }
+]

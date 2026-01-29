@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "300",
+    "alinéa": "523.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-300-523-4-A",
+        "type": "obligation",
+        "texte_normatif": "Groupement de circuits H 523.4.1 Groupement de circuits ou de câbles dans l'air Il y a groupement de circuits si la pose est jointive, c'est à dire si la distance libre séparant deux câbles est inférieure ou égale à deux fois le diamètre extérieur du plus gros conducteur ou câble. En pratique la distance à considérer est la valeur moyenne de l'écartement des câbles le long de leur parcours. Pour des groupements de circuits ou de câbles dans l'air, les facteurs de correction des tableaux 52N et 52O sont applicables aux valeurs de référence du tableau 52H. Lorsqu’un circuit est constitué par plusieurs câbles unipolaires par phase, le facteur de correction est déterminé en considérant qu’il y a autant de circuits que de câbles par phase. - 214 - Tableau 52N - Facteurs de correction pour groupement de plusieurs circuits H ou de plusieurs câbles multiconducteurs REF DISPOSITION FACTEURS DE CORRECTION DE CIRCUITS METHODES MODES OU DE CABLES Nombre de circuits ou de câbles multiconducteurs DE DE POSE REFERENCE JOINTIFS 1 2 3 4 5 6 7 8 9 12 16 20 1 Enfermés B, C, 1, 2, 3, 3A, 4, 4A, 5, 5A, 21, 22, 22A, 23, 23A, 24, 24A, 25, 31,31A, 32, 32A, 33, 33A,34, 34A, 41, 42, 1,000,800,700,650,600,550,550,500,500,450,400,40 43,71 2 Simple couche sur les murs ou les 11, 12 planchers ou tablettes non 1,000,850,790,750,730,720,720,710,70 C perforées Pas de facteur de 3 Simple couche au réduction 11A plafond 1,000,850,760,720,690,670,660,650,64 supplé- mentaire 4 Simple couche sur pour plus des tablettes de 9 câbles 13 perforées 1,000.880,820,770,750,730,730,720,72 E, F 5 Simple couche sur des échelles à 14, 16, 17 câbles, corbeaux, treillis 1,000,880,820,800,800,790,790,780,78 soudés etc. Les facteurs de ce tableau sont applicables à des groupes homogènes de câbles, également chargés. Les mêmes facteurs de correction sont applicables : - aux groupes de deux ou trois câbles monoconducteurs ; - aux câbles multiconducteurs. H Tableau 52O - Facteurs de correction pour pose en plusieurs couches pour les références 1 à 5 du tableau 52N Lorsque les câbles sont disposés en plusieurs couches, les facteurs de correction suivants doivent être appliqués aux valeurs de courants admissibles: Nombre de couches 2 3 4 ou 5 6 à 8 9 et plus Coefficient 0,80 0,73 0,70 0,68 0,66 Ces facteurs de correction sont éventuellement à multiplier par ceux du tableau 52N. Les facteurs de correction pour groupement de câbles ont été calculés en supposant le groupement constitué de câbles semblables également chargés. Lorsqu'un groupe contient des câbles de dimensions différentes, des précautions sont nécessaires pour la charge des plus petits. - 215 - 523.4.2 Groupements de conduits dans l'air ou noyés dans le béton Lorsque des conduits ou des fourreaux sont groupés de façon jointive, les courants admissibles dans les conducteurs posés dans ces conduits ou fourreaux sont réduits en appliquant les facteurs de correction indiqués, suivant le cas, dans les tableaux 52P ou 52Q. Tableau 52P - Facteurs de correction en fonction du nombre de conduits dans l'air et de leur disposition Nombre de conduits Nombre de conduits disposés horizontalement disposés verticalement 1 2 3 4 5 6 1 1 0,94 0,91 0,88 0,87 0,86 2 0,92 0,87 0,84 0,81 0,80 0,79 3 0,85 0,81 0,78 0,76 0,75 0,74 4 0,82 0,78 0,74 0,73 0,72 0,72 5 0,80 0,76 0,72 0,71 0,70 0,70 6 0,79 0,75 0,71 0,70 0,69 0,68 Tableau 52Q - Facteurs de correction en fonction du nombre de conduits noyés dans le béton et de leur disposition Nombre de conduits Nombre de conduits disposés horizontalement disposés verticalement 1 2 3 4 5 6 1 1 0,87 0,77 0,72 0,68 0,65 2 0,87 0,71 0,62 0,57 0,53 0,50 3 0,77 0,62 0,53 0,48 0,45 0,42 4 0,72 0,57 0,48 0,44 0,40 0,38 5 0,68 0,53 0,45 0,40 0,37 0,35 6 0,65 0,50 0,42 0,38 0,35 0,32 - 216 - 523.4.3 Groupement de câbles et de conduits enterrés H Lorsque des conduits ou des câbles sont posés dans le sol, les courants admissibles des conducteurs sont réduits en appliquant les facteurs de correction des tableaux 52R, 52S et 52T. Tableau 52R - Facteurs de correction pour groupement de plusieurs câbles posés directement dans le sol. Câbles monoconducteurs ou multiconducteurs disposés horizontalement ou verticalement Distance entre câbles multiconducteurs ou groupements de 3 câbles monoconducteurs (a) Nombre de Méthode Modes câbles ou Nulle Un diamètre 0,25 m 0,5 m 1,0 m de de de circuits (câbles de câble référence pose jointifs) 2 0,76 0,79 0,84 0,88 0,92 3 0,64 0,67 0,74 0,79 0,85 4 0,57 0,61 0,69 0,75 0,82 D 62, 63 5 0,52 0,56 0,65 0,71 0,80 6 0,49 0,53 0,60 0,69 0,78 Câbles Câbles monoconducteurs : multiconducteurs : a • • • • • • a a Tableau 52S - Facteurs de correction pour conduits enterrés disposés horizontalement ou verticalement à raison d'un câble ou d'un groupement de 3 câbles monoconducteurs par conduit Distance entre conduits (a) Nombre Nulle Méthode Mode de (Conduits 0,25 m 0,5 m 1,0 m de de conduits jointifs) référence pose 2 0,87 0,93 0,95 0,97 3 0,77 0,87 0,91 0,95 4 0,72 0,84 0,89 0,94 D 61 5 0,68 0,81 0,87 0,93 6 0,65 0,79 0,86 0,93 Câbles Câbles multiconducteurs : monoconducteurs : • • • • • • a a Tableau 52T - Facteurs de correction dans le cas de plusieurs circuits ou câbles dans un même conduit enterré Facteurs de correction Méthode Mode de de Nombre de circuits ou de câbles multiconducteurs référence pose 1 2 3 4 5 6 7 8 9 12 16 20 1 0,710,58 0,5 0,450,410,380,350,330,290,25 0,22 D 61 Ce tableau est applicable à des groupements de câbles de sections différentes mais ayant la même température maximale admissible. - 217 - 523.4.4 Charges intermittentes et variables Les facteurs de correction pour groupement de câbles ont été calculés sur la base d'un fonctionnement continu avec un facteur de charge de 100 % pour tous les conducteurs actifs. Lorsqu'il résulte des conditions de fonctionnement de l'installation que la charge pour tous les conducteurs actifs est inférieure à 100 %, le facteur de correction peut être supérieur. 523.4.5 Conducteurs faiblement chargés Pour l'application du tableau 52N, il n'y a pas lieu de tenir compte des circuits dont le courant d'emploi n'est pas supérieur à : 30 % du courant admissible dans les conditions de pose pour les méthodes de référence B et D (voir aussi tableau 52T), 70 % du courant admissible dans les conditions de pose pour les méthodes de référence C, E et F Il en est ainsi par exemple si des conducteurs sont prévus pour transporter un courant nettement inférieur au courant admissible, par exemple pour des raisons de chute de tension ou de protection contre les contacts indirects. De même, il n'est pas tenu compte des conducteurs utilisés pour des circuits de commande, de signalisation ou analogues.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "300"
+        ]
+    }
+}

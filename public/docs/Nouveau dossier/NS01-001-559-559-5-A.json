@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "559",
+    "alinéa": "559.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-559-559-5-A",
+        "type": "obligation",
+        "texte_normatif": "Appareils de chauffage industriels Pour l'application des prescriptions énoncées en 511.1, les normes à considérer sont les suivantes : (33) - Chauffage électrique industriel : Fours à résistances. Règles ; (34) - Emetteurs de rayonnement infrarouge - Caractéristiques ; (35) - Sécurité dans les installations électrothermiques . Les appareils de chauffage industriels ayant un faible isolement sont généralement alimentés par l'intermédiaire de transformateurs à deux enroulements ou par des groupes moteur- générateur à enroulements séparés lorsque les courants de fuite de ces appareils peuvent gêner le fonctionnement des installations qui les alimentent. ——————— (31) UTE C 90-122 (32) NF EN 60065 (C 92-130) (33) C 79-600 (34) NF EN 60240-1 (C 79-651) (35) NF EN 60519 (C79-63X). - 313 - 559.5.1 Appareils de cuisson et fours Les parties accessibles des fours qui peuvent être portées à une température dangereuse, doivent être entourées d'un dispositif de garde ou signalées à l'attention du personnel par une inscription visible. Lorsque les fours présentent des courants de fuite importants - tels que les fours à résistances - ils doivent être alimentés suivant le schéma TN. 559.5.2 Appareils de chauffage des liquides 559.5.2.1 Les appareils de chauffage ou de réchauffage de liquides combustibles ou inflammables doivent, ou bien être munis d'un limiteur de température interrompant ou réduisant le chauffage avant qu'une température dangereuse ne soit atteinte ou bien être construits de façon à ne pas constituer une cause de danger pour les personnes ou de dommage pour les objets avoisinants en cas d'échauffement exagéré. Les dispositions de ce sous-paragraphe ne concernent pas les appareils dont l'usage implique la présence d'un opérateur surveillant leur fonctionnement. 559.5.2.2 Les appareils comportant des électrodes nues ou résistances non isolées, immergées dans l'eau (par exemple, humidificateurs à vapeur, appareils de nettoyage de vêtement, etc.) sont admis dans les installations en schéma TN. Ils peuvent être admis en schéma TT ou IT sous l'une des conditions suivantes : a) soit, leurs cuves sont en matériau non conducteur et leurs alimentations doivent être protégées par des dispositifs différentiels de courant différentiel-résiduel assigné au plus égal à 30 mA ; b) soit, l'alimentation de tels appareils doit être effectuée par l'intermédiaire de transformateur à deux enroulements, un transformateur n'alimentant qu'un seul appareil. 559.5.2.3 Cordons chauffants Les cordons chauffants disposés autour de tuyaux de fluide doivent être protégés par des dispositifs à courant différentiel de courant différentiel-résiduel assigné au plus égal à 30 mA. Lorsque les tuyaux sont en matériau conducteur, ils doivent être mis à la terre par le conducteur de protection du câble d’alimentation.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "559"
+        ]
+    }
+}

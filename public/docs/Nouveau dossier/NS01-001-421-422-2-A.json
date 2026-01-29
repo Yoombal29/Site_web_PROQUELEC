@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre l’incendie, les brûlures et l’explosion",
+    "article": "421",
+    "alinéa": "422.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-421-422-2-A",
+        "type": "obligation",
+        "texte_normatif": "Locaux construits en matériaux combustibles Condition CA2 selon 512.2.21. 422.2.1 Des précautions doivent être prises pour que les matériels électriques ne puissent provoquer l'inflammation des parois, des planchers et des plafonds. Ceci peut être réalisé par : - la prévention d'incendie dû à des défauts d'isolation conformément à 422.1.7, - le choix et la mise en œuvre des matériels électriques. Les câbles doivent être au moins de la catégorie C2. Seuls les conduits, les systèmes de conduits, de goulottes, les chemins de câbles, non propagateurs de la flamme sont mis en œuvre. - 102 - 422.2.2 Choix et mise en œuvre des matériels dans des parois creuses NOTE - Les parois creuses sont généralement constituées par des armatures recouvertes de feuilles de contreplaqué, de plâtre, de bois ou de métal. Les parois creuses peuvent aussi être préfabriquées. Les matériels électriques sont installés dans ces parois. Les canalisations peuvent être fixées ou non dans ces parois. 422.2.2.1 Les matériels électriques, par exemple boîtiers, tableaux de distribution, installés dans des parois creuses combustibles doivent être conformes aux prescriptions des normes appropriées. 422.2.2.2 Si des matériels électriques sont installés dans des parois creuses et ne satisfont pas aux prescriptions de 422.2.2.1, ils doivent être enveloppés d'une épaisseur de 12 mm de fibro-silicate ou de matériau non combustible analogue ou d'une épaisseur de 100 mm de laine de verre ou de roche. Si de tels matériaux sont utilisés, leurs effets sur la dissipation de chaleur des matériels électriques doivent être pris en compte. 422.2.2.3 Les matériels électriques tels que les prises de courant et interrupteurs ne doivent pas être à fixation par griffes. 422.2.2.4 Les câbles et cordons doivent être non propagateurs de la flamme (Catégorie 2). 422.2.2.5 Les conduits doivent être conformes à la NF EN 50086 (C 68-110) et être non propagateurs de la flamme. 422.2.2.6 Les boîtes de jonction connectées à des câbles en montage apparent doivent être équipées d'un dispositif d'arrêt de câble.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "421"
+        ]
+    }
+}

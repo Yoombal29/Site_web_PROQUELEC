@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques temporaires de structures,",
+    "article": "706",
+    "alinéa": "711.411",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-711-411-A",
+        "type": "obligation",
+        "texte_normatif": "Mesure de protection par coupure automatique de l'alimentation 711.411.3 Prescriptions pour la protection contre les contacts indirects 711.411.3.2 Coupure automatique de l'alimentation A l'origine de l'installation et en tête des circuits non terminaux, la coupure automatique est assurée par des dispositifs à courant différentiel résiduel à moyenne sensibilité, temporisés ou de type S, afin d'assurer la sélectivité avec les dispositifs différentiels protégeant les circuits terminaux (voir 711.415.1). 711.411.4 Schéma TN Si le schéma des liaisons à la terre est TN, seul le schéma TN-S doit être utilisé. 711.411.6 Schéma IT Le schéma des liaisons à la terre IT ne peut être utilisé que si le choix d'un autre schéma est impossible. Toutefois, le schéma IT peut être utilisé pour des applications en courant continu. ——————— (1) NF EN 60204-1 (C 79-130) - 400 - 711.415.1 Protection complémentaire C Quel que soit le schéma des liaisons à la terre, tous les circuits terminaux doivent être protégés par un DDR de courant différentiel-résiduel assigné au plus égal à 30 mA, à l'exception des circuits alimentant des moteurs de forte puissance qui peuvent être protégés par des dispositifs à moyenne sensibilité de type S ou non volontairement retardés. Dans le cas d’un schéma IT, il doit être prévu un DDR par circuit. 711.415.2 Liaison équipotentielle supplémentaire Dans les emplacements utilisés pour des animaux, une liaison équipotentielle supplémentaire doit relier toutes les masses et éléments conducteurs pouvant être touchés simultanément par les animaux.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

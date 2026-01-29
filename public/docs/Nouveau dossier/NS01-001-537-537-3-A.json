@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Mises à la terre, conducteurs de protection et",
+    "article": "537",
+    "alinéa": "537.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-537-537-3-A",
+        "type": "obligation",
+        "texte_normatif": "Dispositif de localisation des défauts Pour l'application des règles énoncées en 511.1, la norme à considérer est la suivante : Dispositifs de contrôle permanent de l'isolement (20). Dans les cas où le schéma IT a été choisi pour des raisons de continuité de service, il est fortement recommandé d’associer aux contrôleurs permanents d’isolement des appareils permettant la localisation sous tension des défauts d’isolement. Leur fonction est de détecter le départ en défaut lorsque le contrôleur permanent d’isolement a détecté sa présence. Le temps consacré à la recherche du départ en défaut est ainsi nettement réduit car il évite la coupure des circuits un à un lorsque l’installation n’alimente plus les circuits prioritaires. Des dispositifs à courant résiduel ne possédant que des fonctions de détection et de mesure (tels que tores installés à poste fixe sur les différents circuits de l’installation ou pinces mobiles associées à des appareils de mesure) peuvent être utilisés pour la localisation plus précise des défauts d’isolement. ________________ ——————— (20) NF EN 61557-8 (C 42-198-8) - 265 - d’équipotentialité",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "537"
+        ]
+    }
+}

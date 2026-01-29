@@ -1,0 +1,34 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "411",
+  "alinéa": "411.5.2",
+  "regle_atomique": {
+    "id_unique": "NS01-001-411-5-2-A",
+    "type": "obligation",
+    "texte_normatif": "En schéma TT, les dispositifs de protection doivent être des dispositifs différentiels (DDR).",
+    "acteurs_concernes": ["installateur"],
+    "conditions_application": {
+      "schema_terre": ["TT"],
+      "tension": "<=1000V",
+      "lieu": ["installations"]
+    },
+    "exceptions": [],
+    "risques_couverts": [
+      "non-détection des défauts par dispositifs surintensité (courant trop faible)"
+    ],
+    "gravite_non_conformite": "critique",
+    "mesure_corrective": "Installer DDR avec IΔn adapté (30mA pour circuits terminaux).",
+    "justification": {
+      "physique": "Détection des courants de fuite faibles dus à impédance élevée (RA + RB)",
+      "biologique": "Sensibilité aux courants résiduels",
+      "sécurité": "Coupure avant effets physiologiques"
+    },
+    "verification": {
+      "moyen": "Test de déclenchement DDR",
+      "seuils": "IΔn conforme au circuit"
+    },
+    "liens_normatifs": ["411.5.3", "531.2", "535.4"]
+  }
+}

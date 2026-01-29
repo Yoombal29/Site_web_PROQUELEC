@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques temporaires de structures,",
+    "article": "706",
+    "alinéa": "709.559",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-709-559-A",
+        "type": "obligation",
+        "texte_normatif": "Matériels d’utilisation 709.559.1 Connexion du bateau de plaisance 709.559.1.1 Eléments du dispositif de connexion Le dispositif de connexion du bateau de plaisance se compose : - d'une fiche avec un contact relié au conducteur de protection possédant les caractéristiques indiquées en 709.530.2 ; - d'un câble souple du type H07 RN-F ou équivalent comportant un conducteur de protection, relié soit à demeure au bateau de plaisance, soit à un connecteur possédant les caractéristiqu es indiquées en 709.530.3. 709.559.1.2 Longueur du câble La longueur du câble ne doit pas dépasser 25 m. Le câble ne doit pas comporter de connexions intermédiaires sur toute sa longueur. 709.559.1.3 Section du câble Pour un socle de prise de courant de 16 A, la section minimale est de 2,5 mm2. Pour un socle de prise de courant de 32 A, la section minimale est de 6 mm2. 709.559.1.4 Mise en œuvre des câbles Les câbles sont installés de manière à ce qu'ils ne soient pas : - déplacés par les mouvements du bateau de plaisance, ou - endommagés par des frottements, des tensions ou des écrasements. Sauf s'ils sont installés dans des conduits en plastique, des gaines, des longerons ou analogues, ils doivent être fixés par des colliers ou attaches à des intervalles d'environ 0,3 m. Ils doivent être posés à distance des réservoirs d'essence, des pots d'échappement et des sources de chaleur. 709.559.1.5 Information des utilisateurs L’exploitant de la marina a pour obligation d’informer l’utilisateur sur la nature du courant délivré et sur les possibilités de connexion du navire de plaisance (voir annexe). - 396 - H Annexe - (informative) - Exemple d'instruction pour le branchement du bateau de plaisance sur l'alimentation du port Il est recommandé que le directeur du port fournisse à chaque usager de bateau ayant l'intention de se raccorder à l'alimentation de la marina, une notice d'instructions claire et à jour et appose, à chaque point d'alimentation, une copie à jour de cette notice d'instruction aisément lisible et protégée contre les intempéries. Cette notice d'instruction doit comprendre, au moins, les indications suivantes : INSTRUCTIONS DE MOUILLAGE POUR LE BRANCHEMENT DIRECT A L'ALIMENTATION DU QUAI Cette marina met à votre disposition pour votre bateau de plaisance une connexion directe et une mise à la terre à l'alimentation du quai. Généralités a) A moins que vous n'ayez un transformateur d'isolement embarqué pour séparer l'installation électrique de votre bateau de l'alimentation du quai, la corrosion (l'électrolyse) peut endommager votre bateau ou les bateaux voisins. b) L'alimentation de cette marina est ....* V, ......* Hz [normalement 230 V 50 Hz monophasé (2) ou 400 V 50 Hz triphasé], fournie par des prises conformes à la norme , position 6 h (9 h pour le triphasé dans le cas d'un système IT). c) Des dispositions doivent être prises pour éviter la chute du câble de branchement dans l'eau en cas de déconnexion. d) Un seul câble souple de branchement doit être connecté à une prise quelconque. e) Le câble de branchement souple doit être d'une seule longueur et ne pas dépasser 25 m. Il est du type HO7-RNF : - 3G2,5 pour un socle de prise de courant de 16 A ; - 3G6 ou 5G6 pour un socle de prise de courant de 32 A. f) La pénétration d'humidité, de poussière ou de sel dans la boîte de connexion embarquée peut provoquer un danger. Examinez soigneusement, nettoyez et séchez la prise avant d'effectuer le branchement à l'alimentation du quai. g) Toute réparation ou modification est dangereuse pour des personnes non averties. En cas de difficulté, appelez la direction du port. A l'arrivée a) Couper l'alimentation de tous les appareils embarqués. b) Connecter le câble souple en premier sur la boîte embarquée, puis sur la prise du quai. Avant l'appareillage a) Couper l'alimentation de tous les appareils embarqués. b) Débrancher d'abord le câble souple de la prise de quai, puis de la boîte embarquée. c) Remettre en place le couvercle de protection de la boîte de connexion embarquée afin de prévenir la pénétration d'eau. d) Lover le câble de branchement et l'entreposer dans un emplacement sec où il ne sera pas endommagé. * A compléter par le directeur du port. (2) NF EN 60309-2 (C 63-310) - 397 - baraques, stands dans des champs de foire, des marchés, des parcs de loisirs, des cirques et des lieux d'expositions ou de spectacle",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

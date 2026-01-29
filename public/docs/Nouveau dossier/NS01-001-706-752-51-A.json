@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Aires de distribution de carburants liquides",
+    "article": "706",
+    "alinéa": "752.51",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-752-51-A",
+        "type": "obligation",
+        "texte_normatif": "Emplacements dangereux Conformément à la Directive européenne 1999/92/CE du 16/12/99, le document relatif à la protection contre les explosions établi et tenu à jour par le chef d’établissement mentionne les emplacements dangereux classés en zones. Toutefois, sont classés obligatoirement en zone 1 les volumes au-dessus du sol et limités : a) pour les orifices des bouches de chargement des réservoirs de stockage : - par la surface sphérique située à 2 m autour de la bouche si celle-ci est à l'extérieur, - par les parois du local si la bouche est située à l'intérieur. b) pour les évents : - par la surface sphérique située à 2 m autour de l'orifice : c) pour les appareils distributeurs : - par la surface cylindrique située à « x » mètres autour de l'appareil « x » étant égal à la longueur du flexible de chargement majorée de 1 m et par le plan horizontal tangent au sommet de l'appareil si celui-ci est à l'extérieur, et par le plan horizontal situé à 2 m au- dessus du sommet si celui-ci est situé à l'intérieur.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

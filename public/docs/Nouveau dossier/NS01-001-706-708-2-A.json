@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques des parcs de caravanes",
+    "article": "706",
+    "alinéa": "708.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-708-2-A",
+        "type": "obligation",
+        "texte_normatif": "Définitions 708.2.1 Véhicule de loisirs Unité équipée pour l'habitation pour occupation temporaire ou saisonnière et pouvant satisfaire aux prescriptions pour la construction et l'utilisation des véhicules routiers. 708.2.1.1 Caravane Véhicule de loisirs remorqué, utilisé pour le tourisme, et pouvant satisfaire aux prescriptions pour la construction et l'utilisation des véhicules routiers. 708.2.1.2 Caravane à moteur (camping car) Véhicule de loisirs automoteur utilisé pour le tourisme et pouvant satisfaire aux prescriptions pour la construction et l'utilisation des véhicules routiers. NOTE – La caravane à moteur est soit adaptée d’une série de production de véhicules, soit conçue et construite sur un châssis existant, avec ou sans cabine de conduite, le logement étant fixe ou démontable.. 708.2.1.3 Résidence mobile de loisirs Véhicule de loisirs transportable qui inclut des moyens de mouvement mais ne satisfait pas aux prescriptions pour la construction et l’utilisation des véhicules routiers. 708.2.2 Emplacement de caravane Emplacement du sol destiné à l'installation d'un véhicule équipé pour les loisirs. 708.2.3 Parc de caravanes Surface de terrain qui contient plusieurs emplacements de caravanes. 708.2.4 Point d'alimentation électrique de caravane Matériel qui comporte les moyens de connexion et de déconnexion des câbles d'alimentation des véhicules de loisirs avec un réseau d'alimentation électrique.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

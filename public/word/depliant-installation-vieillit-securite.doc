@@ -1,0 +1,78 @@
+<html>
+<head>
+  <title>Dépliant – Votre installation vieillit : êtes-vous en sécurité ?</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#dbeafe;padding:1em;border-radius:6px;margin-top:1em;} ul{margin-left:1em;} .pictos{font-size:1.3em;}</style>
+</head>
+<body>
+  <h1>Votre installation vieillit : êtes-vous en sécurité ?</h1>
+  <h2>1. Mise en contexte</h2>
+  <p>Les installations anciennes présentent des risques accrus : câbles usés, protections obsolètes, normes dépassées.</p>
+  <h2>2. Dangers potentiels <span class="pictos">⚡🔥💡</span></h2>
+  <ul>
+    <li>Incendie dû à des câbles défectueux</li>
+    <li>Absence de prise de terre</li>
+    <li>Disjoncteurs non conformes</li>
+  </ul>
+  <h2>3. Conseils pratiques</h2>
+  <ul>
+    <li>Faire réaliser un diagnostic électrique</li>
+    <li>Remplacer les protections obsolètes</li>
+    <li>Vérifier la présence d’une prise de terre</li>
+    <li>Moderniser les équipements</li>
+  </ul>
+  <h2>4. Bonnes pratiques de prévention</h2>
+  <ul>
+    <li>Planifier des contrôles réguliers</li>
+    <li>Ne pas attendre la panne pour agir</li>
+    <li>Faire appel à un professionnel agréé</li>
+    <li>Demander un rapport de conformité après travaux</li>
+    <li>Vérifier la présence d’un disjoncteur différentiel 30mA</li>
+  </ul>
+
+  <h2>5. Signes d’usure à surveiller</h2>
+  <ul>
+    <li>Odeurs de brûlé ou bruits suspects</li>
+    <li>Prises ou interrupteurs qui chauffent</li>
+    <li>Disjonctions fréquentes</li>
+    <li>Câbles apparents ou dénudés</li>
+    <li>Absence d’étiquetage sur le tableau électrique</li>
+  </ul>
+
+  <h2>6. Tableau des risques et solutions</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#dbeafe;font-weight:bold;">
+      <td>Risque</td>
+      <td>Conséquence</td>
+      <td>Solution</td>
+    </tr>
+    <tr><td>Câble usé</td><td>Incendie, court-circuit</td><td>Remplacement immédiat</td></tr>
+    <tr><td>Absence de terre</td><td>Électrisation</td><td>Installation d’une prise de terre</td></tr>
+    <tr><td>Disjoncteur obsolète</td><td>Non-protection des personnes</td><td>Remplacement par un modèle différentiel</td></tr>
+    <tr><td>Normes dépassées</td><td>Non-conformité, danger</td><td>Mise à niveau de l’installation</td></tr>
+  </table>
+
+  <h2>7. Erreurs à éviter</h2>
+  <ul>
+    <li>Reporter les travaux de rénovation</li>
+    <li>Ignorer les signes d’usure</li>
+    <li>Faire des réparations soi-même sans compétence</li>
+    <li>Oublier de demander un devis détaillé</li>
+  </ul>
+
+  <h2>8. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/">Promotelec – Sécurité des installations anciennes</a></li>
+    <li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+    <li><a href="https://www.ademe.fr/">ADEME – Rénovation énergétique</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Faites réaliser un diagnostic complet avant toute rénovation. Moderniser votre installation, c’est protéger votre famille et valoriser votre logement.<br>
+    La sécurité électrique doit évoluer avec le temps !
+  </div>
+  <footer>
+    © PROQUELEC – Dépliant installation vieillissante. Grand public.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </footer>
+</body>
+</html>

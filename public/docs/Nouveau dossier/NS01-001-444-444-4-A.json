@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les perturbations de tension et",
+    "article": "444",
+    "alinéa": "444.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-444-444-4-A",
+        "type": "obligation",
+        "texte_normatif": "Mesures de protection des circuits de communication Dans les bâtiments comportant un conducteur PEN ou lorsque des perturbations électromagnétiques apparaissent sur des câbles de communication en raison de dispositions inappropriées de l'installation électrique (voir 545.5), les méthodes suivantes peuvent être prises en considération pour éviter ou minimiser le phénomène. 444.4.1 Utilisation de fibres optiques pour les liaisons de communication. 444.4.2 Utilisation de matériels de classe II. 444.4.3 Utilisation locale de transformateurs à deux enroulements pour l'alimentation des matériels de traitement de l'information, en prenant en compte les prescriptions de 411.6 en schéma IT (schéma IT local), ou de l'article 413 pour la protection par séparation électrique. 444.4.4 Utilisation de cheminements appropriés des canalisations afin de minimiser les aires formées par les boucles constituées conjointement par les câbles d'alimentation de puissance et les câbles de communication. - 140 - 2002 Alimentation Téléphone de puissance H Téléphone Prise de terre par boucle Alimentation de fond de fouille I I de puissance • • LEP LEP I • I • • • I • • Câble issu V • • V de l'antenne • Câble issu de l'antenne I Eau, gaz, Eau, gaz, I chauffage collectif, chauffage collectif, eaux usées eaux usées IEC 320/96 IEC 321/96 Figure 444B1 Figure 444B2 Une pénétration commune est préférée : Des pénétrations en divers endroits ≅ ≠ U 0 V devant être évitées : U 0 V LEP liaison équipotentielle principale I courant induit Figure 444B −−−− Pénétration de câbles armés et de canalisations métalliques dans un bâtiment (exemples) - 141 - H Classe II Classe I 8 FE Tableau Tableau BT BT 3 Dalle 3 7 4 PE Classe I Classe II Classe I 2 FE Tableau Tableau BT BT 6 Dalle 3 7 Conducteurs de télécommunication pour télécom ou système de traitement de Parafoudres PE l'information 1-5 FE Alimentation de puissance Schéma TN-S Borne principale de terre Schéma TN-C Vers la prise de terre, PEN Neutre PE par exemple: la boucle à fond de fouille FE : Conducteur de mise à la terre fonctionnel (optionnel), utilisé et mis à la terre selon les instructions de l'opérateur Référence Description des mesures représentées Article 1) Câbles et conduits métalliques pénètrent dans le bâtiment au même endroit 444.3.14 2) Cheminement commun des canalisations avec séparations adaptées et en 444.3.8 évitant les boucles 3) Liaisons aussi courtes que possible et utilisation de conducteurs 444.3.10 d'accompagnement (voir le guide UTE C 15-900) 4) Câbles de communication blindés et/ou paires torsadées 444.3.9 5) Eviter le schéma TN-C au-delà du point de livraison à l’entrée 444.3.12 6) Utilisation de transformateurs à enroulements séparés 444.4.3 7) Ceinturage d’équipotentialité 545.2 8) Utilisation de matériels de classe II 444.4.2 Figure 444C −−−− Illustration des mesures décrites par le présent article dans un bâtiment - 142 - H (Système de protection contre la foudre) Conducteur de descente PE Socles de prises AC Maillage PE Socles de prises AC Armoires PE 1) Informatique 2) ASI 3) Chemin de câble métallique TGBT Borne principale Liaison équipotentielle de terre selon la NF C 17-100 1)Téléphonie 2)Systèmes électroniques Boucle à fond domestiques et du bâtiment de fouille 3)Liaison équipotentielle locale horizontale AC Alimentation PE Conducteur de protection d’une alimentation AC Figure 444D −−−− Schéma de principe de mise à la terre d’un bâtiment - 143 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "444"
+        ]
+    }
+}

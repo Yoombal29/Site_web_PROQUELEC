@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Piscines et autres bassins",
+    "article": "750",
+    "alinéa": "702.41",
+    "regle_atomique": {
+        "id_unique": "NS01-001-750-702-41-A",
+        "type": "obligation",
+        "texte_normatif": "Protection contre les chocs électriques 702.411.3 Prescriptions particulières relatives aux divers volumes 702.411.3.1 Volumes 0 et 1 des piscines Dans les volumes 0 et 1 des piscines, seule la mesure de protection par TBTS sous une tension nominale non supérieure à 12 V en courant alternatif ou 30 V en courant continu est admise, la source de sécurité étant installée en dehors des volumes 0, 1 et 2 (voir aussi",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "750"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques des marinas",
+    "article": "706",
+    "alinéa": "709.51",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-709-51-A",
+        "type": "obligation",
+        "texte_normatif": "Influences externes Les matériels installés sur et au-dessus des jetées, des appontements, des quais ou des pontons doivent satisfaire aux conditions d'influences externes suivantes : Présence d'eau AD4 (projections d'eau) IPX4 AD5 (jets d'eau) IPX5 AD6 (Paquets d'eau) IPX6 NOTE - Le code approprié sera choisi selon les influences externes réelles. Présence de corps étrangers AE3 (Petits objets), IP4X Présence de substances corrosives ou polluantes AF3 (Atmosphérique) Contraintes mécaniques (chocs) AG3 (Importants), IK08 - 394 - H",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

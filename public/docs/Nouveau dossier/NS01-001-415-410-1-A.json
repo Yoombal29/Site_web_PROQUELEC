@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "415",
+    "alinéa": "410.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-415-410-1-A",
+        "type": "obligation",
+        "texte_normatif": "Domaine d'application C La présente partie traite de la protection contre les chocs électriques dans les installations électriques. Elle se fonde sur la norme NF C 20-030, norme fondamentale de sécurité applicable à la protection des personnes et des animaux domestiques, destinée à donner les principes et prescriptions essentiels communs aux installations et aux matériels ou nécessaires à leur coordination. La règle essentielle pour la protection contre les chocs électriques, telle que définie dans la norme NF C 20-030, est que les parties actives dangereuses ne soient pas accessibles et que les parties conductrices accessibles ne soient pas dangereuses, tant dans des conditions normales que dans des conditions de défaut simple. La protection contre les chocs électriques nécessite donc l'application d'au moins une disposition de protection contre les contacts directs, en fonctionnement normal et d'au moins une disposition de protection contre les contacts indirects, en cas de défaut. L'association de ces deux dispositions de protection constitue une mesure de protection. En alternative, la protection contre les chocs électriques est assurée par une disposition de protection renforcée assurant la protection en fonctionnement normal et en cas de défaut. Dans la norme NF C 20-030, la protection contre les contacts directs est appelée protection principale et la protection contre les contacts indirects est appelée protection en cas de défaut. La présente partie spécifie les prescriptions essentielles et traite de l’application et de la coordination de ces prescriptions, y compris leur application en liaison avec les classes d’influences externes, dans les installations à courant alternatif et dans les installations à courant continu. Elle indique également, en 415, les prescriptions relatives à la protection complémentaire par des dispositifs différentiels ou par liaison équipotentielle supplémentaire, pouvant être requises dans certains cas. Cette nouvelle partie remplace le chapitre 41 de la norme NF C 15-100 : 1991, ainsi que partiellement les anciennes sections 471 et 481.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "415"
+        ]
+    }
+}

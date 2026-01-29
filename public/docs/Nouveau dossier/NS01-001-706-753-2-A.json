@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Équipements de chauffage électrique des locaux",
+    "article": "706",
+    "alinéa": "753.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-753-2-A",
+        "type": "obligation",
+        "texte_normatif": "Définition 753.2.1 Eléments chauffants pour planchers rayonnants • Elément chauffant Elément composé d’un câble ou d’un film souple chauffant, et de sa ou ses liaison(s) froide(s) destinée(s) à relier ce câble ou ce film chauffant au point de connexion à l’installation de l’alimentation. • Plancher rayonnant à accumulation Chauffage électrique à inertie, à basse température, par le plancher composé d’un élément chauffant enrobé dans une dalle épaisse armée. • Plancher rayonnant direct Chauffage électrique direct, à basse température, par le plancher composé d’un élément chauffant au-dessus d’un isolant thermique et d’une chape flottante armée de faible épaisseur. Ce type de chauffage est généralement appelé Plancher Rayonnant Electrique (PRE). 753.2.2 Equipements de chauffage électriques installés en ou au plafond • Plafond rayonnant plâtre Plafond rapporté en plaque de plâtre spécifique équipé de panneaux chauffants et de panneaux non chauffants. Le panneau chauffant comprend un élément chauffant collé sous un panneau rigide de laine minérale et équipé d’un cordon et d’une prise spécifique. Ce type de chauffage est généralement appelé PRP. • Plafond rayonnant modulaire Plafond suspendu composé d’une association de modules rayonnants et de modules non chauffants préfabriqués en usine: Un module rayonnant est une unité chauffante préfabriquée se présentant sous la forme d’un panneau sandwich assemblé par collage et composé d’un isolant thermique, d’une sous face décorative, d’un élément chauffant disposé entre l’isolant et la sous face décorative et équipé d’un cordon et d’une prise spécifique. Ce type de chauffage est généralement appelé PRM. • Cassette suspendue rayonnante Appareil de chauffage rayonnant pour installation horizontale au plafond dont les parties constituantes sont enfermées dans une enveloppe rigide, et destiné à être fixé ou suspendu au plafond ou être encastré dans un plafond suspendu modulaire. • Appareil à réflecteur Appareil de chauffage rayonnant comprenant un bâti métallique renfermant un ou plusieurs éléments chauffants à moyenne ou haute température, le rayonnement émis étant renvoyé dans le local par un ou plusieurs réflecteurs. - 420 - 753.2.3 Emetteur mural direct • Convecteur Appareil fixé à une paroi verticale, équipé d’une résistance électrique permettant le chauffage du local par convection naturelle de l’air au travers d'une ou plusieurs bouches de sortie. • Panneau rayonnant Appareil fixé à une paroi verticale, équipé d’une résistance électrique permettant le chauffage du local, principalement par l’échauffement de la face visible de l’appareil. 753.2.4 Emetteur à accumulation • Appareil de chauffage à accumulation Appareil de chauffage dont la chaleur emmagasinée est obtenue en chargeant un noyau accumulateur, la chaleur pouvant être restituée à tout moment.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

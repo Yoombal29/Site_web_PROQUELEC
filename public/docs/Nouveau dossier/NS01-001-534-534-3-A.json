@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "534",
+    "alinéa": "534.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-534-534-3-A",
+        "type": "obligation",
+        "texte_normatif": "Dispositifs de protection contre les effets des baisses de tension Les dispositifs de protection doivent permettre le démarrage des moteurs lorsque la tension n'est pas inférieure à 85 % de la tension nominale et intervenir sans défaillance lorsque la tension est inférieure à environ 80 % de la tension nominale à la fréquence nominale et avec temporisation si nécessaire. Les dispositifs de protection contre les baisses de tension sont choisis parmi les suivants : - relais à baisse de tension agissant sur un interrupteur ou un disjoncteur ; - contacteurs comportant un contact d'auto-alimentation (dits «3 fils»). Les dispositifs de protection contre les baisses de tension peuvent être retardés si le fonctionnement de l'appareil qu'il protège admet sans inconvénient une interruption ou une baisse de tension de courte durée, 2 secondes par exemple. S'il est fait usage de contacteurs, l'ouverture retardée et la refermeture ne doivent en aucun cas empêcher la coupure instantanée par des dispositifs de commande ou de protection.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "534"
+        ]
+    }
+}

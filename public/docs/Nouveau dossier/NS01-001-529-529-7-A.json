@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "529",
+    "alinéa": "529.7",
+    "regle_atomique": {
+        "id_unique": "NS01-001-529-529-7-A",
+        "type": "obligation",
+        "texte_normatif": "Lignes aériennes extérieures 529.7.1 Les règles énoncées ci-après concernent les canalisations établies en conducteurs nus ou munis d'un revêtement résistant aux intempéries ou en conducteurs assemblés en faisceaux et montées sur poteaux en bois, en béton armé, en fer ou en acier ou sur potelets métalliques. Il est recommandé pour des raisons de sécurité de réaliser les lignes aériennes pour les installations électriques à basse tension, en conducteurs isolés assemblés en faisceaux conformes à la norme NF C 33-209. Ces règles ne concernent pas les lignes de clôtures électriques. 529.7.2 Les conducteurs nus doivent se trouver hors d'atteinte. Dans les traversées des cours, leur point le plus bas doit se trouver à 6 m au moins au-dessus du sol ; cette hauteur peut être réduite à 4 m dans les cours inaccessibles aux véhicules et à 3 m le long des bâtiments et murs ou au-dessus des toits de terrasse. Dans le voisinage des bâtiments, les conducteurs nus doivent se trouver au moins à une distance horizontale de 1 m des fenêtres, baies ou ouvertures ou à une distance verticale de 2 m au-dessus ou de 1 m au-dessous d'elles. 529.7.3 Les conducteurs isolés assemblés en faisceau doivent être fixés par des accessoires dont les parties en contact avec le revêtement isolant des conducteurs doivent être en matière isolante. - 227 - Ces conducteurs doivent se trouver à une hauteur au-dessus du sol d'au moins 4 m dans les traversées des cours et à 2 m dans les cours inaccessibles aux véhicules et le long des murs. Dans le voisinage des bâtiments, ils doivent se trouver au moins à une distance de 0,50 m des fenêtres, baies ou ouvertures, à moins qu'ils ne soient munis d'une protection mécanique complémentaire. ______________ - 228 - (Protection, commande, sectionnement et surveillance)",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "529"
+        ]
+    }
+}

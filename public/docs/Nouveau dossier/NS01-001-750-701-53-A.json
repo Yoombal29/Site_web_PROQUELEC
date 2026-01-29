@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux contenant une baignoire ou une douche",
+    "article": "750",
+    "alinéa": "701.53",
+    "regle_atomique": {
+        "id_unique": "NS01-001-750-701-53-A",
+        "type": "obligation",
+        "texte_normatif": "Appareillage Dans le volume 0, aucun appareillage ne doit être installé. Dans les volumes 1 et 2, aucun appareillage ne doit être installé, à l'exception d'interrupteurs de circuits à TBTS alimentés sous une tension au plus égale à 12 V en courant alternatif ou 30 V en courant continu, la source de sécurité étant installée en dehors des volumes 0, 1 et 2. NOTE - Des cordons isolants commandant des interrupteurs sont admis dans les volumes 1 et 2 à condition qu'ils (1) satisfassent aux prescriptions de la norme en vigueur . ——————— (1) NF EN 60669-1 (C 61-110) - 342 - Par dérogation, dans le volume 2, il est admis un socle de prise de courant alimenté par un C transformateur de séparation pour rasoir de puissance assignée comprise entre 20 VA et 50 VA (2) conforme à la norme . Ce socle de prise de courant peut présenter un degré de protection IP20. Dans le volume 3, sont admis des socles de prise de courant, des interrupteurs et autres C appareillages à condition d'être : • soit alimentés individuellement par un transformateur de séparation conformément à 413.3 ; • soit alimentés en TBTS (414) ; • soit protégés par un dispositif de protection à courant différentiel-résiduel de courant différentiel-résiduel assigné au plus égal à 30 mA. Dans les salles d’eau, les socles de prise de courant installés dans le sol sont interdits.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "750"
+        ]
+    }
+}

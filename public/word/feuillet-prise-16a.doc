@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Feuillet - Prise 16A</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;margin:28px;color:#0f172a}h1{color:#2563eb}.small{font-size:0.95rem;color:#334155}.footer{margin-top:18px;color:#64748b}ul{margin-left:18px}</style>
+</head>
+<body>
+<h1>Feuillet technique — Prise 2P+T 16A</h1>
+<p class="small">Fiche courte : caractéristiques essentielles et contrôles rapides pour l'installation sécurisée d'une prise 16A.</p>
+<h3>Spécifications</h3>
+<ul>
+	<li>Tension : 230 V</li>
+	<li>Courant nominal : 16 A</li>
+	<li>Connexion : phase, neutre, protection (PE) — respecter repérage</li>
+</ul>
+<h3>Contrôles avant mise en service</h3>
+<ul>
+	<li>Serrage correct des bornes (couple recommandé constructeur)</li>
+	<li>Absence de surchauffe au test sous charge</li>
+	<li>Respect de la polarité et du brochage</li>
+</ul>
+<h3>Étapes de vérification lors de l’installation ou de la maintenance</h3>
+<ul>
+		<li>Contrôler la section du câble (2,5 mm² minimum)</li>
+		<li>Vérifier la continuité de la terre</li>
+		<li>Tester le serrage des bornes selon les préconisations constructeur</li>
+		<li>Inspecter l’absence de surchauffe après installation</li>
+		<li>Valider la conformité avec la norme NF C 15-100</li>
+</ul>
+
+<h3>Tableau des anomalies et solutions</h3>
+<table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+		<tr style="background:#fef9c3;font-weight:bold;">
+			<td>Anomalie</td>
+			<td>Conséquence</td>
+			<td>Solution</td>
+		</tr>
+		<tr><td>Serrage insuffisant</td><td>Risque d’échauffement, panne</td><td>Reserrer selon préconisation</td></tr>
+		<tr><td>Absence de terre</td><td>Danger pour les personnes</td><td>Installer la connexion de terre</td></tr>
+		<tr><td>Section de câble insuffisante</td><td>Surchauffe, incendie</td><td>Remplacer par du 2,5 mm²</td></tr>
+		<tr><td>Polarité inversée</td><td>Non-conformité, danger</td><td>Corriger le raccordement</td></tr>
+	</table>
+
+<h3>Erreurs à éviter</h3>
+<ul>
+		<li>Utiliser une section de câble trop faible</li>
+		<li>Oublier la connexion de terre</li>
+		<li>Ignorer le serrage des bornes</li>
+		<li>Ne pas faire appel à un professionnel certifié</li>
+</ul>
+
+<h3>Ressources utiles</h3>
+<ul>
+		<li><a href="https://www.promotelec.com/">Promotelec – Prises électriques</a></li>
+		<li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+		<li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+</ul>
+
+<div class="footer">PROQUELEC • Feuillet technique • 2025<br>Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a></div>
+</body>
+</html>

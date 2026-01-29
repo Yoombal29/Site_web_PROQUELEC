@@ -1,0 +1,36 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "410",
+  "alinéa": "410.3.1",
+  "regle_atomique": {
+    "id_unique": "NS01-001-410-3-1-A",
+    "type": "obligation",
+    "texte_normatif": "Une mesure de protection (coupure automatique, isolation double, séparation électrique ou TBTS) doit être appliquée dans chaque installation, associant protection contre contacts directs et indirects.",
+    "acteurs_concernes": ["installateur", "controleur", "concepteur"],
+    "conditions_application": {
+      "schema_terre": ["TN", "TT", "IT"],
+      "tension": "<=1000V",
+      "lieu": ["tous"]
+    },
+    "exceptions": ["sous conditions surveillance (annexe B, C)"],
+    "risques_couverts": [
+      "électrocution directe et indirecte",
+      "brûlures",
+      "incendie"
+    ],
+    "gravite_non_conformite": "critique",
+    "mesure_corrective": "Choisir la mesure adaptée au lieu (habitation: coupure automatique; locaux humides: séparation).",
+    "justification": {
+      "physique": "Parties actives non accessibles, parties conductrices non dangereuses (normal et défaut)",
+      "biologique": "Respect des effets du courant sur le corps humain",
+      "sécurité": "Principe fondamental de sécurité électrique"
+    },
+    "verification": {
+      "moyen": "Audit de conformité aux mesures prescrites",
+      "seuils": "Présence d'au moins une mesure complète"
+    },
+    "liens_normatifs": ["411", "412", "413", "414", "partie 7"]
+  }
+}

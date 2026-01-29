@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre l’incendie, les brûlures et l’explosion",
+    "article": "424",
+    "alinéa": "424.8",
+    "regle_atomique": {
+        "id_unique": "NS01-001-424-424-8-A",
+        "type": "obligation",
+        "texte_normatif": "Les canalisations doivent être mises en œuvre, dans la mesure du possible, de façon à ce qu‘elles ne soient pas exposées aux chocs mécaniques, à l’action de substances corrosives (par exemple, solvants) ainsi qu’aux effets de la chaleur. S’il n’en est pas ainsi, elles doivent être correctement choisies en fonction des classes d’influences externes ; dans le cas de risque mécanique, la protection doit être supérieure à celle prescrite en fonction de la classe d’influence externe AG. Les âmes en aluminium doivent avoir une section d'au moins 16 mm². 1 Sauf dans le cas des circuits de sécurité intrinsèque pour lesquels les câbles doivent être choisis en respectant les dispositions de la norme NF EN 60079-14 (C 23-579-14), et sauf dans les deux cas particuliers faisant l'objet des paragraphes 2 et 3 ci-après, les câbles sont de tension nominale 1000 volts et leur choix doit satisfaire aux dispositions suivantes : a) dans les conditions d'influences externes AG1, tous les câbles sont admis, y compris les câbles non armés, notamment les câbles U 1000R2V. b) dans les conditions d'influences externes AG2, peuvent être utilisés les câbles armés admissibles dans les conditions AG3 (voir tableau 52D). c) dans les conditions d'influences externes AG3, peuvent être utilisés les câbles admissibles dans la condition b) avec une protection complémentaire (par exemple écrans, fourreaux ou dispositifs analogues) à moins d'utiliser des câbles spéciaux comportant une armure plus importante. Dans les trois situations précédentes, les câbles des séries 07RN-F, 07BB-F et 07BN-4-F peuvent être utilisés lorsque les liaisons souples sont nécessaires. 2 Des câbles de tension nominale inférieure 1000 volts mais au moins égale à 250 volts ne sont admis que si les conditions suivantes sont simultanément remplies : a) les câbles font partie d'un circuit à TBTS satisfaisant à toutes les conditions énoncées en 414. b) l'intensité maximale du courant susceptible de les parcourir ne peut être supérieure à 40 mA, même en cas de défaut. c) les câbles sont protégés par deux feuillards en acier ayant une épaisseur au moins égale à 0,2 mm ou d'une manière équivalente. De telles utilisations se rencontrent dans les circuits de signalisation et d'alarme. 3 Il est admis d'utiliser, pour les circuits d'installations de sécurité telles que l'éclairage de sécurité, des câbles résistants au feu (catégorie CR1 selon la norme en vigueur) de tension nominale 500 volts, armés dans les conditions d'influences externes AG2 et AG3, à condition que l'isolement de ces circuits soit surveillé par un contrôleur permanent d'isolement, même lorsque l'installation n'est pas en service. 4 Dans le cas d'atmosphères explosives à base de gaz, vapeur ou brouillard où sont mis en œuvre les modes de protection définis dans les normes spécifiques, les câbles doivent aussi satisfaire aux dispositions spéciales de mise en œuvre de la norme NF EN 60079-14 (C 23-579-14). - 106 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "424"
+        ]
+    }
+}

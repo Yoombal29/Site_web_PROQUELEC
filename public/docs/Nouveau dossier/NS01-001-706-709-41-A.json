@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques des marinas",
+    "article": "706",
+    "alinéa": "709.41",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-709-41-A",
+        "type": "obligation",
+        "texte_normatif": "Protection contre les chocs électriques 709.411.4 Dans le cas d’un schéma TN, seul le schéma TN-S doit être utilisé. Le schéma IT est déconseillé. H 709.415.1 Protection complémentaire par dispositifs à courant différentiel-résiduel Les socles de prise de courant doivent être protégés par un dispositif à courant différentiel-résiduel ayant un courant différentiel-résiduel assigné au plus égal à 30 mA.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques dans les établissements agricoles",
+    "article": "706",
+    "alinéa": "705.414",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-705-414-A",
+        "type": "obligation",
+        "texte_normatif": "Lorsque la TBTS ou la TBTP est utilisée, la protection contre les contacts directs doit être assurée au moyen de barrières ou d'enveloppes présentant au moins le degré de protection IP2X ou IPXXB, quelle que soit la tension nominale. 705.415.1 Les circuits alimentant des prises de courant, quel que soit leur courant assigné, doivent être protégés par des dispositifs différentiels dont le courant différentiel-résiduel assigné n'est pas supérieur à 30 mA. 705.415.2 Liaison équipotentielle supplémentaire Dans les locaux où se trouvent les animaux, une liaison équipotentielle supplémentaire doit relier toutes les masses et tous les éléments conducteurs qui peuvent être touchés par les animaux. Tous les sols conducteurs doivent comporter des armatures métalliques reliées à la liaison équipotentielle supplémentaire. H 705.42 Protection contre l’incendie, les brûlures et l’explosion",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

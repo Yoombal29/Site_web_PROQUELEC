@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "536",
+    "alinéa": "536.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-536-536-2-A",
+        "type": "obligation",
+        "texte_normatif": "Dispositifs de sectionnement 536.2.1 Les dispositifs de sectionnement doivent couper effectivement tous les conducteurs actifs C d'alimentation du circuit considéré en tenant compte des dispositions en 461.2. Les matériels utilisés pour le sectionnement doivent satisfaire aux sous-paragraphes 536.2.1.1 à 536.2.5. Les dispositifs assurant la fonction de sectionnement peuvent être : - soit des appareils pour lesquels la fonction de sectionnement est explicitement reconnue par les normes les co ncernant, auquel cas la conformité aux règles en 536.2.1.1 et 536.2.1.2 est considérée comme satisfaite par la conformité à leur norme ; - soit d'autres dispositifs qui doivent alors satisfaire à l'ensemble des règles en 536.2. 536.2.1.1 Les dispositifs de sectionnement doivent satisfaire aux deux conditions suivantes : C a) supporter à l'état neuf et dans des conditions propres et sèches, en position ouverte, entre les bornes de chaque pôle, une tension de choc dont la valeur est donnée dans le tableau 53E en fonction de la tension nominale de l'installation. - 258 - C Tableau 53F – Tension de tenue aux chocs pour les dispositifs de sectionnement Tension nominale Tension de tenue aux chocs de l'installation pour les dispositifs de sectionnement (V) (kV) 230/400 5 400/690 8 1 000 10 Les tensions de tenue aux chocs du tableau 53F sont égales à 1,25 fois celles correspondant à la catégorie de surtensions des circuits de distribution et terminaux (catégorie ///), telles qu'elles sont fixées dans le tableau 44 B de 443. Les valeurs du tableau 53F sont valables aussi bien pour le courant alternatif que pour le courant continu. En pratique, les essais de tenue aux chocs ne sont pas effectués si les distances minimales d'ouverture des contacts suivantes sont respectées : - pour les appareils à simple coupure : • 4 mm pour la tension nominale 230/400 V ; • 8 mm pour la tension nominale 400/690 V ; • 11 mm pour la tension nominale 1 000 V. - pour les appareils à double coupure, la somme des distances d'ouverture des contacts doit être au moins égale à 1,25 fois la valeur ci-dessus. Pour des tensions autres que celles du tableau 53F, la distance minimale de séparation des contacts est celle correspondant à la tension nominale immédiatement supérieure. b) avoir un courant de fuite à travers les pôles ouverts non supérieur à C - 0,5 mA par pôle à l'état neuf et dans des conditions propres et sèches, et - 6 mA par pôle à la fin de leur durée de vie conventionnelle déterminée par la norme correspondante, sous une tension d'essai appliquée entre les bornes de chaque pôle et égale à 110 % de la tension nominale entre phase et neutre de l'installation. Lorsque l'essai est effectué en courant continu, la valeur de la tension continue doit être égale à la valeur efficace de la tension d'essai en courant alternatif. 536.2.1.2 La distance d'ouverture entre les contacts du dispositif doit être visible ou être clairement et sûrement indiquée correspondant à la position « Arrêt » ou « Ouvert ». Une telle indication doit apparaître seulement lorsque la distance entre les contacts d'ouverture a été atteinte sur chaque pôle du dispositif. NOTE - Le marquage prescrit dans ce paragraphe peut être réalisé par l'utilisation des symboles graphiques « O » et « I » indiquant respectivement les positions «Ouvert» et «Fermé» lorsque l'utilisation de ces symboles est admise par la norme correspondante du matériel. La visibilité ou l'indication claire et sûre de la position des contacts correspond à la prescription concernant la coupure pleinement apparente prescrite dans certains textes. Les interrupteurs et disjoncteurs pour usage domestique conformes à leurs normes, sont admis comme aptes à la fonction sectionnement. L’indication de la norme fait donc office de marquage pour le sectionnement. - 259 - Pour les appareils pour usage industriel, l’aptitude au sectionnement est une fonction facultative. C’est pour cette raison qu’un marquage spécifique est prévu pour les appareils remplissant la fonction sectionnement : Dans le cas d’appareils aptes au sectionnement, la position indiquée par « O » correspond à la position «ouvert-sectionné» alors que cette même indication correspond à la position «ouvert» pour les appareils non sectionneurs. 536.2.1.3 Les dispositifs à semiconducteurs ne doivent pas être utilisés comme dispositifs de C sectionnement. 536.2.2 Les dispositifs de sectionnement doivent être conçus ou installés de façon à empêcher toute fermeture intempestive. NOTE - Une telle fermeture pourrait être provoquée, par exemple, par des chocs ou des vibrations ou par des manœuvres intempestives. 536.2.3 Des dispositions doivent être prises pour protéger les dispositifs de sectionnement contre une ouverture en charge accidentelle ou non autorisée. NOTE - Cela peut être obtenu en plaçant l'appareil dans un emplacement ou une enveloppe fermant à clé ou en le condamnant. Une autre solution peut consister à asservir le dispositif hors charge avec un appareil de manœuvre en charge (ouverture ou fermeture). 536.2.4 Les moyens de sectionnement doivent de préférence être assurés par un appareil de coupure multipolaire coupant tous les pôles de l'alimentation correspondante. NOTE - Le sectionnement d'un circuit peut être assuré par exemple au moyen de : - sectionneurs, interrupteurs-sectionneurs ; - disjoncteurs reconnus aptes au sectionnement par leur norme ; - prises de courant ; - éléments de remplacement de fusibles ; - barrettes ; - bornes spécialement conçues n'exigeant pas le déplacement d'un conducteur ; - ACP reconnus aptes au sectionnement par leur norme. 536.2.5 Les dispositifs utilisés pour le sectionnement doivent être clairement identifiés, par exemple par marquage, pour indiquer le circuit qu'ils sectionnent. Les dispositifs de sectionnement unipolaires de chaque circuit sont séparés des dispositifs de sectionnement d'autres circuits par un espace suffisant pour éviter toute erreur.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "536"
+        ]
+    }
+}

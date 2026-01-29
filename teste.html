@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProQuelec - Sécurité Électrique</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #004aad;
+      --secondary: #007bff;
+      --accent: #28a745;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --shadow: 0 8px 20px rgba(0,0,0,0.15);
+      --radius: 12px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fdfdfd;
+      color: var(--dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header & Navigation */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    
+    .logo i {
+      margin-right: 0.5rem;
+      font-size: 1.8rem;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+    
+    .nav-links a:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover:after {
+      width: 100%;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 6rem 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      margin-bottom: 4rem;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .hero p {
+      font-size: 1.3rem;
+      margin-top: 1rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .mobile-menu {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Main Content */
+    main {
+      width: 100%;
+    }
+    
+    section {
+      margin-bottom: 6rem;
+      padding: 0 2rem;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+    
+    .section-header h2:after {
+      content: '';
+      position: absolute;
+      width: 70px;
+      height: 4px;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    
+    .section-header p {
+      font-size: 1.1rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .service-card {
+      background: white;
+      padding: 3rem 2rem;
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transition: transform 0.35s, box-shadow 0.35s;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .service-card:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+    }
+    
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    }
+    
+    .service-card i {
+      font-size: 3.5rem;
+      color: var(--secondary);
+      margin-bottom: 1.5rem;
+      background: #eef5ff;
+      padding: 1.2rem;
+      border-radius: 50%;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    
+    .service-card:hover i {
+      transform: scale(1.1);
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
+    }
+    
+    .service-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    
+    .service-card p {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      opacity: 0.8;
+      flex-grow: 1;
+    }
+    
+    .service-btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      border-radius: 35px;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+      align-self: center;
+    }
+    
+    .service-btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: all 0.5s ease;
+    }
+    
+    .service-btn:hover:before {
+      left: 100%;
+    }
+    
+    .service-btn:hover {
+      background: linear-gradient(135deg, var(--primary), #002f6c);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      transform: translateY(-3px) scale(1.02);
+    }
+    
+    .service-btn i {
+      margin-left: 0.6rem;
+    }
+    
+    /* About Section */
+    .about {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .about-image {
+      flex: 1;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    
+    .about-image:hover img {
+      transform: scale(1.05);
+    }
+    
+    .about-content {
+      flex: 1;
+    }
+    
+    .about-content h2 {
+      text-align: left;
+      margin-bottom: 1.5rem;
+      font-size: 2.2rem;
+      color: var(--primary);
+    }
+    
+    .about-content p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .feature i {
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+    
+    /* Partners Section */
+    .partners {
+      background: var(--light);
+      padding: 4rem 0;
+      margin-bottom: 6rem;
+    }
+    
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .partner-card {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+    
+    .partner-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .partner-card h3 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+    
+    .partner-card p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    /* Testimonials */
+    .testimonials {
+      background: var(--light);
+      padding: 4rem 2rem;
+      border-radius: var(--radius);
+      margin-top: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .testimonial-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .testimonial-card {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    .testimonial-text:before {
+      content: '"';
+      font-size: 3rem;
+      color: var(--secondary);
+      opacity: 0.3;
+      position: absolute;
+      top: -1rem;
+      left: -0.5rem;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .author-info h4 {
+      margin-bottom: 0.2rem;
+      color: var(--primary);
+    }
+    
+    .author-info p {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+    
+    /* CTA Section */
+    .cta {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 5rem 2rem;
+      border-radius: var(--radius);
+      margin: 6rem auto;
+      max-width: 1400px;
+    }
+    
+    .cta h2 {
+      color: white;
+      margin-bottom: 2rem;
+    }
+    
+    .cta p {
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      font-size: 1.1rem;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .cta a {
+      display: inline-block;
+      padding: 1.2rem 2.5rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.35s ease;
+    }
+    
+    .cta-primary {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    
+    .cta-primary:hover {
+      background: var(--light);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+      transform: translateY(-3px) scale(1.03);
+    }
+    
+    .cta-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    
+    .cta-secondary:hover {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+      transform: translateY(-3px) scale(1.03);
+    }
+    
+    .cta i {
+      margin-right: 0.6rem;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 4rem 0 2rem;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .footer-column h3 {
+      color: white;
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .footer-column h3:after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 3px;
+      background: var(--secondary);
+      bottom: -8px;
+      left: 0;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.8rem;
+    }
+    
+    .footer-links a {
+      color: #ddd;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: white;
+      padding-left: 5px;
+    }
+    
+    .contact-info {
+      list-style: none;
+    }
+    
+    .contact-info li {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+    
+    .contact-info i {
+      color: var(--secondary);
+      margin-top: 0.2rem;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      background: var(--secondary);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+      
+      section {
+        padding: 0 1.5rem;
+      }
+    }
+    
+    @media (max-width: 992px) {
+      .about {
+        flex-direction: column;
+        gap: 2rem;
+      }
+      
+      .about-content h2 {
+        text-align: center;
+      }
+      
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--primary);
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+        gap: 0;
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .nav-links li {
+        margin: 0.5rem 0;
+      }
+      
+      .mobile-menu {
+        display: block;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .services {
+        grid-template-columns: 1fr;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .cta a {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .hero {
+        padding: 4rem 1rem;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .section-header h2 {
+        font-size: 1.8rem;
+      }
+      
+      .service-card {
+        padding: 2rem 1.5rem;
+      }
+      
+      .partners-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <i class="fas fa-bolt"></i>
+          <span>ProQuelec</span>
+        </div>
+        
+        <div class="mobile-menu">
+          <i class="fas fa-bars"></i>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+ 
+
+  
+    <section id="contact" class="cta">
+      <h2>Prêt à sécuriser vos installations?</h2>
+      <p>Contactez-nous dès aujourd'hui pour un diagnostic gratuit ou pour discuter de vos besoins en sécurité électrique.</p>
+      <div class="cta-buttons">
+        <a href="/contact.html" class="cta-primary"><i class="fas fa-phone-alt"></i> Nous contacter</a>
+        <a href="/rendezvous.html" class="cta-secondary"><i class="fas fa-calendar"></i> Prendre rendez-vous</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+  <!-- SECTION CONVERTISSEUR D’UNITÉS ÉLECTRIQUES PRO -->
+  <section id="convertisseur-pro" style="margin-bottom:6rem;">
+    <div class="container" style="max-width:1400px;">
+      <div class="proq-flex-panel">
+        <!-- Vérificateur approfondi de terre (gauche) -->
+        <div class="proq-panel-left">
+          <div class="service-card proq-fullheight">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Vérificateur approfondi de terre</h3>
+            <label for="earth-resistance" class="proq-label">Résistance de terre (Ω)</label>
+            <input id="earth-resistance" type="number" min="0" step="0.1" placeholder="Ex: 20" class="proq-input">
+            <label for="earth-diff" class="proq-label">Sensibilité du différentiel (mA)</label>
+            <select id="earth-diff" class="proq-input">
+              <option value="30">30 mA (usage courant)</option>
+              <option value="100">100 mA</option>
+              <option value="300">300 mA</option>
+              <option value="500">500 mA</option>
+            </select>
+            <label for="earth-zone" class="proq-label">Zone d'installation</label>
+            <select id="earth-zone" class="proq-input">
+              <option value="50">Zone Sèche (UL = 50 V)</option>
+              <option value="25">Zone Humide (UL = 25 V)</option>
+              <option value="12">Zone Immergée (UL = 12 V)</option>
+            </select>
+            <button onclick="checkEarthResistance()" class="service-btn proq-btn">Vérifier la conformité</button>
+            <div id="earth-result" class="proq-result"></div>
+            <div class="proq-formule">
+              <b>Formule :</b> Uc = R<sub>terre</sub> × IΔn<br>
+              <span>Uc : tension de contact (V), R<sub>terre</sub> : résistance de terre (Ω), IΔn : courant différentiel (A)</span>
+            </div>
+          </div>
+        </div>
+        <!-- Convertisseur PRO (droite) -->
+        <div class="proq-panel-right">
+          <div class="section-header proq-header-right">
+            <h2>Convertisseur d’unités électriques <span title="Conversions professionnelles pour tous les usages électriques."><i class="fas fa-exchange-alt"></i></span></h2>
+            <p>Convertissez toutes les unités électriques courantes : tension, courant, puissance, énergie, impédance, capacité, fréquence…</p>
+          </div>
+          <div class="services proq-services-grid">
+            <!-- Conversion de tension -->
+            <div class="service-card">
+              <i class="fas fa-bolt"></i>
+              <h3>Conversion de tension</h3>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <input id="mv-value" type="number" placeholder="mV" aria-label="MilliVolts" style="width:80px;">
+                <button onclick="document.getElementById('v-value').value = (parseFloat(document.getElementById('mv-value').value)||0)/1000" class="service-btn">→ V</button>
+                <input id="v-value" type="number" placeholder="V" aria-label="Volts" style="width:80px;">
+                <button onclick="document.getElementById('mv-value').value = (parseFloat(document.getElementById('v-value').value)||0)*1000" class="service-btn">→ mV</button>
+                <button onclick="document.getElementById('mv-value').value='';document.getElementById('v-value').value='';" class="service-btn" style="background:var(--accent);color:white;"><i class="fas fa-undo"></i></button>
+              </div>
+              <small>1 V = 1000 mV</small>
+            </div>
+            <!-- Conversion de courant -->
+            <div class="service-card">
+              <i class="fas fa-battery-half"></i>
+              <h3>Conversion de courant</h3>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <input id="ma-value" type="number" placeholder="mA" aria-label="MilliAmpères" style="width:80px;">
+                <button onclick="document.getElementById('a-value').value = (parseFloat(document.getElementById('ma-value').value)||0)/1000" class="service-btn">→ A</button>
+                <input id="a-value" type="number" placeholder="A" aria-label="Ampères" style="width:80px;">
+                <button onclick="document.getElementById('ma-value').value = (parseFloat(document.getElementById('a-value').value)||0)*1000" class="service-btn">→ mA</button>
+                <button onclick="document.getElementById('ma-value').value='';document.getElementById('a-value').value='';" class="service-btn" style="background:var(--accent);color:white;"><i class="fas fa-undo"></i></button>
+              </div>
+              <small>1 A = 1000 mA</small>
+            </div>
+            <!-- Conversion de puissance -->
+            <div class="service-card">
+              <i class="fas fa-plug"></i>
+              <h3>Conversion de puissance</h3>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <input id="w-value" type="number" placeholder="W" aria-label="Watts" style="width:80px;">
+                <button onclick="document.getElementById('kw-value').value = (parseFloat(document.getElementById('w-value').value)||0)/1000" class="service-btn">→ kW</button>
+                <input id="kw-value" type="number" placeholder="kW" aria-label="Kilowatts" style="width:80px;">
+                <button onclick="document.getElementById('w-value').value = (parseFloat(document.getElementById('kw-value').value)||0)*1000" class="service-btn">→ W</button>
+                <button onclick="document.getElementById('w-value').value='';document.getElementById('kw-value').value='';" class="service-btn" style="background:var(--accent);color:white;"><i class="fas fa-undo"></i></button>
+              </div>
+              <small>1 kW = 1000 W</small>
+            </div>
+            <!-- Conversion d'énergie -->
+            <div class="service-card">
+              <i class="fas fa-bolt"></i>
+              <h3>Conversion d'énergie</h3>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <input id="wh-value" type="number" placeholder="Wh" aria-label="Wattheures" style="width:80px;">
+                <button onclick="document.getElementById('kwh-value').value = (parseFloat(document.getElementById('wh-value').value)||0)/1000" class="service-btn">→ kWh</button>
+                <input id="kwh-value" type="number" placeholder="kWh" aria-label="Kilowattheures" style="width:80px;">
+                <button onclick="document.getElementById('wh-value').value = (parseFloat(document.getElementById('kwh-value').value)||0)*1000" class="service-btn">→ Wh</button>
+                <button onclick="document.getElementById('wh-value').value='';document.getElementById('kwh-value').value='';" class="service-btn" style="background:var(--accent);color:white;"><i class="fas fa-undo"></i></button>
+              </div>
+              <small>1 kWh = 1000 Wh</small>
+            </div>
+            <!-- Conversion impédance -->
+            <div class="service-card">
+              <i class="fas fa-wave-square"></i>
+              <h3>Impédance (Ω &harr; kΩ &harr; MΩ)</h3>
+              <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+                <input id="ohm-value" type="number" placeholder="Ω" aria-label="Ohms" style="width:70px;">
+                <button onclick="document.getElementById('kohm-value').value = (parseFloat(document.getElementById('ohm-value').value)||0)/1000" class="service-btn">→ kΩ</button>
+                <input id="kohm-value" type="number" placeholder="kΩ" aria-label="Kiloohms" style="width:70px;">
+                <button onclick="document.getElementById('ohm-value').value = (parseFloat(document.getElementById('kohm-value').value)||0)*1000" class="service-btn">→ Ω</button>
+                <button onclick="document.getElementById('mohm-value').value = (parseFloat(document.getElementById('kohm-value').value)||0)/1000" class="service-btn">→ MΩ</button>
+                <input id="mohm-value" type="number" placeholder="MΩ" aria-label="Mégaohms" style="width:70px;">
+                <button onclick="document.getElementById('kohm-value').value = (parseFloat(document.getElementById('mohm-value').value)||0)*1000" class="service-btn">→ kΩ</button>
+                <button onclick="document.getElementById('ohm-value').value='';document.getElementById('kohm-value').value='';document.getElementById('mohm-value').value='';" class="service-btn" style="background:var(--accent);color:white;"><i class="fas fa-undo"></i></button>
+              </div>
+              <small>1 kΩ = 1000 Ω | 1 MΩ = 1000 kΩ</small>
+            </div>
+            <!-- Conversion capacité -->
+            <div class="service-card">
+              <i class="fas fa-microchip"></i>
+              <h3>Capacité (μF &harr; nF &harr; pF)</h3>
+              <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+                <input id="uf-value" type="number" placeholder="μF" aria-label="Microfarads" style="width:70px;">
+                <button onclick="document.getElementById('nf-value').value = (parseFloat(document.getElementById('uf-value').value)||0)*1000" class="service-btn">→ nF</button>
+                <input id="nf-value" type="number" placeholder="nF" aria-label="Nanofarads" style="width:70px;">
+                <button onclick="document.getElementById('uf-value').value = (parseFloat(document.getElementById('nf-value').value)||0)/1000" class="service-btn">→ μF</button>
+                <button onclick="document.getElementById('pf-value').value = (parseFloat(document.getElementById('nf-value').value)||0)*1000" class="service-btn">→ pF</button>
+                <input id="pf-value" type="number" placeholder="pF" aria-label="Picofarads" style="width:70px;">
+                <button onclick="document.getElementById('nf-value').value = (parseFloat(document.getElementById('pf-value').value)||0)/1000" class="service-btn">→ nF</button>
+                <button onclick="document.getElementById('uf-value').value='';document.getElementById('nf-value').value='';document.getElementById('pf-value').value='';" class="service-btn" style="background:var(--accent);color:white;"><i class="fas fa-undo"></i></button>
+              </div>
+              <small>1 μF = 1000 nF | 1 nF = 1000 pF</small>
+            </div>
+            <!-- Conversion fréquence -->
+            <div class="service-card">
+              <i class="fas fa-wave-square"></i>
+              <h3>Fréquence (Hz &harr; kHz &harr; MHz)</h3>
+              <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+                <input id="hz-value" type="number" placeholder="Hz" aria-label="Hertz" style="width:70px;">
+                <button onclick="document.getElementById('khz-value').value = (parseFloat(document.getElementById('hz-value').value)||0)/1000" class="service-btn">→ kHz</button>
+                <input id="khz-value" type="number" placeholder="kHz" aria-label="Kilohertz" style="width:70px;">
+                <button onclick="document.getElementById('hz-value').value = (parseFloat(document.getElementById('khz-value').value)||0)*1000" class="service-btn">→ Hz</button>
+                <button onclick="document.getElementById('mhz-value').value = (parseFloat(document.getElementById('khz-value').value)||0)/1000" class="service-btn">→ MHz</button>
+                <input id="mhz-value" type="number" placeholder="MHz" aria-label="Mégahertz" style="width:70px;">
+                <button onclick="document.getElementById('khz-value').value = (parseFloat(document.getElementById('mhz-value').value)||0)*1000" class="service-btn">→ kHz</button>
+                <button onclick="document.getElementById('hz-value').value='';document.getElementById('khz-value').value='';document.getElementById('mhz-value').value='';" class="service-btn" style="background:var(--accent);color:white;"><i class="fas fa-undo"></i></button>
+              </div>
+              <small>1 kHz = 1000 Hz | 1 MHz = 1000 kHz</small>
+            </div>
+          </div>
+          <div class="proq-reminder">
+            <div class="proq-reminder-inner">
+              <b>Rappels pros :</b> <br>
+              <span>P = U × I &nbsp; | &nbsp; E = P × t &nbsp; | &nbsp; 1 kW = 1000 W &nbsp; | &nbsp; 1 V = 1000 mV &nbsp; | &nbsp; 1 A = 1000 mA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      .proq-flex-panel {
+        display: flex;
+        gap: 2.5rem;
+        align-items: stretch;
+        flex-wrap: wrap;
+        background: #f8fafd;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        padding: 2.5rem 2rem;
+        margin-bottom: 3rem;
+      }
+      .proq-panel-left, .proq-panel-right {
+        flex: 1 1 350px;
+        min-width: 340px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .proq-panel-left {
+        max-width: 420px;
+      }
+      .proq-panel-right {
+        flex: 2 1 500px;
+        min-width: 340px;
+      }
+      .proq-fullheight {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .proq-label {
+        margin-bottom: 0.5rem;
+        display: block;
+        font-weight: 500;
+        color: #004aad;
+      }
+      .proq-input {
+        width: 100%;
+        margin-bottom: 0.7rem;
+        padding: 0.7rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #dbeafe;
+        font-size: 1rem;
+      }
+      .proq-btn {
+        width: 100%;
+        margin-bottom: 0.7rem;
+      }
+      .proq-result {
+        margin-top: 0.7rem;
+        font-weight: 600;
+      }
+      .proq-formule {
+        margin-top: 1rem;
+        background: #eef5ff;
+        padding: 0.7rem 1rem;
+        border-radius: 8px;
+        font-size: 0.98em;
+      }
+      .proq-formule span {
+        font-size: 0.92em;
+      }
+      .proq-header-right {
+        text-align: left;
+        margin-bottom: 2rem;
+      }
+      .proq-services-grid {
+        gap: 1.2rem;
+        grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+      }
+      .proq-reminder {
+        margin-top: 2rem;
+        text-align: center;
+      }
+      .proq-reminder-inner {
+        display: inline-block;
+        background: var(--light);
+        padding: 1.2rem 2rem;
+        border-radius: 18px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      }
+      @media (max-width: 1100px) {
+        .proq-flex-panel {
+          flex-direction: column;
+          padding: 1.5rem 0.5rem;
+        }
+        .proq-panel-left, .proq-panel-right {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </section>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>ProQuelec</h3>
+        <p>Votre partenaire de confiance pour la sécurité électrique depuis 2010.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Liens rapides</h3>
+        <ul class="footer-links">
+          <li><a href="#accueil">Accueil</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#apropos">À propos</a></li>
+          <li><a href="#partenaires">Partenaires</a></li>
+          <li><a href="#temoignages">Témoignages</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Nos services</h3>
+        <ul class="footer-links">
+          <li><a href="/audits.html">Diagnostic & Audits</a></li>
+          <li><a href="/assistance.html">Assistance Technique</a></li>
+          <li><a href="/formations.html">Formations</a></li>
+          <li><a href="/urgence.html">Services d'urgence</a></li>
+          <li><a href="/conseil.html">Conseil en sécurité</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Contact</h3>
+        <ul class="contact-info">
+          <li>
+            <i class="fas fa-map-marker-alt"></i>
+            <span>123 Avenue de l'Électricité<br>75000 Paris, France</span>
+          </li>
+          <li>
+            <i class="fas fa-phone"></i>
+            <span>+33 1 23 45 67 89</span>
+          </li>
+          <li>
+            <i class="fas fa-envelope"></i>
+            <span>contact@proquelec.fr</span>
+          </li>
+          <li>
+            <i class="fas fa-clock"></i>
+            <span>Lun-Ven: 8h-18h<br>Sam: 9h-12h</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2023 ProQuelec. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Menu mobile
+    document.querySelector('.mobile-menu').addEventListener('click', function() {
+      document.querySelector('.nav-links').classList.toggle('active');
+    });
+
+    // Animation au défilement
+    window.addEventListener('scroll', function() {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if(scrollY >= (sectionTop - 200)) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if(link.getAttribute('href').substring(1) === current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Vérificateur approfondi de terre
+    function checkEarthResistance() {
+      var r = parseFloat(document.getElementById('earth-resistance').value);
+      var diff = parseFloat(document.getElementById('earth-diff').value); // en mA
+      var ul = parseFloat(document.getElementById('earth-zone').value); // tension limite
+      var result = document.getElementById('earth-result');
+      if (isNaN(r) || isNaN(diff) || isNaN(ul)) {
+        result.textContent = 'Veuillez remplir tous les champs.';
+        result.className = 'proq-result';
+        return;
+      }
+      var idelta = diff / 1000; // conversion mA -> A
+      var uc = r * idelta;
+      var ok = uc <= ul;
+      var msg = `Uc = Rterre × IΔn = ${r} Ω × ${idelta} A = <b>${uc.toFixed(2)} V</b><br>`;
+      msg += `Tension limite (UL) pour cette zone : <b>${ul} V</b><br>`;
+      if (ok) {
+        msg += '<span style="color:#28a745;">✅ Conforme : la tension de contact ne dépasse pas la limite autorisée.</span>';
+      } else {
+        msg += '<span style="color:#dc2626;">❌ Non conforme : la tension de contact dépasse la limite autorisée !</span>';
+      }
+      result.innerHTML = msg;
+      result.className = 'proq-result';
+    }
+  </script>
+</body>
+</html>

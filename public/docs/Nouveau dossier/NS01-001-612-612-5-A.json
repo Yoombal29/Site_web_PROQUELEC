@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de sécurité",
+    "article": "612",
+    "alinéa": "612.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-612-612-5-A",
+        "type": "obligation",
+        "texte_normatif": "Résistance des sols et des parois C Il peut être nécessaire de mesurer : - la résistance minimale des sols et parois pour satisfaire aux prescriptions de l’annexe C1 de la partie 4-41 ou, - la résistance maximale des sols des locaux à usage médical où existent des risques d’inflammation pour satisfaire à la prescription du paragraphe 14.1.3 de la norme NF C 15- 211. Les mesures sont faites en au moins cinq emplacements différents du local, situés au voisinage des quatre angles et du centre. En chacun de ces emplacements, il est fait cinq mesures dans un cercle de 50 cm de diamètre, dont on prendra la valeur moyenne. Si l’on veut s’assurer d’une résistance minimale, on retiendra pour résistance du local, la valeur la plus faible des moyennes de mesures effectuées, les mesures ayant été faites sur un sol humide. - 328 - Si l’on veut s’assurer d’une résistance maximale, on retiendra pour résistance du local, la valeur la plus élevée des moyennes de mesures effectuées, les mesures ayant été faites sur un sol à C l’état sec, c’est-à-dire n’ayant pas été lavé depuis au moins quatre heures. L’annexe A de cette partie donne, à titre d’exemple, une méthode de mesure de la résistance des sols et des parois.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "612"
+        ]
+    }
+}

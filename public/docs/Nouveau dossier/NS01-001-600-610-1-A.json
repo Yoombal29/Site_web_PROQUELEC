@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de sécurité",
+    "article": "600",
+    "alinéa": "610.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-600-610-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités 610.1.1 Toute installation doit, pendant la mise en œuvre ou lorsqu'elle est terminée et avant sa mise à la disposition de l'usager, être vérifiée. C 610.1.2 Les informations demandées en 514.5 doivent être mises à la disposition des personnes effectuant les vérifications. Il est rappelé que les schémas font partie des documents demandés dans l'annexe III (point 4) de l'arrêté du 10 octobre 2000. 610.1.3 Des précautions doivent être prises pendant la vérification et les essais, pour éviter des dangers pour les personnes et des dommages aux biens et aux matériels installés. C 610.1.4 Lors d'extensions ou de modifications d'installations existantes, il doit être vérifié que les extensions ou modifications de l'installation satisfont aux prescriptions de la présente norme et ne compromettent pas la sécurité de l'installation existante. 610.1.5 Les vérifications doivent être réalisées par une personne qualifiée, compétente dans le domaine des vérifications, ayant une connaissance approfondie des dispositions de la présente norme et de celles des réglementations nationales. Les textes réglementaires peuvent préciser les conditions auxquelles doivent satisfaire les personnes autorisées à effectuer ces vérifications, le cas échéant, la nécessité d’agrément. 610.1.6 Suite à la vérification conformément aux prescriptions de la présente partie, un rapport C doit être établi. Ce rapport devra comporter les observations relatives à l'inspection visuelle et aux essais effectués. NOTE - Des informations relatives aux vérifications périodiques sont données dans la partie 6-62.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "600"
+        ]
+    }
+}

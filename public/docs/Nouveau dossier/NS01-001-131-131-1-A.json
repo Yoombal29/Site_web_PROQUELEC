@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "131",
+    "alinéa": "131.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-131-131-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités Les règles énoncées dans la présente section sont destinées à assurer la sécurité des personnes, des animaux domestiques et des biens contre les dangers et dommages pouvant résulter de l'utilisation normale de ces installations. NOTE – Deux principales sortes de dangers sont à craindre dans les installations électriques : - les courants de choc ; - les températures trop élevées susceptibles de provoquer des brûlures, des incendies ou d'autres effets dangereux. Ces règles sont développées dans les différentes parties 4 de la norme. - 5 - H 131.2 Protection contre les chocs électriques 131.2.1 Protection contre les contacts directs Les personnes et les animaux domestiques doivent être protégés contre les dangers pouvant résulter d'un contact avec les parties actives de l'installation. Cette protection peut être assurée selon l'une des méthodes énumérées ci-après : - disposition empêchant un courant de traverser le corps humain ou le corps d'un animal ; - limitation du courant pouvant traverser le corps. Les dispositions de protection contre les contacts directs sont décrites en annexe A.1 de la partie 4-41. H 131.2.2 Protection contre les contacts indirects Les personnes et les animaux domestiques doivent être protégés contre les dangers pouvant résulter d'un contact avec des masses en cas de défaut. Cette protection peut être assurée selon l'une des méthodes énumérées ci-après : - disposition empêchant un courant de défaut de traverser le corps humain ou le corps d'un animal domestique ; - limitation du courant de défaut pouvant traverser le corps ; - coupure automatique dans un temps déterminé dès l'apparition d'un défaut susceptible de donner lieu, en cas de contact avec des masses, au passage à travers le corps d’un courant. NOTE – En liaison avec la protection contre les contacts indirects, l'utilisation de liaisons équipotentielles constitue un principe fondamental de sécurité. Les dispositions de protection contre les contacts indirects sont décrites dans la partie 4-41. Par définition, les contacts indirects se réfèrent au contact avec des masses, mais les mesures de protection contre les contacts indirects sont destinées à protéger les personnes contre les dangers pouvant résulter d'un contact non seulement avec les masses proprement dites mais aussi avec toute partie conductrice en contact avec des masses. H 131.3 Protection contre les effets thermiques L'installation électrique doit être disposée de manière à exclure tout risque d'inflammation de matières inflammables dû à des températures élevées ou à des arcs électriques. En outre, en service normal, les personnes et les animaux domestiques ne doivent encourir aucun risque de brûlure. Les dispositions permettant d'assurer la protection contre les effets thermiques en service normal sont indiquées dans la partie 4-42. H 131.4 Protection contre les surintensités Les personnes, les animaux domestiques et les biens doivent être protégés contre les dommages de températures trop élevées ou de contraintes mécaniques dues à des surintensités susceptibles de se produire dans les conducteurs actifs. Cette protection peut être assurée selon l'une des méthodes énumérées ci-après : - coupure automatique avant que la surintensité n'atteigne une valeur dangereuse compte tenu de sa durée ; - limitation de la surintensité maximale à une valeur sûre compte tenu de sa durée. - 6 - Les règles permettant d'assurer la protection contre les surintensités sont décrites en partie 4- 43 de la norme : - article 433 pour la protection contre les surcharges ; - article 434 pour la protection contre les courts-circuits. H 131.5 Protection contre les courants de défaut Les conducteurs, autres que les conducteurs actifs, et les autres parties destinées à l'écoulement des courants de défaut doivent pouvoir supporter ces courants sans atteindre des températures trop élevées. NOTES - 1 - Il convient d'accorder une attention particulière aux courants de défaut à la terre et aux courants de fuite. 2 - Pour les conducteurs actifs, la conformité avec 131.4 assure leur protection contre les surintensités résultant de défauts. Les règles permettant d'assurer la protection contre les courants de défaut sont décrites en partie 5-54, et notamment en 543. H 131.6 Protection contre les surtensions 131.6.1 Les personnes, les animaux domestiques et les biens doivent être protégés contre les conséquences néfastes d'un défaut entre les parties actives des circuits alimentés à des tensions différentes. 131.6.2 Les personnes, les animaux domestiques et les biens doivent être protégés contre les conséquences néfastes de surtensions dues à d'autres causes lorsque de telles surtensions sont susceptibles de se produire (phénomènes atmosphériques, surtensions de manœuvre, etc.) lorsque le risque est inacceptable. Les règles permettant d'assurer la protection contre les surtensions sont décrites en partie 4- 44 : - article 442 pour les surtensions à fréquence industrielle ; - article 443 pour les surtensions d'origine atmosphérique ou dues à des manœuvres.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "131"
+        ]
+    }
+}

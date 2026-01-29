@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "521",
+    "alinéa": "521.7",
+    "regle_atomique": {
+        "id_unique": "NS01-001-521-521-7-A",
+        "type": "obligation",
+        "texte_normatif": "Protection contre les influences externes La protection contre les influences externes conférée par le mode de pose doit être assurée de façon continue sur tout le parcours des canalisations, notamment aux angles, changements de plan et endroits de pénétration dans les appareils. Le raccordement doit assurer, si nécessaire, l'étanchéité, par exemple à l'aide de presse-étoupe. Les conditions de protection contre les influences externes sont indiquées en 522. Les systèmes de goulottes conformes à la norme NF C 68-104 et les systèmes de conduits conformes à leurs normes assurent, après installation, un degré de protection IP homogène quel que soit l'accessoire du système utilisé. Lorsque les canalisations comportent une gaine conférant un certain degré de protection, le presse- étoupe est serré sur cette gaine. Les presse-étoupe, obturateurs, passe-fils, etc. assurent l'étanchéité sur une gaine et non sur les isolants des conducteurs. Lorsque des presse-étoupe sont utilisés, ils peuvent être montés sur la gaine extérieure des câbles, si celle-ci assume une fonction d'étanchéité. Dans le cas d'armures en feuillards ou fils d'acier, ou de tresse métallique, les presse-étoupe ne serrent pas directement sur ces protections. Lorsque la gaine d'étanchéité se trouve sous une armure métallique, les armures sont soigneusement coupées avant l'entrée dans le presse-étoupe et arrêtées par un dispositif approprié (collier, bride, cerclage, soudure, etc.) résistant aux contraintes internes et externes.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "521"
+        ]
+    }
+}

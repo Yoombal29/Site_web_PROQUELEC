@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux d’habitation",
+    "article": "100",
+    "alinéa": "771.558",
+    "regle_atomique": {
+        "id_unique": "NS01-001-100-771-558-A",
+        "type": "obligation",
+        "texte_normatif": "Panneaux de contrôle, tableaux de répartition et de communication - Gaine technique logement (GTL) 771.558.1 Généralités Le panneau de contrôle et les tableaux de répartition et de communication doivent être placés dans des emplacements facilement accessibles et ne nuisant pas aux conditions de fonctionnement de l'appareillage. Ces locaux ou emplacements ne doivent être ni humides, ni poussiéreux. L’organe de manœuvre du dispositif de coupure d’urgence doit être situé à une hauteur comprise entre 1,00 m et 1,80 m au-dessus du sol fini. Cette hauteur est limitée à 1,30 m dans les locaux pour handicapés ou personnes âgées. Les organes de manœuvre des dispositifs de protection du tableau de répartition sont aussi situés à une hauteur comprise entre 1,00 m et 1,80 m sauf dans le cas de Gaine Technique Logement (GTL) fermée où l’axe de la rangée la plus basse (cas de coffret à plus de trois rangées) ne sera pas installé à une hauteur inférieure à 0,50 m. 771.558.2 Gaine technique logement (GTL) 771.558.2.1 Généralités La GTL est prescrite pour tous les locaux d'habitation (individuels ou collectifs). Pour les foyers logements, il est admis qu’elle ne soit pas prévue. - 439 - La GTL regroupe en un seul emplacement toutes les arrivées des réseaux de puissance et de communication. La GTL doit permettre des extensions de l'installation électrique aussi aisées que possible et faciliter les interventions en toute sécurité. En réhabilitation, la GTL n'est exigée que dans le cas de réhabilitation totale avec redistribution des cloisons des locaux d'habitation. La GTL doit être matérialisée. Une concertation organisée par le maître d’œuvre entre le distributeur d’énergie électrique et l’opérateur de communication et l’installateur est indispensable pour la définition du point de pénétration et par conséquent l’emplacement de la GTL. Elle est exclusivement réservée aux matériels électriques et électroniques de l'installation et à leurs adductions (par exemple les appareils de contrôle, de commande et de protection, de connexion et de dérivation, etc.) La GTL n'étant pas considérée comme une enveloppe des matériels électriques, chacun des matériels incorporés doit assurer sa propre protection contre les chocs électriques et mécaniques et contre les perturbations électromagnétiques. 771.558.2.2 Emplacement La GTL est située : • soit à l'intérieur du logement, de préférence à proximité d'une entrée (principale ou de service), • soit dans un garage ou un local annexe. Si la GTL comporte le dispositif de coupure d'urgence, elle doit être directement accessible à partir de l’intérieur du logement comme prescrit en 771.463. Cette GTL, comportant de nombreux départs vers le haut et vers le bas, ne doit pas être placée au droit des poutraisons. Dans les immeubles d’habitation collectifs, la GTL doit être en communication avec les gaines des réseaux de puissance et de communication de l'immeuble. Chacune de ces communications doit présenter une section libre minimale de 300 mm2 (la plus petite dimension ne pouvant être inférieure à 10 mm). 771.558.2.3 Destination La GTL doit contenir : - le panneau de contrôle, s’il est placé à l’intérieur du logement ; En conséquence, la GTL doit garantir toutes les spécifications requises permettant l’installation du panneau de contrôle (NF C 14-100, 7.4 et 7.5). - le tableau de répartition principal ; - le tableau de communication ; - deux socles de prise de courant 16 A 250 V 2P + T, protégés par un circuit dédié pour alimenter des appareils de communication placés dans la GTL (équipements de communication numériques etc.) ; - les autres applications de communication (TV, satellite, interactivité, etc.) lorsqu’elles sont prévues. Cependant, les fonctions d’amplification doivent être situées au plus près de la source par exemple sur le mât d’antenne en collectif. Par ailleurs, la répartition peut être réalisée hors de la GTL, et au plus près des appareils récepteurs (par exemple pour une distribution au-delà de 15 m). - 440 - et éventuellement : - un équipement multiservices à l’habitat (domotique) ; - une protection anti-intrusion. La GTL doit permettre la mise en œuvre des différents systèmes en satisfaisant aux prescriptions en vigueur en matière d'isolation, de protection contre les chocs électriques et d'immunité aux influences d'origine électromagnétique. 771.558.2.4 Réalisation La GTL peut être réalisée en tout matériau autorisé pour les locaux d'habitation (bois, PVC, maçonnerie, etc.). Pour ce qui concerne l'épaisseur des parois, le matériau devra permettre d'assurer la tenue mécanique des fixations des matériels ou d'incorporer les dispositifs adéquats. Les faces des parois internes doivent être également : - planes ; - sans rugosité excessive ; - sans décrochement ; - sans obstacle. Cette GTL peut être également préfabriquée. La GTL a des dimensions intérieures minimales suivantes : - largeur = 600 mm ; - profondeur = 200 mm ; - hauteur = toute la hauteur du sol au plafond. Pour des logements de surface inférieure ou égale à 35 m², la largeur peut être réduite à",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "100"
+        ]
+    }
+}

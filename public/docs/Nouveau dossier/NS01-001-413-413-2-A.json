@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "413",
+    "alinéa": "413.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-413-413-2-A",
+        "type": "obligation",
+        "texte_normatif": "Prescriptions pour la protection contre les contacts directs C 413.2.1 Tous les matériels électriques doivent faire l’objet d’une des dispositions de protection contre les contacts directs de l’annexe A ou de la mesure de protection donnée en 412. 413.2.2 La disposition de protection contre les contacts directs relative à l’isolation des parties actives (A.1 de l’annexe A) ou par barrières ou enveloppes (A.2 de l’annexe A) est applicable quelles que soient les conditions d’influences externes. 413.2.3 Si plus d’un matériel d’utilisation est alimenté par une source séparée isolée de la terre, les prescriptions de 411.6.1 (schéma IT) ou de l’annexe C3 doivent être satisfaites.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "413"
+        ]
+    }
+}

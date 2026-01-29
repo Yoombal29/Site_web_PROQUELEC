@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Feuillet - Parafoudre</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;margin:28px;color:#0f172a}h1{color:#2563eb}.small{font-size:0.95rem;color:#334155}.footer{margin-top:18px;color:#64748b}ul{margin-left:18px}</style>
+</head>
+<body>
+<h1>Feuillet technique — Parafoudre basse tension</h1>
+<p class="small">Résumé : choisir et installer un parafoudre adapté pour réduire le risque de dommages liés aux surtensions transitoires.</p>
+<h3>Principes</h3>
+<ul>
+	<li>Installer le parafoudre en tête de ligne, proche du point d'entrée électrique.</li>
+	<li>Sélectionner le type (SPD Type 1/2/3) selon le niveau d'exposition et la configuration du site.</li>
+	<li>Respecter coupe-circuit et liaison équipotentielle pour éviter boucles de courant.</li>
+</ul>
+<h3>Étapes de vérification lors de l’installation ou de la maintenance</h3>
+<ul>
+		<li>Identifier le niveau d’exposition aux surtensions (zone urbaine, rurale, industrielle)</li>
+		<li>Choisir le type de parafoudre adapté (Type 1, 2, 3)</li>
+		<li>Contrôler la qualité de la liaison équipotentielle</li>
+		<li>Vérifier la présence d’un coupe-circuit dédié</li>
+		<li>Faire réaliser le contrôle par un professionnel certifié</li>
+</ul>
+
+<h3>Tableau des types de parafoudres et usages</h3>
+<table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+		<tr style="background:#fef9c3;font-weight:bold;">
+			<td>Type</td>
+			<td>Usage</td>
+			<td>Emplacement</td>
+		</tr>
+		<tr><td>Type 1</td><td>Protection contre la foudre directe</td><td>En tête d’installation</td></tr>
+		<tr><td>Type 2</td><td>Protection contre les surtensions induites</td><td>Tableau principal</td></tr>
+		<tr><td>Type 3</td><td>Protection fine des équipements sensibles</td><td>Proche des appareils</td></tr>
+	</table>
+
+<h3>Erreurs à éviter</h3>
+<ul>
+		<li>Installer un parafoudre non adapté au site</li>
+		<li>Oublier la liaison équipotentielle</li>
+		<li>Ignorer le contrôle du coupe-circuit</li>
+		<li>Ne pas faire appel à un professionnel certifié</li>
+</ul>
+
+<h3>Ressources utiles</h3>
+<ul>
+		<li><a href="https://www.promotelec.com/">Promotelec – Parafoudre</a></li>
+		<li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+		<li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+</ul>
+
+<div class="footer">PROQUELEC • Feuillet technique • 2025<br>Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a></div>
+</body>
+</html>

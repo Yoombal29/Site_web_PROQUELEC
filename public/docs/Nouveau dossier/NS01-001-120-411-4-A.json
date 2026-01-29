@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "120",
+    "alinéa": "411.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-120-411-4-A",
+        "type": "obligation",
+        "texte_normatif": "Schéma TN La réalisation d’un schéma TN dans une installation alimentée par le réseau de distribution publique basse tension est traitée en annexe D. C 411.4.1 Les masses de l'installation doivent être reliées par des conducteurs de protection à la borne principale de terre de l’installation, laquelle doit être connectée au point de l’alimentation mis à la terre. Le point de l'alimentation mis à la terre est généralement le point neutre. Si le point neutre n'est pas disponible, ou n'est pas accessible, un conducteur de phase doit être mis à la terre. En aucun cas le conducteur de phase ne doit servir de conducteur de protection (voir 411.4.2). NOTES - 1 - S'il existe des possibilités efficaces de mise à la terre, il est recommandé d'y relier le conducteur de protection en autant de points que possible. Une mise à la terre multiple, en des points régulièrement répartis, peut être nécessaire pour s'assurer que le potentiel du conducteur de protection demeure, en cas de défaut, aussi proche que possible de celui de la terre. Dans de grands bâtiments, tels que des immeubles de grande hauteur, des mises à la terre additionnelles des conducteurs de protection ne sont pas possibles pour des raisons pratiques. Des liaisons équipotentielles entre conducteurs de protection et éléments conducteurs ont, toutefois, une fonction similaire dans de tels cas. 2 - Pour la même raison, il est recommandé de relier les conducteurs de protection à la terre à leur point d'entrée d'un bâtiment ou établissement. Le schéma TN peut être : TN-C - Conducteur neutre et conducteur de protection confondus, TN-S - Conducteur neutre et conducteur de protection distincts, TN-C-S - Conducteur neutre et conducteur de protection confondus dans une partie de l'installation et distincts dans le reste de l'installation. - 70 - Les deux schémas TN-C et TN-S peuvent être utilisés dans une même installation sans C mise en œuvre d'une séparation galvanique à condition que le schéma TN-C soit utilisé en amont du schéma TN-S (schéma TN-C-S). L2 L2 L1 L1 L3 L3 N PEN PE I f I Défaut f Défaut R B R B Figure 411A – Boucles de défaut en schémas TN-C et TN-S La boucle de défaut est constituée exclusivement d’éléments galvaniques car elle ne comprend que des conducteurs actifs et des conducteurs de protection. Le courant de défaut franc phase-masse est donc un courant de court-circuit. Certaines conditions d'alimentation peuvent cependant conduire à des valeurs d'impédance de la boucle de défaut phase-neutre trop élevées pour permettre l'application du schéma TN. Il peut en être ainsi par exemple lorsqu'il est fait usage de transformateurs étoile-étoile, en (1) raison de la valeur élevée de leur impédance homopolaire . L'emploi de cette mesure dans les installations alimentées directement par un réseau de distribution publique basse tension est subordonné à l'autorisation du distributeur d'énergie électrique, du fait que l'efficacité de cette mesure de protection risque de ne pas être compatible avec les conditions d'exploitation de son réseau (voir annexe D). 411.4.2 Dans les installations fixes, un seul conducteur peut être utilisé à la fois comme C conducteur de protection et comme conducteur neutre (conducteur PEN), sous réserve que les prescriptions de 543.4 soient respectées. Le conducteur PEN ne doit être ni sectionné, ni coupé. L'installation est réalisée de manière à éviter tout risque de rupture du conducteur PEN ; en particulier, il y a lieu de donner à ce conducteur une section suffisante du point de vue de la résistance mécanique, de le réaliser en matériau résistant à la corrosion et d'éviter les lignes aériennes exposées à des risques mécaniques. Les câbles souples utilisés comme canalisations mobiles doivent comporter un conducteur de protection distinct du conducteur neutre. Les socles de prise de courant alimentés par une canalisation comportant un conducteur PEN ont, en plus des contacts de phase, un contact pour le conducteur neutre et un contact de terre, la liaison entre le conducteur de protection et le conducteur neutre étant effectuée dans le socle. 411.4.3 Les caractéristiques des dispositifs de protection (voir 411.4.4) et les impédances C des circuits doivent être telles que le courant de défaut soit supérieur ou égal au courant I : a U / Z ≥ I o s a (1) Voir annexe de la partie 3 de la norme NF C 13-200 - 71 - 2002 où Zs est l'impédance, en ohm, de la boucle de défaut comprenant la source, le conducteur actif jusqu'au point de défaut et le conducteur de protection entre le point de défaut et la source. Ia est le courant assurant le fonctionnement du dispositif de coupure automatique dans le temps défini en 411.3.2.2 et 411.3.2.3. En courant alternatif, si le dispositif de protection est un dispositif différentiel, ce courant est le courant différentiel-résiduel assigné de ce dispositif. Uo est la tension nominale entre phase et neutre, valeur efficace en courant alternatif ou lisse en courant continu. Si la relation ci-dessus ne peut être satisfaite, il convient d'appliquer 411.3.2.5. La détermination des conditions de protection par le calcul n'est possible que si le conducteur de protection - PEN dans le schéma TN-C et PE dans le schéma TN-S - se trouve, dans toute l'installation, disposé à proximité des conducteurs actifs du circuit correspondant sans interposition d'éléments ferromagnétiques. En effet, l'éloignement du conducteur de protection et/ou l’interposition d'éléments ferromagnétiques augmente sensiblement la valeur de l'impédance de la boucle de défaut, sans que cette valeur puisse être prédéterminée. Il en est ainsi si le parcours du courant de défaut est constitué de charpentes métalliques. De plus, il est rappelé (voir partie 4-44) que le cheminement séparé du conducteur de protection et des conducteurs actifs conduit, en cas de défaut, à des rayonnements électromagnétiques perturbants dans des installations comportant des matériels sensibles. C 411.4.4 Dans le schéma TN, les dispositifs de protection suivants peuvent être utilisés pour la protection contre les contacts indirects : - dispositifs de protection contre les surintensités ; - dispositifs de protection à courant différentiel-résiduel NOTE – Le circuit est aussi protégé par un dispositif de protection contre les surintensités conformément à la partie 4-43. Un dispositif à courant différentiel ne doit pas être utilisé en schéma TN-C. Lorsqu'un dispositif de protection à courant différentiel-résiduel est utilisé dans un schéma TN-C-S, un conducteur PEN ne doit pas être utilisé en aval. La liaison du conducteur de protection au conducteur PEN doit être effectuée en amont du dispositif de protection à courant différentiel-résiduel. NOTE – Si une sélectivité entre dispositifs différentiels est nécessaire, voir 535.4.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "120"
+        ]
+    }
+}

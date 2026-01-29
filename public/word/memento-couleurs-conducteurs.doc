@@ -1,0 +1,92 @@
+<html>
+<head>
+	<title>Mémento – Couleurs des conducteurs électriques</title>
+	<style>
+		body { font-family: Arial, sans-serif; margin: 2em; }
+		h1 { color: #1d4ed8; }
+		h2 { color: #2563eb; margin-top: 1.2em; }
+		table { border-collapse: collapse; margin-top: 1em; }
+		th, td { border: 1px solid #2563eb; padding: 6px 12px; }
+		th { background: #e0e7ff; }
+	</style>
+</head>
+<body>
+	<h1>Mémento – Couleurs des conducteurs électriques</h1>
+	<div style="background:#dbeafe;padding:1em;border-radius:6px;margin-bottom:1em;">
+		<b>Résumé :</b> Ce mémento présente les couleurs normalisées des conducteurs pour garantir la sécurité, la conformité et la facilité d’intervention sur les installations électriques.
+	</div>
+	<h2>1. Tableau des couleurs normalisées</h2>
+	<table>
+		<tr><th>Fonction</th><th>Couleur</th><th>Remarque</th></tr>
+		<tr><td>Neutre</td><td>Bleu clair</td><td>Obligatoire sur tous les circuits</td></tr>
+		<tr><td>Terre</td><td>Vert/jaune</td><td>Obligatoire, jamais utilisée pour autre chose</td></tr>
+		<tr><td>Phase</td><td>Noir, marron, rouge, orange, violet, blanc, gris</td><td>Choix selon le circuit, jamais bleu ni vert/jaune</td></tr>
+		<tr><td>Retour lampe</td><td>Orange ou violet</td><td>Pour repérage spécifique</td></tr>
+		<tr><td>Conducteur de commande</td><td>Autres couleurs (hors bleu et vert/jaune)</td><td>Pour circuits spécialisés</td></tr>
+	</table>
+	<h2>2. Bonnes pratiques</h2>
+	<ul>
+		<li>Respecter strictement la couleur pour chaque fonction</li>
+		<li>Ne jamais utiliser le bleu pour la phase ou le vert/jaune pour autre chose que la terre</li>
+		<li>Vérifier le repérage avant toute intervention</li>
+		<li>Documenter les couleurs utilisées sur le schéma de l’installation</li>
+	</ul>
+	<h2>3. Erreurs à éviter</h2>
+	<ul>
+		<li>Inverser les couleurs (risque d’accident grave)</li>
+		<li>Utiliser des couleurs non conformes</li>
+		<li>Absence de repérage sur les tableaux et schémas</li>
+	</ul>
+	<h2>4. Ressources utiles</h2>
+	<ul>
+		<li>Guide PROQUELEC sur le repérage des conducteurs</li>
+		<li>Norme NF C 15-100</li>
+		<li>Formations PROQUELEC</li>
+	</ul>
+	<footer style="margin-top:2em;font-size:0.9em;color:#555;">© PROQUELEC – Mémento Couleurs des conducteurs. Version 2025.</footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Mémento - Couleurs des conducteurs</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;margin:28px;color:#0f172a}h1{color:#2563eb}.table{width:100%;border-collapse:collapse}.table th,.table td{border:1px solid #e6eefc;padding:8px}.footer{margin-top:18px;color:#64748b}.small{font-size:0.95rem;color:#334155}</style>
+</head>
+<body>
+<h1>Mémento — Couleurs des conducteurs</h1>
+<p class="small">Rappel rapide des codes couleurs usuels. Vérifier la réglementation locale et la documentation produit lors de travaux.</p>
+<table class="table">
+<tr><th>Fonction</th><th>Couleur (exemple)</th></tr>
+<tr><td>Phase</td><td>Rouge / Marron / Noir</td></tr>
+<tr><td>Neutre</td><td>Bleu</td></tr>
+<tr><td>Terre</td><td>Vert / Jaune</td></tr>
+</table>
+<h2 style="color:#2563eb;margin-top:2em;">Tableau complet des couleurs normalisées</h2>
+<table class="table">
+	<tr><th>Fonction</th><th>Couleur</th><th>Remarque</th></tr>
+	<tr><td>Neutre</td><td>Bleu clair</td><td>Obligatoire sur tous les circuits</td></tr>
+	<tr><td>Terre</td><td>Vert/jaune</td><td>Obligatoire, jamais utilisée pour autre chose</td></tr>
+	<tr><td>Phase</td><td>Noir, marron, rouge, orange, violet, blanc, gris</td><td>Choix selon le circuit, jamais bleu ni vert/jaune</td></tr>
+	<tr><td>Retour lampe</td><td>Orange ou violet</td><td>Pour repérage spécifique</td></tr>
+	<tr><td>Conducteur de commande</td><td>Autres couleurs (hors bleu et vert/jaune)</td><td>Pour circuits spécialisés</td></tr>
+</table>
+<h2 style="color:#2563eb;margin-top:2em;">Erreurs à éviter</h2>
+<ul class="small">
+	<li>Inverser les couleurs (risque d’accident grave)</li>
+	<li>Utiliser des couleurs non conformes</li>
+	<li>Absence de repérage sur les tableaux et schémas</li>
+	<li>Ne jamais utiliser le bleu pour la phase ou le vert/jaune pour autre chose que la terre</li>
+</ul>
+<h2 style="color:#2563eb;margin-top:2em;">Ressources utiles</h2>
+<ul class="small">
+	<li><a href="https://www.promotelec.com/repérage-conducteurs/" target="_blank">Guide Promotelec : Repérage des conducteurs</a></li>
+	<li><a href="https://www.afnor.org/" target="_blank">Norme NF C 15-100 (AFNOR)</a></li>
+	<li><a href="https://www.legrand.fr/pro/actualites/couleurs-conducteurs" target="_blank">Legrand : Couleurs et repérage</a></li>
+</ul>
+<div style="background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;">
+	<b>Conformité PROQUELEC :</b> Respecter strictement la couleur pour chaque fonction pour garantir la sécurité et la conformité des installations électriques.
+</div>
+<div class="footer">PROQUELEC — Mémento • 2025</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Mises à la terre, conducteurs de protection et",
+    "article": "543",
+    "alinéa": "543.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-543-543-2-A",
+        "type": "obligation",
+        "texte_normatif": "Types de conducteurs de protection 543.2.1 Peuvent être utilisés comme conducteurs de protection : C - des conducteurs dans des câbles multiconducteurs ; - des conducteurs isolés ou nus passant dans une enveloppe commune avec les conducteurs actifs ; - des conducteurs séparés isolés ou nus ; - certains éléments conducteurs, selon les conditions énoncées en 543.2.2 a) et b). 543.2.2 Lorsque l'installation comporte des enveloppes ou des châssis d'ensembles montés en usine ou des canalisations préfabriquées à enveloppe métallique, ces enveloppes ou châssis peuvent être utilisées comme conducteurs de protection si elles satisfont simultanément aux trois conditions suivantes : a) leur continuité électrique doit être réalisée de façon à être protégée contre les détériorations mécaniques chimiques ou électrochimiques ; b) elles sont conformes aux prescriptions de 543.1 ; c) elles doivent permettre le raccordement d'autres conducteurs de protection à tout endroit de dérivation prédéterminée. 543.2.3 L’utilisation des éléments métalliques suivants comme conducteurs de protection ou d’équipotentialité n’est pas admise : - chemins de câbles et systèmes analogues ; - toutes canalisations métalliques (eau, gaz, liquides inflammables, chauffage, etc.) ; - éléments conducteurs appartenant à la structure du bâtiment ; - câbles porteurs de câbles auto-portés. - 273 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "543"
+        ]
+    }
+}

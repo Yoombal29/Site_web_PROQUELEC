@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "415",
+    "alinéa": "415.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-415-415-1-A",
+        "type": "obligation",
+        "texte_normatif": "Protection complémentaire par dispositifs à courant différentiel-résiduel NOTE - Cette mesure de protection est seulement destinée à compléter d'autres mesures de protection contre les contacts directs. 415.1.1 L'emploi de dispositifs à courant différentiel-résiduel, dont la valeur du courant différentiel nominal de fonctionnement est inférieure ou égale à 30 mA, est reconnu comme mesure de protection complémentaire en cas de défaillance de la disposition de protection contre les contacts directs ou en cas d'imprudence des usagers. 415.1.2 L'utilisation de tels dispositifs n'est pas reconnue comme constituant en soi une mesure de protection complète et ne dispense nullement de l'emploi d'une des mesures de protection énoncées aux paragraphes 411.1 à 411.4. L'expérience prouve que les mesures classiques de protection contre les contacts directs, qui sont de caractère préventif, peuvent se révéler défaillantes occasionnellement, par défaut d'entretien, usure normale ou anormale de l'isolation, ou imprudence. Un moyen permettant d'éliminer une partie des risques d'accidents est d'utiliser un dispositif de protection à courant différentiel-résiduel de courant différentiel-résiduel assigné au plus égal à 30 mA, destiné à assurer rapidement la mise hors tension de l'installation électrique, ou de la partie d'installation intéressée, des l'apparition d'un très faible courant de défaut à la terre.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "415"
+        ]
+    }
+}

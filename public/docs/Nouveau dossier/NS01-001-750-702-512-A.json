@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Piscines et autres bassins",
+    "article": "750",
+    "alinéa": "702.512",
+    "regle_atomique": {
+        "id_unique": "NS01-001-750-702-512-A",
+        "type": "obligation",
+        "texte_normatif": "Conditions de service et influences externes 702.512.2 Influences externes Les conditions d'influences externes sont les suivantes : Tableau 702A – Conditions d’influences externes VOLUMES 0 1 2 Température ambiante (AA) 4 4 4 Humidité (AB) 4 4 4 Présence d’eau (AD) 8 5 2 * Sauf indication contraire, la classe des autres conditions d'influences externes est 1. - 358 - H Les matériels électriques doivent posséder au moins les degrés de protection suivants en conformité avec la NF C 20-010 : - dans le volume 0 : IPX8 ; - dans le volume 1 : IPX5 ; - dans le volume 2 : IPX2 pour les piscines à l'intérieur des bâtiments ou IPX5 si ce volume peut être soumis à des jets d’eau pour nettoyage ; IPX5 pour les piscines à l'extérieur des bâtiments. Pour l'équivalence entre les degrés de protection IP et le marquage par des gouttes d'eau, voir le tableau 702C. Le tableau 702B résume les conditions dans lesquelles les matériels électriques peuvent être utilisés dans les différents volumes des piscines. H",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "750"
+        ]
+    }
+}

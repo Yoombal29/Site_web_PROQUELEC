@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de chantier",
+    "article": "706",
+    "alinéa": "704.352",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-704-352-A",
+        "type": "obligation",
+        "texte_normatif": "Autres circuits de sécurité C Les circuits alimentant des équipements tels que pompes de relevage ou d'épuisement, ventilateurs d'aération, etc. dont la continuité de service est essentielle, leur arrêt faisant courir des dangers graves de noyade, d'asphyxie au personnel, sont à traiter comme des circuits de sécurité. Ces circuits sont conçus de telle sorte que la protection soit assurée sans coupure automatique de l'alimentation au premier défaut et doivent pouvoir être alimentés, en cas de défaillance de l'alimentation normale et selon les puissances : - par des groupes électrogènes pouvant assurer l'alimentation des circuits de sécurité dans un temps au plus égal à 15 secondes ; - par des batteries d'accumulateurs associées à un chargeur redresseur (récepteurs alimentés en courant continu) ou une alimentation sans interruption (ASI) (récepteurs alimentés en courant alternatif). H 704.41 Protection contre les chocs électriques 704.411.1 Généralités Un DDR à haute sensibilité (I∆n ≤ 30 mA) doit être installé en amont de tout circuit destiné à alimenter des appareils mobiles ou portatifs (circuits alimentant les prises de courant). Quelles que soient les mesures de protection prises (choix et mise en œuvre des matériels, maintenance, entretien, vérification), les risques suivants ne peuvent être négligés : - contact direct à la suite d'une dégradation des isolants ; - contact direct à la suite d'une défaillance du matériel ou d'une imprudence des personnes ; - contact indirect avec une masse non reliée à une prise de terre à la suite d'une rupture ou d'une mauvaise continuité du conducteur de protection. H 704.411.1.1 Protection contre les contacts directs Les dispositions de protection contre les contacts directs utilisées sont : - la protection par isolation des parties actives (annexe A.1 e n 4-41) ; - la protection au moyen de barrières ou d'enveloppes (annexe A.2 en 4-41). 704.411.1.2 Mesures de protection a) La TBTS (414) peut être utilisée dans toutes les circonstances et notamment lorsque les conditions de travail sont sévères, par exemple dans les enceintes conductrices exiguës pour l'alimentation des outils portatifs, pour le meulage en milieu mouillé ou pour le chauffage du béton. La TBTP (414) peut être utilisée pour le chauffage du béton. b) La mesure de protection par emploi de matériels de classe Il ou par isolation équivalente (412) est utilisée pour les matériels pour lesquels cette mesure de protection est réalisée par construction. Cette mesure de protection est recommandée pour les outils portatifs à main. L'attention est appelée sur le fait que les outils portatifs ne possèdent pas toujours un degré de protection suffisant pour leur utilisation dans des emplacements soumis à des projections d'eau (IPX4). c) La mesure de protection par séparation électrique (413) est limitée à l'alimentation d'un seul appareil par transformateur.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

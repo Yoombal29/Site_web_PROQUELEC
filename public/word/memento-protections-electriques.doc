@@ -1,0 +1,122 @@
+<html>
+<head>
+  <title>Mémento – Protections électriques</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    h1 { color: #1d4ed8; }
+    h2 { color: #2563eb; margin-top: 1.2em; }
+    h3 { color: #1e293b; margin-top: 1em; }
+    ul { margin-left: 1em; }
+    table { border-collapse: collapse; margin-top: 1em; }
+    th, td { border: 1px solid #2563eb; padding: 6px 12px; }
+    th { background: #e0e7ff; }
+  </style>
+</head>
+<body>
+  <h1>Mémento – Protections électriques</h1>
+  <div style="background:#dbeafe;padding:1em;border-radius:6px;margin-bottom:1em;">
+    <b>Résumé :</b> Ce mémento présente les dispositifs de protection indispensables pour garantir la sécurité des personnes et des installations électriques.
+  </div>
+  <h2>1. Types de protections</h2>
+  <table>
+    <tr><th>Dispositif</th><th>Fonction</th><th>Emplacement</th></tr>
+    <tr><td>Disjoncteur</td><td>Protège contre les surintensités et courts-circuits</td><td>Tableau électrique, départ de circuit</td></tr>
+    <tr><td>Fusible</td><td>Protège contre les surcharges, usage ponctuel</td><td>Tableau, prise, appareil</td></tr>
+    <tr><td>Interrupteur différentiel</td><td>Détecte les fuites de courant vers la terre</td><td>Tableau principal, divisionnaire</td></tr>
+    <tr><td>Parafoudre</td><td>Protège contre les surtensions dues à la foudre</td><td>Entrée de l’installation</td></tr>
+    <tr><td>Relais thermique</td><td>Protège les moteurs contre la surchauffe</td><td>Circuits moteurs</td></tr>
+  </table>
+  <h2>2. Bonnes pratiques d’installation</h2>
+  <ul>
+    <li>Respecter les calibres et la sélectivité des protections</li>
+    <li>Installer un différentiel 30mA en tête de chaque circuit sensible</li>
+    <li>Vérifier le déclenchement régulier des dispositifs</li>
+    <li>Utiliser du matériel certifié et adapté à l’usage</li>
+    <li>Documenter l’emplacement et le type de chaque protection</li>
+  </ul>
+  <h2>3. Erreurs à éviter</h2>
+  <ul>
+    <li>Oublier la protection différentielle sur les circuits d’eau et extérieurs</li>
+    <li>Employer des fusibles de calibre inadapté</li>
+    <li>Ne pas tester les dispositifs après installation</li>
+    <li>Utiliser du matériel non certifié</li>
+  </ul>
+  <h2>4. Ressources utiles</h2>
+  <ul>
+    <li>Guide PROQUELEC sur les protections électriques</li>
+    <li>Tableaux de sélectivité et de calibres (NF C 15-100)</li>
+    <li>Formations PROQUELEC</li>
+  </ul>
+  <footer style="margin-top:2em;font-size:0.9em;color:#555;">© PROQUELEC – Mémento Protections électriques. Version 2025.</footer>
+</body>
+</html>
+<html>
+<head>
+  <title>Mémento Technique – Protections électriques</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>MÉMENTO TECHNIQUE<br>Protections électriques (différentiels, disjoncteurs, fusibles)</h1>
+  <h2>1. Objet du mémento</h2>
+  <p>Rappel des dispositifs de protection essentiels pour la sécurité des installations électriques.</p>
+  <h2>2. Principes essentiels (NS 01-001 & NF C 15-100)</h2>
+  <ul>
+    <li>Protection contre les surintensités et les défauts d’isolement</li>
+    <li>Installation de dispositifs adaptés à chaque circuit</li>
+    <li>Contrôle régulier du bon fonctionnement</li>
+  </ul>
+  <h2>3. Définitions clés</h2>
+  <ul>
+    <li><b>Disjoncteur :</b> Coupe le courant en cas de surintensité</li>
+    <li><b>Fusible :</b> Protège contre les courts-circuits</li>
+    <li><b>Différentiel :</b> Détecte les fuites de courant vers la terre</li>
+  </ul>
+  <h2>4. Règles pratiques à retenir</h2>
+  <ul>
+    <li>Vérifier la présence de chaque type de protection</li>
+    <li>Tester les différentiels régulièrement</li>
+    <li>Remplacer tout matériel défectueux</li>
+  </ul>
+  <h2>5. Tableau récapitulatif</h2>
+  <table>
+    <tr><th>Symptôme</th><th>Cause possible</th><th>Action à mener</th></tr>
+    <tr><td>Disjoncteur saute</td><td>Surcharge ou court-circuit</td><td>Identifier et isoler le circuit en défaut</td></tr>
+    <tr><td>Différentiel déclenche</td><td>Fuite de courant</td><td>Contrôler l’isolation et les appareils</td></tr>
+    <tr><td>Fusible grillé</td><td>Surtension</td><td>Remplacer et vérifier la cause</td></tr>
+  </table>
+  <h2>6. Tableau des calibres recommandés</h2>
+  <table>
+    <tr><th>Circuit</th><th>Calibre disjoncteur</th><th>Section câble</th></tr>
+    <tr><td>Prises 16A</td><td>16A</td><td>1,5 mm²</td></tr>
+    <tr><td>Prises 20A</td><td>20A</td><td>2,5 mm²</td></tr>
+    <tr><td>Éclairage</td><td>10A</td><td>1,5 mm²</td></tr>
+    <tr><td>Lave-linge</td><td>20A</td><td>2,5 mm²</td></tr>
+    <tr><td>Four</td><td>32A</td><td>6 mm²</td></tr>
+    <tr><td>Chauffe-eau</td><td>20A</td><td>2,5 mm²</td></tr>
+    <tr><td>VMC</td><td>2A</td><td>1,5 mm²</td></tr>
+  </table>
+  <h2>7. Erreurs à éviter</h2>
+  <ul>
+    <li>Oublier la protection différentielle sur les circuits d’eau et extérieurs</li>
+    <li>Employer des fusibles ou disjoncteurs de calibre inadapté</li>
+    <li>Ignorer la section minimale des câbles</li>
+    <li>Ne pas tester les dispositifs après installation</li>
+    <li>Utiliser du matériel non certifié</li>
+  </ul>
+  <h2>8. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/protections-electriques/" target="_blank">Guide Promotelec : Protections électriques</a></li>
+    <li><a href="https://www.afnor.org/" target="_blank">Norme NF C 15-100 (AFNOR)</a></li>
+    <li><a href="https://www.legrand.fr/pro/actualites/protections-electriques" target="_blank">Legrand : Protections et calibres</a></li>
+  </ul>
+  <div class="encadre">
+    <b>Conformité PROQUELEC :</b> Respecter les calibres et sections recommandés pour garantir la sécurité et la conformité de l’installation électrique. Consigner chaque test et intervention.
+  </div>
+  <div class="encadre">
+    <b>À retenir PROQUELEC :</b> Les protections sont la première barrière contre les accidents électriques. Ne jamais négliger leur contrôle.
+  </div>
+  <footer>
+    © PROQUELEC – Mémento technique Protections électriques. Version condensée pour techniciens.
+  </footer>
+</body>
+</html>

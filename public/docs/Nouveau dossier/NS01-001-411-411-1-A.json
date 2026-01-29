@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "411",
+    "alinéa": "411.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-411-411-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités la protection par coupure automatique de l’alimentation est une mesure de protection dans laquelle : C - la protection contre les contacts directs est assurée soit par l’isolation principale des parties actives, soit par des barrières ou des enveloppes, conformément à l’annexe A, et - 67 - C - la protection contre les contacts indirects est assurée par des liaisons de protection associées à la coupure automatique de l’alimentation conformément aux 411.3 à 411.6. La mesure de protection par coupure automatique de l'alimentation est destinée à empêcher qu'à la suite d'un défaut d'isolement, une personne puisse se trouver soumise à une tension de contact supérieure à 50 V en courant alternatif (valeur efficace) ou à",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "411"
+        ]
+    }
+}

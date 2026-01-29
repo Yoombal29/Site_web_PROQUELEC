@@ -1,0 +1,92 @@
+<html>
+<head>
+  <title>Guide Technique – Sécurité et conformité des installations électriques des marchés</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.5em;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>GUIDE TECHNIQUE<br>Sécurité et conformité des installations électriques des marchés</h1>
+  <h2>1. Introduction : contexte et importance</h2>
+  <p>La sécurité des installations électriques dans les marchés est essentielle pour protéger les usagers, les commerçants et les biens. Les risques d’incendie et d’électrocution sont accrus dans ces environnements à forte fréquentation.</p>
+  <h2>2. Références normatives</h2>
+  <ul>
+    <li>NS 01-001 : Norme sénégalaise sur les installations électriques</li>
+    <li>NF C 15-100 : Norme française de référence</li>
+    <li>Textes ERP (Établissements Recevant du Public) applicables</li>
+  </ul>
+  <h2>3. Exigences techniques et réglementaires</h2>
+  <ul>
+    <li>Présence d’un dispositif différentiel 30 mA à l’origine</li>
+    <li>Section des câbles adaptée à la puissance installée</li>
+    <li>Protection contre les surcharges et courts-circuits</li>
+    <li>Accessibilité des tableaux électriques</li>
+    <li>Signalisation des zones à risque</li>
+  </ul>
+  <h2>4. Anomalies et risques associés</h2>
+  <ul>
+    <li>Connexions défectueuses</li>
+    <li>Absence de mise à la terre</li>
+    <li>Utilisation de matériels non conformes</li>
+    <li>Enchevêtrement de câbles</li>
+    <li>Humidité excessive</li>
+  </ul>
+  <h2>5. Procédure de diagnostic et de vérification</h2>
+  <ol>
+    <li>Inspection visuelle des installations</li>
+    <li>Test des dispositifs de protection</li>
+    <li>Contrôle de la continuité de la terre</li>
+    <li>Vérification de la conformité des matériels</li>
+    <li>Rédaction d’un rapport de diagnostic</li>
+  </ol>
+  <h2>6. Méthodes d’installation et de mise en conformité</h2>
+  <ul>
+    <li>Remplacement des câbles et matériels non conformes</li>
+    <li>Installation de dispositifs de protection adaptés</li>
+    <li>Respect des schémas de câblage normalisés</li>
+    <li>Formation des usagers à la sécurité électrique</li>
+  </ul>
+  <h2>7. Recommandations pratiques</h2>
+  <ul>
+    <li>Planifier des contrôles réguliers</li>
+    <li>Étiqueter clairement les circuits</li>
+    <li>Limiter les rallonges et multiprises</li>
+    <li>Prévoir une maintenance préventive</li>
+  </ul>
+  <h2>8. Études de cas / exemples d’application</h2>
+  <ul>
+    <li>Marché central : mise en conformité après audit</li>
+    <li>Zone alimentaire : installation de prises étanches</li>
+    <li>Stand artisanal : protection contre les surcharges</li>
+  </ul>
+    <h2>9. Tableau des risques fréquents dans les marchés</h2>
+    <table style="width:100%;border-collapse:collapse;margin-top:1em;">
+      <tr style="background:#e0e7ff;"><th>Risque</th><th>Conséquence</th><th>Prévention</th></tr>
+      <tr><td>Connexions défectueuses</td><td>Incendie, coupure</td><td>Contrôler et remplacer</td></tr>
+      <tr><td>Absence de terre</td><td>Électrocution</td><td>Installer et tester la terre</td></tr>
+      <tr><td>Matériel non conforme</td><td>Défaillance, danger</td><td>Utiliser du matériel certifié</td></tr>
+      <tr><td>Enchevêtrement de câbles</td><td>Chute, court-circuit</td><td>Organiser et fixer les câbles</td></tr>
+      <tr><td>Humidité excessive</td><td>Corrosion, court-circuit</td><td>Installer du matériel étanche</td></tr>
+    </table>
+    <h2>10. Erreurs à éviter</h2>
+    <ul>
+      <li>Ignorer les contrôles périodiques</li>
+      <li>Utiliser des rallonges et multiprises en excès</li>
+      <li>Oublier la signalisation des zones à risque</li>
+      <li>Ne pas former les usagers à la sécurité</li>
+    </ul>
+    <h2>11. Ressources utiles</h2>
+    <ul>
+      <li><a href="https://www.promotelec.com/securite-marches/" target="_blank">Guide Promotelec : Sécurité des marchés</a></li>
+      <li><a href="https://www.afnor.org/" target="_blank">Normes et sécurité (AFNOR)</a></li>
+      <li><a href="https://www.legrand.fr/pro/actualites/securite-marches" target="_blank">Legrand : Sécurité et conformité</a></li>
+    </ul>
+    <div class="encadre">
+      <b>Conformité PROQUELEC :</b> Respecter les normes et organiser les installations pour garantir la sécurité des marchés et des usagers.
+    </div>
+  <div class="encadre">
+    <b>Conseils PROQUELEC :</b> La sécurité électrique est l’affaire de tous. Faites vérifier vos installations par un professionnel agréé et respectez les normes en vigueur.
+  </div>
+  <footer>
+    © PROQUELEC – Guide technique Sécurité des marchés. Version détaillée pour professionnels et gestionnaires.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "213",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-213--A",
+        "type": "obligation",
+        "texte_normatif": "Installations diverses 213.1 installations temporaires installations qui n'ont qu'une durée limitée aux circonstances qui les motivent. - 18 - On distingue les installations temporaires suivantes : 213.1.2 installations de travaux installations réalisées pour permettre des réfections ou transformations d'installations sans en interrompre l'exploitation. 213.1.3 installations semi-permanentes installations destinées à des aménagements de durée limitée, sortant du cadre des activités habituelles des locaux ou se répétant périodiquement. Comme exemples d'installations semi-permanentes, on peut citer les installations des foires, des expositions, des activités foraines. 213.2 installations de chantiers installations temporaires destinées à l'exécution de travaux de construction de bâtiments et analogues. Les installations extérieures de grands chantiers ou d'exploitations soumises à des conditions (2) sévères peuvent faire l'objet de règles supplémentaires . 213.3 installations de sécurité 2 13.3.1 alimentation électrique de sécurité alimentation prévue pour maintenir le fonctionnement d'appareils essentiels pour la sécurité des personnes. C 2 13.3.2 source électrique de sécurité (826-01-05) s ource électrique prévue pour faire partie d’une alimentation électrique de sécurité. 2 13.3.3 circuit électrique de sécurité (826-01-06) c ircuit électrique prévu pour faire partie d’une installation électrique de sécurité. 213.3.4 alimentation électrique de remplacement a limentation prévue pour maintenir, pour des raisons autres que la sécurité des personnes, le fonctionnement d'une installation électrique ou de parties de celle-ci. 2 13.3.5 C source électrique de remplacement (826-01-08) s ource électrique prévue pour maintenir, pour des raisons autres que la sécurité des personnes, l'alimentation d'une installation électrique ou de parties de celle-ci, en cas d'interruption de l'alimentation normale.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "213"
+        ]
+    }
+}

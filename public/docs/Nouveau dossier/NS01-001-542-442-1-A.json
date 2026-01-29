@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Mises à la terre, conducteurs de protection et",
+    "article": "542",
+    "alinéa": "442.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-542-442-1-A",
+        "type": "obligation",
+        "texte_normatif": "442.2.6.1 411.6.2 NF C13-200 442.3 RA est la résistance de la prise de terre des masses de l’installation à basse tension RB est la résistance de la prise de terre du neutre de l’installation à basse tension RP est la résistance de la prise de terre des masses du poste de transformation Lorsque des prises de terre sont interconnectées, les indices sont regroupés. Les valeurs des résistances des prises de terre des paratonnerres sont définies dans la norme NF C 17-100. 542.2.1 Les matériaux et les dimensions des prises de terre doivent être choisis de manière à C résister à la corrosion et présenter une tenue mécanique appropriée. 542.2.2 L'efficacité d'une prise de terre dépend des conditions locales du sol. Une ou plusieurs prises de terre appropriées aux conditions du terrain et à la valeur de la résistance prescrite doivent être choisies. L’annexe C donne des moyens de calcul des résistances de prise de terre. - 269 - 542.2.3 Réalisation des prises de terre 542.2.3.1 Boucle à fond de fouille La réalisation de la prise de terre par une boucle à fond de fouille ou par une disposition équivalente telle que l’utilisation des prises de terre de fait constituées notamment par les poteaux métalliques des murs extérieurs des bâtiments à ossature métallique, est rendue obligatoire par l’arrêté du 04 août 1992 pour tout bâtiment destiné à abriter des lieux de travail (y compris les bâtiments d’habitation collectifs). La boucle à fond de fouille peut être constituée par un conducteur en cuivre nu d'au moins 25 mm² de section, en bon contact avec le sol, La réalisation d’une boucle à fond de fouille pendant la construction des bâtiments est la meilleure solution pour obtenir une bonne prise de terre. En effet : - elle ne nécessite aucun travail de terrassement supplémentaire ; - elle est établie à une profondeur qui permet en général de s'affranchir des contraintes dues aux conditions saisonnières ; - elle assure un bon contact avec le sol ; - elle réalise pratiquement l'utilisation maximale de la surface des bâtiments et donne la valeur minimale de la résistance de la prise de terre pouvant être obtenue avec cette surface ; - elle peut être utilisée, dès le début de la construction des bâtiments, comme prise de terre pour les installations de chantier. Il convient de relier à l'ensemble prise de terre-conducteurs de protection les éléments conducteurs de la construction, aussi bien les éléments métalliques que les armatures du béton armé, à l’exception de celles du béton précontraint. Ces liaisons permettent d'une part, de diminuer la valeur de la résistance globale de mise à la terre des masses et, d'autre part, d'assurer l'équipotentialité de toutes les masses et de tous les éléments conducteurs simultanément accessibles. 542.2.3.2 Autres méthodes de réalisation de prises de terre Lorsque la boucle à fond de fouille n'est pas obligatoire, les méthodes de réalisation de prises de terre suivantes peuvent être utilisées : - feuillard ou câble noyé dans le béton de propreté ; - plaques ; - piquets ou tubes ; - rubans ou fils. L’annexe C donne des indications pour les dimensions de ces éléments. Les prises de terre ne doivent jamais être constituées par une pièce métallique simplement plongée dans l'eau. Elles ne doivent pas être établies dans des pièces d'eau ou dans des rivières. Cette interdiction ne se justifie pas tant par une médiocre conductivité de l'eau que par le risque d'assèchement et par le danger auquel pourraient se trouver exposées des personnes entrant en contact avec l'eau pendant que se produit un défaut. 542.2.4 Le type et la profondeur d'enfouissement des prises de terre doivent être tels que C l'assèchement et le gel n'augmentent pas la résistance de la prise de terre au-dessus de la valeur prescrite dans la partie 4-41 et dans 442. 542.2.5 L’attention doit se porter sur la corrosion électrolytique lors de l’utilisation de matériaux différents dans une installation de mise à la terre. - 270 - 542.2.6 Des canalisations métalliques de distribution de liquides ou de gaz ne doivent pas être utilisées comme prises de terre. NOTE - Cette prescription n’exclut pas la connexion de ces réseaux à la liaison équipotentielle principale C conformément à la partie 4-41.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "542"
+        ]
+    }
+}

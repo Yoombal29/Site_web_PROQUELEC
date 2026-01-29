@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre l’incendie, les brûlures et l’explosion",
+    "article": "421",
+    "alinéa": "422.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-421-422-4-A",
+        "type": "obligation",
+        "texte_normatif": "Structures propagatrices d'incendie Condition CB2, selon 512.2.22. Ces conditions sont normalement réglementées par les textes traitant de la prévention contre l'incendie dans les différents types de bâtiments. 422.4.1 Dans les structures dont la forme et les dimensions facilitent la propagation d'un incendie, des précautions doivent être prises pour que les installations électriques ne propagent pas facilement un incendie (par exemple, effet de cheminée). NOTE - Des détecteurs d'incendie peuvent être prévus assurant la mise en service de mesures s'opposant à la propagation de l'incendie, par exemple la fermeture de volets coupe-feu dans des gaines, des caniveaux ou des galeries. Lorsque de telles conditions se présentent, les dispositions suivantes sont généralement satisfaisantes : Des barrières coupe-feu sont disposées comme indiqué en 527.2, en particulier à chaque niveau. En outre, les canalisations sont réalisées de telle manière qu'elles ne puissent propager un incendie. En particulier, les conducteurs et câbles doivent satisfaire à un essai de non propagation (6) de l'incendie, tel que défini par la norme en vigueur (catégorie C1). Les canalisations ne peuvent être placées dans des gaines de ventilation ou cheminées et, plus généralement, dans tout espace ne pouvant être coupé de place en place par des barrières coupe- feu. (6) NF C 32-070 - 103 - H",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "421"
+        ]
+    }
+}

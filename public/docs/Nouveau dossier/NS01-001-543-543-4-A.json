@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Mises à la terre, conducteurs de protection et",
+    "article": "543",
+    "alinéa": "543.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-543-543-4-A",
+        "type": "obligation",
+        "texte_normatif": "Conducteurs PEN C 543.4.1 Un conducteur PEN ne peut être utilisé que dans les installations fixes et, pour des raisons mécaniques, doit avoir une section au moins égale à 10 mm2 en cuivre ou 16 mm2 en aluminium. La section du conducteur PEN répond aux conditions imposées en 524 pour le conducteur neutre. C 543.4.2 Le conducteur PEN doit être isolé. Les enveloppes des canalisations métalliques ne doivent pas être utilisées comme conducteur PEN, à l’exception des canalisations préfabriquées conformes à la NF C 63-422. Certains câbles comportant un conducteur non isolé (assemblé avec les conducteurs de phase ou conducteur concentrique disposé en méandres), qui ont été conçus pour des réseaux souterrains de distribution publique à basse tension avec neutre mis directement à la terre ainsi que les branchements dérivés sur ces réseaux, ne peuvent être utilisés que dans les branchements faisant l'objet de la NF C 14-100. 543.4.3 Si, à partir de n'importe quel point de l'installation, le conducteur neutre et le conducteur C de protection sont séparés, il n'est pas permis de les relier ensemble en aval de ce point. Le conducteur PEN doit être relié à la borne ou à la barre prévue pour le conducteur de protection. Cette prescription n'interdit pas la mise en place d'une barre commune aux PEN, PE et neutre. - 274 - Arrivée TNC PEN PE N PEN Circuits de TNS TNC distribution Figure 543A – Exemple de réalisation 543.4.4 Les éléments conducteurs ne doivent pas être utilisés comme conducteurs PEN. C",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "543"
+        ]
+    }
+}

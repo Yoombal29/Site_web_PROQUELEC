@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "133",
+    "alinéa": "133.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-133-133-2-A",
+        "type": "obligation",
+        "texte_normatif": "Caractéristiques Les caractéristiques des matériels électriques choisis doivent correspondre aux conditions et aux caractéristiques définies pour l'installation électrique (voir 132), ils doivent en particulier satisfaire aux prescriptions suivantes. 133.2.1 Tension Les matériels électriques doivent être adaptés à la valeur maximale de la tension permanente (valeur efficace en courant alternatif) susceptible d’être appliquée. Ces matériels doivent être appropriés à la catégorie de surtension prévue. NOTE - Pour certains matériels, il peut être nécessaire de tenir compte de la tension la plus basse susceptible de se présenter. 133.2.2 Courant Les matériels électriques doivent être choisis compte tenu de la valeur maximale de l'intensité du courant (valeur efficace en courant alternatif) qui les parcourt en service normal. Il y a également lieu de considérer le courant susceptible de les parcourir dans des conditions anormales, compte tenu de la durée du passage d'un tel courant en fonction des dispositifs de protection éventuels. 133.2.3 Fréquence Si la fréquence a une influence sur les caractéristiques des matériels électriques, leur fréquence nominale doit correspondre à la fréquence de la tension d’alimentation. 133.2.4 Puissance Les matériels électriques, choisis sur la base de leurs caractéristiques de puissance, doivent pouvoir être utilisés à la puissance maximale qu'ils absorbent en service, compte tenu des coefficients d'utilisation et des conditions normales de service. H 133.3 Conditions d'installation Les matériels électriques doivent être choisis de manière à supporter en toute sécurité les contraintes et les conditions d'environnement (voir 132.5) particulières au lieu où ces matériels sont installés, et auxquelles ils peuvent être soumis. Si, toutefois, un matériel ne comporte pas de par sa construction les qualités correspondant au lieu de son installation, il peut être utilisé à condition qu'il soit pourvu d'une protection complémentaire appropriée faisant partie intégrante de l'installation. Voir influences externes (512). H 133.4 Prévention des effets néfastes Les matériels doivent être choisis de manière à n'apporter, en service normal, d'effets néfastes ni aux autres matériels ni au réseau d'alimentation, y compris lors des manœuvres. Dans ce contexte, parmi les facteurs qui peuvent avoir une influence, on peut citer : - le facteur de puissance ; - les appels de courant ; - le déséquilibre des charges ; - les harmoniques. Des indications sur l'absence de troubles sont données en 33. - 11 - H",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "133"
+        ]
+    }
+}

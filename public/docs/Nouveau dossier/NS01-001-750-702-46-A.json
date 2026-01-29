@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Piscines et autres bassins",
+    "article": "750",
+    "alinéa": "702.46",
+    "regle_atomique": {
+        "id_unique": "NS01-001-750-702-46-A",
+        "type": "obligation",
+        "texte_normatif": "Sectionnement et commande Pour les piscines publiques, en vertu de l'article L131 du Code des communes et de l'article L 221-6, alinéa 2, du Code de la consommation, il est prescrit l’adjonction à proximité du bassin, d'un dispositif d'urgence permettant, en cas de besoin, l'interruption immédiate de l'effet \"ventouse\" et la libération d'un baigneur plaqué contre la grille. H 702.5 Choix et mise en œuvre des matériels électriques",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "750"
+        ]
+    }
+}

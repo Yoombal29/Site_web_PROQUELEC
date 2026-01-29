@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques dans les établissements agricoles",
+    "article": "706",
+    "alinéa": "705.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-705-1-A",
+        "type": "obligation",
+        "texte_normatif": "Domaine d'application Les prescriptions particulières de la présente partie s'appliquent à toutes les parties des installations fixes des établissements agricoles et horticoles situées à l'extérieur et à l'intérieur et aux emplacements où se trouvent des animaux d'élevage (telles qu'écuries, étables, poulaillers, porcheries, locaux pour la préparation de la nourriture des animaux, greniers, granges pour le foin, la paille et les fertiliseurs, etc.). Les installations des logements d'habitation de ces établissements ne sont pas soumises aux règles de la présente partie, mais à la partie 7-771. En cas d’incident, il convient de considérer la continuité de service des fonctions vitales pour la survie des animaux. H 705.353 Source de sécurité ou de remplacement Pour l'élevage intensif des animaux (production industrielle animale), il y a lieu de prendre en compte la nécessité éventuelle d’une source de remplacement.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

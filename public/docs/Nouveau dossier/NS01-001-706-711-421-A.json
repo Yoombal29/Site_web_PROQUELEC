@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques temporaires de structures,",
+    "article": "706",
+    "alinéa": "711.421",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-711-421-A",
+        "type": "obligation",
+        "texte_normatif": "Règles générales de protection contre l'incendie Les vitrines illuminées et les panneaux d'affichage doivent être constitués de matériaux présentant une résistance à la chaleur, une tenue mécanique, une isolation électrique et une ventilation appropriées, en tenant compte de la combustibilité des objets exposés à la chaleur dégagée par l'illumination. Les étalages comportant une concentration de matériels électriques, d'éclairage ou de lampes susceptibles d'émettre une chaleur excessive doivent être équipés de toits en matériaux M0, M1 ou M2, convenablement ventilés. 711.422.1.13 Les moteurs commandés automatiquement ou à distance, ou non surveillés en permanence, doivent être protégés contre les températures excessives par des dispositifs de protection contre les surcharges avec réarmement manuel ou par des dispositifs analogues.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

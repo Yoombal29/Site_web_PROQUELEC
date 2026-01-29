@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "556",
+    "alinéa": "556.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-556-556-5-A",
+        "type": "obligation",
+        "texte_normatif": "Surveillance de la tension et du courant a) Taux de distorsion harmonique La mesure du taux de distorsion harmonique en courant (THDi) ou en tension (THDu) est faite au moins jusqu'au rang 15. L'appareil de mesure peut avoir un seuil d'alarme permettant le contrôle du niveau de THDi ou de THDu. NOTES - 1 - Les indications données dans le tableau de 330.1.1 peuvent aider au choix des seuils de réglage. 2 - Pour des installations critiques (alimentation par groupe, charges non linéaires importantes, etc.), il est recommandé que cette mesure de surveillance soit intégrée dans l'appareillage réalisant la protection des départs principaux. b) Surveillance des perturbations La surveillance des perturbations à basse fréquence nécessite la prise en compte simultanée de plusieurs grandeurs (voir 330.1.1) telles que fluctuation de fréquence, variation de tension (y compris microcoupures), courants et distorsions harmoniques, etc. Certains appareils de mesure multifonctions permettent l'acquisition synchronisée de ces différentes grandeurs. Ces grandeurs servent à détecter les éventuelles perturbations à basse fréquence et à vérifier que les solutions mises en place pour pallier ces problèmes sont efficaces. - 299 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "556"
+        ]
+    }
+}

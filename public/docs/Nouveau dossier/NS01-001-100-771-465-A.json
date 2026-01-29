@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux d’habitation",
+    "article": "100",
+    "alinéa": "771.465",
+    "regle_atomique": {
+        "id_unique": "NS01-001-100-771-465-A",
+        "type": "obligation",
+        "texte_normatif": "Commande 771.465.1 Socles de prise de courant commandés Les installations électriques des logements comportent souvent des socles de prises de courant commandés, destinés à alimenter exclusivement des appareils d'éclairage mobiles, tels que lampadaires ou lampes de chevet. Ces socles de prises de courant ont un courant nominal de 16 A. Les socles de prises de courant commandés sont considérés, du point de vue de leur utilisation, comme des points d'éclairage fixes. Ils sont alors alimentés par les circuits d'éclairage de l'installation. Un interrupteur peut commander au plus deux socles de prise de courant à condition que ces socles soient dans la même pièce du logement. Chaque socle commandé est compté comme un point d’éclairage. Un télérupteur, un contacteur ou tout autre dispositif similaire peut commander plus de deux socles de prise de courant. Il est recommandé de repérer les socles de prise de courant commandés. - 434 - 771.465.2 Commande de la ventilation mécanique contrôlée (VMC) et de ventilation mécanique répartie (VMR) Le circuit d’alimentation de la VMC ou de la VMR doit comporter un dispositif d’arrêt. Ce dispositif peut être placé dans le tableau de répartition principal. Le disjoncteur dédié à la protection de ce circuit peut assurer la fonction « Arrêt ». Cette dernière disposition permet d’éviter que l’usager utilise de manière fréquente la fonction « Arrêt », ce qui est susceptible d’engendrer des dégradations dues à l’humidité (condensation, moisissure). Il est recommandé d’utiliser le dispositif de protection du circuit pour assurer la fonction « Arrêt ». Le dispositif de réglage de vitesse peut être placé en dehors du tableau de répartition principal s’il ne comporte pas la fonction « Arrêt ». Si l’extraction de l’air d’un même logement est réalisée par plusieurs extracteurs distincts, leurs circuits sont issus du même dispositif de protection. Dans le cas de VMC alimentée par les services généraux, voir le guide UTE C 15-755.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "100"
+        ]
+    }
+}

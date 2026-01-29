@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "412",
+    "alinéa": "412.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-412-412-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités 412.1.1 L’isolation double ou renforcée est une mesure de protection dans laquelle : - la protection contre les contacts directs est assurée par une isolation principale et la protection contre les contacts indirects est assurée par une isolation supplémentaire, ou - la protection contre les contacts directs et contre les contacts indirects est assurée par une isolation renforcée entre les parties actives et les parties accessibles. NOTE - Cette mesure est prévue pour empêcher l'apparition de tensions dangereuses sur les parties accessibles des matériels électriques lors d'un défaut de l'isolation principale. La classe II est reconnue par les normes relatives à un certain nombre de matériels et notamment les appareils électrodomestiques, les outils portatifs à main, les petits transformateurs (de sécurité, de séparation,...). - 78 - La norme relative aux \"ensembles de série ou dérivés de série\" (précédemment appelés ensembles d'appareillage montés en usine) (2) reconnaît, sous le vocable \"matériel à isolation totale\" des matériels présentant une sécurité équivalente à la classe II. Le sous-paragraphe 412.2.2 décrit les dispositions à prendre lors de la mise en œuvre des matériels pour réaliser la protection par isolation équivalente à la classe II. 412.1.2 La mesure de protection par isolation double ou renforcée est applicable dans toutes C les situations, à moins de limitations données dans la partie 7.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "412"
+        ]
+    }
+}

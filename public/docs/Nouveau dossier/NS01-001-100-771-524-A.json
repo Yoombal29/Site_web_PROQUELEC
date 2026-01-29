@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux d’habitation",
+    "article": "100",
+    "alinéa": "771.524",
+    "regle_atomique": {
+        "id_unique": "NS01-001-100-771-524-A",
+        "type": "obligation",
+        "texte_normatif": "Section des conducteurs Les valeurs des sections minimales imposées dans les tableaux 771B, 771C et 771F sont déterminées en fonction des puissances installées et tiennent compte des règles de 771.314.2 concernant la limitation des points d'utilisation alimentés par chaque circuit terminal. 771.530.4 Fixation des appareillages Les socles de prise de courant ne doivent pas à l'usage se séparer de leur support et rendre accessibles les bornes des conducteurs ou des câbles d'alimentation. - 435 - L'appareillage à fixation par vis, pour utilisation dans des boîtes encastrées dans les parois, permet d'assurer cette prescription. Compte tenu des contraintes d'utilisation et de la nature des parois recevant les boîtes encastrées dans lesquelles les socles de prises de courant sont installés, la fixation par griffes est vivement déconseillée. Elle ne sera plus autorisée à partir du 1er juin 2004. Pour assurer une bonne évolutivité, l’utilisation de boîtes d’encastrement mixtes est recommandée. 771.531.2.3.2 Protection complémentaire contre les contacts directs 771.531.2.3.2.1 Tous les circuits de l’installation, quel que soit le schéma des liaisons à la terre de l'alimentation, doivent être protégés par des dispositifs différentiels à courant différentiel-résiduel assigné au plus égal à 30 mA dont le nombre, le type et le courant assigné sont donnés dans le tableau 771E. Ces dispositifs de protection doivent être placés à l’origine de tous les circuits à l’exception de ceux alimentés par un transformateur de séparation. La protection des circuits extérieurs alimentant des installations et des matériels non fixés au bâtiment doit être distincte de celles des circuits intérieurs. La protection par DDR 30 mA peut être : - soit divisionnaire pour un groupe de circuits ; - soit individuelle pour un circuit spécialisé ou non. L’architecture mise en œuvre tiendra compte de la continuité d’utilisation souhaitée en fonction des applications. En particulier, les appareils mêlant eau et électricité peuvent être source de déclenchements. Il est donc souhaitable de les protéger par des DDR 30 mA spécifiques. Exemple : lave-linge, lave-vaisselle, etc. L'attention est appelée sur les considérations suivantes : Pour assurer la protection des personnes, la coupure d'alimentation résultant du fonctionnement de tels dispositifs peut perturber le fonctionnement de certains appareils, tels les équipements informatiques et les congélateurs. Des dispositions particulières peuvent alors être prises : - alimentation directe par un transformateur de séparation du circuit ; - alimentation par une prise de courant sur un circuit protégé par un DDR 30 mA dédié, de préférence à immunité renforcée. - 436 - Choix du courant assigné des interrupteurs différentiels : Le nombre et le courant assigné des interrupteurs différentiels 30 mA non dédiés à certaines fonctions spécifiques (congélateur, informatique, etc...) protégeant les circuits des locaux d'habitation, sont au minimum ceux indiqués dans le tableau suivant : Tableau 771E – Choix des interrupteurs différentiels Branchement monophasé de Puissance : ≤≤≤≤ 18 kVA, avec ou sans chauffage électrique Surface des locaux d'habitation Nombre, type et courant assigné minimal In des interrupteurs différentiels 30 mA Surface : ≤≤≤≤ 35 m² 1 x 25 A de type AC et 1 x 40 A de type A (1) 35 m² < Surface ≤≤≤≤ 100 m² 2 x 40 A de type AC et 1 x 40 A de type A (1) Surface > 100 m² 3 x 40 A de type AC (2) et 1 x 40 A de type A (1) (1) L’interrupteur différentiel 40 A de type A doit protéger notamment le circuit spécialisé cuisinière ou plaque de cuisson et le circuit spécialisé lave-linge. En effet ces matériels d’utilisation, en fonction de la technologie utilisée, peuvent en cas de défaut produire des courants comportant des composantes continues. Dans ce cas les DDR de type A conçus pour détecter ces courants assurent la protection. (2) En cas de chauffage électrique de puissance supérieure à 8 kVA, remplacer un interrupteur différentiel 40A de type AC par un interrupteur différentiel 63 A de type AC. Pour un branchement triphasé le nombre et le courant assigné des DDR à mettre en œuvre est celui indiqué dans le tableau 771E. En cas d’utilisation de disjoncteurs différentiels, leur type et leur nombre sont au minimum ceux indiqués dans le tableau 771E, leur calibre étant adapté au(x) circuit(s) à protéger. Afin d’équilibrer la charge, les circuits sont judicieusement répartis en aval des DDR. Pour préserver l’utilisation d’au moins un circuit dans une même pièce, il est recommandé de protéger les circuits des prises de courant et d’éclairage de cette pièce par des DDR différents. Dans le cas du chauffage électrique avec fil pilote, l’ensemble des circuits de chauffage (y compris le fil pilote) est placé en aval d’un même DDR. - 437 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "100"
+        ]
+    }
+}

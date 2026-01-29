@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "132",
+    "alinéa": "132.11",
+    "regle_atomique": {
+        "id_unique": "NS01-001-132-132-11-A",
+        "type": "obligation",
+        "texte_normatif": "Indépendance de l'installation électrique L'installation électrique doit être disposée de façon à exclure toute influence matérielle dommageable entre l'installation électrique et les installations non électriques du bâtiment. Les règles relatives à l'indépendance de l'installation électrique sont données en 515 et, pour les canalisations, en 528. H 132.12 Accessibilité des matériels électriques Les matériels électriques doivent être disposés de façon à permettre dans la mesure nécessaire : - de laisser un espace suffisant pour réaliser l'installation initiale et le remplacement ultérieur des matériels individuels ; - l'accessibilité aux fins de service, de vérification, d'entretien et de réparation. Des règles relatives à l’accessibilité des matériels électriques sont données en 513.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "132"
+        ]
+    }
+}

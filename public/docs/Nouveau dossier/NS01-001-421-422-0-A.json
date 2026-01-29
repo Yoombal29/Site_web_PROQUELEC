@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre l’incendie, les brûlures et l’explosion",
+    "article": "421",
+    "alinéa": "422.0",
+    "regle_atomique": {
+        "id_unique": "NS01-001-421-422-0-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités NOTE - Cette partie donne des prescriptions minimales. Des réglementations peuvent prescrire des règles complémentaires. La présente partie traite : - du choix et de la mise en œuvre d'installations dans des locaux à risques d'incendie dus à la nature des matières traitées ou entreposées telles que matériaux inflammables pour la fabrication, le traitement ou le stockage, y compris sous forme de poussières, par exemple dans des granges, des ateliers de menuiserie, des usines à papier. NOTE - La nature, les quantités de matières inflammables, les surfaces et les volumes de ces locaux peuvent être fixés par des réglementations. Les locaux ou emplacements visés par le présent tiret sont les locaux classés BE2. (1) NF C 61-910 et NF EN 60439-1 (C 63-421) - 99 - - du choix et de la mise en œuvre d'installations dans des locaux construits en matériaux H combustibles tels que le bois, certaines parois creuses, etc.; - du choix et de la mise en œuvre d'installations dans des locaux contenant des biens irremplaçables. Les locaux contenant des biens irremplaçables sont les musées, collections d'objets d'art, etc. - d'installations dans des structures propagatrices d'incendie. H Les matériels électriques doivent être choisis et mis en œuvre de manière qu'en fonctionnement normal, leur température et les échauffements prévisibles en cas de défaut ne puissent provoquer d'incendie, en tenant compte des conditions d'influences externes. Ceci peut être réalisé par des mesures constructives appropriées ou par des mesures complémentaires lors de leur installation. Ces dernières mesures ne sont pas nécessaires si la température de surface de ces matériels n'est pas susceptible de provoquer l'inflammation de matières combustibles à proximité. La présente partie ne traite pas du choix et de la mise en œuvre d'installations dans les chemins d'évacuation. Ces conditions peuvent être spécifiées par les Autorités nationales responsables par exemple de la construction des bâtiments, de l'édiction des règles relatives au public ou de la prévention de l'incendie.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "421"
+        ]
+    }
+}

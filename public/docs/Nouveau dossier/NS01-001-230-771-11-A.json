@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux d’habitation",
+    "article": "230",
+    "alinéa": "771.11",
+    "regle_atomique": {
+        "id_unique": "NS01-001-230-771-11-A",
+        "type": "obligation",
+        "texte_normatif": "Domaine d'application La présente partie s'applique aux installations électriques des locaux privatifs à usage d'habitation. En plus des règles de la présente partie, d'autres parties du titre 7 sont également applicables aux locaux à usage d'habitation, telles que : - la partie 7-701 pour les locaux contenant une baignoire ou une douche ; - la partie 7-702 pour les piscines privées ; - la partie 7-703 pour les saunas ; - la partie 7-753 pour les équipements de chauffage électrique. Elle ne s'applique pas aux installations électriques des services généraux et parties communes des bâtiments collectifs à usage d'habitation auxquels sont applicables les règles des titres 1 à 6 de la présente norme, les règles de la partie 7-772 et éventuellement d’autres parties du titre 7. Les bureaux et locaux professionnels intégrés aux logements sont en principe soumis aux dispositions du décret du 14 novembre 1988 relatif à la protection des travailleurs dans les établissements qui mettent en œuvre des courants électriques. Pour les installations électriques alimentées par une source d’énergie autonome (photovoltaïque, éolienne, etc.) de faible puissance (≤ 6 kVA) non raccordées au réseau, se reporter à l’annexe B.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "230"
+        ]
+    }
+}

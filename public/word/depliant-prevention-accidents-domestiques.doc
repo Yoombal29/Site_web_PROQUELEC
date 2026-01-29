@@ -1,0 +1,76 @@
+<html>
+<head>
+  <title>Dépliant – Faites bon ménage avec l’électricité (prévention accidents domestiques)</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#dbeafe;padding:1em;border-radius:6px;margin-top:1em;} ul{margin-left:1em;} .pictos{font-size:1.3em;}</style>
+</head>
+<body>
+  <h1>Faites bon ménage avec l’électricité – Prévention accidents domestiques</h1>
+  <h2>1. Mise en contexte</h2>
+  <p>Les accidents électriques domestiques sont fréquents mais évitables avec des gestes simples et de la vigilance.</p>
+  <h2>2. Dangers potentiels <span class="pictos">⚡🔥💡</span></h2>
+  <ul>
+    <li>Brûlures et électrocutions</li>
+    <li>Incendies liés à des appareils défectueux</li>
+    <li>Chocs électriques dans la salle d’eau</li>
+  </ul>
+  <h2>3. Conseils pratiques</h2>
+  <ul>
+    <li>Ne jamais bricoler une installation sous tension</li>
+    <li>Débrancher les appareils avant nettoyage</li>
+    <li>Surveiller les enfants près des prises</li>
+    <li>Installer des cache-prises</li>
+  </ul>
+  <h2>4. Bonnes pratiques de prévention</h2>
+  <ul>
+    <li>Faire vérifier l’installation régulièrement</li>
+    <li>Éduquer toute la famille aux risques</li>
+    <li>Utiliser des appareils certifiés</li>
+    <li>Installer des dispositifs différentiels 30mA</li>
+    <li>Éviter les rallonges et multiprises surchargées</li>
+  </ul>
+
+  <h2>5. Situations à risque à la maison</h2>
+  <ul>
+    <li>Salle de bain : appareils électriques trop proches de l’eau</li>
+    <li>Cuisine : branchements multiples et humidité</li>
+    <li>Chambres d’enfants : prises non sécurisées</li>
+    <li>Garage : outils électriques mal entretenus</li>
+  </ul>
+
+  <h2>6. Tableau des accidents et gestes de prévention</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#dbeafe;font-weight:bold;">
+      <td>Accident</td>
+      <td>Cause fréquente</td>
+      <td>Prévention</td>
+    </tr>
+    <tr><td>Brûlure</td><td>Appareil défectueux</td><td>Contrôle régulier, remplacement</td></tr>
+    <tr><td>Électrocution</td><td>Contact avec l’eau</td><td>Éloigner les appareils, installer des prises adaptées</td></tr>
+    <tr><td>Incendie</td><td>Surcharge ou court-circuit</td><td>Limiter les branchements, utiliser des protections</td></tr>
+    <tr><td>Choc électrique</td><td>Prise non sécurisée</td><td>Installer des cache-prises</td></tr>
+  </table>
+
+  <h2>7. Erreurs à éviter</h2>
+  <ul>
+    <li>Laisser les enfants manipuler les appareils électriques</li>
+    <li>Utiliser des appareils trop anciens ou abîmés</li>
+    <li>Ignorer les signes de dysfonctionnement</li>
+    <li>Oublier de couper le courant avant toute intervention</li>
+  </ul>
+
+  <h2>8. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/">Promotelec – Sécurité domestique</a></li>
+    <li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+    <li><a href="https://www.inrs.fr/">INRS – Prévention des risques électriques</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Adoptez une routine de vérification et sensibilisez toute la famille. La sécurité électrique est l’affaire de tous !<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </div>
+  <footer>
+    © PROQUELEC – Dépliant prévention accidents. Grand public.
+  </footer>
+</body>
+</html>

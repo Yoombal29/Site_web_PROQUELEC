@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "533",
+    "alinéa": "533.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-533-533-1-A",
+        "type": "obligation",
+        "texte_normatif": "Dispositions générales Pour l'application des règles énoncées en 511.1, les normes à considérer sont notamment les suivantes : Coupe-circuit : (8) - coupe-circuit à cartouches cylindriques ; - coupe-circuit à fusibles pour courant alternatif de tension nominale égale à 500V - Règles (9) supplémentaires pour coupe-circuit pour usages industriels ; - coupe-circuit à fusibles pour courant alternatif de tension nominale égale à 500V - Coupe-circuit (10) à couteaux et à cartouches ; Disjoncteurs : - disjoncteurs de protection contre les surintensités pour installations domestiques et (11) analogues ; (12) - disjoncteurs différentiels pour tableaux de contrôle des installations de première catégorie ; (13) - appareillage industriel de commande à basse tension - Disjoncteurs . C 533.1.1 Les fusibles dont les éléments de remplacement sont susceptibles d'être enlevés ou remplacés par des personnes autres qu'averties (BA4) ou qualifiées (BA5) doivent être d'un modèle conforme aux prescriptions de sécurité de la norme en vigueur - Coupe-circuit à fusibles à basse tension. Troisième partie : Règles supplémentaires pour les fusibles destinés à être utilisés par des personnes non qualifiées (8). Les fusibles ou les ensembles comportant des éléments de remplacement susceptibles d'être enlevés ou remplacés seulement par des personnes averties (BA4) ou qualifiées (BA5) doivent être installés de telle manière qu'il soit assuré que les éléments de remplacement peuvent être retirés ou mis en place sans risque de contact fortuit avec les parties actives. Les fusibles à cartouches cylindriques conformes à la norme en vigueur (8) peuvent être utilisés dans les installations TT et TN de tension nominale 230/400V, mais pas dans les installations IT de même tension nominale. 533.1.2 Les disjoncteurs dont la manœuvre peut être assurée par des personnes autres qu'averties C (BA4) ou qualifiées (BA5) doivent être conçus ou installés de manière qu'il ne soit pas possible de modifier le réglage de leurs relais de surintensité sans une action volontaire nécessitant l'usage d'une clé ou d'un outil. ——————— (8) NF C 61-203 (9) NF EN 60269-2 (C 63-210) (10) NF C 63-213 (11) NF EN 60898 (C 61-410). Dans la suite de la présente norme, ces disjoncteurs sont appelés domestiques. (12) NF C 62-411 (13) NF EN 60947-2 (C 63-120). Dans la suite de la présente norme, ces disjoncteurs sont appelés industriels. - 238 - C 533.2 Choix des dispositifs de protection contre les surcharges Le courant assigné (ou de réglage) du dispositif de protection doit être choisi conformément à 433.2. Le dispositif de protection contre les surcharges doit être sensible à la valeur efficace du courant circulant dans le circuit protégé. Les disjoncteurs équipés de bilame (notamment les disjoncteurs à usage domestique) et les fusibles sont naturellement sensibles à la valeur efficace du courant. Les disjoncteurs à usage industriel peuvent être équipés de déclencheurs électroniques qui doivent comporter un algorithme de calcul permettant la prise en compte de la valeur efficace du courant. Cette non prise en compte de la valeur efficace peut générer des déclenchements intempestifs (surprotection) si le seuil de déclenchement correspond à une valeur inférieure au courant efficace réel, ou à un manque de protection dans le cas inverse. Dans certains cas, pour éviter des fonctionnements intempestifs, les variations temporaires du courant des charges sont à prendre en considération dans le choix de la courbe de protection. Dans le cas de charges cycliques, les valeurs de I et de I doivent être choisies sur la base des C n 2 valeurs de I et de I pour charges constantes thermiquement équivalentes : B z où I est le courant d’emploi de la canalisation. B I est le courant admissible de la canalisation. z I est le courant assigné du dispositif de protection. n I est le courant assurant effectivement le fonctionnement du dispositif de protection. 2 Les courants assignés des fusibles et disjoncteurs protégeant les canalisations contre les surcharges sont obtenus à partir des tableaux du guide UTE C 15-105.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "533"
+        ]
+    }
+}

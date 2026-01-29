@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "522",
+    "alinéa": "522.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-522-522-1-A",
+        "type": "obligation",
+        "texte_normatif": "Sources externes de chaleur H 522.1.1 Afin d'éviter les effets de la chaleur émise par des sources externes, les méthodes suivantes, ou d'autres méthodes aussi efficaces, doivent être utilisées pour protéger les canalisations : - écran de protection ; - éloignement suffisant des sources de chaleur ; - choix d'une canalisation tenant compte des effets nuisibles qui peuvent se produire ; - renforcement local ou modification du matériau isolant. NOTE - La chaleur émise par des sources extérieures peut être transmise par rayonnement, par convection ou par conduction, provenant : - de distributions d'eau chaude ; - d'installations, appareils et luminaires ; - de procédés de fabrication ; - de transmission par des matériaux conducteurs de la chaleur ; - d'absorption par la canalisation de la chaleur du soleil ou du milieu environnant.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "522"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "412",
+    "alinéa": "412.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-412-412-2-A",
+        "type": "obligation",
+        "texte_normatif": "Prescriptions pour la protection contre les contacts directs et pour la protection contre les contacts indirects 412.2.1 La protection doit être assurée par l’utilisation : a) de matériels électriques des types suivants ayant subi les essais de type et ayant été repérés selon les règles qui leur sont applicables : - matériels ayant une isolation double ou renforcée (matériels de la classe II) ; (2) - ensembles de série et dérivés de série et possédant une isolation totale . NOTE - Ces matériels sont marqués du symbole b) de canalisations constituées de câbles considérés comme étant de la classe II ; Sont considérés comme étant de classe II, les câbles ne comportant aucun revêtement métallique et utilisés sous une tension au plus égale à la moitié de leur tension assignée. Ces câbles sont mentionnés dans le tableau 52A. Un câble comportant un conducteur de protection peut être considéré comme un câble de classe II, sous réserve que le conducteur de protection soit isolé dans les mêmes conditions que les conducteurs actifs. Cette condition est conforme à la règle du présent paragraphe concernant la protection par isolation supplémentaire lors de l’installation, pour la traversée d’enveloppes par des conducteurs de protection. C c) d’une isolation supplémentaire recouvrant les matériels électriques possédant seulement une isolation principale et montée au cours de l'installation électrique ; elle assure une sécurité équivalente à celle des matériels conformes à 412.2.1 et remplit les conditions spécifiées en 412.2.2. Par exemple, une canalisation constituée de conducteurs isolés posés sous conduits isolants ou goulottes isolantes peut être considérée comme satisfaisant à cette mesure de protection. C d) d’une isolation renforcée recouvrant les parties actives nues et montée au cours de l'installation électrique ; elle assure une sécurité équivalente à celle des matériels électriques conformes à 412.2.1 et remplit les conditions spécifiées dans les sous- paragraphes 412.2.2 et 412.2.3 ; une telle isolation n'est admise que lorsque des raisons de construction ne permettent pas la réalisation de la double isolation. 412.2.2 Enveloppes Le matériel électrique étant en état de fonctionnement, toutes les parties conductrices séparées des parties actives par une isolation principale seulement doivent être enfermées dans une enveloppe isolante possédant au moins le degré de protection IP2X ou IPXXB. (2) NF EN 60439-1 (C 63-421) - 79 - L'enveloppe isolante ne doit pas être traversée par des parties conductrices susceptibles de C propager un potentiel. L'enveloppe ne doit pas comporter de vis en matière isolante dont le remplacement par une vis métallique pourrait compromettre l'isolation procurée par l'enveloppe. NOTE - Lorsqu'il est impératif que l'enveloppe isolante soit traversée par des liaisons mécaniques (par exemple organes de commande d'appareils incorporés), celles-ci doivent être disposées de telle sorte que la protection contre les chocs électriques ne soit pas compromise. Lorsque l'enveloppe comporte des portes ou couvercles pouvant être ouverts sans l'aide d'un outil ou d'une clé, toutes les parties conductrices qui sont accessibles lorsque la porte ou le couvercle est ouvert doivent être protégées par une barrière isolante possédant au moins le degré de protection IP2X ou IPXXB, de manière à empêcher les personnes de toucher accidentellement ces parties. Cette barrière isolante ne doit pouvoir être enlevée qu'à l'aide d'un outil. La barrière de protection contre les contacts fortuits doit assurer un isolement équivalent à une double isolation. C Les parties conductrices enfermées dans une enveloppe isolante ne doivent pas être reliées à un conducteur de protection. Toutefois, des dispositions peuvent être prises pour la connexion de conducteurs de protection qui passent nécessairement à travers l'enveloppe pour relier d'autres matériels électriques dont le circuit d'alimentation passe à travers l'enveloppe. A l'intérieur de l'enveloppe, de tels conducteurs et leurs bornes doivent être isolés comme des parties actives, et les bornes doivent être repérées de façon appropriée. La mise à la terre de parties intermédiaires peut être nécessaire, par exemple pour empêcher des fonctionnements intempestifs. Les parties conductrices accessibles et les parties intermédiaires ne doivent pas être reliées C à un conducteur de protection sauf si cela est prévu par les règles de construction du matériel correspondant. L'enveloppe ne doit pas nuire aux conditions de fonctionnement du matériel ainsi protégé. 412.2.3 L'installation des maté riels énoncés en 412.1.1 (fixation, raccordement des conducteurs, etc.) doit être effectuée de façon à ne pas nuire à la protection assurée conformément aux règles de construction de ces matériels. 412.2.4 Un circuit alimentant des matériels de classe II doit comporter un conducteur de protection tout au long de son parcours. NOTE – Cette prescription est destinée à prendre en compte le remplacement par l’utilisateur de matériels de classe II par des matériels de classe I.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "412"
+        ]
+    }
+}

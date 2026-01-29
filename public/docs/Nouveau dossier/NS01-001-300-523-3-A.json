@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "300",
+    "alinéa": "523.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-300-523-3-A",
+        "type": "obligation",
+        "texte_normatif": "Résistivité thermique du sol Les courants admissibles indiqués dans les tableaux du présent article pour les câbles enterrés correspondent à une résistivité thermique du sol de 1 K.m/W. Dans les emplacements où la résistivité thermique du sol est différente de 1 K.m/W, les courants admissibles sont à multiplier par les facteurs de correction du tableau 52M à moins que la terre au voisinage immédiat du câble soit remplacée par une terre plus appropriée. De tels cas peuvent se rencontrer dans des terrains très secs. Tableau 52M - Facteurs de correction pour les câbles enterrés en fonction de la résistivité thermique du sol Résistivité thermique Facteur Observations du terrain de (K.m/W) correction Humidité Nature du terrain 0,40 1,25 Pose immergée Marécages 0,50 1,21 Terrains très humides Sable 0,70 1,13 Terrains humides Argile 0,85 1,05 Terrain dit normal et 1,00 1 Terrain sec calcaire 1,20 0,94 1,50 0,86 Terrain très sec Cendres 2,00 0,76 et 2,50 0,70 mâchefer 3,00 0,65",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "300"
+        ]
+    }
+}

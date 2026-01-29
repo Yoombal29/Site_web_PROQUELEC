@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Feuillet - VMC simple flux</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;margin:28px;color:#0f172a}h1{color:#2563eb}.small{font-size:0.95rem;color:#334155}.footer{margin-top:18px;color:#64748b}ul{margin-left:18px}</style>
+</head>
+<body>
+<h1>Feuillet technique — VMC simple flux</h1>
+<p class="small">Fiche pratique pour l'installation, le contrôle et l'entretien d'une VMC simple flux.</p>
+<h3>Points d'installation</h3>
+<ul>
+	<li>Positionner l'unité dans un local ventilé et accessible pour maintenance.</li>
+	<li>Respecter la trajectoire des gaines pour minimiser pertes de charge.</li>
+	<li>Prévoir protection électrique dédiée (disjoncteur adéquat).</li>
+</ul>
+<h3>Entretien</h3>
+<ul>
+	<li>Nettoyage annuel des bouches et éventuels filtres.</li>
+	<li>Vérifier l'absence de vibrations et l'état des silentblocs.</li>
+</ul>
+<h3>Étapes de vérification sur site</h3>
+<ol>
+	<li>Vérifier le bon fonctionnement du moteur et l’absence de bruit anormal.</li>
+	<li>Contrôler le débit d’air aux bouches d’extraction.</li>
+	<li>Inspecter l’état des gaines et des raccords (étanchéité, absence d’écrasement).</li>
+	<li>Tester la protection électrique dédiée (disjoncteur).</li>
+	<li>Consigner les résultats et anomalies éventuelles.</li>
+</ol>
+<h3>Tableau de contrôle VMC</h3>
+<table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+	<tr style="background:#e0e7ff;"><th>Point à contrôler</th><th>Outil</th><th>Critère de conformité</th></tr>
+	<tr><td>Débit d’air</td><td>Anémomètre</td><td>Conforme à la notice fabricant</td></tr>
+	<tr><td>État des gaines</td><td>Inspection visuelle</td><td>Pas d’écrasement, étanchéité assurée</td></tr>
+	<tr><td>Protection électrique</td><td>Test disjoncteur</td><td>Disjoncteur dédié, fonctionnement correct</td></tr>
+	<tr><td>Absence de bruit/vibration</td><td>Observation</td><td>Fonctionnement silencieux</td></tr>
+</table>
+<h3>Erreurs à éviter</h3>
+<ul>
+	<li>Oublier le nettoyage régulier des bouches et filtres</li>
+	<li>Installer la VMC dans un local non accessible</li>
+	<li>Utiliser des gaines non adaptées ou mal posées</li>
+	<li>Ne pas prévoir de protection électrique dédiée</li>
+</ul>
+<h3>Ressources utiles</h3>
+<ul>
+	<li><a href="https://www.promotelec.com/vmc/" target="_blank">Guide Promotelec : VMC</a></li>
+	<li><a href="https://www.legrand.fr/pro/actualites/vmc" target="_blank">Legrand : Installation VMC</a></li>
+	<li><a href="https://www.schneider-electric.fr/fr/faqs/FA164034/" target="_blank">FAQ Schneider Electric : Ventilation</a></li>
+</ul>
+<div style="background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;">
+	<b>Conseil PROQUELEC :</b> Un entretien régulier de la VMC garantit la qualité de l’air et la performance énergétique du logement. Consignez chaque intervention.
+</div>
+<div class="footer">PROQUELEC • Feuillet technique • 2025</div>
+</body>
+</html>

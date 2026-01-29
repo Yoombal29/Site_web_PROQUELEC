@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les surintensités",
+    "article": "435",
+    "alinéa": "435.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-435-435-1-A",
+        "type": "obligation",
+        "texte_normatif": "Protections assurées par le même dispositif Si un dispositif de protection contre les surcharges répondant aux prescriptions en 4 33 possède un pouvoir de coupure au moins égal au courant de court-circuit présumé au point où il est installé, il est considéré comme assurant également la protection contre les courants de court-circuit de la canalisation située en aval de ce point. Le pouvoir de coupure peut être celui du dispositif seul ou celui obtenu par coordination avec un autre dispositif amont tel que prévu en 434.2.1. NOTE - Ceci peut ne pas être valable pour toute la plage des courants de court-circuit pour certains types de disjoncteurs, notamment pour ceux ne limitant pas le courant. La vérification est effectuée conformément aux prescriptions du paragraphe 434.3. Ceci peut également ne pas être valable pour des circuits de grande longueur, tels que circuits des tunnels, circuits d'éclairage extérieur. Dans de tels cas, la règle du temps de coupure doit être systématiquement vérifiée, comme le préconise, par exemple, la norme NF C 17-200 pour les circuits d'éclairage public. C 435.2 Protections assurées par des dispositifs distincts Les règles en 433 et 434 s'appliquent respectivement au dispositif de protection contre les surcharges et au dispositif de protection contre les courts-circuits. Les caractéristiques des dispositifs doivent être coordonnées de telle manière que l'énergie que laisse passer le dispositif de protection contre les courts-circuits ne soit pas supérieure à celle que peut supporter sans dommage le dispositif de protection contre les surcharges.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "435"
+        ]
+    }
+}

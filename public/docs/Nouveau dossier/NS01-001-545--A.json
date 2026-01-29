@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Mises à la terre, conducteurs de protection et",
+    "article": "545",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-545--A",
+        "type": "obligation",
+        "texte_normatif": "Dispositions de mise à la terre et liaisons équipotentielles fonctionnelles.......................277 Annexe A – (normative) – Méthode de calcul du facteur k en 543.1.2...................................279 Annexe B – (normative) – Exemple d'installation de mise à la terre ......................................283 Annexe C – (informative) – Prises de terre..........................................................................284 - 267 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "545"
+        ]
+    }
+}

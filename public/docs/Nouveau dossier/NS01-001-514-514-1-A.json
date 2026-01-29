@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles communes à tous les matériels",
+    "article": "514",
+    "alinéa": "514.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-514-514-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités Des plaques indicatrices ou d'autres moyens appropriés d'identification doivent permettre de reconnaître l'affectation de l'appareillage, à moins que toute possibilité de confusion ne soit écartée. Si le fonctionnement d'un appareillage ne peut pas être observé par l'opérateur et qu'il peut en résulter un danger, un dispositif de signalisation conforme dans la mesure applicable à la NF EN 60073 : Principes de codage pour les dispositifs indicateurs et les organes de commande et à la NF EN 60447 : Principes de manœuvre, doit être placé de façon à être vu par l'opérateur. Ceci est généralement obtenu par construction ou par installation. H 514.2 Identification et repérage des canalisations Les canalisations électriques doivent être établies ou repérées de façon à permettre leur identification lors des vérifications, essais, réparations ou transformations de l'installation. En particulier le tracé des canalisations enterrées doit être relevé sur un plan qui permette de connaître leur emplacement sans avoir à recourir à une fouille. Le plus souvent les différentes canalisations électriques d'une installation sont suffisamment différenciées les unes des autres pour permettre leur identification, soit par leur nature, soit par leurs dimensions, soit enfin par leur tracé. Lorsque l'identification est difficile, il y a lieu d'établir un plan de l'installation et de placer de distance en distance des étiquettes indiquant la destination des circuits. Lorsque coexistent dans les mêmes locaux des installations différentes ou lorsqu'il est nécessaire de repérer les phases ou les polarités recourir à des marques et repères appropriés. - 184 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "514"
+        ]
+    }
+}

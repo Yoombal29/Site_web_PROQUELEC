@@ -1,0 +1,45 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "414",
+    "alinéa": "414.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-414-1-A",
+        "type": "obligation",
+        "texte_normatif": "La très basse tension assure protection contre contacts directs par isolation principale et contre contacts indirects par limitation de tension.",
+        "acteurs_concernes": [
+            "installateur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=50V AC / 120V DC",
+            "lieu": [
+                "locaux humides, chantiers"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "chocs électriques par tension élevée"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Utiliser transformateur TBTS avec isolation renforcée.",
+        "justification": {
+            "physique": "Tension limitée en dessous du seuil de fibrillation",
+            "biologique": "Effets physiologiques négligeables",
+            "sécurité": "Protection par basse tension"
+        },
+        "verification": {
+            "moyen": "Mesure tension de sortie",
+            "seuils": "≤50V AC / 120V DC"
+        },
+        "liens_normatifs": [
+            "414.3",
+            "411.7"
+        ]
+    }
+}

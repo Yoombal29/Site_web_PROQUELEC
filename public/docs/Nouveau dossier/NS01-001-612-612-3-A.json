@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de sécurité",
+    "article": "612",
+    "alinéa": "612.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-612-612-3-A",
+        "type": "obligation",
+        "texte_normatif": "Résistance d'isolement de l'installation électrique La résistance d'isolement doit être mesurée entre chaque conducteur actif et la terre. NOTES - 1 - Dans le schéma TN-C, le conducteur PEN est considéré comme une partie de la terre. 2 - Pendant cette mesure, les conducteurs de phase et le conducteur neutre peuvent être reliés ensemble. Tableau 61A – Valeurs minimales de la résistance d'isolement Tension nominale du circuit Tension d'essai Résistance en courant d'isolement continu V MΩ V TBTS et TBTP 250 ≥ 0,25 Inférieure ou égale à 500 V, à l'exception des cas ci-dessus 500 ≥ 0,5 Supérieure à 500 V 1 000 ≥ 1,0 Les mesures sont effectuées, l’installation étant hors tension. Il est généralement procédé à la mesure de la résistance d’isolement de l’ensemble d’une installation à son origine. Si la valeur mesurée est inférieure à celle spécifiée dans le tableau 61A, l’installation peut être divisée en plusieurs groupes de circuits et la résistance d’isolement de chaque groupe est mesurée. Si, pour un groupe de circuits, la valeur mesurée est inférieure à celle spécifiée dans le tableau 61A, la résistance d’isolement de chaque circuit est mesurée. Lorsque des circuits ou parties de circuit sont déconnectés par des dispositifs à minimum de tension (par exemple des contacteurs) coupant tous les conducteurs actifs, la résistance d’isolement de ces circuits ou parties de circuits est mesurée séparément. Si certains appareils d’utilisation sont connectés et si dans ce cas la valeur mesurée est inférieure à celle spécifiée dans le tableau 61A, ces appareils sont alors déconnectés. En ce qui concerne les appareils d’utilisation, il y a lieu de s‘assurer que leur résistance d’isolement n‘est pas inférieure à la valeur prescrite par la norme les concernant ou, à défaut, 0,5 MΩ. En ce qui concerne la résistance d’isolement des câbles chauffants noyés dans les parois des bâtiments, il y a lieu d’appliquer les valeurs concernant la résistance d’isolement des canalisations, à savoir : La résistance d’isolement mesurée après mise en place dans le béton, doit être au moins égale à 1000 ohms par volt de tension assignée par élément de chauffage, avec un minimum de 0,25 MΩ. Il en résulte que, compte tenu des valeurs de tension assignée des éléments chauffants, les résistances d’isolement doivent être au moins égales à : - 0,25 MΩ pour les éléments chauffants de tension assignée 230 volts. - 0,40 MΩ pour les éléments chauffants de tension assignée 400 volts. - 327 - Le tableau 61 A est applicable pour la vérification de la résistance d’isolement entre des conducteurs de protection non mis à la terre et la terre. Les mesures doivent être effectuées en courant continu. L'appareil d'essai doit être capable de fournir la tension d'essai spécifiée dans le tableau 61A avec un courant de 1 mA.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "612"
+        ]
+    }
+}

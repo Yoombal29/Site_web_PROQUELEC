@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux d’habitation",
+    "article": "250",
+    "alinéa": "772.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-250-772-3-A",
+        "type": "obligation",
+        "texte_normatif": "Prescriptions spéciales aux locaux techniques des services généraux, ascenseurs, chaufferies, surpresseurs, etc. 772.3.0 Domaine d'application Les prescriptions du présent paragraphe s'appliquent aux installations des locaux techniques : ascenseurs, chaufferies, surpresseurs, dans les bâtiments collectifs. Lorsqu'il existe un poste de détente gaz, les règles relatives aux influences externes BE3 (risque d'explosion) sont applicables au local correspondant (voir 424). Les règles imposées par les distributeurs de gaz n'autorisent pas les prises de courant. 772.3.1 Dispositions communes 772.3.1.1 Alimentation principale Un circuit divisionnaire, indépendant des autres circuits, dessert le tableau d'arrivée du local ou du service. Ce circuit est issu du tableau général de répartition des services généraux. 772.3.1.2 Alimentation éclairage L'éclairage de ces locaux techniques est assuré par un circuit divisionnaire distinct de leur alimentation principale et issu du tableau des services généraux. Toutefois, si la puissance totale nécessaire pour l'alimentation principale et l'éclairage est au plus égale à 2 kVA, l'éclairage ne nécessite pas de circuit distinct, sauf spécifications particulières indiquées dans cette section. 772.3.1.3 Eclairage Les appareils de commande manuelle sont placés de façon qu'au moins l'un d'eux soit accessible à chaque entrée dans les locaux. L'éclairement moyen à maintenir est précisé au tableau 772A. 772.3.1.4 Socles de prises de courant Tout local technique ou de service doit comporter au moins un socle de prise de courant 2P + T, 16 A. 772.3.1.5 Réseau d'alarmes techniques et de signalisation L'installation de ce réseau doit être réalisée conformément au paragraphe 772.4. 772.3.2 Ascenseurs L'installation des ascenseurs est régie par la série des normes EN 81-X : Règles de sécurité pour la construction et l'installation des élévateurs. 772.3.2.1 Caractéristiques des locaux et choix des matériels électriques en fonction des influences externes Voir le guide UTE C 15-103. - 463 - 772.3.2.2 Canalisations a) Nature des canalisations L'alimentation principale a son origine au tableau principal des services généraux. Il est rappelé que les canalisations d'alimentation des ascenseurs peuvent être placées, sous certaines conditions, dans les gaines réservées aux installations de branchement sous réserve de l'accord préalable du Service de Distribution (NF C 14-100). b) Passage dans la gaine de l'ascenseur Aucune canalisation ne doit passer à l’intérieur de la gaine d’ascenseur à l’exception de celles dédiées à l’ascenseur. c) Section des conducteurs d'alimentation En l'absence d'indications plus précises de la part de l'installateur des ascenseurs, les dispositions suivantes pourront être retenues : Le courant servant au calcul de la section des conducteurs d'alimentation d'un moteur d'ascenseur est pris au moins égal à : I I=I + d n 3 I = courant en marche normale n I = courant de démarrage d L'attention est attirée sur le fait que la puissance à souscrire auprès du Service de Distribution pour l'alimentation principale doit tenir compte de l'appel de courant au démarrage. Si l'installation comporte plusieurs ascenseurs alimentés par une même canalisation et susceptibles de démarrer simultanément, la section des conducteurs de la canalisation commune qui les alimente doit être choisie, du point de vue des échauffements, en tenant compte de la somme des courants calculés comme ci-dessus pour chacun des moteurs dans le rapport de 100 % pour le moteur le plus puissant, 75 % pour le suivant et 60 % pour les autres. On vérifie en outre, que quel que soit le nombre d'ascenseurs, la section adoptée n'entraîne pas de chute de tension supérieure à 5 % ou 8 % pour la somme des courants Id affectés des coefficients ci-dessus, suivant que l'alimentation est assurée directement par le réseau de distribution publique à basse tension ou par un poste de transformation. - 464 - 772.3.2.3 Local des machines a) Tableau ascenseur Le tableau de répartition est situé le plus près possible de la porte d'entrée du local, à l'intérieur de celui-ci. Sa composition est spécifiée au chapitre 13 de l'EN 81. Interrupteur général DDR DDR 30 mA 30 mA I P P P P P P (*) Eclairage PC Eclairage PC PC Eclairage cabine 1 toit de gaine 1 cuvette 1 local des local des cabine 1 machineries machineries d’ascenseur d’ascenseur Ascenseur 1 Ascenseur 1 Vers tableau de moteur Ascenseur 1 I : Interrupteur principal moteur cadenassable P : Dispositif de protection (disjoncteur ou fusible) (*) : Prévoir un télérupteur Figure 772A – Exemple de schéma de principe du tableau du local des machineries d’ascenseurs b) Eclairage L'éclairement moyen à maintenir est précisé au tableau 772A. La réalisation de l'éclairage de la gaine est du domaine de l'installation d'ascenseurs. c) Canalisations étrangères à la machinerie Aucune canalisation, ni appareil, s'ils sont étrangers à l'exploitation ou à la sécurité du local des machines, ne doivent y être installés. - 465 - 772.3.2.4 Eclairage des paliers d'ascenseurs des bâtiments collectifs Si la commande automatique de l’éclairage des paliers par l'ouverture des portes palières d'ascenseurs est requise, cette commande ne doit pas s'effectuer directement par des dispositifs placés sur ces portes palières. L’éclairage peut être commandé : - soit par détecteur de présence ; - soit avec l'accord du constructeur d'ascenseurs, par l'intermédiaire de contacts prévus à cet effet, dans l'armoire de manœuvre des machines, sous réserve de prémunir le personnel intervenant en machinerie contre les risques de toute tension provenant de l'installation électrique du bâtiment. Ceci doit être réalisé en ramenant la ligne d’alimentation générale de l’ensemble des minuteries sur le tableau d’arrivée de courant de l’ascenseur. Les conditions de sécurité du personnel sont satisfaites par l'emploi d'un dispositif de sectionnement général coupant tous les pôles des circuits de commande des bobines de minuterie et placé, à cet effet, sur le tableau de répartition prévu en 772.3.2.3 a). 772.3.2.5 Local des poulies Le local des poulies doit être équipé d'un tableau de répartition. Le circuit d'alimentation du local des poulies peut être pris sur l'un des circuits d'éclairage des services généraux. 772.3.2.6 Eclairage de remplacement ou de sécurité Chaque fois que l'immeuble dispose d'une alimentation de remplacement ou de sécurité, le local des machines doit posséder un éclairage raccordé à cette alimentation. Dans le cas contraire, un éclairage de sécurité par bloc autonome non permanent à commande manuelle doit être prévu. L'éclairage de remplacement ou de sécurité peut utiliser l'un au moins des appareils de l'éclairage normal. L'attention est attirée sur la nécessité d'un entretien régulier des blocs autonomes d'éclairage de sécurité (BAES). 772.3.3 Chaufferie Les chaufferies comportant un appareil de production de chaleur de puissance utile supérieure à 70 kW doivent respecter les dispositions de l’arrêté interministériel du 23 juin 1978.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "250"
+        ]
+    }
+}

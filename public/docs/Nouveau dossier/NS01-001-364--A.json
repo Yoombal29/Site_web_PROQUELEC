@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "364",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-364--A",
+        "type": "obligation",
+        "texte_normatif": "Installations semi-permanentes Les installations semi-permanentes sont destinées à des aménagements de durée limitée, sortant du cadre des activités habituelles des locaux ou se répétant périodiquement. H 364.1Les installations semi-permanentes peuvent faire l'objet des dérogations énoncées en 363. 364.2Si les installations semi-permanentes se renouvellent périodiquement, elles doivent être intégralement démontées entre chaque période d'utilisation. En outre, les dispositifs de protection de ces installations doivent être placés sur des tableaux stables. ____________ - 63 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "364"
+        ]
+    }
+}

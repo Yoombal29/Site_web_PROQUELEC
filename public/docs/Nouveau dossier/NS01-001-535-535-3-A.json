@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "535",
+    "alinéa": "535.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-535-535-3-A",
+        "type": "obligation",
+        "texte_normatif": "Association entre les dispositifs de protection à courant différentiel-résiduel et les dispositifs de protection contre les surintensités C 535.3.1 Lorsqu'un dispositif de protection à courant différentiel-résiduel est incorporé ou combiné avec un dispositif de protection contre les surintensités, les caractéristiques de l'ensemble du dispositif (pouvoir de coupure, caractéristiques de fonctionnement en fonction du courant assigné) doivent satisfaire aux règles en 433 et 434 et en 533.2 et 533.3. - 253 - 535.3.2 Lorsqu'un dispositif de protection à courant différentiel-résiduel n'est ni incorporé ni C combiné avec un dispositif de protection contre les surintensités (interrupteur différentiel) : - Le courant assigné d’un tel dispositif lorsqu’il est placé en amont de plusieurs circuits doit être : • soit supérieur ou égal à la somme des courants assignés des dispositifs de protection placés en aval ou au courant d’emploi calculé par le concepteur ; • soit supérieur ou égal au courant assigné du dispositif de protection situé directement en amont. Dans le cas particulier des installations des locaux d’habitation, voir tableau 771D. - Le dispositif doit pouvoir supporter sans dommage les contraintes thermiques et mécaniques qu'il est susceptible de subir en cas de court-circuit se produisant en aval de l’endroit où il est installé, même si, par suite d'un déséquilibre de courant ou du courant s'écoulant à la terre, le dispositif s'ouvre de lui-même. Les DDR qui ne sont ni incorporés ni combinés avec un dispositif de protection contre les surintensités, mais qui possèdent un organe de coupure, sont dénommés «interrupteurs différentiels». En pratique, leur pouvoir de coupure est le plus souvent inférieur au courant de court-circuit présumé au point d'installation. Dans ce cas, il y a lieu de les associer à un dispositif de protection contre les courts-circuits déterminé selon les caractéristiques de coordination fournies par le constructeur. Un DDR peut déclencher lorsqu’un courant de court-circuit supérieur à six fois son courant assigné I le traverse. n",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "535"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre l’incendie, les brûlures et l’explosion",
+    "article": "421",
+    "alinéa": "421.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-421-421-4-A",
+        "type": "obligation",
+        "texte_normatif": "Les matériels fixes présentant un effet de focalisation ou de concentration de chaleur doivent être suffisamment éloignés de tout objet fixe et de tout élément de construction, de telle façon que ces objets ou éléments ne puissent être soumis, dans les conditions normales, à une température dangereuse. Cette règle concerne notamment certains projecteurs à incandescence à faisceau intensif. H 421.5 Lorsque les matériels électriques installés dans le même local contiennent une quantité importante de liquide inflammable, des dispositions doivent être prises pour empêcher le liquide enflammé et les produits de combustion du liquide (flamme, fumée, gaz toxique) de se propager dans d'autres parties du bâtiment. - 98 - H NOTES - 1 - Comme exemples de telles dispositions, on peut citer : - une fosse d'extinction recueillant les fuites de liquide et assurant leur extinction en cas d'incendie ; - l'installation des matériels dans un local constitué de parois résistant au feu avec des seuils ou d'autres moyens d'empêcher la propagation de liquide enflammé dans d'autres parties du bâtiment, ce local étant ventilé uniquement sur l'extérieur. 2 - Une quantité de 25 l est généralement considérée comme importante. 3 - Pour des quantités inférieures à 25 l, il est suffisant de prendre des dispositions pour empêcher la fuite du liquide. 4 - Il est souhaitable de mettre hors tension le matériel dès le début d'un incendie. Les mesures de protection contre les risques d'incendie à prendre suivant la nature du diélectrique liquide sont définies dans la norme NF C 17-300. La norme NF C 17-300 n'impose aucune mesure de protection contre les risques d'incendie lorsque le volume total de diélectrique liquide par bac ou réservoir n'est pas supérieur à : - 25 l pour les diélectriques des classes O1 et K1, - 50 l pour les diélectriques des classes K2 et K3, - quelconque pour les diélectriques de la classe L3.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "421"
+        ]
+    }
+}

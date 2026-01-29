@@ -1,0 +1,78 @@
+<html>
+<head>
+  <title>Dépliant – Économisez l’énergie au quotidien</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#dbeafe;padding:1em;border-radius:6px;margin-top:1em;} ul{margin-left:1em;} .pictos{font-size:1.3em;}</style>
+</head>
+<body>
+  <h1>Économisez l’énergie au quotidien</h1>
+  <h2>1. Mise en contexte</h2>
+  <p>Réduire sa consommation d’énergie, c’est bon pour la planète et pour le budget familial. Adoptez les bons réflexes !</p>
+  <h2>2. Dangers potentiels <span class="pictos">💡🔥</span></h2>
+  <ul>
+    <li>Surchauffe des appareils</li>
+    <li>Consommation excessive</li>
+    <li>Risques d’incendie</li>
+  </ul>
+  <h2>3. Conseils pratiques</h2>
+  <ul>
+    <li>Éteindre les lumières inutiles</li>
+    <li>Utiliser des ampoules basse consommation</li>
+    <li>Débrancher les appareils en veille</li>
+    <li>Optimiser l’utilisation des équipements</li>
+  </ul>
+  <h2>4. Bonnes pratiques de prévention</h2>
+  <ul>
+    <li>Surveiller la facture d’électricité</li>
+    <li>Entretenir les appareils</li>
+    <li>Privilégier les équipements certifiés</li>
+    <li>Installer des programmateurs ou thermostats intelligents</li>
+    <li>Vérifier l’isolation du logement</li>
+  </ul>
+
+  <h2>5. Gestes clés pour économiser l’énergie</h2>
+  <ul>
+    <li>Régler le chauffage à 19°C dans les pièces à vivre</li>
+    <li>Utiliser le mode éco des appareils électroménagers</li>
+    <li>Prendre des douches courtes</li>
+    <li>Fermer les volets la nuit pour conserver la chaleur</li>
+    <li>Remplacer les vieux appareils par des modèles A++</li>
+  </ul>
+
+  <h2>6. Tableau des économies réalisables</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#dbeafe;font-weight:bold;">
+      <td>Action</td>
+      <td>Économie estimée</td>
+    </tr>
+    <tr><td>Éteindre les appareils en veille</td><td>Jusqu’à 10% de la facture</td></tr>
+    <tr><td>Remplacer les ampoules</td><td>Jusqu’à 80% sur l’éclairage</td></tr>
+    <tr><td>Réduire la température de chauffage</td><td>7% par degré en moins</td></tr>
+    <tr><td>Optimiser l’isolation</td><td>Jusqu’à 25% sur le chauffage</td></tr>
+    <tr><td>Utiliser le mode éco</td><td>Jusqu’à 15% sur l’électroménager</td></tr>
+  </table>
+
+  <h2>7. Erreurs à éviter</h2>
+  <ul>
+    <li>Laisser les appareils en veille</li>
+    <li>Surchauffer les pièces</li>
+    <li>Ignorer l’entretien des équipements</li>
+    <li>Oublier de comparer les offres d’énergie</li>
+  </ul>
+
+  <h2>8. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.ademe.fr/">ADEME – Agence de la transition écologique</a></li>
+    <li><a href="https://www.ecologie.gouv.fr/">Ministère de la Transition écologique</a></li>
+    <li><a href="https://www.fournisseurs-electricite.com/">Comparateur d’offres d’électricité</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Suivez votre consommation avec un compteur connecté et analysez vos habitudes pour agir efficacement.<br>
+    Chaque geste compte : l’économie d’énergie est à la portée de tous !
+  </div>
+  <footer>
+    © PROQUELEC – Dépliant économie d’énergie. Grand public.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </footer>
+</body>
+</html>

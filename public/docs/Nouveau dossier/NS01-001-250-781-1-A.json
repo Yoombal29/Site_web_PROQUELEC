@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux ou emplacements de service électrique",
+    "article": "250",
+    "alinéa": "781.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-250-781-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités Les locaux ou emplacements de service électrique sont des locaux ou emplacements renfermant des matériels électriques et dont l'accès est réservé aux personnes qualifiées, chargées de l'entretien et de la surveillance des matériels. De ce fait, il est admis que, dans ces locaux ou emplacements, la protection contre les contacts directs soit assurée au moyen d'obstacles (voir annexe B1 de la partie 4-41), ou par mise hors de portée par éloignement (voir annexe B2 de la partie 4-41), et en respectant les conditions de 781.2. La protection contre les contacts directs peut même être absente, en respectant les conditions de 781.3. Les locaux ou emplacements de travail réservés à la production, la conversion ou la distribution de l'électricité, visés par l'article 22 du décret du 14 novembre 1988, sont des locaux ou emplacements de service électrique tels que décrits ci-dessus. Il en est de même pour les locaux d'accès réservés aux électriciens définis dans la publication UTE C 18-510. Il est à noter que, pour des questions de conditions d'influences externes, il peut être nécessaire de prévoir un local, plutôt qu'un emplacement. Des locaux de service électrique peuvent être prescrits par d'autres textes réglementaires (par exemple le règlement de sécurité contre l'incendie relatif aux établissements recevant du public) pour des raisons autres que la protection contre les contacts directs, par exemple : - protéger des locaux et dégagements des risques d'incendie constitués par des matériels électriques ; - dans le cas de matériels électriques appartenant à une installation de sécurité : • protéger ces matériels d'un incendie provenant des locaux environnants (voir également 561.1) ; • éviter que ces matériels puissent être accessibles à des personnes autres que celles désignées par le chef d'établissement (voir également 562.2 et 563.5). C 781.2 Protection au moyen d'obstacles ou par mise hors de portée par éloignement Les mesures de protection au moyen d'obstacles selon l'annexe B1 à la partie 4-41 ou par mise hors de portée par éloignement selon l'annexe B2 à la partie 4-41 sont admises seulement dans les locaux où n'ont accès, conformément aux instructions de manœuvre, que des personnes averties (BA 4) ou qualifiées (BA 5) (*) et si les conditions suivantes sont simultanément remplies : - la tension nominale qui se présente dans de tels locaux (ou emplacements) ne doit pas être supérieure à 1000 V en courant alternatif ou 1500 V en courant continu ; - les règles énoncées en 781.4.1 et 781.4.3 doivent être observées dans les cas considérés ; - les locaux (ou emplacements) doivent être signalés de façon claire et visible par des repères appropriés. ——————— (*) Seules les personnes habilitées au sens de la publication UTE C 18-510 sont autorisées à travailler dans les conditions BA 4 et BA 5 (voir aussi 512.2.16). - 472 - C 781.3 Absence de protection contre les contacts directs U ne protection contre les contacts directs n'est pas requise dans les locaux accessibles seulement à des personnes averties (BA 4) ou qualifiées (BA 5) (*) dûment instruites pour le besoin particulier et si les conditions suivantes sont simultanément remplies : - la tension nominale n'est pas supérieure à 500 volts en courant alternatif et 750V en courant continu lisse (domaine BTA) ; Cette limitation n'est pas prescrite par les normes internationales et résulte de la réglementation pour la protection des travailleurs. - les locaux (ou emplacements) doivent être signalés de façon claire et visible par des repères C appropriés ; - les portes d'entrée des locaux (ou emplacements) doivent permettre une sortie facile vers l'extérieur. Elles doivent pouvoir être ouvertes sans clé de l'intérieur, même si elles sont fermées à clé de l'extérieur ; - pour les passages, les cotes minima les fixées en 781.4.2 et 781.4.3 doivent être observées ; - si les parties actives nues appartiennent à un tableau de distribution et sont situées sur la face portant les dispositifs de manœuvre, le sol ou le plancher doit être isolant ou isolé pour la tension considérée, devant cette face sur au moins 1 m de largeur ; - en cas de présence d’accumulateurs, lorsque la tension nominale des batteries est supérieure à 150 volts, des prescriptions supplémentaires sont données en 554.2.2.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "250"
+        ]
+    }
+}

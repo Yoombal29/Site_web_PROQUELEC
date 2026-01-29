@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "537",
+    "alinéa": "537.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-537-537-1-A",
+        "type": "obligation",
+        "texte_normatif": "Contrôleurs permanents d'isolement (CPI) C 537.1.1 Conformément à la règle énoncée en 411.6.5, un contrôleur permanent d'isolement doit être installé dans les installations en schéma IT. Pour l'application des règles énoncées en 511.1, la norme à considérer est la suivante : - Dispositifs de contrôle permanent de l'isolement(18). Il est rappelé que la protection contre les contacts indirects n’est assurée que si les protections en cas de double défaut ont été mises en œuvre. Des dispositions sont prises pour la recherche et l’élimination du premier défaut dès que les conditions d’exploitation de l’installation le permettent. 537.1.2 Installation des contrôleurs permanents d'isolement Lorsque le conducteur neutre est distribué, la borne «réseau» du CPI est connectée au conducteur neutre le plus près possible de l'origine de l'installation dont il surveille l'isolement, sans interposition d'aucun appareillage de protection contre les surintensités. Lorsque le conducteur neutre n'est pas distribué, la borne «réseau» du CPI peut être connectée : - soit à un point neutre artificiel de trois impédances connectées aux conducteurs de phase à proximité de l'origine de l'installation ; - soit à un conducteur de phase. Dans le cas où le CPI est connecté entre une phase et la terre, il doit posséder une tenue en tension entre sa borne «réseau» et sa borne «terre» au moins égale à la tension entre phase. Cette tension apparaît au niveau de ces bornes en cas de premier défaut d’isolement sur une autre phase. Pour les installations à courant continu, la borne «réseau» du CPI est connectée soit directement au compensateur s'il existe, soit à un des pôles de la source. La borne «terre» du CPI doit être reliée à la plus proche prise de terre des masses de l'installation. Le circuit d'alimentation du CPI est relié soit à l'installation sur le même circuit que le point de connexion de la borne «réseau» et le plus près possible de l’origine de l’installation, soit à une source auxiliaire à haute fiabilité. Dans le premier cas, ce circuit doit être protégé contre les surintensités par des dispositifs de protection appropriés dont le pouvoir de coupure est au moins égal au courant de court-circuit présumé à son point d'installation. ——————— (18) NF EN 61557-8 (C 42-198-8) - 262 - Le point de connexion à l'installation doit être choisi de manière que le CPI soit en mesure de surveiller l'isolement de l'installation dans toutes les conditions de l'exploitation. Dans les installations dont le poste de transformation est éloigné de l'utilisation, il est admis de relier le CPI à la prise de terre du neutre de l'installation. Lorsque le circuit d'alimentation du CPI est relié entre phase et neutre, les dispositifs de protection doivent être installés comme il est indiqué en 431.2.2. L'attention est appelée sur le fait qu'en raison de leur proximité de l'origine de l'installation, il peut être nécessaire de prévoir des dispositifs de protection ayant un pouvoir de coupure important. Lorsqu'une installation est alimentée par Figure 537A – Connexion d'un CPI plusieurs sources de puissance en parallèle, un Exemple de connexion d'un contrôleur contrôleur permanent d'isolement est nécessaire permanent d'isolement dans une installation par source de puissance, à condition qu’ils dont aucun point n'est relié directement à la soient interverrouillés de manière qu’un seul terre (neutre isolé) : le CPI est inséré entre le CPI demeure relié à l’installation. Chaque point neutre du transformateur et la prise de contrôleur permanent d’isolement surveille la terre des masses la plus proche. source de puissance déconnectée permettant ainsi la reconnexion de cette source sans défaut d’isolement préalable. 537.1.3 Réglage des contrôleurs permanents d'isolement Un contrôleur permanent d'isolement prévu conformément au 411.6.5 est un dispositif qui surveille de façon continue l'isolement d'une installation électrique. Il est destiné à signaler toute réduction importante du niveau d'isolement de l'installation afin de permettre d'en trouver la cause avant qu'un deuxième défaut ne se produise, évitant ainsi la coupure de l'alimentation. En conséquence, il est réglé à une valeur inférieure à celle correspondant à l’isolement naturel de l’installation lorsque celle-ci fonctionne normalement avec le maximum de charges connectées. Plus le réglage du contrôleur permanent d’isolement est réglé sur une basse valeur, plus la recherche du défaut sera aisée car elle correspond au courant maximal de fuite à la terre et au maximum du courant injecté par le système de recherche de défaut associé. Une résistance d’isolement de faible valeur ne crée pas de danger pour l’utilisateur. De ce fait, un réglage à une valeur basse du seuil d’alarme (~ 500 Ω) du CPI permet de ne lancer la recherche qu’en cas de vrai défaut. Un deuxième seuil de prévention du CPI, réglé à une valeur inférieure d’environ 50 % à la résistance d’isolement de l’ensemble de l’installation, permet de prévenir en cas de baisse d’isolement du réseau nécessitant une vérification de l’ensemble de l’installation. En effet une baisse de la résistance d’isolement peut parfois résulter non de l'existence d'un défaut franc d'isolement, mais d'une réduction générale de l'isolement d'une installation, réduction due par exemple à la présence d'humidité consécutive à une mise hors tension prolongée de tout ou partie de l'installation ou d'un appareil d'utilisation. Dans de tels cas, la mise en service de l'installation permet de remonter l'isolement à une valeur supérieure au seuil de réglage de prévention du CPI. Les contrôleurs permanents d'isolement doivent être conçus ou installés de manière qu'il ne soit possible d'en modifier le réglage qu'à l'aide d'une clé ou d'un outil ou d’un code. - 263 - 537.1.4 Choix des contrôleurs permanents d'isolement Les caractéristiques intervenant dans le choix du CPI sont : a) La valeur du courant admissible dans les CPI : Les CPI sont conçus de manière que le courant à travers l'appareil ne dépasse pas 30 mA, même en cas de défaut franc. Pour certaines applications (bloc opératoire, par exemple), des valeurs plus faibles de courant peuvent être prescrites, il doit alors être fait usage de CPI spécialement prévus à cet effet. b) La nature du courant de mesure : En ce qui concerne la nature du courant, les CPI les plus couramment utilisés sont : - ceux qui appliquent une tension continue à l'installation ; - ceux qui appliquent une tension alternative à l'installation. Les premiers fournissent une indication de la résistance d'isolement mais leurs indications risquent d'être perturbées par un défaut d'isolement se produisant à l'aval d'un élément redresseur de l'installation surveillée. Ils sont suffisants pour les installations ne comportant pas ou peu d'éléments redresseurs alimentés sans l'intermédiaire de transformateurs. Les seconds indiquent la valeur de la résistance d'isolement et des réactances de fuite de l'installation mesurée à la fréquence de la source de mesure : pour diminuer l'influence de ces réactances, les CPI utilisent généralement une fréquence nettement inférieure à celle de l'installation surveillée. Ces dispositifs conviennent particulièrement pour les installations à courant alternatif comportant de nombreux éléments redresseurs et pour les installations à courant continu. Des dispositifs de conception simplifiée, dont le principe est de détecter l'apparition d'un premier défaut par une méthode de comparaison, dispositifs qui ne sont pas visés par la norme en vigueur (19), et qui ne surveillent pas l'isolement du point milieu artificiel, sont admis dans certains cas particuliers d'installation en courant continu à 2 conducteurs isolés de la terre, sous réserve que : - l'isolement de tous les conducteurs actifs distribués soit surveillé ; - toutes les masses de l'installation soient reliées entre elles ; - les conducteurs des circuits soient disposés de manière à rendre improbable le risque de défaut à la terre, par exemple constitués de câbles considérés comme étant de classe Il (tableau 52A).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "537"
+        ]
+    }
+}

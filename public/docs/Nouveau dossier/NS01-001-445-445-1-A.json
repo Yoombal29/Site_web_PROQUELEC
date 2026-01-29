@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Sectionnement et commande",
+    "article": "445",
+    "alinéa": "445.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-445-445-1-A",
+        "type": "obligation",
+        "texte_normatif": "Prescriptions générales 445.1.1 Des précautions doivent être prises lorsque la disparition de la tension et son rétablissement peuvent entraîner des dangers pour les personnes et pour les biens. De même des précautions appropriées doivent être prises lorsqu'une partie de l'installation ou un matériel d'utilisation peut être endommagé par une baisse de tension. Il n'est pas exigé de dispositif de protection contre les effets des baisses de tension si les dommages subis par l'installation ou par le matériel constituent un risque acceptable sans cause de danger pour les personnes. Cette règle s'applique notamment aux appareils comportant des moteurs susceptibles de démarrer automatiquement après un arrêt dû à une baisse de tension au-dessous d'une certaine valeur. Les machines soumises au décret du 29 juillet 1992 doivent répondre à cette prescription. H 445.1.2 Les dispositifs de protection contre les effets des baisses de tension peuvent être retardés si le fonctionnement de l'appareil qu'ils protègent admet sans danger une interruption ou une baisse de tension de courte durée. 445.1.3 S'il est fait usage de contacteurs, le retard à l'ouverture et à la refermeture ne doit pas empêcher la coupure instantanée par des dispositifs de commande ou de protection. 445.1.4 Les caractéristiques des dispositifs de protection contre les effets des baisses de tension doivent être compatibles avec les prescriptions des normes relatives à la mise en service et à l'utilisation du matériel. 445.1.5 Lorsque la refermeture d'un dispositif de protection est susceptible de créer une situation dangereuse, la refermeture ne doit pas être automatique. ____________ - 144 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "445"
+        ]
+    }
+}

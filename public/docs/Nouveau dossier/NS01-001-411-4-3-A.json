@@ -1,0 +1,34 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "411",
+  "alinéa": "411.4.3",
+  "regle_atomique": {
+    "id_unique": "NS01-001-411-4-3-A",
+    "type": "obligation",
+    "texte_normatif": "L'impédance de la boucle de défaut Zs doit satisfaire Uo / Zs ≥ Ia, où Ia est le courant de fonctionnement du dispositif de protection.",
+    "acteurs_concernes": ["installateur", "controleur"],
+    "conditions_application": {
+      "schema_terre": ["TN"],
+      "tension": "<=1000V",
+      "lieu": ["installations"]
+    },
+    "exceptions": ["si liaison équipotentielle supplémentaire (411.3.2.5)"],
+    "risques_couverts": [
+      "non-déclenchement du dispositif en cas de défaut"
+    ],
+    "gravite_non_conformite": "critique",
+    "mesure_corrective": "Calculer Zs, réduire impédance par proximité PE-phases, éviter éléments ferromagnétiques.",
+    "justification": {
+      "physique": "Courant de défaut ≥ courant de déclenchement pour coupure avant tension dangereuse",
+      "biologique": "Tension de contact <50V en temps t",
+      "sécurité": "Efficacité de la protection automatique"
+    },
+    "verification": {
+      "moyen": "Mesure Zs avec testeur de boucle",
+      "seuils": "Zs ≤ Uo/Ia"
+    },
+    "liens_normatifs": ["411.3.2.2", "411.3.2.3", "411.3.2.5"]
+  }
+}

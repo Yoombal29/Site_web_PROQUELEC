@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Feuillet - Compteur & Branchement</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;margin:28px;color:#0f172a}h1{color:#2563eb}.small{font-size:0.95rem;color:#334155}.footer{margin-top:18px;color:#64748b}ul{margin-left:18px}</style>
+</head>
+<body>
+<h1>Feuillet technique — Compteur & Branchement client</h1>
+<p class="small">Fiche synthétique : points de contrôle avant la mise en service et bonnes pratiques de repérage.</p>
+<h3>Contrôles avant mise sous tension</h3>
+<ul>
+	<li>Vérifier la bonne connexion des conducteurs au coffret de branchement.</li>
+	<li>Confirmer la présence et la bonne position du disjoncteur de branchement.</li>
+	<li>Contrôler l'étiquetage clair des circuits et le plan de repérage.</li>
+</ul>
+<h3>Recommandations</h3>
+<ul>
+	<li>Documenter la configuration (schéma de branchement) et l'inclure dans le dossier client.</li>
+	<li>Mesurer la tension et vérifier l'absence d'anomalies avant raccordement définitif.</li>
+	<li>Contrôler la présence d'une protection différentielle 500mA côté branchement</li>
+	<li>Vérifier la continuité de la terre</li>
+	<li>Faire réaliser le contrôle par un professionnel certifié</li>
+</ul>
+
+<h3>Étapes de vérification lors de la mise en service</h3>
+<ul>
+	<li>Inspection visuelle du coffret et du compteur</li>
+	<li>Test du disjoncteur de branchement</li>
+	<li>Contrôle de l'étiquetage et du plan de repérage</li>
+	<li>Mesure de la tension et vérification de la polarité</li>
+	<li>Validation de la conformité avec la norme NF C 15-100</li>
+</ul>
+
+<h3>Tableau des anomalies et solutions</h3>
+<table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+	<tr style="background:#fef9c3;font-weight:bold;">
+	  <td>Anomalie</td>
+	  <td>Conséquence</td>
+	  <td>Solution</td>
+	</tr>
+	<tr><td>Absence de protection différentielle</td><td>Risque d'électrocution</td><td>Installer un disjoncteur différentiel</td></tr>
+	<tr><td>Mauvaise connexion des conducteurs</td><td>Non-conformité, panne</td><td>Reprise des connexions</td></tr>
+	<tr><td>Étiquetage absent</td><td>Erreur d'intervention</td><td>Mettre à jour le plan et les étiquettes</td></tr>
+	<tr><td>Absence de terre</td><td>Danger pour les personnes</td><td>Installer une prise de terre</td></tr>
+  </table>
+
+<h3>Erreurs à éviter</h3>
+<ul>
+	<li>Oublier le contrôle de la protection différentielle</li>
+	<li>Ignorer l'étiquetage des circuits</li>
+	<li>Reporter la vérification de la terre</li>
+	<li>Ne pas faire appel à un professionnel certifié</li>
+</ul>
+
+<h3>Ressources utiles</h3>
+<ul>
+	<li><a href="https://www.promotelec.com/">Promotelec – Compteur et branchement</a></li>
+	<li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+	<li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+</ul>
+
+<div class="footer">PROQUELEC • Feuillet technique • 2025<br>Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a></div>
+</body>
+</html>

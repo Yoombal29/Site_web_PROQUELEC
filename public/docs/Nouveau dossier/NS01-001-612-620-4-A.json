@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de sécurité",
+    "article": "612",
+    "alinéa": "620.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-612-620-4-A",
+        "type": "obligation",
+        "texte_normatif": "Rapport A la suite des vérifications périodiques, un rapport doit être établi et doit comporter, en complément à toute observation relative à l'examen visuel et aux essais effectués, les informations relatives aux modifications et extensions non conformes aux prescriptions, en spécifiant les parties concernées de l'installation. Partie 6-63 - Entretien des installations C Les installations doivent être maintenues constamment en bon état. Toute défectuosité ou anomalie constatée dans l'état du matériel électrique ou dans son fonctionnement doit être signalée à une personne chargée de la surveillance de l'installation. Il en est ainsi notamment lorsque les dispositifs de protection contre les surintensités ou contre les chocs électriques fonctionnent sans cause connue. Il y a lieu de veiller en particulier : - au maintien des dispositions mettant hors de portée les parties actives, - aux connexions et à l'état des conducteurs de protection, - à l'état des câbles souples alimentant les appareils mobiles ainsi qu'à leurs dispositifs de connexion, - au réglage correct des dispositifs de protection. Toute installation ou partie d'installation qui apparaîtrait dangereuse doit être immédiatement mise hors tension et ne peut être remise en service qu'après réparation satisfaisante. Les opérations d'entretien et de vérification des installations ne doivent être confiées qu'à des personnes qualifiées pour les effectuer. Pour les conditions de sécurité dans lesquelles ces opérations doivent être effectuées, on s'inspirera utilement des indications contenues dans le Recueil d'instructions générales de sécurité d'ordre électrique (2). En particulier, les opérations de remplacement d'un matériel électrique ne doivent être effectuées qu'après sectionnement du circuit d'alimentation correspondant. Pour certains matériels, il y a lieu de vérifier l'absence de toute tension sur les bornes d'alimentation du matériel, il en est ainsi lorsque le mode d'alimentation du matériel peut faire craindre un retour de tension par un autre circuit que le circuit principal d'alimentation du matériel. Par exemple, le remplacement d'un limiteur de surtension (534.2) nécessite le sectionnement des circuits de l'alimentation haute tension du transformateur et du départ vers l'installation à basse tension. ___________ ——————— (2) UTE C 18-510 - 333 - Annexe A – (informative) – Méthode de mesure de la résistance d'isolement des sols et des parois C On utilise pour ces mesures un ohmmètre à magnéto ou un mesureur d'isolement à batterie incorporée donnant une tension à vide d'environ 500 V (ou 1 000 V si la tension assignée de l'installation est supérieure à 500 V) en courant continu. La résistance est mesurée entre l'électrode de mesure et un conducteur de protection de l'installation. L'électrode peut être l'une de celles qui sont décrites ci-après. En cas de contestation, l'utilisation de l'électrode 2 est la méthode de référence. NOTE - Il est recommandé d'effectuer l'essai avant l'application du traitement de surface (vernis, peintures et produits similaires). Électrode de mesure 1",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "612"
+        ]
+    }
+}

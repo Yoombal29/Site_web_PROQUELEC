@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre l’incendie, les brûlures et l’explosion",
+    "article": "421",
+    "alinéa": "422.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-421-422-1-A",
+        "type": "obligation",
+        "texte_normatif": "Locaux à risque d'incendie dû à la nature des matières traitées ou entreposées (locaux BE2) 422.1.1 Dans les locaux classés BE2, les installations doivent être limitées à celles nécessaires à l'exploitation de ces locaux, à l'exception des canalisations dans les conditions définies en 422.1.5. Ces installations doivent satisfaire aux prescriptions des sous-paragraphes 422.1.2 à 422.1.18. 422.1.2 Lorsque des poussières peuvent s'accumuler en quantité suffisante sur des enveloppes de matériels électriques pouvant entraîner un risque d'incendie, des mesures doivent être prises pour empêcher ces enveloppes d'atteindre des températures excessives. Cela relève du simple aspect de l'entretien. 422.1.3 Il est rappelé que les matériels électriques doivent être appropriés à ces locaux ; en H particulier, leurs enveloppes doivent présenter un degré de protection d'au moins IP5X en cas de présence de poussière. 422.1.4 En principe, les règles générales relatives aux canalisations sont applicables. Cependant, lorsque les canalisations ne sont pas noyées dans des matériaux incombustibles tels que plâtre, béton ou matériau équivalent, elles doivent satisfaire aux caractéristiques de non propagation de la flamme définies dans les normes en vigueur. Les conducteurs et câbles, les systèmes de conduits, de goulottes, les chemins de câbles doivent satisfaire à l'essai de non propagation de la flamme (catégorie C2 pour les câbles et conducteurs). H NOTE - Lorsque le risque de propagation de l'incendie est élevé, par exemple dans de longs parcours verticaux ou dans des groupements de câbles, il est recommandé que les câbles satisfassent aux caractéristiques de non propagation de (2) l'incendie définies dans la norme en vigueur . Les câbles non propagateurs de l'incendie sont de la catégorie C1. (2) NF EN 50266 (C 32-072) - 100 - H 422.1.5 En complément à 422.1.4, les canalisations électriques qui traversent de tels locaux, mais qui ne sont pas destinées à l'alimentation de ces locaux ne doivent comporter aucune connexion sur leur parcours à l'intérieur de ces locaux, à moins que ces connexions ne soient placées dans une enveloppe satisfaisant aux essais au feu définis dans les normes appropriées de produits, par exemple prescriptions particulières pour les boîtiers de cloisons définies dans la norme en (3) vigueur . Les enveloppes contenant des connexions satisfont à l'essai au fil incandescent conforme à la (4) norme en vigueur à la température de 960 °C. (5) Les canalisations électriques préfabriquées conformes à la norme en vigueur sont autorisées. Le tableau 52A précise les caractéristiques C1, C2 et C3 des principaux câbles utilisés. 422.1.6 Les canalisations qui alimentent ou traversent de tels locaux doivent être protégées contre H les surcharges et contre les courts-circuits par des dispositifs situés en amont du local concerné. Les canalisations qui ont leur origine dans ces locaux doivent être protégées contre les surcharges et contre les courts-circuits par des dispositifs situés à l'origine de ces circuits. 422.1.7 Les canalisations doivent être protégées contre les défauts d'isolement, à l'exception des canalisations préfabriquées : a) en schéma TN ou TT, par des dispositifs à courant différentiel résiduel de courant différentiel- résiduel assigné au plus égal à 300 mA conformément à 531.2.4 et aux normes appropriées. Si un défaut résistif peut entraîner un risque d'incendie, par exemple chauffage en plafond par films chauffants, le courant différentiel-résiduel assigné doit être au plus de 30 mA. b) en schéma IT, par un contrôleur permanent d'isolement avec alarme sonore et/ou visuelle. Une instruction appropriée doit indiquer, que lors d'un premier défaut sur l'un des circuits d'un local BE2, il doit être procédé à la coupure manuelle de ce circuit. Ceci ne s'oppose pas à la mise en œuvre complémentaire de dispositifs différentiels de courant différentiel-résiduel égal à 300 mA. H NOTE - Des câbles à gaine métallique sont recommandés. Ces gaines métalliques devront être reliées au conducteur de protection. 422.1.8 Les conducteurs PEN ne sont pas admis à l'exception de ceux appartenant à des canalisations traversant ces locaux. Dans les installations en schéma TN, les circuits desservant ces locaux sont réalisés suivant le schéma TN-S. Il est admis que le tableau principal de ces locaux puisse être alimenté en schéma TN-C. H 422.1.9 Tout conducteur neutre doit pouvoir être sectionné par un dispositif associé conformément à 537.2. Cette règle est précisée pour les pays n'appliquant pas systématiquement la coupure du neutre. En France, le conducteur neutre est toujours sectionné. H 422.1.10 Les conducteurs nus ne sont pas admis. On doit s'assurer que les matériaux combustibles présents ne puissent s'enflammer par formation d'arcs, étincelles, particules brûlantes ou autres phénomènes. (3) NF EN 60669-2-2 (C 61-112) (4) NF EN 60695 (C 20-924) (5) NF EN 60439-2 (C 63-422) - 101 - H 422.1.11 Pour les câbles souples il est recommandé de choisir les câbles et cordons pour usage intensif, par exemple du type HO7RN-F ou autre câble analogue. 422.1.12 (disponible) 422.1.13 Les moteurs commandés automatiquement ou à distance, ou non surveillés en permanence, doivent être protégés contre les températures excessives par des dispositifs de protection contre les surcharges avec réarmement manuel ou par des dispositifs analogues. Les moteurs à démarrage étoile-triangle, sans commutation automatique d'étoile à triangle, doivent être aussi protégés contre les températures excessives dans le couplage étoile. 422.1.14 Dans les locaux où il existe un risque d'accumulation de poussières sur le luminaire, seuls les luminaires avec surfaces à températures limitées doivent être utilisés. Ces luminaires doivent être conformes à la norme NF EN 60598-2-24 (NF C 71-024) et présenter le degré de protection IP6X. En outre, si les luminaires utilisés peuvent surchauffer les objets éclairés en raison par exemple du type de lampe utilisé, de la forme du réflecteur, du réglage des moyens de montage, ou de la position de montage, comme indiqué dans les instructions d'installation, ces luminaires devront comporter le marquage correspondant indiquant la distance minimale des objets illuminés. m Le symbole pour la distance minimale des objets éclairés (mètres) est H 422.1.15 (disponible) 422.1.16 Si des systèmes de chauffage électrique ou de ventilation sont utilisés, la présence de poussière et la température de l'air doivent être telles qu'un risque d'incendie ne puisse se présenter dans ce local. Les dispositifs de limitation de température doivent être à réenclenchement manuel. 422.1.17 Les matériels de chauffage électrique doivent être placés sur des supports incombustibles. 422.1.18 Les matériels de chauffage situés à proximité de matériaux combustibles doivent être fournis avec des barrières appropriées empêchant l'inflammation de ces matériaux. Les chauffages à accumulation doivent être tels qu'ils empêchent l'air de transporter de la poussière et/ou des fibres vers la résistance chauffante.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "421"
+        ]
+    }
+}

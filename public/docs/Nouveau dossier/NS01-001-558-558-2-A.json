@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "558",
+    "alinéa": "558.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-558-558-2-A",
+        "type": "obligation",
+        "texte_normatif": "Matériaux Les matériaux utilisés doivent pouvoir supporter les contraintes mécaniques, l'humidité et la chaleur rencontrées en service. Dans la mesure où les matériaux des éléments de construction ne sont pas susceptibles de supporter les contraintes prévues, il faut prévoir un traitement convenable (par exemple peinture ou protection galvanique de la surface). L'usage du bois naturel non traité n'est admis que dans les conditions d'influences externes AD1. Il ne doit pas être fait usage de matériaux M4 ou non classés. Lorsque des degrés de protection supérieurs à IP44 sont nécessaires, la protection ne peut être que présumée, compte tenu des caractéristiques des enveloppes utilisées et des conditions de montage, en raison des difficultés de vérification sur chantier. Il est toujours souhaitable d’aménager un emplacement d’influences externes tel qu’un degré de protection supérieur à IP44 ne soit pas nécessaire. ——————— (27) NF EN 60439-1 (C 63-421) (28) NF EN 60947-4-1 (C 63-110) - 302 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "558"
+        ]
+    }
+}

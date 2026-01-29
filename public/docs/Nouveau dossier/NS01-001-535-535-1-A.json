@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "535",
+    "alinéa": "535.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-535-535-1-A",
+        "type": "obligation",
+        "texte_normatif": "Sélectivité entre dispositifs de protection contre les surintensités La sélectivité entre dispositifs de protection contre les surintensités est la coordination entre les caractéristiques de fonctionnement de plusieurs dispositifs de protection à maximum de courant de telle façon qu'à l'apparition de surintensités comprises dans des limites données, le dispositif prévu pour fonctionner entre ces limites fonctionne, tandis que (le ou les) autres ne fonctionne(nt) pas. Différents types de sélectivités sont possibles : - Sélectivité partielle : Sélectivité lors d’une surintensité dans laquelle, en présence de deux dispositifs de protection à maximum de courant placés en série, le dispositif de protection aval assure la protection jusqu’à un niveau donné de surintensité sans provoquer le fonctionnement de l’autre dispositif de protection ; - Sélectivité totale : Sélectivité lors d’une surintensité dans laquelle, en présence de deux dispositifs de protection à maximum de courant placés en série, le dispositif de protection aval assure la protection sans provoquer le fonctionnement de l’autre appareil de protection. Différents moyens sont utilisés pour réaliser les 2 types de sélectivités dans le cas où les dispositifs de protection sont des disjoncteurs : - Sélectivité ampèremétrique : Elle repose sur un décalage en intensité des courbes de protection temps/courant ; - Sélectivité chronométrique : Elle repose sur un décalage temporel des courbes de protection temps/courant ; - Sélectivité énergétique : Elle repose sur la capacité de l’appareil de protection aval à limiter l’énergie le traversant à une valeur inférieure à celle nécessaire pour provoquer le déclenchement de l’appareil amont. Figure 535A –Types de sélectivité Lorsque plusieurs dispositifs de protection sont placés en série et lorsque la sécurité ou les nécessités de l'exploitation le justifient, leurs caractéristiques de fonctionnement doivent être choisies de façon à n'éliminer que la partie d'installation dans laquelle se trouve le défaut. En pratique, la sélectivité entre deux fusibles du type gG peut être considérée comme assurée si le rapport de leurs courants assignés est au moins égal à 2,5. La sélectivité chronométrique entre dispositifs de protection ne peut être obtenue qu'en comparant les caractéristiques de fonctionnement des dispositifs de protection concernés et en vérifiant que pour tout courant de court-circuit le temps de non-fonctionnement du dispositif placé en amont est supérieur au temps total de fonctionnement du dispositif placé en aval. - 251 - Lorsque les dispositifs de protection sont des disjoncteurs, la superposition des courbes temps/courant permet de qualifier une sélectivité ampèremétrique et chronométrique jusqu’au seuil de déclenchement instantané du disjoncteur amont (si le disjoncteur amont a un retard intentionnel supérieur à celui du disjoncteur aval) ; celle-ci est alors en général obtenue dès que le rapport des réglages des protections thermiques (long retard en cas de déclencheur électronique) et magnétique (court retard en cas de déclencheur électronique) est supérieur à 1,6. Si les disjoncteurs sont à déclenchement instantané (sans retard intentionnel), il est nécessaire de consulter les tables de sélectivité énergétique données par les constructeurs et réalisées selon les essais prescrits par les normes produit sur les disjoncteurs. Lorsque les dispositifs de protection sont de nature différente (par exemple coupe-circuit à fusibles et disjoncteurs), la recherche de la sélectivité nécessite la comparaison des courbes caractéristiques réelles de fonctionnement fournies par les constructeurs.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "535"
+        ]
+    }
+}

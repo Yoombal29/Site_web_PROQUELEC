@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Mises à la terre, conducteurs de protection et",
+    "article": "545",
+    "alinéa": "545.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-545-545-3-A",
+        "type": "obligation",
+        "texte_normatif": "Liaisons équipotentielles fonctionnelles Si une liaison équipotentielle est réalisée pour des raisons fonctionnelles, elle inclut les écrans de câbles, les éléments métalliques de la construction, les éléments métalliques des canalisations électriques, les canalisations métalliques de liquides et de gaz. L’intégration de parties métalliques et de l'armature des bâtiments dans la mise à la terre peut être avantageuse. Les renforts métalliques doivent alors être soudés ensemble et connectés au ceinturage d’équipotentialité. Si le soudage n'est pas permis, il est recommandé d’incorporer des tiges complémentaires en acier reliées aux tiges de renfort au moyen de fils métalliques. Les prescriptions auxquelles doivent satisfaire les liaisons équipotentielles fonctionnelles (par exemple section, forme, position) dépendent de la gamme de fréquences utilisée par les matériels de traitement de l'information et analogues, des conditions présumées de l'environnement électromagnétique et des caractéristiques d'immunité/fréquence des matériels (voir le guide UTE C 15-900).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "545"
+        ]
+    }
+}

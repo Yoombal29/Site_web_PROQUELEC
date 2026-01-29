@@ -1,0 +1,37 @@
+# Configuration des Migrations Automatiques
+# Ce fichier définit l'ordre d'application des migrations
+
+# Ordre des migrations critiques (appliquées en premier)
+CRITICAL_MIGRATIONS = [
+    "20260121_create_pages_table.sql",
+    "20260121_promote_first_admin.sql",
+    "create_menu_items_table.sql",
+    "create_missing_tables.sql"
+]
+
+# Migrations de données (appliquées après les tables)
+DATA_MIGRATIONS = [
+    "insert_initial_pages.sql",
+    "dynamic_systems_data.sql"
+]
+
+# Migrations de contenu (appliquées en dernier)
+CONTENT_MIGRATIONS = [
+    "update_documents_content.sql",
+    "update_events_content.sql",
+    "update_certifications_content.sql",
+    "update_trainings_content.sql",
+    "update_contact_content.sql",
+    "update_labels_content.sql",
+    "publish_all_pages.sql"
+]
+
+# Migrations de maintenance (appliquées à la fin)
+MAINTENANCE_MIGRATIONS = [
+    "cleanup_dynamic_systems.sql",
+    "migrate_existing_components.sql",
+    "auto_migration_system.sql"
+]
+
+# Toutes les autres migrations sont appliquées automatiquement
+# en ordre alphabétique après les migrations prioritaires

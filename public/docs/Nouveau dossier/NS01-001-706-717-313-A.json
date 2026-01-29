@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Unités mobiles ou transportables",
+    "article": "706",
+    "alinéa": "717.313",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-717-313-A",
+        "type": "obligation",
+        "texte_normatif": "Alimentation Les méthodes suivantes peuvent être utilisées pour l’alimentation d’une unité : a) alimentation par un groupe générateur à basse tension (voir figures 717A.1 et 717A.2) ; Le groupe générateur peut être à l’intérieur d’une unité ou un groupe mobile. b) alimentation directe par une installation électrique fixe (voir figure 717B) ; C c) alimentation par une installation électrique fixe par l’intermédiaire d’un transformateur assurant une séparation simple (voir figures 717C.1 et 717C.2). NOTES - 1 - Dans tous les cas, une prise de terre peut être prévue pour des raisons fonctionnelles. 2 - Une séparation simple est appropriée, par exemple si des matériels de traitement de l’information sont utilisés dans l’unité ou si une réduction des influences électromagnétiques est nécessaire. Les sources, les dispositifs de connexion ou de séparation peuvent être à l’intérieur de l’unité.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

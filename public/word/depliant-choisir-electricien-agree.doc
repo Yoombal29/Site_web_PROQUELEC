@@ -1,0 +1,80 @@
+<html>
+<head>
+  <title>Dépliant – Comment choisir un bon électricien / installateur agréé</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#dbeafe;padding:1em;border-radius:6px;margin-top:1em;} ul{margin-left:1em;} .pictos{font-size:1.3em;}</style>
+</head>
+<body>
+  <h1>Comment choisir un bon électricien / installateur agréé</h1>
+  <h2>1. Mise en contexte</h2>
+  <p>Pour vos travaux électriques, il est essentiel de faire appel à un professionnel compétent et certifié.</p>
+  <h2>2. Dangers potentiels <span class="pictos">⚡💡</span></h2>
+  <ul>
+    <li>Travaux non conformes</li>
+    <li>Risques d’accident ou de panne</li>
+    <li>Absence de garantie</li>
+  </ul>
+  <h2>3. Conseils pratiques</h2>
+  <ul>
+    <li>Vérifier les certifications et agréments</li>
+    <li>Demander des références et avis clients</li>
+    <li>Exiger un devis détaillé</li>
+    <li>Privilégier la transparence et le dialogue</li>
+  </ul>
+  <h2>4. Bonnes pratiques de prévention</h2>
+  <ul>
+    <li>Ne jamais confier ses travaux à un amateur</li>
+    <li>Contrôler la conformité des interventions</li>
+    <li>Demander une garantie sur les travaux</li>
+    <li>Vérifier la présence d’une assurance décennale</li>
+    <li>Exiger la remise d’un certificat de conformité</li>
+  </ul>
+
+  <h2>5. Critères de sélection d’un électricien agréé</h2>
+  <ul>
+    <li>Certification professionnelle (Qualifelec, Consuel, etc.)</li>
+    <li>Expérience et spécialisation dans le type de travaux</li>
+    <li>Respect des normes NF C 15-100</li>
+    <li>Clarté et transparence du devis</li>
+    <li>Réactivité et disponibilité</li>
+  </ul>
+
+  <h2>6. Tableau comparatif : professionnel agréé vs non agréé</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#dbeafe;font-weight:bold;">
+      <td>Critère</td>
+      <td>Professionnel agréé</td>
+      <td>Non agréé</td>
+    </tr>
+    <tr><td>Certification</td><td>Oui</td><td>Non</td></tr>
+    <tr><td>Garantie décennale</td><td>Oui</td><td>Rarement</td></tr>
+    <tr><td>Respect des normes</td><td>Oui</td><td>Aléatoire</td></tr>
+    <tr><td>Devis détaillé</td><td>Oui</td><td>Souvent incomplet</td></tr>
+    <tr><td>Références clients</td><td>Oui</td><td>Non</td></tr>
+    <tr><td>Service après-vente</td><td>Oui</td><td>Non</td></tr>
+  </table>
+
+  <h2>7. Erreurs à éviter</h2>
+  <ul>
+    <li>Signer un devis sans détails techniques</li>
+    <li>Ne pas vérifier les références et certifications</li>
+    <li>Accepter des travaux sans garantie écrite</li>
+    <li>Omettre la réception officielle des travaux</li>
+  </ul>
+
+  <h2>8. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.qualifelec.fr/">Annuaire Qualifelec</a></li>
+    <li><a href="https://www.consuel.com/">Consuel</a></li>
+    <li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Lors de la réception des travaux, exigez un procès-verbal et conservez tous les documents liés à l’intervention.<br>
+    Un professionnel agréé vous accompagne de l’étude à la mise en service, pour une installation sûre et conforme.
+  </div>
+  <footer>
+    © PROQUELEC – Dépliant choisir un électricien. Grand public.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </footer>
+</body>
+</html>

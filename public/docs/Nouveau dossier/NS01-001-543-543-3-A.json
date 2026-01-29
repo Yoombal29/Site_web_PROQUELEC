@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Mises à la terre, conducteurs de protection et",
+    "article": "543",
+    "alinéa": "543.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-543-543-3-A",
+        "type": "obligation",
+        "texte_normatif": "Conservation de la continuité électrique des conducteurs de protection C 543.3.1 Les conducteurs de protection doivent être convenablement protégés contre les détériorations mécaniques et chimiques et les efforts électrodynamiques. 543.3.2 Les connexions doivent être accessibles pour vérification et essais, à l'exception: - des connexions avec matière de remplissage ; - des soudures ; - des connexions des canalisations préfabriquées dont l’enveloppe constitue un conducteur de protection. 543.3.3 Aucun appareillage ne doit être inséré dans le conducteur de protection, mais des connexions qui peuvent être démontées à l'aide d'un outil peuvent être utilisées pour des essais. 543.3.4 Lorsqu'un dispositif de contrôle de continuité de terre est utilisé, les enroulements ne doivent pas être insérés dans les conducteurs de protection. 543.3.5 Les masses des matériels à relier aux conducteurs de protection ne doivent pas être connectées en série dans un circuit de protection, à l'exception du cas visé au 543.2.2. La connexion de chacun des conducteurs doit être indépendante.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "543"
+        ]
+    }
+}

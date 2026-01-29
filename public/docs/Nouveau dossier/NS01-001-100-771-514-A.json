@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux d’habitation",
+    "article": "100",
+    "alinéa": "771.514",
+    "regle_atomique": {
+        "id_unique": "NS01-001-100-771-514-A",
+        "type": "obligation",
+        "texte_normatif": "Identification des circuits Chacun des circuits doit être repéré par une indication appropriée, correspondant aux besoins de l’usager et du professionnel. Ce repérage doit préciser les locaux desservis et la fonction (par exemple au moyen de pictogrammes ou autres indications appropriées). Ce repérage doit être lisible, de qualité durable et correctement fixé et doit rester visible après l’installation du tableau. Il doit être compréhensible sans avoir recours aux documents définis en 771.514.5. 771.514.5 Schémas Pour toute installation électrique, il y a lieu d’établir des schémas, diagrammes ou tableaux à remettre à l’utilisateur. Les indications que doivent comporter les schémas et documents annexés sont les suivantes : - nature et type des dispositifs de protection et de commande (contacteurs, programmateurs, délesteurs, etc.) ; - courant de réglage et sensibilité des dispositifs de protection et de commande ; - puissance prévisionnelle ; - nature des canalisations pour circuits extérieurs ; - nombre et section des conducteurs ; - application (éclairage, prises, point d’utilisation en attente, etc.) ; - local desservi (chambre 1, cuisine, etc.). Un schéma unifilaire comportant les éléments ci-dessus répond à cette prescription. Il y a lieu de mettre à jour les schémas, diagrammes ou tableaux lors de créations, de modifications et d’extensions de l’installation et de prévoir les dispositions pour les interventions ultérieures (connexions, mesure de terre, test, etc.)",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "100"
+        ]
+    }
+}

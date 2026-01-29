@@ -1,0 +1,84 @@
+<html>
+<head>
+  <title>Guide Technique – Règles pour installations et emplacements spécifiques</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.5em;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>GUIDE TECHNIQUE<br>Règles pour installations et emplacements spécifiques (locaux humides, ERP, industriels)</h1>
+  <h2>1. Introduction : contexte et importance</h2>
+  <p>Les installations électriques dans les locaux humides, ERP et sites industriels nécessitent des précautions particulières pour garantir la sécurité et la conformité.</p>
+  <h2>2. Références normatives</h2>
+  <ul>
+    <li>NS 01-001</li>
+    <li>NF C 15-100</li>
+    <li>Textes ERP et industriels</li>
+  </ul>
+  <h2>3. Exigences techniques et réglementaires</h2>
+  <ul>
+    <li>Matériel étanche et adapté</li>
+    <li>Protection contre l’humidité</li>
+    <li>Dispositifs différentiels renforcés</li>
+    <li>Signalisation des zones à risque</li>
+  </ul>
+  <h2>4. Anomalies et risques associés</h2>
+  <ul>
+    <li>Corrosion des équipements</li>
+    <li>Risque d’électrocution</li>
+    <li>Non-respect des volumes de sécurité</li>
+  </ul>
+  <h2>5. Procédure de diagnostic et de vérification</h2>
+  <ol>
+    <li>Inspection visuelle</li>
+    <li>Test des dispositifs de protection</li>
+    <li>Contrôle de l’étanchéité</li>
+    <li>Vérification des volumes de sécurité</li>
+  </ol>
+  <h2>6. Méthodes d’installation et de mise en conformité</h2>
+  <ul>
+    <li>Utilisation de boîtiers étanches</li>
+    <li>Respect des schémas de câblage spécifiques</li>
+    <li>Formation du personnel</li>
+  </ul>
+  <h2>7. Recommandations pratiques</h2>
+  <ul>
+    <li>Planifier des contrôles réguliers</li>
+    <li>Étiqueter les circuits sensibles</li>
+    <li>Limiter l’accès aux zones à risque</li>
+  </ul>
+  <h2>8. Études de cas / exemples d’application</h2>
+  <ul>
+    <li>Installation dans une salle d’eau</li>
+    <li>Conformité d’un atelier industriel</li>
+  </ul>
+    <h2>9. Tableau des volumes de sécurité (locaux humides)</h2>
+    <table style="width:100%;border-collapse:collapse;margin-top:1em;">
+      <tr style="background:#e0e7ff;"><th>Volume</th><th>Caractéristiques</th><th>Matériel autorisé</th></tr>
+      <tr><td>Volume 0</td><td>Intérieur de la baignoire/douche</td><td>Aucun matériel sauf très basse tension (SELV)</td></tr>
+      <tr><td>Volume 1</td><td>Autour de la baignoire/douche</td><td>Appareils IPX4, SELV</td></tr>
+      <tr><td>Volume 2</td><td>Zone périphérique</td><td>Appareils IPX4, prises rasoir</td></tr>
+      <tr><td>Hors volume</td><td>Reste du local</td><td>Matériel standard</td></tr>
+    </table>
+    <h2>10. Erreurs à éviter</h2>
+    <ul>
+      <li>Installer du matériel non étanche en zone humide</li>
+      <li>Ignorer les volumes de sécurité</li>
+      <li>Oublier la protection différentielle renforcée</li>
+      <li>Ne pas signaler les zones à risque</li>
+    </ul>
+    <h2>11. Ressources utiles</h2>
+    <ul>
+      <li><a href="https://www.promotelec.com/emplacements-specifiques/" target="_blank">Guide Promotelec : Emplacements spécifiques</a></li>
+      <li><a href="https://www.afnor.org/" target="_blank">Normes et sécurité (AFNOR)</a></li>
+      <li><a href="https://www.legrand.fr/pro/actualites/emplacements-specifiques" target="_blank">Legrand : Volumes et matériel</a></li>
+    </ul>
+    <div class="encadre">
+      <b>Conformité PROQUELEC :</b> Respecter les volumes de sécurité et utiliser du matériel certifié pour garantir la sécurité des installations dans les emplacements spécifiques.
+    </div>
+  <div class="encadre">
+    <b>Conseils PROQUELEC :</b> Adapter l’installation à l’environnement : humidité, public, industrie. Respecter les volumes de sécurité et utiliser du matériel certifié.
+  </div>
+  <footer>
+    © PROQUELEC – Guide technique Emplacements spécifiques. Version détaillée pour professionnels et gestionnaires.
+  </footer>
+</body>
+</html>

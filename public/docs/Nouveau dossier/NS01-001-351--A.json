@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "351",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-351--A",
+        "type": "obligation",
+        "texte_normatif": "Généralités NOTE – La nécessité d'installations de sécurité et leur nature sont souvent définies par les autorités réglementaires dont les prescriptions doivent être observées. Les sources suivantes pour installations de sécurité peuvent être utilisées : - batteries d'accumulateurs ; - générateurs indépendants de l'alimentation normale ; - branchements séparés du réseau de distribution effectivement indépendants de l'alimentation normale (voir 551.1.1). Les règles relatives aux alimentations pour services de sécurité sont données en partie 56.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "351"
+        ]
+    }
+}

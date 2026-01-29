@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Sectionnement et commande",
+    "article": "460",
+    "alinéa": "461.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-460-461-2-A",
+        "type": "obligation",
+        "texte_normatif": "Il doit être placé à l'origine de toute installation un dispositif de commande et un dispositif de sectionnement coupant tous les conducteurs actifs de l'ensemble de l'installation. Le dispositif de commande et le dispositif de sectionnement sont généralement combinés en un seul dispositif (voir 536.1). Dans les installations alimentées directement par un réseau de distribution publique à basse tension, ce dispositif peut être l'appareil général de commande et de protection. H 461.3 Dans le schéma TN-C, le conducteur PEN ne doit être ni sectionné ni coupé. Dans le schéma TN-S, le conducteur neutre doit pouvoir être sectionné et coupé. NOTE - Il est rappelé que dans tous les schémas, le conducteur de protection ne doit être ni sectionné ni coupé (voir aussi 543.4).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "460"
+        ]
+    }
+}

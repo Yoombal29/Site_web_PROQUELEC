@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques des parcs de caravanes",
+    "article": "706",
+    "alinéa": "706.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-706-4-A",
+        "type": "obligation",
+        "texte_normatif": "Protection pour assurer la sécurité ............................................................................383 ______________ Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100. Les numéros suivant le numéro particulier de la partie 7-706 sont ceux des parties, articles ou paragraphes correspondants de la présente norme. L'absence de référence à une partie, à un article ou à un paragraphe signifie que les prescriptions générales correspondantes sont applicables. - 383 - H 706.1 Domaine d'application Les prescriptions particulières de la présente section s'appliquent aux installations des enceintes conductrices exiguës (emplacements BC4) et à l'alimentation des appareils à l'intérieur de ces enceintes. Une enceinte conductrice exiguë est un local ou emplacement de travail dont les parois sont essentiellement constituées de parties métalliques ou conductrices, à l’intérieur duquel une personne peut venir en contact, sur une partie importante de son corps, avec les parties conductrices environnantes et dont l’exiguïté limite les possibilités d’interrompre ce contact Des exemples d'enceintes conductrices sont les chaudières, toutes cuves métalliques dont les dimensions sont telles que les personnes qui y pénètrent pour leur réparation ou leur entretien sont continuellement en contact avec les parois. D'une façon générale, il suffit qu'une dimension de l'enceinte soit particulièrement réduite - par exemple un vide sanitaire ou une fosse de garage - pour que la liberté de mouvement des personnes soit restreinte et que les règles relatives aux enceintes conductrices soient applicables. Les prescriptions de cette partie ne s'appliquent pas aux emplacements dans lesquels les personnes peuvent se mouvoir librement pour travailler, y pénétrer ou en sortir, sans contrainte physique. Elles s'appliquent à l'installation des matériels fixes dans les enceintes conductrices exiguës et à l'alimentation des matériels portatifs dans ces enceintes. H 706.4 Protection pour assurer la sécurité 706.410.3 Généralités Seules sont admises les mesures de protection suivantes : a) pour l'alimentation d'outils portatifs et d'appareils de mesures portatifs : - soit la TBTS (414) ; - soit la séparation électrique des circuits limitée à l’alimentation d’un seul appareil (413). Les matériels électriques sont de préférence de la classe II ; s’ils sont de la classe I, leur masse et l'ensemble des éléments conducteurs constituant l'enceinte conductrice sont interconnectés. b) pour l'alimentation des lampes baladeuses : - la TBTS (414) ; Un luminaire à fluorescence avec un transformateur élévateur incorporé alimenté en TBTS est également admis. H c) Pour l'alimentation des matériels fixes : - soit la coupure automatique de l'alimentation (411) ; une liaison équipotentielle supplémentaire (415.2) doit relier les masses des matériels fixes et les parties conductrices de l'enceinte ; - soit la TBTS (article 414) ; - soit la séparation électrique des circuits limitée à l’alimentation d’un seul appareil (413) ; - soit un dispositif de protection différentiel ayant un courant différentiel-résiduel assigné au plus égal à 30 mA protégeant un matériel de classe Il ou ayant une isolation équivalente, sous réserve que ce matériel possède un degré de protection adéquat. Lorsqu’un matériel électrique comporte un moteur d'entraînement se trouvant à l'extérieur de l'enceinte, ce moteur peut faire l'objet d'autres mesures de protection, à condition que l'appareil soit entraîné par l'intermédiaire d'un axe flexible ou d'un autre moyen de transmission de force motrice répondant à la protection par isolation supplémentaire selon l'article 412. - 384 - Les sources de sécurité et les sources de séparation doivent être installées à l'extérieur de H l'enceinte conductrice exiguë, à moins qu'elles ne fassent partie de l'installation fixe à l'intérieur de l'enceinte conductrice exiguë dans les conditions du c). 706.415.2 Liaison équipotentielle supplémentaire Si pour certains matériels, tels que des appareils de mesure ou de contrôle, il est nécessaire de disposer d'une prise de terre fonctionnelle, une liaison équipotentielle doit relier toutes les masses, tous les éléments conducteurs à l'intérieur de l'enceinte conductrice et la prise de terre fonctionnelle. _________________ - 385 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

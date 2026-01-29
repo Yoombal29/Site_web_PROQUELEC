@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux contenant des radiateurs pour saunas",
+    "article": "750",
+    "alinéa": "703.51",
+    "regle_atomique": {
+        "id_unique": "NS01-001-750-703-51-A",
+        "type": "obligation",
+        "texte_normatif": "Règles communes 703.512.2 Les matériels électriques doivent posséder au moins les degrés de protection IP24. Quatre zones sont définies comme indiqué dans la figure 703A. - dans la zone 1, seuls sont admis les matériels appartenant aux radiateurs pour saunas ; - dans la zone 2, aucune prescription spéciale n'est nécessaire du point de vue de la résistance du matériel à la chaleur ; - dans la zone 3, les matériels doivent pouvoir supporter une température de 125 °C ; - dans la zone 4, seuls sont installés : • les luminaires montés de façon à empêcher leur surchauffe, • les dispositifs de commande des radiateurs de saunas (thermostats et limiteurs de température), • les canalisations qui leur sont raccordées. La résistance à la chaleur doit être comme prescrit pour la zone 3.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "750"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les surintensités",
+    "article": "432",
+    "alinéa": "432.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-432-432-4-A",
+        "type": "obligation",
+        "texte_normatif": "Caractéristiques des dispositifs de protection Les caractéristiques temps/courant des dispositifs de protection contre les surintensités doivent être conformes à celles spécifiées dans les normes en vigueur. Les caractéristiques des dispositifs de protection sont définies dans les normes suivantes : NF C 60-200, NF C 61-201, NF C 61-410, NF C 61-440, NF C 63-120, NF C 63-161, NF C 63-210. NOTE - Ceci ne s'oppose pas à l'utilisation d'autres dispositifs de protection à condition que leurs caractéristiques temps/courant assurent un niveau de protection équivalent à celui spécifié par le présent paragraphe.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "432"
+        ]
+    }
+}

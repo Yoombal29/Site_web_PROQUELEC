@@ -1,0 +1,86 @@
+<html>
+<head>
+  <title>Feuillet Technique – Protection de l’installation électrique</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>FEUILLET TECHNIQUE<br>Protection de l’installation électrique</h1>
+  <h2>1. Définition simple et rôle</h2>
+  <p>La protection de l’installation électrique permet d’éviter les accidents, les incendies et les défaillances des équipements en limitant les effets des surintensités, courts-circuits et défauts d’isolement.</p>
+  <h2>2. Schéma visuel / description pratique</h2>
+  <p><strong>Schéma :</strong> <em>Disjoncteurs, fusibles et interrupteurs différentiels installés au tableau principal, assurant la coupure automatique en cas de défaut.</em></p>
+  <h2>3. Problèmes fréquents</h2>
+  <ul>
+    <li>Absence ou mauvais choix de protection</li>
+    <li>Matériel vieillissant ou défectueux</li>
+    <li>Erreur de câblage ou absence de signalétique</li>
+  </ul>
+  <h2>4. Diagnostic associé</h2>
+  <ul>
+    <li>Test des dispositifs de protection (déclenchement, bouton test, contrôle visuel)</li>
+    <li>Inspection du tableau électrique et des connexions</li>
+  </ul>
+  <h2>5. Risques encourus</h2>
+  <ul>
+    <li>Incendie d’origine électrique</li>
+    <li>Électrocution des personnes</li>
+    <li>Non-conformité réglementaire (NF C 15-100)</li>
+  </ul>
+  <h2>6. Recommandations pratiques</h2>
+  <ul>
+    <li>Installer des dispositifs certifiés et adaptés à chaque circuit</li>
+    <li>Contrôler régulièrement le tableau et les connexions</li>
+    <li>Remplacer immédiatement tout matériel défectueux ou vieillissant</li>
+    <li>Consigner chaque intervention et test dans un registre</li>
+  </ul>
+    <h2>7. Étapes de vérification sur site</h2>
+    <ol>
+      <li>Identifier tous les dispositifs de protection présents au tableau (disjoncteurs, fusibles, différentiels).</li>
+      <li>Vérifier le bon fonctionnement de chaque dispositif (test manuel, bouton test différentiel).</li>
+      <li>Contrôler la conformité des calibres et la présence de la signalétique.</li>
+      <li>Inspecter visuellement l’état des connexions et du câblage.</li>
+      <li>Consigner les résultats et anomalies éventuelles.</li>
+    </ol>
+    <h2>8. Tableau des dispositifs de protection</h2>
+    <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+      <tr style="background:#e0e7ff;"><th>Dispositif</th><th>Fonction</th><th>Test à réaliser</th></tr>
+      <tr><td>Disjoncteur</td><td>Protection contre les surintensités</td><td>Test de déclenchement</td></tr>
+      <tr><td>Fusible</td><td>Protection contre les courts-circuits</td><td>Contrôle visuel/remplacement</td></tr>
+      <tr><td>Différentiel</td><td>Protection des personnes</td><td>Bouton test différentiel</td></tr>
+    </table>
+    <h2>9. Erreurs à éviter</h2>
+    <ul>
+      <li>Oublier de tester les dispositifs après installation</li>
+      <li>Utiliser des protections non certifiées ou inadaptées</li>
+      <li>Ignorer les signes de vieillissement ou de défaillance</li>
+      <li>Ne pas respecter les calibres recommandés</li>
+    </ul>
+    <h2>10. Ressources utiles</h2>
+    <ul>
+      <li><a href="https://www.promotelec.com/protection-installation-electrique/" target="_blank">Guide Promotelec : Protection de l’installation</a></li>
+      <li><a href="https://www.legrand.fr/pro/actualites/disjoncteurs-differentiels" target="_blank">Legrand : Disjoncteurs et différentiels</a></li>
+      <li><a href="https://www.schneider-electric.fr/fr/faqs/FA164034/" target="_blank">FAQ Schneider Electric : Protection électrique</a></li>
+    </ul>
+    <h2>11. Maintenance préventive</h2>
+    <ul>
+      <li>Programmer une vérification annuelle des dispositifs de protection.</li>
+      <li>Contrôler la signalétique et la conformité des calibres.</li>
+      <li>Tenir à jour un registre des tests et interventions.</li>
+    </ul>
+    <div class="encadre">
+      <b>Traçabilité :</b> La traçabilité des interventions et des tests est essentielle pour garantir la sécurité et faciliter les contrôles réglementaires.
+    </div>
+    <div class="encadre">
+      <b>Conseil PROQUELEC :</b> Toujours consigner les tests et interventions sur le tableau électrique. La conformité et la traçabilité sont essentielles pour la sécurité et l’assurance.
+    </div>
+    <div class="encadre">
+      <b>Conformité réglementaire :</b> Les dispositifs de protection doivent être conformes à la norme NF C 15-100 et adaptés à l’installation. Toute anomalie doit être corrigée sans délai.
+    </div>
+  <div class="encadre">
+    <b>Bon à savoir PROQUELEC :</b> La protection est la clé de la sécurité électrique. Toujours tester et remplacer les dispositifs défectueux.
+  </div>
+  <footer>
+    © PROQUELEC – Feuillet technique Protection installation. Fiche pratique pour syndics et gérants.
+  </footer>
+</body>
+</html>

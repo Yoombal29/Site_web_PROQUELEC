@@ -1,0 +1,34 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "411",
+  "alinéa": "411.4.1",
+  "regle_atomique": {
+    "id_unique": "NS01-001-411-4-1-A",
+    "type": "obligation",
+    "texte_normatif": "Toutes les masses de l'installation doivent être reliées par des conducteurs de protection à la borne principale de terre, connectée au point neutre de l'alimentation mis à la terre.",
+    "acteurs_concernes": ["installateur", "controleur"],
+    "conditions_application": {
+      "schema_terre": ["TN"],
+      "tension": "<=1000V",
+      "lieu": ["installations fixes"]
+    },
+    "exceptions": [],
+    "risques_couverts": [
+      "tension de contact dangereuse en cas de défaut phase-masse"
+    ],
+    "gravite_non_conformite": "critique",
+    "mesure_corrective": "Raccorder le PE à la borne principale de terre avec continuité vérifiée.",
+    "justification": {
+      "physique": "Boucle de défaut galvanique pour courant de court-circuit élevé",
+      "biologique": "Coupure rapide avant danger (>50V)",
+      "sécurité": "Protection automatique par dispositifs surintensité ou différentiels"
+    },
+    "verification": {
+      "moyen": "Mesure d'impédance de boucle (Zs)",
+      "seuils": "Zs tel que Uo/Zs ≥ Ia"
+    },
+    "liens_normatifs": ["411.4.2", "411.4.3", "543.4", "annexe D"]
+  }
+}

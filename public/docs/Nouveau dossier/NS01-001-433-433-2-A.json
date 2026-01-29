@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les surintensités",
+    "article": "433",
+    "alinéa": "433.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-433-433-2-A",
+        "type": "obligation",
+        "texte_normatif": "Emplacement des dispositifs de protection contre les surcharges C 433.2.1 Un dispositif assurant la protection contre les surcharges doit être placé à l'endroit où un changement de section, de nature, de mode de pose ou de constitution entraîne une réduction de la valeur du courant admissible dans les conducteurs, à l'exception des cas mentionnés en 433.2.2 et 433.3. 433.2.2 Le dispositif protégeant une canalisation contre les surcharges peut être placé sur le parcours de cette canalisation si la partie de canalisation comprise entre, d'une part le changement de section, de nature, de mode de pose ou de constitution, et le dispositif de protection d'autre part, ne comporte ni dérivation ni prise de courant et répond à l'une des deux conditions suivantes : a) Elle est protégée contre les courts-circuits conformément aux règles énoncées en 434. Exemple de réalisation Figure 433B – Dispositif de protection contre les surcharges placé sur le parcours de la canalisation Le dispositif de protection P protège AO et OB 1 - 116 - b) Sa longueur n'est pas supérieure à 3 mètres, elle est réalisée de manière à réduire au minimum C le risque d'un court-circuit et elle n'est pas placée à proximité de matériaux combustibles. Exemple de réalisation Figure 433C – Dispositif de protection placé sur le parcours de la canalisation Le dispositif P peut ne pas protéger la dérivation OB contre les courts-circuits. 1 La longueur de 3 m est fixée pour des raisons de commodité pratique d'utilisation.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "433"
+        ]
+    }
+}

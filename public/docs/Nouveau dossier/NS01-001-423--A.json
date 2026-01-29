@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre l’incendie, les brûlures et l’explosion",
+    "article": "423",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-423--A",
+        "type": "obligation",
+        "texte_normatif": "Protection contre les risques de brûlures Les parties accessibles des matériels électriques disposés à l'intérieur du volume d'accessibilité au toucher ne doivent pas atteindre des températures susceptibles de provoquer des brûlures aux personnes et doivent satisfaire aux limites appropriées indiquées dans le tableau 42A. Toutes les parties de l'installation susceptibles d'atteindre en service normal, même pendant de courtes périodes, des températures supérieures à celles indiquées dans le tableau 42A doivent être protégées contre tout contact accidentel. Toutefois, les valeurs du tableau 42A ne s'appliquent pas aux matériels qui satisfont aux normes qui leur sont applicables. Tableau 42A - Températures maximales en service normal des parties accessibles des matériels électriques à l'intérieur du volume d'accessibilité au toucher Matières des parties (°C) Parties accessibles acce Organes de commande Métallique 55 manuelle Non métallique 65 Prévues pour être touchées Métallique 70 mais non destinées à être Non métallique 80 tenues à la main Non destinées à être touchées Métallique 80 en service normal Non métallique 90 Les normes relatives aux matériels fixent des limites de températures (ou d'échauffements) telles que les personnes ne risquent pas d'être brûlées dans les conditions normales. Bien entendu, ces limites ne concernent pas les surfaces des appareils destinés à fournir une température élevée (tels que les appareils de cuisson, les fours, les appareils de soudage,... ).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "423"
+        ]
+    }
+}

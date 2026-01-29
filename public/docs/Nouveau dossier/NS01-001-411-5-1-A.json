@@ -1,0 +1,34 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "411",
+  "alinéa": "411.5.1",
+  "regle_atomique": {
+    "id_unique": "NS01-001-411-5-1-A",
+    "type": "obligation",
+    "texte_normatif": "Toutes les masses protégées par un même dispositif de protection doivent être connectées à des conducteurs de protection reliés à une même prise de terre.",
+    "acteurs_concernes": ["installateur", "controleur"],
+    "conditions_application": {
+      "schema_terre": ["TT"],
+      "tension": "<=1000V",
+      "lieu": ["installations"]
+    },
+    "exceptions": [],
+    "risques_couverts": [
+      "tension de contact excessive due à RA élevée"
+    ],
+    "gravite_non_conformite": "critique",
+    "mesure_corrective": "Installer prise de terre commune avec RA mesurée et conforme.",
+    "justification": {
+      "physique": "Limitation de la tension de contact à RA × IΔn ≤ 50V",
+      "biologique": "Coupure par DDR avant danger",
+      "sécurité": "Protection par courants de fuite faibles"
+    },
+    "verification": {
+      "moyen": "Mesure RA avec terre-ohmmètre",
+      "seuils": "RA ≤ 50/IΔn"
+    },
+    "liens_normatifs": ["411.5.3", "542.2", "531.2"]
+  }
+}

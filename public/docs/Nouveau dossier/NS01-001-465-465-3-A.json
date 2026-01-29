@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles communes à tous les matériels",
+    "article": "465",
+    "alinéa": "465.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-465-465-3-A",
+        "type": "obligation",
+        "texte_normatif": "Commande des moteurs Les dispositifs de démarrage peuvent être combinés avec ceux assurant la protection des moteurs ; ils doivent alors répondre aux règles applicables aux dispositifs de protection. Les différents dispositifs de commande et de réglage d'un moteur ou d'un ensemble de moteurs associés, doivent être convenablement groupés (voir 514.1). H 465.3.1 Les circuits de commande des moteurs doivent être conçus de manière à empêcher un démarrage automatique d'un moteur après un arrêt dû à une baisse ou un manque de tension, si un tel démarrage est susceptible de provoquer un danger. 465.3.2 Lorsque le freinage par contre-courant d'un moteur est prévu, toutes précautions doivent être prises pour éviter l'inversion du sens de rotation à la fin du freinage, si une telle inversion peut provoquer un danger. 465.3.3 Lorsque la sécurité dépend du sens de rotation d'un moteur, des dispositions doivent être prises pour éviter le fonctionnement en sens inverse, provoqué, par exemple, par la disparition d'une phase. - 149 - TITRE 5. - Choix et mise en œuvre des matériels",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "465"
+        ]
+    }
+}

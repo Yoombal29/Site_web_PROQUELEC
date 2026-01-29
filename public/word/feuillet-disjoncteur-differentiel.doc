@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Feuillet - Disjoncteur différentiel</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;margin:28px;color:#0f172a}h1{color:#2563eb}.small{font-size:0.95rem;color:#334155}.footer{margin-top:18px;color:#64748b}ul{margin-left:18px}</style>
+</head>
+<body>
+<h1>Feuillet technique — Disjoncteur différentiel</h1>
+<p class="small">Fiche pratique : rôle, sélection et points de contrôle essentiels pour l'installation et la maintenance.</p>
+<h3>Rôle</h3>
+<p class="small">Le différentiel protège les personnes contre les contacts indirects en détectant les fuites de courant et en déclenchant lorsque le courant de fuite dépasse la sensibilité.</p>
+<h3>Caractéristiques usuelles</h3>
+<ul>
+	<li>Sensibilité : 30 mA (habitation) ; 300 mA pour protection d'installation générale</li>
+	<li>Courant nominal : 2P ou 4P selon monophasé/triphasé</li>
+	<li>Courbes et caractéristiques à respecter selon contrainte de sélectivité</li>
+</ul>
+<h3>Points de contrôle rapides</h3>
+<ul>
+	<li>Tester le bouton T chaque mois (fonctionnement mécanique).</li>
+	<li>Vérifier absence de nuisance (déclenchements intempestifs).</li>
+	<li>Contrôler raccordement PE/N et continuité de terre.</li>
+</ul>
+<h3>Étapes de vérification lors de l’installation ou de la maintenance</h3>
+<ul>
+		<li>Vérifier la conformité du modèle (30 mA pour personnes, 300 mA pour installation générale)</li>
+		<li>Contrôler le raccordement correct des conducteurs (PE/N)</li>
+		<li>Tester le bouton T et mesurer la continuité de la terre</li>
+		<li>Valider la sélectivité avec les autres dispositifs de protection</li>
+		<li>Faire réaliser le contrôle par un professionnel certifié</li>
+</ul>
+
+<h3>Tableau des anomalies et solutions</h3>
+<table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+		<tr style="background:#fef9c3;font-weight:bold;">
+			<td>Anomalie</td>
+			<td>Conséquence</td>
+			<td>Solution</td>
+		</tr>
+		<tr><td>Déclenchement intempestif</td><td>Perte de service</td><td>Vérifier les appareils et l’installation</td></tr>
+		<tr><td>Absence de déclenchement</td><td>Danger pour les personnes</td><td>Remplacer le disjoncteur</td></tr>
+		<tr><td>Mauvais raccordement</td><td>Non-conformité, danger</td><td>Reprise des connexions</td></tr>
+		<tr><td>Absence de test régulier</td><td>Risque de panne non détectée</td><td>Mettre en place une routine de test</td></tr>
+	</table>
+
+<h3>Erreurs à éviter</h3>
+<ul>
+		<li>Oublier le test mensuel du bouton T</li>
+		<li>Installer un modèle non adapté à l’usage</li>
+		<li>Ignorer la sélectivité avec les autres protections</li>
+		<li>Ne pas faire appel à un professionnel certifié</li>
+</ul>
+
+<h3>Ressources utiles</h3>
+<ul>
+		<li><a href="https://www.promotelec.com/">Promotelec – Disjoncteur différentiel</a></li>
+		<li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+		<li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+</ul>
+
+<div class="footer">PROQUELEC • Feuillet technique • 2025<br>Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a></div>
+</body>
+</html>

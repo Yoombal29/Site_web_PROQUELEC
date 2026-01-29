@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "222",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-222--A",
+        "type": "obligation",
+        "texte_normatif": "Domaines de tensions en courant alternatif Les domaines de tensions en courant alternatif, dans lesquels doivent être classées les installations selon leur tension nominale, sont définis dans le tableau 22A : - pour les systèmes reliés directement à la terre (schémas TT et TN), par les valeurs efficaces de la tension entre un conducteur de phase et la terre et entre deux conducteurs de phase, - pour les systèmes non reliés directement à la terre (schéma IT), par la valeur efficace de la tension entre deux conducteurs de phase. Tableau 22A - Domaines de tensions en courant alternatif (valeurs efficaces) DOMAINES SYSTEMES RELIES SYSTEMES NON RELIES DIRECTEMENT A LA TERRE DIRECTEMENT A LA TERRE (*) Entre phase et Entre phases Entre phases terre I U < 50 U < 50 U < 50 II 50 < U < 600 50 < U < 1000 50 < U < 1000 U est la tension nominale de l'installation (volts) (*) Si le neutre est distribué, les matériels alimentés entre phase et neutre sont choisis de telle manière que leur isolation corresponde à la tension entre phases (voir 512.1.1). Cette classification des domaines de tensions n'exclut pas la possibilité d'introduire des limites intermédiaires pour certaines règles d'installation. Les très basses tensions TBTS, TBTP et TBTF (respectivement dénommées en anglais SELV, PELV et FELV) sont dans le domaine I. Le domaine II correspond aux appellations suivantes du décret de protection des travailleurs - BTA pour les tensions supérieures à 50 V et inférieures ou égales à 500 V, - BTB pour les tensions supérieures à 500 V et inférieures ou égales à 1 000 V.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "222"
+        ]
+    }
+}

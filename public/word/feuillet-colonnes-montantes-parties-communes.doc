@@ -1,0 +1,84 @@
+<html>
+<head>
+  <title>Feuillet Technique – Gestion des colonnes montantes et parties communes</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>FEUILLET TECHNIQUE<br>Gestion des colonnes montantes et parties communes</h1>
+  <h2>1. Définition simple et rôle</h2>
+  <p>Les colonnes montantes assurent la distribution de l’électricité dans les immeubles, des parties communes vers les logements.</p>
+  <h2>2. Schéma visuel / description pratique</h2>
+  <p>Schéma : <em>Colonne verticale, tableaux de répartition, accès sécurisé.</em></p>
+  <h2>3. Problèmes fréquents</h2>
+  <ul>
+    <li>Défaut d’accessibilité</li>
+    <li>Vieillissement des câbles</li>
+    <li>Absence de repérage</li>
+  </ul>
+  <h2>4. Diagnostic associé</h2>
+  <ul>
+    <li>Inspection visuelle</li>
+    <li>Contrôle du repérage et de l’état des câbles</li>
+  </ul>
+  <h2>5. Risques encourus</h2>
+  <ul>
+    <li>Arrêt de la distribution</li>
+    <li>Incendie</li>
+  </ul>
+  <h2>6. Recommandations pratiques</h2>
+  <ul>
+    <li>Assurer l’accessibilité des colonnes</li>
+    <li>Renouveler les câbles vieillissants</li>
+    <li>Repérer chaque tableau et circuit</li>
+    <li>Vérifier la présence de dispositifs de coupure d’urgence</li>
+    <li>Contrôler la conformité des fixations et supports</li>
+  </ul>
+
+  <h2>7. Étapes de vérification lors d’une installation ou rénovation</h2>
+  <ul>
+    <li>Inspection visuelle complète de la colonne</li>
+    <li>Contrôle du repérage des circuits et tableaux</li>
+    <li>Test des dispositifs de coupure et de sécurité</li>
+    <li>Vérification de l’état des câbles et des fixations</li>
+    <li>Validation de l’accessibilité pour les interventions</li>
+  </ul>
+
+  <h2>8. Tableau des points de contrôle essentiels</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#fef9c3;font-weight:bold;">
+      <td>Point de contrôle</td>
+      <td>Fréquence</td>
+      <td>Responsable</td>
+    </tr>
+    <tr><td>Accessibilité</td><td>Annuel</td><td>Syndic / gestionnaire</td></tr>
+    <tr><td>État des câbles</td><td>Annuel</td><td>Électricien certifié</td></tr>
+    <tr><td>Repérage des circuits</td><td>À chaque intervention</td><td>Électricien</td></tr>
+    <tr><td>Dispositifs de coupure</td><td>Annuel</td><td>Électricien</td></tr>
+    <tr><td>Fixations et supports</td><td>À chaque rénovation</td><td>Entreprise spécialisée</td></tr>
+  </table>
+
+  <h2>9. Erreurs à éviter</h2>
+  <ul>
+    <li>Négliger l’accessibilité pour les secours</li>
+    <li>Oublier le repérage des circuits</li>
+    <li>Reporter le renouvellement des câbles usés</li>
+    <li>Ignorer les dispositifs de coupure d’urgence</li>
+  </ul>
+
+  <h2>10. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/">Promotelec – Colonnes montantes</a></li>
+    <li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+    <li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Faites contrôler régulièrement les colonnes montantes et assurez-vous que les plans de repérage sont à jour. La sécurité collective dépend de la qualité de gestion des parties communes.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </div>
+  <footer>
+    © PROQUELEC – Feuillet technique Colonnes montantes. Fiche pratique pour syndics et gérants.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </footer>
+</body>
+</html>

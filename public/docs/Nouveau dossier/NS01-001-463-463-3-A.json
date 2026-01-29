@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Sectionnement et commande",
+    "article": "463",
+    "alinéa": "463.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-463-463-3-A",
+        "type": "obligation",
+        "texte_normatif": "Les moyens de coupure d'urgence doivent agir aussi directement que possible sur les conducteurs d'alimentation appropriés. Les dispositions doivent être telles qu'une seule manœuvre soit suffisante pour provoquer la coupure de l'alimentation appropriée. Par moyen de coupure d'urgence, on entend l'organe de commande manuelle agissant sur l'appareil comportant les dispositifs capables d'interrompre le courant dans les conditions d'alimentation, soit directement, soit par l'intermédiaire de systèmes de transmission (mécaniques, électriques, électroniques, pneumatiques,...). H 463.4 Les dispositions du système de coupure d'urgence doivent être telles que son fonctionnement ne provoque pas un autre danger ni n'interfère avec l'opération complète nécessaire pour supprimer le danger.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "463"
+        ]
+    }
+}

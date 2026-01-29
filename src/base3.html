@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base de données Matériel Électrique</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f7fa;
+        margin: 20px;
+    }
+    h1, h2 {
+        color: #0d47a1;
+    }
+    .category {
+        margin-top: 50px;
+    }
+    .material-name {
+        cursor: pointer;
+        color: #1565c0;
+        margin: 5px 0;
+        padding: 5px;
+        border-left: 3px solid #0d47a1;
+    }
+    .material-name:hover {
+        background-color: #e3f2fd;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0 30px 0;
+        background-color: #ffffff;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        display: none; /* caché par défaut */
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+    th {
+        background-color: #0d47a1;
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+<h1>Base de données Matériel Électrique</h1>
+
+<script>
+function toggleTable(id) {
+    const table = document.getElementById(id);
+    table.style.display = table.style.display === "table" ? "none" : "table";
+}
+</script>
+
+<!-- Catégorie 1 : Câbles et fils -->
+<div class="category">
+    <h2>1️⃣ Câbles et fils électriques</h2>
+
+    <div class="material-name" onclick="toggleTable('cable1')">Câble préassemblé 2x16mm²</div>
+    <table id="cable1">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Section</td><td>2x16mm²</td></tr>
+            <tr><td>Type</td><td>Préassemblé</td></tr>
+            <tr><td>Remarque</td><td>Utilisation générale</td></tr>
+        </tbody>
+    </table>
+
+    <div class="material-name" onclick="toggleTable('cable2')">Câble préassemblé 4x16mm²</div>
+    <table id="cable2">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Section</td><td>4x16mm²</td></tr>
+            <tr><td>Type</td><td>Préassemblé</td></tr>
+            <tr><td>Remarque</td><td>Utilisation générale</td></tr>
+        </tbody>
+    </table>
+
+    <div class="material-name" onclick="toggleTable('cable3')">Câble préassemblé 3x35+54,6+16mm²</div>
+    <table id="cable3">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Section</td><td>3x35+54,6+16mm²</td></tr>
+            <tr><td>Type</td><td>Préassemblé</td></tr>
+            <tr><td>Remarque</td><td>Usage spécifique</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Répéter pour tous les câbles/fils (U1000, TH, RO2V, etc.) -->
+</div>
+
+<!-- Catégorie 2 : Gaines, conduits et tubes -->
+<div class="category">
+    <h2>2️⃣ Gaines, conduits et tubes</h2>
+
+    <div class="material-name" onclick="toggleTable('tube32')">Tube PVC 32</div>
+    <table id="tube32">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Diamètre</td><td>Ø32mm</td></tr>
+            <tr><td>Type</td><td>PVC rigide</td></tr>
+            <tr><td>Remarque</td><td>Protection câble</td></tr>
+        </tbody>
+    </table>
+
+    <div class="material-name" onclick="toggleTable('tube40')">Tube PVC 40</div>
+    <table id="tube40">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Diamètre</td><td>Ø40mm</td></tr>
+            <tr><td>Type</td><td>PVC rigide</td></tr>
+            <tr><td>Remarque</td><td>Protection câble</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Répéter pour tous les tubes et colliers -->
+</div>
+
+<!-- Catégorie 3 : Coffrets et tableaux -->
+<div class="category">
+    <h2>3️⃣ Coffrets et tableaux électriques</h2>
+
+    <div class="material-name" onclick="toggleTable('coffret_mono')">Coffret comptage mono</div>
+    <table id="coffret_mono">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Type</td><td>Monophasé</td></tr>
+            <tr><td>Modules</td><td>-</td></tr>
+            <tr><td>Remarque</td><td>Compteurs</td></tr>
+        </tbody>
+    </table>
+
+    <div class="material-name" onclick="toggleTable('coffret4')">Coffret 4 compteurs DOM</div>
+    <table id="coffret4">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Modules</td><td>4</td></tr>
+            <tr><td>Type</td><td>Domestique</td></tr>
+            <tr><td>Remarque</td><td>Compteurs</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Répéter pour tous les coffrets -->
+</div>
+
+<!-- Catégorie 4 : Disjoncteurs et interrupteurs -->
+<div class="category">
+    <h2>4️⃣ Disjoncteurs et interrupteurs</h2>
+
+    <div class="material-name" onclick="toggleTable('disj10A')">Disjoncteur modulaire 10A</div>
+    <table id="disj10A">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Type</td><td>1P</td></tr>
+            <tr><td>Courbe</td><td>C</td></tr>
+            <tr><td>Remarque</td><td>Protection ligne</td></tr>
+        </tbody>
+    </table>
+
+    <div class="material-name" onclick="toggleTable('diff4P40A30mA')">Interrupteur différentiel 4P 40A 30mA</div>
+    <table id="diff4P40A30mA">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Type</td><td>4P</td></tr>
+            <tr><td>Intensité</td><td>40A</td></tr>
+            <tr><td>Courant différentiel</td><td>30mA</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Répéter pour tous les disjoncteurs et interrupteurs -->
+</div>
+
+<!-- Catégorie 5 : Prises et luminaires -->
+<div class="category">
+    <h2>5️⃣ Prises, douilles et luminaires</h2>
+
+    <div class="material-name" onclick="toggleTable('prise16A')">Prise 2P+T 16A</div>
+    <table id="prise16A">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Type</td><td>2P+T</td></tr>
+            <tr><td>Intensité</td><td>16A</td></tr>
+            <tr><td>Remarque</td><td>Apparent ou encastré</td></tr>
+        </tbody>
+    </table>
+
+    <div class="material-name" onclick="toggleTable('ampLED')">Ampoule LED E27 5-12W</div>
+    <table id="ampLED">
+        <thead>
+            <tr><th>Caractéristique</th><th>Détail</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Type</td><td>LED</td></tr>
+            <tr><td>Puissance</td><td>5-12W</td></tr>
+            <tr><td>Socle</td><td>E27</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Répéter pour tous les luminaires -->
+</div>
+
+<!-- Catégorie 6 : Barrettes, domino et connecteurs -->
+<!-- Catégorie 7 : Fixations et accessoires -->
+<!-- Catégorie 8 : Terre et mise à la terre -->
+<!-- Catégorie 9 : Parafoudre et sécurité -->
+<!-- Répéter le même schéma pour toutes les autres catégories -->
+</body>
+</html>

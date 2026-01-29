@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "558",
+    "alinéa": "558.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-558-558-5-A",
+        "type": "obligation",
+        "texte_normatif": "Marques et indications 558.5.1 Tout ensemble doit être pourvu d'une plaque de firme indiquant son constructeur. Les plaques des appareils incorporés ne doivent pas être enlevées. 558.5.2 Dans les ensembles, l'appartenance des matériels (tels dispositifs de protection, appareillage, barrettes à bornes, etc.) au circuit correspondant, doit ressortir sans ambiguïté. Les désignations des matériels doivent être lisibles, réalisées de manière durable et placées de manière à éviter tout risque de confusion. Les étiquettes et plaques signalétiques doivent être fixées de manière efficace et durable et correspondre aux désignations dans les documents d'accompagnement (tels que schémas, liste de pièces détachées, liste des canalisations) qui doivent être joints.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "558"
+        ]
+    }
+}

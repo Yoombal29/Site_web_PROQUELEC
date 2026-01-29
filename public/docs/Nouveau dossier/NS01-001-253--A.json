@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "253",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-253--A",
+        "type": "obligation",
+        "texte_normatif": "Définitions relatives aux dispositifs de sectionnement, de commande et de protection Un appareil mécanique de connexion est un appareil destiné à fermer et à ouvrir un ou plusieurs circuits électriques au moyen de contacts séparables. 253.1 sectionneur appareil mécanique de connexion qui assure en position d’ouverture, une distance de sectionnement satisfaisant à des prescriptions spécifiées. NOTE – Un sectionneur ne permet pas la coupure en charge d'un circuit. 253.2 C interrupteur (mécanique) (441-14-10) appareil mécanique de connexion capable d'établir, de supporter et d'interrompre des courants dans les conditions normales du circuit, y compris éventuellement les conditions spécifiées de surcharge en service, ainsi que de supporter pendant une durée spécifiée des courants dans des conditions anormales spécifiées du circuit telles que celles du court-circuit. NOTE - Un interrupteur peut être capable d'établir des courants de court-circuit mais n'est pas capable de les couper. 253.3 coupe-circuit à fusibles (fusible) (441-18-01) appareil dont la fonction est d'ouvrir, par la fusion d'un ou de plusieurs de ses éléments conçus et calibrés à cet effet, le circuit dans lequel il est inséré en coupant le courant lorsque celui-ci dépasse pendant un temps suffisant une valeur donnée. Le fusible comprend toutes les parties qui constituent l'appareil complet. Le coupe-circuit à fusibles comprend toutes les parties qui forment l'ensemble de l'appareil, notamment base et élément de remplacement. C 253.4 disjoncteur (441-14-20) appareil mécanique de connexion capable d'établir, de supporter et d'interrompre des courants dans les conditions normales du circuit, ainsi que d'établir, de supporter pendant une durée spécifiée et d'interrompre des courants dans des conditions anormales spécifiées du circuit telles que celles du court-circuit. Un disjoncteur est généralement prévu pour fonctionner peu fréquemment quoique certains types soient capables de manœuvres fréquentes. 253.5 C contacteur (mécanique) (441-14-33) appareil mécanique de connexion ayant une seule position de repos, commandé autrement qu'à la main, capable d'établir, de supporter et d'interrompre des courants dans les conditions normales du circuit, y compris les conditions de surcharge en service. NOTE - Les contacteurs peuvent être désignés suivant la façon dont est fourni l'effort nécessaire à la fermeture des contacts principaux. Un contacteur est généralement prévu pour fonctionner fréquemment. - 32 - Certains contacteurs peuvent aussi être capables d'établir et d'interrompre des courants de court-circuit. La position de repos d'un contacteur correspond à l'ouverture des contacts principaux. Un discontacteur est une combinaison en un seul appareil, réalisée par le constructeur ou selon ses instructions, d'un contacteur et d'un relais de protection, destinée à provoquer l'ouverture automatique du contacteur dans des conditions prédéterminées. Exemple : Un discontacteur, constitué d'un contacteur et d'un relais de protection contre les surcharges, réalise un démarreur direct de moteur. C 253.6 dispositif à courant différentiel-résiduel (en abrégé \"DDR\") (445-05-02) appareil mécanique ou association d'appareils destiné à provoquer l'ouverture des contacts quand le courant différentiel atteint, dans des conditions spécifiées, une valeur donnée. Les dispositifs différentiels peuvent être des interrupteurs différentiels ou des disjoncteurs différentiels suivant qu'ils répondent également à la définition 253.2 ou 253.4. Un dispositif différentiel peut être une combinaison de divers éléments séparés conçus pour détecter et mesurer le courant différentiel et pour établir ou interrompre le courant. 253.7 appareil de connexion de commande et de protection (en abrégé \"ACP\") appareil de connexion comportant, intégrés à l'appareil, tous les dispositifs nécessaires pour assurer de façon coordonnée : - la commande ; - la protection contre les surcharges ; - la protection contre les courts-circuits. Cet appareil est capable d'établir, de supporter, et d'interrompre des courants dans des conditions normales du circuit, y compris dans des conditions de surcharge en service, et d'établir, de supporter pendant une durée spécifiée, et d'interrompre des courants dans des conditions anormales spécifiées du circuit telles que celles du court-circuit, il satisfait à des essais comprenant des séquences mixtes de ces fonctions. Cet appareil est, soit à commande automatique, soit à commande automatique et manuelle avec ouverture automatique en cas de surintensité.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "253"
+        ]
+    }
+}

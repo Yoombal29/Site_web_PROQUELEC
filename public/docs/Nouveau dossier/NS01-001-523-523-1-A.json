@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "523",
+    "alinéa": "523.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-523-523-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités H 523.1.1 Le courant transporté par tout conducteur pendant des périodes prolongées en fonctionnement normal doit être tel que la température maximale de fonctionnement ne soit pas supérieure à la valeur appropriée spécifiée dans le tableau 52F. La valeur du courant doit être choisie conformément à 523.1.2, ou déterminée conformément à 523.1.3. Tableau 52F - Températures maximales de fonctionnement pour les isolations Température maximale de Type d'isolation fonctionnement (°C) Polychlorure de vinyle (PVC) Conducteur : 70 Polyéthylène réticulé (PR) et éthylène-propylène (EPR) Conducteur : 90 NOTE - Les températures maximales de fonctionnement indiquées dans ce tableau, ont été prises dans les normes NF C 32-300 et NF C 32-301. 523.1.2 La règle du 523.1.1 est considérée comme satisfaite si le courant dans les conducteurs isolés et les câbles sans armure n'est pas supérieur à la valeur appropriée choisie dans les tableaux 52H et 52J. Pour les types de câbles auxquels cet article ne s'applique pas, les courants admissibles doivent être déterminés conformément à 523.1.3. Le tableau 52G indique pour chaque mode de pose les méthodes de référence d'installation (B, C, D, E, F) pour lesquelles les courants admissibles sont indiqués dans les tableaux correspondants et la procédure à utiliser pour déduire les valeurs de courants admissibles de ceux des méthodes de référence. Une tolérance de 5 % est admise sur les valeurs des courants admissibles lors du choix de la section des conducteurs. Les courants admissibles pour les conducteurs isolés sont les mêmes que pour les câbles monoconducteurs. H 523.1.3 Les valeurs de courants admissibles et de facteurs de correction satisfaisant aux prescriptions de 523.1.1 peuvent être déterminées suivant les méthodes de la CEI 60287 par essai ou par des calculs utilisant une méthode reconnue à condition qu'elle soit précisée. Il peut être nécessaire de tenir compte des caractéristiques de la charge. - 207 - Tableau 52G - Choix des méthodes de référence pour les courants admissibles H en fonction des modes de pose Pour chacun des modes de pose décrits dans le tableau 52C, le tableau indique la méthode de référence - repérée par l'une des lettres : B, C, D, E ou F - à appliquer et les facteurs de correction éventuels. Mode de pose Méthode Facteurs (numéro de de référence de correction Remarques référence du tableau 52C) 1 B 0,77 2 B 0,70 3 B - 3A B 0,9 4 B - 4A B 0,9 5 B - 5A B 0,9 11 C - 11A C 0,95 12 C - 13 E, F - 14 E, F - 16 E, F - 17 E, F - 18 C 1,21 21 B 0,95 22 B 0,95 22A B 0,865 23 B 0,95 23A B 0,865 24 B 0,95 24A B 0,865 25 B 0,95 31 B - 31A B 0,9 32 B - 32A B 0,9 33 B - 33A B 0,9 34 B - 34A B 0,9 41 B 0,95 42 B - 43 B - 61 D 0,80 62 D - 63 D - 71 B - (*) Pour la pose de câbles 73 B (*) multiconducteurs, appliquer un facteur de 74 B (*) correction de 0,9. 81 A l'étude - 208 - Utilisation des tableaux 52H et 52J H Les courants admissibles indiqués dans les tableaux 52H et 52J sont valables pour des circuits simples constitués du nombre suivant de conducteurs : Méthode de référence B - deux conducteurs isolés ou deux câbles monoconducteurs ou un câble à deux conducteurs ; - trois conducteurs isolés ou trois câbles monoconducteurs ou un câble à trois conducteurs. Méthode de référence C - deux câbles monoconducteurs ou un câble à deux conducteurs, - trois câbles monoconducteurs ou un câble à trois conducteurs. Méthode de référence D - deux câbles monoconducteurs ou un câble à deux conducteurs, - trois câbles monoconducteurs ou un câble à trois conducteurs. Méthode de référence E - un câble à deux ou trois conducteurs. Méthode de référence F - deux ou trois câbles monoconducteurs. - 209 - Tableau 52H - Courants admissibles (en ampères) dans les canalisations H pour les méthodes de référence B, C, E et F MÉTHODE DE ISOLANT ET NOMBRE DE CONDUCTEURS CHARGÉS RÉFÉRENCE B PVC 3 PVC 2 PR 3 PR 2 C PVC 3 PVC 2 PR 3 PR 2 E PVC 3 PVC 2 PR 3 PR2 F PVC 3 PVC 2 PR 3 PR 2 S (mm²) 1 2 3 4 5 6 7 8 9 CUIVRE 1,5 15,5 17,5 18,5 19,5 22 23 24 26 2,5 21 24 25 27 30 31 33 36 4 28 32 34 36 40 42 45 49 6 36 41 43 48 51 54 58 63 10 50 57 60 63 70 75 80 86 16 68 76 80 85 94 100 107 115 25 89 96 101 112 119 127 138 149 161 35 110 119 126 138 147 158 169 185 200 50 134 144 153 168 179 192 207 225 242 70 171 184 196 213 229 246 268 289 310 95 207 223 238 258 278 298 328 352 377",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "523"
+        ]
+    }
+}

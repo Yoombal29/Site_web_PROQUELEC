@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Mises à la terre, conducteurs de protection et",
+    "article": "543",
+    "alinéa": "543.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-543-543-1-A",
+        "type": "obligation",
+        "texte_normatif": "Sections minimales 543.1.1 La section des conducteurs de protection doit satisfaire aux conditions de la coupure automatique de l’alimentation prescrites en 411.3.2 et être apte à supporter les courants présumés de défaut. Elle est soit calculée conformément en 543.1.2, soit choisie conformément au tableau 54C. Dans les deux cas, 543.1.3 doit être appliqué. Pour les conducteurs de liaison équipotentielle, voir 544. - 271 - Tableau 54C - Section minimale du conducteur de protection liée à C la section du conducteur de phase associé SECTION MINIMALE DES CONDUCTEURS DE SECTION DES CONDUCTEURS DE PHASE PROTECTION DE L'INSTALLATION (mm²) S(mm²) Si le conducteur de Si le conducteur de protection protection est de même n’est pas de même nature que nature que le conducteur le conducteur de phase de phase k S ≤ 16 S 1 x S k 2 k 1 x 16 16 < S ≤ 35 16 (*) k 2 k S S 1 x (*) k 2 S > 35 2 2 (*) Pour le conducteur PEN, une réduction de section n’est permise que conformément aux règles du dimensionnement du conducteur neutre de la partie 5-52. k1 est la valeur de k du conducteur de phase choisi dans le tableau A.54D ou dans les tableaux de la partie 4-43 conformément au matériau du conducteur et à son isolation. k2 est la valeur de k du conducteur de protection choisi selon le tableau approprié des tableaux A.54B à A.54F. Dans le schéma TT, la section du conducteur de protection peut être limitée à : 25 mm² en cuivre, 35 mm² en aluminium, à condition que les prises de terre du neutre et des masses soient distinctes, sinon les conditions du schéma TN sont applicables. Les matériels de l’installation doivent être conçus de manière que leurs bornes dédiées aux C conducteurs de protection puissent accepter les sections prescrites dans le présent sous- paragraphe. 543.1.2 La section des conducteurs de protection doit être au moins égale à celle déterminée par la formule suivante (applicable seulement pour des temps de coupure non supérieurs à 5 s) : 2 I t S = k dans laquelle S est la section du conducteur de protection, en millimètres carrés. I est la valeur efficace du courant de défaut qui peut traverser le dispositif de protection pour un défaut d'impédance négligeable, en ampères. t est le temps de fonctionnement du dispositif de coupure, en secondes. k est le facteur dont la valeur dépend de la nature du métal du conducteur de protection, de son isolation et de ses températures initiale et finale (les valeurs de k sont données dans l’annexe A). La formule ci-dessus est utilisée comme celle de l’article 434.5.2 relative aux courants de court- circuit. Voir également le guide UTE C 15-105. - 272 - Si l'application de la formule conduit à des sections non normalisées, la section plus élevée la C plus proche doit être utilisée. Dans les câbles souples, le conducteur de protection a la même section que les conducteurs de phase. C 543.1.3 Les conducteurs de protection qui ne font pas partie de la canalisation d'alimentation doivent avoir une section d'au moins : - 2,5 mm² Cu ou 35 mm² Alu si les conducteurs de protection comportent une protection mécanique ; - 4 mm² Cu ou 35 mm² Alu si les conducteurs de protection ne comportent pas de protection mécanique. 543.1.4 Lorsqu’un conducteur de protection est commun à plusieurs circuits, la section de ce conducteur de protection doit être dimensionnée en fonction de la plus grande section des conducteurs de phase. Cette règle n’est pas applicable au conducteur PEN dans le schéma TN-C, le conducteur neutre ne pouvant être commun à plusieurs circuits. En schéma TN-S et IT, le conducteur de protection commun doit rester à proximité des conducteurs actifs des circuits concernés (voir 411.4.3 et 411.6.4).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "543"
+        ]
+    }
+}

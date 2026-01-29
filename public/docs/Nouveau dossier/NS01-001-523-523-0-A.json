@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "523",
+    "alinéa": "523.0",
+    "regle_atomique": {
+        "id_unique": "NS01-001-523-523-0-A",
+        "type": "obligation",
+        "texte_normatif": "Objet Les prescriptions de cet article sont destinées à assurer une durée de vie satisfaisante des conducteurs et des isolations soumises aux effets thermiques de fonctionnement à la température maximale de fonctionnement appropriée pendant des périodes prolongées en service normal et pour des conditions habituelles d'installation. D'autres considérations interviennent dans la détermination de la section des conducteurs, telles que les règles pour la protection contre les chocs électriques (voir 4-41), la protection contre les effets thermiques (voir 4-42), la protection contre les surintensités (voir 4-43), la chute de tension (voir 525). Cet article traite des câbles sans armure et des conducteurs, sous des tensions nominales non supérieures à 1000 V à 50-60 Hz et jusqu'à 100 Hz ou 1500 V en courant continu. Pour les fréquences de 100 à 400 Hz, voir le guide UTE C 15-421. Les valeurs des tableaux pour les câbles multiconducteurs peuvent être utilisées pour les câbles armés à condition que chaque câble contienne tous les conducteurs du circuit, les erreurs étant dans le sens de la sécurité. Les valeurs des tableaux peuvent également être utilisées de façon sûre pour des câbles avec conducteur concentrique et écran ou gaine métallique. Les courants admissibles indiqués dans les tableaux sont déterminés pour les types de conducteurs et câbles isolés et les modes de pose couramment utilisés dans les installations électriques fixes. Les valeurs des courants admissibles indiquées dans le tableau 52H sont applicables aux câbles souples dans la mesure où ils sont utilisés dans les installations fixes. - 206 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "523"
+        ]
+    }
+}

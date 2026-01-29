@@ -1,0 +1,84 @@
+<html>
+<head>
+  <title>Feuillet Technique – La mise à la terre</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.2em;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>FEUILLET TECHNIQUE<br>La mise à la terre</h1>
+  <h2>1. Définition simple et rôle</h2>
+  <p>La mise à la terre consiste à relier les masses métalliques des équipements électriques au sol pour éviter tout danger en cas de défaut.</p>
+  <h2>2. Schéma visuel / description pratique</h2>
+  <p>Schéma : <em>Conducteur de protection reliant les appareils au piquet de terre.</em></p>
+  <h2>3. Problèmes fréquents</h2>
+  <ul>
+    <li>Oubli de raccordement</li>
+    <li>Section de câble insuffisante</li>
+    <li>Dégradation du conducteur</li>
+  </ul>
+  <h2>4. Diagnostic associé</h2>
+  <ul>
+    <li>Contrôle de la continuité</li>
+    <li>Vérification de la section du câble</li>
+  </ul>
+  <h2>5. Risques encourus</h2>
+  <ul>
+    <li>Électrocution</li>
+    <li>Défaillance des protections</li>
+  </ul>
+  <h2>6. Recommandations pratiques</h2>
+  <ul>
+    <li>Respecter la section minimale</li>
+    <li>Contrôler à chaque intervention</li>
+    <li>Documenter le raccordement</li>
+    <li>Vérifier la résistance de la prise de terre (&lt; 50 Ω)</li>
+    <li>Faire réaliser le contrôle par un professionnel certifié</li>
+  </ul>
+
+  <h2>7. Étapes de vérification lors d’une installation ou rénovation</h2>
+  <ul>
+    <li>Contrôler la continuité du conducteur de terre</li>
+    <li>Mesurer la résistance de la prise de terre</li>
+    <li>Vérifier la section et la qualité du câble</li>
+    <li>Inspecter les connexions pour détecter la corrosion</li>
+    <li>Valider la conformité avec la norme NF C 15-100</li>
+  </ul>
+
+  <h2>8. Tableau des points de contrôle essentiels</h2>
+  <table border="1" cellpadding="6" style="border-collapse:collapse;margin-top:1em;">
+    <tr style="background:#fef9c3;font-weight:bold;">
+      <td>Point de contrôle</td>
+      <td>Fréquence</td>
+      <td>Responsable</td>
+    </tr>
+    <tr><td>Continuité du conducteur</td><td>À chaque intervention</td><td>Électricien certifié</td></tr>
+    <tr><td>Résistance de la prise de terre</td><td>Annuel</td><td>Entreprise spécialisée</td></tr>
+    <tr><td>Section du câble</td><td>À l’installation</td><td>Installateur</td></tr>
+    <tr><td>Absence de corrosion</td><td>Annuel</td><td>Syndic / gestionnaire</td></tr>
+    <tr><td>Conformité NF C 15-100</td><td>À chaque rénovation</td><td>Entreprise spécialisée</td></tr>
+  </table>
+
+  <h2>9. Erreurs à éviter</h2>
+  <ul>
+    <li>Oublier le raccordement d’un appareil à la terre</li>
+    <li>Utiliser une section de câble insuffisante</li>
+    <li>Ignorer la mesure de la résistance de la prise de terre</li>
+    <li>Ne pas faire appel à un professionnel certifié</li>
+  </ul>
+
+  <h2>10. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/">Promotelec – Mise à la terre</a></li>
+    <li><a href="https://www.service-public.fr/particuliers/vosdroits/F1991">Service Public – Travaux électriques</a></li>
+    <li><a href="https://www.ademe.fr/">ADEME – Conseils rénovation</a></li>
+  </ul>
+
+  <div class="encadre">
+    <b>Conseil PROQUELEC :</b> Faites toujours vérifier la continuité et la résistance de la prise de terre. La sécurité dépend du respect des normes et du contrôle des connexions.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </div>
+  <footer>
+    © PROQUELEC – Feuillet technique Mise à la terre. Fiche pratique pour syndics et gérants.<br>
+    Pour toute question, contactez-nous sur <a href="mailto:contact@proquelec.fr">contact@proquelec.fr</a>
+  </footer>
+</body>
+</html>

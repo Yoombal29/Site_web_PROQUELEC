@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux contenant une baignoire ou une douche",
+    "article": "750",
+    "alinéa": "701.51",
+    "regle_atomique": {
+        "id_unique": "NS01-001-750-701-51-A",
+        "type": "obligation",
+        "texte_normatif": "Règles communes 701.512.2 Influences externes Les conditions d'influences externes sont les suivantes en fonction des volumes considérés : Tableau 701A – Influences externes VVOOLLUUMMEESS 00 11 22 33 TTeemmppéérraattuurree aammbbiiaannttee ((AAAA)) 44 44 44 44 HHuummiiddiittéé ((AABB)) 44 44 44 44 PPrréésseennccee dd’’eeaauu ((AADD)) 77 44 33 22 Les matériels électriques doivent posséder au moins les degrés de protection suivants : • dans le volume 0 : IPX7 ; • dans le volume 1 : IPX4 ou, si ce volume peut être soumis à des jets d'eau pour nettoyage dans les bains publics : IPX5 ; • dans le volume 2 : IPX3 ou, si ce volume peut être soumis à des jets d'eau pour nettoyage dans les bains publics : IPX5 ; • dans le volume 3 : IPX1 ou, si ce volume peut être soumis à des jets d'eau pour nettoyage dans les bains publics : IPX5. Le tableau 701B résume les conditions dans lesquelles les matériels électriques peuvent être utilisés dans les différents volumes.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "750"
+        ]
+    }
+}

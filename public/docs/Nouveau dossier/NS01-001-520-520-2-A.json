@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "520",
+    "alinéa": "520.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-520-520-2-A",
+        "type": "obligation",
+        "texte_normatif": "Pour l'application des règles énoncées en 511.1, les normes à considérer sont : 520.2.1 Profilés, conduits et systèmes de conduits - Plinthes, moulures et chambranles en bois : Règles et dimensions (1) ; - Profilés utilisés pour le cheminement des conducteurs et câbles et leurs accessoires de pose : Règles (2) ; - Systèmes de profilés utilisés pour le cheminement des conducteurs et câbles : Règles (3) ; - Systèmes de conduits pour installations électriques – partie 2-2 : Règles particulières pour les systèmes de conduits cintrables – types ICA, ICTA, ICTL (4) ; - Systèmes de conduits pour installations électriques – partie 2-1 : Règles particulières pour les systèmes de conduits rigides - types IRL, MRL (5) ; - Systèmes de conduits pour installations électriques – partie 2-3 : Règles particulières pour les systèmes de conduits souples - type CSA (6) ; - Systèmes de conduits pour installations électriques – partie 2-4 : Règles particulières pour les systèmes de conduits enterrés dans le sol - type TPC (7) . 520.2.2 Conducteurs et câbles Les profilés comprennent les goulottes, les moulures et les conduits profilés. Le tableau 52A précise les normes à considérer et les caractéristiques des câbles et conducteurs isolés. 520.2.3 Presse-étoupe Pour l'application des règles énoncées en 511.1, les normes à considérer sont les suivantes : - Presse-étoupe à pas métrique (8) ; - Presse-étoupe à pas non-métrique - Règles générales (9) ; - Presse-étoupe à pas non-métrique en matière plastique - Règles particulières (10) ; - Presse-étoupe à pas non-métrique métalliques - Règles particulières (11) . -191- (1) NF C 68-091 (2) NF C 68-102 (3) NF C 68-104 (4) NF EN 50086-2-2 (C 68-112) (5) NF EN 50086-2-1 (C 68-111) (6) NF EN 50086-2-3 (C 68-113) (7) NF EN 50086-2-4 (C 68-114) (8) NF EN 50262 (C 68-302) (9) UTE C 68-300 (10) UTE C 68-311 (11) UTE C 68-312 Le tableau 52A précise les normes à considérer dont les lettres ont la signification suivante : Colonne 1 : Les câbles indiqués en gras sont les plus couramment utilisés. Colonne 2 : A Type national reconnu. H Type harmonisé. FR-N Type national mais avec la désignation internationale. U Type national avec l'ancienne désignation UTE. Colonne 3 : Désignation de la norme. Colonne 4 : Tensions de référence des câbles U /U en V (voir 512.1.1 a). o Colonne 5 : R Conducteur ou câble rigide. S Conducteur ou câble souple. Colonne 6 : A Armure. P Gaine de plomb. R Gaine en matière réticulée. T Gaine en matière thermoplastique. E Ecran en cuivre. TV Tresse. Colonne 7 : II Câble considéré classe II (voir 413.2) pour une tension maximale par rapport à la terre de 500 V. II* Câble considéré classe II (voir 413.2) pour une tension maximale par rapport à la terre de 250 V. Colonne 8 : C 1 Câble non propagateur de l'incendie (selon la norme NF C 32-070). # Câble non propagateur de l'incendie (selon la norme NF C 32-072). C 2 Câble non propagateur de la flamme (selon la norme NF C 32-070). C 3 Pas de caractéristiques du point de vue du comportement au feu (selon la norme NF C 32-070). Colonne 9 : CR 1 Câble résistant au feu (selon la norme NF C 32-070) CR 2 Pas de caractéristiques du point de vue de la résistance au feu (selon la norme NF C 32-070). Colonne 10 : O Câble ne dégageant pas de fumées opaques en cas d’incendie (selon la norme NF C 32-073-1). Colonne 11 : O Câble ne dégageant pas de fumées acides en cas d’incendie (selon la norme NF C 32-074-22). Colonne 12 : Sections minimale et maximale : ces indications n'impliquent pas que l'ensemble de la gamme de sections soit réalisé quel que soit le nombre de conducteurs. Colonne 13 : Températures maximales admissibles sur l'âme. - 193 - Tableau 52A – Conducteurs et câbles isolés N° Désignation Normes Tension Souplesse Revête- Classe Feu Fumées Sections Température NF C assignée ments Propa- Résis- opacité acidité mm2 sur âme gation tance réduite faible °C 1 2 3 4 5 6 7 8 9 10 11 12 13 CÂBLES ISOLÉS AUX ÉLASTOMÈRES (famille PR) 1 U 1000 R2V (6) 32-321 600/1000 R T II C2 – – – 1,5 - 630 90 2 U 1000 RVFV (6) 32-322 600/1000 R TAT C2 – – – 1,5 - 300 90 3 U 1000 RGPFV (6) 32-111 600/1000 R PAT C2 – – – 1,5 - 240 90 4 FR-N1 X1X2 32-323 600/1000 R R II C1# – O O 1,5 - 630 90 5 FR-N 1 X1G1 32-323 600/1000 R T II C1# – O O 1,5 - 630 90 6 FR-N 1 X1X2Z4X2 32-323 600/1000 R RAR C1# – O O 1,5 - 300 90 7 FR-N 1 X1G1Z4G1 32-323 600/1000 R TAT C1# – – – 1,5 - 300 90 8 Torsades (6) 33-209 600/1000 R R C3 – – – 16 - 150 90 9 FRN1 XDV-AR,- AS, -AU 33-210 600/1000 R AT C2 – – – 16 - 240 90 (6) 21 H 07 BB-F 32-102-12 450/750 S R II C3 – – – 1,5 - 500 90 22 H 07 BN4-F 32-102-12 450/750 S R II C2 – – – 1,5 - 500 90 23 H 07 BQ-F 32-102-10 450/750 S R II C3 – – – 1,5 - 16 90 24 H 07 RN-F 32-102-4 450/750 S R II C2 – – – 1,5 - 500 60 (1) 25 A 07 RN-F 32-120 450/750 S R II C2 – – – 1,5 - 300 60 (1) 26 H 07 RN8-F 32-102-16 450/750 S R II C2 – – – 1,5 - 500 60 (1) 27 FR-N 07 X4X5-F 32-131 450/750 S R II C1 – O O 1,5 - 500 90 28 H 07 ZZ-F 32-102-13 450/750 S R II C2# – O O 1,5 - 500 70 51 H 05 BB-F 32-102-12 300/500 S R II C3 – – – 1,5 - 6 90 52 H 05 GG-F 32-102-11 300/500 S R II C3 – – – 1,5 - 6 110 53 H 05 RR-F 32-102-4 300/500 S R II C3 – – – 1,5 - 6 60 (1) 54 A 05 RR-F 32-120 300/500 S R II C3 – – – 1,5 - 6 60 (1) CÂBLES ISOLÉS AU POLYCHLORURE DE VINYLE (famille PVC)",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "520"
+        ]
+    }
+}

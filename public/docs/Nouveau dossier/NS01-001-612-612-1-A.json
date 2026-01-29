@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de sécurité",
+    "article": "612",
+    "alinéa": "612.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-612-612-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités C Les essais ci-après doivent être effectués dans la mesure où ils s'appliquent et de préférence dans l'ordre suivant : - continuité des conducteurs de protection et des liaisons équipotentielles principales et supplémentaires (voir 612.2) ; - résistance d'isolement de l'installation électrique (voir 612.3) ; - protection par TBTS ou TBTP et par séparation des circuits (voir 612.4) ; - résistance des sols et parois (voir 612.5) ; - coupure automatique de l'alimentation (voir article 612.6) ; - essai de polarité (voir 612.7) ; - essais fonctionnels (voir 612.8). Lorsqu'un essai donne un résultat négatif, cet essai et tous les essais qui l'ont précédé, et dont les résultats peuvent être influencés par l'essai en cause, doivent être répétés après l'élimination du défaut. Les méthodes d'essai décrites dans cette partie sont des méthodes de référence ; d'autres méthodes ne sont pas exclues à condition qu'elles donnent des résultats aussi sûrs. Les appareils de mesure doivent être conformes aux normes de la série NF EN 61557 (1) les concernant. Si d’autres appareils de mesure sont utilisés, ils doivent procurer un degré de performance et de sécurité équivalent. Les essais concernant la protection par séparation des circuits sont effectués lorsque les mesures de protection suivantes sont utilisées : - protection par emploi de la TBTS ou de la TBTP (voir 414) ; - protection par séparation électrique (voir 413).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "612"
+        ]
+    }
+}

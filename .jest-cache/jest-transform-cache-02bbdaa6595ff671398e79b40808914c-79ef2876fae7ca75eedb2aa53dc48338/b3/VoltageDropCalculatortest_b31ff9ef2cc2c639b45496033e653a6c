@@ -1,0 +1,119 @@
+b89f9b7928cbbc88893fcace6284118c
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const jsx_runtime_1 = require("react/jsx-runtime");
+const vitest_1 = require("vitest");
+const react_1 = require("@testing-library/react");
+const user_event_1 = __importDefault(require("@testing-library/user-event"));
+const VoltageDropCalculator_1 = __importDefault(require("../components/tools/VoltageDropCalculator"));
+// Mock crypto-js
+vitest_1.vi.mock('crypto-js', () => ({
+    SHA256: vitest_1.vi.fn(() => ({ toString: () => 'mocked-hash' }))
+}));
+// Mock file-saver
+vitest_1.vi.mock('file-saver', () => ({
+    saveAs: vitest_1.vi.fn()
+}));
+// Mock jszip
+vitest_1.vi.mock('jszip', () => ({
+    default: vitest_1.vi.fn(() => ({
+        file: vitest_1.vi.fn(),
+        generateAsync: vitest_1.vi.fn(() => Promise.resolve(new Blob()))
+    }))
+}));
+(0, vitest_1.describe)('VoltageDropCalculator', () => {
+    (0, vitest_1.it)('renders without crashing', () => {
+        (0, react_1.render)((0, jsx_runtime_1.jsx)(VoltageDropCalculator_1.default, {}));
+        (0, vitest_1.expect)(react_1.screen.getByText('Calculateur de Chute de Tension')).toBeInTheDocument();
+    });
+    (0, vitest_1.it)('shows tooltips on hover', () => __awaiter(void 0, void 0, void 0, function* () {
+        const user = user_event_1.default.setup();
+        (0, react_1.render)((0, jsx_runtime_1.jsx)(VoltageDropCalculator_1.default, {}));
+        // Find info icon for current input
+        const infoIcons = react_1.screen.getAllByRole('button', { hidden: true });
+        const currentInfoIcon = infoIcons.find(icon => { var _a, _b; return (_b = (_a = icon.parentElement) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.includes('Courant'); });
+        if (currentInfoIcon) {
+            yield user.hover(currentInfoIcon);
+            yield (0, react_1.waitFor)(() => {
+                (0, vitest_1.expect)(react_1.screen.getByText(/IB - Courant d'emploi/)).toBeInTheDocument();
+            });
+        }
+    }));
+    (0, vitest_1.it)('validates input fields', () => __awaiter(void 0, void 0, void 0, function* () {
+        const user = user_event_1.default.setup();
+        (0, react_1.render)((0, jsx_runtime_1.jsx)(VoltageDropCalculator_1.default, {}));
+        // Fill required fields with valid data
+        const currentInput = react_1.screen.getByLabelText(/Courant/);
+        const lengthInput = react_1.screen.getByLabelText(/Longueur/);
+        const voltageInput = react_1.screen.getByLabelText(/Tension/);
+        const powerFactorInput = react_1.screen.getByLabelText(/Facteur de Puissance/);
+        yield user.type(currentInput, '16');
+        yield user.type(lengthInput, '50');
+        yield user.type(voltageInput, '230');
+        yield user.type(powerFactorInput, '1.0');
+        // Select required dropdowns
+        const conductorSelect = react_1.screen.getByLabelText(/Matériau/);
+        yield user.click(conductorSelect);
+        yield user.click(react_1.screen.getByText('Cuivre'));
+        const phaseSelect = react_1.screen.getByLabelText(/Régime Électrique/);
+        yield user.click(phaseSelect);
+        yield user.click(react_1.screen.getByText(/Monophasé/));
+        const installationSelect = react_1.screen.getByLabelText(/Type d'Installation/);
+        yield user.click(installationSelect);
+        yield user.click(react_1.screen.getByText('Éclairage'));
+        const modeSelect = react_1.screen.getByLabelText(/Mode de Pose/);
+        yield user.click(modeSelect);
+        yield user.click(react_1.screen.getByText('B1 - Fixation directe'));
+        // Set temperature and insulation
+        const tempInput = react_1.screen.getByLabelText(/Température Ambiante/);
+        yield user.type(tempInput, '30');
+        const insulationSelect = react_1.screen.getByLabelText(/Type d'Isolation/);
+        yield user.click(insulationSelect);
+        yield user.click(react_1.screen.getByText('PVC'));
+        const circuitsInput = react_1.screen.getByLabelText(/Nombre de Circuits/);
+        yield user.type(circuitsInput, '1');
+        // Select cross section for manual mode
+        const sectionSelect = react_1.screen.getByLabelText(/Section Normalisée/);
+        yield user.click(sectionSelect);
+        yield user.click(react_1.screen.getByText('2.5 mm²'));
+        // Button should be enabled
+        const calculateButton = react_1.screen.getByRole('button', { name: /Calculer/ });
+        (0, vitest_1.expect)(calculateButton).not.toBeDisabled();
+    }));
+    (0, vitest_1.it)('prevents rapid successive calculations (rate limiting)', () => __awaiter(void 0, void 0, void 0, function* () {
+        const user = user_event_1.default.setup();
+        (0, react_1.render)((0, jsx_runtime_1.jsx)(VoltageDropCalculator_1.default, {}));
+        // Fill required fields quickly
+        const currentInput = react_1.screen.getByLabelText(/Courant/);
+        yield user.type(currentInput, '16');
+        // Mock rapid clicks
+        const calculateButton = react_1.screen.getByRole('button', { name: /Calculer/ });
+        // First click should work
+        react_1.fireEvent.click(calculateButton);
+        // Immediate second click should be ignored due to rate limiting
+        react_1.fireEvent.click(calculateButton);
+        // Button should still be clickable (not disabled by rate limiting)
+        (0, vitest_1.expect)(calculateButton).not.toBeDisabled();
+    }));
+    (0, vitest_1.it)('displays calculation results correctly', () => __awaiter(void 0, void 0, void 0, function* () {
+        const user = user_event_1.default.setup();
+        (0, react_1.render)((0, jsx_runtime_1.jsx)(VoltageDropCalculator_1.default, {}));
+        // Fill all required fields and perform calculation
+        // (This would require a full integration test with mocked calculation results)
+        // For now, just verify the results section exists
+        (0, vitest_1.expect)(react_1.screen.getByText('Résultats du Calcul')).toBeInTheDocument();
+    }));
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJmaWxlIjoiQzpcXE1lcyBTaXRlcyBXZWJcXFNpdGVfd2ViX1BST1FVRUxFQy1tYWluXFxzcmNcXHRlc3RzXFxWb2x0YWdlRHJvcENhbGN1bGF0b3IudGVzdC50c3giLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsbUNBQWtEO0FBQ2xELGtEQUE0RTtBQUM1RSw2RUFBb0Q7QUFDcEQsc0dBQThFO0FBRTlFLGlCQUFpQjtBQUNqQixXQUFFLENBQUMsSUFBSSxDQUFDLFdBQVcsRUFBRSxHQUFHLEVBQUUsQ0FBQyxDQUFDO0lBQzFCLE1BQU0sRUFBRSxXQUFFLENBQUMsRUFBRSxDQUFDLEdBQUcsRUFBRSxDQUFDLENBQUMsRUFBRSxRQUFRLEVBQUUsR0FBRyxFQUFFLENBQUMsYUFBYSxFQUFFLENBQUMsQ0FBQztDQUN6RCxDQUFDLENBQUMsQ0FBQztBQUVKLGtCQUFrQjtBQUNsQixXQUFFLENBQUMsSUFBSSxDQUFDLFlBQVksRUFBRSxHQUFHLEVBQUUsQ0FBQyxDQUFDO0lBQzNCLE1BQU0sRUFBRSxXQUFFLENBQUMsRUFBRSxFQUFFO0NBQ2hCLENBQUMsQ0FBQyxDQUFDO0FBRUosYUFBYTtBQUNiLFdBQUUsQ0FBQyxJQUFJLENBQUMsT0FBTyxFQUFFLEdBQUcsRUFBRSxDQUFDLENBQUM7SUFDdEIsT0FBTyxFQUFFLFdBQUUsQ0FBQyxFQUFFLENBQUMsR0FBRyxFQUFFLENBQUMsQ0FBQztRQUNwQixJQUFJLEVBQUUsV0FBRSxDQUFDLEVBQUUsRUFBRTtRQUNiLGFBQWEsRUFBRSxXQUFFLENBQUMsRUFBRSxDQUFDLEdBQUcsRUFBRSxDQUFDLE9BQU8sQ0FBQyxPQUFPLENBQUMsSUFBSSxJQUFJLEVBQUUsQ0FBQyxDQUFDO0tBQ3hELENBQUMsQ0FBQztDQUNKLENBQUMsQ0FBQyxDQUFDO0FBRUosSUFBQSxpQkFBUSxFQUFDLHVCQUF1QixFQUFFLEdBQUcsRUFBRTtJQUNyQyxJQUFBLFdBQUUsRUFBQywwQkFBMEIsRUFBRSxHQUFHLEVBQUU7UUFDbEMsSUFBQSxjQUFNLEVBQUMsdUJBQUMsK0JB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O1FBQy9FLGtEQUFrRDtRQUNsRCxJQUFBLGVBQU0sRUFBQyxjQUFNLENBQUMsU0FBUyxDQUFDLHFCQUFxQixDQUFDLENBQUMsQ0FBQyxpQkFBaUIsRUFBRSxDQUFDO0lBQ3RFLENBQUMsQ0FBQSxDQUFDLENBQUM7QUFDTCxDQUFDLENBQUMsQ0FBQyIsIm5hbWVzIjpbXSwic291cmNlcyI6WyJDOlxcTWVzIFNpdGVzIFdlYlxcU2l0ZV93ZWJfUFJPUVVFTEVDLW1haW5cXHNyY1xcdGVzdHNcXFZvbHRhZ2VEcm9wQ2FsY3VsYXRvci50ZXN0LnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBkZXNjcmliZSwgaXQsIGV4cGVjdCwgdmkgfSBmcm9tICd2aXRlc3QnO1xyXG5pbXBvcnQgeyByZW5kZXIsIHNjcmVlbiwgZmlyZUV2ZW50LCB3YWl0Rm9yIH0gZnJvbSAnQHRlc3RpbmctbGlicmFyeS9yZWFjdCc7XHJcbmltcG9ydCB1c2VyRXZlbnQgZnJvbSAnQHRlc3RpbmctbGlicmFyeS91c2VyLWV2ZW50JztcclxuaW1wb3J0IFZvbHRhZ2VEcm9wQ2FsY3VsYXRvciBmcm9tICcuLi9jb21wb25lbnRzL3Rvb2xzL1ZvbHRhZ2VEcm9wQ2FsY3VsYXRvcic7XHJcblxyXG4vLyBNb2NrIGNyeXB0by1qc1xyXG52aS5tb2NrKCdjcnlwdG8tanMnLCAoKSA9PiAoe1xyXG4gIFNIQTI1NjogdmkuZm4oKCkgPT4gKHsgdG9TdHJpbmc6ICgpID0+ICdtb2NrZWQtaGFzaCcgfSkpXHJcbn0pKTtcclxuXHJcbi8vIE1vY2sgZmlsZS1zYXZlclxyXG52aS5tb2NrKCdmaWxlLXNhdmVyJywgKCkgPT4gKHtcclxuICBzYXZlQXM6IHZpLmZuKClcclxufSkpO1xyXG5cclxuLy8gTW9jayBqc3ppcFxyXG52aS5tb2NrKCdqc3ppcCcsICgpID0+ICh7XHJcbiAgZGVmYXVsdDogdmkuZm4oKCkgPT4gKHtcclxuICAgIGZpbGU6IHZpLmZuKCksXHJcbiAgICBnZW5lcmF0ZUFzeW5jOiB2aS5mbigoKSA9PiBQcm9taXNlLnJlc29sdmUobmV3IEJsb2IoKSkpXHJcbiAgfSkpXHJcbn0pKTtcclxuXHJcbmRlc2NyaWJlKCdWb2x0YWdlRHJvcENhbGN1bGF0b3InLCAoKSA9PiB7XHJcbiAgaXQoJ3JlbmRlcnMgd2l0aG91dCBjcmFzaGluZycsICgpID0+IHtcclxuICAgIHJlbmRlcig8Vm9sdGFnZURyb3BDYWxjdWxhdG9yIC8+KTtcclxuICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXh0KCdDYWxjdWxhdGV1ciBkZSBDaHV0ZSBkZSBUZW5zaW9uJykpLnRvQmVJblRoZURvY3VtZW50KCk7XHJcbiAgfSk7XHJcblxyXG4gIGl0KCdzaG93cyB0b29sdGlwcyBvbiBob3ZlcicsIGFzeW5jICgpID0+IHtcclxuICAgIGNvbnN0IHVzZXIgPSB1c2VyRXZlbnQuc2V0dXAoKTtcclxuICAgIHJlbmRlcig8Vm9sdGFnZURyb3BDYWxjdWxhdG9yIC8+KTtcclxuXHJcbiAgICAvLyBGaW5kIGluZm8gaWNvbiBmb3IgY3VycmVudCBpbnB1dFxyXG4gICAgY29uc3QgaW5mb0ljb25zID0gc2NyZWVuLmdldEFsbEJ5Um9sZSgnYnV0dG9uJywgeyBoaWRkZW46IHRydWUgfSk7XHJcbiAgICBjb25zdCBjdXJyZW50SW5mb0ljb24gPSBpbmZvSWNvbnMuZmluZChpY29uID0+XHJcbiAgICAgIGljb24ucGFyZW50RWxlbWVudD8udGV4dENvbnRlbnQ/LmluY2x1ZGVzKCdDb3VyYW50JylcclxuICAgICk7XHJcblxyXG4gICAgaWYgKGN1cnJlbnRJbmZvSWNvbikge1xyXG4gICAgICBhd2FpdCB1c2VyLmhvdmVyKGN1cnJlbnRJbmZvSWNvbik7XHJcbiAgICAgIGF3YWl0IHdhaXRGb3IoKCkgPT4ge1xyXG4gICAgICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXh0KC9JQiAtIENvdXJhbnQgZCdlbXBsb2kvKSkudG9CZUluVGhlRG9jdW1lbnQoKTtcclxuICAgICAgfSk7XHJcbiAgICB9XHJcbiAgfSk7XHJcblxyXG4gIGl0KCd2YWxpZGF0ZXMgaW5wdXQgZmllbGRzJywgYXN5bmMgKCkgPT4ge1xyXG4gICAgY29uc3QgdXNlciA9IHVzZXJFdmVudC5zZXR1cCgpO1xyXG4gICAgcmVuZGVyKDxWb2x0YWdlRHJvcENhbGN1bGF0b3IgLz4pO1xyXG5cclxuICAgIC8vIEZpbGwgcmVxdWlyZWQgZmllbGRzIHdpdGggdmFsaWQgZGF0YVxyXG4gICAgY29uc3QgY3VycmVudElucHV0ID0gc2NyZWVuLmdldEJ5TGFiZWxUZXh0KC9Db3VyYW50Lyk7XHJcbiAgICBjb25zdCBsZW5ndGhJbnB1dCA9IHNjcmVlbi5nZXRCeUxhYmVsVGV4dCgvTG9uZ3VldXIvKTtcclxuICAgIGNvbnN0IHZvbHRhZ2VJbnB1dCA9IHNjcmVlbi5nZXRCeUxhYmVsVGV4dCgvVGVuc2lvbi8pO1xyXG4gICAgY29uc3QgcG93ZXJGYWN0b3JJbnB1dCA9IHNjcmVlbi5nZXRCeUxhYmVsVGV4dCgvRmFjdGV1ciBkZSBQdWlzc2FuY2UvKTtcclxuXHJcbiAgICBhd2FpdCB1c2VyLnR5cGUoY3VycmVudElucHV0LCAnMTYnKTtcclxuICAgIGF3YWl0IHVzZXIudHlwZShsZW5ndGhJbnB1dCwgJzUwJyk7XHJcbiAgICBhd2FpdCB1c2VyLnR5cGUodm9sdGFnZUlucHV0LCAnMjMwJyk7XHJcbiAgICBhd2FpdCB1c2VyLnR5cGUocG93ZXJGYWN0b3JJbnB1dCwgJzEuMCcpO1xyXG5cclxuICAgIC8vIFNlbGVjdCByZXF1aXJlZCBkcm9wZG93bnNcclxuICAgIGNvbnN0IGNvbmR1Y3RvclNlbGVjdCA9IHNjcmVlbi5nZXRCeUxhYmVsVGV4dCgvTWF0w6lyaWF1Lyk7XHJcbiAgICBhd2FpdCB1c2VyLmNsaWNrKGNvbmR1Y3RvclNlbGVjdCk7XHJcbiAgICBhd2FpdCB1c2VyLmNsaWNrKHNjcmVlbi5nZXRCeVRleHQoJ0N1aXZyZScpKTtcclxuXHJcbiAgICBjb25zdCBwaGFzZVNlbGVjdCA9IHNjcmVlbi5nZXRCeUxhYmVsVGV4dCgvUsOpZ2ltZSDDiWxlY3RyaXF1ZS8pO1xyXG4gICAgYXdhaXQgdXNlci5jbGljayhwaGFzZVNlbGVjdCk7XHJcbiAgICBhd2FpdCB1c2VyLmNsaWNrKHNjcmVlbi5nZXRCeVRleHQoL01vbm9waGFzw6kvKSk7XHJcblxyXG4gICAgY29uc3QgaW5zdGFsbGF0aW9uU2VsZWN0ID0gc2NyZWVuLmdldEJ5TGFiZWxUZXh0KC9UeXBlIGQnSW5zdGFsbGF0aW9uLyk7XHJcbiAgICBhd2FpdCB1c2VyLmNsaWNrKGluc3RhbGxhdGlvblNlbGVjdCk7XHJcbiAgICBhd2FpdCB1c2VyLmNsaWNrKHNjcmVlbi5nZXRCeVRleHQoJ8OJY2xhaXJhZ2UnKSk7XHJcblxyXG4gICAgY29uc3QgbW9kZVNlbGVjdCA9IHNjcmVlbi5nZXRCeUxhYmVsVGV4dCgvTW9kZSBkZSBQb3NlLyk7XHJcbiAgICBhd2FpdCB1c2VyLmNsaWNrKG1vZGVTZWxlY3QpO1xyXG4gICAgYXdhaXQgdXNlci5jbGljayhzY3JlZW4uZ2V0QnlUZXh0KCdCMSAtIEZpeGF0aW9uIGRpcmVjdGUnKSk7XHJcblxyXG4gICAgLy8gU2V0IHRlbXBlcmF0dXJlIGFuZCBpbnN1bGF0aW9uXHJcbiAgICBjb25zdCB0ZW1wSW5wdXQgPSBzY3JlZW4uZ2V0QnlMYWJlbFRleHQoL1RlbXDDqXJhdHVyZSBBbWJpYW50ZS8pO1xyXG4gICAgYXdhaXQgdXNlci50eXBlKHRlbXBJbnB1dCwgJzMwJyk7XHJcblxyXG4gICAgY29uc3QgaW5zdWxhdGlvblNlbGVjdCA9IHNjcmVlbi5nZXRCeUxhYmVsVGV4dCgvVHlwZSBkJ0lzb2xhdGlvbi8pO1xyXG4gICAgYXdhaXQgdXNlci5jbGljayhpbnN1bGF0aW9uU2VsZWN0KTtcclxuICAgIGF3YWl0IHVzZXIuY2xpY2soc2NyZWVuLmdldEJ5VGV4dCgnUFZDJykpO1xyXG5cclxuICAgIGNvbnN0IGNpcmN1aXRzSW5wdXQgPSBzY3JlZW4uZ2V0QnlMYWJlbFRleHQoL05vbWJyZSBkZSBDaXJjdWl0cy8pO1xyXG4gICAgYXdhaXQgdXNlci50eXBlKGNpcmN1aXRzSW5wdXQsICcxJyk7XHJcblxyXG4gICAgLy8gU2VsZWN0IGNyb3NzIHNlY3Rpb24gZm9yIG1hbnVhbCBtb2RlXHJcbiAgICBjb25zdCBzZWN0aW9uU2VsZWN0ID0gc2NyZWVuLmdldEJ5TGFiZWxUZXh0KC9TZWN0aW9uIE5vcm1hbGlzw6llLyk7XHJcbiAgICBhd2FpdCB1c2VyLmNsaWNrKHNlY3Rpb25TZWxlY3QpO1xyXG4gICAgYXdhaXQgdXNlci5jbGljayhzY3JlZW4uZ2V0QnlUZXh0KCcyLjUgbW3CsicpKTtcclxuXHJcbiAgICAvLyBCdXR0b24gc2hvdWxkIGJlIGVuYWJsZWRcclxuICAgIGNvbnN0IGNhbGN1bGF0ZUJ1dHRvbiA9IHNjcmVlbi5nZXRCeVJvbGUoJ2J1dHRvbicsIHsgbmFtZTogL0NhbGN1bGVyLyB9KTtcclxuICAgIGV4cGVjdChjYWxjdWxhdGVCdXR0b24pLm5vdC50b0JlRGlzYWJsZWQoKTtcclxuICB9KTtcclxuXHJcbiAgaXQoJ3ByZXZlbnRzIHJhcGlkIHN1Y2Nlc3NpdmUgY2FsY3VsYXRpb25zIChyYXRlIGxpbWl0aW5nKScsIGFzeW5jICgpID0+IHtcclxuICAgIGNvbnN0IHVzZXIgPSB1c2VyRXZlbnQuc2V0dXAoKTtcclxuICAgIHJlbmRlcig8Vm9sdGFnZURyb3BDYWxjdWxhdG9yIC8+KTtcclxuXHJcbiAgICAvLyBGaWxsIHJlcXVpcmVkIGZpZWxkcyBxdWlja2x5XHJcbiAgICBjb25zdCBjdXJyZW50SW5wdXQgPSBzY3JlZW4uZ2V0QnlMYWJlbFRleHQoL0NvdXJhbnQvKTtcclxuICAgIGF3YWl0IHVzZXIudHlwZShjdXJyZW50SW5wdXQsICcxNicpO1xyXG5cclxuICAgIC8vIE1vY2sgcmFwaWQgY2xpY2tzXHJcbiAgICBjb25zdCBjYWxjdWxhdGVCdXR0b24gPSBzY3JlZW4uZ2V0QnlSb2xlKCdidXR0b24nLCB7IG5hbWU6IC9DYWxjdWxlci8gfSk7XHJcblxyXG4gICAgLy8gRmlyc3QgY2xpY2sgc2hvdWxkIHdvcmtcclxuICAgIGZpcmVFdmVudC5jbGljayhjYWxjdWxhdGVCdXR0b24pO1xyXG5cclxuICAgIC8vIEltbWVkaWF0ZSBzZWNvbmQgY2xpY2sgc2hvdWxkIGJlIGlnbm9yZWQgZHVlIHRvIHJhdGUgbGltaXRpbmdcclxuICAgIGZpcmVFdmVudC5jbGljayhjYWxjdWxhdGVCdXR0b24pO1xyXG5cclxuICAgIC8vIEJ1dHRvbiBzaG91bGQgc3RpbGwgYmUgY2xpY2thYmxlIChub3QgZGlzYWJsZWQgYnkgcmF0ZSBsaW1pdGluZylcclxuICAgIGV4cGVjdChjYWxjdWxhdGVCdXR0b24pLm5vdC50b0JlRGlzYWJsZWQoKTtcclxuICB9KTtcclxuXHJcbiAgaXQoJ2Rpc3BsYXlzIGNhbGN1bGF0aW9uIHJlc3VsdHMgY29ycmVjdGx5JywgYXN5bmMgKCkgPT4ge1xyXG4gICAgY29uc3QgdXNlciA9IHVzZXJFdmVudC5zZXR1cCgpO1xyXG4gICAgcmVuZGVyKDxWb2x0YWdlRHJvcENhbGN1bGF0b3IgLz4pO1xyXG5cclxuICAgIC8vIEZpbGwgYWxsIHJlcXVpcmVkIGZpZWxkcyBhbmQgcGVyZm9ybSBjYWxjdWxhdGlvblxyXG4gICAgLy8gKFRoaXMgd291bGQgcmVxdWlyZSBhIGZ1bGwgaW50ZWdyYXRpb24gdGVzdCB3aXRoIG1vY2tlZCBjYWxjdWxhdGlvbiByZXN1bHRzKVxyXG4gICAgLy8gRm9yIG5vdywganVzdCB2ZXJpZnkgdGhlIHJlc3VsdHMgc2VjdGlvbiBleGlzdHNcclxuICAgIGV4cGVjdChzY3JlZW4uZ2V0QnlUZXh0KCdSw6lzdWx0YXRzIGR1IENhbGN1bCcpKS50b0JlSW5UaGVEb2N1bWVudCgpO1xyXG4gIH0pO1xyXG59KTsiXSwidmVyc2lvbiI6M30=

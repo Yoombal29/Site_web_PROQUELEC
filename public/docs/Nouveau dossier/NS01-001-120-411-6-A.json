@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "120",
+    "alinéa": "411.6",
+    "regle_atomique": {
+        "id_unique": "NS01-001-120-411-6-A",
+        "type": "obligation",
+        "texte_normatif": "Schéma IT 411.6.1 Dans le schéma IT, l’installation doit être isolée de la terre ou reliée à la terre à travers une impédance de valeur suffisamment élevée. Cette liaison s'effectue soit au point neutre de l'installation, soit à défaut à un point neutre artificiel qui peut être relié directement à la terre si l'impédance homopolaire correspondante a une valeur suffisante. Lorsque aucun point neutre n'existe, un conducteur de phase peut être relié à la terre à travers une impédance. En cas de défaut d’isolement sur un même conducteur actif, le courant de défaut est faible et la coupure automatique conforme à 411.3.2 n'est pas impérative si la condition de 411.6.2 est satisfaite. Toutefois, des mesures doivent être prises pour éviter un risque d'effet pathophysiologique dangereux pour une personne en contact avec des parties conductrices simultanément accessibles en cas de deux défauts simultanés concernant deux conducteurs actifs différents. NOTE - Afin de réduire les surtensions et d'amortir les oscillations, la mise à la terre par l'intermédiaire d'impédance ou de point neutre artificiel peut être nécessaire ; il convient que leurs caractéristiques soient appropriées à celles de l'installation. En général, la valeur de l’impédance est prise de l’ordre de 4 à 6 fois la tension simple de l’installation, par exemple de l’ordre de 1 000 ohms pour des installations 230/400 V à fréquence industrielle. L1 L2 L3 l f M C3 C2 C1 PE R A l f Figure 411C – Boucle de premier défaut en schéma IT isolé de la terre - 74 - 2002 Lorsque l'installation est isolée de la terre, le courant de premier défaut se referme par les capacités des deux autres phases par rapport à la terre. L1 C L2 N L3 l l f f M C3 C2 C1 Z s PE R R B A l f Figure 411D – Boucle de premier défaut en schéma IT avec neutre relié à la terre par une impédance Lorsque l'installation est reliée à la terre par une impédance, l’intensité du courant de premier défaut est limitée par la valeur de l’impédance résultant de la mise en parallèle de Z et des s capacités des deux autres phases par rapport à la terre. C 411.6.2 Les masses doivent être reliées à la terre, soit individuellement, soit par groupes ou ensemble. NOTE - Dans de grands bâtiments, tels que des immeubles de grande hauteur, des mises à la terre additionnelles des conducteurs de protection ne sont pas possibles pour des raisons pratiques. Des liaisons équipotentielles entre conducteurs de protection et éléments conducteurs ont, toutefois, une fonction similaire dans de tels cas. De plus, la condition suivante doit être remplie : Pour les réseaux à courant alternatif R x I ≤ 50 V A f Pour les réseaux à courant continu R x I ≤ 120 V A f où R est la résistance de mise à la terre des masses. A If est le courant de défaut en cas de premier défaut franc de faible impédance entre un conducteur de phase et une masse. La valeur de If tient compte des courants de fuite et de l'impédance globale de mise à la terre de l'installation électrique. Le respect de la condition garantit que lors de l'apparition d'un premier défaut d'isolement, aucune tension de contact dangereuse n’apparaisse dans l'installation. Cela permet d'éviter toute coupure au premier défaut et de continuer l'exploitation de l'installation. Pour que cette possibilité soit valable, il importe que le défaut soit rapidement recherché et éliminé. - 75 - 2002 C 411.6.3 Un contrôleur permanent d'isolement doit être prévu pour indiquer l'apparition d'un premier défaut d'une partie active à la masse ou à la terre. Ce dispositif doit actionner un signal sonore ou un signal visuel. Si les deux signaux sonores et visuels existent, il est permis d’annuler le signal sonore, mais le signal visuel doit persister tant que le défaut existe. Les conditions relatives au choix et à la mise en œuvre des contrôleurs permanents d'isolement sont indiquées en 532.4. C 411.6.4 Après l'apparition d'un premier défaut, les conditions de coupure automatique de l'alimentation au deuxième défaut doivent être comme suit : a) Lorsque les masses sont interconnectées par un conducteur de protection, et collectivement mises à la terre, les conditions du schéma TN s'appliquent et la condition suivante doit être satisfaite lorsque le neutre n'est pas distribué dans les réseaux à courant alternatif et dans les réseaux à courant continu où le conducteur médian n’est pas distribué : 0,5 U / Z ≥ I s a ou, lorsque le neutre ou le conducteur médian est distribué: 0,5 U / Z’ ≥ I o s a où Uo est la tension nominale entre phase et neutre, valeur efficace en courant alternatif ou lisse en courant continu U est la tension entre phases, valeur efficace en courant alternatif ou lisse en courant continu Z est l'impédance de la boucle de défaut constituée du conducteur de phase et du S conducteur de protection du circuit Z' est l'impédance de la boucle de défaut constituée du conducteur neutre et du S conducteur de protection du circuit Ia est le courant assurant le fonctionnement du dispositif de protection dans le temps t prescrit dans le tableau 41A. b) Lorsque des masses sont mises à la terre par groupes ou individuellement, les conditions de protection sont celles de 411.5 comme pour le schéma TT, à l'exception du deuxième alinéa de 411.5.1 qui ne s'applique pas. NOTES - 1 – Un dispositif différentiel de courant différentiel-résiduel assigné supérieur à 30 mA ne peut protéger qu'un seul circuit. 2 – Si un dispositif différentiel de courant différentiel-résiduel assigné inférieur ou égal à 30 mA est utilisé dans les conditions a), il peut déclencher au premier défaut. Les conditions d'élimination du courant de double défaut dépendent de la situation des prises de terre : a) Lorsque dans une même installation, toutes les masses ne sont pas reliées à la même prise de terre, la protection est assurée, si deux défauts se produisent dans des groupes différents de masses interconnectées, par le respect des conditions du schéma TT. b) A l'intérieur d'un groupe de masses interconnectées, la protection est assurée, si deux défauts se produisent dans ce groupe, par le respect des conditions du schéma TN. Il en est ainsi dans une installation si toutes les masses, y compris celles de la source ou du poste de transformation, sont reliées à la même prise de terre. - 76 - Courant de double défaut (I ) fab 0 Z Z O O L1 L2 L3 PE m1 ZZ Z I Z aa a fab b m2 Z f I : courant de double défaut fab Figure 411E – Boucle de double défaut en schéma IT lorsque les masses sont reliées à la même prise de terre La figure s’applique que le schéma IT soit isolé de la terre ou relié à la terre par une impédance. Si le premier défaut n'est pas éliminé et que se produit un deuxième défaut d'isolement affectant un autre conducteur actif, un courant de double défaut, lequel est un courant de court-circuit entre phases (ou entre phase et neutre), va s’établir, mais dont l'intensité est nettement inférieure à un courant de court-circuit dans un circuit, du fait qu'il intéresse deux circuits comme le montre la figure. La détermination des conditions de protection par le calcul n'est possible que si le conducteur de protection se trouve, dans toute l'installation, disposé à proximité des conducteurs actifs du circuit correspondant sans interposition d'éléments ferromagnétiques.. En effet, l'éloignement du conducteur de protection et/ou l’interposition d'éléments ferromagnétiques augmente sensiblement la valeur de l'impédance de la boucle de défaut, sans que cette valeur puisse être prédéterminée. Il en est ainsi si le parcours du courant de défaut est seulement constitué de charpentes métalliques. C 411.6.5 En schéma IT, les dispositifs de contrôle et de protection suivants peuvent être utilisés: - contrôleurs permanents d'isolement ; - dispositifs de recherche de défaut ; - dispositifs de protection contre les surintensités ; - dispositifs de protection à courant différentiel-résiduel. Les conditions auxquelles doivent satisfaire les dispositifs de protection sont définies par l'article 531. - 77 - 2002",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "120"
+        ]
+    }
+}

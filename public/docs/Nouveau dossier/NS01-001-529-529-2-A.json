@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "529",
+    "alinéa": "529.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-529-529-2-A",
+        "type": "obligation",
+        "texte_normatif": "Moulures, plinthes et chambranles en bois 529.2.1 Les moulures en bois ne sont autorisées qu'en rénovation dans les monuments historiques dans des conditions d'influences externes AD1. 529.2.2 Les rainures des moulures doivent avoir des dimensions telles que les conducteurs s'y logent librement. Dans les moulures en bois, on ne doit passer qu'un seul conducteur par rainure. Il est toutefois admis de passer plusieurs conducteurs dans une même rainure sous réserve que ces conducteurs appartiennent à un seul et même circuit. En l'absence de plinthes, la partie inférieure des moulures doit être à au moins 10 cm au-dessus du sol fini. 529.2.3 Lorsqu'il est fait usage de plinthes rainurées et qui servent de support à des socles de prises de courant pour plinthes, il est admis de passer dans une même rainure des conducteurs appartenant à deux circuits différents sous réserve que ces conducteurs ne soient pas de même polarité. - 225 - 2002",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "529"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les surintensités",
+    "article": "431",
+    "alinéa": "431.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-431-431-2-A",
+        "type": "obligation",
+        "texte_normatif": "Protection du conducteur neutre C 431.2.1 Installations dont le point neutre est relié directement à la terre (schémas TT ou TN) a) Lorsque la section du conducteur neutre est au moins égale ou équivalente à celle des conducteurs de phase, il n'est pas nécessaire de prévoir une détection de surintensité sur le conducteur neutre. b) Lorsque la section du conducteur neutre est inférieure à celle des conducteurs de phase, il est nécessaire de prévoir une détection de surintensité sur le conducteur neutre, appropriée à la section de ce conducteur : cette détection doit entraîner la coupure des conducteurs de phase, mais pas nécessairement celle du conducteur neutre. Dans le schéma TN-C, un tore de détection de surintensité peut être placé sur le conducteur PEN entraînant la coupure des conducteurs de phase et non celle du conducteur PEN. - 112 - C Toutefois, il est admis de ne pas prévoir de détection de surintensité sur le conducteur neutre entre la source (transformateur, groupe électrogène) et le tableau général de distribution (TGBT). La section du conducteur neutre doit être au moins égale à la valeur prescrite en 524. 431.2.2 Installations dont le point neutre n'est pas relié directement à la terre (schéma IT) Lorsqu'il est nécessaire de distribuer le conducteur neutre en schéma IT, il y a lieu de prévoir une C détection de surintensité sur le conducteur neutre de tout circuit, détection qui doit entraîner la coupure de tous les conducteurs actifs du circuit correspondant, y compris le conducteur neutre. Toutefois, lorsque le circuit alimente des appareils monophasés ou comportant des éléments branchés entre phase et neutre de faible puissance (par exemple, appareils de mesure) et qui ne sont pas susceptibles de provoquer un incendie s'ils se trouvent soumis à la tension entre phases, mais dont la détérioration est admissible, le dispositif de coupure du conducteur neutre peut ne pas entraîner la coupure des conducteurs de phase du circuit. C Cette disposition n'est pas nécessaire si : - le conducteur neutre considéré est effectivement protégé contre les courts-circuits par un dispositif de protection placé en amont, par exemple à l'origine de l'installation, conformément aux règles énoncées en 434.5.2. - ou si le circuit considéré est protégé par un dispositif de protection à courant différentiel- résiduel dont le courant différentiel-résiduel assigné est au plus égal à 0,15 fois le courant admissible dans le conducteur neutre correspondant : ce dispositif doit couper tous les conducteurs actifs du circuit correspondant, y compris le conducteur neutre. Un dispositif différentiel répondant aux conditions précédentes peut être commun à un ensemble de circuits terminaux et si toutes les conditions suivantes sont respectées : a) Chacun de ces circuits est protégé contre les contacts indirects par le dispositif de protection contre les surintensités placé à son origine, conformément aux règles énoncées en 411.6.4. b) Les caractéristiques de ces circuits terminaux sont identiques : - les canalisations sont de même nature ou admettent les mêmes courants admissibles ; - les conducteurs sont de même section ; - et les dispositifs de protection contre les surintensités sont de même courant assigné et de même caractéristique de déclenchement (type B, C ou D). Il est à noter que pour les circuits pour lesquels le dispositif de protection contre les surintensités n'assure pas la protection contre les contacts indirects, cette dernière protection ne peut être assurée par des dispositifs différentiels que s'il est prévu un dispositif par circuit.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "431"
+        ]
+    }
+}

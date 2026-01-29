@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques des marinas",
+    "article": "706",
+    "alinéa": "709.530",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-709-530-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités et règles communes 709.530.1 Les coffrets avec des socles de prises de courant pour l'alimentation des bateaux de plaisance doivent être situés aussi près que possible des points d'amarrage à alimenter. NOTES - 1 - Les socles de prises de courant pour l'alimentation des bateaux peuvent être installés dans des coffrets séparés du tableau de distribution. 2 - Si les socles de prises de courant sont installés dans un tableau de distribution, ce tableau doit être situé aussi près que possible des points d'amarrage à alimenter. 709.530.2 Les tableaux de distribution et les coffrets de socles de prises de courant installés à l'extérieur doivent avoir les degrés de protection minimaux IP44 et IK08. Les enveloppes doivent résister à la corrosion. Lorsque les tableaux de distribution et les prises de courant associées sont installés sur des installations flottantes ou des jetées, ils doivent être fixés à au moins 0,3 m au-dessus de la passerelle. 709.530.3 Un socle de prise de courant doit alimenter seulement un bateau de plaisance. (1) Il y a lieu de prévoir des socles de prises de courant conformes à la norme de caractéristiques minimales suivantes : Socles de prises de courant monophasé : - Tension assignée : 200-250 V - Courant assigné : 16 A - Position horaire : 6 h - Nombre de pôles : 2 et un contact de terre - Construction : IP44 et IK08 minimum En supplément, des socles de prises de courant de caractéristiques suivantes peuvent être prévus : - Socles de prises de courant monophasé : - Tension assignée : 200-250 V - Courant assigné : 32 A - Position horaire : 6 h - Nombre de pôles : 2 et un contact de terre - Construction : IP44 et IK08 minimum (1) NF EN 60309-2 (C 63-310) - 395 - H - Socles de prises de courant triphasé : - Tension assignée : 346-415 V - Courant assigné : 32 A - Position horaire : 6 h - Nombre de pôles : 4 et un contact de terre - Construction : IP44 et IK08 minimum 709.530.4 Quatre socles de prises de courant, au plus, peuvent être groupés dans un coffret enveloppe.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

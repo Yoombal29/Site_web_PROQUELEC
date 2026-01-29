@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Équipements de chauffage électrique des locaux",
+    "article": "500",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-500--A",
+        "type": "obligation",
+        "texte_normatif": "mA. Dans le cas où l'installation est réalisée en schéma IT, l'impédance du contrôleur permanent d'isolement (CPI) et les caractéristiques des dispositifs à courant différentiel- résiduel doivent être choisies de manière à assurer la coupure lors de l'apparition du premier défaut à la masse ou à la terre. Quel que soit le schéma des liaisons à la terre, la coupure au premier défaut réalisée par le dispositif de protection ayant un courant différentiel-résiduel assigné au plus égal à 500 mA a pour but d'éviter la destruction des revêtements métalliques par la circulation de courants de défaut de valeur importante pendant une trop longue durée. 753.4.1.2 Les équipements de chauffage comportant des conducteurs isolés, sans armure, gaine ou autre revêtement métallique doivent être protégés par des dispositifs à courant différentiel-résiduel de courant différentiel-résiduel assigné au plus égal à 30 mA, chaque DDR 30 mA étant prévu pour une puissance assignée des éléments chauffants au plus égale à 13 kW (400 V) ou 7,5 kW (230 V). - 421 - Dans le cas d’une installation triphasée, il est recommandé de mettre en œuvre un dispositif différentiel par circuit à deux conducteurs actifs. Exemples de raccordement : Disjoncteur N L1 L2 L3 DDR 30 mA DDR 30 mA DDR 30 mA Elément Figure 753A – Exemple de protection d’une installation triphasée : alimentation entre phases Disjoncteur général N L1 L2 L3 DDR 30 mA DDR 30 mA DDR 30 mA Elément chauffant Figure 753B – Exemple de protection d’une installation triphasée : alimentation entre phase et neutre 753.4.1.3 L'armure, la gaine ou le revêtement métallique de tout élément chauffant lorsqu’il existe, doit être relié à chaque extrémité au conducteur de protection du circuit d'alimentation. Le conducteur de protection a la même section que les conducteurs d’alimentation. 753.4.1.4 Des éléments électriques chauffants noyés dans le sol, destinés au chauffage d’un local ou emplacement autre que AD1, peuvent être installés sous réserve qu'ils soient recouverts d'un grillage métallique mis à la terre ou comportent un revêtement métallique mis à la terre. 753.4.1.5 Des conducteurs nus ou légèrement isolés incorporés dans un matériau ou dans le plancher, pour le chauffage de celui-ci, sont admis à condition que la source soit TBTS (414.4) et que la plus grande tension entre parties actives ou entre parties actives et la terre, ne soit pas supérieure à 25 V en courant alternatif ou 60 V en courant continu. Par conducteurs légèrement isolés, il faut entendre des conducteurs possédant un revêtement en matériau non conducteur destiné à assurer une protection contre la corrosion chimique ou électrochimique ou une protection mécanique, mais pour lequel aucune caractéristique électrique n'est exigée. C'est pourquoi, du point de vue de la protection contre les chocs électriques, de tels conducteurs sont considérés comme des conducteurs nus. - 422 - 753.4.2 Protection contre les surintensités Si la protection contre les surintensités des circuits d’alimentation des éléments chauffants est (1) assurée par des fusibles, ceux-ci doivent être du type gG conforme à la norme en vigueur et non des fusibles domestiques. Dans les locaux d’habitation, seuls les disjoncteurs sont autorisés. Dans le cas de plancher à accumulation ou direct équipé de câbles autorégulants, les intensités annoncées par le constructeur de câbles doivent être majorées de 30 % pour tenir compte principalement des mises sous tension à froid. En outre, le courant assigné des dispositifs de protection doit tenir compte des températures pouvant être atteintes tant dans les gaines d'alimentation du chauffage qu'à l'intérieur des armoires ou coffrets. Le tableau ci-dessous, relatif aux planchers à accumulation ou directs équipés de câbles autorégulants, prend en compte les dispositions précédentes pour le choix des dispositifs de protection. Tableau 753A – Protection contre les surintensités dans le cas de plancher à accumulation ou direct équipé de câbles autorégulants Puissance maximale Courant assigné du dispositif Section minimale annoncée par le de protection des conducteurs constructeur (A) d’alimentation (W) (mm²)",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "500"
+        ]
+    }
+}

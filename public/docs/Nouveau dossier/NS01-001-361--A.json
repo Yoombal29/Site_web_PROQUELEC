@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "361",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-361--A",
+        "type": "obligation",
+        "texte_normatif": "Conditions générales Les installations temporaires comprennent les installations de dépannage, de travaux et semi-permanentes. Il est rappelé que les installations temporaires (213.1) sont celles qui n'ont qu'une durée limitée aux circonstances qui les motivent. H 361.1Les installations de dépannage, de travaux et semi-permanentes peuvent faire l'objet des dérogations aux règles de la présente norme énoncées respectivement en 362, 363 et 364. Toutefois aucune dérogation n'est admise ni dans les locaux (ou emplacements) présentant des risques d'incendie (BE2), ni dans les locaux (ou emplacements) présentant des risques d'explosion (BE3). 361.2Des dérogations ne sont admises aux prescriptions du titre 4 que pour les installations de dépannage et sous les réserves énoncées en 362. Toute installation de dépannage, de travaux ou semi-permanente doit être protégée à son origine contre les surintensités, cette protection devant répondre aux conditions fixées à la partie 43. 361.3Les installations temporaires ne doivent pas gêner ni entraver la circulation des personnes. 361.4En cas d'utilisation de prolongateurs, toutes précautions doivent être prises afin d'éviter que leurs éléments ne puissent être séparés fortuitement. Cette règle n'implique pas nécessairement l'emploi de dispositif de verrouillage. Il est essentiel que les éléments assemblés des prolongateurs aient les mêmes caractéristiques électriques et dimensionnelles d'interchangeabilité. - 61 - H 362 Installations de dépannage Pour les installations de dépannage, il peut être admis de ne pas respecter les prescriptions de la présente norme, sous réserve que leur durée soit aussi limitée que possible et que, si certaines mesures ne se trouvent plus respectées, des mesures compensatrices ou des précautions appropriées soient prises. Les installations de dépannage sont celles nécessaires pour pallier un incident d'exploitation.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "361"
+        ]
+    }
+}

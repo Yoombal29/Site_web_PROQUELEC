@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "413",
+    "alinéa": "413.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-413-413-3-A",
+        "type": "obligation",
+        "texte_normatif": "Prescriptions pour la protection contre les contacts indirects 413.3.1 La protection par séparation électrique doit être assurée en respectant les prescriptions énoncées dans les sous-paragraphes 413.3.2 à 413.3.6. 413.3.2 Le circuit doit être alimenté par l'intermédiaire d'une source de séparation, c'est-à- dire : - d'un transformateur de séparation, ou - d'une source de courant assurant une sécurité équivalente à celle du transformateur de séparation spécifié ci-dessus, par exemple un moteur-générateur ayant des enroulements procurant une séparation équivalente. La norme relative aux transformateurs de séparation à considérer pour l'application de la règle énoncée en 511.2 est la norme NF EN 61558-2-4 (C 52-558-2-4). L'utilisation de transformateurs présentant une sécurité équivalente est nécessaire pour des appareils dont les caractéristiques (puissance...) sont en dehors du domaine d'application de la norme précitée. La source de courant assurant une sécurité équivalente peut être obtenue par application de règles de construction analogues à celles des transformateurs de séparation. Les conditions relatives aux groupes moteur-générateur sont à l'étude. Les groupes visés sont ceux dont le moteur est électrique. C Les sources de séparation mobiles reliées à un réseau d'alimentation doivent être choisies ou installées conformément aux prescriptions de l'article 412. Les sources de séparation fixes doivent être : - soit choisies ou installées conformément aux prescriptions de l'article 412 ; - soit telles que le circuit secondaire soit séparé du circuit primaire et de l'enveloppe par une isolation satisfaisant aux conditions de l'article 412 ; si une telle source alimente plusieurs appareils, les masses de ceux-ci ne doivent pas être reliées à l'enveloppe métallique de la source. - 81 - 413.3.3 Les parties actives du circuit séparé ne doivent avoir aucun point commun avec un C autre circuit ni aucun point relié à la terre. Les dispositions prises doivent assurer une séparation au moins équivalente à celle qui existe entre les circuits primaire et secondaire d'un transformateur de séparation des circuits. NOTE - En particulier, si un circuit auxiliaire est un circuit séparé, une séparation électrique est nécessaire entre les parties puissance et les parties auxiliaires de matériels électriques tels que relais, contacteurs, auxiliaires de commande. 413.3.4 Les câbles souples doivent être visibles sur toute leur longueur susceptible de subir des dommages mécaniques. 413.3.5 Il est recommandé d'utiliser, pour le circuit séparé, une canalisation dédiée. Si on ne peut éviter d'utiliser les conducteurs d'une même canalisation pour le circuit séparé et d'autres circuits, il doit être fait usage de câbles multiconducteurs sans aucun revêtement métallique ou de conducteurs isolés posés dans des goulottes ou conduits isolants, sous réserve que ces câbles et conducteurs soient spécifiés pour une tension au moins égale à la tension la plus élevée mise en jeu et que chaque circuit soit protégé contre les surintensités. La protection des circuits contre les surcharges à leur origine répond aux conditions de 434.2. 413.3.6 Les masses du circuit séparé ne doivent être connectées ni à un conducteur de C protection, ni aux masses d’autres circuits. NOTE - Si les masses du circuit séparé sont susceptibles de se trouver en contact, soit de fait, soit fortuitement, avec des masses d'autres circuits, la sécurité des personnes ne repose plus sur la seule mesure de protection par séparation électrique, mais sur les mesures de protection dont ces dernières masses font l'objet.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "413"
+        ]
+    }
+}

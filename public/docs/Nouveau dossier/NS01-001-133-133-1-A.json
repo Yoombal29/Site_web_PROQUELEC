@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "133",
+    "alinéa": "133.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-133-133-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités Tout matériel électrique doit être conforme à la norme européenne (EN) ou document d’harmonisation (HD) approprié ou à la norme nationale issue du HD. En l’absence de EN ou HD, les matériels doivent être conformes aux normes nationales appropriées. Dans tous les autres cas, il convient de faire référence à la norme CEI appropriée ou à la norme nationale appropriée d’un autre pays. Lorsqu’il n’existe pas de norme applicable à un matériel électrique, celui-ci doit être choisi d’un commun accord entre l’utilisateur ou le maître d’ouvrage et l’installateur. Voir aussi 511. - 10 - H",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "133"
+        ]
+    }
+}

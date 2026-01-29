@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "311",
+    "alinéa": "311.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-311-311-2-A",
+        "type": "obligation",
+        "texte_normatif": "Structure des installations. Puissance d'alimentation *Faune (AL) .............................................. 512.2.9 Caractéristiques Fil pilote .................................................... 753.6.2 Sectionnement 771.462.2 Locaux d’habitation Fixes (matériels) ...................................... 271.5 Définition Fixation des appareils .............................. 530.4 Règles *Flore (AK) ............................................... 512.2.8 Caractéristiques Foires ....................................................... 711 Foires et expositions *Foudre (AQ) ............................................ 443 Surtensions atmosphériques 512.2.13 Règles",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "311"
+        ]
+    }
+}

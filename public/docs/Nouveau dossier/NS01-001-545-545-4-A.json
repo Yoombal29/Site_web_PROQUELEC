@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Mises à la terre, conducteurs de protection et",
+    "article": "545",
+    "alinéa": "545.4",
+    "regle_atomique": {
+        "id_unique": "NS01-001-545-545-4-A",
+        "type": "obligation",
+        "texte_normatif": "Conducteurs de mise à la terre fonctionnelle Une mise à la terre fonctionnelle peut être réalisée en utilisant le conducteur de protection du circuit d’alimentation des matériels de traitement de l’information ou en utilisant un conducteur séparé spécifique. 545.4.1 Section La section des conducteurs de mise à la terre fonctionnelle doit prendre en compte les éventuels courants de défaut pouvant s'écouler ; les données appropriées doivent être obtenues auprès du constructeur. 545.4.2 Types de conducteurs de mise à la terre combinée de protection et fonctionnelle Des exemples de types de conducteurs de mise à la terre combinée de protection et fonctionnelle sont donnés en 543.2.1.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "545"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "415",
+    "alinéa": "415.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-415-415-2-A",
+        "type": "obligation",
+        "texte_normatif": "Liaison équipotentielle supplémentaire C NOTES - 1 - L'utilisation de liaisons équipotentielles supplémentaires ne dispense pas de la nécessité de coupure de l'alimentation pour d'autres raisons, telles que protection contre l'incendie, contraintes thermiques des matériels, etc. 2 - Cette liaison équipotentielle supplémentaire peut intéresser une partie de l’installation, un appareil ou un emplacement. 3 - Des prescriptions supplémentaires peuvent être nécessaires pour des emplacements spéciaux, voir partie 7. 415.2.1 La liaison équipotentielle supplémentaire doit comprendre toutes les parties conductrices simultanément accessibles, qu'il s'agisse des masses des matériels fixes ou des éléments conducteurs, y compris, dans la mesure du possible, les armatures principales du béton armé utilisées dans la construction des bâtiments. A ce système équipotentiel doivent être reliés les conducteurs de protection de tous les matériels, y compris ceux des prises de courant. C 415.2.2 En cas de doute sur l'efficacité de la liaison équipotentielle supplémentaire, elle doit être vérifiée en s'assurant que la résistance R entre toute masse considérée et tout élément conducteur simultanément accessible remplit la condition suivante : 50 V R ≤≤≤≤ en courant alternatif I a",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "415"
+        ]
+    }
+}

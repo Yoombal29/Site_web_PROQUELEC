@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "300",
+    "alinéa": "523.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-300-523-2-A",
+        "type": "obligation",
+        "texte_normatif": "Température ambiante H La valeur de la température ambiante à utiliser est la température du milieu environnant lorsque le câble ou le conducteur considéré n'est pas chargé. Les valeurs de courants admissibles indiquées dans cet article sont valables pour une température ambiante de : 30 °C, pour les câbles dans l'air, quel que soit le mode de pose ; 20 °C, pour les câbles enterrés directement dans le sol ou dans des conduits enterrés. Pour d'autres températures ambiantes, les valeurs des tableaux doivent être multipliées par le facteur appro prié des tableaux 52K et 52L. Toutefois, pour les câbles enterrés, la correction n'est pas nécessaire si la température du sol n'est supérieure à 25 °C que pendant quelques semaines par an. Les facteurs de correction du tableau 52K ne tiennent pas compte de l'augmentation éventuelle de température due au rayonnement solaire. Lorsque les câbles ou conducteurs sont soumis à un tel rayonnement, les courants admissibles doivent être calculés en tenant compte du facteur de correction de 0,85 (voir 512.2.11). Lorsque des canalisations électriques sont encastrées dans des parois comportant des éléments chauffants, il est généralement nécessaire de réduire les courants admissibles en appliquant les facteurs de correction du tableau 52K. - 212 - Tableau 52K - Facteurs de correction pour des températures ambiantes différentes de 30 °C H à appliquer aux val eurs de courants admissibles du tableau 52H Température Isolation ambiante Élastomère (Caoutchouc) PVC PR / EPR (°C) 10 1,29 1,22 1,15 15 1,22 1,17 1,12 20 1,15 1,12 1,08 25 1,07 1,06 1,04 35 0,93 0,94 0,96 40 0,82 0,87 0,91 45 0,71 0,79 0,87 50 0,58 0,71 0,82 55 - 0,61 0,76 60 - 0,50 0,71 65 - - 0,65 70 - - 0,58 75 - - 0,50 80 - - 0,41 85 - - - 90 - - - 95 - - - Tableau 52L - Facteurs de correction pour des températures du sol différentes de 20 °C à appliquer aux valeurs du tableau 52J Température Isolation du sol (°C) PVC PR / EPR 10 1,10 1,07 15 1,05 1,04 25 0,95 0,96 30 0,89 0,93 35 0,84 0,89 40 0,77 0,85 45 0,71 0,80 50 0,63 0,76 55 0,55 0,71 60 0,45 0,65 65 - 0,60 70 - 0,53 75 - 0,46 80 - 0,38 - 213 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "300"
+        ]
+    }
+}

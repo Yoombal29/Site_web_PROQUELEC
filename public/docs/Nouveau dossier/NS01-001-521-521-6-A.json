@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "521",
+    "alinéa": "521.6",
+    "regle_atomique": {
+        "id_unique": "NS01-001-521-521-6-A",
+        "type": "obligation",
+        "texte_normatif": "Pose des câbles et conducteurs 521.6.1 Des conducteurs appartenant à des circuits différents peuvent emprunter un même câble multiconducteur, un même conduit ou un même compartiment de goulotte, sous réserve que tous les conducteurs soient isolés pour la tension assignée présente la plus élevée. 521.6.2 Les câbles monoconducteurs et les conducteurs isolés, appartenant à un même circuit, doivent être posés à proximité immédiate les uns des autres. Cette règle s'applique également au conducteur de protection correspondant (voir 544.1). 521.6.3 Lorsque plusieurs câbles monoconducteurs sont réunis en parallèle, ils sont répartis en autant de groupes qu'il existe de conducteurs en parallèle, chaque groupe comprenant un conducteur de chaque phase ou polarité. Les conducteurs de chaque groupe doivent être posés à proximité les uns des autres. Ces dispositions ont pour but de réduire les impédances de boucle et d'assurer la répartition correcte des courants dans les conducteurs en parallèle (voir 523.6). 521.6.4 Les canalisations doivent être choisies et installées de manière à empêcher pendant la mise en œuvre, l'utilisation et la maintenance, tout dommage aux gaines et à l'isolation des conducteurs isolés et des câbles. 521.6.5 Les dimensions intérieures des conduits, des conduits-profilés et des accessoires de raccordement doivent permettre de tirer et de retirer facilement les conducteurs ou câbles après la pose des conduits et de leurs accessoires. Dans le cas de conducteurs, cette règle est satisfaite si leur section d'occupation, toutes protections comprises, n'est pas supérieure au tiers de la section intérieure du conduit ou du conduit-profilé. 521.6.6 Le rayon de courbure d'une canalisation doit être tel que les conducteurs et câbles ne soient pas endommagés. 521.6.7 Lorsque les conducteurs et câbles ne sont pas supportés sur toute leur longueur par des supports ou en raison de leur mode de pose, ils doivent être supportés par des moyens appropriés à des intervalles suffisants de telle manière que les conducteurs et câbles ne soient pas endommagés par leur propre poids. 521.6.8 Lorsque les canalisations sont soumises à une traction permanente (par exemple en raison de leur propre poids en parcours vertical), un type approprié de câble ou conducteur avec une section et un mode de pose appropriés doit être choisi, de manière à éviter tout dommage aux câbles ou conducteurs et à leurs supports. 521.6.9 Les canalisations dans lesquelles des conducteurs ou câbles doivent être tirés doivent comporter des moyens d'accès appropriés pour permettre leur tirage. Cette prescription s'applique notamment à la pose des conduits dans des caniveaux fermés et dans des vides de construction. 521.6.10 Les canalisations encastrées dans les planchers doivent être suffisamment protégées contre les dommages dus à l'utilisation prévue du plancher. 521.6.11 Les parcours des canalisations apparentes qui sont rigidement fixées doivent être horizontaux ou verticaux ou parallèles aux arêtes des parois. Ceci ne s'oppose pas à des parcours obliques lorsque de tels parcours sont nécessaires, par exemple pour des changements de plan ou le contournement d'obstacles. Les canalisations noyées ou encastrées dans les plafonds ou planchers peuvent suivre le parcours pratique le plus courPour les canalisations encastrées dans des murs ou cloisons, voir le guide UTE C 15-520. - 202 - 521.6.12 Les câbles souples doivent être installés de manière à éviter des efforts de traction excessifs sur les conducteurs ; les connexions et la gaine ou autres moyens de protection doivent être fixés de façon sûre aux deux extrémités.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "521"
+        ]
+    }
+}

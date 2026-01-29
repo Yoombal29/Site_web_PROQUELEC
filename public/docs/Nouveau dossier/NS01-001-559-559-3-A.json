@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "559",
+    "alinéa": "559.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-559-559-3-A",
+        "type": "obligation",
+        "texte_normatif": "Appareils électrodomestiques Les appareils comportant des électrodes nues ou résistances non isolées, immergées dans l'eau (par exemple chauffe-eau, humidificateurs à vapeur, etc.) sont admis dans les conditions suivantes : - leurs cuves sont en matériau non conducteur ; - leurs alimentations doivent être protégées par des dispositifs différentiels de courant différentiel-résiduel assigné au plus égal à 30 mA.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "559"
+        ]
+    }
+}

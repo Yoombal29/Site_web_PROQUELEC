@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "533",
+    "alinéa": "533.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-533-533-3-A",
+        "type": "obligation",
+        "texte_normatif": "Choix des dispositifs de protection contre les courts-circuits Le paragraphe 434.5 définit une règle de pouvoir de coupure en 434.5.1 et une règle de temps de coupure en 434.5.2. Pour satisfaire à ces règles, le choix des dispositifs de protection contre les courts-circuits doit respecter les conditions suivantes. 533.3.1 Pouvoir de coupure Pour tous les dispositifs de protection contre les courts-circuits, le courant maximal présumé au point d’installation du dispositif de protection doit être inférieur au pouvoir de coupure de ce dispositif. Les normes relatives aux disjoncteurs spécifient un pouvoir de coupure (ultime I pour les cu disjoncteurs industriels et assigné I pour les disjoncteurs domestiques) qui doit être au moins égal cn au courant maximal présumé de court-circuit à l’endroit où le disjoncteur est installé. Ces normes prévoient en outre un pouvoir de coupure de service (I ). Les conditions de cs fonctionnement de l’installation peuvent justifier le choix du dispositif de protection d’après le pouvoir de coupure de service, par exemple lorsque le disjoncteur est placé à l’origine de l’installation. Lorsque l’installation est réalisée suivant le schéma IT, les dispositifs de protection doivent de plus pouvoir couper sur un pôle, sous la tension entre phases, le courant de double défaut. Ces dispositifs peuvent être : - soit des appareils dont le pouvoir de coupure sur un pôle sous la tension composée est au moins égale à : • 0,15 fois le courant de court-circuit triphasé au point considéré si ce dernier est inférieur ou égal à 10 000 A, • 0,25 fois le courant de court-circuit triphasé au point considéré si ce dernier est supérieur à 10 000 A. - 239 - En l’absence d’informations plus précises, on peut admettre que le pouvoir de coupure sur un seul pôle sous la tension entre phases des appareils tripolaires et tétrapolaires est au moins égal au pouvoir de coupure ultime triphasé sous une tension égale à fois celle de la tension nominale 3 du circuit concerné. Pour les dispositifs de protection unipolaires (petits disjoncteurs, fusibles), le pouvoir de coupure à prendre en considération est celui indiqué pour la tension entre phases, soit par exemple 400 V dans une installation 230/400V. - soit des appareils de calibre maximal supérieur ou égal à 100 A et pour lesquels cette capacité est explicitement reconnue dans les normes les concernant ; c’est le cas des disjoncteurs industriels conformes à l’annexe H de la norme (14). 533.3.2 Temps de coupure L’application de la règle de 434.5.2 pour les courts-circuits de durée au plus égale à 5 s doit tenir compte des conditions minimales et maximales de courts-circuits. Il en résulte les conditions suivantes pour les fusibles et pour les disjoncteurs en tenant compte de leurs caractéristiques différentes. a) cas des fusibles : le courant de court-circuit minimal I ne doit pas être inférieur à I(figure k i 533A). C Courbe intensité/temps correspondant à la contrainte thermique admissible dans la canalisation protégée. F Courbe de fusion du fusible (limite supérieure de la zone de fonctionnement). I I i Figure 533A – Fusibles – temps de coupure Lorsque le temps de fonctionnement du fusible pour le courant I est supérieur à 5 s, le courant I est i i remplacé par le courant de fonctionnement du fusible en 5 s. b) cas de disjoncteurs : Po ur les disjoncteurs, deux conditions sont à remplir (figure 533B) : - le courant de court-circuit minimal doit être au moins égal à I ; i - le courant de court-circuit présumé au point d'installation du disjoncteur doit être inférieur à I. j ——————— (14) NF EN 60947-2 (C 63-120) - 240 - C Courbe intensité/temps correspondant à la contrainte thermique admissible dans la canalisation protégée. D Courbe de fonctionnement du disjoncteur. Figure 533B – Disjoncteurs – temps de coupure I est le courant de fonctionnement instantané ou de court retard du disjoncteur. i La seconde condition est vérifiée par la comparaison de l’énergie traversante I²t du disjoncteur pendant le temps de coupure du court-circuit avec la contrainte thermique maximale admissible par la canalisation. Pour les courants de court-circuit dont la durée est supérieure à plusieurs périodes, l'énergie traversante I²t du dispositif de protection peut être calculée en multipliant le carré de la valeur efficace de l'intensité du courant de court-circuit par le temps de fonctionnement du disjoncteur. Pour les courants de court-circuit de plus courte durée, il y a lieu de se référer aux caractéristiques I²t fournies par le constructeur. Le courant de court-circuit minimal est celui correspondant à un court-circuit franc se produisant au point le plus éloigné de la canalisation protégée, entre phase et neutre (I ) ou entre deux phases k1 (I ) si le neutre n’est pas distribué. k2 Le même dispositif de protection assure, en général, à la fois la protection contre les surcharges et la protection contre les courts-circuits ; il n’est alors pas nécessaire de vérifier la condition du courant de court-circuit minimal. C’est le cas général pour les disjoncteurs à usage domestique et industriel qui possèdent des relais de détection contre les surcharges et contre les courts-circuits. Il en est de même pour les fusibles de type gG qui assurent à la fois la protection contre les surcharges et contre les courts-circuits. Ceci peut ne pas être valable pour des circuits de grande longueur, tels que circuits des tunnels, circuits d’éclairage extérieur. Dans de tels cas, la règle du temps de coupure doit être systématiquement vérifiée, comme le préconise, par exemple la norme NF C 17-200 pour les circuits d’éclairage public. Lorsqu’un même dispositif de protection n’assure que la protection contre les courts-circuits, il est en général associé à un autre dispositif de protection contre les surcharges. Dans la mesure où ces deux dispositifs sont coordonnés, aucune vérification complémentaire n’est requise. C’est le cas par exemple de la protection moteur où dans une même armoire, un disjoncteur sans relais de surcharge est associé à un relais thermique spécifique moteur et un contacteur. Les différents types d’association de ces dispositifs sont décrits dans la norme (15). Ces types d’association sont également possibles avec des coupe-circuit à fusible (par exemple de type aM). ——————— (15) NF EN 60947-4-1 (C 63-110) - 241 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "533"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "434",
+    "alinéa": "524.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-434-524-2-A",
+        "type": "obligation",
+        "texte_normatif": "Section du conducteur neutre 524.2.1 Le conducteur neutre éventuel doit avoir la même section que les conducteurs de phase : - dans les circuits monophasés à deux conducteurs, quelle que soit la section des conducteurs, - dans les circuits polyphasés dont les conducteurs de phase ont une section au plus égale à 16 mm² en cuivre ou 25 mm² en aluminium, - dans les circuits triphasés susceptibles d'être parcourus par des courants harmoniques de rang 3 et multiple de 3 dont le taux d'harmoniques est compris entre 15 % et 33 %. Voir aussi 523.5.2. Ces taux d'harmoniques se rencontrent par exemple dans les circuits alimentant des luminaires à lampes à décharge dont les tubes fluorescents. 524.2.2 Lorsque le taux d'harmoniques de rang 3 et multiple de 3 est supérieur à 33 % en courant, le choix d'une section de neutre supérieure à celle du conducteur de phase peut être nécessaire. Ces taux d'harmoniques se rencontrent par exemple dans les circuits dédiés à la bureautique et à l'informatique. -220- - a) dans le cas d'utilisation de câbles multipolaires, la section des phases est égale à celle du conducteur neutre, le calcul de cette section étant fait pour le courant dans le neutre pris égal à 1,45 fois le courant d'emploi dans la phase. b) dans le cas d'utilisation de câbles unipolaires, la section des phases peut être choisie inférieure à celle du neutre, le calcul étant fait : - pour la phase : pour son courant d'emploi ; - pour le neutre : pour le courant pris égal à 1,45 fois le courant d'emploi dans la phase. 524.2.3 Dans les circuits polyphasés dont les conducteurs de phase ont une section supérieure à 16 mm² en cuivre ou 25 mm² en aluminium, le conducteur neutre peut avoir une section inférieure à celle des conducteurs de phase si les conditions suivantes sont simultanément remplies : - la charge transportée par le circuit en service normal est supposée équilibrée et le taux d’harmoniques de rang 3 et multiple de 3 ne dépasse pas 15 % dans le conducteur de phase ; En règle générale la section réduite du conducteur neutre n'est pas inférieure à la moitié de celle des conducteurs de phase. - le conducteur neutre est protégé contre les surintensités suivant les règles du 431.2 ; - la section du conducteur neutre est au moins égale à 16 mm² en cuivre ou 25 mm² en aluminium. 524.2.4 Un conducteur neutre ne peut être commun à plusieurs circuits.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "434"
+        ]
+    }
+}

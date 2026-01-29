@@ -1,0 +1,34 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "411",
+  "alinéa": "411.6.2",
+  "regle_atomique": {
+    "id_unique": "NS01-001-411-6-2-A",
+    "type": "obligation",
+    "texte_normatif": "Les masses doivent être reliées à la terre, soit individuellement, soit par groupes ou ensemble, avec RA x If ≤ 50V en AC ou 120V en DC.",
+    "acteurs_concernes": ["installateur", "controleur"],
+    "conditions_application": {
+      "schema_terre": ["IT"],
+      "tension": "<=1000V",
+      "lieu": ["installations IT"]
+    },
+    "exceptions": [],
+    "risques_couverts": [
+      "tension de contact dangereuse au premier défaut"
+    ],
+    "gravite_non_conformite": "critique",
+    "mesure_corrective": "Mesurer et ajuster RA pour satisfaire l'inégalité.",
+    "justification": {
+      "physique": "Limitation de la tension de contact au premier défaut",
+      "biologique": "Prévention des effets physiologiques",
+      "sécurité": "Permet continuité sans coupure immédiate"
+    },
+    "verification": {
+      "moyen": "Calcul RA x If",
+      "seuils": "≤50V AC / 120V DC"
+    },
+    "liens_normatifs": ["411.6.1", "411.6.4"]
+  }
+}

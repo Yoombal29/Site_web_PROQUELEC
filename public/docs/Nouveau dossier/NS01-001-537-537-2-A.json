@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Appareillage",
+    "article": "537",
+    "alinéa": "537.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-537-537-2-A",
+        "type": "obligation",
+        "texte_normatif": "Contrôleurs permanents d’isolement pour la surveillance des matériels hors tension Pour l'application des règles énoncées en 511.1, la norme à considérer est la suivante : Dispositifs de contrôle permanent de l'isolement (19). Dans les installations en schéma TT ou TN, lorsqu’un équipement de sécurité n’est sollicité qu’en cas de sinistre c’est-à-dire lorsque l’équipement de sécurité est normalement à l’état de veille, un contrôleur permanent d’isolement hors tension doit surveiller en permanence cet équipement pendant les périodes de non-fonctionnement. La baisse de l’isolement sera signalée par un dispositif lumineux ou sonore avec possibilité de renvoi à distance de l’information. Le contrôleur permanent d’isolement hors tension doit être connecté entre la terre et un conducteur actif de l’équipement à surveiller. Le circuit de mesure sera coupé automatiquement à la mise sous tension de l’équipement. ——————— (19) NF EN 61557-8 (C 42-198-8) - 264 - Les équipements étant séparés du réseau lors de la mesure d’isolement hors tension, les niveaux d’isolement à mesurer sont généralement très élevés : le seuil d’alarme aura une valeur généralement supérieure à 300 kΩ.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "537"
+        ]
+    }
+}

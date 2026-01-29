@@ -1,0 +1,15 @@
+﻿--- ALL PAGES ---
+[PUB] ID: 86d884df-af3b-4f7d-9d1d-0867db9b45b9 | Title: À propos de PROQUELEC | Slug: about
+[PUB] ID: 460716d7-35a5-4125-8724-c00834ce7014 | Title: Nos Activités | Slug: activities
+[PUB] ID: b3b5e646-4308-47e7-87b4-5da2bca7ea4f | Title: Certifications PROQUELEC | Slug: certifications
+[PUB] ID: ae9cbebd-b7ba-411a-867c-eaff38b9f257 | Title: Documents & Ressources | Slug: documents
+[PUB] ID: 009dabdb-6642-451c-a1f3-a6bf94147d0e | Title: Événements PROQUELEC | Slug: events
+[PUB] ID: 968e8972-0240-403f-a720-f0823bd7d3cf | Title: Blog PROQUELEC | Slug: blog
+[PUB] ID: 518f3467-402f-4cd0-9d1c-9afbd87c55a0 | Title: Nos Labels de Qualité | Slug: labels
+[PUB] ID: 78502d8a-faf1-45bd-8c44-b3a39bbe2d84 | Title: Contact PROQUELEC | Slug: contact
+[PUB] ID: 764bf968-dcdc-4d6c-9e94-0121f441ad63 | Title: Formations PROQUELEC | Slug: formations-proquelec
+[PUB] ID: e0a75f20-3465-4aa9-9a16-75c6dc978079 | Title: Actualités | Slug: actualites
+[PUB] ID: 6219a5b0-02e2-4b63-8e36-33e5826c9b19 | Title: Formations | Slug: formations
+[PUB] ID: 4cf68e4e-d091-4334-b826-7538f509a11c | Title: Événements | Slug: evenements
+[PUB] ID: f2f4244c-00f0-4d12-8a58-7d82752dc239 | Title: Nos Produits | Slug: produits
+------------------

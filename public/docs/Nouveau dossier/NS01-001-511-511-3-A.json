@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles communes à tous les matériels",
+    "article": "511",
+    "alinéa": "511.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-511-511-3-A",
+        "type": "obligation",
+        "texte_normatif": "Un procédé d'installation non décrit dans la présente norme doit faire l'objet d'une étude par l'Union technique de l'Électricité qui émettra, s'il y a lieu, un Avis sur l'application de ce procédé dans la mesure où il satisfait aux règles de la présente norme. De même, certains matériels, bien que faisant l'objet de normes, peuvent être utilisés dans des conditions différentes de celles prévues dans la présente norme ; de telles applications doivent faire l'objet de la même procédure. La Commission 07 de l'UTE délivre des Avis techniques pour les nouveaux procédés d'installation. - 152 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "511"
+        ]
+    }
+}

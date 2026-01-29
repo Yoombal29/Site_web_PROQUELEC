@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "521",
+    "alinéa": "521.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-521-521-5-A",
+        "type": "obligation",
+        "texte_normatif": "Circuits en courant alternatif et enveloppes en matériau ferromagnétique H Les conducteurs des circuits en courant alternatif disposés dans des enveloppes en matériau ferromagnétique doivent être installés de telle manière que les conducteurs de chaque circuit se trouvent dans la même enveloppe. NOTE - Si cette condition n'est pas remplie, des suréchauffements et des chutes de tension excessives peuvent se produire en raison de phénomènes d'induction. Cette condition concerne notamment les conduits métalliques et les câbles comportant un revêtement métallique. Des colliers ferromagnétiques peuvent également s'échauffer et il est préférable d'utiliser des colliers en matériau amagnétique. Il est rappelé que dans les schémas TN et IT, le conducteur de protection doit également être installé dans la même enveloppe que les conducteurs actifs. Dans le cas contraire, l'impédance de la boucle de défaut pourrait être augmentée au point que les conditions de protection ne soient pas satisfaites. (12) NF EN 60439-2 (C 63-422) - 196 - Tableau 52C - Exemples de modes de pose H Les figures ne sont pas destinées à représenter réellement les modes de pose mais sont destinées à expliquer le principe du mode de pose correspondant. Exemple Description Réf. local Conducteurs isolés dans des conduits encastrés dans les 1 parois thermiquement isolantes. Câbles multiconducteurs dans des conduits encastrés dans local des parois thermiquement isolantes. 2 Conducteurs isolés dans des conduits en montage apparent. 3 Câbles mono- ou multiconducteurs dans des conduits en 3A montage apparent. Conducteurs isolés dans des conduits-profilés en montage 4 apparent. Câbles mono- ou multiconducteurs dans des conduits-profilés 4A en montage apparent. Conducteurs isolés dans des conduits encastrés dans une 5 paroi. Câbles mono- ou multiconducteurs dans des conduits encastrés dans une paroi. 5A - 197 - Tableau 52C - Exemples de modes de pose (suite) H Exemple Description Réf. Câbles mono- ou multiconducteurs avec ou sans armure : 11 - fixés sur un mur, - fixés à un plafond, 11A - sur des chemins de câbles ou tablettes non perforés, (*) 12 - sur des chemins de câbles ou tablettes perforés, en 13 parcours horizontal ou vertical, (*) - sur des treillis soudés ou sur des corbeaux, 14 - sur échelles à câbles. 16 Câbles mono- ou multiconducteurs suspendus à un câble 17 porteur ou autoporteurs. Conducteurs nus ou isolés sur isolateurs. 18 (*) un chemin de câbles avec couvercle est considéré comme une goulotte (mode de pose 31A). - 198 - Tableau 52C - Exemples de modes de pose (suite) H Exemple Description Réf. Câbles mono- ou multiconducteurs dans des vides de 21 construction. Conducteurs isolés dans des conduits dans des vides de 22 construction. Câbles mono- ou multiconducteurs dans des conduits dans 22A des vides de construction. Conducteurs isolés dans des conduits-profilés dans des vides 23 de construction. Câbles mono- ou multiconducteurs dans des conduits-profilés 23A dans des vides de construction. Conducteurs isolés dans des conduits-profilés noyés dans la 24 construction. Câbles mono- ou multiconducteurs dans des conduits-profilés 24A noyés dans la construction. Câbles mono- ou multiconducteurs : - dans l'espace entre plafond et faux plafond, 25 - posés sur des faux plafonds suspendus non démontables. - 199 - Tableau 52C - Exemples de modes de pose (suite) H Exemple Description Réf. 31 31A Conducteurs isolés ou câbles mono- ou multiconducteurs dans des goulottes fixées aux parois. - en parcours horizontal, 31 32 32A - en parcours vertical. 32 Conducteurs isolés dans des goulottes encastrées dans des 33 parois ou planchers. Câbles mono- ou multiconducteurs dans des goulottes 33A encastrées dans des parois ou planchers. Conducteurs isolés dans des goulottes suspendues. 34 Câbles mono- ou multiconducteurs dans des goulottes 34A suspendues. 34 34A 41 Conducteurs isolés dans des conduits ou câbles mono- ou multiconducteurs dans des caniveaux fermés, en parcours horizontal ou vertical. Conducteurs isolés dans des conduits dans des caniveaux 42 ventilés. Câbles mono- ou multiconducteurs dans des caniveaux 43 ouverts ou ventilés. - 200 - Tableau 52C - Exemples de modes de pose (suite) H Exemple Description Réf. Câbles mono- ou multiconducteurs dans des conduits, des 61 fourreaux ou des conduits-profilés enterrés. Câbles mono ou multiconducteurs enterrés sans protection 62 mécanique complémentaire. Câbles mono ou multiconducteurs enterrés avec protection 63 mécanique complémentaire. Conducteurs isolés dans des plinthes ou des moulures en 71 bois. Conducteurs isolés dans des conduits ou câbles 73 multiconducteurs dans des chambranles. Conducteurs isolés dans des conduits ou câbles 74 multiconducteurs dans des huisseries de fenêtre. Câbles immergés dans l’eau. 81 - 201 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "521"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "432",
+    "alinéa": "533.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-432-533-3-A",
+        "type": "obligation",
+        "texte_normatif": "Choix Tableau 53E Dispositifs de sectionnement G Gaine (d'un câble) .................................... 261.5 Définition (2) Voir UTE C 15-421. - XIV - Index Gaine (ventilation, désenfumage) ............ 528.2 Voisinage des canalisations 528.2.1 Passage des canalisations Gaine Technique Logement .................... 771.558.2 Mise en œuvre Galeries .................................................... 262.7 Définition Garages ................................................... 752 Aires de distribution de carburants liquides 772.2.3.4.2 Règles pour immeubles Gaz (canalisations de) ............................. 411.3.1.1 LEP 528.2.2 Voisinage avec des canalisations électriques Générateurs ............................................. 551 Règles Goulottes .................................................. 262.8 Définition Tableau 52E Utilisation Tableau 52B Modes de pose",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "432"
+        ]
+    }
+}

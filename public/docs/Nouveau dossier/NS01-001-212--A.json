@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "212",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-212--A",
+        "type": "obligation",
+        "texte_normatif": "Grandeurs C 212.1 valeur assignée (151-16-08) valeur d'une grandeur, fixée généralement par le constructeur pour un fonctionnement spécifié d'un composant d'un dispositif ou d'un matériel. Cette définition s’applique à une grandeur telle qu’une tension assignée, un courant assigné, etc. 212.2 valeur nominale valeur utilisée pour dénommer un matériel par une grandeur qui le caractérise (intensité, tension, etc.). Cette grandeur est généralement voisine de la valeur assignée de ce matériel. Par exemple, pour un disjoncteur réglable de courant nominal I , le courant nominal n correspond au courant assigné maximal de réglage.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "212"
+        ]
+    }
+}

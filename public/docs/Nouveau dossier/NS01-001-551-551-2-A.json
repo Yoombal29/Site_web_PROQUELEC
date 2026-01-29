@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "551",
+    "alinéa": "551.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-551-551-2-A",
+        "type": "obligation",
+        "texte_normatif": "Dispositions particulières 551.2.1 Groupes électrogènes Les locaux où sont installés les moteurs thermiques, quelle que soit la puissance de ces derniers, doivent être largement ventilés sur l'extérieur. Toutes dispositions doivent être prises pour que les gaz de combustion soient évacués directement sur l'extérieur et ne puissent en aucun cas se répandre dans les autres locaux. Les conduits d'évacuation des gaz de combustion doivent être réalisés en matériaux incombustibles, être étanches et présenter un degré coupe-feu égal au degré de stabilité au feu du bâtiment. Des règlements de sécurité relatifs respectivement aux établissements recevant du public et aux immeubles de grande hauteur indiquent les conditions de mise en oeuvre dans le bâtiment et d’alimentation en combustible des groupes, ainsi que les conditions de stockage des combustibles liquides. Des règlements fixent des limites des niveaux acoustiques. Le guide UTE C 15-401 définit les conditions de mise en œuvre dans l’installation des groupes électrogènes selon leur type et la nature des installations alimentées.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "551"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux d’habitation",
+    "article": "230",
+    "alinéa": "771.558",
+    "regle_atomique": {
+        "id_unique": "NS01-001-230-771-558-A",
+        "type": "obligation",
+        "texte_normatif": "Panneaux de contrôle, tableaux de répartition et de communication - Gaine technique logement (GTL) ....................................................................................438 Annexe A – (normative) – Niveaux kérauniques en France et dans les DOM.......................449 Annexe B – (normative) – Installations électriques alimentées par une source d’énergie autonome de faible puissance ( ≤ 6 kVA), non raccordées au réseau.................................450 Annexe C – (informative) – Exemple de lett re pour sensibiliser les différents acteurs à leurs responsabilités...........................................................................................................451 Annexe D – (informative) – Système de gestion ou appareillage utilisant les informations délivrées sur le circuit de téléinformation du compteur électronique du distributeur..........................................................................................................................452 ____________ Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100. Les numéros suivant le numéro particulier de la partie 7-771 sont ceux des parties, articles ou paragraphes correspondants de la présente norme. L'absence de référence à une partie, à un article ou à un paragraphe signifie que les prescriptions générales correspondantes sont applicables. - 427 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "230"
+        ]
+    }
+}

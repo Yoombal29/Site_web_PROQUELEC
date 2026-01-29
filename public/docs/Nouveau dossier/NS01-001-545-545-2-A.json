@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Mises à la terre, conducteurs de protection et",
+    "article": "545",
+    "alinéa": "545.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-545-545-2-A",
+        "type": "obligation",
+        "texte_normatif": "Ceinturage d'équipotentialité Si un ceinturage d’équipotentialité est prescrit pour des raisons fonctionnelles, il doit être raccordé, par le chemin pratique le plus court possible, à la borne principale de terre du bâtiment. NOTES - 1 - Le ceinturage d’équipotentialité peut être nu ou isolé. 2 - Le ceinturage d’équipotentialité est mis en œuvre de préférence de manière à ce qu’il soit accessible sur tout son parcours, par exemple dans une goulotte. Pour éviter la corrosion, il peut être nécessaire d’isoler les conducteurs nus au niveau des supports et lors du passage des cloisons. 545.2.1 Section du ceinturage d’équipotentialité La section du ceinturage d'équipotentialité doit être au moins égale à 25 mm2 . 545.2.2 Connexions au ceinturage d'équipotentialité Les conducteurs suivants doivent être connectés au ceinturage d'équipotentialité : - les écrans conducteurs, les gaines et armures conductrices des câbles de communication ; - les enveloppes conductrices des matériels de communication ; - les conducteurs de mise à la terre des dispositifs de protection contre les surtensions ; - les conducteurs de mise à la terre des systèmes d'antennes de radiocommunication ; - le conducteur de mise à la terre de la polarité reliée à la terre d'une alimentation en courant continu pour un matériel de traitement de l'information ; - les conducteurs de mise à la terre fonctionnelle ; - les conducteurs de descente des paratonnerres. - 277 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "545"
+        ]
+    }
+}

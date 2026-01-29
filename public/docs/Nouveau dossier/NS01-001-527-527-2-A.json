@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "527",
+    "alinéa": "527.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-527-527-2-A",
+        "type": "obligation",
+        "texte_normatif": "Barrières coupe-feu H 527.2.1 Lorsqu'une canalisation traverse des éléments de construction tels que planchers, murs, toitures, plafonds, parois,… les ouvertures demeurant après passage de la canalisation doivent être obturées suivant le degré de résistance au feu prescrit pour l'élément correspondant de la construction avant la traversée. L'obturation des traversées peut être obtenue à l'aide de matériaux tels que plâtre, fibres minérales, sable, mortier de ciment. - 223 - Ces obturations sont réalisées de manière à permettre d'effectuer des modifications de l'installation sans endommager les canalisations existantes et de telle manière que les qualités d'étanchéité et de non propagation de l’incendie soient maintenues. 527.2.2 Les canalisations telles que conduits, profilés, goulottes, canalisations préfabriquées, qui H pénètrent dans des éléments de construction ayant une résistance au feu spécifiée doivent être obturées intérieurement suivant le degré de résistance au feu prescrit pour l'élément correspondant avant la pénétration et également obturées extérieurement comme prescrit en 527.2.1. Toutefois, il n'y a pas lieu de prévoir d'obturation intérieure pour les conduits et goulottes satisfaisant à l'essai de non propagation de la flamme, dont la section intérieure est inférieure ou égale à",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "527"
+        ]
+    }
+}

@@ -1,0 +1,35 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "411",
+  "alinéa": "411.3.1.1",
+  "regle_atomique": {
+    "id_unique": "NS01-001-411-3-1-1-A",
+    "type": "obligation",
+    "texte_normatif": "La liaison équipotentielle principale doit connecter le conducteur principal de protection, la borne principale de terre et les éléments conducteurs (canalisations métalliques eau/gaz/chauffage, armatures béton, gaines câbles) dans chaque bâtiment.",
+    "acteurs_concernes": ["installateur", "controleur"],
+    "conditions_application": {
+      "schema_terre": ["TN", "TT", "IT"],
+      "tension": "<=1000V",
+      "lieu": ["bâtiment", "habitation", "ERP"]
+    },
+    "exceptions": [],
+    "risques_couverts": [
+      "électrocution par différence de potentiel entre éléments conducteurs",
+      "propagation de potentiel de défaut externe"
+    ],
+    "gravite_non_conformite": "critique",
+    "mesure_corrective": "Installer conducteurs d'équipotentialité de section ≥6mm² Cu ou 16mm² Al, reliés à la borne principale de terre.",
+    "justification": {
+      "physique": "Équipotentialité locale pour éviter les tensions de pas et de contact",
+      "biologique": "Réduction des risques de choc par contact simultané",
+      "sécurité": "Prévention des potentiels flottants dus à défauts externes"
+    },
+    "verification": {
+      "moyen": "Mesure de résistance d'équipotentialité (ohmmètre)",
+      "seuils": "Résistance <1Ω selon NS 01-001"
+    },
+    "liens_normatifs": ["542.2", "543.2", "544"]
+  }
+}

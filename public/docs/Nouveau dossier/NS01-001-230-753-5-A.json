@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Équipements de chauffage électrique des locaux",
+    "article": "230",
+    "alinéa": "753.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-230-753-5-A",
+        "type": "obligation",
+        "texte_normatif": "Equipements de chauffage électrique installés en plafond 753.5.1 Protection contre les courants de défaut Les circuits alimentant les équipements de chauffage plafond rayonnant plâtre (PRP) ou plafond rayonnant modulaire (PRM) doivent être : - soit alimentés en TBTS ou TBTP et répondre aux prescriptions du paragraphe 414.4 ; - soit protégés par des dispositifs à courant différentiel-résiduel (voir 531.2) de courant différentiel-résiduel assigné au plus égal à 30 mA, chaque DDR 30 mA étant prévu pour une puissance assignée des éléments chauffants au plus égale à 13 kW (400 V) ou 7,5 kW (230 V). Disjoncteur général N L1 L2 L3 DDR 30 mA DDR 30 mA DDR 30 mA Elément chauffant Figure 753C – Exemple de protection d’une installation triphasée : alimentation entre phases et neutre Si l’équipement de chauffage est protégé par un écran ou une grille métallique, et qu’il n’est pas de classe II, l’écran ou la grille métallique doivent être mis à la terre. Lorsque les appareils à réflecteurs et les cassettes rayonnantes ne sont pas de classe I, les circuits les alimentant sont protégés par des DDR (voir 531.2) de courant différentiel-résiduel assigné au plus égal à 30 mA, chaque DDR 30 mA étant prévu pour une puissance assignée des éléments chauffants au plus égale à 13 kW (400 V) ou 7,5 kW (230 V). 753.5.2 Mise en œuvre des équipements de plafond rayonnant plâtre ou modulaire (3) Les émetteurs doivent satisfaire aux normes et guides en vigueur . Leur mise en œuvre doit satisfaire au cahier des prescriptions techniques communes (CPT PEC 12/33), aux cahiers des prescriptions techniques (PT PRM 10/97) et à l’avis technique du procédé. Dans le cas d’établissements recevant du public (ERP), Il convient d’appliquer en outre les dispositions du règlement ERP. (3) UTE C 73-999 pour les plafonds rayonnants (PRP et PRM) ; NF EN 60335-2 -30 (C 73-830) pour les appareils à réflecteur et cassettes rayonnantes - 424 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "230"
+        ]
+    }
+}

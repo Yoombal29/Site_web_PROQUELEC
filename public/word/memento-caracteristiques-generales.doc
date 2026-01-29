@@ -1,0 +1,129 @@
+<html>
+<head>
+  <title>Mémento – Caractéristiques générales des installations électriques</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    h1 { color: #1d4ed8; }
+    h2 { color: #2563eb; margin-top: 1.2em; }
+    h3 { color: #1e293b; margin-top: 1em; }
+    ul { margin-left: 1em; }
+    table { border-collapse: collapse; margin-top: 1em; }
+    th, td { border: 1px solid #2563eb; padding: 6px 12px; }
+    th { background: #e0e7ff; }
+  </style>
+</head>
+<body>
+  <h1>Mémento – Caractéristiques générales des installations électriques</h1>
+  <div style="background:#dbeafe;padding:1em;border-radius:6px;margin-bottom:1em;">
+    <b>Résumé :</b> Ce mémento présente les paramètres essentiels à prendre en compte pour concevoir, dimensionner et vérifier une installation électrique conforme et sécurisée.
+  </div>
+  <h2>1. Paramètres à considérer</h2>
+  <ul>
+    <li>Puissance totale à installer (kW)</li>
+    <li>Nombre et type de circuits (éclairage, prises, gros appareils)</li>
+    <li>Longueur des câbles et chute de tension admissible</li>
+    <li>Section des conducteurs adaptée</li>
+    <li>Type de protection (disjoncteurs, fusibles, différentiels)</li>
+    <li>Schéma de distribution (unifilaire, multifilaire)</li>
+    <li>Normes et réglementations applicables</li>
+  </ul>
+  <h2>2. Calculs essentiels</h2>
+  <table>
+    <tr><th>Calcul</th><th>Formule</th><th>Utilité</th></tr>
+    <tr><td>Puissance (P)</td><td>P = U × I</td><td>Déterminer la puissance consommée</td></tr>
+    <tr><td>Intensité (I)</td><td>I = P / U</td><td>Dimensionner les conducteurs et protections</td></tr>
+    <tr><td>Chute de tension (ΔU)</td><td>ΔU = (2 × L × I × ρ) / S</td><td>Vérifier la sécurité et la conformité</td></tr>
+  </table>
+  <h2>3. Bonnes pratiques</h2>
+  <ul>
+    <li>Prévoir des circuits séparés pour les gros appareils</li>
+    <li>Respecter les sections minimales selon la norme</li>
+    <li>Limiter la chute de tension à 3% maximum</li>
+    <li>Utiliser des tableaux électriques bien identifiés</li>
+    <li>Documenter le schéma de l’installation</li>
+  </ul>
+  <h2>4. Erreurs à éviter</h2>
+  <ul>
+    <li>Sous-dimensionner les câbles</li>
+    <li>Oublier la protection des circuits spécialisés</li>
+    <li>Ignorer la chute de tension sur les longues distances</li>
+    <li>Utiliser du matériel non certifié</li>
+  </ul>
+  <h2>5. Ressources utiles</h2>
+  <ul>
+    <li>Guide PROQUELEC sur le dimensionnement des installations</li>
+    <li>Tableaux de sections normalisées (NF C 15-100)</li>
+    <li>Formations PROQUELEC</li>
+  </ul>
+  <footer style="margin-top:2em;font-size:0.9em;color:#555;">© PROQUELEC – Mémento Caractéristiques générales. Version 2025.</footer>
+</body>
+</html>
+<html>
+<head>
+  <title>Mémento Technique – Détermination des caractéristiques générales</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>MÉMENTO TECHNIQUE<br>Détermination des caractéristiques générales (puissance, intensité, chute de tension)</h1>
+  <h2>1. Objet du mémento</h2>
+  <p>Guide rapide pour calculer et vérifier les caractéristiques électriques principales d’une installation.</p>
+  <h2>2. Principes essentiels (NS 01-001 & NF C 15-100)</h2>
+  <ul>
+    <li>Dimensionner les circuits selon la puissance et l’intensité</li>
+    <li>Limiter la chute de tension</li>
+    <li>Respecter les tolérances normatives</li>
+  </ul>
+  <h2>3. Définitions clés</h2>
+  <ul>
+    <li><b>Puissance (W) :</b> Énergie consommée par les appareils</li>
+    <li><b>Intensité (A) :</b> Courant traversant le conducteur</li>
+    <li><b>Chute de tension :</b> Perte de tension entre origine et point d’utilisation</li>
+  </ul>
+  <h2>4. Règles pratiques à retenir</h2>
+  <ul>
+    <li>Calculer la puissance totale installée</li>
+    <li>Adapter la section des câbles à l’intensité</li>
+    <li>Vérifier la chute de tension sur les longues distances</li>
+  </ul>
+  <h2>5. Tableau récapitulatif</h2>
+  <table>
+    <tr><th>Symptôme</th><th>Cause possible</th><th>Action à mener</th></tr>
+    <tr><td>Appareil ne fonctionne pas</td><td>Chute de tension excessive</td><td>Augmenter la section du câble</td></tr>
+    <tr><td>Disjoncteur déclenche</td><td>Intensité trop élevée</td><td>Revoir le dimensionnement</td></tr>
+  </table>
+  <h2>6. Tableau des sections normalisées</h2>
+  <table>
+    <tr><th>Usage</th><th>Section minimale</th><th>Calibre disjoncteur</th></tr>
+    <tr><td>Éclairage</td><td>1,5 mm²</td><td>10A</td></tr>
+    <tr><td>Prises 16A</td><td>1,5 mm²</td><td>16A</td></tr>
+    <tr><td>Prises 20A</td><td>2,5 mm²</td><td>20A</td></tr>
+    <tr><td>Four</td><td>6 mm²</td><td>32A</td></tr>
+    <tr><td>Lave-linge</td><td>2,5 mm²</td><td>20A</td></tr>
+    <tr><td>Chauffe-eau</td><td>2,5 mm²</td><td>20A</td></tr>
+    <tr><td>VMC</td><td>1,5 mm²</td><td>2A</td></tr>
+  </table>
+  <h2>7. Erreurs à éviter</h2>
+  <ul>
+    <li>Sous-dimensionner les câbles</li>
+    <li>Oublier la protection des circuits spécialisés</li>
+    <li>Ignorer la chute de tension sur les longues distances</li>
+    <li>Utiliser du matériel non certifié</li>
+    <li>Ne pas documenter le schéma de l’installation</li>
+  </ul>
+  <h2>8. Ressources utiles</h2>
+  <ul>
+    <li><a href="https://www.promotelec.com/dimensionnement-installations/" target="_blank">Guide Promotelec : Dimensionnement</a></li>
+    <li><a href="https://www.afnor.org/" target="_blank">Norme NF C 15-100 (AFNOR)</a></li>
+    <li><a href="https://www.legrand.fr/pro/actualites/dimensionnement-installations" target="_blank">Legrand : Tableaux de sections</a></li>
+  </ul>
+  <div class="encadre">
+    <b>Conformité PROQUELEC :</b> Respecter les sections et calibres normalisés pour garantir la sécurité et la conformité de l’installation électrique. Documenter chaque calcul et schéma.
+  </div>
+  <div class="encadre">
+    <b>À retenir PROQUELEC :</b> Un bon dimensionnement évite les pannes et optimise la sécurité. Toujours vérifier avant installation.
+  </div>
+  <footer>
+    © PROQUELEC – Mémento technique Caractéristiques générales. Version condensée pour techniciens.
+  </footer>
+</body>
+</html>

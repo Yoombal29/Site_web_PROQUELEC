@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles complémentaires pour les canalisations",
+    "article": "529",
+    "alinéa": "529.5",
+    "regle_atomique": {
+        "id_unique": "NS01-001-529-529-5-A",
+        "type": "obligation",
+        "texte_normatif": "Canalisations enterrées 529.5.1 Seuls sont admis en pose enterrée des câbles dans les conditions suivantes : a) les câbles armés d'acier et comportant sous l'armure une gaine d'étanchéité peuvent être placés directement dans le sol. Les câbles pouvant être posés directement dans le sol sont les câbles de tension nominale au moins égale à 1000 volts et comportant un revêtement métallique, tels que ceux des séries U- 1000 RGPFV, U-1000 RVFV, FR-N1X-DV, FR-N 1-X1X2Z4X2, FR-N 1-X 1G lZ4G1. b) les câbles sans armure mais comportant une gaine épaisse nécessitent une protection mécanique indépendante contre le choc des outils métalliques à main. Les câbles qui nécessitent une protection contre le choc des outils métalliques à main sont les câbles de tension nominale au moins égale à 1000 volts et ne comportant pas de revêtement métallique, tels que ceux des séries U- 1000 R 12N, U- 1000 R2V, FR-N 1-X 1X2, FR-N 1-X 1G1. Les autres câbles pouvant être utilisés dans les conditions d'influences externes AD5 (voir tableau 52D) doivent être placés dans des conduits ou fourreaux, tels que les conduits pour canalisations enterrées conformes à la norme en vigueur (14). (14) NF EN 50086-2-4 (C 68-114). - 226 - c) les autres câbles doivent être placés dans des conduits ou fourreaux, ou protégés par des dispositifs équivalents contre les détériorations mécaniques. 529.5.2 Les câbles doivent être protégés contre les détériorations causées par le tassement des terres, le contact des corps durs, le choc des outils à main en cas de fouilles, ainsi que contre les actions chimiques causées par les éléments du sol. Pour parer aux effets du tassement des terres, les câbles doivent être enfouis en terrain normal, au moins à 0,50 m de la surface du sol. Cette profondeur est portée à 0,85 m à la traversée des voies accessibles aux voitures et sous les trottoirs. Ces profondeurs peuvent être diminuées en terrain rocheux. Elles peuvent ne pas être respectées si des dispositions sont prises pour que les câbles ne supportent pas directement les effets du tassement des terres, par exemple à l'aide de fourreaux. Ces valeurs s'appliquent à compter de la partie supérieure du câble après pose. 529.5.3 Lorsqu'une canalisation enterrée croise une autre canalisation électrique enterrée, elles doivent, en principe, se trouver à une distance minimale de 0,20 m. Lorsqu'une canalisation électrique enterrée longe ou croise des conduites d'eau, d'hydrocarbure, de gaz, d'air comprimé ou de vapeur également enterrées, une distance minimale de 0,20 mètre doit, en principe, exister entre leurs points les plus rapprochés. Cette distance peut être réduite à condition que les installations soient séparées par un dispositif de protection donnant une sécurité équivalente. 529.5.4 Toute canalisation enterrée doit être signalée par un dispositif avertisseur non corrodable placé au moins à 0,20 m au-dessus d'elle. Il est recommandé que le dispositif avertisseur soit constitué par un grillage en plastique de couleur rouge. Ce dispositif n'est pas nécessaire lorsque les câbles sont munis d'une protection mécanique indépendante ou sont placés dans des conduits de couleur rouge ou fourreaux.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "529"
+        ]
+    }
+}

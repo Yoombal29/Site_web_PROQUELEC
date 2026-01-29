@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations électriques des marinas",
+    "article": "706",
+    "alinéa": "709.52",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-709-52-A",
+        "type": "obligation",
+        "texte_normatif": "Choix et mise en oeuvre des matériels électriques 709.52.1 Canalisations des marinas Les règles générales de la partie 52 de la NF C 15-100 sont applicables en prenant en compte les conditions d’influences externes (709.51). 709.52.1.1 Les canalisations suivantes ne doivent pas être utilisées : - les lignes aériennes, - les conducteurs isolés sous conduits, - les câbles avec des conducteurs en aluminium. 709.52.1.2 Les câbles doivent être choisis et installés de façon que les dommages mécaniques dus aux marées et aux autres mouvements des structures flottantes soient évités. Les conduits doivent être installés pour permettre l'écoulement de l'eau par des pentes et/ou des trous d'évacuation.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

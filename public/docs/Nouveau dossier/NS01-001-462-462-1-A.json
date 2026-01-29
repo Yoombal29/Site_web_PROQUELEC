@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Sectionnement et commande",
+    "article": "462",
+    "alinéa": "462.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-462-462-1-A",
+        "type": "obligation",
+        "texte_normatif": "Tout circuit doit pouvoir être sectionné sur chacun des conducteurs actifs, à l'exception du conducteur PEN, comme prescrit en 461.3 Des dispositions complémentaires peuvent être prises pour le sectionnement d'un ensemble de circuits par un même dispositif, si les conditions de service le permettent. Il est précisé que l'expression “si les conditions de service le permettent” signifie que la coupure correspondante est nécessaire en exploitation pour permettre d'effectuer hors tension des travaux d'entretien ou de réparation. Afin de se prémunir contre toute réalimentation éventuelle en retour, il peut être nécessaire de prévoir un sectionnement en amont et en aval de la partie à mettre hors tension. Dans le cas d'alimentation en schéma TN-C d'une armoire électrique comportant des départs en schéma TN-S, un dispositif de sectionnement et de commande tripolaire mis en œuvre sur la canalisation d'arrivée est satisfaisant pour assurer la fonction de sectionnement, de commande et de coupure d'urgence et ce, quels que soient le nombre et la répartition des départs TN-S et TN-C dans l'armoire. Circuits particuliers des postes de transformation (1) Dans les installations alimentées par un poste de transformation, la norme en vigueur prévoit l'alimentation d'un certain nombre de circuits entre les bornes de sortie du transformateur et le dispositif général de commande et de protection de l'installation à basse tension. Ces circuits doivent être munis d'un dispositif de sectionnement à leur origine et sont essentiellement destinés à alimenter l'éclairage du poste, des socles de prises de courant, les ——————— (1) NF C 13-100 - 146 - relais de protection des transformateurs, la bobine de déclenchement du disjoncteur à haute tension éventuel, certains relais,... Il est rappelé que la protection de ces circuits est assurée par des dispositifs de protection contre les surintensités qui doivent posséder un pouvoir de coupure au moins égal au courant de court-circuit aux bornes de sortie du transformateur. Il est aussi rappelé que la protection contre les contacts indirects est assurée par la liaison équipotentielle prévue au sous-paragraphe 413.1.1 de la norme relative aux postes de (2) livraison . Les matériels de ces circuits sont choisis conformément aux règles de 311.2.2 de la même norme (2). H 462.2 Des moyens appropriés doivent être prévus pour empêcher toute mise sous tension intempestive du matériel. NOTE - Ces dispositions peuvent comprendre une ou plusieurs des mesures suivantes : - condamnation, - pancartes d'avertissement, - disposition dans un local ou sous enveloppe, fermant à clé. La mise en court-circuit et à la terre peut être utilisée comme mesure complémentaire. Ces dispositions permettent de réaliser la consignation prévue par la Publication UTE C 18- 510. Il est également possible de satisfaire à cette règle par verrouillage ou téléverrouillage à condition que les dispositifs présentent le même degré de sécurité. H 462.3 Lorsqu'un matériel ou une enveloppe contient des parties actives reliées à plusieurs alimentations, une pancarte d'avertissement doit être disposée de telle manière que toute personne accédant aux parties actives soit prévenue de la nécessité de sectionner ces parties des différentes alimentations, à moins qu'un verrouillage assure que tous les circuits concernés sont sectionnés.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "462"
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "120",
+    "alinéa": "411.3",
+    "regle_atomique": {
+        "id_unique": "NS01-001-120-411-3-A",
+        "type": "obligation",
+        "texte_normatif": "Prescriptions pour la protection contre les contacts indirects 411.3.1 Liaisons de protection 411.3.1.1 Liaison équipotentielle principale Dans chaque bâtiment, le conducteur principal de protection, la borne principale de terre et les éléments conducteurs suivants doivent être connectés à la liaison équipotentielle principale : - canalisations métalliques, par exemple eau, gaz, canalisations de chauffage central et de conditionnement d'air ; - éléments métalliques de la construction et armatures du béton armé ; - gaines ou tresses métalliques des câbles de communication. Lorsque de tels éléments conducteurs proviennent de l'extérieur du bâtiment, ils doivent être reliés à la liaison équipotentielle principale aussi près que possible de leur point d'entrée dans le bâtiment. - 68 - Les conducteurs de la liaison équipotentielle principale doivent satisfaire aux prescriptions de la partie 5-54. La liaison équipotentielle principale permet notamment d'éviter qu'un élément conducteur ne propage un potentiel soit par rapport à la terre résultant d'un défaut d'origine externe au bâtiment, soit le potentiel de la terre lointaine. 411.3.1.2 Mise à la terre des masses C Les masses doivent être reliées à un conducteur de protection selon les conditions particulières des divers schémas des liaisons à la terre comme spécifié de 411.4 à 411.6. Les masses simultanément accessibles doivent être connectées à la même prise de terre. NOTE – Pour les dispositions de mise à la terre et les conducteurs de protection, voir la partie 5-54. 411.3.2 Coupure automatique de l'alimentation 411.3.2.1 A l’exception du cas indiqué en 411.3.2.5, un dispositif de protection doit séparer automatiquement de l'alimentation le circuit ou le matériel concerné en cas de défaut entre une partie active et une masse ou un conducteur de protection dans le circuit ou le matériel, dans un temps maximal donné en 411.3.2.2 ou 411.3.2.3. NOTES - 1 - Des valeurs de temps de coupure et de tension inférieures peuvent être prescrites pour des installations ou des locaux particuliers conformément aux articles correspondants de la partie 7. 2 - Dans le schéma IT, la coupure automatique n'est pas prescrite en général lors d'un premier défaut (voir 411.6.1). 411.3.2.2 Selon la tension nominale entre phase et neutre U , le temps de coupure maximal 0 du tableau 41A doit être appliqué à tous les circuits terminaux. Tableau 41A - Temps de coupure maximal (en secondes) pour les circuits terminaux 50 V < U 0 ≤ 120 V 120 V < U 0 ≤ 230 V 230 V < U 0 ≤ 400 V U 0 > 400 V Temps de coupure alternatif continu alternatif continu alternatif continu Alternatif continu (s) Schéma TN ou IT 0,8 5 0,4 5 0,2 0,4 0,1 0,1 Schéma TT 0,3 5 0,2 0,4 0,07 0,2 0,04 0,1 NOTE - Le courant continu lisse est défini conventionnellement par un taux d'ondulation non supérieur à 10 % valeur efficace; la valeur maximale de crête n'est pas supérieure à 140 V pour une tension nominale de 120 V en courant continu lisse et 70 V pour une tension nominale de 60 V en courant continu lisse. Ces temps dérivent d’une courbe définissant le temps de coupure du dispositif de protection en fonction de la tension de contact présumée. Cette courbe a été établie en tenant compte des études internationales sur les effets du courant électrique sur le corps humain rassemblées dans le guide UTE C 15-110. Les temps de coupure ci-dessus sont satisfaits notamment par les dispositifs différentiels non volontairement retardés ou, lorsque U est inférieure ou égale à 230 V, de type S. 0 En pratique, les temps de coupure des dispositifs de protection ne sont à prendre en considération que si ces dispositifs sont des fusibles ou des disjoncteurs dont le déclenchement est retardé. Lorsque la protection est assurée par d'autres types de disjoncteurs, il suffit de vérifier que le courant de défaut est au moins égal au plus petit courant assurant le fonctionnement instantané du disjoncteur. Les temps de coupure en schéma TT sont plus faibles qu'en schéma TN ou IT, les tensions de contact présumées dans ce schéma pouvant être proches de la tension simple U 0. 411.3.2.3 Un temps de coupure conventionnel non supérieur à 5 s est admis pour les circuits C de distribution. Toutefois, il est recommandé de réaliser la sélectivité des protections dans les temps les plus courts compatibles avec une utilisation normale. - 69 - C 411.3.2.4 (disponible) 411.3.2.5 Si la coupure automatique conformément à 411.3.2.1 ne peut être réalisée dans les temps prescrits en 411.3.2.2 ou 411.3.2.3 ni par un dispositif de protection contre les surintensités, ni par un DDR, une liaison équipotentielle supplémentaire doit être prévue conformément à 415.2. 411.3.3 Protection complémentaire En courant alternatif, les circuits terminaux doivent être pourvus d’une protection complémentaire par dispositif différentiel de courant différentiel-résiduel assigné au plus égal à 30 mA conformément à 415.1 lorsqu’ils alimentent : - les socles de prise de courant de courant assigné au plus égal à 32 A ; - les socles de prise de courant installés dans des locaux ou emplacements de la classe d’influences externes AD4, quel que soit leur courant assigné ; - les socles de prises de courant dans les installations temporaires, telles que les installations de chantiers, quel que soit leur courant assigné. D'autres situations, où l'emploi de dispositifs à courant différentiel-résiduel (DDR) de courant assigné au plus égal à 30 mA est prescrit, sont indiquées dans le titre 7. NOTE - Si une installation est prévue pour l’utilisation de matériels portatifs à l’extérieur, il est recommandé de mettre en œuvre un ou deux socles de prise de courant à l’extérieur. L'emploi de DDR à haute sensibilité est particulièrement justifié pour assurer la protection des câbles souples alimentant les appareils mobiles ou portatifs, l'usure ou le vieillissement de ces câbles pouvant entraîner la détérioration de l'isolant ou la rupture du conducteur de protection, sans que de tels défauts puissent être détectés. Cette disposition ne vise pas les prises de courant prévues par les constructeurs sur des machines portant le marquage CE, la directive européenne relative aux machines ne prévoyant pas cette exigence. dans ce cas de figure , il est recommandé que, l'utilisation de telles prises de courant doit être réservé, sous la responsabilité du chef d'établissement, au personnel ayant reçu une formation et une consigne d'exploitation.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "120"
+        ]
+    }
+}

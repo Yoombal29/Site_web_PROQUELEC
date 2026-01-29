@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Guide de l'installation résidentielle - PROQUELEC</title>
+<style>
+body{font-family: 'Segoe UI', Roboto, Arial, Helvetica, sans-serif; color:#0f172a; margin:28px; line-height:1.45}
+.cover{display:block;padding:18px;border:1px solid #e6eefc;background:#f8fbff}
+.logo{float:right;font-weight:700;color:#2563eb}
+h1{color:#0b4ed6;margin:0 0 6px}
+h2{color:#0f172a;margin-top:18px}
+h3{color:#134a86}
+.muted{color:#475569;font-size:0.95rem}
+.section{margin-top:14px}
+.toc{margin-top:12px}
+.toc li{margin-bottom:6px}
+.table{width:100%;border-collapse:collapse;margin-top:10px}
+.table th,.table td{border:1px solid #e6eefc;padding:8px;text-align:left}
+.checklist{background:#f1f5f9;padding:10px;border-radius:6px}
+.footer{margin-top:28px;color:#64748b;font-size:0.92rem;border-top:1px solid #e6eefc;padding-top:10px}
+.small{font-size:0.95rem;color:#334155}
+.clear{clear:both}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="logo">PROQUELEC</div>
+  <h1>Guide de l'installation résidentielle au Sénégal</h1>
+  <div class="muted">Version 2025 • Document professionnel • PROQUELEC</div>
+</div>
+
+<div class="section">
+  <h2>Objet du document</h2>
+  <p class="small">Ce guide fournit une démarche professionnelle, étape par étape, pour concevoir, dimensionner et mettre en oeuvre une installation électrique résidentielle conforme aux normes en vigueur au Sénégal. Il vise les techniciens, bureaux d'étude et installateurs.</p>
+</div>
+
+<div class="section">
+  <h2>Sommaire</h2>
+  <ul class="toc">
+    <li>1. Étude préalable</li>
+    <li>2. Dimensionnement des circuits</li>
+    <li>3. Protections et sélectivité</li>
+    <li>4. Mise à la terre</li>
+    <li>5. Installation et bonnes pratiques</li>
+    <li>6. Essais, contrôles et conformité</li>
+    <li>Annexes et checklists</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h3>1. Étude préalable</h3>
+  <ul>
+    <li>Collecte des plans architecturaux et contraintes (accès, armoires, arrivées SENELEC).</li>
+    <li>Inventaire des usages : éclairage, prises, chauffage, climatisation, appareils lourds.</li>
+    <li>Dimensionnement préliminaire de la puissance souscrite et optimisation énergétique.</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h3>2. Dimensionnement des circuits</h3>
+  <p class="small">Méthode recommandée pour répartir les circuits et choisir les sections minimales (exemples indicatifs).</p>
+  <table class="table">
+    <tr><th>Usage</th><th>Courant approximatif</th><th>Section recommandée</th></tr>
+    <tr><td>Éclairage</td><td>10 A</td><td>1,5 mm²</td></tr>
+    <tr><td>Prises générales</td><td>16 A</td><td>2,5 mm²</td></tr>
+    <tr><td>Chauffe-eau / plaque</td><td>> 20 A</td><td>6 à 10 mm² (selon puissance)</td></tr>
+    <tr><td>Moteurs / climatiseurs</td><td>variable</td><td>voir calcul d'intensité et protections dédiées</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h3>3. Protections et sélectivité</h3>
+  <ul>
+    <li>Disjoncteurs modulaires en tête de chaque circuit (courbe adaptée à l'usage).</li>
+    <li>Interrupteur différentiel 30 mA en tête de tableau pour la protection des personnes.</li>
+    <li>Étudier la sélectivité entre protections (coordonner courbes et réglages).</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h3>4. Mise à la terre</h3>
+  <p class="small">Procédure et relevés recommandés :</p>
+  <ul>
+    <li>Mesurer la résistance de terre et viser <strong>&lt; 30 Ω</strong> si possible ; norme locale souvent &lt; 100 Ω minimum.</li>
+    <li>Utiliser piquets, conducteurs de protection et barrette de terre correctement dimensionnés.</li>
+    <li>Documenter l'implantation et fournir schéma de terre dans le dossier COSSUEL.</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h3>5. Installation et bonnes pratiques</h3>
+  <ul>
+    <li>Respecter les chemins de câbles, dégagements et ventilation des coffrets.</li>
+    <li>Etiquetage clair des circuits et plan de repérage du tableau.</li>
+    <li>Serrer correctement les connexions, vérifier absence de points chauds.</li>
+    <li>Installer parafoudre si exposition aux surtensions locales.</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h3>6. Essais, contrôles et conformité</h3>
+  <ol>
+    <li>Tests d'isolement et continuité des protections.</li>
+    <li>Test différentiel (mesure fuite) et test de mise à la terre.</li>
+    <li>Préparation du dossier pour COSSUEL et réception finale.</li>
+  </ol>
+</div>
+
+<div class="section checklist">
+  <h3>Checklist rapide avant réception</h3>
+  <ul>
+    <li>Tableau étiqueté et accessible</li>
+    <li>Disjoncteur différentiel testé</li>
+    <li>Mesure de terre documentée</li>
+    <li>Pas de fils dénudés, connexions serrées</li>
+    <li>Panneaux et circuits identifiés sur plan</li>
+  </ul>
+  </div>
+  <div class="section">
+    <h3>Tableau des erreurs fréquentes à éviter</h3>
+    <table class="table">
+      <tr><th>Erreur</th><th>Conséquence</th><th>Correction</th></tr>
+      <tr><td>Sous-dimensionnement des câbles</td><td>Risque de surchauffe, déclenchement</td><td>Respecter les sections minimales</td></tr>
+      <tr><td>Absence de protection différentielle</td><td>Danger pour les personnes</td><td>Installer un différentiel 30 mA</td></tr>
+      <tr><td>Tableau non étiqueté</td><td>Interventions risquées</td><td>Étiqueter chaque circuit</td></tr>
+      <tr><td>Absence de schéma de terre</td><td>Non-conformité COSSUEL</td><td>Fournir schéma et mesure</td></tr>
+      <tr><td>Matériel non certifié</td><td>Risque d’incident</td><td>Privilégier CE/NF</td></tr>
+    </table>
+  </div>
+  <div class="section">
+    <h3>Ressources utiles</h3>
+    <ul>
+      <li><a href="https://www.promotelec.com/installation-residentielle/" target="_blank">Guide Promotelec : Installation résidentielle</a></li>
+      <li><a href="https://www.afnor.org/" target="_blank">Normes et sécurité (AFNOR)</a></li>
+      <li><a href="https://www.legrand.fr/pro/actualites/installation-residentielle" target="_blank">Legrand : Conseils et schémas</a></li>
+    </ul>
+  </div>
+  <div class="encadre">
+    <b>Conformité PROQUELEC :</b> Respecter les étapes et les normes pour garantir la sécurité, la conformité et la performance de l’installation résidentielle.
+  </div>
+</div>
+
+<div class="footer">PROQUELEC — Guide professionnel • 2025<br>Contact : contact@proquelec.sn • Site : proquelec.sn</div>
+
+</body>
+</html>

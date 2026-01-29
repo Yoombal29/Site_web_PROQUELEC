@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Installations de sécurité",
+    "article": "612",
+    "alinéa": "612.7",
+    "regle_atomique": {
+        "id_unique": "NS01-001-612-612-7-A",
+        "type": "obligation",
+        "texte_normatif": "Essais fonctionnels Les ensembles d'appareillage, les moteurs et leurs auxiliaires, les commandes, les verrouillages, les CPI, doivent être soumis à un essai fonctionnel afin de vérifier qu'ils sont correctement montés, réglés et installés conformément aux prescriptions de la présente norme. Les dispositifs de protection doivent être soumis à des essais fonctionnels, si nécessaire, afin de vérifier qu'ils sont correctement installés et réglés. Partie 6-62 - Vérifications périodiques",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "612"
+        ]
+    }
+}

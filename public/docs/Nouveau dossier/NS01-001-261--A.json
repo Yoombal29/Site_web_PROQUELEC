@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "261",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-261--A",
+        "type": "obligation",
+        "texte_normatif": "Termes généraux C 261.1 conducteur (isolé) (461-04-04) ensemble comprenant l'âme, son enveloppe isolante et ses écrans éventuels. Par convention, dans la présente norme, le terme conducteur désigne un conducteur isolé. Lorsqu'il s'agit de conducteurs nus, le texte le précise explicitement. Le même terme désigne aussi bien le conducteur constitutif d'un câble, que le conducteur utilisé séparément des autres. C 261.2 câble (isolé) (461-06-01) ensemble constitué par : - un ou plusieurs conducteurs isolés ; - leur revêtement individuel éventuel ; - la protection d'assemblage éventuelle ; - le ou les revêtements ou gaines de protection éventuels. Il peut comporter en plus un ou plusieurs conducteurs non isolés. 261.3 câble monoconducteur câble unipolaire (461-06-02) câble comprenant un seul conducteur isolé. NOTE - Le terme câble unipolaire est plus particulièrement utilisé pour désigner le câble constituant l'une des phases d’un système polyphasé. 261.4 câble multiconducteur Câble multipolaire (461-06-04) câble comprenant plus d'un conducteur isolé. NOTE - Le terme câble multipolaire est plus particulièrement utilisé pour designer le câble constituant les phases d’un système polyphasé (exemple câble tripolaire). - 34 - C 261.5 gaine (d'un câble) (461-05-03) revêtement tubulaire continu et uniforme en matériau métallique ou non métallique, généralement extrudé. 261.6 canalisation (826-06-01) ensemble constitué par un ou plusieurs conducteurs électriques isolés, câbles ou jeux de barres et les éléments assurant leur fixation et, le cas échéant, leur protection mécanique. 261.7 connexion (581-03-01) jonction matérielle entre conducteurs ou contacts, destinée à assurer le passage du courant.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "261"
+        ]
+    }
+}

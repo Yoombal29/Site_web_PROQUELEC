@@ -1,0 +1,34 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "411",
+  "alinéa": "411.4.2",
+  "regle_atomique": {
+    "id_unique": "NS01-001-411-4-2-A",
+    "type": "obligation",
+    "texte_normatif": "Un conducteur PEN (neutre + protection confondus) peut être utilisé dans les installations fixes, sous réserve des prescriptions de 543.4, sans sectionnement ni coupure.",
+    "acteurs_concernes": ["installateur"],
+    "conditions_application": {
+      "schema_terre": ["TN-C", "TN-C-S"],
+      "tension": "<=1000V",
+      "lieu": ["installations fixes"]
+    },
+    "exceptions": ["câbles souples mobiles doivent avoir PE séparé"],
+    "risques_couverts": [
+      "rupture du PEN causant absence de protection sur masses aval"
+    ],
+    "gravite_non_conformite": "critique",
+    "mesure_corrective": "Utiliser câbles PEN résistants mécaniquement et à la corrosion, éviter aériens exposés.",
+    "justification": {
+      "physique": "Continuité de la protection dans le même conducteur",
+      "biologique": "Prévention de potentiels dangereux en aval",
+      "sécurité": "Réduction des conducteurs tout en assurant la sécurité"
+    },
+    "verification": {
+      "moyen": "Inspection visuelle et test de continuité",
+      "seuils": "Pas de sectionnement, section suffisante"
+    },
+    "liens_normatifs": ["543.4", "411.4.1", "555.1"]
+  }
+}

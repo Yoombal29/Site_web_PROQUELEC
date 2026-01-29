@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "523",
+    "alinéa": "534.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-523-534-1-A",
+        "type": "obligation",
+        "texte_normatif": "Choix des parafoudres Caves immeubles .................................... 772.2.3.4.3 Règles particulières Ceinturage d’équipotentialité ................... 545.2 Règles *CEM (AM) .............................................. 444.3 Dispositions générales 512.2.10 Caractéristiques Chambranles ........................................... 529.2 Pose Châssis .................................................... 558 Voir ensembles d'appareillage Chantiers ................................................. 213.2 Définition",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "523"
+        ]
+    }
+}

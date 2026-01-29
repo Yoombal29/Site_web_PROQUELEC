@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les surintensités",
+    "article": "432",
+    "alinéa": "432.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-432-432-1-A",
+        "type": "obligation",
+        "texte_normatif": "Dispositifs assurant à la fois la protection contre les surcharges et la protection contre C les courts-circuits Ces dispositifs de protection doivent pouvoir interrompre toute surintensité jusqu'au courant de court-circuit présumé au point où le dispositif est installé. Ils doivent satisfaire aux prescriptions de l'article 433. De tels dispositifs de protection peuvent être : - des disjoncteurs magnétothermiques ou électroniques, - des fusibles du type gG. NOTES - 1 - Le fusible comprend toutes les parties formant l'ensemble du dispositif de protection. 2 - L'utilisation d'un dispositif possédant un pouvoir de coupure inférieur au courant de court-circuit présumé au point où il est installé, est sujette aux prescriptions du sous-paragraphe 434.2.1. 3 - Le présent paragraphe n'exclut pas l'utilisation de dispositifs de protection présentant des caractéristiques différentes si les prescriptions du paragraphe 433.1 sont satisfaites. (1) Les fusibles du type gG sont conformes aux normes en vigueur . (2) Les disjoncteurs sont conformes à l'une des normes en vigueur . (3) Les appareils de connexion, de commande et de protection (ACP) sont conformes à la norme en vigueur . C 432.2 Dispositifs assurant uniquement la protection contre les surcharges Ce sont des dispositifs possédant généralement une caractéristique de fonctionnement à temps inverse et pouvant avoir un pouvoir de coupure inférieur au courant de court-circuit présumé au point où ils sont installés. Ils doivent satisfaire aux prescriptions de l'article 433. Les fusibles aM ne protègent pas contre les surcharges.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "432"
+        ]
+    }
+}

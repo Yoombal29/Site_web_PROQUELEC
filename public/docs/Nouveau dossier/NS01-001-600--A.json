@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux d’habitation",
+    "article": "600",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-600--A",
+        "type": "obligation",
+        "texte_normatif": "mm 600 mm a : armoire c : coffret g: goulotte Figure 771B – Exemples de GTL saillies matérialisées par goulottes, coffrets ou armoires 771.558.2.5 Organisation La position des différents éléments constituant la GTL (panneau de contrôle, tableau de répartition, tableau de communication et cheminements) est libre dans la GTL, mais doit respecter les contraintes suivantes. Les appareils de contrôle, de commande et de protection doivent être disposés de façon qu'il existe, entre l'un d'entre eux et une paroi latérale voisine, un espace libre, tel que : a) dans le cas du branchement avec panneau de contrôle unique pour le compteur d’électricité et l'appareil général de commande et de protection : - on puisse avoir accès aux bornes de l'appareil général de commande et de protection et du compteur d’électricité sans dépose de ces derniers ; - le capot esthétique éventuel du panneau de contrôle reste démontable ; le retrait de la platine de branchement soit possible sans démontage du (des) tableau(x) de répartition ; - la distance entre les bornes du compteur d’électricité et le tableau de répartition adjacent soit d'au moins 3 cm si la paroi est en matière isolante et 8 cm si elle est en matière non isolante. b) afin de tenir compte de la présence de la GTL, la distance entre le compteur d’électricité et les parois latérales de la GTL sera de 8 cm si la paroi est non isolante ou de 3 cm si la paroi est en matière isolante. c) dans le cas où le panneau de contrôle se trouve dans un ensemble préfabriqué, il est admis d'avoir à démonter des pièces d'habillage de cet ensemble pour avoir accès aux appareillages à condition qu'elles ne servent pas à maintenir en place des canalisations ou des appareillages, que le nombre des pièces à démonter soit limité et que la méthode de démontage soit facilement identifiable par une personne qualifiée. - 442 - La liaison entre les barrettes de terre du tableau de répartition et le tableau de communication doit être aussi courte que possible (de préférence inférieure à 50 cm) et de section 6 mm² minimum. Moyennant le respect des règles propres à chaque tableau, le tableau de communication peut être incorporé dans le tableau de répartition. Les équipements correspondant aux autres applications de communication (TV, satellite, interactivité, etc.) sont implantés soit en dessous de 1,10 m, soit au-dessus de 1,80 m, avec une réservation de 35 cm en largeur et de 18 cm en profondeur. Le cheminement des réseaux de puissance et de communication doit se faire dans des conduits ou des compartiments de goulottes distincts. Les croisements entre ces canalisations doivent être évités au maximum et être réalisés à 90. Veiller à ne pas réaliser de boucles. Certains produits de gestion du bâtiment sont conçus pour cohabiter sans problème de fonctionnement avec les matériels de puissance. Ils peuvent donc être indifféremment installés dans la partie courant fort ou courant faible, le cheminement se faisant dans la partie où le produit est installé. L'agencement du tableau de répartition est réalisé de manière à ce que l'éloignement entre les produits perturbateurs (par exemple contacteurs) et le tableau de communication soit le plus grand possible. Afin de permettre une bonne incorporation de l’ouverture de la GTL aux besoins ou à la décoration intérieure du logement, liberté est donnée quant à la conception de l’accès à la gaine. Une fermeture à clé n’est pas admise. Quelques exemples de réalisations sont indiqués ci-dessous. Plafond A A A B B B A A Sol 2 parties A démontables ou Une retombée d’huisserie normale 2 parties permettant fixes si leur hauteur est en A permettant d’ouvrir en B une l’accès à l’appareillage inférieure à 0,30 m, porte de hauteur et décoration en A et une partie permettant l’accessibilité à identiques à celles des portes démontable en B partir de B. avoisinantes permettant d’avoir des 1 partie B permettant l’accès dispositifs apparents à l’appareillage (domotique régulation, signalisation etc.) Figure 771C - Exemples de réalisations de GTL matérialisée selon la figure 771A - 443 - Les dimensions des parties démontables et mobiles seront définies en accord avec le (ou les) installateur(s) concerné(s). La GTL n'étant pas considérée comme une enveloppe de matériel électrique, chacun des matériels incorporés doit assurer sa propre protection contre les chocs électriques : IP2X ou IPXXB ou TBTS 25 V alternatif ou 60 V continu. Figure 771D - Exemple de réalisation de Figure 771E - Exemple de réalisation de GTL encastrée GTL encastrée Panneau de contrôle à gauche Panneau de contrôle à gauche Branchement par le haut Branchement par le bas (*) 330 pour une distribution triphasée - 444 - noitacinummoc noitasilanaC tnemehcnarb noitasilanaC ecnassiup noitasilanaC 600 250 PC TR",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "600"
+        ]
+    }
+}

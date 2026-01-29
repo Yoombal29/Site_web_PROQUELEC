@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre l’incendie, les brûlures et l’explosion",
+    "article": "424",
+    "alinéa": "424.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-424-424-2-A",
+        "type": "obligation",
+        "texte_normatif": "Dans le cas d’atmosphères explosives gazeuses (G), les matériels doivent être choisis parmi ceux conformes aux normes spécifiques des modes de protection. Le tableau 42B donne les références des normes à considérer, ainsi que les zones dans lesquelles peuvent être installés les matériels des différents modes de protection. Tableau 42B – Indications sur l’utilisation des matériels conformes aux normes spécifiques des modes de protection en atmosphère explosive gazeuse Norme Zone d’atmosphère (G) Mode de protection Zone 0 Zone 1 Zone 2 Enveloppe antidéflagrante « d » NF EN 50018 x x Sécurité augmentée « e » NF EN 50019 x x Sécurité intrinsèque NF EN 50020 Mode de sécurité « ia » x x x Mode de sécurité « ib » x x Encapsulage « m » NF EN 50028 x x Immersion dans l’huile « o » NF EN 50015 x x Surpression interne « p » NF EN 50016 x x Remplissage pulvérulent « q » NF EN 50017 x x Mode de protection « n » NF EN 50021 x x Utilisation possible sous réserve de l’adéquation à la nature de l’atmosphère explosive. La norme NF EN 60079-14 (C 23-579-14) définit les règles à respecter pour la mise en œuvre des matériels des différents modes de protection. Dans le cas d’atmosphères explosives du fait de la présence de poussières combustibles (D), les matériels utilisables dans les zones 20, 21 et 22 doivent être conformes à la norme NF EN 50281-1- 1 (C 23-581-1-1). La norme NF EN 50281-1-2 (C 23-581-1-2) définit les règles à respecter pour la mise en œuvre desdits matériels.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "424"
+        ]
+    }
+}

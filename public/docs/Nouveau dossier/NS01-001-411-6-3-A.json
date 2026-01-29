@@ -1,0 +1,34 @@
+{
+  "norme": "NS 01-001",
+  "titre": "Titre 4 - Protection pour assurer la sécurité",
+  "chapitre": "Protection contre les chocs électriques",
+  "article": "411",
+  "alinéa": "411.6.3",
+  "regle_atomique": {
+    "id_unique": "NS01-001-411-6-3-A",
+    "type": "obligation",
+    "texte_normatif": "Un contrôleur permanent d'isolement doit être prévu pour indiquer l'apparition d'un premier défaut d'une partie active à la masse ou à la terre.",
+    "acteurs_concernes": ["installateur"],
+    "conditions_application": {
+      "schema_terre": ["IT"],
+      "tension": "<=1000V",
+      "lieu": ["installations IT"]
+    },
+    "exceptions": [],
+    "risques_couverts": [
+      "défaillance non détectée menant à deuxième défaut"
+    ],
+    "gravite_non_conformite": "majeure",
+    "mesure_corrective": "Installer contrôleur avec signal visuel et sonore (sonore annulable).",
+    "justification": {
+      "physique": "Détection précoce du défaut pour réparation rapide",
+      "biologique": "Prévention de tensions dangereuses cumulées",
+      "sécurité": "Surveillance continue de l'isolement"
+    },
+    "verification": {
+      "moyen": "Test du contrôleur (signal à défaut simulé)",
+      "seuils": "Signal persistant tant que défaut existe"
+    },
+    "liens_normatifs": ["532.4", "411.6.1"]
+  }
+}

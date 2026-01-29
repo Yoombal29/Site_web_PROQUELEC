@@ -1,0 +1,83 @@
+<html>
+<head>
+  <title>Guide Technique – Économie d’énergie et maîtrise de la consommation</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.5em;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>GUIDE TECHNIQUE<br>Économie d’énergie et maîtrise de la consommation</h1>
+  <h2>1. Introduction : contexte et importance</h2>
+  <p>Maîtriser la consommation d’énergie permet de réduire les coûts, préserver l’environnement et garantir la pérennité des installations électriques.</p>
+  <h2>2. Références normatives</h2>
+  <ul>
+    <li>NS 01-001</li>
+    <li>NF C 15-100</li>
+    <li>Textes sur l’efficacité énergétique</li>
+  </ul>
+  <h2>3. Exigences techniques et réglementaires</h2>
+  <ul>
+    <li>Installation d’appareils basse consommation</li>
+    <li>Contrôle des pertes énergétiques</li>
+    <li>Optimisation des circuits</li>
+  </ul>
+  <h2>4. Anomalies et risques associés</h2>
+  <ul>
+    <li>Surchauffe des équipements</li>
+    <li>Consommation excessive</li>
+    <li>Absence de régulation</li>
+  </ul>
+  <h2>5. Procédure de diagnostic et de vérification</h2>
+  <ol>
+    <li>Analyse de la consommation</li>
+    <li>Contrôle des appareils</li>
+    <li>Vérification des circuits</li>
+  </ol>
+  <h2>6. Méthodes d’installation et de mise en conformité</h2>
+  <ul>
+    <li>Remplacement des appareils énergivores</li>
+    <li>Installation de régulateurs</li>
+    <li>Optimisation des schémas électriques</li>
+  </ul>
+  <h2>7. Recommandations pratiques</h2>
+  <ul>
+    <li>Surveiller la consommation mensuelle</li>
+    <li>Former les usagers</li>
+    <li>Privilégier les équipements certifiés</li>
+  </ul>
+  <h2>8. Études de cas / exemples d’application</h2>
+  <ul>
+    <li>Optimisation énergétique d’un immeuble collectif</li>
+    <li>Installation d’un système de régulation</li>
+  </ul>
+    <h2>9. Tableau des gestes efficaces pour économiser l’énergie</h2>
+    <table style="width:100%;border-collapse:collapse;margin-top:1em;">
+      <tr style="background:#e0e7ff;"><th>Action</th><th>Effet</th><th>Conseil</th></tr>
+      <tr><td>Remplacer les lampes par des LED</td><td>Réduction de la consommation</td><td>Jusqu’à 80% d’économie</td></tr>
+      <tr><td>Installer des minuteries ou détecteurs de présence</td><td>Éviter les gaspillages</td><td>Idéal pour parties communes</td></tr>
+      <tr><td>Régler la température des chauffe-eau</td><td>Moins de pertes</td><td>55-60°C recommandé</td></tr>
+      <tr><td>Entretenir les appareils</td><td>Optimisation du rendement</td><td>Nettoyage et contrôle régulier</td></tr>
+      <tr><td>Surveiller la consommation</td><td>Détection des anomalies</td><td>Relever les index chaque mois</td></tr>
+    </table>
+    <h2>10. Erreurs à éviter</h2>
+    <ul>
+      <li>Ignorer les pertes énergétiques des vieux appareils</li>
+      <li>Oublier d’entretenir les équipements</li>
+      <li>Ne pas sensibiliser les usagers</li>
+      <li>Installer des appareils non certifiés</li>
+    </ul>
+    <h2>11. Ressources utiles</h2>
+    <ul>
+      <li><a href="https://www.promotelec.com/economie-energie/" target="_blank">Guide Promotelec : Économie d’énergie</a></li>
+      <li><a href="https://www.afnor.org/" target="_blank">Normes et efficacité énergétique (AFNOR)</a></li>
+      <li><a href="https://www.legrand.fr/pro/actualites/economie-energie" target="_blank">Legrand : Maîtrise de la consommation</a></li>
+    </ul>
+    <div class="encadre">
+      <b>Conformité PROQUELEC :</b> Privilégier les équipements certifiés et sensibiliser les usagers pour garantir la performance énergétique et la conformité réglementaire.
+    </div>
+  <div class="encadre">
+    <b>Conseils PROQUELEC :</b> L’économie d’énergie commence par le choix des équipements et la sensibilisation des usagers. Agir pour la planète et le portefeuille.
+  </div>
+  <footer>
+    © PROQUELEC – Guide technique Économie d’énergie. Version détaillée pour professionnels et gestionnaires.
+  </footer>
+</body>
+</html>

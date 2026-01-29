@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Locaux contenant une baignoire ou une douche",
+    "article": "750",
+    "alinéa": "701.32",
+    "regle_atomique": {
+        "id_unique": "NS01-001-750-701-32-A",
+        "type": "obligation",
+        "texte_normatif": "Classification des volumes 701.320.1 Les présentes prescriptions considèrent quatre volumes, - le volume 0 est le volume intérieur de la baignoire ou du receveur de douche ; - le volume 1 est limité, • d'une part, par la surface cylindrique à génératrice verticale circonscrite à la baignoire ou au receveur de douche ou, pour une douche à pomme fixe sans receveur, par la surface cylindrique à génératrice verticale de rayon 0,60 m et dont l'axe passe par la pomme fixe, • d'autre part, par le plan horizontal situé au-dessus du volume 0 et celui situé à 2,25 m au-dessus du fond de la baignoire ou du receveur de douche. - le volume 2 est limité, • d'une part, par la surface verticale extérieure du volume 1 et une surface parallèle située à 0,60 m de la première, • d'autre part, par le sol et le plan horizontal situé à 3,0 m au-dessus du sol. - le volume 3 est limité, • d'une part, par la surface verticale extérieure du volume 2 et une surface parallèle située à 2,40 m de la première, • d'autre part, par le sol et le plan horizontal situé à 2,25 m au-dessus du sol. Les dimensions sont mesurées en tenant compte des murs et des parois (voir figures 701A, 701B et 701C). 701.320.2 Dans le cas où il n'y a pas de receveur de douche et où la pomme de douche est située à l'extrémité d'un flexible, l'axe vertical de la surface cylindrique est considéré à l'origine du flexible et le volume 1 est limité par la surface cylindrique située à 1,20 m de ce point, quelle que soit la position du point d'écoulement. C 701.320.3 Les cabines de douche individuelles doivent répondre aux prescriptions des paragraphes 701.1 à 701.5. 701.320.4 Le volume situé au-dessus du volume 1 jusqu'à une hauteur de 3 m au-dessus du sol est un volume 2. Le volume situé au-dessus du volume 2 pour une hauteur supérieure à 3 m au-dessus du sol est hors volumes. Le volume situé au-dessus du volume 3 est hors volumes. Voir figures 701B. - 340 - 2002 701.320.5 L'espace situé au-dessous de la baignoire ou de la douche et sur leurs côtés est assimilé au volume 3 s'il est fermé et accessible par une trappe prévue à cet usage et pouvant être ouverte seulement à l'aide d'un outil. Dans le cas contraire, les règles du volume 1 s’appliquent à cet espace. Toutefois, dans les deux cas, le degré de protection minimal IPX3 est requis. 701.320.6 Lorsqu'un faux-plafond fermé est disposé dans les volumes 1 et 2, l'espace situé au- dessus de ce faux-plafond est assimilé à un volume 3 [voir figure 701B e)]. Si un faux-plafond ajouré est à une hauteur comprise entre 2,25 m et 3 m, les volumes ainsi définis sont indiqués dans la figure 701B c).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "750"
+        ]
+    }
+}

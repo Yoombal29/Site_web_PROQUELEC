@@ -1,0 +1,83 @@
+<html>
+<head>
+  <title>Guide Technique – Choix et mise en œuvre des matériels</title>
+  <style>body{font-family:Arial,sans-serif;margin:2em;}h1{color:#1d4ed8;}h2{margin-top:1.5em;}table{width:100%;border-collapse:collapse;}th,td{border:1px solid #ccc;padding:6px;}footer{margin-top:2em;font-size:0.9em;color:#555;} .encadre{background:#e0f2fe;padding:1em;border-radius:6px;margin-top:1em;}</style>
+</head>
+<body>
+  <h1>GUIDE TECHNIQUE<br>Choix et mise en œuvre des matériels (pose, raccordement)</h1>
+  <h2>1. Introduction : contexte et importance</h2>
+  <p>Le choix et la mise en œuvre des matériels électriques sont déterminants pour la sécurité, la conformité et la durabilité des installations.</p>
+  <h2>2. Références normatives</h2>
+  <ul>
+    <li>NS 01-001</li>
+    <li>NF C 15-100</li>
+    <li>Textes sur la certification des matériels</li>
+  </ul>
+  <h2>3. Exigences techniques et réglementaires</h2>
+  <ul>
+    <li>Utilisation de matériels certifiés</li>
+    <li>Respect des schémas de câblage</li>
+    <li>Contrôle de la compatibilité des équipements</li>
+  </ul>
+  <h2>4. Anomalies et risques associés</h2>
+  <ul>
+    <li>Matériel non conforme</li>
+    <li>Erreur de raccordement</li>
+    <li>Usure prématurée</li>
+  </ul>
+  <h2>5. Procédure de diagnostic et de vérification</h2>
+  <ol>
+    <li>Inspection du matériel avant installation</li>
+    <li>Test de compatibilité</li>
+    <li>Contrôle du raccordement</li>
+  </ol>
+  <h2>6. Méthodes d’installation et de mise en conformité</h2>
+  <ul>
+    <li>Respecter les notices des fabricants</li>
+    <li>Utiliser des outils adaptés</li>
+    <li>Documenter chaque étape</li>
+  </ul>
+  <h2>7. Recommandations pratiques</h2>
+  <ul>
+    <li>Privilégier les marques reconnues</li>
+    <li>Former les installateurs</li>
+    <li>Contrôler après chaque intervention</li>
+  </ul>
+  <h2>8. Études de cas / exemples d’application</h2>
+  <ul>
+    <li>Pose d’un tableau électrique certifié</li>
+    <li>Raccordement d’un appareil spécifique</li>
+  </ul>
+    <h2>9. Tableau des critères de choix des matériels</h2>
+    <table style="width:100%;border-collapse:collapse;margin-top:1em;">
+      <tr style="background:#e0e7ff;"><th>Critère</th><th>Exemple</th><th>Impact</th></tr>
+      <tr><td>Certification</td><td>Marquage CE, NF</td><td>Conformité réglementaire</td></tr>
+      <tr><td>Compatibilité</td><td>Adaptation au schéma et puissance</td><td>Fiabilité de l’installation</td></tr>
+      <tr><td>Durabilité</td><td>Matériaux robustes</td><td>Longévité, moins d’interventions</td></tr>
+      <tr><td>Facilité de pose</td><td>Notice claire, accessoires fournis</td><td>Gain de temps, moins d’erreurs</td></tr>
+      <tr><td>Prix</td><td>Rapport qualité/prix</td><td>Optimisation du budget</td></tr>
+    </table>
+    <h2>10. Erreurs à éviter</h2>
+    <ul>
+      <li>Choisir du matériel non certifié ou contrefait</li>
+      <li>Ignorer la compatibilité avec l’installation</li>
+      <li>Ne pas lire la notice fabricant</li>
+      <li>Oublier de contrôler après installation</li>
+    </ul>
+    <h2>11. Ressources utiles</h2>
+    <ul>
+      <li><a href="https://www.promotelec.com/choix-materiels/" target="_blank">Guide Promotelec : Choix des matériels</a></li>
+      <li><a href="https://www.afnor.org/" target="_blank">Normes et certifications (AFNOR)</a></li>
+      <li><a href="https://www.legrand.fr/pro/actualites/choix-materiels" target="_blank">Legrand : Sélection des matériels</a></li>
+    </ul>
+    <div class="encadre">
+      <b>Conformité PROQUELEC :</b> Toujours privilégier les matériels certifiés et adaptés à l’usage pour garantir la sécurité et la conformité de l’installation.
+    </div>
+  <div class="encadre">
+    <b>Conseils PROQUELEC :</b> Un matériel bien choisi et bien posé, c’est la garantie d’une installation fiable et durable. Toujours vérifier la conformité.
+  </div>
+  <footer>
+    © PROQUELEC – Guide technique Choix des matériels. Version détaillée pour professionnels et gestionnaires.
+  </footer>
+</body>
+</html>

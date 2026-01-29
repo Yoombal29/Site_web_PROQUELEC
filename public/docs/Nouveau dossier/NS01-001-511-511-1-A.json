@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Règles communes à tous les matériels",
+    "article": "511",
+    "alinéa": "511.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-511-511-1-A",
+        "type": "obligation",
+        "texte_normatif": "Tout matériel électrique doit être conforme à la norme européenne (EN) ou document d’harmonisation (HD) approprié ou à la norme nationale issue du HD. En l’absence de EN ou HD, les matériels doivent être conformes aux normes nationales appropriées. Dans tous les autres cas, il convient de faire référence à la norme CEI appropriée ou à la norme nationale appropriée d’un autre pays. L'utilisation de matériels conformes aux normes éditées par l'Union Technique de l'Électricité et de la Communication permet de satisfaire à cette règle. Lorsqu'un matériel est revêtu d'une marque de conformité aux normes, il est considéré sans autre vérification comme conforme à ces normes. Pour certains matériels dits à usage industriel, la conformité aux normes est apportée soit par une déclaration de conformité du constructeur, soit par un certificat de conformité établi par un organisme accrédité. Un organisme accrédité est un organisme ayant obtenu une accréditation délivrée par le COFRAC (Comité Français d'Accréditation), ou par un comité équivalent désigné par les accords multilatéraux de reconnaissance mutuelle signés entre le COFRAC et ses homologues européens et internationaux dans le cadre de l'ECA (European Cooperation of Accreditation) et de l'IAF (International Accreditation Form). Le marquage CE, atteste la conformité du produit aux dispositions (exigences essentielles et procédures d'évaluation) de la Directive Basse Tension en matière de sécurité et/ou de la Directive Compatibilité Electromagnétique en matière d'environnement électromagnétique. Ce marquage ne préjuge pas de la conformité du produit aux normes (voir 133.1). Il ne garantit pas, en particulier, son niveau de performance, ni son aptitude à la fonction.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "511"
+        ]
+    }
+}

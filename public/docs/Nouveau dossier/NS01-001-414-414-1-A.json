@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les chocs électriques",
+    "article": "414",
+    "alinéa": "414.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-414-414-1-A",
+        "type": "obligation",
+        "texte_normatif": "Généralités 414.1.1 La protection par très basse tension est une mesure de protection constituée par deux types différents de circuits à très basse tension : - Très Basse Tension de Sécurité (TBTS, circuits non reliés à la terre), - Très Basse Tension de Protection (TBTP, circuits reliés à la terre), pour lesquels la protection est assurée par : - une limitation de la tension TBTS ou TBTP à 50 V en courant alternatif et 120 V en courant continu ; - une séparation de protection entre les circuits TBTS ou TBTP et tous les autres circuits autres que TBTS ou TBTP, et une isolation principale entre les circuits TBTS et TBTP, Pour les seuls circuits TBTS, une isolation principale est assurée entre le circuit TBTS et la terre. 414.1.2 L’utilisation de la TBTS ou de la TBTP est considérée comme une mesure de protection dans toutes les situations. NOTE – Dans certains cas, la partie 7 limite la valeur de la très basse tension à des valeurs inférieures à 50 V en courant alternatif ou 120 V en courant continu lisse. - 82 - Les différentes très basses tensions sont désignées par les abréviations suivantes : - TBTS : très basse tension de sécurité ; - TBTP : très basse tension de sécurité ayant un point du circuit secondaire relié à la terre mais satisfaisant à toutes les autres conditions de la TBTS ; - TBTF : très basse tension fonctionnelle, c'est-à-dire très basse tension ne répondant ni aux règles de la TBTS ni aux règles de la TBTP (voir 411.7). Les matériels utilisés dans les circuits à TBTS et TBTP peuvent être de la classe III. C 414.2 Prescriptions pour la protection contre les contacts directs et pour la protection contre les contacts indirects La protection contre les contacts directs et la protection contre les contacts indirects pour les circuits dont la tension nominale ne peut être supérieure à 50 V en courant alternatif et",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "414"
+        ]
+    }
+}

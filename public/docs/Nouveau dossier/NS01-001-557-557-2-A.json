@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Autres matériels",
+    "article": "557",
+    "alinéa": "557.2",
+    "regle_atomique": {
+        "id_unique": "NS01-001-557-557-2-A",
+        "type": "obligation",
+        "texte_normatif": "Points à considérer pour le choix des condensateurs Ils doivent être choisis et installés suivant les instructions du constructeur d'une part et de conditions générales techniques d'autre part. Les points les plus importants à considérer sont les suivants : 557.2.1 Distorsion harmonique Les distorsions harmoniques peuvent entraîner des effets préjudiciables pour les condensateurs. L’utilisation d’inductances anti-harmoniques en série avec chaque gradin de condensateurs permet d’éviter les problèmes de résonance et de protéger les condensateurs. Si des distorsions harmoniques sont constatées, il convient de prévoir des dispositions de compensation. L’usage est d’utiliser des inductances anti-harmoniques dès que la puissance des charges générant des harmoniques dépasse 20 % de la puissance du transformateur d’alimentation. Si cette puissance dépasse 50 %, il convient d’utiliser des filtres anti- harmoniques. 557.2.2 Tension assignée La valeur de la tension assignée des condensateurs diffère parfois de celle de la tension nominale du réseau. La tension assignée des condensateurs est au moins égale à la tension maximale de fonctionnement de l'installation, compte tenu de l'influence des condensateurs, des éléments inductifs qui peuvent leur être associés en série et de la présence éventuelle de courants harmoniques. Les variations de charge de l'installation sont également à prendre en compte (mise hors tension totale ou partielle des condensateurs à faible charge). Cependant, il convient d'éviter les marges de sécurité excessives dans le choix de la tension assignée, car elles peuvent entraîner une diminution de la puissance réactive de la batterie de condensateurs. ——————— (25) NF EN 60831-1 (C 54-108), NF EN 60831-2 (C 54-109) (26) NF EN 60931-1 (C 54-118), NF EN 60931-2, (C 54-119) - 300 - 557.2.3 Altitude - Les condensateurs sont conçus pour fonctionner jusqu'à 2 000 mètres. Au- delà, le choix est à faire en accord avec le constructeur. 557.2.4 Température de service - Les condensateurs sont très sensibles aux températures trop élevées ; ils doivent donc être choisis et installés de telle façon que la température de l’air ambiant ne dépasse pas les valeurs limites de la catégorie de température. Une température trop élevée a une grande influence sur la durée de vie des condensateurs. Il convient donc de les installer de manière à permettre une bonne évacuation par rayonnement et par convection de la chaleur produite par les pertes et de les protéger contre les rayonnements (solaires ou autres). L'utilisation de condensateurs prévus pour une tension assignée plus élevée est parfois nécessaire pour tenir compte des effets néfastes des températures trop élevées. 557.2.5 Surtensions - Le choix et l'installation des condensateurs doivent tenir compte des surtensions susceptibles d'être rencontrées au lieu de l'installation. Les condensateurs peuvent fonctionner pendant de longues périodes sous des tensions ne dépassant pas 1,10 U , à l'exclusion des surtensions transitoires. n Parmi les surtensions transitoires, il faut noter particulièrement celles résultant des réamorçages des appareils de commutation au moment de leur ouverture. Il convient de choisir des appareillages (interrupteurs, disjoncteurs, contacteurs) aptes à manœuvrer les condensateurs. Dans le cas de batteries de condensateurs de grande dimension, les parafoudres éventuels de protection contre les surtensions transitoires sont choisis pour tenir compte du courant de décharge des condensateurs. En ce qui concerne les surtensions temporaires à fréquence industrielle, il est nécessaire de limiter la valeur de courant des condensateurs à 90 % du courant magnétisant des moteurs auxquels les condensateurs sont connectés directement (suppression de l'auto-excitation). 557.2.6 Surintensités Les condensateurs sont prévus normalement pour pouvoir fonctionner de manière permanente sous un courant permanent égal à 1,3 fois le courant engendré par la tension sinusoïdale assignée sous la fréquence assignée, transitoires exclues. Ils doivent être protégés pour toute surintensité de valeur supérieure. Les courants de surcharge supérieurs aux valeurs admissibles peuvent être provoqués par une tension excessive à la fréquence fondamentale, par des harmoniques, ou par les deux à la fois. Les sources principales d'harmoniques sont les redresseurs, l’électronique de puissance, les circuits magnétiques à noyaux saturés. Pour protéger les condensateurs contre les surintensités dues aux harmoniques, il peut être nécessaire d’ajouter des inductances anti-harmoniques en série avec les condensateurs. La tension assignée des condensateurs doit alors être augmentée. 557.2.7 Appareillage de commande et de protection Sauf cas particulier (par exemple filtrage des harmoniques) l’appareillage de commande et de protection des condensateurs doit supporter en permanence, au maximum 1,5 fois le courant assigné, afin de tenir compte des harmoniques et des tolérances sur les capacités. Du fait des phénomènes transitoires au moment de la mise sous tension, il doit supporter les efforts électrodynamiques et thermiques dus aux surintensités qui apparaissent à ce moment. Lorsque plusieurs batteries ou gradins sont connectées en parallèle, il est nécessaire de limiter les surintensités transitoires en utilisant des inductances en série avec les condensateurs ou en mettant sous tension les condensateurs par l’intermédiaire d’une résistance. 557.2.8 Règles de sécurité Chaque condensateur doit être équipé d’un dispositif permettant la décharge après déconnexion. - 301 -",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "557"
+        ]
+    }
+}

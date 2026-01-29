@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Protection contre les perturbations de tension et",
+    "article": "441",
+    "alinéa": "442.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-441-442-1-A",
+        "type": "obligation",
+        "texte_normatif": "Domaine d'application et objet Les règles du présent article sont destinées à assurer la sécurité des personnes et des matériels dans une installation à basse tension en cas de surtension temporaire à fréquence industrielle. Les articles suivants ne prennent en considération que quatre situations généralement à l’origine des surtensions temporaires, ces situations étant les plus contraignantes : - défaut à la terre de l’installation à haute tension (442.2) ; - rupture du conducteur neutre dans une installation en schéma TN ou TT (442.5) ; - premier défaut à la terre dans une installation en schéma IT (442.6).",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "441"
+        ]
+    }
+}

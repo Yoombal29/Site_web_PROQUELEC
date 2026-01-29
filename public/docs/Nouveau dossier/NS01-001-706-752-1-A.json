@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "Titre 4 - Protection pour assurer la sécurité",
+    "chapitre": "Aires de distribution de carburants liquides",
+    "article": "706",
+    "alinéa": "752.1",
+    "regle_atomique": {
+        "id_unique": "NS01-001-706-752-1-A",
+        "type": "obligation",
+        "texte_normatif": "Domaine d’application Les prescriptions de la présente partie sont applicables aux installations électriques des aires de distribution des carburants liquides. Les installations de distribution de liquides inflammables sont généralement des installations classées, le plus souvent soumises à déclaration. De ce fait, elles doivent notamment satisfaire aux prescriptions de l'arrêté-type n°261 bis (n° de nomenclature actuel 1434) relatif au remplissage et à la distribution de liquides inflammables.",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "706"
+        ]
+    }
+}

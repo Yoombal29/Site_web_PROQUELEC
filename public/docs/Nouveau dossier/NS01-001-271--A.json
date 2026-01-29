@@ -1,0 +1,47 @@
+{
+    "norme": "NS 01-001",
+    "titre": "",
+    "chapitre": "",
+    "article": "271",
+    "alinéa": "",
+    "regle_atomique": {
+        "id_unique": "NS01-001-271--A",
+        "type": "obligation",
+        "texte_normatif": "Termes relatifs aux possibilités de déplacement C 271.1 matériel portatif (à main) (826-07-05) matériel prévu pour être tenu à la main en usage normal. Un matériel portatif est un matériel dont le fonctionnement exige l'action constante de la main soit comme support, soit comme guide. C 271.2 matériel mobile (826-07-04) matériel qui est déplacé pendant son fonctionnement ou qui peut être facilement déplacé tout en restant relié au circuit d'alimentation. Un matériel mobile peut, soit se déplacer par ses propres moyens, soit être déplacé pendant qu'il est sous tension. C 271.3 matériel semi-fixe (stationnaire) (826-07-06) matériel non muni d'une poignée pour le transport et ayant une masse telle qu'il ne puisse pas être déplacé facilement. Exemple : cette masse est fixée à 18 kg dans les normes relatives aux appareils électrodomestiques. - 37 - 271.4 matériel amovible matériel portatif à main ou mobile ou semi-fixe. 271.5 matériel fixe matériel scellé à un support ou fixé d'une autre manière à un endroit précis. 28 SECTIONNEMENT ET COMMANDE C 281.1 sectionnement (826-08-01) fonction destinée à assurer la mise hors tension de tout ou partie d'une installation électrique en séparant l'installation électrique ou une partie de l'installation électrique, de toute source d'énergie électrique, pour des raisons de sécurité. La fonction de sectionnement contribue à garantir la sécurité des personnes devant effectuer des travaux des réparations, la recherche de défaut ou le remplacement de matériels. 281.2 coupure pour entretien mécanique ouverture d'un dispositif de coupure destinée à couper l'alimentation des parties d'un matériel alimenté en énergie électrique de façon à éviter les dangers lors de travaux sur ce matériel. Cette fonction est destinée à assurer la coupure de l'alimentation électrique d'un appareil pendant des interventions sur les parties mécaniques. C 281.3 coupure d'urgence (826-08-03) action destinée à couper l’alimentation électrique d’une installation électrique pour supprimer ou réduire un danger. 281.4 commande fonctionnelle (826-08-05) action destinée à assurer la fermeture, l'ouverture ou la variation de l'alimentation en énergie électrique de tout ou partie d'une installation électrique à des fins de fonctionnement normal. 281.5 circuit de commande circuit servant à transmettre des ordres à partir d'un organe de manœuvre (tel que clé, manette, levier, bouton-poussoir, appareil de commande automatique,...) vers le dispositif assurant l'ouverture, la fermeture ou le réglage d'un autre circuit. 29 COMPÉTENCE DES PERSONNES C 291.1 personne qualifiée (en électricité) (826-09-01) personne ayant la formation et l'expérience appropriées pour lui permettre de percevoir les risques et d'éviter les dangers que peut présenter l'électricité. Cette définition correspond à la condition d'influence externe BA5 (512.2.16). (*) La Publication UTE C 18-510 donne la définition suivante d'une personne qualifiée (2.1.9) : « Personne possédant les connaissances théoriques et pratiques nécessaires à la bonne exécution des tâches qui lui sont confiées mais qui peut ne pas posséder de connaissances en matière de sécurité ». Au senegal, seules les personnes habilitées au sens de la publication UTE C 18-510 sont autorisées à travailler dans les conditions BA4 et BA5. - 38 - 291.2 C personne avertie (en électricité) (826-09-02) personne suffisamment informée ou surveillée par des personnes qualifiées en électricité pour lui permettre de percevoir les risques et d'éviter les dangers que peut présenter l'électricité. Cette définition correspond à la condition d'influence externe BA4 (512-2-16). Au Senegal, seules les personnes habilitées au sens de la publication UTE C 18-510 sont autorisées à travailler dans les conditions BA4 et BA5. 291.3 C personne ordinaire (826-09-03) personne qui n'est ni une personne qualifiée en électricité ni une personne avertie en électricité. 292.1 zone d'accès limité (826-09-04) zone uniquement accessible aux personnes électriquement qualifiées et aux personnes électriquement averties. 292.2 passage de service (826-01-09) passage utilisé pour des besoins tels que commande, contrôle, réglage et observation des matériels électriques. 292.3 passage d'entretien (826-01-10) passage utilisé pour l'accès à des matériels électriques pour besoin d'entretien. ______________ - 39 - Titre 3 – Détermination des caractéristiques générales des Installations 30 GENERALITES ................................................................................................................42 31 ALIMENTATIONS ET STRUCTURES...............................................................................42",
+        "acteurs_concernes": [
+            "installateur",
+            "controleur"
+        ],
+        "conditions_application": {
+            "schema_terre": [
+                "TN",
+                "TT",
+                "IT"
+            ],
+            "tension": "<=1000V",
+            "lieu": [
+                "habitation",
+                "ERP"
+            ]
+        },
+        "exceptions": [],
+        "risques_couverts": [
+            "électrocution",
+            "incendie"
+        ],
+        "gravite_non_conformite": "critique",
+        "mesure_corrective": "Appliquer les prescriptions de la norme",
+        "justification": {
+            "physique": "Écoulement du courant de défaut",
+            "biologique": "Réduction tension de contact",
+            "sécurité": "Coupure automatique"
+        },
+        "verification": {
+            "moyen": "Mesure continuité PE",
+            "seuils": "Conformité selon NS 01-001"
+        },
+        "liens_normatifs": [
+            "271"
+        ]
+    }
+}
