@@ -291,15 +291,17 @@
 
 .technical-table {
   @apply w-full border-collapse my-4 text-sm;
-    background: hsl(var(--muted) / 0.08);
-    border: 1px solid hsl(var(--border) / 0.26);
-    border-radius: 8px;
-    overflow: hidden;
-  }
+  background: hsl(var(--muted) / 0.08);
+  border: 1px solid hsl(var(--border) / 0.26);
+  border-radius: 8px;
+  overflow: hidden;
+}
 
-  .dark .technical-table {
-    background: hsl(var(--muted) / 0.12);
-    border-color: hsl(var(--border) / 0.18);
+.dark .technical-table {
+  background: hsl(var(--muted) / 0.12);
+  border-color: hsl(var(--border) / 0.18);
+}
+
 .technical-table th {
   @apply bg-slate-900 text-white p-3 text-left font-semibold;
 }
@@ -314,21 +316,23 @@
 
 .audit-alert {
   @apply p-4 rounded-lg border-l-4 my-4 flex items-start gap-3;
-    background: linear-gradient(to right, hsl(var(--destructive) / 0.12), transparent);
-    border-color: hsl(var(--destructive));
-  }
+  background: linear-gradient(to right, hsl(var(--destructive) / 0.12), transparent);
+  border-color: hsl(var(--destructive));
+}
 
-  .dark .audit-alert {
-    background: linear-gradient(to right, hsl(var(--destructive) / 0.18), transparent);
-  }
+.dark .audit-alert {
+  background: linear-gradient(to right, hsl(var(--destructive) / 0.18), transparent);
+}
 
-  .audit-alert-warning {
-    @apply border-orange-500;
-    background: linear-gradient(to right, hsl(var(--accent) / 0.12), transparent);
-  }
+.audit-alert-warning {
+  @apply border-orange-500;
+  background: linear-gradient(to right, hsl(var(--accent) / 0.12), transparent);
+}
 
-  .dark .audit-alert-warning {
-    background: linear-gradient(to right, hsl(var(--accent) / 0.18), transparent);
+.dark .audit-alert-warning {
+  background: linear-gradient(to right, hsl(var(--accent) / 0.18), transparent);
+}
+
 @keyframes float {
   0% {
     transform: translateY(0px);
