@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { getSupabaseClient } from '@/utils/supabaseClient';
 import { PageRenderer } from '@/components/PageRenderer';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '@/components/SEO';
 import type { PageRecord } from '@/types/PageSystem';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
+import { DEFAULT_PAGE_SECTIONS } from '@/data/defaultPageSections';
+// @ts-ignore
+import BuilderPageRenderer from '@/components/builder/BuilderPageRenderer';
+import { Block } from "@/types/builder";
+
+import { useLiveSettings } from '@/hooks/useLiveSettings';
 
 /**
  * Page générique pour afficher toute page gérée par le système CMS
@@ -15,11 +20,12 @@ import { ScrollToTopButton } from '@/components/ScrollToTopButton';
  */
 
 const DynamicPageComponent: React.FC = () => {
-  const { slug: paramSlug } = useParams<{ slug: string }>();
+  const { slug: paramSlug } = useParams<{slug: string;}>();
   const location = useLocation();
   const [page, setPage] = useState<PageRecord | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { settings } = useLiveSettings();
 
   useEffect(() => {
     const fetchPage = async () => {
@@ -27,41 +33,79 @@ const DynamicPageComponent: React.FC = () => {
       let effectiveSlug = paramSlug;
 
       if (!effectiveSlug) {
-        // Enlève le slash initial et final éventuel
         effectiveSlug = location.pathname.replace(/^\/|\/$/g, '');
       }
 
-      // Si racine "/" (slug vide après nettoyage), utiliser 'home' comme slug par défaut
       if (!effectiveSlug || effectiveSlug === '') {
         effectiveSlug = 'home';
       }
 
-      console.log('Chargement page dynamique pour slug:', effectiveSlug);
+      const settingsKey = effectiveSlug === 'home' ? 'home_page' : effectiveSlug;
+
+
 
       try {
-        const supabase = getSupabaseClient();
-        const { data, error } = await supabase
-          .from('pages')
-          .select('*')
-          .eq('slug', effectiveSlug)
-          .eq('is_published', true)
-          .single();
+        const response = await fetch("/api/pages");
+        if (!response.ok) throw new Error("Failed to fetch pages");
+        const allPages = await response.json();
 
-        if (error || !data) {
+        const data = allPages.find((p: unknown) => p.slug === effectiveSlug && (p.is_published === true || p.status === 'published'));
+
+        if (!data) {
+          // FALLBACK 1: site_settings.page_sections (Database settings)
+          // FALLBACK 2: DEFAULT_PAGE_SECTIONS (Hardcoded defaults)
+          const liveSection = settings?.page_sections?.[effectiveSlug] || settings?.page_sections?.[settingsKey];
+          const defaultData = (DEFAULT_PAGE_SECTIONS as unknown)[effectiveSlug] || (DEFAULT_PAGE_SECTIONS as unknown)[settingsKey];
+
+          const sourceData = liveSection || defaultData;
+
+          if (sourceData) {
+
+
+            // Map the old "Sections" format to the new "Blocks" format for PageRenderer
+            const blocks = (sourceData.sections || []).map((s: unknown) => ({
+              id: s.id,
+              type: 'section',
+              data: {
+                title: s.label,
+                content: sourceData.content?.[s.id]?.title ?
+                `<h3>${sourceData.content[s.id].title}</h3><p>${sourceData.content[s.id].subtitle || ''}</p><ul>${(sourceData.content[s.id].features || []).map((f: string) => `<li>${f}</li>`).join('')}</ul>` :
+                sourceData.content?.[s.id] || 'Contenu en attente...'
+              }
+            }));
+
+            const fallbackPage = {
+              id: `fallback-${effectiveSlug}`,
+              title: sourceData.hero_title?.replace('|', ' ') || sourceData.label || effectiveSlug,
+              slug: effectiveSlug,
+              content: sourceData.customHTML || '',
+              content_blocks: blocks,
+              is_published: true,
+              meta_description: sourceData.hero_subtitle || '',
+              design_options: {
+                hero_enabled: true,
+                renderMode: sourceData.renderMode || 'sections'
+              }
+            } as unknown as PageRecord;
+
+            setPage(fallbackPage);
+            setLoading(false);
+            return;
+          }
+
           setError('Page non trouvée');
           setLoading(false);
           return;
         }
 
-        // Parse les champs JSONB si nécessaire (Supabase le fait souvent automatiquement si typé)
-        const rawData = data as any;
+        // Parse les champs JSON si nécessaire
+        const rawData = data;
         const pageData = {
           ...data,
-          // ICE ENGINE: Use content_raw (Monaco) if available, otherwise legacy content
           content: rawData.content_raw || data.content,
-          content_blocks: data.content_blocks || [],
-          design_options: data.design_options || {},
-          seo_options: data.seo_options || {}
+          content_blocks: typeof data.content_blocks === 'string' ? JSON.parse(data.content_blocks) : data.content_blocks || [],
+          design_options: typeof data.design_options === 'string' ? JSON.parse(data.design_options) : data.design_options || {},
+          seo_options: typeof data.seo_options === 'string' ? JSON.parse(data.seo_options) : data.seo_options || {}
         } as PageRecord;
 
         setPage(pageData);
@@ -74,7 +118,7 @@ const DynamicPageComponent: React.FC = () => {
     };
 
     fetchPage();
-  }, [paramSlug, location.pathname]);
+  }, [paramSlug, location.pathname, settings]);
 
   if (loading) {
     return (
@@ -83,8 +127,8 @@ const DynamicPageComponent: React.FC = () => {
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
           <p className="text-gray-600">Chargement de la page...</p>
         </div>
-      </div>
-    );
+      </div>);
+
   }
 
   if (error || !page) {
@@ -97,29 +141,36 @@ const DynamicPageComponent: React.FC = () => {
             ← Retour à l'accueil
           </a>
         </div>
-      </div>
-    );
+      </div>);
+
   }
 
 
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Helmet>
-        <title>{page.seo_options?.og_title || page.title}</title>
-        <meta name="description" content={page.seo_options?.meta_description || page.meta_description} />
-      </Helmet>
+      <SEO
+        title={page.title}
+        description={page.seo_options?.meta_description || page.meta_description || ""}
+        image={page.featured_image || (page as unknown).hero_background_image}
+        keywords={page.meta_keywords || (page.seo_options as unknown)?.keywords}
+        path={`/${page.slug}`} />
+      
 
       <Header />
 
       <main className="flex-grow">
+        {(page as unknown).structure_json && (page as unknown).structure_json.length > 0 ?
+        <BuilderPageRenderer blocks={(page as unknown).structure_json as Block[]} /> :
+
         <PageRenderer page={page} />
+        }
       </main>
 
       <Footer />
-      <ScrollToTopButton />
-    </div>
-  );
+      <ScrollToTopButton aria-label="Action" />
+    </div>);
+
 };
 
 const DynamicPage: React.FC = () => {

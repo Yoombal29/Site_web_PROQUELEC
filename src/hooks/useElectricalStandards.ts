@@ -1,6 +1,6 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { apiFetch } from "@/lib/api-client";
 
 export interface ElectricalStandard {
   id: string;
@@ -24,18 +24,13 @@ export function useElectricalStandards() {
   return useQuery({
     queryKey: ["electrical-standards"],
     queryFn: async (): Promise<ElectricalStandard[]> => {
-      const { data, error } = await supabase
-        .from('electrical_standards')
-        .select('*')
-        .eq('status', 'active')
-        .order('code');
-
-      if (error) {
+      try {
+        const data = await apiFetch<ElectricalStandard[]>('/api/electrical-standards');
+        return data || [];
+      } catch (error) {
         console.error('Erreur normes:', error);
         throw error;
       }
-
-      return (data || []) as ElectricalStandard[];
     },
     staleTime: 1000 * 60 * 30, // 30 minutes
   });
@@ -46,13 +41,10 @@ export function useCreateStandard() {
 
   return useMutation({
     mutationFn: async (standard: Omit<ElectricalStandard, 'id' | 'created_at'>) => {
-      const { data, error } = await supabase
-        .from('electrical_standards')
-        .insert([standard])
-        .select()
-        .single();
-
-      if (error) throw error;
+      const data = await apiFetch('/api/electrical-standards', {
+        method: 'POST',
+        body: JSON.stringify(standard)
+      });
       return data;
     },
     onSuccess: () => {

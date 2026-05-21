@@ -1,0 +1,3504 @@
+{
+  "questions": [
+    {
+      "id": "q_sec_13",
+      "type": "ouvert",
+      "question": "Resumer la section 13 : INCENDIE ET ACCIDENTS SUR OU PRES DES OUVRAGES ET INSTALLATIONS",
+      "answer": "",
+      "source_section": "13"
+    },
+    {
+      "id": "q_sec_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 1.1 : Domaine d'application du présent document",
+      "answer": "",
+      "source_section": "1.1"
+    },
+    {
+      "id": "q_sec_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 1.2 : Lien entre la norme et la réglementation",
+      "answer": "",
+      "source_section": "1.2"
+    },
+    {
+      "id": "q_sec_2",
+      "type": "ouvert",
+      "question": "Resumer la section 2 : REFERENCES NORMATIVES",
+      "answer": "",
+      "source_section": "2"
+    },
+    {
+      "id": "q_sec_3",
+      "type": "ouvert",
+      "question": "Resumer la section 3 : TERMES ET DEFINITIONS",
+      "answer": "",
+      "source_section": "3"
+    },
+    {
+      "id": "q_sec_3_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.1 : Entreprise exploitante",
+      "answer": "",
+      "source_section": "3.1.1"
+    },
+    {
+      "id": "q_sec_3_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.2 : Entreprise extérieure",
+      "answer": "",
+      "source_section": "3.1.2"
+    },
+    {
+      "id": "q_sec_3_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.3 : Donneur d'ordre",
+      "answer": "",
+      "source_section": "3.1.3"
+    },
+    {
+      "id": "q_sec_3_1_4",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.4 : Employeur",
+      "answer": "",
+      "source_section": "3.1.4"
+    },
+    {
+      "id": "q_sec_3_1_5",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.5 : Chef d'établissement",
+      "answer": "",
+      "source_section": "3.1.5"
+    },
+    {
+      "id": "q_sec_3_1_6",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.6 : Chargé d'exploitation électrique",
+      "answer": "",
+      "source_section": "3.1.6"
+    },
+    {
+      "id": "q_sec_3_1_7",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.7 : Personne qualifiée (en électricité)",
+      "answer": "",
+      "source_section": "3.1.7"
+    },
+    {
+      "id": "q_sec_3_1_8",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.8 : Personne avertie",
+      "answer": "",
+      "source_section": "3.1.8"
+    },
+    {
+      "id": "q_sec_3_1_9",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.9 : Personne ordinaire",
+      "answer": "",
+      "source_section": "3.1.9"
+    },
+    {
+      "id": "q_sec_3_1_10",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.10 : Opérateur",
+      "answer": "",
+      "source_section": "3.1.10"
+    },
+    {
+      "id": "q_sec_3_1_11",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.11 : Charge de consignation",
+      "answer": "",
+      "source_section": "3.1.11"
+    },
+    {
+      "id": "q_sec_3_1_12",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.12 : Charge de travaux",
+      "answer": "",
+      "source_section": "3.1.12"
+    },
+    {
+      "id": "q_sec_3_1_13",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.13 : Chargé d'intervention",
+      "answer": "",
+      "source_section": "3.1.13"
+    },
+    {
+      "id": "q_sec_3_1_14",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.14 : Chargé d'opérations spécifiques",
+      "answer": "",
+      "source_section": "3.1.14"
+    },
+    {
+      "id": "q_sec_3_1_15",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.15 : Charge de chantier",
+      "answer": "",
+      "source_section": "3.1.15"
+    },
+    {
+      "id": "q_sec_3_1_16",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.16 : Exécutant",
+      "answer": "",
+      "source_section": "3.1.16"
+    },
+    {
+      "id": "q_sec_3_1_17",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.17 : Surveillant de sécurité électrique",
+      "answer": "",
+      "source_section": "3.1.17"
+    },
+    {
+      "id": "q_sec_3_1_18",
+      "type": "ouvert",
+      "question": "Resumer la section 3.1.18 : Habilitation - personne habilitée",
+      "answer": "",
+      "source_section": "3.1.18"
+    },
+    {
+      "id": "q_sec_3_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.1 : Installation électrique - ouvrage électrique",
+      "answer": "",
+      "source_section": "3.2.1"
+    },
+    {
+      "id": "q_sec_3_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.2 : Matériel électrique",
+      "answer": "",
+      "source_section": "3.2.2"
+    },
+    {
+      "id": "q_sec_3_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.3 : Ligne électrique aérienne",
+      "answer": "",
+      "source_section": "3.2.3"
+    },
+    {
+      "id": "q_sec_3_2_4",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.4 : Canalisation électrique isolée - Canalisation isolée",
+      "answer": "",
+      "source_section": "3.2.4"
+    },
+    {
+      "id": "q_sec_3_2_5",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.5 : Canalisation encastrée",
+      "answer": "",
+      "source_section": "3.2.5"
+    },
+    {
+      "id": "q_sec_3_2_6",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.6 : Canalisation noyée",
+      "answer": "",
+      "source_section": "3.2.6"
+    },
+    {
+      "id": "q_sec_3_2_7",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.7 : Partie active",
+      "answer": "",
+      "source_section": "3.2.7"
+    },
+    {
+      "id": "q_sec_3_2_8",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.8 : Conducteur PEN",
+      "answer": "",
+      "source_section": "3.2.8"
+    },
+    {
+      "id": "q_sec_3_2_9",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.9 : Elément (d'accumulateur)",
+      "answer": "",
+      "source_section": "3.2.9"
+    },
+    {
+      "id": "q_sec_3_2_10",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.10 : Accumulateur",
+      "answer": "",
+      "source_section": "3.2.10"
+    },
+    {
+      "id": "q_sec_3_2_11",
+      "type": "ouvert",
+      "question": "Resumer la section 3.2.11 : Batterie d'accumulateurs",
+      "answer": "",
+      "source_section": "3.2.11"
+    },
+    {
+      "id": "q_sec_3_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 3.3.1 : Tension nominale",
+      "answer": "",
+      "source_section": "3.3.1"
+    },
+    {
+      "id": "q_sec_3_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 3.3.2 : Domaines de tension",
+      "answer": "",
+      "source_section": "3.3.2"
+    },
+    {
+      "id": "q_sec_3_3_3",
+      "type": "ouvert",
+      "question": "Resumer la section 3.3.3 : Très basse tension de sécurité (TBTS)",
+      "answer": "",
+      "source_section": "3.3.3"
+    },
+    {
+      "id": "q_sec_3_3_4",
+      "type": "ouvert",
+      "question": "Resumer la section 3.3.4 : Très Basse Tension de Protection (TBTP)",
+      "answer": "",
+      "source_section": "3.3.4"
+    },
+    {
+      "id": "q_sec_3_3_5",
+      "type": "ouvert",
+      "question": "Resumer la section 3.3.5 : Très Basse Tension Fonctionnelle (TBTF)",
+      "answer": "",
+      "source_section": "3.3.5"
+    },
+    {
+      "id": "q_sec_3_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.1 : Exploitation",
+      "answer": "",
+      "source_section": "3.4.1"
+    },
+    {
+      "id": "q_sec_3_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.2 : Opération",
+      "answer": "",
+      "source_section": "3.4.2"
+    },
+    {
+      "id": "q_sec_3_4_3",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.3 : Opération d'ordre électrique",
+      "answer": "",
+      "source_section": "3.4.3"
+    },
+    {
+      "id": "q_sec_3_4_4",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.4 : Type d'opérations d'ordre électrique",
+      "answer": "",
+      "source_section": "3.4.4"
+    },
+    {
+      "id": "q_sec_3_4_5",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.5 : Essai",
+      "answer": "",
+      "source_section": "3.4.5"
+    },
+    {
+      "id": "q_sec_3_4_6",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.6 : Mesurage",
+      "answer": "",
+      "source_section": "3.4.6"
+    },
+    {
+      "id": "q_sec_3_4_8",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.8 : Manœuvre",
+      "answer": "",
+      "source_section": "3.4.8"
+    },
+    {
+      "id": "q_sec_3_4_9",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.9 : Opération d'ordre non électrique",
+      "answer": "",
+      "source_section": "3.4.9"
+    },
+    {
+      "id": "q_sec_3_4_10",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.10 : Consignation",
+      "answer": "",
+      "source_section": "3.4.10"
+    },
+    {
+      "id": "q_sec_3_4_11",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.11 : Déconsignation",
+      "answer": "",
+      "source_section": "3.4.11"
+    },
+    {
+      "id": "q_sec_3_4_12",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.12 : Mise hors tension",
+      "answer": "",
+      "source_section": "3.4.12"
+    },
+    {
+      "id": "q_sec_3_4_13",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.13 : Mise hors de portée",
+      "answer": "",
+      "source_section": "3.4.13"
+    },
+    {
+      "id": "q_sec_3_4_14",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.14 : Réquisition ou essai sous alimentation autonome",
+      "answer": "",
+      "source_section": "3.4.14"
+    },
+    {
+      "id": "q_sec_3_4_15",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.15 : Situation de travail",
+      "answer": "",
+      "source_section": "3.4.15"
+    },
+    {
+      "id": "q_sec_3_4_16",
+      "type": "ouvert",
+      "question": "Resumer la section 3.4.16 : Phase de travail",
+      "answer": "",
+      "source_section": "3.4.16"
+    },
+    {
+      "id": "q_sec_3_5",
+      "type": "ouvert",
+      "question": "Resumer la section 3.5 : Définitions relatives aux distances, zones et locaux",
+      "answer": "",
+      "source_section": "3.5"
+    },
+    {
+      "id": "q_sec_3_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 3.5.1 : Environnement électrique",
+      "answer": "",
+      "source_section": "3.5.1"
+    },
+    {
+      "id": "q_sec_3_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 3.5.2 : Voisinage",
+      "answer": "",
+      "source_section": "3.5.2"
+    },
+    {
+      "id": "q_sec_3_5_3",
+      "type": "ouvert",
+      "question": "Resumer la section 3.5.3 : Champ libre",
+      "answer": "",
+      "source_section": "3.5.3"
+    },
+    {
+      "id": "q_sec_3_5_4",
+      "type": "ouvert",
+      "question": "Resumer la section 3.5.4 : Zone de travail",
+      "answer": "",
+      "source_section": "3.5.4"
+    },
+    {
+      "id": "q_sec_3_5_5",
+      "type": "ouvert",
+      "question": "Resumer la section 3.5.5 : Poste de travail",
+      "answer": "",
+      "source_section": "3.5.5"
+    },
+    {
+      "id": "q_sec_3_5_6",
+      "type": "ouvert",
+      "question": "Resumer la section 3.5.6 : Zone d'évolution",
+      "answer": "",
+      "source_section": "3.5.6"
+    },
+    {
+      "id": "q_sec_3_5_7",
+      "type": "ouvert",
+      "question": "Resumer la section 3.5.7 : Local ou emplacement d'accès reserve aux électriciens (local ou emplacement",
+      "answer": "",
+      "source_section": "3.5.7"
+    },
+    {
+      "id": "q_sec_3_6",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6 : Définitions relatives aux équipements de travail et aux eQUIPEMENTS de protection",
+      "answer": "",
+      "source_section": "3.6"
+    },
+    {
+      "id": "q_sec_3_6_1",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.1 : Equipement de protection individuelle (EPI)",
+      "answer": "",
+      "source_section": "3.6.1"
+    },
+    {
+      "id": "q_sec_3_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.2 : Pavé de terre",
+      "answer": "",
+      "source_section": "3.6.2"
+    },
+    {
+      "id": "q_sec_3_6_3",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.3 : Dispositif de vérification d'absence de tension (VAT)",
+      "answer": "",
+      "source_section": "3.6.3"
+    },
+    {
+      "id": "q_sec_3_6_4",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.4 : Equipement portable de mise à la terre et en court-circuit (MALT/CC)",
+      "answer": "",
+      "source_section": "3.6.4"
+    },
+    {
+      "id": "q_sec_3_6_5",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.5 : Outil isolant",
+      "answer": "",
+      "source_section": "3.6.5"
+    },
+    {
+      "id": "q_sec_3_6_6",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.6 : Outil isolé",
+      "answer": "",
+      "source_section": "3.6.6"
+    },
+    {
+      "id": "q_sec_3_6_7",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.7 : Enveloppe",
+      "answer": "",
+      "source_section": "3.6.7"
+    },
+    {
+      "id": "q_sec_3_6_8",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.8 : Nappage",
+      "answer": "",
+      "source_section": "3.6.8"
+    },
+    {
+      "id": "q_sec_3_6_9",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.9 : Habillage",
+      "answer": "",
+      "source_section": "3.6.9"
+    },
+    {
+      "id": "q_sec_3_6_10",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.10 : Nappe isolante",
+      "answer": "",
+      "source_section": "3.6.10"
+    },
+    {
+      "id": "q_sec_3_6_11",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.11 : Ecran",
+      "answer": "",
+      "source_section": "3.6.11"
+    },
+    {
+      "id": "q_sec_3_6_12",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.12 : Protecteur",
+      "answer": "",
+      "source_section": "3.6.12"
+    },
+    {
+      "id": "q_sec_3_6_13",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.13 : Isolation",
+      "answer": "",
+      "source_section": "3.6.13"
+    },
+    {
+      "id": "q_sec_3_6_14",
+      "type": "ouvert",
+      "question": "Resumer la section 3.6.14 : Balisage",
+      "answer": "",
+      "source_section": "3.6.14"
+    },
+    {
+      "id": "q_sec_3_7",
+      "type": "ouvert",
+      "question": "Resumer la section 3.7 : Liste des documents écrits (voir Annexe A)",
+      "answer": "",
+      "source_section": "3.7"
+    },
+    {
+      "id": "q_sec_4",
+      "type": "ouvert",
+      "question": "Resumer la section 4 : DISPOSITIONS GENERALES",
+      "answer": "",
+      "source_section": "4"
+    },
+    {
+      "id": "q_sec_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.1 : Analyse du risque élecTRIQUE",
+      "answer": "",
+      "source_section": "4.1"
+    },
+    {
+      "id": "q_sec_4_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.1.1 : Le risque électrique et ses conséquences",
+      "answer": "",
+      "source_section": "4.1.1"
+    },
+    {
+      "id": "q_sec_4_1_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.1.2.1 : A quel moment doit-on analyser le risque électrique ?",
+      "answer": "",
+      "source_section": "4.1.2.1"
+    },
+    {
+      "id": "q_sec_4_1_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.1.2.2 : Qui a mission d'effectuer l'analyse du risque électrique ?",
+      "answer": "",
+      "source_section": "4.1.2.2"
+    },
+    {
+      "id": "q_sec_4_1_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 4.1.2.3 : Eléments à prendre en compte pour l'analyse du risque électrique",
+      "answer": "",
+      "source_section": "4.1.2.3"
+    },
+    {
+      "id": "q_sec_4_1_2_4",
+      "type": "ouvert",
+      "question": "Resumer la section 4.1.2.4 : Risques liés à l'induction magnétique et au couplage capacitif",
+      "answer": "",
+      "source_section": "4.1.2.4"
+    },
+    {
+      "id": "q_sec_4_1_2_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.1.2.4.1 : Couplage capacitif",
+      "answer": "",
+      "source_section": "4.1.2.4.1"
+    },
+    {
+      "id": "q_sec_4_1_2_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.1.2.4.2 : Induction magnétique",
+      "answer": "",
+      "source_section": "4.1.2.4.2"
+    },
+    {
+      "id": "q_sec_4_1_2_5",
+      "type": "ouvert",
+      "question": "Resumer la section 4.1.2.5 : Risques liés à la Très Basse Tension",
+      "answer": "",
+      "source_section": "4.1.2.5"
+    },
+    {
+      "id": "q_sec_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.2 : Environnement des ouvrages ou des installations",
+      "answer": "",
+      "source_section": "4.2"
+    },
+    {
+      "id": "q_sec_4_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.2.1 : Environnement des pièces nues en champ libre",
+      "answer": "",
+      "source_section": "4.2.1"
+    },
+    {
+      "id": "q_sec_4_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.2.2 : Locaux et emplacements d'accès réservé aux électriciens",
+      "answer": "",
+      "source_section": "4.2.2"
+    },
+    {
+      "id": "q_sec_4_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 4.2.3 : Environnement des canalisations isolées",
+      "answer": "",
+      "source_section": "4.2.3"
+    },
+    {
+      "id": "q_sec_4_3",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3 : Prévention du risque électrique",
+      "answer": "",
+      "source_section": "4.3"
+    },
+    {
+      "id": "q_sec_4_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.1 : Principes de prévention du risque électrique",
+      "answer": "",
+      "source_section": "4.3.1"
+    },
+    {
+      "id": "q_sec_4_3_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.1.1 : Eléments d'analyse des opérations",
+      "answer": "",
+      "source_section": "4.3.1.1"
+    },
+    {
+      "id": "q_sec_4_3_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.1.2 : Principes de mise en œuvre",
+      "answer": "",
+      "source_section": "4.3.1.2"
+    },
+    {
+      "id": "q_sec_4_3_1_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.1.2.1 : Les opérations après consignation ou mise hors tension",
+      "answer": "",
+      "source_section": "4.3.1.2.1"
+    },
+    {
+      "id": "q_sec_4_3_1_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.1.2.2 : Les opérations après mise hors de portée",
+      "answer": "",
+      "source_section": "4.3.1.2.2"
+    },
+    {
+      "id": "q_sec_4_3_1_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.1.2.3 : Les opérations sous tension",
+      "answer": "",
+      "source_section": "4.3.1.2.3"
+    },
+    {
+      "id": "q_sec_4_3_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.1.3 : Délimitation et balisage de la zone de travail",
+      "answer": "",
+      "source_section": "4.3.1.3"
+    },
+    {
+      "id": "q_sec_4_3_1_4",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.1.4 : Mise à la terre et en court-circuit",
+      "answer": "",
+      "source_section": "4.3.1.4"
+    },
+    {
+      "id": "q_sec_4_3_1_5",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.1.5 : Mise en équipotentialité du poste de travail",
+      "answer": "",
+      "source_section": "4.3.1.5"
+    },
+    {
+      "id": "q_sec_4_3_1_6",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.1.6 : Surveillance",
+      "answer": "",
+      "source_section": "4.3.1.6"
+    },
+    {
+      "id": "q_sec_4_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.2 : Protection collective",
+      "answer": "",
+      "source_section": "4.3.2"
+    },
+    {
+      "id": "q_sec_4_3_3",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.3 : Protection individuelle",
+      "answer": "",
+      "source_section": "4.3.3"
+    },
+    {
+      "id": "q_sec_4_3_4",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.4 : Outil, matériel et équipement de travail",
+      "answer": "",
+      "source_section": "4.3.4"
+    },
+    {
+      "id": "q_sec_4_3_5",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.5 : Conditions ambiantes de travail",
+      "answer": "",
+      "source_section": "4.3.5"
+    },
+    {
+      "id": "q_sec_4_3_6",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.6 : Opérations dans les zones présentant un risque d'explosion",
+      "answer": "",
+      "source_section": "4.3.6"
+    },
+    {
+      "id": "q_sec_4_4",
+      "type": "ouvert",
+      "question": "Resumer la section 4.4 : Réalisation et mise en œuvre des opérations",
+      "answer": "",
+      "source_section": "4.4"
+    },
+    {
+      "id": "q_sec_4_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.4.1 : Procédures d'accès, de suivi et de contrôle",
+      "answer": "",
+      "source_section": "4.4.1"
+    },
+    {
+      "id": "q_sec_4_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.4.2 : Instruction de sécurité",
+      "answer": "",
+      "source_section": "4.4.2"
+    },
+    {
+      "id": "q_sec_4_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.1 : Les acteurs économiques (entreprises et autres)",
+      "answer": "",
+      "source_section": "4.5.1"
+    },
+    {
+      "id": "q_sec_4_5_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.1.1 : Entreprise exploitante",
+      "answer": "",
+      "source_section": "4.5.1.1"
+    },
+    {
+      "id": "q_sec_4_5_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.1.2 : Entreprise extérieure",
+      "answer": "",
+      "source_section": "4.5.1.2"
+    },
+    {
+      "id": "q_sec_4_5_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.1.3 : Entreprise de travail temporaire et prêt de main d'œuvre a but non lucratif",
+      "answer": "",
+      "source_section": "4.5.1.3"
+    },
+    {
+      "id": "q_sec_4_5_1_4",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.1.4 : Donneur d'ordre ou maître d'ouvrage",
+      "answer": "",
+      "source_section": "4.5.1.4"
+    },
+    {
+      "id": "q_sec_4_5_1_5",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.1.5 : Travailleur indépendant, employeur ou auto-entrepreneur participant à une",
+      "answer": "",
+      "source_section": "4.5.1.5"
+    },
+    {
+      "id": "q_sec_4_5_1_6",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.1.6 : Professionnel intervenant chez un particulier",
+      "answer": "",
+      "source_section": "4.5.1.6"
+    },
+    {
+      "id": "q_sec_4_5_1_7",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.1.7 : Etablissements sans personnel compétent en électricité",
+      "answer": "",
+      "source_section": "4.5.1.7"
+    },
+    {
+      "id": "q_sec_4_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2 : Fonctions et personnes concernées",
+      "answer": "",
+      "source_section": "4.5.2"
+    },
+    {
+      "id": "q_sec_4_5_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.1 : Employeur et chef d'établissement",
+      "answer": "",
+      "source_section": "4.5.2.1"
+    },
+    {
+      "id": "q_sec_4_5_2_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.1.1 : Rôle de l'employeur",
+      "answer": "",
+      "source_section": "4.5.2.1.1"
+    },
+    {
+      "id": "q_sec_4_5_2_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.1.2 : Rôle du chef d'établissement",
+      "answer": "",
+      "source_section": "4.5.2.1.2"
+    },
+    {
+      "id": "q_sec_4_5_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.2 : Chargé d'exploitation électrique",
+      "answer": "",
+      "source_section": "4.5.2.2"
+    },
+    {
+      "id": "q_sec_4_5_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.3 : Personne autorisant l'accès à l'installation",
+      "answer": "",
+      "source_section": "4.5.2.3"
+    },
+    {
+      "id": "q_sec_4_5_2_4",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.4 : Chargé de consignation",
+      "answer": "",
+      "source_section": "4.5.2.4"
+    },
+    {
+      "id": "q_sec_4_5_2_5",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.5 : Charge de travaux",
+      "answer": "",
+      "source_section": "4.5.2.5"
+    },
+    {
+      "id": "q_sec_4_5_2_6",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.6 : Chargé d'intervention",
+      "answer": "",
+      "source_section": "4.5.2.6"
+    },
+    {
+      "id": "q_sec_4_5_2_7",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.7 : Chargé d'opérations spécifiques",
+      "answer": "",
+      "source_section": "4.5.2.7"
+    },
+    {
+      "id": "q_sec_4_5_2_8",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.8 : Chargé de chantier (operation d'ordre non électrique)",
+      "answer": "",
+      "source_section": "4.5.2.8"
+    },
+    {
+      "id": "q_sec_4_5_2_9",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.9 : Exécutant",
+      "answer": "",
+      "source_section": "4.5.2.9"
+    },
+    {
+      "id": "q_sec_4_5_2_9_1",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.9.1 : L'exécutant d'opération d'ordre électrique",
+      "answer": "",
+      "source_section": "4.5.2.9.1"
+    },
+    {
+      "id": "q_sec_4_5_2_9_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.9.2 : L'exécutant d'opération d'ordre non électrique habilité",
+      "answer": "",
+      "source_section": "4.5.2.9.2"
+    },
+    {
+      "id": "q_sec_4_5_2_9_3",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.9.3 : L'exécutant d'opération d'ordre non électrique non habilité",
+      "answer": "",
+      "source_section": "4.5.2.9.3"
+    },
+    {
+      "id": "q_sec_4_5_2_10",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.10 : Surveillant de sécurité électrique",
+      "answer": "",
+      "source_section": "4.5.2.10"
+    },
+    {
+      "id": "q_sec_5",
+      "type": "ouvert",
+      "question": "Resumer la section 5 : FORMATION ET HABILITATION",
+      "answer": "",
+      "source_section": "5"
+    },
+    {
+      "id": "q_sec_5_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 5.1.1 : Objet",
+      "answer": "",
+      "source_section": "5.1.1"
+    },
+    {
+      "id": "q_sec_5_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 5.1.2 : Principes",
+      "answer": "",
+      "source_section": "5.1.2"
+    },
+    {
+      "id": "q_sec_5_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 5.1.3 : Cas dans lesquels l'habilitation est obligatoire",
+      "answer": "",
+      "source_section": "5.1.3"
+    },
+    {
+      "id": "q_sec_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 5.2 : Evaluation du besoin initial",
+      "answer": "",
+      "source_section": "5.2"
+    },
+    {
+      "id": "q_sec_5_3",
+      "type": "ouvert",
+      "question": "Resumer la section 5.3 : Conditions d'attribution de l'habilitation",
+      "answer": "",
+      "source_section": "5.3"
+    },
+    {
+      "id": "q_sec_5_4",
+      "type": "ouvert",
+      "question": "Resumer la section 5.4 : Suivi de l'habilitation",
+      "answer": "",
+      "source_section": "5.4"
+    },
+    {
+      "id": "q_sec_5_5",
+      "type": "ouvert",
+      "question": "Resumer la section 5.5 : Maintien des compétences - Recyclage",
+      "answer": "",
+      "source_section": "5.5"
+    },
+    {
+      "id": "q_sec_5_6_1",
+      "type": "ouvert",
+      "question": "Resumer la section 5.6.1 : Principes d'organisation",
+      "answer": "",
+      "source_section": "5.6.1"
+    },
+    {
+      "id": "q_sec_5_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 5.6.2 : Objectif de la formation",
+      "answer": "",
+      "source_section": "5.6.2"
+    },
+    {
+      "id": "q_sec_5_6_3",
+      "type": "ouvert",
+      "question": "Resumer la section 5.6.3 : Évaluation et avis",
+      "answer": "",
+      "source_section": "5.6.3"
+    },
+    {
+      "id": "q_sec_5_7_1",
+      "type": "ouvert",
+      "question": "Resumer la section 5.7.1 : Matérialisation de l'habilitation",
+      "answer": "",
+      "source_section": "5.7.1"
+    },
+    {
+      "id": "q_sec_5_7_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 5.7.2.1 : Principe et présentation",
+      "answer": "",
+      "source_section": "5.7.2.1"
+    },
+    {
+      "id": "q_sec_5_7_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 5.7.2.2 : Premier caractère",
+      "answer": "",
+      "source_section": "5.7.2.2"
+    },
+    {
+      "id": "q_sec_5_7_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 5.7.2.3 : Deuxième caractère",
+      "answer": "",
+      "source_section": "5.7.2.3"
+    },
+    {
+      "id": "q_sec_5_7_2_4",
+      "type": "ouvert",
+      "question": "Resumer la section 5.7.2.4 : Troisième caractère",
+      "answer": "",
+      "source_section": "5.7.2.4"
+    },
+    {
+      "id": "q_sec_5_7_2_5",
+      "type": "ouvert",
+      "question": "Resumer la section 5.7.2.5 : Attribut",
+      "answer": "",
+      "source_section": "5.7.2.5"
+    },
+    {
+      "id": "q_sec_5_7_2_6",
+      "type": "ouvert",
+      "question": "Resumer la section 5.7.2.6 : Tableaux des symboles des habilitations",
+      "answer": "",
+      "source_section": "5.7.2.6"
+    },
+    {
+      "id": "q_sec_5_7_3",
+      "type": "ouvert",
+      "question": "Resumer la section 5.7.3 : Champ d'application des habilitations",
+      "answer": "",
+      "source_section": "5.7.3"
+    },
+    {
+      "id": "q_sec_5_7_4",
+      "type": "ouvert",
+      "question": "Resumer la section 5.7.4 : Equivalences entre habilitations",
+      "answer": "",
+      "source_section": "5.7.4"
+    },
+    {
+      "id": "q_sec_5_7_5",
+      "type": "ouvert",
+      "question": "Resumer la section 5.7.5 : Titre d'habilitation",
+      "answer": "",
+      "source_section": "5.7.5"
+    },
+    {
+      "id": "q_sec_5_8_1",
+      "type": "ouvert",
+      "question": "Resumer la section 5.8.1 : Cas particulier pour certaines opérations d'ordre non électrique",
+      "answer": "",
+      "source_section": "5.8.1"
+    },
+    {
+      "id": "q_sec_5_8_2",
+      "type": "ouvert",
+      "question": "Resumer la section 5.8.2 : Le travailleur indépendant - l'employeur - l'auto-entrepreneur participant à une",
+      "answer": "",
+      "source_section": "5.8.2"
+    },
+    {
+      "id": "q_sec_6",
+      "type": "ouvert",
+      "question": "Resumer la section 6 : DÉTERMINATION DE L'ENVIRONNEMENT DES OPÉRATIONS",
+      "answer": "",
+      "source_section": "6"
+    },
+    {
+      "id": "q_sec_6_1",
+      "type": "ouvert",
+      "question": "Resumer la section 6.1 : Généralités et présentation",
+      "answer": "",
+      "source_section": "6.1"
+    },
+    {
+      "id": "q_sec_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2 : Distances limites et zones définies autour des pièces nues sous tension en",
+      "answer": "",
+      "source_section": "6.2"
+    },
+    {
+      "id": "q_sec_6_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.1 : Distance limite d'investigation",
+      "answer": "",
+      "source_section": "6.2.1"
+    },
+    {
+      "id": "q_sec_6_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.2 : Zone d'investigation",
+      "answer": "",
+      "source_section": "6.2.2"
+    },
+    {
+      "id": "q_sec_6_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.3 : Distance limite de voisinage simple",
+      "answer": "",
+      "source_section": "6.2.3"
+    },
+    {
+      "id": "q_sec_6_2_4",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.4 : Le voisinage",
+      "answer": "",
+      "source_section": "6.2.4"
+    },
+    {
+      "id": "q_sec_6_2_5",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.5 : Zone de voisinage simple",
+      "answer": "",
+      "source_section": "6.2.5"
+    },
+    {
+      "id": "q_sec_6_2_6",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.6 : Distance limite de voisinage renforcé",
+      "answer": "",
+      "source_section": "6.2.6"
+    },
+    {
+      "id": "q_sec_6_2_6_1",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.6.1 : Distance limite de voisinage renforce HT",
+      "answer": "",
+      "source_section": "6.2.6.1"
+    },
+    {
+      "id": "q_sec_6_2_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.6.2 : Distance limite de voisinage renforce BT",
+      "answer": "",
+      "source_section": "6.2.6.2"
+    },
+    {
+      "id": "q_sec_6_2_7_1",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.7.1 : Zone de voisinage renforcé HT",
+      "answer": "",
+      "source_section": "6.2.7.1"
+    },
+    {
+      "id": "q_sec_6_2_7_2",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.7.2 : Zone de voisinage renforcé BT",
+      "answer": "",
+      "source_section": "6.2.7.2"
+    },
+    {
+      "id": "q_sec_6_2_8",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.8 : Distance minimale d'approche",
+      "answer": "",
+      "source_section": "6.2.8"
+    },
+    {
+      "id": "q_sec_6_2_8_1",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.8.1 : Distance de tension (t)",
+      "answer": "",
+      "source_section": "6.2.8.1"
+    },
+    {
+      "id": "q_sec_6_2_8_2",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.8.2 : Distance de garde (g)",
+      "answer": "",
+      "source_section": "6.2.8.2"
+    },
+    {
+      "id": "q_sec_6_2_9",
+      "type": "ouvert",
+      "question": "Resumer la section 6.2.9 : Zone des travaux sous tension en haute tension",
+      "answer": "",
+      "source_section": "6.2.9"
+    },
+    {
+      "id": "q_sec_6_3",
+      "type": "ouvert",
+      "question": "Resumer la section 6.3 : Distances limites et zones définies dans les locaux et emplacements d'accès",
+      "answer": "",
+      "source_section": "6.3"
+    },
+    {
+      "id": "q_sec_6_4",
+      "type": "ouvert",
+      "question": "Resumer la section 6.4 : Distances limites et zones définies autour des supports de lignes aériennes",
+      "answer": "",
+      "source_section": "6.4"
+    },
+    {
+      "id": "q_sec_6_5",
+      "type": "ouvert",
+      "question": "Resumer la section 6.5 : Distances limites et zones définies par l'ouverture d'une armoire, d'un coffret ou",
+      "answer": "",
+      "source_section": "6.5"
+    },
+    {
+      "id": "q_sec_6_6",
+      "type": "ouvert",
+      "question": "Resumer la section 6.6 : Distances limites et zones définies autour des canalisations isolées",
+      "answer": "",
+      "source_section": "6.6"
+    },
+    {
+      "id": "q_sec_6_6_1",
+      "type": "ouvert",
+      "question": "Resumer la section 6.6.1 : Canalisations isolées visibles",
+      "answer": "",
+      "source_section": "6.6.1"
+    },
+    {
+      "id": "q_sec_6_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 6.6.2 : Canalisations isolées invisibles",
+      "answer": "",
+      "source_section": "6.6.2"
+    },
+    {
+      "id": "q_sec_6_6_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 6.6.2.1 : Canalisations isolées invisibles enterrées",
+      "answer": "",
+      "source_section": "6.6.2.1"
+    },
+    {
+      "id": "q_sec_6_6_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 6.6.2.2 : Canalisations isolées invisibles noyées ou encastrées",
+      "answer": "",
+      "source_section": "6.6.2.2"
+    },
+    {
+      "id": "q_sec_6_7",
+      "type": "ouvert",
+      "question": "Resumer la section 6.7 : Environnement autour d'un circuit de terre",
+      "answer": "",
+      "source_section": "6.7"
+    },
+    {
+      "id": "q_sec_6_8",
+      "type": "ouvert",
+      "question": "Resumer la section 6.8 : Cas particulier des canalisations gainées",
+      "answer": "",
+      "source_section": "6.8"
+    },
+    {
+      "id": "q_sec_7",
+      "type": "ouvert",
+      "question": "Resumer la section 7 : OPERATIONS HORS TENSION",
+      "answer": "",
+      "source_section": "7"
+    },
+    {
+      "id": "q_sec_7_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.1 : Principes fondamentaux de la consignation électrique d'un ouvrage ou d'une",
+      "answer": "",
+      "source_section": "7.1.1"
+    },
+    {
+      "id": "q_sec_7_1_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.2.1 : Condition préalable à la consignation ou préidentification",
+      "answer": "",
+      "source_section": "7.1.2.1"
+    },
+    {
+      "id": "q_sec_7_1_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.2.2 : Opération 1 - Séparation électrique de l'ouvrage ou de l'installation des",
+      "answer": "",
+      "source_section": "7.1.2.2"
+    },
+    {
+      "id": "q_sec_7_1_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.2.3 : Opération 2 - Condamnation en position d'ouverture",
+      "answer": "",
+      "source_section": "7.1.2.3"
+    },
+    {
+      "id": "q_sec_7_1_2_4",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.2.4 : Opération 3 - Identification de la partie de l'ouvrage ou de l'installation",
+      "answer": "",
+      "source_section": "7.1.2.4"
+    },
+    {
+      "id": "q_sec_7_1_2_5",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.2.5 : Opération 4 - Vérification d'absence de tension",
+      "answer": "",
+      "source_section": "7.1.2.5"
+    },
+    {
+      "id": "q_sec_7_1_2_6",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.2.6 : Opération 5 - Mise à la terre et en court-circuit",
+      "answer": "",
+      "source_section": "7.1.2.6"
+    },
+    {
+      "id": "q_sec_7_1_2_7_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.2.7.1 : En cas d'induction magnétique et de couplage capacitif - équipotentialité",
+      "answer": "",
+      "source_section": "7.1.2.7.1"
+    },
+    {
+      "id": "q_sec_7_1_2_7_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.2.7.2 : En présence de condensateurs",
+      "answer": "",
+      "source_section": "7.1.2.7.2"
+    },
+    {
+      "id": "q_sec_7_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.3 : Procédures de consignation",
+      "answer": "",
+      "source_section": "7.1.3"
+    },
+    {
+      "id": "q_sec_7_1_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.3.1 : Consignation en une étape",
+      "answer": "",
+      "source_section": "7.1.3.1"
+    },
+    {
+      "id": "q_sec_7_1_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.3.2 : Consignation en deux étapes",
+      "answer": "",
+      "source_section": "7.1.3.2"
+    },
+    {
+      "id": "q_sec_7_1_4",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.4 : Opérations de deconsignation",
+      "answer": "",
+      "source_section": "7.1.4"
+    },
+    {
+      "id": "q_sec_7_1_5",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5 : Applications particulières de la consignation aux différents ouvrages ou",
+      "answer": "",
+      "source_section": "7.1.5"
+    },
+    {
+      "id": "q_sec_7_1_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5.1 : Particularités pour la BT",
+      "answer": "",
+      "source_section": "7.1.5.1"
+    },
+    {
+      "id": "q_sec_7_1_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5.2 : Particularités pour les lignes aériennes en conducteurs nus BT et HTA",
+      "answer": "",
+      "source_section": "7.1.5.2"
+    },
+    {
+      "id": "q_sec_7_1_5_3",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5.3 : Particularités pour les canalisations isolees BT et HTA avec ou sans",
+      "answer": "",
+      "source_section": "7.1.5.3"
+    },
+    {
+      "id": "q_sec_7_1_5_4",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5.4 : Particularités pour les postes HTA équipes d'appareillages à haute tension",
+      "answer": "",
+      "source_section": "7.1.5.4"
+    },
+    {
+      "id": "q_sec_7_1_5_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5.5.1 : Postes HTB à phases séparées ou très espacées",
+      "answer": "",
+      "source_section": "7.1.5.5.1"
+    },
+    {
+      "id": "q_sec_7_1_5_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5.5.2 : Postes HTB sous enveloppe métallique à isolement gazeux (PSEM)",
+      "answer": "",
+      "source_section": "7.1.5.5.2"
+    },
+    {
+      "id": "q_sec_7_1_5_6",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5.6 : Particularités des lignes aériennes HTB en conducteurs nus",
+      "answer": "",
+      "source_section": "7.1.5.6"
+    },
+    {
+      "id": "q_sec_7_1_5_7",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5.7 : Particularités des câbles isolés souterrains et aero-souterrains HTB à",
+      "answer": "",
+      "source_section": "7.1.5.7"
+    },
+    {
+      "id": "q_sec_7_1_5_8",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5.8 : Mise à la terre à l'aide d'un pavé de terre",
+      "answer": "",
+      "source_section": "7.1.5.8"
+    },
+    {
+      "id": "q_sec_7_1_5_9",
+      "type": "ouvert",
+      "question": "Resumer la section 7.1.5.9 : Cas de la consignation dans les véhicules et engins à motorisation électrique",
+      "answer": "",
+      "source_section": "7.1.5.9"
+    },
+    {
+      "id": "q_sec_7_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.2 : Procédure de mise hors tension",
+      "answer": "",
+      "source_section": "7.2"
+    },
+    {
+      "id": "q_sec_7_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.2.1 : Objet et champ d'application de la mise hors tension",
+      "answer": "",
+      "source_section": "7.2.1"
+    },
+    {
+      "id": "q_sec_7_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.2.2 : Déroulement d'une mise hors tension",
+      "answer": "",
+      "source_section": "7.2.2"
+    },
+    {
+      "id": "q_sec_7_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 7.2.3 : Remise sous tension après mise hors tension",
+      "answer": "",
+      "source_section": "7.2.3"
+    },
+    {
+      "id": "q_sec_7_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.1 : Attributions et articulation des fonctions",
+      "answer": "",
+      "source_section": "7.3.1"
+    },
+    {
+      "id": "q_sec_7_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2 : Procédures d'accès, de suivi et de contrôle des opérations hors tension",
+      "answer": "",
+      "source_section": "7.3.2"
+    },
+    {
+      "id": "q_sec_7_3_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.1 : Principes d'emploi des documents",
+      "answer": "",
+      "source_section": "7.3.2.1"
+    },
+    {
+      "id": "q_sec_7_3_2_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.1.1 : Tableaux des documents attestant la consignation ou la mise hors tension",
+      "answer": "",
+      "source_section": "7.3.2.1.1"
+    },
+    {
+      "id": "q_sec_7_3_2_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.1.2 : Attestation de consignation en une étape",
+      "answer": "",
+      "source_section": "7.3.2.1.2"
+    },
+    {
+      "id": "q_sec_7_3_2_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.1.3 : Attestation de 1ere étape de consignation",
+      "answer": "",
+      "source_section": "7.3.2.1.3"
+    },
+    {
+      "id": "q_sec_7_3_2_1_4",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.1.4 : Autorisation de travail",
+      "answer": "",
+      "source_section": "7.3.2.1.4"
+    },
+    {
+      "id": "q_sec_7_3_2_1_5",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.1.5 : Attestation de mise hors tension",
+      "answer": "",
+      "source_section": "7.3.2.1.5"
+    },
+    {
+      "id": "q_sec_7_3_2_1_6",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.1.6 : Certificat pour tiers après consignation",
+      "answer": "",
+      "source_section": "7.3.2.1.6"
+    },
+    {
+      "id": "q_sec_7_3_2_1_7",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.1.7 : Certificat pour tiers après mise hors tension",
+      "answer": "",
+      "source_section": "7.3.2.1.7"
+    },
+    {
+      "id": "q_sec_7_3_2_1_8",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.1.8 : Avis de fin de travail",
+      "answer": "",
+      "source_section": "7.3.2.1.8"
+    },
+    {
+      "id": "q_sec_7_3_2_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.2.1 : Cas général",
+      "answer": "",
+      "source_section": "7.3.2.2.1"
+    },
+    {
+      "id": "q_sec_7_3_2_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.2.2.2 : Transmission des documents",
+      "answer": "",
+      "source_section": "7.3.2.2.2"
+    },
+    {
+      "id": "q_sec_7_3_3",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.3 : Conditions atmosphériques",
+      "answer": "",
+      "source_section": "7.3.3"
+    },
+    {
+      "id": "q_sec_7_3_4",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.4 : Séparation d'un réseau de distribution",
+      "answer": "",
+      "source_section": "7.3.4"
+    },
+    {
+      "id": "q_sec_7_3_5",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.5 : Mesures particulières relatives aux consignations",
+      "answer": "",
+      "source_section": "7.3.5"
+    },
+    {
+      "id": "q_sec_7_3_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.5.1 : Travaux hors tension d'ordre électrique sur un ouvrage ou une installation",
+      "answer": "",
+      "source_section": "7.3.5.1"
+    },
+    {
+      "id": "q_sec_7_3_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.5.2 : Opérations hors tension après consignation pour suppression du voisinage",
+      "answer": "",
+      "source_section": "7.3.5.2"
+    },
+    {
+      "id": "q_sec_7_3_5_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.5.2.1 : Dispositions pour les opérations d'ordre non électrique concourant à",
+      "answer": "",
+      "source_section": "7.3.5.2.1"
+    },
+    {
+      "id": "q_sec_7_3_5_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.5.2.2 : Dispositions pour les autres operations d'ordre non électrique",
+      "answer": "",
+      "source_section": "7.3.5.2.2"
+    },
+    {
+      "id": "q_sec_7_3_5_3",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.5.3 : Cas des locaux et emplacements d'accès réservé aux électriciens",
+      "answer": "",
+      "source_section": "7.3.5.3"
+    },
+    {
+      "id": "q_sec_7_3_5_4",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.5.4 : Opérations d'ordre non électrique realisees dans l'environnement des",
+      "answer": "",
+      "source_section": "7.3.5.4"
+    },
+    {
+      "id": "q_sec_7_3_6",
+      "type": "ouvert",
+      "question": "Resumer la section 7.3.6 : Mesures particulières relatives à la mise hors tension",
+      "answer": "",
+      "source_section": "7.3.6"
+    },
+    {
+      "id": "q_sec_7_4_8",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.8 : et 7.4.9).",
+      "answer": "",
+      "source_section": "7.4.8"
+    },
+    {
+      "id": "q_sec_7_4",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4 : Rôle des différents acteurs dans le cadre d'un travail hors tension ou d'une",
+      "answer": "",
+      "source_section": "7.4"
+    },
+    {
+      "id": "q_sec_7_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.1 : Rôle de l'employeur",
+      "answer": "",
+      "source_section": "7.4.1"
+    },
+    {
+      "id": "q_sec_7_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.2 : Rôle du chef d'établissement",
+      "answer": "",
+      "source_section": "7.4.2"
+    },
+    {
+      "id": "q_sec_7_4_3",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.3 : Rôle du donneur d'ordre",
+      "answer": "",
+      "source_section": "7.4.3"
+    },
+    {
+      "id": "q_sec_7_4_4",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.4 : Rôle du chargé d'exploitation électrique",
+      "answer": "",
+      "source_section": "7.4.4"
+    },
+    {
+      "id": "q_sec_4_5_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.5.2.2 : :",
+      "answer": "",
+      "source_section": "4.5.2.2"
+    },
+    {
+      "id": "q_sec_7_4_5",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.5 : Rôle du charge de consignation",
+      "answer": "",
+      "source_section": "7.4.5"
+    },
+    {
+      "id": "q_sec_7_4_6",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.6 : Rôle du charge de travaux pour les travaux hors tension",
+      "answer": "",
+      "source_section": "7.4.6"
+    },
+    {
+      "id": "q_sec_7_4_6_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.6.1 : Avant d'entreprendre le travail",
+      "answer": "",
+      "source_section": "7.4.6.1"
+    },
+    {
+      "id": "q_sec_7_4_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.6.2 : Pendant les travaux",
+      "answer": "",
+      "source_section": "7.4.6.2"
+    },
+    {
+      "id": "q_sec_7_4_6_3",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.6.3 : A la fin des travaux",
+      "answer": "",
+      "source_section": "7.4.6.3"
+    },
+    {
+      "id": "q_sec_7_4_7",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.7 : Rôle du chargé de travaux pour les opérations après suppression du voisinage",
+      "answer": "",
+      "source_section": "7.4.7"
+    },
+    {
+      "id": "q_sec_7_4_8",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.8 : Rôle du charge de chantier dans le cadre d'opérations d'ordre non électrique",
+      "answer": "",
+      "source_section": "7.4.8"
+    },
+    {
+      "id": "q_sec_7_4_9",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.9 : Rôle du CHARGE DE CHANTIER DANS le CADRE D'OPERATIONS D'ORDRE NON ELectrique",
+      "answer": "",
+      "source_section": "7.4.9"
+    },
+    {
+      "id": "q_sec_7_4_10",
+      "type": "ouvert",
+      "question": "Resumer la section 7.4.10 : Rôle de l'exécutant de travaux d'ordre électrique ou non",
+      "answer": "",
+      "source_section": "7.4.10"
+    },
+    {
+      "id": "q_sec_7_5",
+      "type": "ouvert",
+      "question": "Resumer la section 7.5 : Formation à la prévention du risque électrique et Habilitation",
+      "answer": "",
+      "source_section": "7.5"
+    },
+    {
+      "id": "q_sec_7_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 7.5.1 : Chargé d'exploitation électrique",
+      "answer": "",
+      "source_section": "7.5.1"
+    },
+    {
+      "id": "q_sec_7_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 7.5.2 : Chargé de consignation",
+      "answer": "",
+      "source_section": "7.5.2"
+    },
+    {
+      "id": "q_sec_7_5_3",
+      "type": "ouvert",
+      "question": "Resumer la section 7.5.3 : Charge de travaux",
+      "answer": "",
+      "source_section": "7.5.3"
+    },
+    {
+      "id": "q_sec_7_5_4",
+      "type": "ouvert",
+      "question": "Resumer la section 7.5.4 : Chargé de chantier",
+      "answer": "",
+      "source_section": "7.5.4"
+    },
+    {
+      "id": "q_sec_7_5_5",
+      "type": "ouvert",
+      "question": "Resumer la section 7.5.5 : Exécutant",
+      "answer": "",
+      "source_section": "7.5.5"
+    },
+    {
+      "id": "q_sec_8",
+      "type": "ouvert",
+      "question": "Resumer la section 8 : TRAVAUX SOUS TENSION",
+      "answer": "",
+      "source_section": "8"
+    },
+    {
+      "id": "q_sec_8_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 8.1.1 : Le cadre réglementaire",
+      "answer": "",
+      "source_section": "8.1.1"
+    },
+    {
+      "id": "q_sec_8_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.1.2 : Présentation des risques encourus au cours des TST",
+      "answer": "",
+      "source_section": "8.1.2"
+    },
+    {
+      "id": "q_sec_8_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 8.2.1 : Disposition pour les ouvrages",
+      "answer": "",
+      "source_section": "8.2.1"
+    },
+    {
+      "id": "q_sec_8_2_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 8.2.1.1 : Conditions d'attribution de l'habilitation",
+      "answer": "",
+      "source_section": "8.2.1.1"
+    },
+    {
+      "id": "q_sec_8_2_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.2.1.2 : Suivi du titre d'habilitation",
+      "answer": "",
+      "source_section": "8.2.1.2"
+    },
+    {
+      "id": "q_sec_8_2_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 8.2.1.3 : Maintien des compétences - Recyclage",
+      "answer": "",
+      "source_section": "8.2.1.3"
+    },
+    {
+      "id": "q_sec_8_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.2.2 : Dispositions pour les installations",
+      "answer": "",
+      "source_section": "8.2.2"
+    },
+    {
+      "id": "q_sec_8_2_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 8.2.2.1 : Conditions d'attribution de l'habilitation",
+      "answer": "",
+      "source_section": "8.2.2.1"
+    },
+    {
+      "id": "q_sec_8_2_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.2.2.2 : Suivi du titre d'habilitation",
+      "answer": "",
+      "source_section": "8.2.2.2"
+    },
+    {
+      "id": "q_sec_8_2_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 8.2.2.3 : Maintien des compétences - Recyclage",
+      "answer": "",
+      "source_section": "8.2.2.3"
+    },
+    {
+      "id": "q_sec_8_3",
+      "type": "ouvert",
+      "question": "Resumer la section 8.3 : Méthodes de travail sous tension",
+      "answer": "",
+      "source_section": "8.3"
+    },
+    {
+      "id": "q_sec_8_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.3.2 : Travail à distance",
+      "answer": "",
+      "source_section": "8.3.2"
+    },
+    {
+      "id": "q_sec_8_3_3",
+      "type": "ouvert",
+      "question": "Resumer la section 8.3.3 : Travail au potentiel",
+      "answer": "",
+      "source_section": "8.3.3"
+    },
+    {
+      "id": "q_sec_8_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 8.4.1 : Travaux sous tension, hors tension et au voisinage",
+      "answer": "",
+      "source_section": "8.4.1"
+    },
+    {
+      "id": "q_sec_8_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.4.2 : Participation de personnel non habilite symbole T sur un chantier TST",
+      "answer": "",
+      "source_section": "8.4.2"
+    },
+    {
+      "id": "q_sec_8_5",
+      "type": "ouvert",
+      "question": "Resumer la section 8.5 : Documents de référence",
+      "answer": "",
+      "source_section": "8.5"
+    },
+    {
+      "id": "q_sec_8_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 8.5.1 : TST sur les ouvrages - Conditions d'Execution du Travail, Fiches Techniques",
+      "answer": "",
+      "source_section": "8.5.1"
+    },
+    {
+      "id": "q_sec_8_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.5.2 : TST sur les installations - Normes spécifiques et référentiels",
+      "answer": "",
+      "source_section": "8.5.2"
+    },
+    {
+      "id": "q_sec_8_6",
+      "type": "ouvert",
+      "question": "Resumer la section 8.6 : Outil, matériel, équipement de travail, équipement de protection individuelle,",
+      "answer": "",
+      "source_section": "8.6"
+    },
+    {
+      "id": "q_sec_8_7",
+      "type": "ouvert",
+      "question": "Resumer la section 8.7 : Régime spécial d'exploitation",
+      "answer": "",
+      "source_section": "8.7"
+    },
+    {
+      "id": "q_sec_8_8",
+      "type": "ouvert",
+      "question": "Resumer la section 8.8 : Conditions atmosphériques",
+      "answer": "",
+      "source_section": "8.8"
+    },
+    {
+      "id": "q_sec_8_9",
+      "type": "ouvert",
+      "question": "Resumer la section 8.9 : Organisation des travaux",
+      "answer": "",
+      "source_section": "8.9"
+    },
+    {
+      "id": "q_sec_8_9_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 8.9.1.1 : Besoin initial",
+      "answer": "",
+      "source_section": "8.9.1.1"
+    },
+    {
+      "id": "q_sec_8_9_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.9.1.2 : Préparation du travail",
+      "answer": "",
+      "source_section": "8.9.1.2"
+    },
+    {
+      "id": "q_sec_8_9_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 8.9.1.3 : Désignation des opérateurs",
+      "answer": "",
+      "source_section": "8.9.1.3"
+    },
+    {
+      "id": "q_sec_8_9_1_4",
+      "type": "ouvert",
+      "question": "Resumer la section 8.9.1.4 : Exécution du travail",
+      "answer": "",
+      "source_section": "8.9.1.4"
+    },
+    {
+      "id": "q_sec_8_9_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.9.2 : Procédure applicable en basse tension",
+      "answer": "",
+      "source_section": "8.9.2"
+    },
+    {
+      "id": "q_sec_8_10_1",
+      "type": "ouvert",
+      "question": "Resumer la section 8.10.1 : Travaux sur les installations de contrôle, de télétransmission et de",
+      "answer": "",
+      "source_section": "8.10.1"
+    },
+    {
+      "id": "q_sec_8_10_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.10.2 : Mise en place de protections isolantes pour des tiers sur un ouvrage de",
+      "answer": "",
+      "source_section": "8.10.2"
+    },
+    {
+      "id": "q_sec_8_10_3",
+      "type": "ouvert",
+      "question": "Resumer la section 8.10.3 : Mise en place de protections isolantes sur une installation en vue de travaux",
+      "answer": "",
+      "source_section": "8.10.3"
+    },
+    {
+      "id": "q_sec_8_10_4",
+      "type": "ouvert",
+      "question": "Resumer la section 8.10.4 : Travaux sous tension sur les accumulateurs et batteries d'accumulateurs",
+      "answer": "",
+      "source_section": "8.10.4"
+    },
+    {
+      "id": "q_sec_8_10_5",
+      "type": "ouvert",
+      "question": "Resumer la section 8.10.5 : Travaux sous tension sur les installations photovoltaïques",
+      "answer": "",
+      "source_section": "8.10.5"
+    },
+    {
+      "id": "q_sec_8_11",
+      "type": "ouvert",
+      "question": "Resumer la section 8.11 : Travaux de nettoyage sous tension",
+      "answer": "",
+      "source_section": "8.11"
+    },
+    {
+      "id": "q_sec_8_12_1",
+      "type": "ouvert",
+      "question": "Resumer la section 8.12.1 : Rôle de l'employeur",
+      "answer": "",
+      "source_section": "8.12.1"
+    },
+    {
+      "id": "q_sec_8_12_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.12.2 : Rôle du chef d'établissement",
+      "answer": "",
+      "source_section": "8.12.2"
+    },
+    {
+      "id": "q_sec_8_12_3",
+      "type": "ouvert",
+      "question": "Resumer la section 8.12.3 : Rôle du donneur d'ordre",
+      "answer": "",
+      "source_section": "8.12.3"
+    },
+    {
+      "id": "q_sec_8_12_4",
+      "type": "ouvert",
+      "question": "Resumer la section 8.12.4 : Rôle du chargé d'exploitation électrique",
+      "answer": "",
+      "source_section": "8.12.4"
+    },
+    {
+      "id": "q_sec_8_12_5",
+      "type": "ouvert",
+      "question": "Resumer la section 8.12.5 : Rôle du charge de travaux",
+      "answer": "",
+      "source_section": "8.12.5"
+    },
+    {
+      "id": "q_sec_8_12_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 8.12.5.1 : Direction et surveillance des travaux",
+      "answer": "",
+      "source_section": "8.12.5.1"
+    },
+    {
+      "id": "q_sec_8_12_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 8.12.5.2 : Fin des travaux",
+      "answer": "",
+      "source_section": "8.12.5.2"
+    },
+    {
+      "id": "q_sec_8_12_6",
+      "type": "ouvert",
+      "question": "Resumer la section 8.12.6 : Rôle des exécutants",
+      "answer": "",
+      "source_section": "8.12.6"
+    },
+    {
+      "id": "q_sec_9",
+      "type": "ouvert",
+      "question": "Resumer la section 9 : OPERATIONS DANS L'ENVIRONNEMENT",
+      "answer": "",
+      "source_section": "9"
+    },
+    {
+      "id": "q_sec_9_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.1 : Principes de prévention vis-à-vis de l'environnement électrique",
+      "answer": "",
+      "source_section": "9.1"
+    },
+    {
+      "id": "q_sec_9_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.2.1 : Mise hors de portee par éloignement",
+      "answer": "",
+      "source_section": "9.2.1"
+    },
+    {
+      "id": "q_sec_9_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.2.2 : Mise hors de portée par pose d'obstacles",
+      "answer": "",
+      "source_section": "9.2.2"
+    },
+    {
+      "id": "q_sec_9_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 9.2.3 : Mise hors de portée par pose d'isolations",
+      "answer": "",
+      "source_section": "9.2.3"
+    },
+    {
+      "id": "q_sec_9_2_4",
+      "type": "ouvert",
+      "question": "Resumer la section 9.2.4 : Mise en œuvre des obstacles et des isolations",
+      "answer": "",
+      "source_section": "9.2.4"
+    },
+    {
+      "id": "q_sec_9_2_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.2.4.1 : Mise en place et retrait des obstacles et des isolations en basse tension",
+      "answer": "",
+      "source_section": "9.2.4.1"
+    },
+    {
+      "id": "q_sec_9_2_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.2.4.2 : Mise en place et retrait des obstacles et des isolations en haute tension",
+      "answer": "",
+      "source_section": "9.2.4.2"
+    },
+    {
+      "id": "q_sec_9_3",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3 : Présence de pièces nues sous tension en champ libre",
+      "answer": "",
+      "source_section": "9.3"
+    },
+    {
+      "id": "q_sec_9_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.1 : à 9.3.5).",
+      "answer": "",
+      "source_section": "9.3.1"
+    },
+    {
+      "id": "q_sec_9_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.1 : Zone d'investigation - Zone 0",
+      "answer": "",
+      "source_section": "9.3.1"
+    },
+    {
+      "id": "q_sec_9_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.2 : Zone de voisinage simple - Zone 1",
+      "answer": "",
+      "source_section": "9.3.2"
+    },
+    {
+      "id": "q_sec_9_3_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.2.1 : Zone de voisinage simple en basse tension",
+      "answer": "",
+      "source_section": "9.3.2.1"
+    },
+    {
+      "id": "q_sec_9_3_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.2.2 : Zone de voisinage simple en haute tension",
+      "answer": "",
+      "source_section": "9.3.2.2"
+    },
+    {
+      "id": "q_sec_9_3_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.3.1 : Dispositions générales",
+      "answer": "",
+      "source_section": "9.3.3.1"
+    },
+    {
+      "id": "q_sec_9_3_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.3.2 : Opérations d'ordre électrique",
+      "answer": "",
+      "source_section": "9.3.3.2"
+    },
+    {
+      "id": "q_sec_9_3_3_3",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.3.3 : Opérations d'ordre non électrique",
+      "answer": "",
+      "source_section": "9.3.3.3"
+    },
+    {
+      "id": "q_sec_9_3_4",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.4 : Zone de travaux sous tension HT - Zone 3",
+      "answer": "",
+      "source_section": "9.3.4"
+    },
+    {
+      "id": "q_sec_9_3_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.5.1 : Dispositions générales",
+      "answer": "",
+      "source_section": "9.3.5.1"
+    },
+    {
+      "id": "q_sec_9_3_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.5.2 : Modalités d'exécution des travaux hors tension au voisinage",
+      "answer": "",
+      "source_section": "9.3.5.2"
+    },
+    {
+      "id": "q_sec_9_3_6",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.6 : Prescriptions particulières pour les travaux d'ordre non électrique dans",
+      "answer": "",
+      "source_section": "9.3.6"
+    },
+    {
+      "id": "q_sec_9_3_6_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.3.6.1 : Procédure générale",
+      "answer": "",
+      "source_section": "9.3.6.1"
+    },
+    {
+      "id": "q_sec_9_4",
+      "type": "ouvert",
+      "question": "Resumer la section 9.4 : Locaux et emplacements d'accès réservé aux électriciens",
+      "answer": "",
+      "source_section": "9.4"
+    },
+    {
+      "id": "q_sec_9_5",
+      "type": "ouvert",
+      "question": "Resumer la section 9.5 : Ouverture d'une enveloppe électrique en basse tension",
+      "answer": "",
+      "source_section": "9.5"
+    },
+    {
+      "id": "q_sec_9_6_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.6.1 : Travaux d'ordre électrique",
+      "answer": "",
+      "source_section": "9.6.1"
+    },
+    {
+      "id": "q_sec_9_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.6.2 : Travaux d'ordre non électrique",
+      "answer": "",
+      "source_section": "9.6.2"
+    },
+    {
+      "id": "q_sec_9_7",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7 : Canalisations isolées",
+      "answer": "",
+      "source_section": "9.7"
+    },
+    {
+      "id": "q_sec_9_7_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.1 : Analyse du risque électrique",
+      "answer": "",
+      "source_section": "9.7.1"
+    },
+    {
+      "id": "q_sec_9_7_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2 : Canalisations isolées visibles",
+      "answer": "",
+      "source_section": "9.7.2"
+    },
+    {
+      "id": "q_sec_9_7_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2.1 : Activités sans risque pour les canalisations ou sans necessite de contact",
+      "answer": "",
+      "source_section": "9.7.2.1"
+    },
+    {
+      "id": "q_sec_9_7_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2.2 : Activités sans nécessité de contact, mais susceptibles de porter atteinte à",
+      "answer": "",
+      "source_section": "9.7.2.2"
+    },
+    {
+      "id": "q_sec_9_7_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2.3 : Activités sans risque pour la canalisation, mais nécessitant d'entrer en",
+      "answer": "",
+      "source_section": "9.7.2.3"
+    },
+    {
+      "id": "q_sec_9_7_2_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2.4.1 : Activités nécessitant d'écarter ou de deformer un conducteur BT isole",
+      "answer": "",
+      "source_section": "9.7.2.4.1"
+    },
+    {
+      "id": "q_sec_9_7_2_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2.4.2 : Déplacement d'une canalisation électrique isolée",
+      "answer": "",
+      "source_section": "9.7.2.4.2"
+    },
+    {
+      "id": "q_sec_9_7_2_4_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2.4.2.1 : Principes d'exécution",
+      "answer": "",
+      "source_section": "9.7.2.4.2.1"
+    },
+    {
+      "id": "q_sec_9_7_2_4_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2.4.2.2 : Modalités d'exécution",
+      "answer": "",
+      "source_section": "9.7.2.4.2.2"
+    },
+    {
+      "id": "q_sec_9_7_2_4_3",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2.4.3 : Soutènement d'une canalisation électrique isolée",
+      "answer": "",
+      "source_section": "9.7.2.4.3"
+    },
+    {
+      "id": "q_sec_9_7_2_4_4",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2.4.4 : Nettoyage d'une canalisation électrique isolée",
+      "answer": "",
+      "source_section": "9.7.2.4.4"
+    },
+    {
+      "id": "q_sec_9_7_2_5",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.2.5 : Mise en présence fortuite d'une partie active accessible",
+      "answer": "",
+      "source_section": "9.7.2.5"
+    },
+    {
+      "id": "q_sec_9_7_3",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.3 : Canalisations invisibles enterrées",
+      "answer": "",
+      "source_section": "9.7.3"
+    },
+    {
+      "id": "q_sec_9_7_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.3.1 : Principes d'exécution",
+      "answer": "",
+      "source_section": "9.7.3.1"
+    },
+    {
+      "id": "q_sec_9_7_3_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.3.1.1 : Prévenir le risque d'endommagement d'une canalisation",
+      "answer": "",
+      "source_section": "9.7.3.1.1"
+    },
+    {
+      "id": "q_sec_9_7_3_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.3.1.2 : Préserver l'intégrité de la canalisation après sa mise à l'air libre",
+      "answer": "",
+      "source_section": "9.7.3.1.2"
+    },
+    {
+      "id": "q_sec_9_7_3_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.3.1.3 : Protéger les personnes",
+      "answer": "",
+      "source_section": "9.7.3.1.3"
+    },
+    {
+      "id": "q_sec_9_7_3_1_4",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.3.1.4 : Savoir réagir en cas de dommage effectif",
+      "answer": "",
+      "source_section": "9.7.3.1.4"
+    },
+    {
+      "id": "q_sec_9_7_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.3.2 : Modalités d'exécution",
+      "answer": "",
+      "source_section": "9.7.3.2"
+    },
+    {
+      "id": "q_sec_9_7_3_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.3.2.1 : Canalisations électriques hors tension",
+      "answer": "",
+      "source_section": "9.7.3.2.1"
+    },
+    {
+      "id": "q_sec_9_7_3_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.3.2.2 : Canalisations électriques sous tension",
+      "answer": "",
+      "source_section": "9.7.3.2.2"
+    },
+    {
+      "id": "q_sec_9_7_4",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.4 : Canalisations invisibles noyées ou encastrées",
+      "answer": "",
+      "source_section": "9.7.4"
+    },
+    {
+      "id": "q_sec_9_7_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.4.1 : Principes d'exécution",
+      "answer": "",
+      "source_section": "9.7.4.1"
+    },
+    {
+      "id": "q_sec_9_7_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.7.4.2 : Modalités d'exécution",
+      "answer": "",
+      "source_section": "9.7.4.2"
+    },
+    {
+      "id": "q_sec_9_8",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8 : Rôle et compétence des différents acteurs dans l'environnement",
+      "answer": "",
+      "source_section": "9.8"
+    },
+    {
+      "id": "q_sec_9_8_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.1 : Rôle de l'employeur",
+      "answer": "",
+      "source_section": "9.8.1"
+    },
+    {
+      "id": "q_sec_9_8_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.2 : Rôle du chef d'établissement",
+      "answer": "",
+      "source_section": "9.8.2"
+    },
+    {
+      "id": "q_sec_9_8_3",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.3 : Rôle du donneur d'ordre",
+      "answer": "",
+      "source_section": "9.8.3"
+    },
+    {
+      "id": "q_sec_9_8_4",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.4 : Rôle du charge d'exploitation électrique",
+      "answer": "",
+      "source_section": "9.8.4"
+    },
+    {
+      "id": "q_sec_9_8_5",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.5 : Rôle du chargé de travaux",
+      "answer": "",
+      "source_section": "9.8.5"
+    },
+    {
+      "id": "q_sec_9_8_6",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.6 : Rôle du chargé de chantier",
+      "answer": "",
+      "source_section": "9.8.6"
+    },
+    {
+      "id": "q_sec_9_8_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.6.2 : Chargé de chantier habilité symboles B0 ou H0",
+      "answer": "",
+      "source_section": "9.8.6.2"
+    },
+    {
+      "id": "q_sec_9_8_6_3",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.6.3 : Charge de chantier habilite symbole HOV",
+      "answer": "",
+      "source_section": "9.8.6.3"
+    },
+    {
+      "id": "q_sec_9_8_7",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.7 : Rôle des surveillants de sécurité électrique",
+      "answer": "",
+      "source_section": "9.8.7"
+    },
+    {
+      "id": "q_sec_9_8_7_1",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.7.1 : Rôle du surveillant de sécurité électrique d'opération et d'accompagnement",
+      "answer": "",
+      "source_section": "9.8.7.1"
+    },
+    {
+      "id": "q_sec_9_8_7_2",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.7.2 : Rôle du surveillant de sécurité électrique de limite",
+      "answer": "",
+      "source_section": "9.8.7.2"
+    },
+    {
+      "id": "q_sec_9_8_8",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.8 : Rôle des exécutants habilités ou non",
+      "answer": "",
+      "source_section": "9.8.8"
+    },
+    {
+      "id": "q_sec_9_8_9",
+      "type": "ouvert",
+      "question": "Resumer la section 9.8.9 : Rôle des personnes formées non habilitées",
+      "answer": "",
+      "source_section": "9.8.9"
+    },
+    {
+      "id": "q_sec_10",
+      "type": "ouvert",
+      "question": "Resumer la section 10 : INTERVENTIONS BT",
+      "answer": "",
+      "source_section": "10"
+    },
+    {
+      "id": "q_sec_10_1",
+      "type": "ouvert",
+      "question": "Resumer la section 10.1 : Critères généraux d'une intervention BT",
+      "answer": "",
+      "source_section": "10.1"
+    },
+    {
+      "id": "q_sec_10_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 10.1.1 : Critères spécifiques aux interventions BT générales",
+      "answer": "",
+      "source_section": "10.1.1"
+    },
+    {
+      "id": "q_sec_10_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 10.1.2 : Critères spécifiques aux interventions BT élémentaires",
+      "answer": "",
+      "source_section": "10.1.2"
+    },
+    {
+      "id": "q_sec_10_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 10.2.1 : Généralités",
+      "answer": "",
+      "source_section": "10.2.1"
+    },
+    {
+      "id": "q_sec_10_2_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 10.2.2.1 : Chez un particulier",
+      "answer": "",
+      "source_section": "10.2.2.1"
+    },
+    {
+      "id": "q_sec_10_2_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 10.2.2.2 : Autres situations",
+      "answer": "",
+      "source_section": "10.2.2.2"
+    },
+    {
+      "id": "q_sec_10_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.1 : Généralités",
+      "answer": "",
+      "source_section": "10.3.1"
+    },
+    {
+      "id": "q_sec_10_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.2 : Procedure d'accès, de suivi et de contrôle",
+      "answer": "",
+      "source_section": "10.3.2"
+    },
+    {
+      "id": "q_sec_10_3_3",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.3 : Déroulement des interventions BT générales",
+      "answer": "",
+      "source_section": "10.3.3"
+    },
+    {
+      "id": "q_sec_10_3_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.3.1 : Etape 1 - Recherche et localisation des défauts",
+      "answer": "",
+      "source_section": "10.3.3.1"
+    },
+    {
+      "id": "q_sec_10_3_3_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.3.1.1 : Contrôle de fonctionnement",
+      "answer": "",
+      "source_section": "10.3.3.1.1"
+    },
+    {
+      "id": "q_sec_10_3_3_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.3.1.2 : Mesurage des grandeurs électriques",
+      "answer": "",
+      "source_section": "10.3.3.1.2"
+    },
+    {
+      "id": "q_sec_10_3_3_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.3.1.3 : Opérations particulières dans la recherche de défauts",
+      "answer": "",
+      "source_section": "10.3.3.1.3"
+    },
+    {
+      "id": "q_sec_10_3_3_1_4",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.3.1.4 : Mise en œuvre des operations de connexion et déconnexion de",
+      "answer": "",
+      "source_section": "10.3.3.1.4"
+    },
+    {
+      "id": "q_sec_10_3_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.3.2 : Etape 2 - Elimination du (des) défaut(s), réparation ou remplacement de",
+      "answer": "",
+      "source_section": "10.3.3.2"
+    },
+    {
+      "id": "q_sec_10_3_3_3",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.3.3 : Etape 3 : Réglages et vérification du fonctionnement du matériel électrique",
+      "answer": "",
+      "source_section": "10.3.3.3"
+    },
+    {
+      "id": "q_sec_10_3_3_4",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.3.4 : Fin de l'intervention BT",
+      "answer": "",
+      "source_section": "10.3.3.4"
+    },
+    {
+      "id": "q_sec_10_3_4",
+      "type": "ouvert",
+      "question": "Resumer la section 10.3.4 : Opérations particulières de connexion et de déconnexion",
+      "answer": "",
+      "source_section": "10.3.4"
+    },
+    {
+      "id": "q_sec_10_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 10.4.1 : Généralités",
+      "answer": "",
+      "source_section": "10.4.1"
+    },
+    {
+      "id": "q_sec_10_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 10.4.2 : Organisation",
+      "answer": "",
+      "source_section": "10.4.2"
+    },
+    {
+      "id": "q_sec_10_4_3",
+      "type": "ouvert",
+      "question": "Resumer la section 10.4.3 : Déroulement d'une intervention BT élémentaire",
+      "answer": "",
+      "source_section": "10.4.3"
+    },
+    {
+      "id": "q_sec_10_5",
+      "type": "ouvert",
+      "question": "Resumer la section 10.5 : Rôle des différents acteurs",
+      "answer": "",
+      "source_section": "10.5"
+    },
+    {
+      "id": "q_sec_10_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 10.5.1 : Rôle de l'employeur",
+      "answer": "",
+      "source_section": "10.5.1"
+    },
+    {
+      "id": "q_sec_10_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 10.5.2 : Rôle du chef d'établissement",
+      "answer": "",
+      "source_section": "10.5.2"
+    },
+    {
+      "id": "q_sec_10_5_3",
+      "type": "ouvert",
+      "question": "Resumer la section 10.5.3 : Rôle du donneur d'ordre",
+      "answer": "",
+      "source_section": "10.5.3"
+    },
+    {
+      "id": "q_sec_10_5_4",
+      "type": "ouvert",
+      "question": "Resumer la section 10.5.4 : Rôle du chargé d'exploitation électrique",
+      "answer": "",
+      "source_section": "10.5.4"
+    },
+    {
+      "id": "q_sec_10_5_5",
+      "type": "ouvert",
+      "question": "Resumer la section 10.5.5 : Rôle de la personne donnant accès à l'installation",
+      "answer": "",
+      "source_section": "10.5.5"
+    },
+    {
+      "id": "q_sec_10_5_6",
+      "type": "ouvert",
+      "question": "Resumer la section 10.5.6 : Rôle du charge d'intervention générale",
+      "answer": "",
+      "source_section": "10.5.6"
+    },
+    {
+      "id": "q_sec_10_5_7",
+      "type": "ouvert",
+      "question": "Resumer la section 10.5.7 : Rôle du chargé d'intervention élémentaire",
+      "answer": "",
+      "source_section": "10.5.7"
+    },
+    {
+      "id": "q_sec_10_5_8",
+      "type": "ouvert",
+      "question": "Resumer la section 10.5.8 : Rôle de l'exécutant",
+      "answer": "",
+      "source_section": "10.5.8"
+    },
+    {
+      "id": "q_sec_10_6",
+      "type": "ouvert",
+      "question": "Resumer la section 10.6 : Formation Habilitation à la prévention du risque électrique et",
+      "answer": "",
+      "source_section": "10.6"
+    },
+    {
+      "id": "q_sec_10_6_1",
+      "type": "ouvert",
+      "question": "Resumer la section 10.6.1 : Formation du chargé d'intervention générale",
+      "answer": "",
+      "source_section": "10.6.1"
+    },
+    {
+      "id": "q_sec_10_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 10.6.2 : Formation du chargé d'intervention élémentaire",
+      "answer": "",
+      "source_section": "10.6.2"
+    },
+    {
+      "id": "q_sec_11",
+      "type": "ouvert",
+      "question": "Resumer la section 11 : OPERATIONS SPECIFIQUES D'ESSAI, DE MESURAGE, DE VÉRIFICATION ET",
+      "answer": "",
+      "source_section": "11"
+    },
+    {
+      "id": "q_sec_11_1",
+      "type": "ouvert",
+      "question": "Resumer la section 11.1 : Présentation",
+      "answer": "",
+      "source_section": "11.1"
+    },
+    {
+      "id": "q_sec_11_2",
+      "type": "ouvert",
+      "question": "Resumer la section 11.2 : Essais",
+      "answer": "",
+      "source_section": "11.2"
+    },
+    {
+      "id": "q_sec_11_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 11.2.1 : Procédure d'accès, de suivi et de contrôle",
+      "answer": "",
+      "source_section": "11.2.1"
+    },
+    {
+      "id": "q_sec_11_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 11.2.2 : Essais mettant en œuvre les principes des travaux",
+      "answer": "",
+      "source_section": "11.2.2"
+    },
+    {
+      "id": "q_sec_11_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 11.2.3 : Essais mettant en œuvre les principes des interventions BT",
+      "answer": "",
+      "source_section": "11.2.3"
+    },
+    {
+      "id": "q_sec_11_2_4",
+      "type": "ouvert",
+      "question": "Resumer la section 11.2.4 : Autres essais",
+      "answer": "",
+      "source_section": "11.2.4"
+    },
+    {
+      "id": "q_sec_11_2_5",
+      "type": "ouvert",
+      "question": "Resumer la section 11.2.5 : Dispositions particulières pour les essais réalisés avec une source autonome",
+      "answer": "",
+      "source_section": "11.2.5"
+    },
+    {
+      "id": "q_sec_11_3",
+      "type": "ouvert",
+      "question": "Resumer la section 11.3 : Mesurages",
+      "answer": "",
+      "source_section": "11.3"
+    },
+    {
+      "id": "q_sec_11_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 11.3.1 : Contenu des mesurages",
+      "answer": "",
+      "source_section": "11.3.1"
+    },
+    {
+      "id": "q_sec_11_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 11.3.2 : Mise en œuvre des mesurages",
+      "answer": "",
+      "source_section": "11.3.2"
+    },
+    {
+      "id": "q_sec_4_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 4.3.2 : et 4.3.3 ;",
+      "answer": "",
+      "source_section": "4.3.2"
+    },
+    {
+      "id": "q_sec_11_3_3",
+      "type": "ouvert",
+      "question": "Resumer la section 11.3.3 : Risques particuliers relatifs à un transformateur de courant",
+      "answer": "",
+      "source_section": "11.3.3"
+    },
+    {
+      "id": "q_sec_11_3_4",
+      "type": "ouvert",
+      "question": "Resumer la section 11.3.4 : Risques particuliers relatifs à l'usage d'une pince ampèremétrique",
+      "answer": "",
+      "source_section": "11.3.4"
+    },
+    {
+      "id": "q_sec_11_4",
+      "type": "ouvert",
+      "question": "Resumer la section 11.4 : Vérifications",
+      "answer": "",
+      "source_section": "11.4"
+    },
+    {
+      "id": "q_sec_11_4_1",
+      "type": "ouvert",
+      "question": "Resumer la section 11.4.1 : Contenu des vérifications",
+      "answer": "",
+      "source_section": "11.4.1"
+    },
+    {
+      "id": "q_sec_11_4_2",
+      "type": "ouvert",
+      "question": "Resumer la section 11.4.2 : Mise en œuvre des vérifications",
+      "answer": "",
+      "source_section": "11.4.2"
+    },
+    {
+      "id": "q_sec_11_4_3",
+      "type": "ouvert",
+      "question": "Resumer la section 11.4.3 : Cas des vérifications chez les particuliers",
+      "answer": "",
+      "source_section": "11.4.3"
+    },
+    {
+      "id": "q_sec_11_5",
+      "type": "ouvert",
+      "question": "Resumer la section 11.5 : Manœuvres",
+      "answer": "",
+      "source_section": "11.5"
+    },
+    {
+      "id": "q_sec_11_5_1",
+      "type": "ouvert",
+      "question": "Resumer la section 11.5.1 : Les manœuvres d'exploitation",
+      "answer": "",
+      "source_section": "11.5.1"
+    },
+    {
+      "id": "q_sec_11_5_2",
+      "type": "ouvert",
+      "question": "Resumer la section 11.5.2 : Les manœuvres de consignation",
+      "answer": "",
+      "source_section": "11.5.2"
+    },
+    {
+      "id": "q_sec_11_5_3",
+      "type": "ouvert",
+      "question": "Resumer la section 11.5.3 : Les manœuvres d'urgence",
+      "answer": "",
+      "source_section": "11.5.3"
+    },
+    {
+      "id": "q_sec_11_5_4",
+      "type": "ouvert",
+      "question": "Resumer la section 11.5.4 : Protection de l'opérateur au cours des manœuvres",
+      "answer": "",
+      "source_section": "11.5.4"
+    },
+    {
+      "id": "q_sec_11_6",
+      "type": "ouvert",
+      "question": "Resumer la section 11.6 : Formation à la prévention du risque électrique et Habilitation",
+      "answer": "",
+      "source_section": "11.6"
+    },
+    {
+      "id": "q_sec_11_6_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 11.6.1.1 : Formation à la prévention du risque électrique pour les charges d'essais",
+      "answer": "",
+      "source_section": "11.6.1.1"
+    },
+    {
+      "id": "q_sec_11_6_1_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 11.6.1.1.1 : Essais dans le cadre des travaux",
+      "answer": "",
+      "source_section": "11.6.1.1.1"
+    },
+    {
+      "id": "q_sec_11_6_1_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 11.6.1.1.2 : Essais dans le cadre des interventions BT",
+      "answer": "",
+      "source_section": "11.6.1.1.2"
+    },
+    {
+      "id": "q_sec_11_6_1_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 11.6.1.1.3 : Autres essais",
+      "answer": "",
+      "source_section": "11.6.1.1.3"
+    },
+    {
+      "id": "q_sec_11_6_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 11.6.1.2 : Formation à la prévention du risque électrique pour les exécutants dans le",
+      "answer": "",
+      "source_section": "11.6.1.2"
+    },
+    {
+      "id": "q_sec_11_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 11.6.2 : Formation à la prévention du risque électrique pour le mesurage",
+      "answer": "",
+      "source_section": "11.6.2"
+    },
+    {
+      "id": "q_sec_11_6_3",
+      "type": "ouvert",
+      "question": "Resumer la section 11.6.3 : Formation à la prévention du risque électrique pour les vérifications",
+      "answer": "",
+      "source_section": "11.6.3"
+    },
+    {
+      "id": "q_sec_11_6_4",
+      "type": "ouvert",
+      "question": "Resumer la section 11.6.4 : Formation à la prévention du risque électrique pour les manœuvres",
+      "answer": "",
+      "source_section": "11.6.4"
+    },
+    {
+      "id": "q_sec_11_7",
+      "type": "ouvert",
+      "question": "Resumer la section 11.7 : Tableau des compétences",
+      "answer": "",
+      "source_section": "11.7"
+    },
+    {
+      "id": "q_sec_12",
+      "type": "ouvert",
+      "question": "Resumer la section 12 : OPÉRATIONS PARTICULIÈRES",
+      "answer": "",
+      "source_section": "12"
+    },
+    {
+      "id": "q_sec_12_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.1 : Opérations sur les lignes aériennes sur supports communs",
+      "answer": "",
+      "source_section": "12.1"
+    },
+    {
+      "id": "q_sec_12_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.2 : Opérations sur les installations d'éclairage extérieur",
+      "answer": "",
+      "source_section": "12.2"
+    },
+    {
+      "id": "q_sec_12_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.3.1 : En basse tension",
+      "answer": "",
+      "source_section": "12.3.1"
+    },
+    {
+      "id": "q_sec_12_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.3.2 : En haute tension",
+      "answer": "",
+      "source_section": "12.3.2"
+    },
+    {
+      "id": "q_sec_12_4",
+      "type": "ouvert",
+      "question": "Resumer la section 12.4 : Opérations de remplacement de fusibles BT",
+      "answer": "",
+      "source_section": "12.4"
+    },
+    {
+      "id": "q_sec_12_5",
+      "type": "ouvert",
+      "question": "Resumer la section 12.5 : Opérations de remplacement de fusibles HTA",
+      "answer": "",
+      "source_section": "12.5"
+    },
+    {
+      "id": "q_sec_12_6_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.6.1 : Opération sur les circuits",
+      "answer": "",
+      "source_section": "12.6.1"
+    },
+    {
+      "id": "q_sec_12_6_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.6.2 : Autres opérations",
+      "answer": "",
+      "source_section": "12.6.2"
+    },
+    {
+      "id": "q_sec_12_7",
+      "type": "ouvert",
+      "question": "Resumer la section 12.7 : Matériels alimentes en BT et TBT comportant des circuits HT",
+      "answer": "",
+      "source_section": "12.7"
+    },
+    {
+      "id": "q_sec_12_7_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.7.1 : Conditions que doit remplir le personnel appele a effectuer des opérations sur",
+      "answer": "",
+      "source_section": "12.7.1"
+    },
+    {
+      "id": "q_sec_12_7_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.7.2 : Formation à la prévention du risque électrique - Habilitation",
+      "answer": "",
+      "source_section": "12.7.2"
+    },
+    {
+      "id": "q_sec_12_8",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8 : Travaux et interventions BT sur les accumulateurs et les batteries",
+      "answer": "",
+      "source_section": "12.8"
+    },
+    {
+      "id": "q_sec_12_8_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.1 : Les manutentions",
+      "answer": "",
+      "source_section": "12.8.1"
+    },
+    {
+      "id": "q_sec_12_8_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.2 : Les opérations de connexion et de déconnexion",
+      "answer": "",
+      "source_section": "12.8.2"
+    },
+    {
+      "id": "q_sec_12_8_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.2.1 : Batterie de démarrage des véhicules automobiles et engins",
+      "answer": "",
+      "source_section": "12.8.2.1"
+    },
+    {
+      "id": "q_sec_12_8_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.2.2 : Batterie de traction des véhicules automobiles et engins",
+      "answer": "",
+      "source_section": "12.8.2.2"
+    },
+    {
+      "id": "q_sec_12_8_3",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.3 : Le nettoyage",
+      "answer": "",
+      "source_section": "12.8.3"
+    },
+    {
+      "id": "q_sec_12_8_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.3.1 : Le nettoyage du corps de batterie",
+      "answer": "",
+      "source_section": "12.8.3.1"
+    },
+    {
+      "id": "q_sec_12_8_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.3.2 : Le nettoyage de la connectique",
+      "answer": "",
+      "source_section": "12.8.3.2"
+    },
+    {
+      "id": "q_sec_12_8_3_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.3.2.1 : Batterie de démarrage des véhicules automobiles et engins",
+      "answer": "",
+      "source_section": "12.8.3.2.1"
+    },
+    {
+      "id": "q_sec_12_8_3_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.3.2.2 : Batterie de traction des véhicules automobiles et engins",
+      "answer": "",
+      "source_section": "12.8.3.2.2"
+    },
+    {
+      "id": "q_sec_12_8_4",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.4 : Les contrôles",
+      "answer": "",
+      "source_section": "12.8.4"
+    },
+    {
+      "id": "q_sec_12_8_5",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.5 : La vérification de l'electrolyte",
+      "answer": "",
+      "source_section": "12.8.5"
+    },
+    {
+      "id": "q_sec_12_8_6",
+      "type": "ouvert",
+      "question": "Resumer la section 12.8.6 : Organisation",
+      "answer": "",
+      "source_section": "12.8.6"
+    },
+    {
+      "id": "q_sec_12_9",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9 : Travaux et interventions BT sur la partie en courant continu des installations",
+      "answer": "",
+      "source_section": "12.9"
+    },
+    {
+      "id": "q_sec_12_9_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.1 : Risques et mesures de prevention applicables aux parties en courant continu",
+      "answer": "",
+      "source_section": "12.9.1"
+    },
+    {
+      "id": "q_sec_12_9_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.1.1 : Évaluation du risque électrique",
+      "answer": "",
+      "source_section": "12.9.1.1"
+    },
+    {
+      "id": "q_sec_12_9_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.1.2 : Mesures de prévention",
+      "answer": "",
+      "source_section": "12.9.1.2"
+    },
+    {
+      "id": "q_sec_12_9_2_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.1.1 : Montage ou demontage d'un connecteur debrochable sur un conducteur",
+      "answer": "",
+      "source_section": "12.9.2.1.1"
+    },
+    {
+      "id": "q_sec_12_9_2_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.1.2 : Manipulation d'un module PV",
+      "answer": "",
+      "source_section": "12.9.2.1.2"
+    },
+    {
+      "id": "q_sec_12_9_2_1_3",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.1.3 : Connexion, déconnexion, sectionnement mécanique",
+      "answer": "",
+      "source_section": "12.9.2.1.3"
+    },
+    {
+      "id": "q_sec_12_9_2_1_4",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.1.4 : Séparation et condamnation d'une partie d'installation",
+      "answer": "",
+      "source_section": "12.9.2.1.4"
+    },
+    {
+      "id": "q_sec_12_9_2_1_5",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.1.5 : Mise en œuvre d'écran opaque - Nettoyage des surfaces transparentes des",
+      "answer": "",
+      "source_section": "12.9.2.1.5"
+    },
+    {
+      "id": "q_sec_12_9_2_1_6",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.1.6 : Essais, vérifications, mesurages",
+      "answer": "",
+      "source_section": "12.9.2.1.6"
+    },
+    {
+      "id": "q_sec_12_9_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.2 : Organisation",
+      "answer": "",
+      "source_section": "12.9.2.2"
+    },
+    {
+      "id": "q_sec_12_9_2_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.2.1 : Encadrement des opérations",
+      "answer": "",
+      "source_section": "12.9.2.2.1"
+    },
+    {
+      "id": "q_sec_12_9_2_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.2.2 : Intervention BT chaîne PV",
+      "answer": "",
+      "source_section": "12.9.2.2.2"
+    },
+    {
+      "id": "q_sec_12_9_2_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.2.3 : Intervention BT generale PV",
+      "answer": "",
+      "source_section": "12.9.2.2.3"
+    },
+    {
+      "id": "q_sec_12_9_2_2_4",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.2.4 : Autres opérations",
+      "answer": "",
+      "source_section": "12.9.2.2.4"
+    },
+    {
+      "id": "q_sec_12_9_2_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.3.1 : Mention d'habilitation « Photovoltaïque >>",
+      "answer": "",
+      "source_section": "12.9.2.3.1"
+    },
+    {
+      "id": "q_sec_12_9_2_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.3.2 : Habilitation symbole BP",
+      "answer": "",
+      "source_section": "12.9.2.3.2"
+    },
+    {
+      "id": "q_sec_12_9_2_3_3",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.3.3 : Habilitation symbole BR Photovoltaïque",
+      "answer": "",
+      "source_section": "12.9.2.3.3"
+    },
+    {
+      "id": "q_sec_12_9_2_3_4",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.3.4 : Autres habilitations",
+      "answer": "",
+      "source_section": "12.9.2.3.4"
+    },
+    {
+      "id": "q_sec_12_9_2_3_5",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.2.3.5 : Dispense d'habilitation",
+      "answer": "",
+      "source_section": "12.9.2.3.5"
+    },
+    {
+      "id": "q_sec_12_9_3",
+      "type": "ouvert",
+      "question": "Resumer la section 12.9.3 : Travaux d'ordre non electrique dans l'environnement d'une installation",
+      "answer": "",
+      "source_section": "12.9.3"
+    },
+    {
+      "id": "q_sec_12_10_1",
+      "type": "ouvert",
+      "question": "Resumer la section 12.10.1 : Principe de prévention",
+      "answer": "",
+      "source_section": "12.10.1"
+    },
+    {
+      "id": "q_sec_12_10_2",
+      "type": "ouvert",
+      "question": "Resumer la section 12.10.2 : Modalités de mise en œuvre",
+      "answer": "",
+      "source_section": "12.10.2"
+    },
+    {
+      "id": "q_sec_12_10_3",
+      "type": "ouvert",
+      "question": "Resumer la section 12.10.3 : Compétence du personnel",
+      "answer": "",
+      "source_section": "12.10.3"
+    },
+    {
+      "id": "q_sec_12_11",
+      "type": "ouvert",
+      "question": "Resumer la section 12.11 : Opérations sur les circuits de terre",
+      "answer": "",
+      "source_section": "12.11"
+    },
+    {
+      "id": "q_sec_13",
+      "type": "ouvert",
+      "question": "Resumer la section 13 : INCENDIE ET ACCIDENTS SUR OU PRES DES OUVRAGES ET",
+      "answer": "",
+      "source_section": "13"
+    },
+    {
+      "id": "q_sec_13_1",
+      "type": "ouvert",
+      "question": "Resumer la section 13.1 : Généralités",
+      "answer": "",
+      "source_section": "13.1"
+    },
+    {
+      "id": "q_sec_13_2",
+      "type": "ouvert",
+      "question": "Resumer la section 13.2 : Incendie sur ou près des ouvrages ou des installations électriques",
+      "answer": "",
+      "source_section": "13.2"
+    },
+    {
+      "id": "q_sec_13_2_1",
+      "type": "ouvert",
+      "question": "Resumer la section 13.2.1 : Prescriptions générales",
+      "answer": "",
+      "source_section": "13.2.1"
+    },
+    {
+      "id": "q_sec_13_2_2",
+      "type": "ouvert",
+      "question": "Resumer la section 13.2.2 : Prescriptions complémentaires concernant l'utilisation d'extincteurs sur des",
+      "answer": "",
+      "source_section": "13.2.2"
+    },
+    {
+      "id": "q_sec_13_2_3",
+      "type": "ouvert",
+      "question": "Resumer la section 13.2.3 : Prescriptions complémentaires concernant les lances de pulvérisation sur des",
+      "answer": "",
+      "source_section": "13.2.3"
+    },
+    {
+      "id": "q_sec_13_3",
+      "type": "ouvert",
+      "question": "Resumer la section 13.3 : Conduite à tenir en cas d'accident d'origine électrique sur les ouvrages, les",
+      "answer": "",
+      "source_section": "13.3"
+    },
+    {
+      "id": "q_sec_13_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 13.3.1 : Eviter le sur-accident électrique",
+      "answer": "",
+      "source_section": "13.3.1"
+    },
+    {
+      "id": "q_sec_13_3_1_1",
+      "type": "ouvert",
+      "question": "Resumer la section 13.3.1.1 : Mise hors tension en basse tension",
+      "answer": "",
+      "source_section": "13.3.1.1"
+    },
+    {
+      "id": "q_sec_13_3_1_2",
+      "type": "ouvert",
+      "question": "Resumer la section 13.3.1.2 : Mise hors tension en haute tension",
+      "answer": "",
+      "source_section": "13.3.1.2"
+    },
+    {
+      "id": "q_sec_13_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 13.3.2 : Donner l'alerte",
+      "answer": "",
+      "source_section": "13.3.2"
+    },
+    {
+      "id": "q_sec_13_3_3_1",
+      "type": "ouvert",
+      "question": "Resumer la section 13.3.3.1 : Dégager l'accidenté",
+      "answer": "",
+      "source_section": "13.3.3.1"
+    },
+    {
+      "id": "q_sec_13_3_3_2",
+      "type": "ouvert",
+      "question": "Resumer la section 13.3.3.2 : Mise en œuvre des premiers gestes de secours",
+      "answer": "",
+      "source_section": "13.3.3.2"
+    },
+    {
+      "id": "q_sec_13_3_4",
+      "type": "ouvert",
+      "question": "Resumer la section 13.3.4 : Conducteur tombé à terre ou conducteur accidentellement à portée de main",
+      "answer": "",
+      "source_section": "13.3.4"
+    },
+    {
+      "id": "q_sec_13_3_5",
+      "type": "ouvert",
+      "question": "Resumer la section 13.3.5 : Cas d'un véhicule ou d'un engin venant en contact accidentel avec une ligne",
+      "answer": "",
+      "source_section": "13.3.5"
+    },
+    {
+      "id": "q_sec_13_3_6",
+      "type": "ouvert",
+      "question": "Resumer la section 13.3.6 : Autre dégagement d'urgence",
+      "answer": "",
+      "source_section": "13.3.6"
+    },
+    {
+      "id": "q_sec_13_4",
+      "type": "ouvert",
+      "question": "Resumer la section 13.4 : Incident en zone présentant des risques d'explosion",
+      "answer": "",
+      "source_section": "13.4"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "questions": [
+    {
+      "id": "q_art_1",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 1 : DOMAINE D'APPLICATION ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_1",
+        "article_numero": "1"
+      }
+    },
+    {
+      "id": "q_art_2",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 2 : REFERENCES NORMATIVES ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_2",
+        "article_numero": "2"
+      }
+    },
+    {
+      "id": "q_art_3",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 3 : TERMES ET DEFINITIONS ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_3",
+        "article_numero": "3"
+      }
+    },
+    {
+      "id": "q_art_4",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 4 : DISPOSITIONS GENERALES ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_4",
+        "article_numero": "4"
+      }
+    },
+    {
+      "id": "q_art_5",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 5 : FORMATION ET HABILITATION ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_5",
+        "article_numero": "5"
+      }
+    },
+    {
+      "id": "q_art_6",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 6 : DÉTERMINATION DE L'ENVIRONNEMENT DES OPÉRATIONS ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_6",
+        "article_numero": "6"
+      }
+    },
+    {
+      "id": "q_art_7",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 7 : OPERATIONS HORS TENSION ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_7",
+        "article_numero": "7"
+      }
+    },
+    {
+      "id": "q_art_8",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 8 : TRAVAUX SOUS TENSION ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_8",
+        "article_numero": "8"
+      }
+    },
+    {
+      "id": "q_art_9",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 9 : OPERATIONS DANS L'ENVIRONNEMENT ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_9",
+        "article_numero": "9"
+      }
+    },
+    {
+      "id": "q_art_10",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 10 : INTERVENTIONS BT ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_10",
+        "article_numero": "10"
+      }
+    },
+    {
+      "id": "q_art_11",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 11 : OPERATIONS SPECIFIQUES D'ESSAI, DE MESURAGE, DE VÉRIFICATION ET ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_11",
+        "article_numero": "11"
+      }
+    },
+    {
+      "id": "q_art_12",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 12 : OPÉRATIONS PARTICULIÈRES ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_12",
+        "article_numero": "12"
+      }
+    },
+    {
+      "id": "q_art_13",
+      "type": "question_ouverte",
+      "question": "Quel est l'objet de l'article 13 : INCENDIE ET ACCIDENTS SUR OU PRES DES OUVRAGES ET ?",
+      "reponse_attendue": "",
+      "source_ref": {
+        "article_id": "art_13",
+        "article_numero": "13"
+      }
+    }
+  ]
+}

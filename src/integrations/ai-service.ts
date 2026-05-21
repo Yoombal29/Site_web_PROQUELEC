@@ -1,4 +1,4 @@
-import { supabase } from '@/integrations/supabase/client';
+import { apiFetch } from '@/lib/api-client';
 
 interface AIGenerationRequest {
   prompt: string;
@@ -18,53 +18,23 @@ interface AIGenerationResponse {
  * Service IA pour générer du contenu
  */
 export class AIService {
-  private static readonly API_KEY = process.env.VITE_OPENAI_API_KEY;
-  private static readonly API_BASE = 'https://api.openai.com/v1';
+  // private static readonly API_KEY = process.env.VITE_OPENAI_API_KEY; // Managed by backend now
+  // private static readonly API_BASE = 'https://api.openai.com/v1'; // Replaced by local API call
 
   /**
-   * Génère du contenu via OpenAI
+   * Génère du contenu via l'API locale (qui peut appeler OpenAI, Gemini ou autre)
    */
   static async generateContent(request: AIGenerationRequest): Promise<AIGenerationResponse> {
-    if (!this.API_KEY) {
-      throw new Error('OpenAI API key not configured');
-    }
-
-    const systemPrompt = this.buildSystemPrompt(request);
-    const userPrompt = this.buildUserPrompt(request);
-
+    // Appel de l'endpoint IA générique du backend local
     try {
-      const response = await fetch(`${this.API_BASE}/chat/completions`, {
+      const response = await apiFetch<unknown>('/api/ai-generate', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.API_KEY}`
-        },
-        body: JSON.stringify({
-          model: 'gpt-4-turbo',
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: userPrompt }
-          ],
-          max_tokens: this.getMaxTokens(request.length),
-          temperature: this.getTemperature(request.tone),
-          top_p: 0.9
-        })
+        body: JSON.stringify(request)
       });
 
-      if (!response.ok) {
-        throw new Error(`OpenAI API error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const generatedText = data.choices[0].message.content;
-      const tokensUsed = data.usage.total_tokens;
-
-      // Sauvegarder dans les logs
-      await this.logGeneration(request, generatedText, tokensUsed);
-
       return {
-        content: generatedText,
-        tokens_used: tokensUsed,
+        content: response.content || response.text || '',
+        tokens_used: response.tokens_used || 0,
         generated_at: new Date().toISOString()
       };
     } catch (error) {
@@ -77,10 +47,10 @@ export class AIService {
    * Génère plusieurs variations de contenu
    */
   static async generateVariations(
-    basePrompt: string,
-    context: AIGenerationRequest['context'],
-    count: number = 3
-  ): Promise<AIGenerationResponse[]> {
+  basePrompt: string,
+  context: AIGenerationRequest['context'],
+  count: number = 3)
+  : Promise<AIGenerationResponse[]> {
     const variations: AIGenerationResponse[] = [];
 
     for (let i = 0; i < count; i++) {
@@ -118,7 +88,7 @@ export class AIService {
       length: 'short',
       tone: 'professional'
     });
-    return response.content.split(',').map(k => k.trim());
+    return response.content.split(',').map((k) => k.trim());
   }
 
   /**
@@ -131,7 +101,7 @@ export class AIService {
       length: 'short',
       tone: 'marketing'
     });
-    return response.content.split('\n').filter(line => line.trim());
+    return response.content.split('\n').filter((line) => line.trim());
   }
 
   /**
@@ -149,7 +119,7 @@ export class AIService {
   /**
    * Génère du contenu FAQ
    */
-  static async generateFAQ(topic: string, count: number = 5): Promise<Array<{ question: string; answer: string }>> {
+  static async generateFAQ(topic: string, count: number = 5): Promise<Array<{question: string;answer: string;}>> {
     const response = await this.generateContent({
       prompt: `Générer ${count} questions-réponses FAQ pertinentes sur: ${topic}\nFormatez comme:\nQ1: question?\nA1: réponse\nQ2: question?\nA2: réponse\netc.`,
       context: 'faq',
@@ -157,7 +127,7 @@ export class AIService {
       tone: 'professional'
     });
 
-    const faqs: Array<{ question: string; answer: string }> = [];
+    const faqs: Array<{question: string;answer: string;}> = [];
     const lines = response.content.split('\n');
     let currentQuestion = '';
 
@@ -203,9 +173,9 @@ export class AIService {
    * Génère du contenu d'email marketing
    */
   static async generateEmailContent(
-    subject: string,
-    purpose: string
-  ): Promise<{ subject: string; preview: string; body: string }> {
+  subject: string,
+  purpose: string)
+  : Promise<{subject: string;preview: string;body: string;}> {
     const response = await this.generateContent({
       prompt: `Générer un email marketing complet avec:\nSujet: ${subject}\nObjectif: ${purpose}\n\nFormatez comme:\nSujet: ...\nAperçu: ...\nCorps: ...`,
       context: 'email',
@@ -255,7 +225,7 @@ export class AIService {
       tone: 'professional'
     });
 
-    return response.content.split('\n').filter(line => line.trim());
+    return response.content.split('\n').filter((line) => line.trim());
   }
 
   /**
@@ -282,71 +252,7 @@ export class AIService {
   }
 
   // ====== Méthodes privées ======
-
-  private static buildSystemPrompt(request: AIGenerationRequest): string {
-    const basePrompt = `Tu es un assistant IA professionnel spécialisé dans la création de contenu Web.
-Tu crées du contenu de haute qualité, optimisé pour le SEO, engageant et professionnel.
-Langue: ${request.language || 'Français'}
-Ton: ${request.tone || 'professional'}`;
-
-    const contextPrompts: Record<AIGenerationRequest['context'], string> = {
-      description: `${basePrompt}\nSpécialité: Créer des descriptions produits/services compactes mais complètes.`,
-      title: `${basePrompt}\nSpécialité: Créer des titres accrocheurs et optimisés SEO.`,
-      meta: `${basePrompt}\nSpécialité: Créer des meta descriptions, mots-clés et tags SEO.`,
-      blog: `${basePrompt}\nSpécialité: Écrire des articles de blog informatifs et engageants.`,
-      email: `${basePrompt}\nSpécialité: Écrire des emails marketing persuasifs et clairs.`,
-      faq: `${basePrompt}\nSpécialité: Créer des FAQ claires et complètes.`,
-      section: `${basePrompt}\nSpécialité: Écrire du contenu web général de qualité.`
-    };
-
-    return contextPrompts[request.context];
-  }
-
-  private static buildUserPrompt(request: AIGenerationRequest): string {
-    return request.prompt;
-  }
-
-  private static getMaxTokens(length?: 'short' | 'medium' | 'long'): number {
-    const tokenMap = {
-      short: 300,
-      medium: 800,
-      long: 2000
-    };
-    return tokenMap[length || 'medium'];
-  }
-
-  private static getTemperature(tone?: 'professional' | 'casual' | 'formal' | 'marketing'): number {
-    const tempMap = {
-      professional: 0.7,
-      casual: 0.8,
-      formal: 0.5,
-      marketing: 0.9
-    };
-    return tempMap[tone || 'professional'];
-  }
-
-  private static async logGeneration(
-    request: AIGenerationRequest,
-    content: string,
-    tokensUsed: number
-  ): Promise<void> {
-    try {
-      // Save to localStorage for now (log file)
-      const logs = JSON.parse(localStorage.getItem('ai_logs') || '[]');
-      logs.push({
-        context: request.context,
-        prompt: request.prompt,
-        generated_content: content,
-        tokens_used: tokensUsed,
-        tone: request.tone,
-        length: request.length,
-        created_at: new Date().toISOString()
-      });
-      localStorage.setItem('ai_logs', JSON.stringify(logs.slice(-100))); // Keep last 100
-    } catch (error) {
-      console.warn('Failed to log AI generation:', error);
-    }
-  }
+  // Logging is now handled by the server
 }
 
 export default AIService;

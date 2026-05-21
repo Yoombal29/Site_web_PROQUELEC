@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proquelec Neural-Next | Monitoring Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0088ff;
+            --primary-glow: rgba(0, 136, 255, 0.4);
+            --bg: #0a0e14;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { 
+            background: var(--bg); 
+            color: var(--text-main); 
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(0, 136, 255, 0.05), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05), transparent 40%);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .logo { font-size: 24px; font-weight: 700; letter-spacing: -1px; }
+        .logo span { color: var(--primary); text-shadow: 0 0 20px var(--primary-glow); }
+
+        .badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pulse {
+            width: 8px; height: 8px; border-radius: 50%; background: var(--success);
+            box-shadow: 0 0 10px var(--success);
+            animation: pulse-op 1.5s infinite;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border 0.3s;
+            animation: slideUp 0.6s ease-out forwards;
+        }
+        .card:hover { 
+            transform: translateY(-5px); 
+            border-color: rgba(0, 136, 255, 0.3);
+        }
+
+        h3 { font-size: 16px; color: var(--text-dim); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .val { font-size: 42px; font-weight: 700; margin-bottom: 4px; }
+        .sub { font-size: 14px; color: var(--text-dim); }
+
+        .chart-card { grid-column: span 2; }
+
+        .table-area {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-top: 24px;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 15px; color: var(--text-dim); font-weight: 500; font-size: 14px; border-bottom: 1px solid var(--glass-border); }
+        td { padding: 20px 15px; font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.02); }
+
+        .endpoint-name { font-weight: 600; color: var(--text-main); }
+        .tag { font-size: 12px; padding: 4px 8px; border-radius: 6px; background: rgba(0, 136, 255, 0.1); color: var(--primary); }
+
+        .log-area { font-family: 'Courier New', monospace; font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+        .log-line::before { content: '> '; color: var(--primary); }
+
+        @keyframes pulse-op {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        canvas { max-height: 300px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">PROQUELEC <span>CORTEX</span></div>
+            <div class="badge">
+                <div class="pulse"></div>
+                NEURAL-NEXT LIVE MONITOR
+            </div>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Total Issues</h3>
+                <div class="val" id="issues-val">--</div>
+                <div class="sub">Scanning depth: Multi-Ductile</div>
+            </div>
+            <div class="card">
+                <h3>Auto-Fixes</h3>
+                <div class="val" id="fixes-val" style="color: var(--success);">--</div>
+                <div class="sub" id="fix-rate">Stabilisation: 100%</div>
+            </div>
+            <div class="card chart-card">
+                <h3>Performance Health Index</h3>
+                <canvas id="healthChart"></canvas>
+            </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="table-area">
+                <h3>Active SEO Endpoints</h3>
+                <table id="endpoint-table">
+                    <thead>
+                        <tr>
+                            <th>ENDPOINT</th>
+                            <th>STATUS</th>
+                            <th>LATENCY</th>
+                        </tr>
+                    </thead>
+                    <tbody id="endpoint-body"></tbody>
+                </table>
+            </div>
+            <div class="table-area">
+                <h3>Recent Neural Activity</h3>
+                <div class="log-area" id="log-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let healthChart;
+
+        async function initChart(history) {
+            const ctx = document.getElementById('healthChart').getContext('2d');
+            healthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: history.labels,
+                    datasets: [
+                        {
+                            label: 'Issues Found',
+                            data: history.issues,
+                            borderColor: '#8b5cf6',
+                            backgroundGradient: 'rgba(139, 92, 246, 0.1)',
+                            tension: 0.4,
+                            borderWidth: 3,
+                            fill: true
+                        },
+                        {
+                            label: 'Resolution Rate',
+                            data: history.fixes,
+                            borderColor: '#10b981',
+                            tension: 0.4,
+                            borderWidth: 3,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { display: false },
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
+
+        async function updateDashboard() {
+            try {
+                const response = await fetch('http://localhost:4000/api/dashboard/stats');
+                const data = await response.json();
+
+                document.getElementById('issues-val').textContent = data.issuesDetected;
+                document.getElementById('fixes-val').textContent = data.fixesApplied;
+                
+                // Endpoints
+                const tbody = document.getElementById('endpoint-body');
+                tbody.innerHTML = data.endpoints.map(ep => `
+                    <tr>
+                        <td>
+                            <div class="endpoint-name">${ep.name}</div>
+                            <span class="tag">${ep.path}</span>
+                        </td>
+                        <td><span style="color: var(--success); font-weight:600;">ACTIVE</span></td>
+                        <td>${ep.latency}</td>
+                    </tr>
+                `).join('');
+
+                // Logs
+                const logBody = document.getElementById('log-body');
+                logBody.innerHTML = data.lastFiles.map(line => `
+                    <div class="log-line">${line.replace(/\[\w+\]\s*/, '')}</div>
+                `).join('');
+
+                if (!healthChart) {
+                    initChart(data.history);
+                }
+            } catch (err) {
+                console.warn('Waiting for Dashboard API...', err.message);
+            }
+        }
+
+        setInterval(updateDashboard, 3000);
+        updateDashboard();
+    </script>
+</body>
+</html>

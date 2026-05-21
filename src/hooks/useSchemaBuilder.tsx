@@ -14,21 +14,21 @@
  * @status PRODUCTION READY
  */
 
-import { useMemo, useCallback, useEffect, useState } from 'react';
-import { VoltageDropModel, VoltageDropResult } from '../types/VoltageDropModel';
+import { useCallback, useEffect, useState } from 'react';
+import { VoltageDropResult } from '../types/VoltageDropModel';
 import { DynamicPanelsGenerator, DynamicPanelsStructure } from '../generators/DynamicPanelsGenerator';
 import { VoltageDropEngine } from '../engines/VoltageDropEngine';
 import { NormativeHash } from '../utils/NormativeHash';
-import { GraphStore } from '../stores/GraphStore';
-import { EditorManager } from '../managers/EditorManager';
+
+
 
 /**
  * Hook pour gérer la synchronisation schéma ↔ panneaux dynamiques
  */
 export function useSchemaBuilder(
-  graphStore: GraphStore | null,
-  editorManager: EditorManager | null
-) {
+graphStore: GraphStore | null,
+editorManager: EditorManager | null)
+{
   const [dynamicPanels, setDynamicPanels] = useState<DynamicPanelsStructure | null>(null);
   const [calculationResult, setCalculationResult] = useState<VoltageDropResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
@@ -89,7 +89,7 @@ export function useSchemaBuilder(
    * ✅ Effectuer le calcul
    */
   const performCalculation = useCallback(
-    async (formData?: any) => {
+    async (formData?: unknown) => {
       const model = buildCalculationModel(formData);
       if (!model) return;
 
@@ -154,7 +154,7 @@ export function formatCalculationResults(result: VoltageDropResult | null) {
   // Récupérer les max values en itérant sur les feeders
   let maxVoltageDropPercent = 0;
   let maxThermalPower = 0;
-  
+
   result.feederResults.forEach((feederResult) => {
     maxVoltageDropPercent = Math.max(maxVoltageDropPercent, feederResult.deltaU_percent);
     maxThermalPower = Math.max(maxThermalPower, feederResult.maxPower_watts);

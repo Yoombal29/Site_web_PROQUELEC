@@ -1,0 +1,8 @@
+{"query": "r\u00e8gles pour une piscine", "score": 0.75, "top_ids": [null, null, null], "status": "success", "timestamp": "2026-02-17T00:16:17.665146"}
+{"query": "r\u00e8gles pour une piscine", "score": 0.75, "top_ids": ["111", "131.4", "132.1"], "status": "success", "timestamp": "2026-02-17T00:17:01.124555"}
+{"query": "r\u00e8gles pour une piscine", "score": 0.75, "top_ids": ["111", "131.4", "132.1"], "status": "success", "timestamp": "2026-02-17T00:25:54.523118"}
+{"query": "r\u00e8gles pour une piscine", "score": 0.75, "top_ids": ["111", "131.4", "132.1"], "status": "success", "timestamp": "2026-02-17T00:26:16.810540"}
+{"query": "sectionnement", "score": 1.0, "top_ids": ["112", "132.10", "141"], "status": "success", "timestamp": "2026-02-17T00:33:01.732121"}
+{"query": "banane", "score": 0, "top_ids": [], "status": "not_found", "timestamp": "2026-02-17T00:33:01.739982"}
+{"query": "section 2.5 calibre 20 prises", "score": 0.8333333333333334, "top_ids": ["112", "536.1", "545.5"], "status": "success", "timestamp": "2026-02-17T00:34:04.474053"}
+{"query": "section 2.5 calibre 20 prises", "score": 0.8333333333333334, "top_ids": ["112", "536.1", "545.5"], "status": "success", "timestamp": "2026-02-17T00:34:51.778971"}

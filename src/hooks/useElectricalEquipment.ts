@@ -1,6 +1,6 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { apiFetch } from "@/lib/api-client";
 
 export interface ElectricalEquipment {
   id: string;
@@ -8,7 +8,7 @@ export interface ElectricalEquipment {
   category: string;
   brand: string | null;
   model: string | null;
-  specifications: any;
+  specifications: unknown;
   price: number | null;
   rental_price_daily: number | null;
   availability_status: string;
@@ -26,20 +26,15 @@ export function useElectricalEquipment() {
   return useQuery({
     queryKey: ["electrical-equipment"],
     queryFn: async (): Promise<ElectricalEquipment[]> => {
-      const { data, error } = await supabase
-        .from('electrical_equipment')
-        .select('*')
-        .eq('availability_status', 'available')
-        .order('name');
-
-      if (error) {
+      try {
+        const data = await apiFetch<ElectricalEquipment[]>('/api/electrical-equipment');
+        return data || [];
+      } catch (error) {
         console.error('Erreur équipements:', error);
         throw error;
       }
-
-      return (data || []) as ElectricalEquipment[];
     },
-    staleTime: 1000 * 60 * 15,
+    staleTime: 1000 * 60 * 15
   });
 }
 
@@ -48,17 +43,14 @@ export function useCreateEquipment() {
 
   return useMutation({
     mutationFn: async (equipment: Omit<ElectricalEquipment, 'id' | 'created_at'>) => {
-      const { data, error } = await supabase
-        .from('electrical_equipment')
-        .insert([equipment])
-        .select()
-        .single();
-
-      if (error) throw error;
+      const data = await apiFetch('/api/electrical-equipment', {
+        method: 'POST',
+        body: JSON.stringify(equipment)
+      });
       return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["electrical-equipment"] });
-    },
+    }
   });
 }

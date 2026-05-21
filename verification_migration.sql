@@ -1,6 +1,5 @@
--- ===========================================
--- SCRIPT DE VÉRIFICATION DES MIGRATIONS PROQUELEC
--- À exécuter dans Supabase Studio > SQL Editor
+-- À exécuter dans votre client PostgreSQL (ex: pgAdmin ou DBeaver)
+-- Assurez-vous d'être connecté à la base de données proquelec
 -- ===========================================
 
 -- 1. VÉRIFICATION DES TABLES

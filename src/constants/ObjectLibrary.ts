@@ -23,7 +23,7 @@ export interface ObjectDefinition {
   /** Symbole normatif (IEC/NF C) */
   symbol: string;
   /** Paramètres par défaut */
-  defaultParams: Record<string, any>;
+  defaultParams: Record<string, unknown>;
   /** Référence normative (Art. XXX) */
   normativeRef: string;
   /** Champs éditables par l'utilisateur */
@@ -58,19 +58,19 @@ const SOURCES: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 14-100 Art. 5 / Art. 522',
     editableFields: [
-      {
-        name: 'voltage',
-        type: 'select',
-        label: 'Tension (V)',
-        options: [230, 400]
-      },
-      {
-        name: 'regime',
-        type: 'select',
-        label: 'Régime du neutre',
-        options: ['TT', 'TN-S', 'TN-C-S', 'IT']
-      }
-    ]
+    {
+      name: 'voltage',
+      type: 'select',
+      label: 'Tension (V)',
+      options: [230, 400]
+    },
+    {
+      name: 'regime',
+      type: 'select',
+      label: 'Régime du neutre',
+      options: ['TT', 'TN-S', 'TN-C-S', 'IT']
+    }]
+
   },
   SOURCE_TYPE_B: {
     id: 'source_type_b',
@@ -86,20 +86,20 @@ const SOURCES: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 525 / Art. 523',
     editableFields: [
-      {
-        name: 'voltage',
-        type: 'select',
-        label: 'Tension aval (V)',
-        options: [230, 400]
-      },
-      {
-        name: 'maxCurrent',
-        type: 'number',
-        label: 'Courant disponible (A)',
-        min: 10,
-        max: 630
-      }
-    ]
+    {
+      name: 'voltage',
+      type: 'select',
+      label: 'Tension aval (V)',
+      options: [230, 400]
+    },
+    {
+      name: 'maxCurrent',
+      type: 'number',
+      label: 'Courant disponible (A)',
+      min: 10,
+      max: 630
+    }]
+
   }
 };
 
@@ -121,19 +121,19 @@ const PROTECTIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 61-201 / NF C 15-100 Art. 533',
     editableFields: [
-      {
-        name: 'calibre',
-        type: 'select',
-        label: 'Calibre (A)',
-        options: [6, 10, 16, 20, 25, 32, 40, 50, 63]
-      },
-      {
-        name: 'curve',
-        type: 'select',
-        label: 'Courbe de déclenchement',
-        options: ['B', 'C', 'D']
-      }
-    ]
+    {
+      name: 'calibre',
+      type: 'select',
+      label: 'Calibre (A)',
+      options: [6, 10, 16, 20, 25, 32, 40, 50, 63]
+    },
+    {
+      name: 'curve',
+      type: 'select',
+      label: 'Courbe de déclenchement',
+      options: ['B', 'C', 'D']
+    }]
+
   },
   BREAKER_16A: {
     id: 'breaker_16a',
@@ -149,13 +149,13 @@ const PROTECTIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 61-201 / NF C 15-100 Art. 533',
     editableFields: [
-      {
-        name: 'calibre',
-        type: 'select',
-        label: 'Calibre (A)',
-        options: [10, 16, 20, 25, 32]
-      }
-    ]
+    {
+      name: 'calibre',
+      type: 'select',
+      label: 'Calibre (A)',
+      options: [10, 16, 20, 25, 32]
+    }]
+
   },
   DDR_30MA: {
     id: 'ddr_30ma',
@@ -170,19 +170,19 @@ const PROTECTIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 61-202 / NF C 15-100 Art. 535',
     editableFields: [
-      {
-        name: 'sensitivity',
-        type: 'select',
-        label: 'Sensibilité (mA)',
-        options: [10, 30, 100, 300]
-      },
-      {
-        name: 'type',
-        type: 'select',
-        label: 'Type de DDR',
-        options: ['A', 'AC', 'B']
-      }
-    ]
+    {
+      name: 'sensitivity',
+      type: 'select',
+      label: 'Sensibilité (mA)',
+      options: [10, 30, 100, 300]
+    },
+    {
+      name: 'type',
+      type: 'select',
+      label: 'Type de DDR',
+      options: ['A', 'AC', 'B']
+    }]
+
   },
   FUSE_10A: {
     id: 'fuse_10a',
@@ -197,13 +197,13 @@ const PROTECTIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 61-210 / NF C 15-100 Art. 533',
     editableFields: [
-      {
-        name: 'calibre',
-        type: 'select',
-        label: 'Calibre (A)',
-        options: [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63]
-      }
-    ]
+    {
+      name: 'calibre',
+      type: 'select',
+      label: 'Calibre (A)',
+      options: [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63]
+    }]
+
   }
 };
 
@@ -224,20 +224,20 @@ const DISTRIBUTIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 521-522',
     editableFields: [
-      {
-        name: 'label',
-        type: 'text',
-        label: 'Étiquette'
-      },
-      {
-        name: 'amperage',
-        type: 'number',
-        label: 'Ampérage (A)',
-        min: 20,
-        max: 630,
-        unit: 'A'
-      }
-    ]
+    {
+      name: 'label',
+      type: 'text',
+      label: 'Étiquette'
+    },
+    {
+      name: 'amperage',
+      type: 'number',
+      label: 'Ampérage (A)',
+      min: 20,
+      max: 630,
+      unit: 'A'
+    }]
+
   },
   TABLEAU_DIV: {
     id: 'tableau_div',
@@ -252,19 +252,19 @@ const DISTRIBUTIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 522',
     editableFields: [
-      {
-        name: 'label',
-        type: 'text',
-        label: 'Étiquette'
-      },
-      {
-        name: 'amperage',
-        type: 'number',
-        label: 'Ampérage (A)',
-        min: 16,
-        max: 125
-      }
-    ]
+    {
+      name: 'label',
+      type: 'text',
+      label: 'Étiquette'
+    },
+    {
+      name: 'amperage',
+      type: 'number',
+      label: 'Ampérage (A)',
+      min: 16,
+      max: 125
+    }]
+
   }
 };
 
@@ -285,19 +285,19 @@ const DERIVATIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 522',
     editableFields: [
-      {
-        name: 'label',
-        type: 'text',
-        label: 'Étiquette'
-      },
-      {
-        name: 'maxCurrent',
-        type: 'number',
-        label: 'Courant max (A)',
-        min: 10,
-        max: 100
-      }
-    ]
+    {
+      name: 'label',
+      type: 'text',
+      label: 'Étiquette'
+    },
+    {
+      name: 'maxCurrent',
+      type: 'number',
+      label: 'Courant max (A)',
+      min: 10,
+      max: 100
+    }]
+
   },
   JUNCTION_BOX: {
     id: 'junction_box',
@@ -312,19 +312,19 @@ const DERIVATIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 522',
     editableFields: [
-      {
-        name: 'label',
-        type: 'text',
-        label: 'Étiquette'
-      },
-      {
-        name: 'conductorCount',
-        type: 'number',
-        label: 'Nombre de conducteurs',
-        min: 2,
-        max: 8
-      }
-    ]
+    {
+      name: 'label',
+      type: 'text',
+      label: 'Étiquette'
+    },
+    {
+      name: 'conductorCount',
+      type: 'number',
+      label: 'Nombre de conducteurs',
+      min: 2,
+      max: 8
+    }]
+
   }
 };
 
@@ -345,19 +345,19 @@ const COUPURES: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 537',
     editableFields: [
-      {
-        name: 'label',
-        type: 'text',
-        label: 'Étiquette'
-      },
-      {
-        name: 'maxCurrent',
-        type: 'number',
-        label: 'Courant max (A)',
-        min: 16,
-        max: 630
-      }
-    ]
+    {
+      name: 'label',
+      type: 'text',
+      label: 'Étiquette'
+    },
+    {
+      name: 'maxCurrent',
+      type: 'number',
+      label: 'Courant max (A)',
+      min: 16,
+      max: 630
+    }]
+
   },
   DISCONNECTOR: {
     id: 'disconnector',
@@ -372,19 +372,19 @@ const COUPURES: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 537',
     editableFields: [
-      {
-        name: 'label',
-        type: 'text',
-        label: 'Étiquette'
-      },
-      {
-        name: 'maxCurrent',
-        type: 'number',
-        label: 'Courant max (A)',
-        min: 16,
-        max: 630
-      }
-    ]
+    {
+      name: 'label',
+      type: 'text',
+      label: 'Étiquette'
+    },
+    {
+      name: 'maxCurrent',
+      type: 'number',
+      label: 'Courant max (A)',
+      min: 16,
+      max: 630
+    }]
+
   }
 };
 
@@ -406,31 +406,31 @@ const TRANSFORMATIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 523 / CEI 60076',
     editableFields: [
-      {
-        name: 'power',
-        type: 'number',
-        label: 'Puissance (kVA)',
-        min: 10,
-        max: 1000,
-        unit: 'kVA'
-      },
-      {
-        name: 'uk',
-        type: 'number',
-        label: 'Impédance Uk (%)',
-        min: 2,
-        max: 10,
-        unit: '%'
-      },
-      {
-        name: 'dT',
-        type: 'number',
-        label: 'Échauffement (°C)',
-        min: 30,
-        max: 100,
-        unit: '°C'
-      }
-    ]
+    {
+      name: 'power',
+      type: 'number',
+      label: 'Puissance (kVA)',
+      min: 10,
+      max: 1000,
+      unit: 'kVA'
+    },
+    {
+      name: 'uk',
+      type: 'number',
+      label: 'Impédance Uk (%)',
+      min: 2,
+      max: 10,
+      unit: '%'
+    },
+    {
+      name: 'dT',
+      type: 'number',
+      label: 'Échauffement (°C)',
+      min: 30,
+      max: 100,
+      unit: '°C'
+    }]
+
   },
   CONVERTER_DC: {
     id: 'converter_dc',
@@ -446,22 +446,22 @@ const TRANSFORMATIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Annexe G',
     editableFields: [
-      {
-        name: 'power',
-        type: 'number',
-        label: 'Puissance (W)',
-        min: 50,
-        max: 5000,
-        unit: 'W'
-      },
-      {
-        name: 'efficiency',
-        type: 'number',
-        label: 'Rendement',
-        min: 0.7,
-        max: 0.95
-      }
-    ]
+    {
+      name: 'power',
+      type: 'number',
+      label: 'Puissance (W)',
+      min: 50,
+      max: 5000,
+      unit: 'W'
+    },
+    {
+      name: 'efficiency',
+      type: 'number',
+      label: 'Rendement',
+      min: 0.7,
+      max: 0.95
+    }]
+
   }
 };
 
@@ -483,23 +483,23 @@ const PRODUCTIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Annexe G / NFC 15-100-1',
     editableFields: [
-      {
-        name: 'power',
-        type: 'number',
-        label: 'Puissance (W)',
-        min: 100,
-        max: 500,
-        unit: 'W'
-      },
-      {
-        name: 'area',
-        type: 'number',
-        label: 'Surface (m²)',
-        min: 0.5,
-        max: 3.0,
-        unit: 'm²'
-      }
-    ]
+    {
+      name: 'power',
+      type: 'number',
+      label: 'Puissance (W)',
+      min: 100,
+      max: 500,
+      unit: 'W'
+    },
+    {
+      name: 'area',
+      type: 'number',
+      label: 'Surface (m²)',
+      min: 0.5,
+      max: 3.0,
+      unit: 'm²'
+    }]
+
   },
   GENERATOR: {
     id: 'generator',
@@ -515,21 +515,21 @@ const PRODUCTIONS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 551',
     editableFields: [
-      {
-        name: 'power',
-        type: 'number',
-        label: 'Puissance (kVA)',
-        min: 5,
-        max: 100,
-        unit: 'kVA'
-      },
-      {
-        name: 'fuelType',
-        type: 'select',
-        label: 'Type de carburant',
-        options: ['diesel', 'essence', 'gaz']
-      }
-    ]
+    {
+      name: 'power',
+      type: 'number',
+      label: 'Puissance (kVA)',
+      min: 5,
+      max: 100,
+      unit: 'kVA'
+    },
+    {
+      name: 'fuelType',
+      type: 'select',
+      label: 'Type de carburant',
+      options: ['diesel', 'essence', 'gaz']
+    }]
+
   }
 };
 
@@ -550,23 +550,23 @@ const GROUNDS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 541-542',
     editableFields: [
-      {
-        name: 'resistance',
-        type: 'number',
-        label: 'Résistance (Ω)',
-        min: 1,
-        max: 100,
-        unit: 'Ω'
-      },
-      {
-        name: 'length',
-        type: 'number',
-        label: 'Longueur (m)',
-        min: 1.5,
-        max: 3.0,
-        unit: 'm'
-      }
-    ]
+    {
+      name: 'resistance',
+      type: 'number',
+      label: 'Résistance (Ω)',
+      min: 1,
+      max: 100,
+      unit: 'Ω'
+    },
+    {
+      name: 'length',
+      type: 'number',
+      label: 'Longueur (m)',
+      min: 1.5,
+      max: 3.0,
+      unit: 'm'
+    }]
+
   },
   GROUND_LOOP: {
     id: 'ground_loop',
@@ -581,23 +581,23 @@ const GROUNDS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 541-542',
     editableFields: [
-      {
-        name: 'resistance',
-        type: 'number',
-        label: 'Résistance (Ω)',
-        min: 1,
-        max: 50,
-        unit: 'Ω'
-      },
-      {
-        name: 'perimeter',
-        type: 'number',
-        label: 'Périmètre (m)',
-        min: 10,
-        max: 50,
-        unit: 'm'
-      }
-    ]
+    {
+      name: 'resistance',
+      type: 'number',
+      label: 'Résistance (Ω)',
+      min: 1,
+      max: 50,
+      unit: 'Ω'
+    },
+    {
+      name: 'perimeter',
+      type: 'number',
+      label: 'Périmètre (m)',
+      min: 10,
+      max: 50,
+      unit: 'm'
+    }]
+
   }
 };
 
@@ -620,27 +620,27 @@ const CABLES: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 523-525 / Tableau 52C',
     editableFields: [
-      {
-        name: 'modeOfInstallation',
-        type: 'select',
-        label: 'Mode de pose (Art. 523)',
-        options: ['A1', 'A2', 'B1', 'C', 'D', 'E', 'F', 'G']
-      },
-      {
-        name: 'temperatureAmbient',
-        type: 'number',
-        label: 'Température ambiante (°C)',
-        min: 10,
-        max: 60,
-        unit: '°C'
-      },
-      {
-        name: 'grouping',
-        type: 'select',
-        label: 'Groupement de circuits',
-        options: [1, 2, 3, 4, 6, 9]
-      }
-    ]
+    {
+      name: 'modeOfInstallation',
+      type: 'select',
+      label: 'Mode de pose (Art. 523)',
+      options: ['A1', 'A2', 'B1', 'C', 'D', 'E', 'F', 'G']
+    },
+    {
+      name: 'temperatureAmbient',
+      type: 'number',
+      label: 'Température ambiante (°C)',
+      min: 10,
+      max: 60,
+      unit: '°C'
+    },
+    {
+      name: 'grouping',
+      type: 'select',
+      label: 'Groupement de circuits',
+      options: [1, 2, 3, 4, 6, 9]
+    }]
+
   },
   CABLE_CU_25: {
     id: 'cable_cu_25',
@@ -657,13 +657,13 @@ const CABLES: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 523-525 / Tableau 52C',
     editableFields: [
-      {
-        name: 'modeOfInstallation',
-        type: 'select',
-        label: 'Mode de pose',
-        options: ['A1', 'A2', 'B1', 'C', 'D', 'E', 'F', 'G']
-      }
-    ]
+    {
+      name: 'modeOfInstallation',
+      type: 'select',
+      label: 'Mode de pose',
+      options: ['A1', 'A2', 'B1', 'C', 'D', 'E', 'F', 'G']
+    }]
+
   },
   CABLE_CU_4: {
     id: 'cable_cu_4',
@@ -680,13 +680,13 @@ const CABLES: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 523-525 / Tableau 52C',
     editableFields: [
-      {
-        name: 'modeOfInstallation',
-        type: 'select',
-        label: 'Mode de pose',
-        options: ['A1', 'A2', 'B1', 'C', 'D', 'E', 'F', 'G']
-      }
-    ]
+    {
+      name: 'modeOfInstallation',
+      type: 'select',
+      label: 'Mode de pose',
+      options: ['A1', 'A2', 'B1', 'C', 'D', 'E', 'F', 'G']
+    }]
+
   }
 };
 
@@ -708,23 +708,23 @@ const RECEPTORS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 525 / Tableau 52V',
     editableFields: [
-      {
-        name: 'power',
-        type: 'number',
-        label: 'Puissance (W)',
-        min: 50,
-        max: 5000,
-        unit: 'W'
-      },
-      {
-        name: 'cosφ',
-        type: 'number',
-        label: 'Facteur de puissance (cosφ)',
-        min: 0.5,
-        max: 1.0,
-        unit: ''
-      }
-    ]
+    {
+      name: 'power',
+      type: 'number',
+      label: 'Puissance (W)',
+      min: 50,
+      max: 5000,
+      unit: 'W'
+    },
+    {
+      name: 'cosφ',
+      type: 'number',
+      label: 'Facteur de puissance (cosφ)',
+      min: 0.5,
+      max: 1.0,
+      unit: ''
+    }]
+
   },
   OUTLETS_16A: {
     id: 'outlets_16a',
@@ -740,14 +740,14 @@ const RECEPTORS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 525 / Tableau 52V',
     editableFields: [
-      {
-        name: 'socketCount',
-        type: 'number',
-        label: 'Nombre de prises',
-        min: 1,
-        max: 10
-      }
-    ]
+    {
+      name: 'socketCount',
+      type: 'number',
+      label: 'Nombre de prises',
+      min: 1,
+      max: 10
+    }]
+
   },
   MOTOR_3KW: {
     id: 'motor_3kw',
@@ -763,22 +763,22 @@ const RECEPTORS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Art. 525 / CEI 60034',
     editableFields: [
-      {
-        name: 'power',
-        type: 'number',
-        label: 'Puissance (W)',
-        min: 500,
-        max: 50000,
-        unit: 'W'
-      },
-      {
-        name: 'efficiency',
-        type: 'number',
-        label: 'Rendement',
-        min: 0.5,
-        max: 0.95
-      }
-    ]
+    {
+      name: 'power',
+      type: 'number',
+      label: 'Puissance (W)',
+      min: 500,
+      max: 50000,
+      unit: 'W'
+    },
+    {
+      name: 'efficiency',
+      type: 'number',
+      label: 'Rendement',
+      min: 0.5,
+      max: 0.95
+    }]
+
   },
   CHARGING_POINT: {
     id: 'charging_point',
@@ -794,19 +794,19 @@ const RECEPTORS: Record<string, ObjectDefinition> = {
     },
     normativeRef: 'NF C 15-100 Annexe G / NFC 15-100-1',
     editableFields: [
-      {
-        name: 'power',
-        type: 'select',
-        label: 'Puissance (W)',
-        options: [3680, 7000, 11000, 22000]
-      },
-      {
-        name: 'type',
-        type: 'select',
-        label: 'Type de borne',
-        options: ['wallbox', 'pedestal', 'ground']
-      }
-    ]
+    {
+      name: 'power',
+      type: 'select',
+      label: 'Puissance (W)',
+      options: [3680, 7000, 11000, 22000]
+    },
+    {
+      name: 'type',
+      type: 'select',
+      label: 'Type de borne',
+      options: ['wallbox', 'pedestal', 'ground']
+    }]
+
   }
 };
 
@@ -819,12 +819,12 @@ export const OBJECT_DEFINITIONS: Record<string, ObjectDefinition> = {};
 
 // Build the flat definitions indexed by object.id (not by key)
 [...Object.values(SOURCES), ...Object.values(PROTECTIONS), ...Object.values(DISTRIBUTIONS),
- ...Object.values(DERIVATIONS), ...Object.values(COUPURES), ...Object.values(RECEPTORS),
- ...Object.values(TRANSFORMATIONS), ...Object.values(PRODUCTIONS), ...Object.values(GROUNDS),
- ...Object.values(CABLES)]
-  .forEach(obj => {
-    OBJECT_DEFINITIONS[obj.id] = obj;
-  });
+...Object.values(DERIVATIONS), ...Object.values(COUPURES), ...Object.values(RECEPTORS),
+...Object.values(TRANSFORMATIONS), ...Object.values(PRODUCTIONS), ...Object.values(GROUNDS),
+...Object.values(CABLES)].
+forEach((obj) => {
+  OBJECT_DEFINITIONS[obj.id] = obj;
+});
 
 /**
  * Grouper par catégorie pour UI
@@ -853,5 +853,5 @@ export function getObjectDefinition(id: string): ObjectDefinition | undefined {
  * Helper : lister objets par catégorie
  */
 export function getObjectsByCategory(category: string): ObjectDefinition[] {
-  return Object.values(OBJECT_DEFINITIONS).filter(obj => obj.category === category);
+  return Object.values(OBJECT_DEFINITIONS).filter((obj) => obj.category === category);
 }

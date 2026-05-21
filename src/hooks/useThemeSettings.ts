@@ -1,22 +1,22 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { Database } from "@/integrations/supabase/types";
+
+import { Database } from "@/types/database";
 
 type ThemeSettings = Database["public"]["Tables"]["theme_settings"]["Row"];
 type ThemeSettingsUpdate = Database["public"]["Tables"]["theme_settings"]["Update"];
+
+
+import { apiFetch } from "@/lib/api-client";
+
+// The local authFetch is now replaced by the centralized apiFetch in src/lib/api-client.ts
 
 export function useThemeSettings() {
   return useQuery({
     queryKey: ["theme-settings"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("theme_settings")
-        .select("*")
-        .single();
-      
-      if (error) throw error;
-      return data;
+      const data = await apiFetch<ThemeSettings[]>("/api/theme-settings");
+      return Array.isArray(data) ? data[0] : data;
     },
   });
 }
@@ -25,18 +25,15 @@ export function useUpdateThemeSettings() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (updates: ThemeSettingsUpdate) => {
-      const { data, error } = await supabase
-        .from("theme_settings")
-        .update({ ...updates, updated_at: new Date().toISOString() })
-        .eq("id", 1)
-        .select()
-        .single();
-      
-      if (error) throw error;
-      return data;
+      return apiFetch("/api/theme-settings", {
+        method: 'PUT',
+        body: JSON.stringify(updates)
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["theme-settings"] });
+      queryClient.invalidateQueries({ queryKey: ["liveSettings"] });
     },
   });
 }
+

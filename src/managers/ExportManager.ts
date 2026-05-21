@@ -10,7 +10,7 @@
  * Architecture modulaire avec spécialisation par format.
  */
 
-import { GraphStore } from '@/stores/GraphStore';
+
 import { TronçonEngine } from '@/engines/TronçonEngine';
 
 export interface ExportOptions {
@@ -139,28 +139,28 @@ export class ExcelExporter {
     let csv = 'Tronçon;Longueur (m);Section (mm²);Courant (A);Matériau;Chute Tension (V);Chute (%);Puissance (W);Conformité\n';
 
     // Calculer tous les tronçons
-    const tronçons = Array.from(graph.edges.values())
-      .filter(edge => edge.type.includes('CABLE'))
-      .map(edge => {
-        const fromNode = graph.nodes.get(edge.from);
-        const toNode = graph.nodes.get(edge.to);
+    const tronçons = Array.from(graph.edges.values()).
+    filter((edge) => edge.type.includes('CABLE')).
+    map((edge) => {
+      const fromNode = graph.nodes.get(edge.from);
+      const toNode = graph.nodes.get(edge.to);
 
-        return {
-          id: edge.id,
-          name: `${fromNode?.type} → ${toNode?.type}`,
-          from: edge.from,
-          to: edge.to,
-          longueur: edge.properties.length || 0,
-          section: edge.properties.section || 2.5,
-          materiau: edge.properties.materiau || (edge.type === 'CABLE_CU' ? 'Cu' : 'Al'),
-          courant: edge.properties.courant || 10,
-          modeInstallation: edge.properties.modeOfInstallation || 'Apparent'
-        };
-      });
+      return {
+        id: edge.id,
+        name: `${fromNode?.type} → ${toNode?.type}`,
+        from: edge.from,
+        to: edge.to,
+        longueur: edge.properties.length || 0,
+        section: edge.properties.section || 2.5,
+        materiau: edge.properties.materiau || (edge.type === 'CABLE_CU' ? 'Cu' : 'Al'),
+        courant: edge.properties.courant || 10,
+        modeInstallation: edge.properties.modeOfInstallation || 'Apparent'
+      };
+    });
 
     const results = TronçonEngine.calculateAll(tronçons);
 
-    results.tronçons.forEach(tronçon => {
+    results.tronçons.forEach((tronçon) => {
       csv += `${tronçon.name};${tronçon.longueur.toFixed(1)};${tronçon.section};${tronçon.courant};${tronçon.materiau};`;
       csv += `${tronçon.resultats?.chuteTension?.toFixed(2) || '-'};`;
       csv += `${tronçon.resultats?.chuteTensionPercent?.toFixed(2) || '-'};`;
@@ -219,30 +219,30 @@ export class JSONExporter {
     return JSON.stringify(exportData, null, 2);
   }
 
-  private static generateCalculations(graph: GraphStore): any {
-    const tronçons = Array.from(graph.edges.values())
-      .filter(edge => edge.type.includes('CABLE'))
-      .map(edge => {
-        const fromNode = graph.nodes.get(edge.from);
-        const toNode = graph.nodes.get(edge.to);
+  private static generateCalculations(graph: GraphStore): unknown {
+    const tronçons = Array.from(graph.edges.values()).
+    filter((edge) => edge.type.includes('CABLE')).
+    map((edge) => {
+      const fromNode = graph.nodes.get(edge.from);
+      const toNode = graph.nodes.get(edge.to);
 
-        return {
-          id: edge.id,
-          name: `${fromNode?.type} → ${toNode?.type}`,
-          from: edge.from,
-          to: edge.to,
-          longueur: edge.properties.length || 0,
-          section: edge.properties.section || 2.5,
-          materiau: edge.properties.materiau || (edge.type === 'CABLE_CU' ? 'Cu' : 'Al'),
-          courant: edge.properties.courant || 10,
-          modeInstallation: edge.properties.modeOfInstallation || 'Apparent'
-        };
-      });
+      return {
+        id: edge.id,
+        name: `${fromNode?.type} → ${toNode?.type}`,
+        from: edge.from,
+        to: edge.to,
+        longueur: edge.properties.length || 0,
+        section: edge.properties.section || 2.5,
+        materiau: edge.properties.materiau || (edge.type === 'CABLE_CU' ? 'Cu' : 'Al'),
+        courant: edge.properties.courant || 10,
+        modeInstallation: edge.properties.modeOfInstallation || 'Apparent'
+      };
+    });
 
     return TronçonEngine.calculateAll(tronçons);
   }
 
-  private static generateValidations(graph: GraphStore): any {
+  private static generateValidations(graph: GraphStore): unknown {
     // Importer ValidationEngine dynamiquement pour éviter dépendance circulaire
     const ValidationEngine = require('@/engines/ValidationEngine').default;
     return ValidationEngine.validateGraph(graph);
@@ -327,33 +327,33 @@ export class ExportManager {
   /**
    * Obtenir les formats disponibles
    */
-  static getAvailableFormats(): { id: string; name: string; extension: string; description: string }[] {
+  static getAvailableFormats(): {id: string;name: string;extension: string;description: string;}[] {
     return [
-      {
-        id: 'dwg',
-        name: 'AutoCAD DWG',
-        extension: '.dwg',
-        description: 'Format vectoriel pour CAO'
-      },
-      {
-        id: 'pdf',
-        name: 'PDF Document',
-        extension: '.pdf',
-        description: 'Rapport et documentation'
-      },
-      {
-        id: 'excel',
-        name: 'Excel Spreadsheet',
-        extension: '.xlsx',
-        description: 'Tableau de calculs détaillé'
-      },
-      {
-        id: 'json',
-        name: 'JSON Data',
-        extension: '.json',
-        description: 'Sauvegarde complète et échange'
-      }
-    ];
+    {
+      id: 'dwg',
+      name: 'AutoCAD DWG',
+      extension: '.dwg',
+      description: 'Format vectoriel pour CAO'
+    },
+    {
+      id: 'pdf',
+      name: 'PDF Document',
+      extension: '.pdf',
+      description: 'Rapport et documentation'
+    },
+    {
+      id: 'excel',
+      name: 'Excel Spreadsheet',
+      extension: '.xlsx',
+      description: 'Tableau de calculs détaillé'
+    },
+    {
+      id: 'json',
+      name: 'JSON Data',
+      extension: '.json',
+      description: 'Sauvegarde complète et échange'
+    }];
+
   }
 }
 

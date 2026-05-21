@@ -8,24 +8,24 @@ Ce dossier contient toute la configuration pour faire tourner la plateforme PROQ
 - **Port 3101** : BI Metabase
 - **Port 8183** : SSO Keycloak
 
-## Procédure de Migration (Supabase -> Local)
+## Maintenance et Sauvegarde
 
-### 1. Exporter les données de Supabase
-Exécutez cette commande dans votre terminal PowerShell pour extraire l'intégralité de la base actuelle :
+### 1. Sauvegarde des données locales
+Exécutez cette commande pour extraire l'intégralité de la base locale :
 
 ```powershell
-docker run --rm postgres:15-alpine pg_dump "postgresql://postgres:Darousalam2828Touba@db.yyuhwuaqsbhwtiotyauu.supabase.co:5432/postgres" > docker/postgres/init/supabase_backup.sql
+docker exec proquelec-db pg_dump -U postgres postgres > backup_proquelec.sql
 ```
 
 ### 2. Lancer l'infrastructure
-Une fois le fichier `supabase_backup.sql` généré, lancez les conteneurs :
+Lancement des conteneurs :
 
 ```powershell
 cd docker
 docker-compose up -d
 ```
 
-La base de données sera automatiquement initialisée avec vos données Supabase au premier lancement.
+L'infrastructure est totalement autonome et hébergée localement.
 
 ## Accès
 - **Site Web** : [http://localhost:3100](http://localhost:3100) (Après configuration du frontend)

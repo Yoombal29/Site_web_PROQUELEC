@@ -50,18 +50,18 @@ export default function AdminMenuPanel() {
         await createMenuItem.mutateAsync(formData);
         toast({ title: "Élément de menu créé avec succès" });
       }
-      
+
       // Invalider le cache pour actualiser le header
       queryClient.invalidateQueries({ queryKey: ["menuItems"] });
       queryClient.invalidateQueries({ queryKey: ["liveSettings"] });
-      
+
       setIsDialogOpen(false);
       resetForm();
     } catch (error) {
-      toast({ 
-        title: "Erreur", 
-        description: "Une erreur est survenue", 
-        variant: "destructive" 
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue",
+        variant: "destructive"
       });
     }
   };
@@ -82,16 +82,16 @@ export default function AdminMenuPanel() {
     if (confirm("Êtes-vous sûr de vouloir supprimer cet élément de menu ?")) {
       try {
         await deleteMenuItem.mutateAsync(id);
-        
+
         // Invalider le cache pour actualiser le header
         queryClient.invalidateQueries({ queryKey: ["menuItems"] });
-        
+
         toast({ title: "Élément de menu supprimé avec succès" });
       } catch (error) {
-        toast({ 
-          title: "Erreur", 
-          description: "Impossible de supprimer l'élément", 
-          variant: "destructive" 
+        toast({
+          title: "Erreur",
+          description: "Impossible de supprimer l'élément",
+          variant: "destructive"
         });
       }
     }
@@ -150,8 +150,8 @@ export default function AdminMenuPanel() {
               </div>
               <div>
                 <Label htmlFor="target">Cible</Label>
-                <Select 
-                  value={formData.target} 
+                <Select
+                  value={formData.target}
                   onValueChange={(value) => setFormData(prev => ({ ...prev, target: value }))}
                 >
                   <SelectTrigger>
@@ -190,20 +190,20 @@ export default function AdminMenuPanel() {
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg flex items-center gap-2">
                 {item.is_active ? (
-                  <Eye className="w-4 h-4 text-green-600" />
+                  <Eye className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 ) : (
-                  <EyeOff className="w-4 h-4 text-gray-400" />
+                  <EyeOff className="w-4 h-4 text-muted-foreground/50" />
                 )}
                 {item.title}
-                <span className="text-sm text-gray-500">({item.menu_order})</span>
+                <span className="text-sm text-muted-foreground">({item.menu_order})</span>
               </CardTitle>
               <div className="flex gap-2">
                 <Button size="sm" variant="outline" onClick={() => handleEdit(item)}>
                   <Edit className="w-4 h-4" />
                 </Button>
-                <Button 
-                  size="sm" 
-                  variant="destructive" 
+                <Button
+                  size="sm"
+                  variant="destructive"
                   onClick={() => handleDelete(item.id)}
                 >
                   <Trash2 className="w-4 h-4" />
@@ -211,8 +211,8 @@ export default function AdminMenuPanel() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600">URL: {item.url}</p>
-              <p className="text-sm text-gray-600">Cible: {item.target}</p>
+              <p className="text-sm text-muted-foreground">URL: {item.url}</p>
+              <p className="text-sm text-muted-foreground">Cible: {item.target}</p>
             </CardContent>
           </Card>
         ))}

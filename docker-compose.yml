@@ -1,0 +1,86 @@
+name: Site-Proquelec
+version: '3.8'
+
+services:
+  # --- CORE APPLICATION (NODE.JS + REACT) ---
+  app-backend:
+    build: .
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=${DATABASE_URL:-postgres://postgres:password@db:5432/proquelec}
+    ports:
+      - "${SITE_APP_PORT:-3000}:3000"
+    working_dir: /app
+    command: npm start
+    depends_on:
+      - db
+
+  # --- CORTEX BRAIN (LLAMA-3.1-8B) ---
+  cortex-brain:
+    build:
+      context: ./haystack_backend
+      dockerfile: Dockerfile
+    environment:
+      - HF_HOME=/app/.cache
+      - PYTHONUNBUFFERED=1
+      - PROQUELEC_MODEL_DIR=/app/models/models--NousResearch--Meta-Llama-3.1-8B-Instruct
+      - IPEX_XPU_BACKEND=level_zero
+      - ONEAPI_DEVICE_SELECTOR=gpu
+      - LD_LIBRARY_PATH=/opt/intel/oneapi/lib:$LD_LIBRARY_PATH
+    ports:
+      - "${SITE_BRAIN_PORT:-8000}:8000"
+    volumes:
+      - ./haystack_backend/models:/app/models
+      - ./haystack_backend/.cache:/app/.cache
+      - ./haystack_backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  cortex-vision:
+    build:
+      context: ./haystack_backend
+      dockerfile: Dockerfile
+    environment:
+      - HF_HOME=/app/.cache
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "${SITE_VISION_PORT:-8003}:8003"
+    volumes:
+      - ./haystack_backend/.cache:/app/.cache
+    command: uvicorn main_8003:app --host 0.0.0.0 --port 8003 --workers 1
+
+  cortex-image:
+    build:
+      context: ./haystack_backend
+      dockerfile: Dockerfile
+    environment:
+      - HF_HOME=/app/.cache
+      - PYTHONUNBUFFERED=1
+      - HF_HUB_ENABLE_HF_TRANSFER=0
+    ports:
+      - "${SITE_IMAGE_PORT:-8004}:8004"
+    volumes:
+      - ./haystack_backend/.cache:/app/.cache
+    command: uvicorn main_8004:app --host 0.0.0.0 --port 8004 --workers 1
+
+  # --- INFRASTRUCTURE ---
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=proquelec
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "${SITE_DB_PORT:-5436}:5432"
+
+volumes:
+  pgdata:

@@ -10,16 +10,16 @@
  * 6. Notifier UI des changements
  */
 
-import { GraphStore, GraphNode, GraphEdge } from '@/stores/GraphStore';
-import { HistoryManager, HistoryState } from '@/stores/HistoryManager';
-import { TronçonEngine, Tronçon } from '@/engines/TronçonEngine';
+
+import { HistoryManager } from '@/stores/HistoryManager';
+import { TronçonEngine } from '@/engines/TronçonEngine';
 
 export class EditorManager {
   private graphStore: GraphStore;
   private history: HistoryManager;
   private selectedNodeId: string | null = null;
   private selectedEdgeId: string | null = null;
-  private listeners: Set<(event: string, data?: any) => void> = new Set();
+  private listeners: Set<(event: string, data?: unknown) => void> = new Set();
 
   constructor(graphStore: GraphStore) {
     this.graphStore = graphStore;
@@ -117,7 +117,7 @@ export class EditorManager {
   /**
    * Mettre à jour position d'un nœud
    */
-  updateNodePosition(nodeId: string, position: { x: number; y: number }): void {
+  updateNodePosition(nodeId: string, position: {x: number;y: number;}): void {
     this.graphStore.updateNodePosition(nodeId, position);
     // Pas de saveState ici car drag-drop est continu
   }
@@ -125,7 +125,7 @@ export class EditorManager {
   /**
    * Mettre à jour paramètres d'un nœud
    */
-  updateNodeParams(nodeId: string, params: Record<string, any>): void {
+  updateNodeParams(nodeId: string, params: Record<string, unknown>): void {
     this.saveState(`Modifier ${nodeId}`);
     this.graphStore.updateNodeParams(nodeId, params);
     this.notifyListeners('editor:node-updated', { nodeId });
@@ -139,10 +139,10 @@ export class EditorManager {
     if (!node) return;
 
     this.saveState(`Supprimer ${node.type}`);
-    
+
     // Supprimer le nœud (qui supprime aussi ses câbles)
     this.graphStore.removeNode(nodeId);
-    
+
     // Déselectionner
     if (this.selectedNodeId === nodeId) {
       this.selectedNodeId = null;
@@ -157,7 +157,7 @@ export class EditorManager {
   deleteEdge(edgeId: string): void {
     this.saveState('Supprimer câble');
     this.graphStore.removeEdge(edgeId);
-    
+
     if (this.selectedEdgeId === edgeId) {
       this.selectedEdgeId = null;
     }
@@ -281,24 +281,24 @@ export class EditorManager {
     issues: string[];
   } {
     // Convertir edges en tronçons
-    const tronçons: Tronçon[] = Array.from(this.graphStore.edges.values())
-      .filter((edge: GraphEdge) => edge.type.includes('CABLE'))
-      .map((edge: GraphEdge) => {
-        const fromNode = this.graphStore.nodes.get(edge.from);
-        const toNode = this.graphStore.nodes.get(edge.to);
+    const tronçons: Tronçon[] = Array.from(this.graphStore.edges.values()).
+    filter((edge: GraphEdge) => edge.type.includes('CABLE')).
+    map((edge: GraphEdge) => {
+      const fromNode = this.graphStore.nodes.get(edge.from);
+      const toNode = this.graphStore.nodes.get(edge.to);
 
-        return {
-          id: edge.id,
-          name: `${fromNode?.type} → ${toNode?.type}`,
-          from: edge.from,
-          to: edge.to,
-          longueur: edge.properties.length || 0,
-          section: edge.properties.section || 2.5, // Par défaut 2.5 mm²
-          materiau: edge.properties.materiau || (edge.type === 'CABLE_CU' ? 'Cu' : 'Al'),
-          courant: edge.properties.courant || 10, // Par défaut 10A
-          modeInstallation: edge.properties.modeOfInstallation || 'Apparent'
-        };
-      });
+      return {
+        id: edge.id,
+        name: `${fromNode?.type} → ${toNode?.type}`,
+        from: edge.from,
+        to: edge.to,
+        longueur: edge.properties.length || 0,
+        section: edge.properties.section || 2.5, // Par défaut 2.5 mm²
+        materiau: edge.properties.materiau || (edge.type === 'CABLE_CU' ? 'Cu' : 'Al'),
+        courant: edge.properties.courant || 10, // Par défaut 10A
+        modeInstallation: edge.properties.modeOfInstallation || 'Apparent'
+      };
+    });
 
     return TronçonEngine.calculateAll(tronçons);
   }
@@ -306,7 +306,7 @@ export class EditorManager {
   /**
    * S'abonner aux événements
    */
-  subscribe(callback: (event: string, data?: any) => void): () => void {
+  subscribe(callback: (event: string, data?: unknown) => void): () => void {
     this.listeners.add(callback);
     return () => this.listeners.delete(callback);
   }
@@ -314,8 +314,8 @@ export class EditorManager {
   /**
    * Notifier les listeners
    */
-  private notifyListeners(event: string, data?: any): void {
-    this.listeners.forEach(cb => cb(event, data));
+  private notifyListeners(event: string, data?: unknown): void {
+    this.listeners.forEach((cb) => cb(event, data));
   }
 
   /**

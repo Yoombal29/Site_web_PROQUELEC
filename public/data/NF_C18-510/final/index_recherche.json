@@ -1,0 +1,2130 @@
+{
+  "source": {
+    "atomise": "nf_c18_510_atomise.json",
+    "resume": "NF_C18-510_extrait_FRANCAIS.json",
+    "generated_at": "2026-02-05T08:16:26"
+  },
+  "articles": [
+    {
+      "id": "art_1",
+      "numero": "1",
+      "titre": "DOMAINE D'APPLICATION",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "essai",
+        "protection",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 1060,
+      "ligne_fin": 1164
+    },
+    {
+      "id": "art_1_1",
+      "numero": "1.1",
+      "titre": "Domaine d'application du présent document",
+      "mots_cles": [
+        "sous tension",
+        "essai",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 1062,
+      "ligne_fin": 1102
+    },
+    {
+      "id": "art_1_2",
+      "numero": "1.2",
+      "titre": "Lien entre la norme et la réglementation",
+      "mots_cles": [
+        "travaux",
+        "protection",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 1103,
+      "ligne_fin": 1164
+    },
+    {
+      "id": "art_2",
+      "numero": "2",
+      "titre": "REFERENCES NORMATIVES",
+      "mots_cles": [
+        "haute tension",
+        "basse tension",
+        "sous tension",
+        "travaux",
+        "essai",
+        "protection"
+      ],
+      "ligne_debut": 1165,
+      "ligne_fin": 1270
+    },
+    {
+      "id": "art_3",
+      "numero": "3",
+      "titre": "TERMES ET DEFINITIONS",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "très basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "VAT",
+        "employeur",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 1271,
+      "ligne_fin": 1890
+    },
+    {
+      "id": "art_3_1",
+      "numero": "3.1",
+      "titre": "Définitions relatives aux structures et aux personnes",
+      "mots_cles": [
+        "BT",
+        "basse tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "consignation",
+        "habilitation",
+        "risque électrique",
+        "employeur",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 1284,
+      "ligne_fin": 1405
+    },
+    {
+      "id": "art_3_2",
+      "numero": "3.2",
+      "titre": "Définitions relatives aux installations et aux ouvrages électriques",
+      "mots_cles": [
+        "BT",
+        "sous tension",
+        "essai",
+        "protection",
+        "VAT"
+      ],
+      "ligne_debut": 1406,
+      "ligne_fin": 1512
+    },
+    {
+      "id": "art_3_3",
+      "numero": "3.3",
+      "titre": "Définitions relatives aux grandeurs électriques",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "basse tension",
+        "très basse tension",
+        "protection"
+      ],
+      "ligne_debut": 1513,
+      "ligne_fin": 1562
+    },
+    {
+      "id": "art_3_4",
+      "numero": "3.4",
+      "titre": "Définitions relatives aux operations",
+      "mots_cles": [
+        "BT",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "protection",
+        "risque électrique"
+      ],
+      "ligne_debut": 1563,
+      "ligne_fin": 1721
+    },
+    {
+      "id": "art_3_5",
+      "numero": "3.5",
+      "titre": "Définitions relatives aux distances, zones et locaux",
+      "mots_cles": [
+        "haute tension",
+        "basse tension",
+        "sous tension",
+        "protection"
+      ],
+      "ligne_debut": 1722,
+      "ligne_fin": 1784
+    },
+    {
+      "id": "art_3_6",
+      "numero": "3.6",
+      "titre": "Définitions relatives aux équipements de travail et aux eQUIPEMENTS de protection",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "essai",
+        "vérification",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "VAT"
+      ],
+      "ligne_debut": 1785,
+      "ligne_fin": 1876
+    },
+    {
+      "id": "art_3_7",
+      "numero": "3.7",
+      "titre": "Liste des documents écrits (voir Annexe A)",
+      "mots_cles": [],
+      "ligne_debut": 1877,
+      "ligne_fin": 1890
+    },
+    {
+      "id": "art_4",
+      "numero": "4",
+      "titre": "DISPOSITIONS GENERALES",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "très basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "consignation",
+        "habilitation",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "employeur",
+        "chargé de consignation",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 1891,
+      "ligne_fin": 3086
+    },
+    {
+      "id": "art_4_1",
+      "numero": "4.1",
+      "titre": "Analyse du risque élecTRIQUE",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTB",
+        "basse tension",
+        "très basse tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "essai",
+        "mesurage",
+        "consignation",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 1911,
+      "ligne_fin": 2251
+    },
+    {
+      "id": "art_4_2",
+      "numero": "4.2",
+      "titre": "Environnement des ouvrages ou des installations",
+      "mots_cles": [
+        "haute tension",
+        "basse tension",
+        "protection",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 2252,
+      "ligne_fin": 2303
+    },
+    {
+      "id": "art_4_3",
+      "numero": "4.3",
+      "titre": "Prévention du risque électrique",
+      "mots_cles": [
+        "BT",
+        "HTA",
+        "HTB",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "consignation",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 2304,
+      "ligne_fin": 2606
+    },
+    {
+      "id": "art_4_4",
+      "numero": "4.4",
+      "titre": "Réalisation et mise en œuvre des opérations",
+      "mots_cles": [
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 2607,
+      "ligne_fin": 2640
+    },
+    {
+      "id": "art_4_5",
+      "numero": "4.5",
+      "titre": "Les acteurs",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "consignation",
+        "habilitation",
+        "risque électrique",
+        "employeur",
+        "chargé de consignation",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 2641,
+      "ligne_fin": 3086
+    },
+    {
+      "id": "art_5",
+      "numero": "5",
+      "titre": "FORMATION ET HABILITATION",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "très basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "risque électrique",
+        "VAT",
+        "employeur",
+        "chargé de travaux",
+        "exécutant"
+      ],
+      "ligne_debut": 3087,
+      "ligne_fin": 4009
+    },
+    {
+      "id": "art_5_1",
+      "numero": "5.1",
+      "titre": "Principes de fonctionnement et champ d'application",
+      "mots_cles": [
+        "essai",
+        "habilitation",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 3092,
+      "ligne_fin": 3162
+    },
+    {
+      "id": "art_5_2",
+      "numero": "5.2",
+      "titre": "Evaluation du besoin initial",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "habilitation",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 3163,
+      "ligne_fin": 3237
+    },
+    {
+      "id": "art_5_3",
+      "numero": "5.3",
+      "titre": "Conditions d'attribution de l'habilitation",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "habilitation",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 3238,
+      "ligne_fin": 3279
+    },
+    {
+      "id": "art_5_4",
+      "numero": "5.4",
+      "titre": "Suivi de l'habilitation",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "essai",
+        "habilitation",
+        "employeur"
+      ],
+      "ligne_debut": 3280,
+      "ligne_fin": 3327
+    },
+    {
+      "id": "art_5_5",
+      "numero": "5.5",
+      "titre": "Maintien des compétences - Recyclage",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "habilitation",
+        "employeur"
+      ],
+      "ligne_debut": 3328,
+      "ligne_fin": 3354
+    },
+    {
+      "id": "art_5_6",
+      "numero": "5.6",
+      "titre": "Formation à la prévention du risque électrique",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "essai",
+        "habilitation",
+        "risque électrique",
+        "VAT",
+        "employeur"
+      ],
+      "ligne_debut": 3355,
+      "ligne_fin": 3548
+    },
+    {
+      "id": "art_5_7",
+      "numero": "5.7",
+      "titre": "Formalisation en cas d'habilitation",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "haute tension",
+        "basse tension",
+        "très basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "employeur",
+        "chargé de travaux",
+        "exécutant"
+      ],
+      "ligne_debut": 3549,
+      "ligne_fin": 3966
+    },
+    {
+      "id": "art_5_8",
+      "numero": "5.8",
+      "titre": "Disposition en cas de non habilitation",
+      "mots_cles": [
+        "habilitation",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 3967,
+      "ligne_fin": 4009
+    },
+    {
+      "id": "art_6",
+      "numero": "6",
+      "titre": "DÉTERMINATION DE L'ENVIRONNEMENT DES OPÉRATIONS",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "sous tension",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "EPI",
+        "protection",
+        "risque électrique"
+      ],
+      "ligne_debut": 4010,
+      "ligne_fin": 4849
+    },
+    {
+      "id": "art_6_1",
+      "numero": "6.1",
+      "titre": "Généralités et présentation",
+      "mots_cles": [
+        "sous tension",
+        "risque électrique"
+      ],
+      "ligne_debut": 4017,
+      "ligne_fin": 4057
+    },
+    {
+      "id": "art_6_2",
+      "numero": "6.2",
+      "titre": "Distances limites et zones définies autour des pièces nues sous tension en",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "sous tension",
+        "travaux",
+        "manœuvre",
+        "EPI",
+        "risque électrique"
+      ],
+      "ligne_debut": 4058,
+      "ligne_fin": 4505
+    },
+    {
+      "id": "art_6_3",
+      "numero": "6.3",
+      "titre": "Distances limites et zones définies dans les locaux et emplacements d'accès",
+      "mots_cles": [
+        "haute tension",
+        "basse tension",
+        "sous tension",
+        "travaux"
+      ],
+      "ligne_debut": 4506,
+      "ligne_fin": 4588
+    },
+    {
+      "id": "art_6_4",
+      "numero": "6.4",
+      "titre": "Distances limites et zones définies autour des supports de lignes aériennes",
+      "mots_cles": [
+        "haute tension",
+        "sous tension",
+        "EPI"
+      ],
+      "ligne_debut": 4589,
+      "ligne_fin": 4639
+    },
+    {
+      "id": "art_6_5",
+      "numero": "6.5",
+      "titre": "Distances limites et zones définies par l'ouverture d'une armoire, d'un coffret ou",
+      "mots_cles": [
+        "BT",
+        "basse tension",
+        "sous tension",
+        "EPI"
+      ],
+      "ligne_debut": 4640,
+      "ligne_fin": 4681
+    },
+    {
+      "id": "art_6_6",
+      "numero": "6.6",
+      "titre": "Distances limites et zones définies autour des canalisations isolées",
+      "mots_cles": [
+        "sous tension",
+        "essai",
+        "EPI",
+        "risque électrique"
+      ],
+      "ligne_debut": 4682,
+      "ligne_fin": 4811
+    },
+    {
+      "id": "art_6_7",
+      "numero": "6.7",
+      "titre": "Environnement autour d'un circuit de terre",
+      "mots_cles": [],
+      "ligne_debut": 4812,
+      "ligne_fin": 4830
+    },
+    {
+      "id": "art_6_8",
+      "numero": "6.8",
+      "titre": "Cas particulier des canalisations gainées",
+      "mots_cles": [
+        "HTA",
+        "protection",
+        "risque électrique"
+      ],
+      "ligne_debut": 4831,
+      "ligne_fin": 4849
+    },
+    {
+      "id": "art_7",
+      "numero": "7",
+      "titre": "OPERATIONS HORS TENSION",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "protection",
+        "risque électrique",
+        "VAT",
+        "employeur",
+        "chargé de travaux",
+        "chargé de consignation",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 4850,
+      "ligne_fin": 6358
+    },
+    {
+      "id": "art_7_1",
+      "numero": "7.1",
+      "titre": "Procédure de consignation",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "protection",
+        "risque électrique",
+        "VAT"
+      ],
+      "ligne_debut": 4885,
+      "ligne_fin": 5542
+    },
+    {
+      "id": "art_7_2",
+      "numero": "7.2",
+      "titre": "Procédure de mise hors tension",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "consignation",
+        "risque électrique"
+      ],
+      "ligne_debut": 5543,
+      "ligne_fin": 5587
+    },
+    {
+      "id": "art_7_3",
+      "numero": "7.3",
+      "titre": "Organisation de la consignation et de la mise hors tension",
+      "mots_cles": [
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "consignation",
+        "risque électrique",
+        "exécutant"
+      ],
+      "ligne_debut": 5588,
+      "ligne_fin": 5942
+    },
+    {
+      "id": "art_7_4",
+      "numero": "7.4",
+      "titre": "Rôle des différents acteurs dans le cadre d'un travail hors tension ou d'une",
+      "mots_cles": [
+        "hors tension",
+        "sous tension",
+        "travaux",
+        "essai",
+        "consignation",
+        "habilitation",
+        "risque électrique",
+        "employeur",
+        "chargé de travaux",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 5943,
+      "ligne_fin": 6265
+    },
+    {
+      "id": "art_7_5",
+      "numero": "7.5",
+      "titre": "Formation à la prévention du risque électrique et Habilitation",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "sous tension",
+        "travaux",
+        "consignation",
+        "habilitation",
+        "risque électrique",
+        "chargé de consignation",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 6266,
+      "ligne_fin": 6358
+    },
+    {
+      "id": "art_8",
+      "numero": "8",
+      "titre": "TRAVAUX SOUS TENSION",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "travaux",
+        "essai",
+        "vérification",
+        "habilitation",
+        "protection",
+        "risque électrique",
+        "VAT",
+        "employeur",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 6359,
+      "ligne_fin": 7081
+    },
+    {
+      "id": "art_8_1",
+      "numero": "8.1",
+      "titre": "Généralités",
+      "mots_cles": [
+        "haute tension",
+        "basse tension",
+        "sous tension",
+        "travaux",
+        "protection",
+        "employeur"
+      ],
+      "ligne_debut": 6365,
+      "ligne_fin": 6434
+    },
+    {
+      "id": "art_8_2",
+      "numero": "8.2",
+      "titre": "Formation et habilitation",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "habilitation",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 6435,
+      "ligne_fin": 6538
+    },
+    {
+      "id": "art_8_3",
+      "numero": "8.3",
+      "titre": "Méthodes de travail sous tension",
+      "mots_cles": [
+        "sous tension",
+        "protection"
+      ],
+      "ligne_debut": 6539,
+      "ligne_fin": 6575
+    },
+    {
+      "id": "art_8_4",
+      "numero": "8.4",
+      "titre": "Chantier comportant différents types d'opérations",
+      "mots_cles": [
+        "hors tension",
+        "sous tension",
+        "travaux"
+      ],
+      "ligne_debut": 6576,
+      "ligne_fin": 6610
+    },
+    {
+      "id": "art_8_5",
+      "numero": "8.5",
+      "titre": "Documents de référence",
+      "mots_cles": [
+        "travaux",
+        "essai",
+        "vérification",
+        "protection",
+        "VAT"
+      ],
+      "ligne_debut": 6611,
+      "ligne_fin": 6644
+    },
+    {
+      "id": "art_8_6",
+      "numero": "8.6",
+      "titre": "Outil, matériel, équipement de travail, équipement de protection individuelle,",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "protection"
+      ],
+      "ligne_debut": 6645,
+      "ligne_fin": 6654
+    },
+    {
+      "id": "art_8_7",
+      "numero": "8.7",
+      "titre": "Régime spécial d'exploitation",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "essai",
+        "protection"
+      ],
+      "ligne_debut": 6655,
+      "ligne_fin": 6690
+    },
+    {
+      "id": "art_8_8",
+      "numero": "8.8",
+      "titre": "Conditions atmosphériques",
+      "mots_cles": [
+        "sous tension",
+        "travaux"
+      ],
+      "ligne_debut": 6691,
+      "ligne_fin": 6696
+    },
+    {
+      "id": "art_8_9",
+      "numero": "8.9",
+      "titre": "Organisation des travaux",
+      "mots_cles": [
+        "basse tension",
+        "sous tension",
+        "travaux",
+        "employeur"
+      ],
+      "ligne_debut": 6697,
+      "ligne_fin": 6826
+    },
+    {
+      "id": "art_8_10",
+      "numero": "8.10",
+      "titre": "Cas particuliers",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "haute tension",
+        "basse tension",
+        "sous tension",
+        "travaux",
+        "habilitation",
+        "protection"
+      ],
+      "ligne_debut": 6827,
+      "ligne_fin": 6880
+    },
+    {
+      "id": "art_8_11",
+      "numero": "8.11",
+      "titre": "Travaux de nettoyage sous tension",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "habilitation"
+      ],
+      "ligne_debut": 6881,
+      "ligne_fin": 6911
+    },
+    {
+      "id": "art_8_12",
+      "numero": "8.12",
+      "titre": "Rôle des différents acteurs",
+      "mots_cles": [
+        "sous tension",
+        "travaux",
+        "essai",
+        "employeur",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 6912,
+      "ligne_fin": 7081
+    },
+    {
+      "id": "art_9",
+      "numero": "9",
+      "titre": "OPERATIONS DANS L'ENVIRONNEMENT",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "VAT",
+        "employeur",
+        "chargé de travaux",
+        "exécutant"
+      ],
+      "ligne_debut": 7082,
+      "ligne_fin": 8769
+    },
+    {
+      "id": "art_9_1",
+      "numero": "9.1",
+      "titre": "Principes de prévention vis-à-vis de l'environnement électrique",
+      "mots_cles": [
+        "BT",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "travaux",
+        "essai",
+        "consignation",
+        "habilitation",
+        "protection"
+      ],
+      "ligne_debut": 7109,
+      "ligne_fin": 7225
+    },
+    {
+      "id": "art_9_2",
+      "numero": "9.2",
+      "titre": "Mise hors de portée par éloignement, par obstacle ou par isolation",
+      "mots_cles": [
+        "haute tension",
+        "basse tension",
+        "sous tension",
+        "travaux",
+        "consignation",
+        "habilitation",
+        "protection"
+      ],
+      "ligne_debut": 7226,
+      "ligne_fin": 7375
+    },
+    {
+      "id": "art_9_3",
+      "numero": "9.3",
+      "titre": "Présence de pièces nues sous tension en champ libre",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "habilitation",
+        "EPI",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 7376,
+      "ligne_fin": 7666
+    },
+    {
+      "id": "art_9_4",
+      "numero": "9.4",
+      "titre": "Locaux et emplacements d'accès réservé aux électriciens",
+      "mots_cles": [
+        "basse tension",
+        "sous tension",
+        "protection",
+        "employeur"
+      ],
+      "ligne_debut": 7667,
+      "ligne_fin": 7711
+    },
+    {
+      "id": "art_9_5",
+      "numero": "9.5",
+      "titre": "Ouverture d'une enveloppe électrique en basse tension",
+      "mots_cles": [
+        "BT",
+        "basse tension",
+        "sous tension",
+        "EPI",
+        "protection",
+        "VAT"
+      ],
+      "ligne_debut": 7712,
+      "ligne_fin": 7776
+    },
+    {
+      "id": "art_9_6",
+      "numero": "9.6",
+      "titre": "Ascension et travaux sur les supports de lignes aériennes",
+      "mots_cles": [
+        "BT",
+        "haute tension",
+        "basse tension",
+        "travaux"
+      ],
+      "ligne_debut": 7777,
+      "ligne_fin": 7802
+    },
+    {
+      "id": "art_9_7",
+      "numero": "9.7",
+      "titre": "Canalisations isolées",
+      "mots_cles": [
+        "BT",
+        "HTA",
+        "HTB",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "essai",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "VAT",
+        "employeur"
+      ],
+      "ligne_debut": 7803,
+      "ligne_fin": 8458
+    },
+    {
+      "id": "art_9_8",
+      "numero": "9.8",
+      "titre": "Rôle et compétence des différents acteurs dans l'environnement",
+      "mots_cles": [
+        "haute tension",
+        "intervention",
+        "travaux",
+        "essai",
+        "habilitation",
+        "protection",
+        "risque électrique",
+        "employeur",
+        "chargé de travaux",
+        "exécutant"
+      ],
+      "ligne_debut": 8459,
+      "ligne_fin": 8769
+    },
+    {
+      "id": "art_10",
+      "numero": "10",
+      "titre": "INTERVENTIONS BT",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "VAT",
+        "employeur",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 8770,
+      "ligne_fin": 9680
+    },
+    {
+      "id": "art_10_1",
+      "numero": "10.1",
+      "titre": "Critères généraux d'une intervention BT",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "hors tension",
+        "intervention",
+        "protection"
+      ],
+      "ligne_debut": 8790,
+      "ligne_fin": 8858
+    },
+    {
+      "id": "art_10_2",
+      "numero": "10.2",
+      "titre": "Règles s'appliquant à toutes les interventions BT",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "essai",
+        "consignation",
+        "habilitation",
+        "protection",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 8859,
+      "ligne_fin": 8931
+    },
+    {
+      "id": "art_10_3",
+      "numero": "10.3",
+      "titre": "Intervention BT générale",
+      "mots_cles": [
+        "BT",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "protection",
+        "risque électrique"
+      ],
+      "ligne_debut": 8932,
+      "ligne_fin": 9336
+    },
+    {
+      "id": "art_10_4",
+      "numero": "10.4",
+      "titre": "Interventions BT élémentaires",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "habilitation",
+        "protection",
+        "VAT",
+        "employeur"
+      ],
+      "ligne_debut": 9337,
+      "ligne_fin": 9436
+    },
+    {
+      "id": "art_10_5",
+      "numero": "10.5",
+      "titre": "Rôle des différents acteurs",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "essai",
+        "consignation",
+        "habilitation",
+        "protection",
+        "risque électrique",
+        "employeur",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 9437,
+      "ligne_fin": 9594
+    },
+    {
+      "id": "art_10_6",
+      "numero": "10.6",
+      "titre": "Formation Habilitation à la prévention du risque électrique et",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "mesurage",
+        "consignation",
+        "habilitation",
+        "EPI",
+        "protection",
+        "risque électrique"
+      ],
+      "ligne_debut": 9595,
+      "ligne_fin": 9680
+    },
+    {
+      "id": "art_11",
+      "numero": "11",
+      "titre": "OPERATIONS SPECIFIQUES D'ESSAI, DE MESURAGE, DE VÉRIFICATION ET",
+      "mots_cles": [
+        "BT",
+        "HTA",
+        "HTB",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "employeur",
+        "exécutant"
+      ],
+      "ligne_debut": 9681,
+      "ligne_fin": 10387
+    },
+    {
+      "id": "art_11_1",
+      "numero": "11.1",
+      "titre": "Présentation",
+      "mots_cles": [
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "risque électrique"
+      ],
+      "ligne_debut": 9704,
+      "ligne_fin": 9714
+    },
+    {
+      "id": "art_11_2",
+      "numero": "11.2",
+      "titre": "Essais",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "essai",
+        "mesurage",
+        "consignation",
+        "habilitation",
+        "protection",
+        "risque électrique"
+      ],
+      "ligne_debut": 9715,
+      "ligne_fin": 9892
+    },
+    {
+      "id": "art_11_3",
+      "numero": "11.3",
+      "titre": "Mesurages",
+      "mots_cles": [
+        "BT",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "habilitation",
+        "protection"
+      ],
+      "ligne_debut": 9893,
+      "ligne_fin": 9997
+    },
+    {
+      "id": "art_11_4",
+      "numero": "11.4",
+      "titre": "Vérifications",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "intervention",
+        "travaux",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "EPI",
+        "protection",
+        "risque électrique"
+      ],
+      "ligne_debut": 9998,
+      "ligne_fin": 10089
+    },
+    {
+      "id": "art_11_5",
+      "numero": "11.5",
+      "titre": "Manœuvres",
+      "mots_cles": [
+        "BT",
+        "HTA",
+        "HTB",
+        "hors tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "consignation",
+        "habilitation",
+        "protection",
+        "risque électrique"
+      ],
+      "ligne_debut": 10090,
+      "ligne_fin": 10217
+    },
+    {
+      "id": "art_11_6",
+      "numero": "11.6",
+      "titre": "Formation à la prévention du risque électrique et Habilitation",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "protection",
+        "risque électrique",
+        "exécutant"
+      ],
+      "ligne_debut": 10218,
+      "ligne_fin": 10330
+    },
+    {
+      "id": "art_11_7",
+      "numero": "11.7",
+      "titre": "Tableau des compétences",
+      "mots_cles": [
+        "BT",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "habilitation",
+        "risque électrique"
+      ],
+      "ligne_debut": 10331,
+      "ligne_fin": 10387
+    },
+    {
+      "id": "art_12",
+      "numero": "12",
+      "titre": "OPÉRATIONS PARTICULIÈRES",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "protection",
+        "risque électrique",
+        "VAT",
+        "employeur"
+      ],
+      "ligne_debut": 10388,
+      "ligne_fin": 11349
+    },
+    {
+      "id": "art_12_1",
+      "numero": "12.1",
+      "titre": "Opérations sur les lignes aériennes sur supports communs",
+      "mots_cles": [
+        "BT",
+        "HTA",
+        "sous tension"
+      ],
+      "ligne_debut": 10396,
+      "ligne_fin": 10429
+    },
+    {
+      "id": "art_12_2",
+      "numero": "12.2",
+      "titre": "Opérations sur les installations d'éclairage extérieur",
+      "mots_cles": [
+        "BT",
+        "basse tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "consignation"
+      ],
+      "ligne_debut": 10430,
+      "ligne_fin": 10475
+    },
+    {
+      "id": "art_12_3",
+      "numero": "12.3",
+      "titre": "Opérations de remplacement de lampes et d'accessoires",
+      "mots_cles": [
+        "BT",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "intervention",
+        "travaux",
+        "protection",
+        "risque électrique"
+      ],
+      "ligne_debut": 10476,
+      "ligne_fin": 10497
+    },
+    {
+      "id": "art_12_4",
+      "numero": "12.4",
+      "titre": "Opérations de remplacement de fusibles BT",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "sous tension",
+        "protection"
+      ],
+      "ligne_debut": 10498,
+      "ligne_fin": 10518
+    },
+    {
+      "id": "art_12_5",
+      "numero": "12.5",
+      "titre": "Opérations de remplacement de fusibles HTA",
+      "mots_cles": [
+        "HTA",
+        "hors tension",
+        "sous tension",
+        "travaux",
+        "consignation"
+      ],
+      "ligne_debut": 10519,
+      "ligne_fin": 10532
+    },
+    {
+      "id": "art_12_6",
+      "numero": "12.6",
+      "titre": "Opérations sur les transformateurs de puissance et de tension",
+      "mots_cles": [
+        "hors tension",
+        "travaux"
+      ],
+      "ligne_debut": 10533,
+      "ligne_fin": 10567
+    },
+    {
+      "id": "art_12_7",
+      "numero": "12.7",
+      "titre": "Matériels alimentes en BT et TBT comportant des circuits HT",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "haute tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "essai",
+        "mesurage",
+        "consignation",
+        "habilitation",
+        "protection",
+        "risque électrique"
+      ],
+      "ligne_debut": 10568,
+      "ligne_fin": 10648
+    },
+    {
+      "id": "art_12_8",
+      "numero": "12.8",
+      "titre": "Travaux et interventions BT sur les accumulateurs et les batteries",
+      "mots_cles": [
+        "BT",
+        "basse tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "essai",
+        "mesurage",
+        "vérification",
+        "habilitation",
+        "protection",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 10649,
+      "ligne_fin": 10861
+    },
+    {
+      "id": "art_12_9",
+      "numero": "12.9",
+      "titre": "Travaux et interventions BT sur la partie en courant continu des installations",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "habilitation",
+        "protection",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 10862,
+      "ligne_fin": 11217
+    },
+    {
+      "id": "art_12_10",
+      "numero": "12.10",
+      "titre": "Poste de travail soumis à induction magnétique ou couplage capacitif",
+      "mots_cles": [
+        "travaux",
+        "essai",
+        "habilitation",
+        "protection",
+        "risque électrique",
+        "VAT"
+      ],
+      "ligne_debut": 11218,
+      "ligne_fin": 11301
+    },
+    {
+      "id": "art_12_11",
+      "numero": "12.11",
+      "titre": "Opérations sur les circuits de terre",
+      "mots_cles": [
+        "hors tension",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "protection",
+        "employeur"
+      ],
+      "ligne_debut": 11302,
+      "ligne_fin": 11349
+    },
+    {
+      "id": "art_13",
+      "numero": "13",
+      "titre": "INCENDIE ET ACCIDENTS SUR OU PRES DES OUVRAGES ET",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "VAT",
+        "employeur",
+        "chargé de travaux",
+        "chargé de consignation",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 11350,
+      "ligne_fin": 16757
+    },
+    {
+      "id": "art_13_1",
+      "numero": "13.1",
+      "titre": "Généralités",
+      "mots_cles": [
+        "intervention",
+        "essai",
+        "protection",
+        "employeur"
+      ],
+      "ligne_debut": 11359,
+      "ligne_fin": 11375
+    },
+    {
+      "id": "art_13_2",
+      "numero": "13.2",
+      "titre": "Incendie sur ou près des ouvrages ou des installations électriques",
+      "mots_cles": [
+        "BT",
+        "hors tension",
+        "sous tension",
+        "manœuvre",
+        "essai",
+        "risque électrique",
+        "employeur"
+      ],
+      "ligne_debut": 11376,
+      "ligne_fin": 11483
+    },
+    {
+      "id": "art_13_3",
+      "numero": "13.3",
+      "titre": "Conduite à tenir en cas d'accident d'origine électrique sur les ouvrages, les",
+      "mots_cles": [
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "manœuvre",
+        "essai",
+        "consignation",
+        "EPI",
+        "protection",
+        "VAT",
+        "employeur"
+      ],
+      "ligne_debut": 11484,
+      "ligne_fin": 11628
+    },
+    {
+      "id": "art_13_4",
+      "numero": "13.4",
+      "titre": "Incident en zone présentant des risques d'explosion",
+      "mots_cles": [
+        "TBT",
+        "BT",
+        "HTA",
+        "HTB",
+        "haute tension",
+        "basse tension",
+        "hors tension",
+        "sous tension",
+        "intervention",
+        "travaux",
+        "manœuvre",
+        "essai",
+        "mesurage",
+        "vérification",
+        "consignation",
+        "habilitation",
+        "EPI",
+        "protection",
+        "risque électrique",
+        "VAT",
+        "employeur",
+        "chargé de travaux",
+        "chargé de consignation",
+        "exécutant",
+        "chargé d'exploitation"
+      ],
+      "ligne_debut": 11629,
+      "ligne_fin": 16757
+    }
+  ],
+  "definitions": [
+    {
+      "numero": "3.1.1",
+      "terme": "Entreprise exploitante",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.2",
+      "terme": "Entreprise extérieure",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.3",
+      "terme": "Donneur d'ordre",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.4",
+      "terme": "Employeur",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.5",
+      "terme": "Chef d'établissement",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.6",
+      "terme": "Chargé d'exploitation électrique",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.7",
+      "terme": "Personne qualifiée (en électricité)",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.8",
+      "terme": "Personne avertie",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.9",
+      "terme": "Personne ordinaire",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.10",
+      "terme": "Opérateur",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.11",
+      "terme": "Charge de consignation",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.12",
+      "terme": "Charge de travaux",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.13",
+      "terme": "Chargé d'intervention",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.14",
+      "terme": "Chargé d'opérations spécifiques",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.15",
+      "terme": "Charge de chantier",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.16",
+      "terme": "Exécutant",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.17",
+      "terme": "Surveillant de sécurité électrique",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.1.18",
+      "terme": "Habilitation - personne habilitée",
+      "categorie": "3.1"
+    },
+    {
+      "numero": "3.2.1",
+      "terme": "Installation électrique - ouvrage électrique",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.2.2",
+      "terme": "Matériel électrique",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.2.3",
+      "terme": "Ligne électrique aérienne",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.2.4",
+      "terme": "Canalisation électrique isolée - Canalisation isolée",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.2.5",
+      "terme": "Canalisation encastrée",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.2.6",
+      "terme": "Canalisation noyée",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.2.7",
+      "terme": "Partie active",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.2.8",
+      "terme": "Conducteur PEN",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.2.9",
+      "terme": "Elément (d'accumulateur)",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.2.10",
+      "terme": "Accumulateur",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.2.11",
+      "terme": "Batterie d'accumulateurs",
+      "categorie": "3.2"
+    },
+    {
+      "numero": "3.3.1",
+      "terme": "Tension nominale",
+      "categorie": "3.3"
+    },
+    {
+      "numero": "3.3.2",
+      "terme": "Domaines de tension",
+      "categorie": "3.3"
+    },
+    {
+      "numero": "3.3.3",
+      "terme": "Très basse tension de sécurité (TBTS)",
+      "categorie": "3.3"
+    },
+    {
+      "numero": "3.3.4",
+      "terme": "Très Basse Tension de Protection (TBTP)",
+      "categorie": "3.3"
+    },
+    {
+      "numero": "3.3.5",
+      "terme": "Très Basse Tension Fonctionnelle (TBTF)",
+      "categorie": "3.3"
+    },
+    {
+      "numero": "3.4.1",
+      "terme": "Exploitation",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.2",
+      "terme": "Opération",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.3",
+      "terme": "Opération d'ordre électrique",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.4",
+      "terme": "Type d'opérations d'ordre électrique",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.5",
+      "terme": "Essai",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.6",
+      "terme": "Mesurage",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.8",
+      "terme": "Manœuvre",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.9",
+      "terme": "Opération d'ordre non électrique",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.10",
+      "terme": "Consignation",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.11",
+      "terme": "Déconsignation",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.12",
+      "terme": "Mise hors tension",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.13",
+      "terme": "Mise hors de portée",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.14",
+      "terme": "Réquisition ou essai sous alimentation autonome",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.15",
+      "terme": "Situation de travail",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.4.16",
+      "terme": "Phase de travail",
+      "categorie": "3.4"
+    },
+    {
+      "numero": "3.5.1",
+      "terme": "Environnement électrique",
+      "categorie": "3.5"
+    },
+    {
+      "numero": "3.5.2",
+      "terme": "Voisinage",
+      "categorie": "3.5"
+    },
+    {
+      "numero": "3.5.3",
+      "terme": "Champ libre",
+      "categorie": "3.5"
+    },
+    {
+      "numero": "3.5.4",
+      "terme": "Zone de travail",
+      "categorie": "3.5"
+    },
+    {
+      "numero": "3.5.5",
+      "terme": "Poste de travail",
+      "categorie": "3.5"
+    },
+    {
+      "numero": "3.5.6",
+      "terme": "Zone d'évolution",
+      "categorie": "3.5"
+    },
+    {
+      "numero": "3.5.7",
+      "terme": "Local ou emplacement d'accès reserve aux électriciens (local ou emplacement",
+      "categorie": "3.5"
+    },
+    {
+      "numero": "3.6.1",
+      "terme": "Equipement de protection individuelle (EPI)",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.2",
+      "terme": "Pavé de terre",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.3",
+      "terme": "Dispositif de vérification d'absence de tension (VAT)",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.4",
+      "terme": "Equipement portable de mise à la terre et en court-circuit (MALT/CC)",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.5",
+      "terme": "Outil isolant",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.6",
+      "terme": "Outil isolé",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.7",
+      "terme": "Enveloppe",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.8",
+      "terme": "Nappage",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.9",
+      "terme": "Habillage",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.10",
+      "terme": "Nappe isolante",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.11",
+      "terme": "Ecran",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.12",
+      "terme": "Protecteur",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.13",
+      "terme": "Isolation",
+      "categorie": "3.6"
+    },
+    {
+      "numero": "3.6.14",
+      "terme": "Balisage",
+      "categorie": "3.6"
+    }
+  ],
+  "annexes": [
+    {
+      "lettre": "A",
+      "titre": "Documents - Définitions et exemples 163",
+      "ligne_debut": 873,
+      "ligne_fin": 901
+    },
+    {
+      "lettre": "B",
+      "titre": "Elements d'analyse des opérations 185",
+      "ligne_debut": 902,
+      "ligne_fin": 903
+    },
+    {
+      "lettre": "C",
+      "titre": "Emploi et entretien des principaux équipements de protection",
+      "ligne_debut": 904,
+      "ligne_fin": 915
+    },
+    {
+      "lettre": "D",
+      "titre": "REFERENTIELS DES SAVOIRS Formation initiale et recyclage 199",
+      "ligne_debut": 916,
+      "ligne_fin": 927
+    },
+    {
+      "lettre": "E",
+      "titre": "Exemples de titre d'habilitation 241",
+      "ligne_debut": 928,
+      "ligne_fin": 935
+    },
+    {
+      "lettre": "F",
+      "titre": "Reçu du recueil d'instructions générales de sécurité",
+      "ligne_debut": 936,
+      "ligne_fin": 16591
+    }
+  ]
+}

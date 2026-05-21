@@ -1,32 +1,40 @@
 
 import { useMutation } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
+/**
+ * Hook for uploading files to local storage.
+ * The bucketName parameter is kept for API compatibility but not used in local storage.
+ */
 export const useUploadFile = (bucketName: string) => {
   return useMutation({
     mutationFn: async (file: File) => {
-      const fileName = `${Date.now()}-${file.name.replace(/\s/g, '-')}`;
-      const { data, error } = await supabase.storage
-        .from(bucketName)
-        .upload(fileName, file);
-
-      if (error) {
-        throw new Error(error.message);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Vous devez être connecté pour téléverser des fichiers.');
       }
 
-      const { data: publicUrlData } = supabase.storage
-        .from(bucketName)
-        .getPublicUrl(data.path);
+      const formData = new FormData();
+      formData.append('file', file);
 
-      if (!publicUrlData) {
-        throw new Error("Impossible d'obtenir l'URL publique de l'image.");
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ error: 'Erreur inconnue' }));
+        throw new Error(error.error || 'Erreur lors du téléversement');
       }
-      
-      return publicUrlData.publicUrl;
+
+      const result = await response.json();
+      return result.url || `/uploads/${result.file_name}`;
     },
-    onError: (error) => {
+    onError: (error: unknown) => {
       toast.error(`Erreur lors du téléversement : ${error.message}`);
-    },
+    }
   });
 };

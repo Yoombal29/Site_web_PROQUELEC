@@ -32,8 +32,8 @@ export function usePageSEO({
   });
 
   useEffect(() => {
-    // Marquer la page comme visitée pour les analytics
-    console.log(`Page vue: ${title} - ${window.location.pathname}`);
+
+
   }, [title]);
 
   return { updateSEO };

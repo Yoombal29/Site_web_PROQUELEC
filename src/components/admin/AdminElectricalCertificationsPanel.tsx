@@ -56,13 +56,13 @@ export const AdminElectricalCertificationsPanel: React.FC = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-semibold text-proqblue flex items-center gap-2">
+          <h2 className="text-2xl font-semibold text-primary flex items-center gap-2">
             <Award className="w-6 h-6" />
             Certifications Électriques
           </h2>
-          <p className="text-gray-600">Gestion des certifications professionnelles</p>
+          <p className="text-muted-foreground">Gestion des certifications professionnelles</p>
         </div>
-        <Button onClick={() => setShowForm(!showForm)} className="bg-proqblue hover:bg-proqblue-dark">
+        <Button onClick={() => setShowForm(!showForm)} className="bg-primary hover:opacity-90 transition">
           <Plus className="w-4 h-4 mr-2" />
           Nouvelle Certification
         </Button>
@@ -180,10 +180,10 @@ export const AdminElectricalCertificationsPanel: React.FC = () => {
             </CardHeader>
             <CardContent className="space-y-3">
               {cert.description && (
-                <p className="text-sm text-gray-600">{cert.description}</p>
+                <p className="text-sm text-muted-foreground">{cert.description}</p>
               )}
-              
-              <div className="flex items-center gap-4 text-sm text-gray-500">
+
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <Clock className="w-4 h-4" />
                   {cert.validity_period} mois
@@ -206,7 +206,7 @@ export const AdminElectricalCertificationsPanel: React.FC = () => {
               {cert.requirements && cert.requirements.length > 0 && (
                 <div>
                   <p className="text-sm font-medium mb-2">Prérequis:</p>
-                  <ul className="text-xs text-gray-600 space-y-1">
+                  <ul className="text-xs text-muted-foreground space-y-1">
                     {cert.requirements.map((req, index) => (
                       <li key={index} className="flex items-start gap-1">
                         <span>•</span>
@@ -224,8 +224,8 @@ export const AdminElectricalCertificationsPanel: React.FC = () => {
       {certifications?.length === 0 && (
         <Card>
           <CardContent className="text-center py-8">
-            <Award className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500">Aucune certification disponible</p>
+            <Award className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
+            <p className="text-muted-foreground">Aucune certification disponible</p>
           </CardContent>
         </Card>
       )}

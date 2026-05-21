@@ -32,9 +32,9 @@ describe('Système Électrique Complet', () => {
   });
 
   afterEach(() => {
+
     // Nettoyage si nécessaire
   });
-
   // ========== TESTS CALCULS ÉLECTRIQUES ==========
 
   describe('Calculs NF C 15-100', () => {
@@ -55,9 +55,9 @@ describe('Système Électrique Complet', () => {
 
       // Vérifications selon formules
       const resistivite = 0.0175; // Cuivre
-      const expectedResistance = (2 * 10 * resistivite) / 1.5;
+      const expectedResistance = 2 * 10 * resistivite / 1.5;
       const expectedChuteTension = 16 * expectedResistance;
-      const expectedPercent = (expectedChuteTension / 230) * 100;
+      const expectedPercent = expectedChuteTension / 230 * 100;
 
       expect(result.resultats?.resistance).toBeCloseTo(expectedResistance, 4);
       expect(result.resultats?.chuteTension).toBeCloseTo(expectedChuteTension, 2);
@@ -81,7 +81,7 @@ describe('Système Électrique Complet', () => {
       const result = TronçonEngine.calculate(tronçon);
 
       const resistivite = 0.0280; // Aluminium
-      const expectedResistance = (2 * 50 * resistivite) / 16;
+      const expectedResistance = 2 * 50 * resistivite / 16;
       const expectedChuteTension = 63 * expectedResistance;
 
       expect(result.resultats?.resistance).toBeCloseTo(expectedResistance, 4);
@@ -124,29 +124,29 @@ describe('Système Électrique Complet', () => {
 
     test('calculs multiples avec verdict global', () => {
       const tronçons = [
-        {
-          id: 't1',
-          name: 'Tronçon 1',
-          from: 's1',
-          to: 'l1',
-          longueur: 10,
-          section: 2.5,
-          materiau: 'Cu' as const,
-          courant: 20,
-          modeInstallation: 'Apparent'
-        },
-        {
-          id: 't2',
-          name: 'Tronçon 2',
-          from: 's2',
-          to: 'l2',
-          longueur: 50,
-          section: 1.5,
-          materiau: 'Cu' as const,
-          courant: 16,
-          modeInstallation: 'Apparent'
-        }
-      ];
+      {
+        id: 't1',
+        name: 'Tronçon 1',
+        from: 's1',
+        to: 'l1',
+        longueur: 10,
+        section: 2.5,
+        materiau: 'Cu' as const,
+        courant: 20,
+        modeInstallation: 'Apparent'
+      },
+      {
+        id: 't2',
+        name: 'Tronçon 2',
+        from: 's2',
+        to: 'l2',
+        longueur: 50,
+        section: 1.5,
+        materiau: 'Cu' as const,
+        courant: 16,
+        modeInstallation: 'Apparent'
+      }];
+
 
       const results = TronçonEngine.calculateAll(tronçons);
 
@@ -173,8 +173,8 @@ describe('Système Électrique Complet', () => {
       });
 
       const validations = ValidationEngine.validateGraph(graphStore);
-      const isolatedValidation = validations.find(v =>
-        v.ruleId === 'isolated-node' && v.targetId === 'isolated'
+      const isolatedValidation = validations.find((v) =>
+      v.ruleId === 'isolated-node' && v.targetId === 'isolated'
       );
 
       expect(isolatedValidation).toBeDefined();
@@ -214,8 +214,8 @@ describe('Système Électrique Complet', () => {
       });
 
       const validations = ValidationEngine.validateGraph(graphStore);
-      const compatibilityValidation = validations.find(v =>
-        v.ruleId === 'section-current-compatibility'
+      const compatibilityValidation = validations.find((v) =>
+      v.ruleId === 'section-current-compatibility'
       );
 
       expect(compatibilityValidation).toBeDefined();
@@ -541,36 +541,36 @@ describe('Système Électrique Complet', () => {
         // Propriétés manquantes
       };
 
-      const result = TronçonEngine.calculate(incompleteTronçon as any);
+      const result = TronçonEngine.calculate(incompleteTronçon as unknown);
       expect(result.resultats).toBeDefined();
       // Devrait utiliser des valeurs par défaut
     });
 
     test('résistance aux pannes calculs', () => {
       const tronçons = [
-        {
-          id: 'valid',
-          name: 'Valid',
-          from: 's1',
-          to: 'l1',
-          longueur: 10,
-          section: 2.5,
-          materiau: 'Cu' as const,
-          courant: 20,
-          modeInstallation: 'Apparent'
-        },
-        {
-          id: 'invalid',
-          name: 'Invalid',
-          from: 's2',
-          to: 'l2',
-          longueur: NaN, // Valeur invalide
-          section: Infinity, // Valeur invalide
-          materiau: 'Cu' as const,
-          courant: 10,
-          modeInstallation: 'Apparent'
-        }
-      ];
+      {
+        id: 'valid',
+        name: 'Valid',
+        from: 's1',
+        to: 'l1',
+        longueur: 10,
+        section: 2.5,
+        materiau: 'Cu' as const,
+        courant: 20,
+        modeInstallation: 'Apparent'
+      },
+      {
+        id: 'invalid',
+        name: 'Invalid',
+        from: 's2',
+        to: 'l2',
+        longueur: NaN, // Valeur invalide
+        section: Infinity, // Valeur invalide
+        materiau: 'Cu' as const,
+        courant: 10,
+        modeInstallation: 'Apparent'
+      }];
+
 
       expect(() => {
         TronçonEngine.calculateAll(tronçons);
@@ -617,19 +617,19 @@ describe('Système Électrique Complet', () => {
 
       const validations = ValidationEngine.validateGraph(graphStore);
       const calculations = TronçonEngine.calculateAll(
-        Array.from(graphStore.edges.values())
-          .filter(e => e.type.includes('CABLE'))
-          .map(e => ({
-            id: e.id,
-            name: e.id,
-            from: e.from,
-            to: e.to,
-            longueur: e.properties.length || 0,
-            section: e.properties.section || 2.5,
-            materiau: e.properties.materiau || 'Cu',
-            courant: e.properties.courant || 10,
-            modeInstallation: e.properties.modeOfInstallation || 'Apparent'
-          }))
+        Array.from(graphStore.edges.values()).
+        filter((e) => e.type.includes('CABLE')).
+        map((e) => ({
+          id: e.id,
+          name: e.id,
+          from: e.from,
+          to: e.to,
+          longueur: e.properties.length || 0,
+          section: e.properties.section || 2.5,
+          materiau: e.properties.materiau || 'Cu',
+          courant: e.properties.courant || 10,
+          modeInstallation: e.properties.modeOfInstallation || 'Apparent'
+        }))
       );
 
       const endTime = Date.now();

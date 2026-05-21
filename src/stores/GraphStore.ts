@@ -19,23 +19,23 @@ import SHA256 from 'crypto-js/sha256';
  */
 export interface Charge {
   id: string;
-  nom: string;              // Nom de la charge (ex: "Éclairage bureau", "Prise informatique")
-  puissance: number;        // Puissance en watts
-  tension: number;          // Tension nominale en volts (230V, 400V, etc.)
-  cosPhi: number;           // Facteur de puissance (0.8 à 1.0)
+  nom: string; // Nom de la charge (ex: "Éclairage bureau", "Prise informatique")
+  puissance: number; // Puissance en watts
+  tension: number; // Tension nominale en volts (230V, 400V, etc.)
+  cosPhi: number; // Facteur de puissance (0.8 à 1.0)
   type: 'MONOPHASE' | 'TRIPHASE' | 'DC';
-  courantNominal: number;   // Courant calculé en ampères
+  courantNominal: number; // Courant calculé en ampères
   categorie: 'ECLAIRAGE' | 'FORCE' | 'SPECIALISE'; // Pour normes différentes
 }
 
 export interface GraphNode {
   id: string;
   type: 'SOURCE' | 'PROTECTION' | 'DISTRIBUTION' | 'DERIVATION' | 'COUPURE' | 'RECEPTOR' | 'TRANSFORMATION' | 'PRODUCTION' | 'GROUND' | 'CABLE';
-  position: { x: number; y: number };
-  params: Record<string, any>;        // Paramètres techniques (legacy)
-  properties: Record<string, any>;    // Propriétés PROQUELEC (nouveau)
-  charges?: Charge[];                 // Liste des charges connectées (pour RECEPTOR)
-  metadata: { createdAt: number; modifiedAt: number };
+  position: {x: number;y: number;};
+  params: Record<string, unknown>; // Paramètres techniques (legacy)
+  properties: Record<string, unknown>; // Propriétés PROQUELEC (nouveau)
+  charges?: Charge[]; // Liste des charges connectées (pour RECEPTOR)
+  metadata: {createdAt: number;modifiedAt: number;};
 }
 
 export interface GraphEdge {
@@ -66,7 +66,7 @@ export class GraphStore {
   nodes: Map<string, GraphNode> = new Map();
   edges: Map<string, GraphEdge> = new Map();
   private listeners: Set<(event: string) => void> = new Set();
-  private modificationHistory: Array<{ timestamp: number; action: string; graphHash: string }> = [];
+  private modificationHistory: Array<{timestamp: number;action: string;graphHash: string;}> = [];
 
   /**
    * Ajouter un nœud au graphe
@@ -113,7 +113,7 @@ export class GraphStore {
    * @param nodeId ID du nœud
    * @param newPosition Nouvelle position {x, y}
    */
-  updateNodePosition(nodeId: string, newPosition: { x: number; y: number }): void {
+  updateNodePosition(nodeId: string, newPosition: {x: number;y: number;}): void {
     const node = this.nodes.get(nodeId);
     if (!node) throw new Error(`Node not found: ${nodeId}`);
 
@@ -138,7 +138,7 @@ export class GraphStore {
    * @param nodeId ID du nœud
    * @param newParams Nouveaux paramètres
    */
-  updateNodeParams(nodeId: string, newParams: Record<string, any>): void {
+  updateNodeParams(nodeId: string, newParams: Record<string, unknown>): void {
     const node = this.nodes.get(nodeId);
     if (!node) throw new Error(`Node not found: ${nodeId}`);
 
@@ -178,7 +178,7 @@ export class GraphStore {
         edgesToRemove.push(edgeId);
       }
     }
-    edgesToRemove.forEach(id => this.edges.delete(id));
+    edgesToRemove.forEach((id) => this.edges.delete(id));
 
     this.recordModification(`REMOVE_NODE:${nodeId}`);
     this.notifyListeners('GRAPH_CHANGED');
@@ -201,7 +201,7 @@ export class GraphStore {
    * @param p2 Point destination
    * @returns Distance en mètres
    */
-  private calculateDistance(p1: { x: number; y: number }, p2: { x: number; y: number }): number {
+  private calculateDistance(p1: {x: number;y: number;}, p2: {x: number;y: number;}): number {
     const PIXELS_PER_METER = 10; // 1 mètre = 10 pixels sur le canvas
     const dx = p2.x - p1.x;
     const dy = p2.y - p1.y;
@@ -249,7 +249,7 @@ export class GraphStore {
    * @param event Type d'événement
    */
   private notifyListeners(event: string): void {
-    this.listeners.forEach(callback => callback(event));
+    this.listeners.forEach((callback) => callback(event));
   }
 
   /**
@@ -301,9 +301,9 @@ export class GraphStore {
     return {
       nodeCount: this.nodes.size,
       edgeCount: this.edges.size,
-      totalCableLength: Array.from(this.edges.values())
-        .filter(e => e.type.includes('CABLE'))
-        .reduce((sum, e) => sum + (e.properties.length || 0), 0),
+      totalCableLength: Array.from(this.edges.values()).
+      filter((e) => e.type.includes('CABLE')).
+      reduce((sum, e) => sum + (e.properties.length || 0), 0),
       hash: this.getHash()
     };
   }
@@ -323,7 +323,7 @@ export class GraphStore {
     if (!node.charges) node.charges = [];
 
     // Calculer le courant nominal
-    const courantNominal = (charge.puissance / charge.tension) / charge.cosPhi;
+    const courantNominal = charge.puissance / charge.tension / charge.cosPhi;
 
     const newCharge: Charge = {
       id: `charge_${nodeId}_${Date.now()}`,
@@ -343,7 +343,7 @@ export class GraphStore {
     const node = this.nodes.get(nodeId);
     if (!node || !node.charges) throw new Error(`Node or charges not found`);
 
-    const chargeIndex = node.charges.findIndex(c => c.id === chargeId);
+    const chargeIndex = node.charges.findIndex((c) => c.id === chargeId);
     if (chargeIndex === -1) throw new Error(`Charge not found: ${chargeId}`);
 
     const charge = node.charges[chargeIndex];
@@ -351,7 +351,7 @@ export class GraphStore {
 
     // Recalculer le courant si puissance, tension ou cosPhi ont changé
     if (updates.puissance !== undefined || updates.tension !== undefined || updates.cosPhi !== undefined) {
-      updatedCharge.courantNominal = (updatedCharge.puissance / updatedCharge.tension) / updatedCharge.cosPhi;
+      updatedCharge.courantNominal = updatedCharge.puissance / updatedCharge.tension / updatedCharge.cosPhi;
     }
 
     node.charges[chargeIndex] = updatedCharge;
@@ -366,7 +366,7 @@ export class GraphStore {
     const node = this.nodes.get(nodeId);
     if (!node || !node.charges) throw new Error(`Node or charges not found`);
 
-    node.charges = node.charges.filter(c => c.id !== chargeId);
+    node.charges = node.charges.filter((c) => c.id !== chargeId);
     this.recordModification(`REMOVE_CHARGE:${chargeId}`);
     this.notifyListeners('GRAPH_CHANGED');
   }

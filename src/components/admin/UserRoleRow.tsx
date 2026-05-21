@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useGrantAdminRole, useRevokeAdminRole, UserRole } from '@/hooks/useUserRoles';
+import { useGrantAdminRole, useRevokeAdminRole } from '@/hooks/useUserRoles';
 import { useToast } from "@/hooks/use-toast";
 
 interface UserRoleRowProps {
@@ -45,13 +45,13 @@ const UserRoleRow: React.FC<UserRoleRowProps> = ({ userRole }) => {
           size="sm"
           variant={userRole.is_admin ? "destructive" : "default"}
           onClick={handleToggleAdmin}
-          disabled={grantAdminRole.isPending || revokeAdminRole.isPending}
-        >
+          disabled={grantAdminRole.isPending || revokeAdminRole.isPending}>
+          
           {userRole.is_admin ? "Retirer admin" : "Donner admin"}
         </Button>
       </td>
-    </tr>
-  );
+    </tr>);
+
 };
 
 export default UserRoleRow;

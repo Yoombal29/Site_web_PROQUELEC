@@ -20,7 +20,7 @@ interface CacheConfig {
 }
 
 class AdvancedCacheManager {
-  private cache = new Map<string, CacheItem<any>>();
+  private cache = new Map<string, CacheItem<unknown>>();
   private maxSize = 200;
   private cleanupInterval: NodeJS.Timeout | null = null;
 
@@ -38,7 +38,7 @@ class AdvancedCacheManager {
   private cleanup() {
     const now = Date.now();
     const entries = Array.from(this.cache.entries());
-    
+
     // Supprimer les entrées expirées
     entries.forEach(([key, item]) => {
       if (now > item.expiry) {
@@ -48,14 +48,14 @@ class AdvancedCacheManager {
 
     // Si la cache est encore trop pleine, supprimer les moins utilisées
     if (this.cache.size > this.maxSize) {
-      const sortedEntries = entries
-        .filter(([, item]) => now <= item.expiry)
-        .sort((a, b) => {
-          // Tri par priorité d'accès (moins accédé récemment = supprimé en premier)
-          const scoreA = a[1].accessCount / (now - a[1].lastAccessed);
-          const scoreB = b[1].accessCount / (now - b[1].lastAccessed);
-          return scoreA - scoreB;
-        });
+      const sortedEntries = entries.
+      filter(([, item]) => now <= item.expiry).
+      sort((a, b) => {
+        // Tri par priorité d'accès (moins accédé récemment = supprimé en premier)
+        const scoreA = a[1].accessCount / (now - a[1].lastAccessed);
+        const scoreB = b[1].accessCount / (now - b[1].lastAccessed);
+        return scoreA - scoreB;
+      });
 
       const toDelete = sortedEntries.slice(0, this.cache.size - this.maxSize);
       toDelete.forEach(([key]) => this.cache.delete(key));
@@ -70,8 +70,8 @@ class AdvancedCacheManager {
       if (stored) {
         const data = JSON.parse(stored);
         const now = Date.now();
-        
-        Object.entries(data).forEach(([key, item]: [string, any]) => {
+
+        Object.entries(data).forEach(([key, item]: [string, unknown]) => {
           if (now <= item.expiry) {
             this.cache.set(key, item);
           }
@@ -99,9 +99,9 @@ class AdvancedCacheManager {
       serialize = true
     } = config;
 
-    const processedData = serialize && typeof data === 'object' 
-      ? JSON.parse(JSON.stringify(data)) 
-      : data;
+    const processedData = serialize && typeof data === 'object' ?
+    JSON.parse(JSON.stringify(data)) :
+    data;
 
     if (this.cache.size >= this.maxSize) {
       this.cleanup();
@@ -122,9 +122,9 @@ class AdvancedCacheManager {
 
   get<T>(key: string, expectedVersion?: string): T | null {
     const item = this.cache.get(key);
-    
+
     if (!item) return null;
-    
+
     const now = Date.now();
     if (now > item.expiry) {
       this.cache.delete(key);
@@ -136,11 +136,11 @@ class AdvancedCacheManager {
       this.cache.delete(key);
       return null;
     }
-    
+
     // Mise à jour des statistiques d'accès
     item.accessCount++;
     item.lastAccessed = now;
-    
+
     return item.data;
   }
 
@@ -156,27 +156,27 @@ class AdvancedCacheManager {
 
   invalidateByTag(tag: string): void {
     const toDelete: string[] = [];
-    
+
     this.cache.forEach((item, key) => {
       if (item.tags.includes(tag)) {
         toDelete.push(key);
       }
     });
 
-    toDelete.forEach(key => this.cache.delete(key));
+    toDelete.forEach((key) => this.cache.delete(key));
     this.saveToStorage();
   }
 
   invalidateByPattern(pattern: RegExp): void {
     const toDelete: string[] = [];
-    
+
     this.cache.forEach((_, key) => {
       if (pattern.test(key)) {
         toDelete.push(key);
       }
     });
 
-    toDelete.forEach(key => this.cache.delete(key));
+    toDelete.forEach((key) => this.cache.delete(key));
     this.saveToStorage();
   }
 
@@ -188,15 +188,15 @@ class AdvancedCacheManager {
   getStats() {
     const now = Date.now();
     const items = Array.from(this.cache.values());
-    
+
     return {
       totalItems: this.cache.size,
       maxSize: this.maxSize,
       memoryUsage: JSON.stringify(Object.fromEntries(this.cache.entries())).length,
-      expiredItems: items.filter(item => now > item.expiry).length,
+      expiredItems: items.filter((item) => now > item.expiry).length,
       averageAccessCount: items.reduce((acc, item) => acc + item.accessCount, 0) / items.length || 0,
-      oldestItem: Math.min(...items.map(item => item.timestamp)),
-      newestItem: Math.max(...items.map(item => item.timestamp))
+      oldestItem: Math.min(...items.map((item) => item.timestamp)),
+      newestItem: Math.max(...items.map((item) => item.timestamp))
     };
   }
 
@@ -210,12 +210,12 @@ class AdvancedCacheManager {
       }
 
       // Sinon, récupérer et mettre en cache
-      fetcher()
-        .then(data => {
-          this.set(key, data, config);
-          resolve(data);
-        })
-        .catch(reject);
+      fetcher().
+      then((data) => {
+        this.set(key, data, config);
+        resolve(data);
+      }).
+      catch(reject);
     });
   }
 
@@ -229,10 +229,10 @@ class AdvancedCacheManager {
 const advancedCacheManager = new AdvancedCacheManager();
 
 export function useAdvancedCache<T>(
-  key: string,
-  fetcher: () => Promise<T>,
-  config: CacheConfig & { enabled?: boolean } = {}
-) {
+key: string,
+fetcher: () => Promise<T>,
+config: CacheConfig & {enabled?: boolean;} = {})
+{
   const { enabled = true, ...cacheConfig } = config;
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
@@ -261,7 +261,7 @@ export function useAdvancedCache<T>(
       const result = await fetcher();
       advancedCacheManager.set(key, result, cacheConfig);
       setData(result);
-      
+
       return result;
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Unknown error');

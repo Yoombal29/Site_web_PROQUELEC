@@ -1,0 +1,1982 @@
+{
+  "qcm_13": {
+    "correct_index": 0,
+    "correct_answer": "INCENDIE ET ACCIDENTS SUR OU PRES DES OUVRAGES ET"
+  },
+  "qcm_1_1": {
+    "correct_index": 1,
+    "correct_answer": "Domaine d'application du présent document"
+  },
+  "qcm_1_2": {
+    "correct_index": 1,
+    "correct_answer": "Lien entre la norme et la réglementation"
+  },
+  "qcm_2": {
+    "correct_index": 2,
+    "correct_answer": "REFERENCES NORMATIVES"
+  },
+  "qcm_3": {
+    "correct_index": 2,
+    "correct_answer": "TERMES ET DEFINITIONS"
+  },
+  "qcm_3_1_1": {
+    "correct_index": 3,
+    "correct_answer": "Entreprise exploitante"
+  },
+  "qcm_3_1_2": {
+    "correct_index": 3,
+    "correct_answer": "Entreprise extérieure"
+  },
+  "qcm_3_1_3": {
+    "correct_index": 3,
+    "correct_answer": "Donneur d'ordre"
+  },
+  "qcm_3_1_4": {
+    "correct_index": 0,
+    "correct_answer": "Employeur"
+  },
+  "qcm_3_1_5": {
+    "correct_index": 1,
+    "correct_answer": "Chef d'établissement"
+  },
+  "qcm_3_1_6": {
+    "correct_index": 1,
+    "correct_answer": "Chargé d'exploitation électrique"
+  },
+  "qcm_3_1_7": {
+    "correct_index": 0,
+    "correct_answer": "Personne qualifiée (en électricité)"
+  },
+  "qcm_3_1_8": {
+    "correct_index": 3,
+    "correct_answer": "Personne avertie"
+  },
+  "qcm_3_1_9": {
+    "correct_index": 2,
+    "correct_answer": "Personne ordinaire"
+  },
+  "qcm_3_1_10": {
+    "correct_index": 1,
+    "correct_answer": "Opérateur"
+  },
+  "qcm_3_1_11": {
+    "correct_index": 1,
+    "correct_answer": "Charge de consignation"
+  },
+  "qcm_3_1_12": {
+    "correct_index": 0,
+    "correct_answer": "Charge de travaux"
+  },
+  "qcm_3_1_13": {
+    "correct_index": 2,
+    "correct_answer": "Chargé d'intervention"
+  },
+  "qcm_3_1_14": {
+    "correct_index": 3,
+    "correct_answer": "Chargé d'opérations spécifiques"
+  },
+  "qcm_3_1_15": {
+    "correct_index": 0,
+    "correct_answer": "Charge de chantier"
+  },
+  "qcm_3_1_16": {
+    "correct_index": 2,
+    "correct_answer": "Exécutant"
+  },
+  "qcm_3_1_17": {
+    "correct_index": 1,
+    "correct_answer": "Surveillant de sécurité électrique"
+  },
+  "qcm_3_1_18": {
+    "correct_index": 3,
+    "correct_answer": "Habilitation - personne habilitée"
+  },
+  "qcm_3_2_1": {
+    "correct_index": 2,
+    "correct_answer": "Installation électrique - ouvrage électrique"
+  },
+  "qcm_3_2_2": {
+    "correct_index": 3,
+    "correct_answer": "Matériel électrique"
+  },
+  "qcm_3_2_3": {
+    "correct_index": 0,
+    "correct_answer": "Ligne électrique aérienne"
+  },
+  "qcm_3_2_4": {
+    "correct_index": 1,
+    "correct_answer": "Canalisation électrique isolée - Canalisation isolée"
+  },
+  "qcm_3_2_5": {
+    "correct_index": 3,
+    "correct_answer": "Canalisation encastrée"
+  },
+  "qcm_3_2_6": {
+    "correct_index": 2,
+    "correct_answer": "Canalisation noyée"
+  },
+  "qcm_3_2_7": {
+    "correct_index": 1,
+    "correct_answer": "Partie active"
+  },
+  "qcm_3_2_8": {
+    "correct_index": 1,
+    "correct_answer": "Conducteur PEN"
+  },
+  "qcm_3_2_9": {
+    "correct_index": 1,
+    "correct_answer": "Elément (d'accumulateur)"
+  },
+  "qcm_3_2_10": {
+    "correct_index": 3,
+    "correct_answer": "Accumulateur"
+  },
+  "qcm_3_2_11": {
+    "correct_index": 3,
+    "correct_answer": "Batterie d'accumulateurs"
+  },
+  "qcm_3_3_1": {
+    "correct_index": 0,
+    "correct_answer": "Tension nominale"
+  },
+  "qcm_3_3_2": {
+    "correct_index": 1,
+    "correct_answer": "Domaines de tension"
+  },
+  "qcm_3_3_3": {
+    "correct_index": 3,
+    "correct_answer": "Très basse tension de sécurité (TBTS)"
+  },
+  "qcm_3_3_4": {
+    "correct_index": 0,
+    "correct_answer": "Très Basse Tension de Protection (TBTP)"
+  },
+  "qcm_3_3_5": {
+    "correct_index": 3,
+    "correct_answer": "Très Basse Tension Fonctionnelle (TBTF)"
+  },
+  "qcm_3_4_1": {
+    "correct_index": 3,
+    "correct_answer": "Exploitation"
+  },
+  "qcm_3_4_2": {
+    "correct_index": 0,
+    "correct_answer": "Opération"
+  },
+  "qcm_3_4_3": {
+    "correct_index": 0,
+    "correct_answer": "Opération d'ordre électrique"
+  },
+  "qcm_3_4_4": {
+    "correct_index": 3,
+    "correct_answer": "Type d'opérations d'ordre électrique"
+  },
+  "qcm_3_4_5": {
+    "correct_index": 3,
+    "correct_answer": "Essai"
+  },
+  "qcm_3_4_6": {
+    "correct_index": 2,
+    "correct_answer": "Mesurage"
+  },
+  "qcm_3_4_8": {
+    "correct_index": 1,
+    "correct_answer": "Manœuvre"
+  },
+  "qcm_3_4_9": {
+    "correct_index": 1,
+    "correct_answer": "Opération d'ordre non électrique"
+  },
+  "qcm_3_4_10": {
+    "correct_index": 1,
+    "correct_answer": "Consignation"
+  },
+  "qcm_3_4_11": {
+    "correct_index": 1,
+    "correct_answer": "Déconsignation"
+  },
+  "qcm_3_4_12": {
+    "correct_index": 3,
+    "correct_answer": "Mise hors tension"
+  },
+  "qcm_3_4_13": {
+    "correct_index": 2,
+    "correct_answer": "Mise hors de portée"
+  },
+  "qcm_3_4_14": {
+    "correct_index": 3,
+    "correct_answer": "Réquisition ou essai sous alimentation autonome"
+  },
+  "qcm_3_4_15": {
+    "correct_index": 1,
+    "correct_answer": "Situation de travail"
+  },
+  "qcm_3_4_16": {
+    "correct_index": 3,
+    "correct_answer": "Phase de travail"
+  },
+  "qcm_3_5": {
+    "correct_index": 1,
+    "correct_answer": "Définitions relatives aux distances, zones et locaux"
+  },
+  "qcm_3_5_1": {
+    "correct_index": 3,
+    "correct_answer": "Environnement électrique"
+  },
+  "qcm_3_5_2": {
+    "correct_index": 0,
+    "correct_answer": "Voisinage"
+  },
+  "qcm_3_5_3": {
+    "correct_index": 0,
+    "correct_answer": "Champ libre"
+  },
+  "qcm_3_5_4": {
+    "correct_index": 1,
+    "correct_answer": "Zone de travail"
+  },
+  "qcm_3_5_5": {
+    "correct_index": 2,
+    "correct_answer": "Poste de travail"
+  },
+  "qcm_3_5_6": {
+    "correct_index": 2,
+    "correct_answer": "Zone d'évolution"
+  },
+  "qcm_3_5_7": {
+    "correct_index": 1,
+    "correct_answer": "Local ou emplacement d'accès reserve aux électriciens (local ou emplacement"
+  },
+  "qcm_3_6": {
+    "correct_index": 1,
+    "correct_answer": "Définitions relatives aux équipements de travail et aux eQUIPEMENTS de protection"
+  },
+  "qcm_3_6_1": {
+    "correct_index": 1,
+    "correct_answer": "Equipement de protection individuelle (EPI)"
+  },
+  "qcm_3_6_2": {
+    "correct_index": 2,
+    "correct_answer": "Pavé de terre"
+  },
+  "qcm_3_6_3": {
+    "correct_index": 1,
+    "correct_answer": "Dispositif de vérification d'absence de tension (VAT)"
+  },
+  "qcm_3_6_4": {
+    "correct_index": 2,
+    "correct_answer": "Equipement portable de mise à la terre et en court-circuit (MALT/CC)"
+  },
+  "qcm_3_6_5": {
+    "correct_index": 2,
+    "correct_answer": "Outil isolant"
+  },
+  "qcm_3_6_6": {
+    "correct_index": 3,
+    "correct_answer": "Outil isolé"
+  },
+  "qcm_3_6_7": {
+    "correct_index": 2,
+    "correct_answer": "Enveloppe"
+  },
+  "qcm_3_6_8": {
+    "correct_index": 1,
+    "correct_answer": "Nappage"
+  },
+  "qcm_3_6_9": {
+    "correct_index": 3,
+    "correct_answer": "Habillage"
+  },
+  "qcm_3_6_10": {
+    "correct_index": 2,
+    "correct_answer": "Nappe isolante"
+  },
+  "qcm_3_6_11": {
+    "correct_index": 2,
+    "correct_answer": "Ecran"
+  },
+  "qcm_3_6_12": {
+    "correct_index": 0,
+    "correct_answer": "Protecteur"
+  },
+  "qcm_3_6_13": {
+    "correct_index": 3,
+    "correct_answer": "Isolation"
+  },
+  "qcm_3_6_14": {
+    "correct_index": 3,
+    "correct_answer": "Balisage"
+  },
+  "qcm_3_7": {
+    "correct_index": 3,
+    "correct_answer": "Liste des documents écrits (voir Annexe A)"
+  },
+  "qcm_4": {
+    "correct_index": 0,
+    "correct_answer": "DISPOSITIONS GENERALES"
+  },
+  "qcm_4_1": {
+    "correct_index": 0,
+    "correct_answer": "Analyse du risque élecTRIQUE"
+  },
+  "qcm_4_1_1": {
+    "correct_index": 2,
+    "correct_answer": "Le risque électrique et ses conséquences"
+  },
+  "qcm_4_1_2_1": {
+    "correct_index": 1,
+    "correct_answer": "A quel moment doit-on analyser le risque électrique ?"
+  },
+  "qcm_4_1_2_2": {
+    "correct_index": 3,
+    "correct_answer": "Qui a mission d'effectuer l'analyse du risque électrique ?"
+  },
+  "qcm_4_1_2_3": {
+    "correct_index": 1,
+    "correct_answer": "Eléments à prendre en compte pour l'analyse du risque électrique"
+  },
+  "qcm_4_1_2_4": {
+    "correct_index": 3,
+    "correct_answer": "Risques liés à l'induction magnétique et au couplage capacitif"
+  },
+  "qcm_4_1_2_4_1": {
+    "correct_index": 3,
+    "correct_answer": "Couplage capacitif"
+  },
+  "qcm_4_1_2_4_2": {
+    "correct_index": 2,
+    "correct_answer": "Induction magnétique"
+  },
+  "qcm_4_1_2_5": {
+    "correct_index": 3,
+    "correct_answer": "Risques liés à la Très Basse Tension"
+  },
+  "qcm_4_2": {
+    "correct_index": 2,
+    "correct_answer": "Environnement des ouvrages ou des installations"
+  },
+  "qcm_4_2_1": {
+    "correct_index": 2,
+    "correct_answer": "Environnement des pièces nues en champ libre"
+  },
+  "qcm_4_2_2": {
+    "correct_index": 3,
+    "correct_answer": "Locaux et emplacements d'accès réservé aux électriciens"
+  },
+  "qcm_4_2_3": {
+    "correct_index": 0,
+    "correct_answer": "Environnement des canalisations isolées"
+  },
+  "qcm_4_3": {
+    "correct_index": 0,
+    "correct_answer": "Prévention du risque électrique"
+  },
+  "qcm_4_3_1": {
+    "correct_index": 1,
+    "correct_answer": "Principes de prévention du risque électrique"
+  },
+  "qcm_4_3_1_1": {
+    "correct_index": 3,
+    "correct_answer": "Eléments d'analyse des opérations"
+  },
+  "qcm_4_3_1_2": {
+    "correct_index": 2,
+    "correct_answer": "Principes de mise en œuvre"
+  },
+  "qcm_4_3_1_2_1": {
+    "correct_index": 1,
+    "correct_answer": "Les opérations après consignation ou mise hors tension"
+  },
+  "qcm_4_3_1_2_2": {
+    "correct_index": 0,
+    "correct_answer": "Les opérations après mise hors de portée"
+  },
+  "qcm_4_3_1_2_3": {
+    "correct_index": 1,
+    "correct_answer": "Les opérations sous tension"
+  },
+  "qcm_4_3_1_3": {
+    "correct_index": 2,
+    "correct_answer": "Délimitation et balisage de la zone de travail"
+  },
+  "qcm_4_3_1_4": {
+    "correct_index": 1,
+    "correct_answer": "Mise à la terre et en court-circuit"
+  },
+  "qcm_4_3_1_5": {
+    "correct_index": 1,
+    "correct_answer": "Mise en équipotentialité du poste de travail"
+  },
+  "qcm_4_3_1_6": {
+    "correct_index": 3,
+    "correct_answer": "Surveillance"
+  },
+  "qcm_4_3_2": {
+    "correct_index": 3,
+    "correct_answer": "et 4.3.3 ;"
+  },
+  "qcm_4_3_3": {
+    "correct_index": 2,
+    "correct_answer": "Protection individuelle"
+  },
+  "qcm_4_3_4": {
+    "correct_index": 1,
+    "correct_answer": "Outil, matériel et équipement de travail"
+  },
+  "qcm_4_3_5": {
+    "correct_index": 0,
+    "correct_answer": "Conditions ambiantes de travail"
+  },
+  "qcm_4_3_6": {
+    "correct_index": 1,
+    "correct_answer": "Opérations dans les zones présentant un risque d'explosion"
+  },
+  "qcm_4_4": {
+    "correct_index": 3,
+    "correct_answer": "Réalisation et mise en œuvre des opérations"
+  },
+  "qcm_4_4_1": {
+    "correct_index": 3,
+    "correct_answer": "Procédures d'accès, de suivi et de contrôle"
+  },
+  "qcm_4_4_2": {
+    "correct_index": 0,
+    "correct_answer": "Instruction de sécurité"
+  },
+  "qcm_4_5_1": {
+    "correct_index": 2,
+    "correct_answer": "Les acteurs économiques (entreprises et autres)"
+  },
+  "qcm_4_5_1_1": {
+    "correct_index": 1,
+    "correct_answer": "Entreprise exploitante"
+  },
+  "qcm_4_5_1_2": {
+    "correct_index": 2,
+    "correct_answer": "Entreprise extérieure"
+  },
+  "qcm_4_5_1_3": {
+    "correct_index": 1,
+    "correct_answer": "Entreprise de travail temporaire et prêt de main d'œuvre a but non lucratif"
+  },
+  "qcm_4_5_1_4": {
+    "correct_index": 2,
+    "correct_answer": "Donneur d'ordre ou maître d'ouvrage"
+  },
+  "qcm_4_5_1_5": {
+    "correct_index": 0,
+    "correct_answer": "Travailleur indépendant, employeur ou auto-entrepreneur participant à une"
+  },
+  "qcm_4_5_1_6": {
+    "correct_index": 0,
+    "correct_answer": "Professionnel intervenant chez un particulier"
+  },
+  "qcm_4_5_1_7": {
+    "correct_index": 2,
+    "correct_answer": "Etablissements sans personnel compétent en électricité"
+  },
+  "qcm_4_5_2": {
+    "correct_index": 2,
+    "correct_answer": "Fonctions et personnes concernées"
+  },
+  "qcm_4_5_2_1": {
+    "correct_index": 0,
+    "correct_answer": "Employeur et chef d'établissement"
+  },
+  "qcm_4_5_2_1_1": {
+    "correct_index": 2,
+    "correct_answer": "Rôle de l'employeur"
+  },
+  "qcm_4_5_2_1_2": {
+    "correct_index": 3,
+    "correct_answer": "Rôle du chef d'établissement"
+  },
+  "qcm_4_5_2_2": {
+    "correct_index": 3,
+    "correct_answer": ":"
+  },
+  "qcm_4_5_2_3": {
+    "correct_index": 2,
+    "correct_answer": "Personne autorisant l'accès à l'installation"
+  },
+  "qcm_4_5_2_4": {
+    "correct_index": 3,
+    "correct_answer": "Chargé de consignation"
+  },
+  "qcm_4_5_2_5": {
+    "correct_index": 0,
+    "correct_answer": "Charge de travaux"
+  },
+  "qcm_4_5_2_6": {
+    "correct_index": 3,
+    "correct_answer": "Chargé d'intervention"
+  },
+  "qcm_4_5_2_7": {
+    "correct_index": 3,
+    "correct_answer": "Chargé d'opérations spécifiques"
+  },
+  "qcm_4_5_2_8": {
+    "correct_index": 1,
+    "correct_answer": "Chargé de chantier (operation d'ordre non électrique)"
+  },
+  "qcm_4_5_2_9": {
+    "correct_index": 1,
+    "correct_answer": "Exécutant"
+  },
+  "qcm_4_5_2_9_1": {
+    "correct_index": 3,
+    "correct_answer": "L'exécutant d'opération d'ordre électrique"
+  },
+  "qcm_4_5_2_9_2": {
+    "correct_index": 2,
+    "correct_answer": "L'exécutant d'opération d'ordre non électrique habilité"
+  },
+  "qcm_4_5_2_9_3": {
+    "correct_index": 3,
+    "correct_answer": "L'exécutant d'opération d'ordre non électrique non habilité"
+  },
+  "qcm_4_5_2_10": {
+    "correct_index": 1,
+    "correct_answer": "Surveillant de sécurité électrique"
+  },
+  "qcm_5": {
+    "correct_index": 1,
+    "correct_answer": "FORMATION ET HABILITATION"
+  },
+  "qcm_5_1_1": {
+    "correct_index": 1,
+    "correct_answer": "Objet"
+  },
+  "qcm_5_1_2": {
+    "correct_index": 0,
+    "correct_answer": "Principes"
+  },
+  "qcm_5_1_3": {
+    "correct_index": 0,
+    "correct_answer": "Cas dans lesquels l'habilitation est obligatoire"
+  },
+  "qcm_5_2": {
+    "correct_index": 0,
+    "correct_answer": "Evaluation du besoin initial"
+  },
+  "qcm_5_3": {
+    "correct_index": 0,
+    "correct_answer": "Conditions d'attribution de l'habilitation"
+  },
+  "qcm_5_4": {
+    "correct_index": 2,
+    "correct_answer": "Suivi de l'habilitation"
+  },
+  "qcm_5_5": {
+    "correct_index": 3,
+    "correct_answer": "Maintien des compétences - Recyclage"
+  },
+  "qcm_5_6_1": {
+    "correct_index": 0,
+    "correct_answer": "Principes d'organisation"
+  },
+  "qcm_5_6_2": {
+    "correct_index": 2,
+    "correct_answer": "Objectif de la formation"
+  },
+  "qcm_5_6_3": {
+    "correct_index": 0,
+    "correct_answer": "Évaluation et avis"
+  },
+  "qcm_5_7_1": {
+    "correct_index": 3,
+    "correct_answer": "Matérialisation de l'habilitation"
+  },
+  "qcm_5_7_2_1": {
+    "correct_index": 1,
+    "correct_answer": "Principe et présentation"
+  },
+  "qcm_5_7_2_2": {
+    "correct_index": 0,
+    "correct_answer": "Premier caractère"
+  },
+  "qcm_5_7_2_3": {
+    "correct_index": 2,
+    "correct_answer": "Deuxième caractère"
+  },
+  "qcm_5_7_2_4": {
+    "correct_index": 2,
+    "correct_answer": "Troisième caractère"
+  },
+  "qcm_5_7_2_5": {
+    "correct_index": 2,
+    "correct_answer": "Attribut"
+  },
+  "qcm_5_7_2_6": {
+    "correct_index": 0,
+    "correct_answer": "Tableaux des symboles des habilitations"
+  },
+  "qcm_5_7_3": {
+    "correct_index": 3,
+    "correct_answer": "Champ d'application des habilitations"
+  },
+  "qcm_5_7_4": {
+    "correct_index": 1,
+    "correct_answer": "Equivalences entre habilitations"
+  },
+  "qcm_5_7_5": {
+    "correct_index": 0,
+    "correct_answer": "Titre d'habilitation"
+  },
+  "qcm_5_8_1": {
+    "correct_index": 3,
+    "correct_answer": "Cas particulier pour certaines opérations d'ordre non électrique"
+  },
+  "qcm_5_8_2": {
+    "correct_index": 2,
+    "correct_answer": "Le travailleur indépendant - l'employeur - l'auto-entrepreneur participant à une"
+  },
+  "qcm_6": {
+    "correct_index": 1,
+    "correct_answer": "DÉTERMINATION DE L'ENVIRONNEMENT DES OPÉRATIONS"
+  },
+  "qcm_6_1": {
+    "correct_index": 1,
+    "correct_answer": "Généralités et présentation"
+  },
+  "qcm_6_2": {
+    "correct_index": 3,
+    "correct_answer": "Distances limites et zones définies autour des pièces nues sous tension en"
+  },
+  "qcm_6_2_1": {
+    "correct_index": 3,
+    "correct_answer": "Distance limite d'investigation"
+  },
+  "qcm_6_2_2": {
+    "correct_index": 0,
+    "correct_answer": "Zone d'investigation"
+  },
+  "qcm_6_2_3": {
+    "correct_index": 2,
+    "correct_answer": "Distance limite de voisinage simple"
+  },
+  "qcm_6_2_4": {
+    "correct_index": 0,
+    "correct_answer": "Le voisinage"
+  },
+  "qcm_6_2_5": {
+    "correct_index": 3,
+    "correct_answer": "Zone de voisinage simple"
+  },
+  "qcm_6_2_6": {
+    "correct_index": 3,
+    "correct_answer": "Distance limite de voisinage renforcé"
+  },
+  "qcm_6_2_6_1": {
+    "correct_index": 2,
+    "correct_answer": "Distance limite de voisinage renforce HT"
+  },
+  "qcm_6_2_6_2": {
+    "correct_index": 2,
+    "correct_answer": "Distance limite de voisinage renforce BT"
+  },
+  "qcm_6_2_7_1": {
+    "correct_index": 3,
+    "correct_answer": "Zone de voisinage renforcé HT"
+  },
+  "qcm_6_2_7_2": {
+    "correct_index": 0,
+    "correct_answer": "Zone de voisinage renforcé BT"
+  },
+  "qcm_6_2_8": {
+    "correct_index": 0,
+    "correct_answer": "Distance minimale d'approche"
+  },
+  "qcm_6_2_8_1": {
+    "correct_index": 2,
+    "correct_answer": "Distance de tension (t)"
+  },
+  "qcm_6_2_8_2": {
+    "correct_index": 0,
+    "correct_answer": "Distance de garde (g)"
+  },
+  "qcm_6_2_9": {
+    "correct_index": 2,
+    "correct_answer": "Zone des travaux sous tension en haute tension"
+  },
+  "qcm_6_3": {
+    "correct_index": 2,
+    "correct_answer": "Distances limites et zones définies dans les locaux et emplacements d'accès"
+  },
+  "qcm_6_4": {
+    "correct_index": 0,
+    "correct_answer": "Distances limites et zones définies autour des supports de lignes aériennes"
+  },
+  "qcm_6_5": {
+    "correct_index": 0,
+    "correct_answer": "Distances limites et zones définies par l'ouverture d'une armoire, d'un coffret ou"
+  },
+  "qcm_6_6": {
+    "correct_index": 1,
+    "correct_answer": "Distances limites et zones définies autour des canalisations isolées"
+  },
+  "qcm_6_6_1": {
+    "correct_index": 0,
+    "correct_answer": "Canalisations isolées visibles"
+  },
+  "qcm_6_6_2": {
+    "correct_index": 0,
+    "correct_answer": "Canalisations isolées invisibles"
+  },
+  "qcm_6_6_2_1": {
+    "correct_index": 3,
+    "correct_answer": "Canalisations isolées invisibles enterrées"
+  },
+  "qcm_6_6_2_2": {
+    "correct_index": 2,
+    "correct_answer": "Canalisations isolées invisibles noyées ou encastrées"
+  },
+  "qcm_6_7": {
+    "correct_index": 1,
+    "correct_answer": "Environnement autour d'un circuit de terre"
+  },
+  "qcm_6_8": {
+    "correct_index": 2,
+    "correct_answer": "Cas particulier des canalisations gainées"
+  },
+  "qcm_7": {
+    "correct_index": 2,
+    "correct_answer": "OPERATIONS HORS TENSION"
+  },
+  "qcm_7_1_1": {
+    "correct_index": 0,
+    "correct_answer": "Principes fondamentaux de la consignation électrique d'un ouvrage ou d'une"
+  },
+  "qcm_7_1_2_1": {
+    "correct_index": 2,
+    "correct_answer": "Condition préalable à la consignation ou préidentification"
+  },
+  "qcm_7_1_2_2": {
+    "correct_index": 1,
+    "correct_answer": "Opération 1 - Séparation électrique de l'ouvrage ou de l'installation des"
+  },
+  "qcm_7_1_2_3": {
+    "correct_index": 2,
+    "correct_answer": "Opération 2 - Condamnation en position d'ouverture"
+  },
+  "qcm_7_1_2_4": {
+    "correct_index": 1,
+    "correct_answer": "Opération 3 - Identification de la partie de l'ouvrage ou de l'installation"
+  },
+  "qcm_7_1_2_5": {
+    "correct_index": 1,
+    "correct_answer": "Opération 4 - Vérification d'absence de tension"
+  },
+  "qcm_7_1_2_6": {
+    "correct_index": 2,
+    "correct_answer": "Opération 5 - Mise à la terre et en court-circuit"
+  },
+  "qcm_7_1_2_7_1": {
+    "correct_index": 2,
+    "correct_answer": "En cas d'induction magnétique et de couplage capacitif - équipotentialité"
+  },
+  "qcm_7_1_2_7_2": {
+    "correct_index": 0,
+    "correct_answer": "En présence de condensateurs"
+  },
+  "qcm_7_1_3": {
+    "correct_index": 2,
+    "correct_answer": "Procédures de consignation"
+  },
+  "qcm_7_1_3_1": {
+    "correct_index": 2,
+    "correct_answer": "Consignation en une étape"
+  },
+  "qcm_7_1_3_2": {
+    "correct_index": 1,
+    "correct_answer": "Consignation en deux étapes"
+  },
+  "qcm_7_1_4": {
+    "correct_index": 1,
+    "correct_answer": "Opérations de deconsignation"
+  },
+  "qcm_7_1_5": {
+    "correct_index": 1,
+    "correct_answer": "Applications particulières de la consignation aux différents ouvrages ou"
+  },
+  "qcm_7_1_5_1": {
+    "correct_index": 1,
+    "correct_answer": "Particularités pour la BT"
+  },
+  "qcm_7_1_5_2": {
+    "correct_index": 3,
+    "correct_answer": "Particularités pour les lignes aériennes en conducteurs nus BT et HTA"
+  },
+  "qcm_7_1_5_3": {
+    "correct_index": 1,
+    "correct_answer": "Particularités pour les canalisations isolees BT et HTA avec ou sans"
+  },
+  "qcm_7_1_5_4": {
+    "correct_index": 0,
+    "correct_answer": "Particularités pour les postes HTA équipes d'appareillages à haute tension"
+  },
+  "qcm_7_1_5_5_1": {
+    "correct_index": 2,
+    "correct_answer": "Postes HTB à phases séparées ou très espacées"
+  },
+  "qcm_7_1_5_5_2": {
+    "correct_index": 2,
+    "correct_answer": "Postes HTB sous enveloppe métallique à isolement gazeux (PSEM)"
+  },
+  "qcm_7_1_5_6": {
+    "correct_index": 3,
+    "correct_answer": "Particularités des lignes aériennes HTB en conducteurs nus"
+  },
+  "qcm_7_1_5_7": {
+    "correct_index": 1,
+    "correct_answer": "Particularités des câbles isolés souterrains et aero-souterrains HTB à"
+  },
+  "qcm_7_1_5_8": {
+    "correct_index": 1,
+    "correct_answer": "Mise à la terre à l'aide d'un pavé de terre"
+  },
+  "qcm_7_1_5_9": {
+    "correct_index": 0,
+    "correct_answer": "Cas de la consignation dans les véhicules et engins à motorisation électrique"
+  },
+  "qcm_7_2": {
+    "correct_index": 2,
+    "correct_answer": "Procédure de mise hors tension"
+  },
+  "qcm_7_2_1": {
+    "correct_index": 2,
+    "correct_answer": "Objet et champ d'application de la mise hors tension"
+  },
+  "qcm_7_2_2": {
+    "correct_index": 2,
+    "correct_answer": "Déroulement d'une mise hors tension"
+  },
+  "qcm_7_2_3": {
+    "correct_index": 2,
+    "correct_answer": "Remise sous tension après mise hors tension"
+  },
+  "qcm_7_3_1": {
+    "correct_index": 0,
+    "correct_answer": "Attributions et articulation des fonctions"
+  },
+  "qcm_7_3_2": {
+    "correct_index": 1,
+    "correct_answer": "Procédures d'accès, de suivi et de contrôle des opérations hors tension"
+  },
+  "qcm_7_3_2_1": {
+    "correct_index": 3,
+    "correct_answer": "Principes d'emploi des documents"
+  },
+  "qcm_7_3_2_1_1": {
+    "correct_index": 1,
+    "correct_answer": "Tableaux des documents attestant la consignation ou la mise hors tension"
+  },
+  "qcm_7_3_2_1_2": {
+    "correct_index": 2,
+    "correct_answer": "Attestation de consignation en une étape"
+  },
+  "qcm_7_3_2_1_3": {
+    "correct_index": 2,
+    "correct_answer": "Attestation de 1ere étape de consignation"
+  },
+  "qcm_7_3_2_1_4": {
+    "correct_index": 3,
+    "correct_answer": "Autorisation de travail"
+  },
+  "qcm_7_3_2_1_5": {
+    "correct_index": 1,
+    "correct_answer": "Attestation de mise hors tension"
+  },
+  "qcm_7_3_2_1_6": {
+    "correct_index": 3,
+    "correct_answer": "Certificat pour tiers après consignation"
+  },
+  "qcm_7_3_2_1_7": {
+    "correct_index": 3,
+    "correct_answer": "Certificat pour tiers après mise hors tension"
+  },
+  "qcm_7_3_2_1_8": {
+    "correct_index": 3,
+    "correct_answer": "Avis de fin de travail"
+  },
+  "qcm_7_3_2_2_1": {
+    "correct_index": 0,
+    "correct_answer": "Cas général"
+  },
+  "qcm_7_3_2_2_2": {
+    "correct_index": 0,
+    "correct_answer": "Transmission des documents"
+  },
+  "qcm_7_3_3": {
+    "correct_index": 1,
+    "correct_answer": "Conditions atmosphériques"
+  },
+  "qcm_7_3_4": {
+    "correct_index": 1,
+    "correct_answer": "Séparation d'un réseau de distribution"
+  },
+  "qcm_7_3_5": {
+    "correct_index": 0,
+    "correct_answer": "Mesures particulières relatives aux consignations"
+  },
+  "qcm_7_3_5_1": {
+    "correct_index": 0,
+    "correct_answer": "Travaux hors tension d'ordre électrique sur un ouvrage ou une installation"
+  },
+  "qcm_7_3_5_2": {
+    "correct_index": 1,
+    "correct_answer": "Opérations hors tension après consignation pour suppression du voisinage"
+  },
+  "qcm_7_3_5_2_1": {
+    "correct_index": 1,
+    "correct_answer": "Dispositions pour les opérations d'ordre non électrique concourant à"
+  },
+  "qcm_7_3_5_2_2": {
+    "correct_index": 0,
+    "correct_answer": "Dispositions pour les autres operations d'ordre non électrique"
+  },
+  "qcm_7_3_5_3": {
+    "correct_index": 0,
+    "correct_answer": "Cas des locaux et emplacements d'accès réservé aux électriciens"
+  },
+  "qcm_7_3_5_4": {
+    "correct_index": 1,
+    "correct_answer": "Opérations d'ordre non électrique realisees dans l'environnement des"
+  },
+  "qcm_7_3_6": {
+    "correct_index": 0,
+    "correct_answer": "Mesures particulières relatives à la mise hors tension"
+  },
+  "qcm_7_4_8": {
+    "correct_index": 3,
+    "correct_answer": "Rôle du charge de chantier dans le cadre d'opérations d'ordre non électrique"
+  },
+  "qcm_7_4": {
+    "correct_index": 3,
+    "correct_answer": "Rôle des différents acteurs dans le cadre d'un travail hors tension ou d'une"
+  },
+  "qcm_7_4_1": {
+    "correct_index": 0,
+    "correct_answer": "Rôle de l'employeur"
+  },
+  "qcm_7_4_2": {
+    "correct_index": 2,
+    "correct_answer": "Rôle du chef d'établissement"
+  },
+  "qcm_7_4_3": {
+    "correct_index": 2,
+    "correct_answer": "Rôle du donneur d'ordre"
+  },
+  "qcm_7_4_4": {
+    "correct_index": 0,
+    "correct_answer": "Rôle du chargé d'exploitation électrique"
+  },
+  "qcm_7_4_5": {
+    "correct_index": 1,
+    "correct_answer": "Rôle du charge de consignation"
+  },
+  "qcm_7_4_6": {
+    "correct_index": 1,
+    "correct_answer": "Rôle du charge de travaux pour les travaux hors tension"
+  },
+  "qcm_7_4_6_1": {
+    "correct_index": 3,
+    "correct_answer": "Avant d'entreprendre le travail"
+  },
+  "qcm_7_4_6_2": {
+    "correct_index": 1,
+    "correct_answer": "Pendant les travaux"
+  },
+  "qcm_7_4_6_3": {
+    "correct_index": 2,
+    "correct_answer": "A la fin des travaux"
+  },
+  "qcm_7_4_7": {
+    "correct_index": 1,
+    "correct_answer": "Rôle du chargé de travaux pour les opérations après suppression du voisinage"
+  },
+  "qcm_7_4_9": {
+    "correct_index": 1,
+    "correct_answer": "Rôle du CHARGE DE CHANTIER DANS le CADRE D'OPERATIONS D'ORDRE NON ELectrique"
+  },
+  "qcm_7_4_10": {
+    "correct_index": 2,
+    "correct_answer": "Rôle de l'exécutant de travaux d'ordre électrique ou non"
+  },
+  "qcm_7_5": {
+    "correct_index": 1,
+    "correct_answer": "Formation à la prévention du risque électrique et Habilitation"
+  },
+  "qcm_7_5_1": {
+    "correct_index": 1,
+    "correct_answer": "Chargé d'exploitation électrique"
+  },
+  "qcm_7_5_2": {
+    "correct_index": 2,
+    "correct_answer": "Chargé de consignation"
+  },
+  "qcm_7_5_3": {
+    "correct_index": 1,
+    "correct_answer": "Charge de travaux"
+  },
+  "qcm_7_5_4": {
+    "correct_index": 3,
+    "correct_answer": "Chargé de chantier"
+  },
+  "qcm_7_5_5": {
+    "correct_index": 1,
+    "correct_answer": "Exécutant"
+  },
+  "qcm_8": {
+    "correct_index": 1,
+    "correct_answer": "TRAVAUX SOUS TENSION"
+  },
+  "qcm_8_1_1": {
+    "correct_index": 0,
+    "correct_answer": "Le cadre réglementaire"
+  },
+  "qcm_8_1_2": {
+    "correct_index": 2,
+    "correct_answer": "Présentation des risques encourus au cours des TST"
+  },
+  "qcm_8_2_1": {
+    "correct_index": 2,
+    "correct_answer": "Disposition pour les ouvrages"
+  },
+  "qcm_8_2_1_1": {
+    "correct_index": 3,
+    "correct_answer": "Conditions d'attribution de l'habilitation"
+  },
+  "qcm_8_2_1_2": {
+    "correct_index": 2,
+    "correct_answer": "Suivi du titre d'habilitation"
+  },
+  "qcm_8_2_1_3": {
+    "correct_index": 1,
+    "correct_answer": "Maintien des compétences - Recyclage"
+  },
+  "qcm_8_2_2": {
+    "correct_index": 1,
+    "correct_answer": "Dispositions pour les installations"
+  },
+  "qcm_8_2_2_1": {
+    "correct_index": 3,
+    "correct_answer": "Conditions d'attribution de l'habilitation"
+  },
+  "qcm_8_2_2_2": {
+    "correct_index": 3,
+    "correct_answer": "Suivi du titre d'habilitation"
+  },
+  "qcm_8_2_2_3": {
+    "correct_index": 3,
+    "correct_answer": "Maintien des compétences - Recyclage"
+  },
+  "qcm_8_3": {
+    "correct_index": 1,
+    "correct_answer": "Méthodes de travail sous tension"
+  },
+  "qcm_8_3_2": {
+    "correct_index": 2,
+    "correct_answer": "Travail à distance"
+  },
+  "qcm_8_3_3": {
+    "correct_index": 1,
+    "correct_answer": "Travail au potentiel"
+  },
+  "qcm_8_4_1": {
+    "correct_index": 1,
+    "correct_answer": "Travaux sous tension, hors tension et au voisinage"
+  },
+  "qcm_8_4_2": {
+    "correct_index": 3,
+    "correct_answer": "Participation de personnel non habilite symbole T sur un chantier TST"
+  },
+  "qcm_8_5": {
+    "correct_index": 3,
+    "correct_answer": "Documents de référence"
+  },
+  "qcm_8_5_1": {
+    "correct_index": 1,
+    "correct_answer": "TST sur les ouvrages - Conditions d'Execution du Travail, Fiches Techniques"
+  },
+  "qcm_8_5_2": {
+    "correct_index": 0,
+    "correct_answer": "TST sur les installations - Normes spécifiques et référentiels"
+  },
+  "qcm_8_6": {
+    "correct_index": 0,
+    "correct_answer": "Outil, matériel, équipement de travail, équipement de protection individuelle,"
+  },
+  "qcm_8_7": {
+    "correct_index": 0,
+    "correct_answer": "Régime spécial d'exploitation"
+  },
+  "qcm_8_8": {
+    "correct_index": 0,
+    "correct_answer": "Conditions atmosphériques"
+  },
+  "qcm_8_9": {
+    "correct_index": 1,
+    "correct_answer": "Organisation des travaux"
+  },
+  "qcm_8_9_1_1": {
+    "correct_index": 2,
+    "correct_answer": "Besoin initial"
+  },
+  "qcm_8_9_1_2": {
+    "correct_index": 2,
+    "correct_answer": "Préparation du travail"
+  },
+  "qcm_8_9_1_3": {
+    "correct_index": 3,
+    "correct_answer": "Désignation des opérateurs"
+  },
+  "qcm_8_9_1_4": {
+    "correct_index": 1,
+    "correct_answer": "Exécution du travail"
+  },
+  "qcm_8_9_2": {
+    "correct_index": 0,
+    "correct_answer": "Procédure applicable en basse tension"
+  },
+  "qcm_8_10_1": {
+    "correct_index": 2,
+    "correct_answer": "Travaux sur les installations de contrôle, de télétransmission et de"
+  },
+  "qcm_8_10_2": {
+    "correct_index": 1,
+    "correct_answer": "Mise en place de protections isolantes pour des tiers sur un ouvrage de"
+  },
+  "qcm_8_10_3": {
+    "correct_index": 0,
+    "correct_answer": "Mise en place de protections isolantes sur une installation en vue de travaux"
+  },
+  "qcm_8_10_4": {
+    "correct_index": 3,
+    "correct_answer": "Travaux sous tension sur les accumulateurs et batteries d'accumulateurs"
+  },
+  "qcm_8_10_5": {
+    "correct_index": 0,
+    "correct_answer": "Travaux sous tension sur les installations photovoltaïques"
+  },
+  "qcm_8_11": {
+    "correct_index": 0,
+    "correct_answer": "Travaux de nettoyage sous tension"
+  },
+  "qcm_8_12_1": {
+    "correct_index": 3,
+    "correct_answer": "Rôle de l'employeur"
+  },
+  "qcm_8_12_2": {
+    "correct_index": 2,
+    "correct_answer": "Rôle du chef d'établissement"
+  },
+  "qcm_8_12_3": {
+    "correct_index": 3,
+    "correct_answer": "Rôle du donneur d'ordre"
+  },
+  "qcm_8_12_4": {
+    "correct_index": 1,
+    "correct_answer": "Rôle du chargé d'exploitation électrique"
+  },
+  "qcm_8_12_5": {
+    "correct_index": 3,
+    "correct_answer": "Rôle du charge de travaux"
+  },
+  "qcm_8_12_5_1": {
+    "correct_index": 3,
+    "correct_answer": "Direction et surveillance des travaux"
+  },
+  "qcm_8_12_5_2": {
+    "correct_index": 3,
+    "correct_answer": "Fin des travaux"
+  },
+  "qcm_8_12_6": {
+    "correct_index": 3,
+    "correct_answer": "Rôle des exécutants"
+  },
+  "qcm_9": {
+    "correct_index": 1,
+    "correct_answer": "OPERATIONS DANS L'ENVIRONNEMENT"
+  },
+  "qcm_9_1": {
+    "correct_index": 1,
+    "correct_answer": "Principes de prévention vis-à-vis de l'environnement électrique"
+  },
+  "qcm_9_2_1": {
+    "correct_index": 2,
+    "correct_answer": "Mise hors de portee par éloignement"
+  },
+  "qcm_9_2_2": {
+    "correct_index": 3,
+    "correct_answer": "Mise hors de portée par pose d'obstacles"
+  },
+  "qcm_9_2_3": {
+    "correct_index": 2,
+    "correct_answer": "Mise hors de portée par pose d'isolations"
+  },
+  "qcm_9_2_4": {
+    "correct_index": 2,
+    "correct_answer": "Mise en œuvre des obstacles et des isolations"
+  },
+  "qcm_9_2_4_1": {
+    "correct_index": 1,
+    "correct_answer": "Mise en place et retrait des obstacles et des isolations en basse tension"
+  },
+  "qcm_9_2_4_2": {
+    "correct_index": 3,
+    "correct_answer": "Mise en place et retrait des obstacles et des isolations en haute tension"
+  },
+  "qcm_9_3": {
+    "correct_index": 3,
+    "correct_answer": "Présence de pièces nues sous tension en champ libre"
+  },
+  "qcm_9_3_1": {
+    "correct_index": 0,
+    "correct_answer": "Zone d'investigation - Zone 0"
+  },
+  "qcm_9_3_2": {
+    "correct_index": 3,
+    "correct_answer": "Zone de voisinage simple - Zone 1"
+  },
+  "qcm_9_3_2_1": {
+    "correct_index": 1,
+    "correct_answer": "Zone de voisinage simple en basse tension"
+  },
+  "qcm_9_3_2_2": {
+    "correct_index": 2,
+    "correct_answer": "Zone de voisinage simple en haute tension"
+  },
+  "qcm_9_3_3_1": {
+    "correct_index": 0,
+    "correct_answer": "Dispositions générales"
+  },
+  "qcm_9_3_3_2": {
+    "correct_index": 3,
+    "correct_answer": "Opérations d'ordre électrique"
+  },
+  "qcm_9_3_3_3": {
+    "correct_index": 0,
+    "correct_answer": "Opérations d'ordre non électrique"
+  },
+  "qcm_9_3_4": {
+    "correct_index": 1,
+    "correct_answer": "Zone de travaux sous tension HT - Zone 3"
+  },
+  "qcm_9_3_5_1": {
+    "correct_index": 0,
+    "correct_answer": "Dispositions générales"
+  },
+  "qcm_9_3_5_2": {
+    "correct_index": 3,
+    "correct_answer": "Modalités d'exécution des travaux hors tension au voisinage"
+  },
+  "qcm_9_3_6": {
+    "correct_index": 3,
+    "correct_answer": "Prescriptions particulières pour les travaux d'ordre non électrique dans"
+  },
+  "qcm_9_3_6_1": {
+    "correct_index": 3,
+    "correct_answer": "Procédure générale"
+  },
+  "qcm_9_4": {
+    "correct_index": 3,
+    "correct_answer": "Locaux et emplacements d'accès réservé aux électriciens"
+  },
+  "qcm_9_5": {
+    "correct_index": 1,
+    "correct_answer": "Ouverture d'une enveloppe électrique en basse tension"
+  },
+  "qcm_9_6_1": {
+    "correct_index": 3,
+    "correct_answer": "Travaux d'ordre électrique"
+  },
+  "qcm_9_6_2": {
+    "correct_index": 1,
+    "correct_answer": "Travaux d'ordre non électrique"
+  },
+  "qcm_9_7": {
+    "correct_index": 0,
+    "correct_answer": "Canalisations isolées"
+  },
+  "qcm_9_7_1": {
+    "correct_index": 2,
+    "correct_answer": "Analyse du risque électrique"
+  },
+  "qcm_9_7_2": {
+    "correct_index": 0,
+    "correct_answer": "Canalisations isolées visibles"
+  },
+  "qcm_9_7_2_1": {
+    "correct_index": 0,
+    "correct_answer": "Activités sans risque pour les canalisations ou sans necessite de contact"
+  },
+  "qcm_9_7_2_2": {
+    "correct_index": 0,
+    "correct_answer": "Activités sans nécessité de contact, mais susceptibles de porter atteinte à"
+  },
+  "qcm_9_7_2_3": {
+    "correct_index": 1,
+    "correct_answer": "Activités sans risque pour la canalisation, mais nécessitant d'entrer en"
+  },
+  "qcm_9_7_2_4_1": {
+    "correct_index": 1,
+    "correct_answer": "Activités nécessitant d'écarter ou de deformer un conducteur BT isole"
+  },
+  "qcm_9_7_2_4_2": {
+    "correct_index": 2,
+    "correct_answer": "Déplacement d'une canalisation électrique isolée"
+  },
+  "qcm_9_7_2_4_2_1": {
+    "correct_index": 2,
+    "correct_answer": "Principes d'exécution"
+  },
+  "qcm_9_7_2_4_2_2": {
+    "correct_index": 3,
+    "correct_answer": "Modalités d'exécution"
+  },
+  "qcm_9_7_2_4_3": {
+    "correct_index": 2,
+    "correct_answer": "Soutènement d'une canalisation électrique isolée"
+  },
+  "qcm_9_7_2_4_4": {
+    "correct_index": 3,
+    "correct_answer": "Nettoyage d'une canalisation électrique isolée"
+  },
+  "qcm_9_7_2_5": {
+    "correct_index": 0,
+    "correct_answer": "Mise en présence fortuite d'une partie active accessible"
+  },
+  "qcm_9_7_3": {
+    "correct_index": 2,
+    "correct_answer": "Canalisations invisibles enterrées"
+  },
+  "qcm_9_7_3_1": {
+    "correct_index": 3,
+    "correct_answer": "Principes d'exécution"
+  },
+  "qcm_9_7_3_1_1": {
+    "correct_index": 1,
+    "correct_answer": "Prévenir le risque d'endommagement d'une canalisation"
+  },
+  "qcm_9_7_3_1_2": {
+    "correct_index": 3,
+    "correct_answer": "Préserver l'intégrité de la canalisation après sa mise à l'air libre"
+  },
+  "qcm_9_7_3_1_3": {
+    "correct_index": 2,
+    "correct_answer": "Protéger les personnes"
+  },
+  "qcm_9_7_3_1_4": {
+    "correct_index": 0,
+    "correct_answer": "Savoir réagir en cas de dommage effectif"
+  },
+  "qcm_9_7_3_2": {
+    "correct_index": 3,
+    "correct_answer": "Modalités d'exécution"
+  },
+  "qcm_9_7_3_2_1": {
+    "correct_index": 2,
+    "correct_answer": "Canalisations électriques hors tension"
+  },
+  "qcm_9_7_3_2_2": {
+    "correct_index": 1,
+    "correct_answer": "Canalisations électriques sous tension"
+  },
+  "qcm_9_7_4": {
+    "correct_index": 3,
+    "correct_answer": "Canalisations invisibles noyées ou encastrées"
+  },
+  "qcm_9_7_4_1": {
+    "correct_index": 0,
+    "correct_answer": "Principes d'exécution"
+  },
+  "qcm_9_7_4_2": {
+    "correct_index": 3,
+    "correct_answer": "Modalités d'exécution"
+  },
+  "qcm_9_8": {
+    "correct_index": 1,
+    "correct_answer": "Rôle et compétence des différents acteurs dans l'environnement"
+  },
+  "qcm_9_8_1": {
+    "correct_index": 0,
+    "correct_answer": "Rôle de l'employeur"
+  },
+  "qcm_9_8_2": {
+    "correct_index": 0,
+    "correct_answer": "Rôle du chef d'établissement"
+  },
+  "qcm_9_8_3": {
+    "correct_index": 0,
+    "correct_answer": "Rôle du donneur d'ordre"
+  },
+  "qcm_9_8_4": {
+    "correct_index": 2,
+    "correct_answer": "Rôle du charge d'exploitation électrique"
+  },
+  "qcm_9_8_5": {
+    "correct_index": 2,
+    "correct_answer": "Rôle du chargé de travaux"
+  },
+  "qcm_9_8_6": {
+    "correct_index": 3,
+    "correct_answer": "Rôle du chargé de chantier"
+  },
+  "qcm_9_8_6_2": {
+    "correct_index": 0,
+    "correct_answer": "Chargé de chantier habilité symboles B0 ou H0"
+  },
+  "qcm_9_8_6_3": {
+    "correct_index": 3,
+    "correct_answer": "Charge de chantier habilite symbole HOV"
+  },
+  "qcm_9_8_7": {
+    "correct_index": 0,
+    "correct_answer": "Rôle des surveillants de sécurité électrique"
+  },
+  "qcm_9_8_7_1": {
+    "correct_index": 3,
+    "correct_answer": "Rôle du surveillant de sécurité électrique d'opération et d'accompagnement"
+  },
+  "qcm_9_8_7_2": {
+    "correct_index": 0,
+    "correct_answer": "Rôle du surveillant de sécurité électrique de limite"
+  },
+  "qcm_9_8_8": {
+    "correct_index": 1,
+    "correct_answer": "Rôle des exécutants habilités ou non"
+  },
+  "qcm_9_8_9": {
+    "correct_index": 3,
+    "correct_answer": "Rôle des personnes formées non habilitées"
+  },
+  "qcm_10": {
+    "correct_index": 1,
+    "correct_answer": "INTERVENTIONS BT"
+  },
+  "qcm_10_1": {
+    "correct_index": 3,
+    "correct_answer": "Critères généraux d'une intervention BT"
+  },
+  "qcm_10_1_1": {
+    "correct_index": 1,
+    "correct_answer": "Critères spécifiques aux interventions BT générales"
+  },
+  "qcm_10_1_2": {
+    "correct_index": 2,
+    "correct_answer": "Critères spécifiques aux interventions BT élémentaires"
+  },
+  "qcm_10_2_1": {
+    "correct_index": 2,
+    "correct_answer": "Généralités"
+  },
+  "qcm_10_2_2_1": {
+    "correct_index": 1,
+    "correct_answer": "Chez un particulier"
+  },
+  "qcm_10_2_2_2": {
+    "correct_index": 0,
+    "correct_answer": "Autres situations"
+  },
+  "qcm_10_3_1": {
+    "correct_index": 1,
+    "correct_answer": "Généralités"
+  },
+  "qcm_10_3_2": {
+    "correct_index": 3,
+    "correct_answer": "Procedure d'accès, de suivi et de contrôle"
+  },
+  "qcm_10_3_3": {
+    "correct_index": 3,
+    "correct_answer": "Déroulement des interventions BT générales"
+  },
+  "qcm_10_3_3_1": {
+    "correct_index": 0,
+    "correct_answer": "Etape 1 - Recherche et localisation des défauts"
+  },
+  "qcm_10_3_3_1_1": {
+    "correct_index": 1,
+    "correct_answer": "Contrôle de fonctionnement"
+  },
+  "qcm_10_3_3_1_2": {
+    "correct_index": 0,
+    "correct_answer": "Mesurage des grandeurs électriques"
+  },
+  "qcm_10_3_3_1_3": {
+    "correct_index": 0,
+    "correct_answer": "Opérations particulières dans la recherche de défauts"
+  },
+  "qcm_10_3_3_1_4": {
+    "correct_index": 0,
+    "correct_answer": "Mise en œuvre des operations de connexion et déconnexion de"
+  },
+  "qcm_10_3_3_2": {
+    "correct_index": 0,
+    "correct_answer": "Etape 2 - Elimination du (des) défaut(s), réparation ou remplacement de"
+  },
+  "qcm_10_3_3_3": {
+    "correct_index": 1,
+    "correct_answer": "Etape 3 : Réglages et vérification du fonctionnement du matériel électrique"
+  },
+  "qcm_10_3_3_4": {
+    "correct_index": 0,
+    "correct_answer": "Fin de l'intervention BT"
+  },
+  "qcm_10_3_4": {
+    "correct_index": 2,
+    "correct_answer": "Opérations particulières de connexion et de déconnexion"
+  },
+  "qcm_10_4_1": {
+    "correct_index": 1,
+    "correct_answer": "Généralités"
+  },
+  "qcm_10_4_2": {
+    "correct_index": 2,
+    "correct_answer": "Organisation"
+  },
+  "qcm_10_4_3": {
+    "correct_index": 3,
+    "correct_answer": "Déroulement d'une intervention BT élémentaire"
+  },
+  "qcm_10_5": {
+    "correct_index": 1,
+    "correct_answer": "Rôle des différents acteurs"
+  },
+  "qcm_10_5_1": {
+    "correct_index": 3,
+    "correct_answer": "Rôle de l'employeur"
+  },
+  "qcm_10_5_2": {
+    "correct_index": 2,
+    "correct_answer": "Rôle du chef d'établissement"
+  },
+  "qcm_10_5_3": {
+    "correct_index": 1,
+    "correct_answer": "Rôle du donneur d'ordre"
+  },
+  "qcm_10_5_4": {
+    "correct_index": 2,
+    "correct_answer": "Rôle du chargé d'exploitation électrique"
+  },
+  "qcm_10_5_5": {
+    "correct_index": 2,
+    "correct_answer": "Rôle de la personne donnant accès à l'installation"
+  },
+  "qcm_10_5_6": {
+    "correct_index": 3,
+    "correct_answer": "Rôle du charge d'intervention générale"
+  },
+  "qcm_10_5_7": {
+    "correct_index": 3,
+    "correct_answer": "Rôle du chargé d'intervention élémentaire"
+  },
+  "qcm_10_5_8": {
+    "correct_index": 1,
+    "correct_answer": "Rôle de l'exécutant"
+  },
+  "qcm_10_6": {
+    "correct_index": 1,
+    "correct_answer": "Formation Habilitation à la prévention du risque électrique et"
+  },
+  "qcm_10_6_1": {
+    "correct_index": 1,
+    "correct_answer": "Formation du chargé d'intervention générale"
+  },
+  "qcm_10_6_2": {
+    "correct_index": 3,
+    "correct_answer": "Formation du chargé d'intervention élémentaire"
+  },
+  "qcm_11": {
+    "correct_index": 1,
+    "correct_answer": "OPERATIONS SPECIFIQUES D'ESSAI, DE MESURAGE, DE VÉRIFICATION ET"
+  },
+  "qcm_11_1": {
+    "correct_index": 3,
+    "correct_answer": "Présentation"
+  },
+  "qcm_11_2": {
+    "correct_index": 1,
+    "correct_answer": "Essais"
+  },
+  "qcm_11_2_1": {
+    "correct_index": 0,
+    "correct_answer": "Procédure d'accès, de suivi et de contrôle"
+  },
+  "qcm_11_2_2": {
+    "correct_index": 1,
+    "correct_answer": "Essais mettant en œuvre les principes des travaux"
+  },
+  "qcm_11_2_3": {
+    "correct_index": 0,
+    "correct_answer": "Essais mettant en œuvre les principes des interventions BT"
+  },
+  "qcm_11_2_4": {
+    "correct_index": 3,
+    "correct_answer": "Autres essais"
+  },
+  "qcm_11_2_5": {
+    "correct_index": 2,
+    "correct_answer": "Dispositions particulières pour les essais réalisés avec une source autonome"
+  },
+  "qcm_11_3": {
+    "correct_index": 3,
+    "correct_answer": "Mesurages"
+  },
+  "qcm_11_3_1": {
+    "correct_index": 3,
+    "correct_answer": "Contenu des mesurages"
+  },
+  "qcm_11_3_2": {
+    "correct_index": 2,
+    "correct_answer": "Mise en œuvre des mesurages"
+  },
+  "qcm_11_3_3": {
+    "correct_index": 3,
+    "correct_answer": "Risques particuliers relatifs à un transformateur de courant"
+  },
+  "qcm_11_3_4": {
+    "correct_index": 0,
+    "correct_answer": "Risques particuliers relatifs à l'usage d'une pince ampèremétrique"
+  },
+  "qcm_11_4": {
+    "correct_index": 0,
+    "correct_answer": "Vérifications"
+  },
+  "qcm_11_4_1": {
+    "correct_index": 3,
+    "correct_answer": "Contenu des vérifications"
+  },
+  "qcm_11_4_2": {
+    "correct_index": 3,
+    "correct_answer": "Mise en œuvre des vérifications"
+  },
+  "qcm_11_4_3": {
+    "correct_index": 1,
+    "correct_answer": "Cas des vérifications chez les particuliers"
+  },
+  "qcm_11_5": {
+    "correct_index": 0,
+    "correct_answer": "Manœuvres"
+  },
+  "qcm_11_5_1": {
+    "correct_index": 1,
+    "correct_answer": "Les manœuvres d'exploitation"
+  },
+  "qcm_11_5_2": {
+    "correct_index": 0,
+    "correct_answer": "Les manœuvres de consignation"
+  },
+  "qcm_11_5_3": {
+    "correct_index": 2,
+    "correct_answer": "Les manœuvres d'urgence"
+  },
+  "qcm_11_5_4": {
+    "correct_index": 1,
+    "correct_answer": "Protection de l'opérateur au cours des manœuvres"
+  },
+  "qcm_11_6": {
+    "correct_index": 2,
+    "correct_answer": "Formation à la prévention du risque électrique et Habilitation"
+  },
+  "qcm_11_6_1_1": {
+    "correct_index": 0,
+    "correct_answer": "Formation à la prévention du risque électrique pour les charges d'essais"
+  },
+  "qcm_11_6_1_1_1": {
+    "correct_index": 1,
+    "correct_answer": "Essais dans le cadre des travaux"
+  },
+  "qcm_11_6_1_1_2": {
+    "correct_index": 1,
+    "correct_answer": "Essais dans le cadre des interventions BT"
+  },
+  "qcm_11_6_1_1_3": {
+    "correct_index": 1,
+    "correct_answer": "Autres essais"
+  },
+  "qcm_11_6_1_2": {
+    "correct_index": 2,
+    "correct_answer": "Formation à la prévention du risque électrique pour les exécutants dans le"
+  },
+  "qcm_11_6_2": {
+    "correct_index": 3,
+    "correct_answer": "Formation à la prévention du risque électrique pour le mesurage"
+  },
+  "qcm_11_6_3": {
+    "correct_index": 2,
+    "correct_answer": "Formation à la prévention du risque électrique pour les vérifications"
+  },
+  "qcm_11_6_4": {
+    "correct_index": 2,
+    "correct_answer": "Formation à la prévention du risque électrique pour les manœuvres"
+  },
+  "qcm_11_7": {
+    "correct_index": 2,
+    "correct_answer": "Tableau des compétences"
+  },
+  "qcm_12": {
+    "correct_index": 2,
+    "correct_answer": "OPÉRATIONS PARTICULIÈRES"
+  },
+  "qcm_12_1": {
+    "correct_index": 1,
+    "correct_answer": "Opérations sur les lignes aériennes sur supports communs"
+  },
+  "qcm_12_2": {
+    "correct_index": 1,
+    "correct_answer": "Opérations sur les installations d'éclairage extérieur"
+  },
+  "qcm_12_3_1": {
+    "correct_index": 0,
+    "correct_answer": "En basse tension"
+  },
+  "qcm_12_3_2": {
+    "correct_index": 1,
+    "correct_answer": "En haute tension"
+  },
+  "qcm_12_4": {
+    "correct_index": 0,
+    "correct_answer": "Opérations de remplacement de fusibles BT"
+  },
+  "qcm_12_5": {
+    "correct_index": 2,
+    "correct_answer": "Opérations de remplacement de fusibles HTA"
+  },
+  "qcm_12_6_1": {
+    "correct_index": 1,
+    "correct_answer": "Opération sur les circuits"
+  },
+  "qcm_12_6_2": {
+    "correct_index": 1,
+    "correct_answer": "Autres opérations"
+  },
+  "qcm_12_7": {
+    "correct_index": 0,
+    "correct_answer": "Matériels alimentes en BT et TBT comportant des circuits HT"
+  },
+  "qcm_12_7_1": {
+    "correct_index": 1,
+    "correct_answer": "Conditions que doit remplir le personnel appele a effectuer des opérations sur"
+  },
+  "qcm_12_7_2": {
+    "correct_index": 1,
+    "correct_answer": "Formation à la prévention du risque électrique - Habilitation"
+  },
+  "qcm_12_8": {
+    "correct_index": 3,
+    "correct_answer": "Travaux et interventions BT sur les accumulateurs et les batteries"
+  },
+  "qcm_12_8_1": {
+    "correct_index": 0,
+    "correct_answer": "Les manutentions"
+  },
+  "qcm_12_8_2": {
+    "correct_index": 3,
+    "correct_answer": "Les opérations de connexion et de déconnexion"
+  },
+  "qcm_12_8_2_1": {
+    "correct_index": 0,
+    "correct_answer": "Batterie de démarrage des véhicules automobiles et engins"
+  },
+  "qcm_12_8_2_2": {
+    "correct_index": 0,
+    "correct_answer": "Batterie de traction des véhicules automobiles et engins"
+  },
+  "qcm_12_8_3": {
+    "correct_index": 0,
+    "correct_answer": "Le nettoyage"
+  },
+  "qcm_12_8_3_1": {
+    "correct_index": 2,
+    "correct_answer": "Le nettoyage du corps de batterie"
+  },
+  "qcm_12_8_3_2": {
+    "correct_index": 0,
+    "correct_answer": "Le nettoyage de la connectique"
+  },
+  "qcm_12_8_3_2_1": {
+    "correct_index": 0,
+    "correct_answer": "Batterie de démarrage des véhicules automobiles et engins"
+  },
+  "qcm_12_8_3_2_2": {
+    "correct_index": 2,
+    "correct_answer": "Batterie de traction des véhicules automobiles et engins"
+  },
+  "qcm_12_8_4": {
+    "correct_index": 1,
+    "correct_answer": "Les contrôles"
+  },
+  "qcm_12_8_5": {
+    "correct_index": 1,
+    "correct_answer": "La vérification de l'electrolyte"
+  },
+  "qcm_12_8_6": {
+    "correct_index": 2,
+    "correct_answer": "Organisation"
+  },
+  "qcm_12_9": {
+    "correct_index": 0,
+    "correct_answer": "Travaux et interventions BT sur la partie en courant continu des installations"
+  },
+  "qcm_12_9_1": {
+    "correct_index": 2,
+    "correct_answer": "Risques et mesures de prevention applicables aux parties en courant continu"
+  },
+  "qcm_12_9_1_1": {
+    "correct_index": 3,
+    "correct_answer": "Évaluation du risque électrique"
+  },
+  "qcm_12_9_1_2": {
+    "correct_index": 1,
+    "correct_answer": "Mesures de prévention"
+  },
+  "qcm_12_9_2_1_1": {
+    "correct_index": 0,
+    "correct_answer": "Montage ou demontage d'un connecteur debrochable sur un conducteur"
+  },
+  "qcm_12_9_2_1_2": {
+    "correct_index": 0,
+    "correct_answer": "Manipulation d'un module PV"
+  },
+  "qcm_12_9_2_1_3": {
+    "correct_index": 2,
+    "correct_answer": "Connexion, déconnexion, sectionnement mécanique"
+  },
+  "qcm_12_9_2_1_4": {
+    "correct_index": 1,
+    "correct_answer": "Séparation et condamnation d'une partie d'installation"
+  },
+  "qcm_12_9_2_1_5": {
+    "correct_index": 1,
+    "correct_answer": "Mise en œuvre d'écran opaque - Nettoyage des surfaces transparentes des"
+  },
+  "qcm_12_9_2_1_6": {
+    "correct_index": 3,
+    "correct_answer": "Essais, vérifications, mesurages"
+  },
+  "qcm_12_9_2_2": {
+    "correct_index": 1,
+    "correct_answer": "Organisation"
+  },
+  "qcm_12_9_2_2_1": {
+    "correct_index": 2,
+    "correct_answer": "Encadrement des opérations"
+  },
+  "qcm_12_9_2_2_2": {
+    "correct_index": 2,
+    "correct_answer": "Intervention BT chaîne PV"
+  },
+  "qcm_12_9_2_2_3": {
+    "correct_index": 0,
+    "correct_answer": "Intervention BT generale PV"
+  },
+  "qcm_12_9_2_2_4": {
+    "correct_index": 0,
+    "correct_answer": "Autres opérations"
+  },
+  "qcm_12_9_2_3_1": {
+    "correct_index": 0,
+    "correct_answer": "Mention d'habilitation « Photovoltaïque >>"
+  },
+  "qcm_12_9_2_3_2": {
+    "correct_index": 2,
+    "correct_answer": "Habilitation symbole BP"
+  },
+  "qcm_12_9_2_3_3": {
+    "correct_index": 1,
+    "correct_answer": "Habilitation symbole BR Photovoltaïque"
+  },
+  "qcm_12_9_2_3_4": {
+    "correct_index": 0,
+    "correct_answer": "Autres habilitations"
+  },
+  "qcm_12_9_2_3_5": {
+    "correct_index": 0,
+    "correct_answer": "Dispense d'habilitation"
+  },
+  "qcm_12_9_3": {
+    "correct_index": 1,
+    "correct_answer": "Travaux d'ordre non electrique dans l'environnement d'une installation"
+  },
+  "qcm_12_10_1": {
+    "correct_index": 1,
+    "correct_answer": "Principe de prévention"
+  },
+  "qcm_12_10_2": {
+    "correct_index": 3,
+    "correct_answer": "Modalités de mise en œuvre"
+  },
+  "qcm_12_10_3": {
+    "correct_index": 3,
+    "correct_answer": "Compétence du personnel"
+  },
+  "qcm_12_11": {
+    "correct_index": 2,
+    "correct_answer": "Opérations sur les circuits de terre"
+  },
+  "qcm_13_1": {
+    "correct_index": 1,
+    "correct_answer": "Généralités"
+  },
+  "qcm_13_2": {
+    "correct_index": 1,
+    "correct_answer": "Incendie sur ou près des ouvrages ou des installations électriques"
+  },
+  "qcm_13_2_1": {
+    "correct_index": 0,
+    "correct_answer": "Prescriptions générales"
+  },
+  "qcm_13_2_2": {
+    "correct_index": 2,
+    "correct_answer": "Prescriptions complémentaires concernant l'utilisation d'extincteurs sur des"
+  },
+  "qcm_13_2_3": {
+    "correct_index": 2,
+    "correct_answer": "Prescriptions complémentaires concernant les lances de pulvérisation sur des"
+  },
+  "qcm_13_3": {
+    "correct_index": 2,
+    "correct_answer": "Conduite à tenir en cas d'accident d'origine électrique sur les ouvrages, les"
+  },
+  "qcm_13_3_1": {
+    "correct_index": 3,
+    "correct_answer": "Eviter le sur-accident électrique"
+  },
+  "qcm_13_3_1_1": {
+    "correct_index": 3,
+    "correct_answer": "Mise hors tension en basse tension"
+  },
+  "qcm_13_3_1_2": {
+    "correct_index": 3,
+    "correct_answer": "Mise hors tension en haute tension"
+  },
+  "qcm_13_3_2": {
+    "correct_index": 3,
+    "correct_answer": "Donner l'alerte"
+  },
+  "qcm_13_3_3_1": {
+    "correct_index": 2,
+    "correct_answer": "Dégager l'accidenté"
+  },
+  "qcm_13_3_3_2": {
+    "correct_index": 1,
+    "correct_answer": "Mise en œuvre des premiers gestes de secours"
+  },
+  "qcm_13_3_4": {
+    "correct_index": 0,
+    "correct_answer": "Conducteur tombé à terre ou conducteur accidentellement à portée de main"
+  },
+  "qcm_13_3_5": {
+    "correct_index": 0,
+    "correct_answer": "Cas d'un véhicule ou d'un engin venant en contact accidentel avec une ligne"
+  },
+  "qcm_13_3_6": {
+    "correct_index": 3,
+    "correct_answer": "Autre dégagement d'urgence"
+  },
+  "qcm_13_4": {
+    "correct_index": 2,
+    "correct_answer": "Incident en zone présentant des risques d'explosion"
+  }
+}

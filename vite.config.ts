@@ -14,8 +14,25 @@ export default defineConfig(async ({ mode }) => {
       mode === 'development' && componentTagger(),
     ].filter(Boolean),
     server: {
-      port: fallbackPort,
+      port: Number(process.env.VITE_PORT) || 5173,
       host: true,
+      strictPort: true,
+      hmr: {
+        clientPort: Number(process.env.VITE_PORT) || 5173,
+        port: Number(process.env.VITE_PORT) || 5173,
+      },
+      proxy: {
+        '/api': {
+          target: process.env.VITE_API_URL || 'http://127.0.0.1:3010',
+          changeOrigin: true,
+          secure: false,
+        },
+        '/uploads': {
+          target: process.env.VITE_API_URL || 'http://127.0.0.1:3010',
+          changeOrigin: true,
+          secure: false,
+        }
+      }
     },
     resolve: {
       alias: {

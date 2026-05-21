@@ -9,8 +9,11 @@ import DashboardHome from "@/components/admin/DashboardHome";
 import AdminPagesPanel from "@/components/admin/AdminPagesPanel";
 import AdminBlogPanel from "@/components/admin/AdminBlogPanel";
 import { EventCalendar } from "@/components/EventCalendar";
+import InfraDocs from '@/components/admin/InfraDocs';
 import { AdminElectricalCertificationsPanel } from "@/components/admin/AdminElectricalCertificationsPanel";
 import { AdminProfessionalTrainingPanel } from "@/components/admin/AdminProfessionalTrainingPanel";
+import { DocumentManager } from "@/components/DocumentManager";
+import ProjectList from "@/pages/projects/ProjectList"; // Import ProjectList
 import { Loader2 } from "lucide-react";
 
 export default function AdminSecondaryDashboard() {
@@ -30,6 +33,8 @@ export default function AdminSecondaryDashboard() {
         switch (activeTab) {
             case "overview":
                 return <DashboardHome />;
+            case "projects": // Integrated ProjectList Tab
+                return <ProjectList />;
             case "pages":
                 return <AdminPagesPanel />;
             case "blog":
@@ -40,6 +45,15 @@ export default function AdminSecondaryDashboard() {
                 return <AdminElectricalCertificationsPanel />;
             case "training":
                 return <AdminProfessionalTrainingPanel />;
+            case "media":
+                return (
+                    <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+                        <h2 className="text-2xl font-bold mb-6 text-slate-800">Médiathèque & Archives</h2>
+                        <DocumentManager />
+                    </div>
+                );
+            case "infrastructure":
+                return <InfraDocs />;
             default:
                 return <DashboardHome />;
         }

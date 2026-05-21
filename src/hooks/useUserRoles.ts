@@ -1,7 +1,7 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from 'sonner';
+import { apiFetch } from "@/lib/api-client";
 
 export type AppRole = 'admin' | 'secondary_admin' | 'partner' | 'user';
 export type UserStatus = 'pending' | 'active' | 'rejected';
@@ -21,20 +21,8 @@ export function useAllUserRoles() {
     queryKey: ["all-user-roles"],
     queryFn: async (): Promise<UserRoleData[]> => {
       try {
-        const { data: profiles, error: pErr } = await supabase.from("profiles").select("id, username");
-        const { data: roles, error: rErr } = await supabase.from("user_roles").select("user_id, role, status");
-
-        if (pErr || rErr) throw (pErr || rErr);
-
-        return (profiles || []).map(p => {
-          const r = roles?.find(role => role.user_id === p.id);
-          return {
-            user_id: p.id,
-            email: p.username || p.id,
-            role: (r?.role as AppRole) || 'user',
-            status: (r?.status as UserStatus) || 'active'
-          };
-        });
+        const data = await apiFetch<UserRoleData[]>('/api/user-roles');
+        return data || [];
       } catch (error) {
         console.error(error);
         return [];
@@ -50,10 +38,10 @@ export function useUpdateUserStatus() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ userId, role, status }: { userId: string, role: AppRole, status: UserStatus }) => {
-      const { error } = await (supabase
-        .from("user_roles") as any)
-        .upsert([{ user_id: userId, role, status }]);
-      if (error) throw error;
+      await apiFetch(`/api/user-roles/${userId}`, {
+        method: 'PUT',
+        body: JSON.stringify({ role, status })
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["all-user-roles"] });
@@ -69,8 +57,9 @@ export function useRemoveUserRole() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (userId: string) => {
-      const { error } = await supabase.from("user_roles").delete().eq("user_id", userId);
-      if (error) throw error;
+      await apiFetch(`/api/user-roles/${userId}`, {
+        method: 'DELETE'
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["all-user-roles"] });

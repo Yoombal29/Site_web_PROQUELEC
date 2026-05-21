@@ -1,0 +1,9 @@
+
+path: C:/Mes Sites Web/Site_web_PROQUELEC-main/datasets/proquelec  # Absolute path
+train: images/train
+val: images/val
+
+names:
+  0: disjoncteur
+  1: technicien
+  2: tableau_electrique

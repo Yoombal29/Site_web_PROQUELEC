@@ -1,4 +1,4 @@
-import { describe, test, expect } from '@jest/globals';
+import { describe, expect } from '@jest/globals';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import VoltageDropCalculator from '../components/tools/VoltageDropCalculator';
@@ -33,8 +33,8 @@ describe('VoltageDropCalculator', () => {
 
     // Find info icon for current input
     const infoIcons = screen.getAllByRole('button', { hidden: true });
-    const currentInfoIcon = infoIcons.find(icon =>
-      icon.parentElement?.textContent?.includes('Courant')
+    const currentInfoIcon = infoIcons.find((icon) =>
+    icon.parentElement?.textContent?.includes('Courant')
     );
 
     if (currentInfoIcon) {

@@ -1,0 +1,395 @@
+#!/usr/bin/env node
+
+/**
+ * CHECKLIST DE DÉPLOIEMENT
+ * Synchronisation Bidirectionnelle
+ * 
+ * À remplir au fil de l'intégration
+ * Status: [ ] TODO | [✓] DONE | [✗] FAILED | [~] IN PROGRESS
+ */
+
+const checklist = `
+╔════════════════════════════════════════════════════════════════════════╗
+║         SYNCHRONISATION BIDIRECTIONNELLE - CHECKLIST                   ║
+║                         Version 2.0                                    ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+📋 PHASE 1: PRÉPARATION (5 min)
+═══════════════════════════════════════════════════════════════════════
+
+  [ ] 1.1 Lire QUICKSTART_SYNC.txt
+  [ ] 1.2 Lire README_BIDIRECTIONAL_SYNC.md
+  [ ] 1.3 Consulter BIDIRECTIONAL_SYNC_GUIDE.md (optionnel)
+  [ ] 1.4 Avoir Node.js 18+ installé
+  [ ] 1.5 Navigateur moderne (Chrome/Firefox/Safari)
+
+  Responsable: _________________    Date: __________
+
+
+🔧 PHASE 2: VALIDATION SYSTÈME (5 min)
+═══════════════════════════════════════════════════════════════════════
+
+  [ ] 2.1 Exécuter: node validate-sync.cjs
+         Résultat attendu: ✓ Tous les fichiers existent
+         
+  [ ] 2.2 Vérifier fichiers source existent:
+         [ ] src/hooks/useBidirectionalSync.ts
+         [ ] src/components/admin/AdvancedPageEditorSync.tsx
+         
+  [ ] 2.3 Exécuter: npm test -- AdvancedPageEditorSync.test.tsx
+         Résultat attendu: ✓ 30+ tests passent
+         
+  [ ] 2.4 Pas d'erreurs critiques TypeScript:
+         [ ] npm run lint
+         [ ] npm run build (optionnel)
+
+  Responsable: _________________    Date: __________
+
+
+💻 PHASE 3: INTÉGRATION (30 min)
+═══════════════════════════════════════════════════════════════════════
+
+Suivre INTEGRATION_GUIDE.cjs pour chacune des étapes:
+
+  [ ] 3.1 ÉTAPE 1: Vérifier points d'intégration
+         [ ] Vérifier AdvancedPageEditorSync EXISTE
+         [ ] Vérifier useBidirectionalSync EXISTE
+         [ ] Lister fichiers utilisant AdminPageEditor:
+             • AdminPagesPanel.tsx (ligne: _______)
+             • Autres: ___________________
+             
+  [ ] 3.2 ÉTAPE 2: Remplacer l'import dans AdminPagesPanel.tsx
+         Ancien: import AdminPageEditor from '...';
+         Nouveau: import { AdvancedPageEditorSync } from '...';
+         
+  [ ] 3.3 ÉTAPE 3: Remplacer le composant dans le JSX
+         Ancien: <AdminPageEditor pageId={...} />
+         Nouveau: <AdvancedPageEditorSync pageId={...} initialPage={...} />
+         
+  [ ] 3.4 ÉTAPE 4: Vérifier TypeScript
+         $ npm run lint
+         Résultat: [ ] ✓ OK  [ ] ✗ Errors (détailler ci-dessous)
+         ____________________________________________________
+         
+  [ ] 3.5 ÉTAPE 5: Vérifier build
+         $ npm run build
+         Résultat: [ ] ✓ OK  [ ] ✗ Errors (détailler ci-dessous)
+         ____________________________________________________
+
+  Responsable: _________________    Date: __________
+
+
+🧪 PHASE 4: TESTS AUTOMATISÉS (10 min)
+═══════════════════════════════════════════════════════════════════════
+
+  [ ] 4.1 Lancer tous les tests
+         $ npm test
+         Résultat: [ ] ✓ OK  [ ] ✗ Échecs (détailler ci-dessous)
+         ____________________________________________________
+         
+  [ ] 4.2 Vérifier spécifiquement AdvancedPageEditorSync
+         $ npm test -- AdvancedPageEditorSync.test.tsx
+         Count: ____ tests
+         Résultat: [ ] ✓ Tous passent  [ ] ✗ ____ failures
+         
+  [ ] 4.3 Pas d'avertissements TypeScript
+         [ ] Type checking: $ npm tsc --noEmit
+         [ ] Lint: $ npm lint
+         Résultat: [ ] ✓ Clean  [ ] ⚠️  Warnings (noter ci-dessous)
+         ____________________________________________________
+
+  Responsable: _________________    Date: __________
+
+
+📱 PHASE 5: TESTS MANUELS - DEV SERVER (20 min)
+═══════════════════════════════════════════════════════════════════════
+
+  [ ] 5.1 Démarrer le dev server
+         $ npm run dev
+         URL: http://localhost:____
+         
+  [ ] 5.2 Naviguer à /admin/pages
+         [ ] Page charge sans erreur
+         [ ] Voir une liste de pages
+         
+  [ ] 5.3 Cliquer "Edit" sur une page
+         [ ] Dialog s'ouvre
+         [ ] Voir AdvancedPageEditorSync charger
+         [ ] Pas d'erreur console
+         
+  [ ] 5.4 Tester ONGLET HTML
+         [ ] HTML visible
+         [ ] Peut éditer le texte
+         [ ] Change détecté immédiatement
+         [ ] Pas d'erreur
+         
+  [ ] 5.5 Tester ONGLET JSON
+         [ ] JSON visible et bien formaté
+         [ ] Peut éditer
+         [ ] Change détecté immédiatement
+         [ ] Validation JSON fonctionne
+         
+  [ ] 5.6 Tester ONGLET FORMULAIRE
+         [ ] Champs visibles (title, description, etc)
+         [ ] Peut éditer les champs
+         [ ] Changes détectés
+         
+  [ ] 5.7 Tester ONGLET VISUEL (si disponible)
+         [ ] Composant loads
+         [ ] Elements visibles
+         
+  [ ] 5.8 Tester ONGLET APERÇU
+         [ ] Render du HTML visible
+         [ ] Actualise en temps réel
+         [ ] Pas d'erreurs iframe
+         
+  [ ] 5.9 TEST PRINCIPAL: Synchronisation HTML ↔ JSON
+         Procédure:
+         1. Onglet HTML → Modifier texte
+         2. Attendre 300ms
+         3. Cliquer onglet JSON
+         4. Vérifier JSON contient le changement
+         5. Inverse: Modifier JSON → Vérifier HTML
+         Résultat: [ ] ✓ Sync fonctionne  [ ] ✗ Ne fonctionne pas
+
+  [ ] 5.10 TEST: Auto-save
+         Procédure:
+         1. Modifier le titre
+         2. Attendre 1-2 secondes
+         3. Observer Network tab (DevTools)
+         4. Voir PUT /api/pages/:id appelé
+         Résultat: [ ] ✓ Auto-save fonctionne  [ ] ✗ Ne fonctionne pas
+
+  [ ] 5.11 TEST: RealTime Preview
+         Procédure:
+         1. Onglet HTML
+         2. Modifier du HTML
+         3. Onglet Aperçu
+         4. Voir le changement instantanément
+         Résultat: [ ] ✓ Fonctionne  [ ] ✗ Pas à jour
+         
+  [ ] 5.12 Aucune erreur dans console dev
+         [ ] Console tab: Pas d'erreurs rouges
+         [ ] Network tab: Pas de 4xx/5xx
+
+  Responsable: _________________    Date: __________
+
+
+🌐 PHASE 6: TEST SITE PUBLIC (10 min) - OPTIONNEL
+═══════════════════════════════════════════════════════════════════════
+
+  [ ] 6.1 Ouvrir site public dans autre onglet
+         URL: _____________________
+         
+  [ ] 6.2 Éditer une page dans admin
+         (Faire une modification visible)
+         
+  [ ] 6.3 Vérifier site public se met à jour
+         [ ] Rechargement automatique (SSE)
+         [ ] Page montre le changement
+         [ ] Délai: _____ ms (cible: <500ms)
+         
+  [ ] 6.4 Tester multi-onglet
+         [ ] Admin dans onglet 1
+         [ ] Site public dans onglet 2
+         [ ] Modifier page → Site public se met à jour
+         [ ] Pas de rechargement manuel nécessaire
+
+  Responsable: _________________    Date: __________
+
+
+🛡️  PHASE 7: SÉCURITÉ (15 min) - AVANT PRODUCTION
+═══════════════════════════════════════════════════════════════════════
+
+  [ ] 7.1 Ajouter HTML Sanitization
+         [ ] npm install dompurify @types/dompurify
+         [ ] Importer DOMPurify dans useBidirectionalSync.ts
+         [ ] Sanitizer avant parsing HTML
+         Voir: BIDIRECTIONAL_SYNC_STATUS.md section "SÉCURITÉ"
+         
+  [ ] 7.2 Validation JSON côté serveur
+         [ ] API route /api/pages/:id validée
+         [ ] Vérifier JSON parse + validation
+         [ ] Vérifier taille < 10MB
+         
+  [ ] 7.3 Rate limiting
+         [ ] Auto-save max 1x par 5 secondes
+         [ ] Protégé contre spam
+         
+  [ ] 7.4 Test avec HTML malveillant
+         [ ] Essayer: <script>alert('xss')</script>
+         [ ] Script ne devrait PAS exécuter
+         [ ] Doit être sanitized ou échapper
+         
+  [ ] 7.5 CORS settings vérifiés
+         [ ] PUT /api/pages/:id accepte cross-origin si besoin
+         [ ] Headers Content-Type valides
+
+  Responsable: _________________    Date: __________
+
+
+📚 PHASE 8: DOCUMENTATION (10 min)
+═══════════════════════════════════════════════════════════════════════
+
+  [ ] 8.1 Vérifier documentation à jour
+         [ ] README_BIDIRECTIONAL_SYNC.md existe
+         [ ] BIDIRECTIONAL_SYNC_GUIDE.md existe
+         [ ] INTEGRATION_GUIDE.cjs existe
+         
+  [ ] 8.2 Code commenté
+         [ ] Functions ont des JSDoc comments
+         [ ] Types expliqués
+         [ ] Hooks documentés
+         
+  [ ] 8.3 Changelog noté
+         [ ] FICHIERS_MODIFIES.md à jour
+         [ ] Décrivez la nouvelle feature
+
+  Responsable: _________________    Date: __________
+
+
+👥 PHASE 9: FORMATION ÉQUIPE (15 min)
+═══════════════════════════════════════════════════════════════════════
+
+  Communication:
+  [ ] 9.1 Email envoyé à l'équipe
+         Subject: "✨ Nouvel éditeur avec sync temps réel"
+         
+  [ ] 9.2 Lien vers guide utilisateur
+         BIDIRECTIONAL_SYNC_GUIDE.md
+         
+  [ ] 9.3 Démonstration live (optionnel)
+         [ ] Montrer les 5 onglets
+         [ ] Montrer sync instantanée
+         [ ] Répondre aux questions
+         
+  [ ] 9.4 FAQ créée
+         Q: Comment synchroniser les onglets?
+         R: Automatique - tout changement se sync
+         
+         Q: Quand la page est-elle sauvegardée?
+         R: Auto-save après 1s d'inactivité
+         
+         Q: Site public se met-il à jour?
+         R: Oui, <500ms après save
+
+  Responsable: _________________    Date: __________
+
+
+🚀 PHASE 10: DÉPLOIEMENT (5-30 min selon infra)
+═══════════════════════════════════════════════════════════════════════
+
+  Préparation:
+  [ ] 10.1 Backup complet
+          [ ] Database sauvegardée
+          [ ] Code versionné (git)
+          Backup date: ______________
+          
+  [ ] 10.2 Déployer en STAGING d'abord
+          [ ] Code pushé à git
+          [ ] Build en staging
+          [ ] Tests passent en staging
+          [ ] Testé avec vraies données
+          
+  Déploiement production:
+  [ ] 10.3 Go/No-Go decision
+          [ ] Tech lead approuve
+          [ ] PO approuve
+          [ ] Infra prête
+          
+  [ ] 10.4 Déployer code version
+          [ ] git tag v2.0-sync
+          [ ] Build production
+          [ ] No build errors
+          
+  [ ] 10.5 Déployer en prod (off-peak hours)
+          Heure de déploiement: ________
+          [ ] Code pushé
+          [ ] Services redémarrés
+          
+  [ ] 10.6 Vérifier en production
+          [ ] Page chargeable
+          [ ] Éditeur fonctionne
+          [ ] Sync fonctionne
+          [ ] Auto-save fonctionne
+          [ ] Site public se met à jour
+          
+  [ ] 10.7 Monitor les erreurs (1 heure)
+          [ ] Vérifier error tracking
+          [ ] VérifierSSE events
+          [ ] Vérifier API logs
+          [ ] Aucune erreur critique
+          
+  [ ] 10.8 Rollback plan si besoin
+          [ ] Script rollback préparé
+          [ ] Backup prêt à être restauré
+          [ ] Team prévenue
+
+  Responsable: _________________    Date: __________
+  Heure go-live: ________________
+
+
+✅ PHASE 11: POST-DÉPLOIEMENT (30 min)
+═══════════════════════════════════════════════════════════════════════
+
+  [ ] 11.1 Vérifier usage réel
+         [ ] Quelques pages modifiées par l'équipe
+         [ ] Pas de bug rapporté
+         [ ] Performance acceptable
+         
+  [ ] 11.2 Métriques basiques
+         [ ] Nombre d'éditions: ______
+         [ ] Temps moyen sync: _______ ms
+         [ ] Auto-save succès rate: _____%
+         
+  [ ] 11.3 Documentation de post-déploiement
+         [ ] Créer ticket si problème trouvé
+         [ ] Noter l'itération prochaine
+         [ ] Success story partagée
+
+  Responsable: _________________    Date: __________
+
+
+═════════════════════════════════════════════════════════════════════════
+
+                           SIGNATURE
+
+Date complétée: ______________
+Responsable: _________________
+Approuver par: _________________
+
+═════════════════════════════════════════════════════════════════════════
+
+NOTES ET PROBLÈMES RENCONTRÉS:
+─────────────────────────────────────────────────────────────────────────
+
+_____________________________________________________________________________
+
+_____________________________________________________________________________
+
+_____________________________________________________________________________
+
+SOLUTIONS APPLIQUÉES:
+─────────────────────────────────────────────────────────────────────────
+
+_____________________________________________________________________________
+
+_____________________________________________________________________________
+
+═════════════════════════════════════════════════════════════════════════
+
+                    STATUS FINAL: [ ] OK [ ] AVEC RÉSERVES [ ] BLOQUÉ
+
+                         🎉 DÉPLOIEMENT RÉUSSI
+                         Version 2.0 - Bidirectional Sync
+                         En production depuis: ______________
+
+═════════════════════════════════════════════════════════════════════════
+`;
+
+console.log(checklist);
+
+// Aussi exporter en tant que texte
+if (module.exports) {
+  module.exports = { checklist };
+}

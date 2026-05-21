@@ -1,4 +1,4 @@
-import { supabase } from './supabase/client';
+import { apiFetch } from '@/lib/api-client';
 
 interface ContactFormData {
   nom: string;
@@ -8,48 +8,33 @@ interface ContactFormData {
   message: string;
 }
 
-interface NewsletterData {
-  email: string;
-  source: string;
-}
-
 /**
  * Envoie un email de contact
  */
 export async function sendContactEmail(data: ContactFormData) {
   try {
-    // Sauvegarder dans la base de données
-    const { error: dbError } = await supabase
-      .from('contact_requests')
-      .insert([
-        {
-          nom: data.nom,
-          email: data.email,
-          telephone: data.telephone || null,
-          sujet: data.sujet || null,
-          message: data.message,
-          submitted_at: new Date().toISOString(),
-          status: 'nouveau'
-        }
-      ]);
-
-    if (dbError) throw dbError;
-
-    // Appeler une fonction serverless pour envoyer l'email
-    const { data: response, error } = await supabase.functions.invoke('send-contact-email', {
-      body: {
-        ...data,
-        timestamp: new Date().toISOString()
-      }
+    // Sauvegarder dans la base de données via l'API locale
+    const result = await apiFetch<unknown>('/api/contact-requests', {
+      method: 'POST',
+      body: JSON.stringify(data)
     });
 
-    if (error) {
-      console.error('Erreur envoi email:', error);
+    // Appeler le service d'envoi d'email local (placeholder ou réel)
+    try {
+      await apiFetch<unknown>('/api/send-email', {
+        method: 'POST',
+        body: JSON.stringify({
+          ...data,
+          timestamp: new Date().toISOString()
+        })
+      });
+    } catch (e) {
+      console.error('Erreur envoi email (backend):', e);
       // Ne pas bloquer l'utilisateur même si l'email échoue
-      return { success: true, emailSent: false };
+      return { success: true, emailSent: false, result };
     }
 
-    return { success: true, emailSent: true, response };
+    return { success: true, emailSent: true, result };
   } catch (error) {
     console.error('Erreur service email:', error);
     throw error;
@@ -61,15 +46,15 @@ export async function sendContactEmail(data: ContactFormData) {
  */
 export async function sendNewsletterWelcomeEmail(email: string) {
   try {
-    const { data, error } = await supabase.functions.invoke('send-newsletter-email', {
-      body: {
+    const data = await apiFetch<unknown>('/api/email/welcome', {
+      method: 'POST',
+      body: JSON.stringify({
         email,
         type: 'welcome',
         timestamp: new Date().toISOString()
-      }
+      })
     });
 
-    if (error) throw error;
     return { success: true, data };
   } catch (error) {
     console.error('Erreur newsletter email:', error);
@@ -82,16 +67,16 @@ export async function sendNewsletterWelcomeEmail(email: string) {
  */
 export async function sendFormationConfirmationEmail(email: string, formationName: string, date: string) {
   try {
-    const { data, error } = await supabase.functions.invoke('send-formation-email', {
-      body: {
+    const data = await apiFetch<unknown>('/api/email/formation-confirmation', {
+      method: 'POST',
+      body: JSON.stringify({
         email,
         formationName,
         date,
         timestamp: new Date().toISOString()
-      }
+      })
     });
 
-    if (error) throw error;
     return { success: true, data };
   } catch (error) {
     console.error('Erreur formation email:', error);
@@ -104,15 +89,15 @@ export async function sendFormationConfirmationEmail(email: string, formationNam
  */
 export async function sendCertificationNotificationEmail(email: string, certificationName: string) {
   try {
-    const { data, error } = await supabase.functions.invoke('send-certification-email', {
-      body: {
+    const data = await apiFetch<unknown>('/api/email/certification-notification', {
+      method: 'POST',
+      body: JSON.stringify({
         email,
         certificationName,
         timestamp: new Date().toISOString()
-      }
+      })
     });
 
-    if (error) throw error;
     return { success: true, data };
   } catch (error) {
     console.error('Erreur certification email:', error);

@@ -1,0 +1,4306 @@
+{
+  "qcm_1": {
+    "correct_index": 1,
+    "correct_answer": "TITRE 7. Règles pour les installations et emplacements spécifiques"
+  },
+  "qcm_2": {
+    "correct_index": 1,
+    "correct_answer": "462.1 et"
+  },
+  "qcm_3": {
+    "correct_index": 2,
+    "correct_answer": "330.1.1 c)"
+  },
+  "qcm_4": {
+    "correct_index": 3,
+    "correct_answer": "330.1.1 d)"
+  },
+  "qcm_5": {
+    "correct_index": 1,
+    "correct_answer": "330.1.1 d)"
+  },
+  "qcm_6": {
+    "correct_index": 2,
+    "correct_answer": "330.1.1 d)"
+  },
+  "qcm_7": {
+    "correct_index": 3,
+    "correct_answer": "330.1.1 d)"
+  },
+  "qcm_8": {
+    "correct_index": 0,
+    "correct_answer": "612.6.1 a)"
+  },
+  "qcm_9": {
+    "correct_index": 0,
+    "correct_answer": "612.6.1 b)"
+  },
+  "qcm_10": {
+    "correct_index": 0,
+    "correct_answer": "612.6.1 c)"
+  },
+  "qcm_11": {
+    "correct_index": 1,
+    "correct_answer": "Titre 1 – Domaine d’application, objet et principes fondamentaux"
+  },
+  "qcm_12": {
+    "correct_index": 2,
+    "correct_answer": "titre 2."
+  },
+  "qcm_13": {
+    "correct_index": 3,
+    "correct_answer": "131.1 Généralités"
+  },
+  "qcm_14": {
+    "correct_index": 2,
+    "correct_answer": "131.2.1 Protection contre les contacts directs"
+  },
+  "qcm_15": {
+    "correct_index": 1,
+    "correct_answer": "131.2.2 Protection contre les contacts indirects"
+  },
+  "qcm_16": {
+    "correct_index": 0,
+    "correct_answer": "131.3 Protection contre les effets thermiques"
+  },
+  "qcm_17": {
+    "correct_index": 3,
+    "correct_answer": "131.4 Protection contre les surintensités"
+  },
+  "qcm_18": {
+    "correct_index": 3,
+    "correct_answer": "131.5 Protection contre les courants de défaut"
+  },
+  "qcm_19": {
+    "correct_index": 0,
+    "correct_answer": "131.6.1 Les personnes, les animaux domestiques et les biens doivent être protégés contre les"
+  },
+  "qcm_20": {
+    "correct_index": 1,
+    "correct_answer": "131.6.2 Les personnes, les animaux domestiques et les biens doivent être protégés contre les"
+  },
+  "qcm_21": {
+    "correct_index": 3,
+    "correct_answer": "132.1 Généralités"
+  },
+  "qcm_22": {
+    "correct_index": 3,
+    "correct_answer": "132.2.1 Nature du courant : courant alternatif ou courant continu"
+  },
+  "qcm_23": {
+    "correct_index": 1,
+    "correct_answer": "132.2.2 Nature et nombre de conducteurs :"
+  },
+  "qcm_24": {
+    "correct_index": 2,
+    "correct_answer": "132.2.3 Valeurs caractéristiques et tolérances :"
+  },
+  "qcm_25": {
+    "correct_index": 3,
+    "correct_answer": "132.2.4 Schéma des liaisons à la terre et autres conditions inhérentes à l'alimentation"
+  },
+  "qcm_26": {
+    "correct_index": 0,
+    "correct_answer": "132.2.5 Exigences particulières du distributeur d'énergie électrique"
+  },
+  "qcm_27": {
+    "correct_index": 2,
+    "correct_answer": "132.3 Nature de la demande"
+  },
+  "qcm_28": {
+    "correct_index": 2,
+    "correct_answer": "132.4 Alimentation de sécurité ou de remplacement"
+  },
+  "qcm_29": {
+    "correct_index": 0,
+    "correct_answer": "132.5 Conditions d'environnement"
+  },
+  "qcm_30": {
+    "correct_index": 3,
+    "correct_answer": "132.6 Section des conducteurs"
+  },
+  "qcm_31": {
+    "correct_index": 3,
+    "correct_answer": "132.7 Modes de pose et types de canalisations"
+  },
+  "qcm_32": {
+    "correct_index": 2,
+    "correct_answer": "132.8 Dispositifs de protection"
+  },
+  "qcm_33": {
+    "correct_index": 0,
+    "correct_answer": "132.9 Dispositifs de coupure d'urgence"
+  },
+  "qcm_34": {
+    "correct_index": 1,
+    "correct_answer": "132.10 Dispositifs de sectionnement"
+  },
+  "qcm_35": {
+    "correct_index": 1,
+    "correct_answer": "132.11 Indépendance de l'installation électrique"
+  },
+  "qcm_36": {
+    "correct_index": 3,
+    "correct_answer": "132.12 Accessibilité des matériels électriques"
+  },
+  "qcm_37": {
+    "correct_index": 2,
+    "correct_answer": "133.1 Généralités"
+  },
+  "qcm_38": {
+    "correct_index": 3,
+    "correct_answer": "133.2 Caractéristiques"
+  },
+  "qcm_39": {
+    "correct_index": 2,
+    "correct_answer": "133.2.1 Tension"
+  },
+  "qcm_40": {
+    "correct_index": 2,
+    "correct_answer": "133.2.2 Courant"
+  },
+  "qcm_41": {
+    "correct_index": 0,
+    "correct_answer": "133.2.3 Fréquence"
+  },
+  "qcm_42": {
+    "correct_index": 0,
+    "correct_answer": "133.2.4 Puissance"
+  },
+  "qcm_43": {
+    "correct_index": 2,
+    "correct_answer": "133.3 Conditions d'installation"
+  },
+  "qcm_44": {
+    "correct_index": 0,
+    "correct_answer": "133.4 Prévention des effets néfastes"
+  },
+  "qcm_45": {
+    "correct_index": 2,
+    "correct_answer": "134.1 Réalisation"
+  },
+  "qcm_46": {
+    "correct_index": 1,
+    "correct_answer": "134.2 Vérification lors de la mise en service"
+  },
+  "qcm_47": {
+    "correct_index": 2,
+    "correct_answer": "Titre 2 – Définitions"
+  },
+  "qcm_48": {
+    "correct_index": 3,
+    "correct_answer": "Titre 3 – Détermination des caractéristiques générales des Installations"
+  },
+  "qcm_49": {
+    "correct_index": 1,
+    "correct_answer": "311.1 Une détermination de la puissance d'alimentation est essentielle pour une conception"
+  },
+  "qcm_50": {
+    "correct_index": 1,
+    "correct_answer": "311.2 En déterminant la puissance d'alimentation d'une installation ou d'une partie de celle-"
+  },
+  "qcm_51": {
+    "correct_index": 1,
+    "correct_answer": "311.3 Détermination du courant d’emploi"
+  },
+  "qcm_52": {
+    "correct_index": 0,
+    "correct_answer": "312.1 Types de schémas de conducteurs actifs"
+  },
+  "qcm_53": {
+    "correct_index": 2,
+    "correct_answer": "312.2 Types de schémas des liaisons à la terre"
+  },
+  "qcm_54": {
+    "correct_index": 3,
+    "correct_answer": "312.2.1 Schéma TN"
+  },
+  "qcm_55": {
+    "correct_index": 1,
+    "correct_answer": "312.2.2 Schéma TT"
+  },
+  "qcm_56": {
+    "correct_index": 2,
+    "correct_answer": "312.2.3 Schéma IT"
+  },
+  "qcm_57": {
+    "correct_index": 3,
+    "correct_answer": "312.2.4.1 Généralités"
+  },
+  "qcm_58": {
+    "correct_index": 2,
+    "correct_answer": "312.2.4.2 Schéma TN en courant continu"
+  },
+  "qcm_59": {
+    "correct_index": 1,
+    "correct_answer": "312.2.4.3 Schéma TT en courant continu"
+  },
+  "qcm_60": {
+    "correct_index": 1,
+    "correct_answer": "312.2.4.4 Schéma IT en courant continu"
+  },
+  "qcm_61": {
+    "correct_index": 3,
+    "correct_answer": "313.1.1 Les caractéristiques suivantes de l'alimentation doivent être déterminées :"
+  },
+  "qcm_62": {
+    "correct_index": 0,
+    "correct_answer": "313.1.2 Ces caractéristiques doivent être estimées dans le cas d'une source externe et"
+  },
+  "qcm_63": {
+    "correct_index": 2,
+    "correct_answer": "313.2 Alimentations pour installations de sécurité et alimentations de remplacement"
+  },
+  "qcm_64": {
+    "correct_index": 2,
+    "correct_answer": "314.1 Toute installation doit être divisée en plusieurs circuits selon les besoins, afin :"
+  },
+  "qcm_65": {
+    "correct_index": 3,
+    "correct_answer": "314.2 Des circuits de distribution distincts doivent être prévus pour"
+  },
+  "qcm_66": {
+    "correct_index": 3,
+    "correct_answer": "314.3 Lorsqu’un bâtiment est desservi par plusieurs installations, les circuits correspondants"
+  },
+  "qcm_67": {
+    "correct_index": 1,
+    "correct_answer": "330.1 Caractéristiques"
+  },
+  "qcm_68": {
+    "correct_index": 3,
+    "correct_answer": "330.1.1 Perturbations à basses fréquences"
+  },
+  "qcm_69": {
+    "correct_index": 0,
+    "correct_answer": "330.1.2 Perturbations à hautes fréquences"
+  },
+  "qcm_70": {
+    "correct_index": 3,
+    "correct_answer": "330.1.3 Autres causes de perturbations"
+  },
+  "qcm_71": {
+    "correct_index": 0,
+    "correct_answer": "340.1 Il y a lieu d'estimer la fréquence et la qualité de l'entretien de l'installation qui peuvent"
+  },
+  "qcm_72": {
+    "correct_index": 0,
+    "correct_answer": "361.1 Les installations de dépannage, de travaux et semi-permanentes peuvent faire l'objet"
+  },
+  "qcm_73": {
+    "correct_index": 3,
+    "correct_answer": "361.3 Les installations temporaires ne doivent pas gêner ni entraver la circulation des"
+  },
+  "qcm_74": {
+    "correct_index": 0,
+    "correct_answer": "361.4 En cas d'utilisation de prolongateurs, toutes précautions doivent être prises afin"
+  },
+  "qcm_75": {
+    "correct_index": 0,
+    "correct_answer": "364.1 Les installations semi-permanentes peuvent faire l'objet des dérogations énoncées"
+  },
+  "qcm_76": {
+    "correct_index": 2,
+    "correct_answer": "364.2 Si les installations semi-permanentes se renouvellent périodiquement, elles doivent"
+  },
+  "qcm_77": {
+    "correct_index": 2,
+    "correct_answer": "TITRE 4 – Protection pour assurer la sécurité"
+  },
+  "qcm_78": {
+    "correct_index": 2,
+    "correct_answer": "411.7 Très Basse Tension Fonctionnelle (TBTF).................................................................78"
+  },
+  "qcm_79": {
+    "correct_index": 3,
+    "correct_answer": "Annexe B – (normative) – Mesures de protection sans disposition de protection contre"
+  },
+  "qcm_80": {
+    "correct_index": 0,
+    "correct_answer": "Annexe C – (normative) – Mesures de protection dans des installations sous condition"
+  },
+  "qcm_81": {
+    "correct_index": 0,
+    "correct_answer": "Annexe D – (normative) – Compatibilité entre divers schémas de liaisons à la terre"
+  },
+  "qcm_82": {
+    "correct_index": 0,
+    "correct_answer": "410.1 Domaine d'application"
+  },
+  "qcm_83": {
+    "correct_index": 3,
+    "correct_answer": "410.2 (disponible)"
+  },
+  "qcm_84": {
+    "correct_index": 1,
+    "correct_answer": "410.3.1 Une ou plusieurs des mesures de protection suivantes, constituées chacune d’une"
+  },
+  "qcm_85": {
+    "correct_index": 2,
+    "correct_answer": "410.3.2 et 410.3.4, dans chaque installation ou partie d’installation, en tenant compte des"
+  },
+  "qcm_86": {
+    "correct_index": 3,
+    "correct_answer": "410.3.2 Pour des installations et des emplacements particuliers, les mesures de protection"
+  },
+  "qcm_87": {
+    "correct_index": 1,
+    "correct_answer": "410.3.3 Les mesures de protection, spécifiées en annexe B, par mise en œuvre d’ob stacles"
+  },
+  "qcm_88": {
+    "correct_index": 3,
+    "correct_answer": "410.3.4 Les mesures de protection, spécifiées en annexe C :"
+  },
+  "qcm_89": {
+    "correct_index": 0,
+    "correct_answer": "410.3.5 Si une mesure de protection n’est pas complètement satisfaite, des dispositions"
+  },
+  "qcm_90": {
+    "correct_index": 0,
+    "correct_answer": "410.3.6 On doit s’assurer que des mesures de protection différentes appliquées dans la"
+  },
+  "qcm_91": {
+    "correct_index": 0,
+    "correct_answer": "410.3.7 Il est permis de se dispenser de dispositions de protection contre les contacts"
+  },
+  "qcm_92": {
+    "correct_index": 3,
+    "correct_answer": "411.1 Généralités"
+  },
+  "qcm_93": {
+    "correct_index": 0,
+    "correct_answer": "411.2 Prescriptions pour la protection contre les contacts directs"
+  },
+  "qcm_94": {
+    "correct_index": 3,
+    "correct_answer": "411.3.1.1 Liaison équipotentielle principale"
+  },
+  "qcm_95": {
+    "correct_index": 0,
+    "correct_answer": "411.3.1.2 Mise à la terre des masses"
+  },
+  "qcm_96": {
+    "correct_index": 0,
+    "correct_answer": "411.3.2 Coupure automatique de l'alimentation"
+  },
+  "qcm_97": {
+    "correct_index": 1,
+    "correct_answer": "411.3.2.1 A l’exception du cas indiqué en 411.3.2.5,"
+  },
+  "qcm_98": {
+    "correct_index": 1,
+    "correct_answer": "411.3.2.2 Selon la tension nominale entre phase et neutre U 0, le temps de coupure maximal"
+  },
+  "qcm_99": {
+    "correct_index": 2,
+    "correct_answer": "411.3.2.3 Un temps de coupure conventionnel non supérieur à 5 s est admis pour les circuits"
+  },
+  "qcm_100": {
+    "correct_index": 2,
+    "correct_answer": "411.3.2.5 Si la coupure automatique conformément à 411.3.2.1 ne peut être réalisée"
+  },
+  "qcm_101": {
+    "correct_index": 2,
+    "correct_answer": "411.3.3 Protection complémentaire"
+  },
+  "qcm_102": {
+    "correct_index": 1,
+    "correct_answer": "411.4 Schéma TN"
+  },
+  "qcm_103": {
+    "correct_index": 0,
+    "correct_answer": "411.4.1 Les masses de l'installation doivent être reliées par des conducteurs de protection"
+  },
+  "qcm_104": {
+    "correct_index": 3,
+    "correct_answer": "411.4.2 Dans les installations fixes, un seul conducteur peut être utilisé à la fois comme"
+  },
+  "qcm_105": {
+    "correct_index": 0,
+    "correct_answer": "411.4.3 Les caractéristiques"
+  },
+  "qcm_106": {
+    "correct_index": 3,
+    "correct_answer": "411.4.4 Dans le schéma TN, les dispositifs de protection suivants peuvent être utilisés"
+  },
+  "qcm_107": {
+    "correct_index": 2,
+    "correct_answer": "411.5.1 Toutes les masses protégées par un même dispositif de protection doivent être"
+  },
+  "qcm_108": {
+    "correct_index": 2,
+    "correct_answer": "411.5.2 En schéma TT, les dispositifs de protection sont des dispositifs différentiels"
+  },
+  "qcm_109": {
+    "correct_index": 0,
+    "correct_answer": "411.5.3 En courant alternatif, la condition suivante doit être satisfaite :"
+  },
+  "qcm_110": {
+    "correct_index": 0,
+    "correct_answer": "411.6.1 Dans le schéma IT, l’installation doit être isolée de la terre ou reliée à la terre à"
+  },
+  "qcm_111": {
+    "correct_index": 2,
+    "correct_answer": "411.6.2 est satisfaite. Toutefois,"
+  },
+  "qcm_112": {
+    "correct_index": 0,
+    "correct_answer": "411.6.2 Les masses doivent être reliées à la terre, soit individuellement, soit par groupes"
+  },
+  "qcm_113": {
+    "correct_index": 2,
+    "correct_answer": "411.6.3 Un contrôleur permanent d'isolement doit être prévu pour indiquer l'apparition d'un"
+  },
+  "qcm_114": {
+    "correct_index": 0,
+    "correct_answer": "411.6.4 Après l'apparition d'un premier défaut, les conditions de coupure automatique de"
+  },
+  "qcm_115": {
+    "correct_index": 3,
+    "correct_answer": "411.6.5 En schéma IT, les dispositifs de contrôle et de protection suivants peuvent être"
+  },
+  "qcm_116": {
+    "correct_index": 0,
+    "correct_answer": "411.7 Très Basse Tension Fonctionnelle (TBTF)"
+  },
+  "qcm_117": {
+    "correct_index": 0,
+    "correct_answer": "411.7.1 Généralités"
+  },
+  "qcm_118": {
+    "correct_index": 2,
+    "correct_answer": "411.7.2 Prescriptions pour la protection contre les contacts directs"
+  },
+  "qcm_119": {
+    "correct_index": 3,
+    "correct_answer": "411.7.3 Prescriptions pour la protection contre les contacts indirects"
+  },
+  "qcm_120": {
+    "correct_index": 3,
+    "correct_answer": "411.7.4 Sources"
+  },
+  "qcm_121": {
+    "correct_index": 2,
+    "correct_answer": "411.7.5 Prises de courant"
+  },
+  "qcm_122": {
+    "correct_index": 0,
+    "correct_answer": "412.1.1 L’isolation double ou renforcée est une mesure de protection dans laquelle :"
+  },
+  "qcm_123": {
+    "correct_index": 3,
+    "correct_answer": "412.1.2 La mesure de protection par isolation double ou renforcée est applicable dans toutes"
+  },
+  "qcm_124": {
+    "correct_index": 0,
+    "correct_answer": "412.2 Prescriptions pour la protection contre les contacts directs et pour la protection contre"
+  },
+  "qcm_125": {
+    "correct_index": 2,
+    "correct_answer": "412.2.1 La protection doit être assurée par l’utilisation :"
+  },
+  "qcm_126": {
+    "correct_index": 2,
+    "correct_answer": "412.2.2 Enveloppes"
+  },
+  "qcm_127": {
+    "correct_index": 2,
+    "correct_answer": "412.2.3 L'installation des maté riels énoncés en 412.1.1 (fixation,"
+  },
+  "qcm_128": {
+    "correct_index": 1,
+    "correct_answer": "412.2.4 Un circuit alimentant des matériels de classe II doit comporter un conducteur de"
+  },
+  "qcm_129": {
+    "correct_index": 1,
+    "correct_answer": "413.1.1 La séparation électrique est une mesure de protection dans laquelle :"
+  },
+  "qcm_130": {
+    "correct_index": 3,
+    "correct_answer": "413.1.2 La mesure de protection par séparation électrique est applicable dans toutes les"
+  },
+  "qcm_131": {
+    "correct_index": 0,
+    "correct_answer": "413.2.1 Tous les matériels électriques doivent faire l’objet d’une des dispositions de"
+  },
+  "qcm_132": {
+    "correct_index": 0,
+    "correct_answer": "413.2.2 La disposition de protection contre les contacts directs relative à l’isolation des"
+  },
+  "qcm_133": {
+    "correct_index": 0,
+    "correct_answer": "413.2.3 Si plus d’un matériel d’utilisation est alimenté par une source séparée isolée de la"
+  },
+  "qcm_134": {
+    "correct_index": 3,
+    "correct_answer": "413.3.1 La protection par séparation électrique doit être assurée en respectant"
+  },
+  "qcm_135": {
+    "correct_index": 2,
+    "correct_answer": "413.3.2 Le circuit doit être alimenté par l'intermédiaire d'une source de séparation, c'est-à-"
+  },
+  "qcm_136": {
+    "correct_index": 2,
+    "correct_answer": "413.3.3 Les parties actives du circuit séparé ne doivent avoir aucun point commun avec un"
+  },
+  "qcm_137": {
+    "correct_index": 3,
+    "correct_answer": "413.3.4 Les câbles souples doivent être visibles sur toute leur longueur susceptible de"
+  },
+  "qcm_138": {
+    "correct_index": 3,
+    "correct_answer": "413.3.5 Il est recommandé d'utiliser, pour le circuit séparé, une canalisation dédiée. Si on"
+  },
+  "qcm_139": {
+    "correct_index": 1,
+    "correct_answer": "413.3.6 Les masses du circuit séparé ne doivent être connectées ni à un conducteur de"
+  },
+  "qcm_140": {
+    "correct_index": 0,
+    "correct_answer": "414.1.1 La protection par très basse tension est une mesure de protection constituée par"
+  },
+  "qcm_141": {
+    "correct_index": 1,
+    "correct_answer": "414.1.2 L’utilisation de la TBTS ou de la TBTP est considérée comme une mesure de"
+  },
+  "qcm_142": {
+    "correct_index": 2,
+    "correct_answer": "414.2 Prescriptions pour la protection contre les contacts directs et pour la protection"
+  },
+  "qcm_143": {
+    "correct_index": 3,
+    "correct_answer": "414.3 Sources pour TBTS et TBTP"
+  },
+  "qcm_144": {
+    "correct_index": 2,
+    "correct_answer": "414.3.2 Une source de courant assurant un degré de sécurité équivalent à celui d'un"
+  },
+  "qcm_145": {
+    "correct_index": 1,
+    "correct_answer": "414.3.3 Une source électrochimique (piles ou accumulateurs) ou une autre source qui ne"
+  },
+  "qcm_146": {
+    "correct_index": 3,
+    "correct_answer": "414.3.4 Certains dispositifs électroniques conformes aux normes appropriées, dans"
+  },
+  "qcm_147": {
+    "correct_index": 3,
+    "correct_answer": "414.3.5 Les sources mobiles, telles que transformateurs de sécurité ou groupes moteur-"
+  },
+  "qcm_148": {
+    "correct_index": 1,
+    "correct_answer": "511.2 sont respectivement les normes"
+  },
+  "qcm_149": {
+    "correct_index": 3,
+    "correct_answer": "414.4.1 Les circuits TBTS et TBTP doivent présenter :"
+  },
+  "qcm_150": {
+    "correct_index": 1,
+    "correct_answer": "414.4.2 La séparation de protection entre les canalisations des circuits TBTS et TBTP et"
+  },
+  "qcm_151": {
+    "correct_index": 1,
+    "correct_answer": "414.4.3 Les prises de courant pour des circuits TBTS et TBTP doivent satisfaire aux"
+  },
+  "qcm_152": {
+    "correct_index": 3,
+    "correct_answer": "414.4.4 Les parties actives des circuits TBTS ne doivent pas être reliées électriquement à"
+  },
+  "qcm_153": {
+    "correct_index": 2,
+    "correct_answer": "414.4.5 Les masses ne doivent être reliées intentionnellement ni à la terre, ni à des"
+  },
+  "qcm_154": {
+    "correct_index": 2,
+    "correct_answer": "414.4.6 Lorsque la tension nominale du circuit TBTS est supérieure à 25 V valeur efficace en"
+  },
+  "qcm_155": {
+    "correct_index": 1,
+    "correct_answer": "415.1 Protection complémentaire par dispositifs à courant différentiel-résiduel"
+  },
+  "qcm_156": {
+    "correct_index": 1,
+    "correct_answer": "415.1.1 L'emploi de dispositifs à courant différentiel-résiduel, dont la valeur du courant"
+  },
+  "qcm_157": {
+    "correct_index": 0,
+    "correct_answer": "415.1.2 L'utilisation de tels dispositifs n'est pas reconnue comme constituant en soi une"
+  },
+  "qcm_158": {
+    "correct_index": 3,
+    "correct_answer": "411.1 à 411.4."
+  },
+  "qcm_159": {
+    "correct_index": 0,
+    "correct_answer": "415.2 Liaison équipotentielle supplémentaire"
+  },
+  "qcm_160": {
+    "correct_index": 2,
+    "correct_answer": "415.2.1 La"
+  },
+  "qcm_161": {
+    "correct_index": 3,
+    "correct_answer": "415.2.2 En cas de doute sur l'efficacité de la liaison équipotentielle supplémentaire, elle"
+  },
+  "qcm_162": {
+    "correct_index": 3,
+    "correct_answer": "Annexe A – (normative) – Dispositions pour la protection"
+  },
+  "qcm_163": {
+    "correct_index": 1,
+    "correct_answer": "Annexe B – (normative) – Mesures de protection sans disposition de protection"
+  },
+  "qcm_164": {
+    "correct_index": 3,
+    "correct_answer": "Annexe C – (normative) – Mesures de protection dans des installations"
+  },
+  "qcm_165": {
+    "correct_index": 1,
+    "correct_answer": "Annexe D – (normative) – Compatibilité entre divers schémas de liaisons à la"
+  },
+  "qcm_166": {
+    "correct_index": 0,
+    "correct_answer": "421.1 Les matériels électriques ne doivent pas présenter de danger d'incendie pour les matériaux"
+  },
+  "qcm_167": {
+    "correct_index": 1,
+    "correct_answer": "421.2 Lorsque les températures extérieures des matériels fixes peuvent atteindre des valeurs"
+  },
+  "qcm_168": {
+    "correct_index": 2,
+    "correct_answer": "421.3 Les matériels fixes, susceptibles de produire des arcs ou des étincelles en service normal,"
+  },
+  "qcm_169": {
+    "correct_index": 0,
+    "correct_answer": "421.4 Les matériels fixes présentant un effet de focalisation ou de concentration de chaleur doivent"
+  },
+  "qcm_170": {
+    "correct_index": 2,
+    "correct_answer": "421.5 Lorsque les matériels électriques installés dans le même local contiennent une quantité"
+  },
+  "qcm_171": {
+    "correct_index": 1,
+    "correct_answer": "421.6 Les matériaux des enveloppes disposées autour des matériels électriques lors de leur mise"
+  },
+  "qcm_172": {
+    "correct_index": 3,
+    "correct_answer": "422.0 Généralités"
+  },
+  "qcm_173": {
+    "correct_index": 1,
+    "correct_answer": "422.1 Locaux à risque d'incendie dû à la nature des matières traitées ou entreposées"
+  },
+  "qcm_174": {
+    "correct_index": 1,
+    "correct_answer": "422.1.1 Dans les locaux classés BE2, les installations doivent être limitées à celles nécessaires à"
+  },
+  "qcm_175": {
+    "correct_index": 2,
+    "correct_answer": "422.1.2 Lorsque des poussières peuvent s'accumuler en quantité suffisante sur des enveloppes de"
+  },
+  "qcm_176": {
+    "correct_index": 2,
+    "correct_answer": "422.1.3 Il est rappelé que les matériels électriques doivent être appropriés à ces locaux ; en"
+  },
+  "qcm_177": {
+    "correct_index": 1,
+    "correct_answer": "422.1.4 En principe, les règles générales relatives aux canalisations sont applicables. Cependant,"
+  },
+  "qcm_178": {
+    "correct_index": 1,
+    "correct_answer": "422.1.5 En complément à 422.1.4, les canalisations électriques qui traversent de tels locaux, mais"
+  },
+  "qcm_179": {
+    "correct_index": 1,
+    "correct_answer": "422.1.6 Les canalisations qui alimentent ou traversent de tels locaux doivent être protégées contre"
+  },
+  "qcm_180": {
+    "correct_index": 1,
+    "correct_answer": "422.1.7 Les canalisations doivent être protégées contre les défauts d'isolement, à l'exception des"
+  },
+  "qcm_181": {
+    "correct_index": 0,
+    "correct_answer": "422.1.8 Les conducteurs PEN ne sont pas admis à l'exception de ceux appartenant à des"
+  },
+  "qcm_182": {
+    "correct_index": 0,
+    "correct_answer": "422.1.9 Tout conducteur neutre doit pouvoir être sectionné par un dispositif associé conformément"
+  },
+  "qcm_183": {
+    "correct_index": 1,
+    "correct_answer": "422.1.10 Les conducteurs nus ne sont pas admis."
+  },
+  "qcm_184": {
+    "correct_index": 1,
+    "correct_answer": "422.1.11 Pour les câbles souples il est recommandé de choisir les câbles et cordons pour usage"
+  },
+  "qcm_185": {
+    "correct_index": 3,
+    "correct_answer": "422.1.13 Les moteurs commandés automatiquement ou à distance, ou non surveillés en"
+  },
+  "qcm_186": {
+    "correct_index": 0,
+    "correct_answer": "422.1.14 Dans les locaux où il existe un risque d'accumulation de poussières sur le luminaire, seuls"
+  },
+  "qcm_187": {
+    "correct_index": 1,
+    "correct_answer": "422.1.16 Si des systèmes de chauffage électrique ou de ventilation sont utilisés, la présence de"
+  },
+  "qcm_188": {
+    "correct_index": 3,
+    "correct_answer": "422.1.17 Les matériels de chauffage électrique doivent être placés sur des supports"
+  },
+  "qcm_189": {
+    "correct_index": 2,
+    "correct_answer": "422.1.18 Les matériels de chauffage situés à proximité de matériaux combustibles doivent être"
+  },
+  "qcm_190": {
+    "correct_index": 0,
+    "correct_answer": "422.2 Locaux construits en matériaux combustibles"
+  },
+  "qcm_191": {
+    "correct_index": 3,
+    "correct_answer": "422.2.1 Des précautions doivent être prises pour que les matériels électriques ne puissent"
+  },
+  "qcm_192": {
+    "correct_index": 2,
+    "correct_answer": "422.2.2 Choix et mise en œuvre des matériels dans des parois creuses"
+  },
+  "qcm_193": {
+    "correct_index": 3,
+    "correct_answer": "422.2.2.1 Les matériels électriques, par exemple boîtiers, tableaux de distribution, installés dans"
+  },
+  "qcm_194": {
+    "correct_index": 1,
+    "correct_answer": "422.2.2.2 Si des matériels électriques sont installés dans des parois creuses et ne satisfont pas aux"
+  },
+  "qcm_195": {
+    "correct_index": 2,
+    "correct_answer": "422.2.2.3 Les matériels électriques tels que les prises de courant et interrupteurs ne doivent pas"
+  },
+  "qcm_196": {
+    "correct_index": 2,
+    "correct_answer": "422.2.2.5 Les conduits doivent être conformes à la NF EN 50086 (C 68-110) et être non"
+  },
+  "qcm_197": {
+    "correct_index": 3,
+    "correct_answer": "422.2.2.6 Les boîtes de jonction connectées à des câbles en montage apparent doivent être"
+  },
+  "qcm_198": {
+    "correct_index": 3,
+    "correct_answer": "422.4 Structures propagatrices d'incendie"
+  },
+  "qcm_199": {
+    "correct_index": 1,
+    "correct_answer": "422.4.1 Dans les structures dont la forme et les dimensions facilitent la propagation d'un incendie,"
+  },
+  "qcm_200": {
+    "correct_index": 1,
+    "correct_answer": "424.1 Dans les emplacements classés BE3, les installations doivent être limitées à celles"
+  },
+  "qcm_201": {
+    "correct_index": 1,
+    "correct_answer": "424.2 Dans le cas d’atmosphères explosives gazeuses (G), les matériels doivent être choisis parmi"
+  },
+  "qcm_202": {
+    "correct_index": 1,
+    "correct_answer": "424.3 Dans les atmosphères explosives gazeuses, en cas de présence de poussières non"
+  },
+  "qcm_203": {
+    "correct_index": 0,
+    "correct_answer": "424.4 Les valeurs de courants admissibles dans les conducteurs doivent être réduites de"
+  },
+  "qcm_204": {
+    "correct_index": 0,
+    "correct_answer": "424.5 Lorsque les canalisations ne sont pas noyées dans des matériaux incombustibles tels que"
+  },
+  "qcm_205": {
+    "correct_index": 0,
+    "correct_answer": "424.6 Lorsqu’une ligne aérienne dessert des emplacements classés BE3, l’alimentation doit"
+  },
+  "qcm_206": {
+    "correct_index": 1,
+    "correct_answer": "424.7 Les caniveaux, conduits, fourreaux, etc. recevant des câbles doivent être obturés pour"
+  },
+  "qcm_207": {
+    "correct_index": 2,
+    "correct_answer": "424.8 Les canalisations doivent être mises en œuvre, dans la mesure du possible, de façon à ce"
+  },
+  "qcm_208": {
+    "correct_index": 3,
+    "correct_answer": "424.9 Les canalisations qui alimentent de tels emplacements doivent être protégées contre les"
+  },
+  "qcm_209": {
+    "correct_index": 2,
+    "correct_answer": "424.10 Les canalisations doivent être protégées contre les défauts d'isolement :"
+  },
+  "qcm_210": {
+    "correct_index": 3,
+    "correct_answer": "424.12 Des liaisons équipotentielles doivent être réalisées entre les masses et les éléments"
+  },
+  "qcm_211": {
+    "correct_index": 0,
+    "correct_answer": "424.13 En dehors des dispositifs de coupure d'urgence éventuellement prévus dans les zones"
+  },
+  "qcm_212": {
+    "correct_index": 1,
+    "correct_answer": "424.14 Les câbles souples doivent être choisis parmi les câbles et cordons pour usage intensif, par"
+  },
+  "qcm_213": {
+    "correct_index": 1,
+    "correct_answer": "424.15 Les machines tournantes et les transformateurs doivent être protégés contre les surcharges"
+  },
+  "qcm_214": {
+    "correct_index": 2,
+    "correct_answer": "424.16 Les éléments remplaçables tels que les lampes doivent être de types et de caractéristiques"
+  },
+  "qcm_215": {
+    "correct_index": 3,
+    "correct_answer": "424.17 Certaines installations doivent être protégées contre les effets de la foudre. Il peut être"
+  },
+  "qcm_216": {
+    "correct_index": 3,
+    "correct_answer": "430.1 Les conducteurs actifs doivent être protégés par un ou plusieurs dispositifs de coupure"
+  },
+  "qcm_217": {
+    "correct_index": 0,
+    "correct_answer": "431.1.1 La détection de surintensité doit être prévue sur tous les conducteurs de phase ; elle doit"
+  },
+  "qcm_218": {
+    "correct_index": 3,
+    "correct_answer": "431.1.2 Toutefois, dans les schémas TT et TN, sur les circuits alimentés entre phases et dans"
+  },
+  "qcm_219": {
+    "correct_index": 2,
+    "correct_answer": "431.2 Protection du conducteur neutre"
+  },
+  "qcm_220": {
+    "correct_index": 1,
+    "correct_answer": "431.2.1 Installations dont le point neutre est relié directement à la terre (schémas TT ou TN)"
+  },
+  "qcm_221": {
+    "correct_index": 2,
+    "correct_answer": "431.2.2 Installations dont le point neutre n'est pas relié directement à la terre (schéma IT)"
+  },
+  "qcm_222": {
+    "correct_index": 2,
+    "correct_answer": "431.3 Coupure du conducteur neutre"
+  },
+  "qcm_223": {
+    "correct_index": 3,
+    "correct_answer": "432.1 Dispositifs assurant à la fois la protection contre les surcharges et la protection contre"
+  },
+  "qcm_224": {
+    "correct_index": 3,
+    "correct_answer": "432.2 Dispositifs assurant uniquement la protection contre les surcharges"
+  },
+  "qcm_225": {
+    "correct_index": 2,
+    "correct_answer": "432.3 Dispositifs assurant uniquement la protection contre les courts-circuits"
+  },
+  "qcm_226": {
+    "correct_index": 1,
+    "correct_answer": "432.4 Caractéristiques des dispositifs de protection"
+  },
+  "qcm_227": {
+    "correct_index": 0,
+    "correct_answer": "433.0 Règle générale"
+  },
+  "qcm_228": {
+    "correct_index": 0,
+    "correct_answer": "433.1 Coordination entre les conducteurs et les dispositifs de protection"
+  },
+  "qcm_229": {
+    "correct_index": 1,
+    "correct_answer": "433.2 Emplacement des dispositifs de protection contre les surcharges"
+  },
+  "qcm_230": {
+    "correct_index": 2,
+    "correct_answer": "433.2.1 Un dispositif assurant la protection contre les surcharges doit être placé à l'endroit où un"
+  },
+  "qcm_231": {
+    "correct_index": 0,
+    "correct_answer": "433.2.2 Le dispositif protégeant une canalisation contre les surcharges peut être placé sur le"
+  },
+  "qcm_232": {
+    "correct_index": 1,
+    "correct_answer": "433.3 Dispense de protection contre les surcharges"
+  },
+  "qcm_233": {
+    "correct_index": 3,
+    "correct_answer": "433.4 Emplacement ou dispense de protection contre les surcharges dans le schéma IT"
+  },
+  "qcm_234": {
+    "correct_index": 3,
+    "correct_answer": "433.5 Cas où il est recommandé de se dispenser de protection contre les surcharges pour"
+  },
+  "qcm_235": {
+    "correct_index": 1,
+    "correct_answer": "433.6 Protection contre les surcharges de conducteurs en parallèle"
+  },
+  "qcm_236": {
+    "correct_index": 2,
+    "correct_answer": "434.0 Règle générale"
+  },
+  "qcm_237": {
+    "correct_index": 2,
+    "correct_answer": "434.1 Détermination des courants de court-circuit présumés"
+  },
+  "qcm_238": {
+    "correct_index": 3,
+    "correct_answer": "434.2 Emplacement des dispositifs de protection contre les courts-circuits"
+  },
+  "qcm_239": {
+    "correct_index": 0,
+    "correct_answer": "434.2.1 Règle générale"
+  },
+  "qcm_240": {
+    "correct_index": 0,
+    "correct_answer": "434.2.2 Déplacement du dispositif de protection contre les courts-circuits"
+  },
+  "qcm_241": {
+    "correct_index": 2,
+    "correct_answer": "434.2.2.1 La partie de canalisation comprise entre, d'une part la réduction de section ou autre"
+  },
+  "qcm_242": {
+    "correct_index": 2,
+    "correct_answer": "434.2.2.2 Un dispositif de protection placé en amont possède une caractéristique de"
+  },
+  "qcm_243": {
+    "correct_index": 3,
+    "correct_answer": "434.3 Dispense de protection contre les courts-circuits"
+  },
+  "qcm_244": {
+    "correct_index": 3,
+    "correct_answer": "434.2.2.1 b) ;"
+  },
+  "qcm_245": {
+    "correct_index": 3,
+    "correct_answer": "434.4 Protection contre les courts-circuits de conducteurs en parallèle"
+  },
+  "qcm_246": {
+    "correct_index": 2,
+    "correct_answer": "434.5 Caractéristiques des dispositifs de protection contre les courts-circuits"
+  },
+  "qcm_247": {
+    "correct_index": 3,
+    "correct_answer": "434.5.1 Son pouvoir de coupure doit être au moins égal au courant de court-circuit présumé au"
+  },
+  "qcm_248": {
+    "correct_index": 1,
+    "correct_answer": "434.5.2 Le temps de coupure de tout"
+  },
+  "qcm_249": {
+    "correct_index": 3,
+    "correct_answer": "435.1 Protections assurées par le même dispositif"
+  },
+  "qcm_250": {
+    "correct_index": 1,
+    "correct_answer": "435.2 Protections assurées par des dispositifs distincts"
+  },
+  "qcm_251": {
+    "correct_index": 3,
+    "correct_answer": "442.1 Domaine d'application et objet"
+  },
+  "qcm_252": {
+    "correct_index": 2,
+    "correct_answer": "442.2 Surtensions en cas de défaut à la terre dans les installations à haute tension"
+  },
+  "qcm_253": {
+    "correct_index": 0,
+    "correct_answer": "442.2.1 Contraintes de tension admissibles à fréquence industrielle par les matériels de"
+  },
+  "qcm_254": {
+    "correct_index": 2,
+    "correct_answer": "442.2.2 Symboles"
+  },
+  "qcm_255": {
+    "correct_index": 2,
+    "correct_answer": "442.2.3 Mise à la terre dans les postes de transformation"
+  },
+  "qcm_256": {
+    "correct_index": 0,
+    "correct_answer": "442.2.4 Prescriptions applicables suivant le schéma des liaisons à la terre des installations à"
+  },
+  "qcm_257": {
+    "correct_index": 2,
+    "correct_answer": "442.2.4.1 Schéma TN"
+  },
+  "qcm_258": {
+    "correct_index": 0,
+    "correct_answer": "442.2.4.2 Schéma TT"
+  },
+  "qcm_259": {
+    "correct_index": 2,
+    "correct_answer": "442.2.4.3 Schéma IT"
+  },
+  "qcm_260": {
+    "correct_index": 3,
+    "correct_answer": "442.2.5 Limitation des contraintes de tension dans les matériels à basse tension du poste de"
+  },
+  "qcm_261": {
+    "correct_index": 3,
+    "correct_answer": "442.2.5.1 Schémas TN et TT"
+  },
+  "qcm_262": {
+    "correct_index": 1,
+    "correct_answer": "442.2.5.2 Schéma IT"
+  },
+  "qcm_263": {
+    "correct_index": 0,
+    "correct_answer": "442.2.6.1 Pour se prémunir contre les surtensions dues à des défauts directs entre installations à"
+  },
+  "qcm_264": {
+    "correct_index": 2,
+    "correct_answer": "442.2.6.2 En outre, dans les installations IT, un dispositif limiteur de surtension doit être connecté à"
+  },
+  "qcm_265": {
+    "correct_index": 0,
+    "correct_answer": "442.2.6.3 Les canalisations électriques à basse et à haute tension ne doivent pas emprunter les"
+  },
+  "qcm_266": {
+    "correct_index": 1,
+    "correct_answer": "442.5 Contraintes de tension en cas de rupture du conducteur neutre en schémas TN et TT"
+  },
+  "qcm_267": {
+    "correct_index": 0,
+    "correct_answer": "442.6 Contraintes de tension en cas de premier défaut à la terre en schéma IT"
+  },
+  "qcm_268": {
+    "correct_index": 1,
+    "correct_answer": "442.7 Contraintes de tension en cas de court-circuit entre phase et neutre dans l’installation"
+  },
+  "qcm_269": {
+    "correct_index": 0,
+    "correct_answer": "443.1 Domaine d'application et objet"
+  },
+  "qcm_270": {
+    "correct_index": 3,
+    "correct_answer": "443.2.1 Objet de la classification des catégories de tenue aux chocs (catégories de"
+  },
+  "qcm_271": {
+    "correct_index": 0,
+    "correct_answer": "443.2.2 Description des catégories de tenue aux chocs (catégories de surtensions)"
+  },
+  "qcm_272": {
+    "correct_index": 1,
+    "correct_answer": "443.3 Dispositions pour le contrôle des surtensions"
+  },
+  "qcm_273": {
+    "correct_index": 1,
+    "correct_answer": "443.3.1 Situation naturelle"
+  },
+  "qcm_274": {
+    "correct_index": 3,
+    "correct_answer": "443.3.1.1 Lorsqu'une installation est alimentée par un réseau à basse tension entièrement"
+  },
+  "qcm_275": {
+    "correct_index": 1,
+    "correct_answer": "443.3.1.2 Lorsqu'une installation est alimentée par, ou comprend, une ligne aérienne à basse"
+  },
+  "qcm_276": {
+    "correct_index": 2,
+    "correct_answer": "443.3.2 Situation contrôlée"
+  },
+  "qcm_277": {
+    "correct_index": 0,
+    "correct_answer": "443.3.2.1 Lorsqu'une installation est alimentée par, ou comprend, une ligne aérienne, une mesure"
+  },
+  "qcm_278": {
+    "correct_index": 0,
+    "correct_answer": "443.3.2.2 Dans les conditions de 443.3.2.1, une mesure de protection contre les surtensions"
+  },
+  "qcm_279": {
+    "correct_index": 1,
+    "correct_answer": "443.4.1 Les matériels sont choisis de manière que leur tension assignée de tenue aux chocs ne soit"
+  },
+  "qcm_280": {
+    "correct_index": 3,
+    "correct_answer": "443.4.2 Les matériels ayant une tension de tenue aux chocs inférieure à celle spécifiée dans le"
+  },
+  "qcm_281": {
+    "correct_index": 1,
+    "correct_answer": "443.5 Caractéristiques des dispositifs de protection contre les surtensions"
+  },
+  "qcm_282": {
+    "correct_index": 2,
+    "correct_answer": "444.0 Généralités"
+  },
+  "qcm_283": {
+    "correct_index": 3,
+    "correct_answer": "444.1 Domaine d'application"
+  },
+  "qcm_284": {
+    "correct_index": 2,
+    "correct_answer": "444.3 Dispositions à prendre contre les influences électriques et magnétiques sur les"
+  },
+  "qcm_285": {
+    "correct_index": 3,
+    "correct_answer": "444.3.2 Emplacement des matériels sensibles par rapport à de fortes intensités présentes, par"
+  },
+  "qcm_286": {
+    "correct_index": 1,
+    "correct_answer": "444.3.3 Mise en œuvre de filtres et/ou de parafoudres dans les circuits alimentant les matériels"
+  },
+  "qcm_287": {
+    "correct_index": 2,
+    "correct_answer": "444.3.4 Choix de dispositifs de protection avec des retards appropriés pour éviter des"
+  },
+  "qcm_288": {
+    "correct_index": 0,
+    "correct_answer": "444.3.6 Séparation appropriée (éloignement ou blindage) des câbles de puissance et de"
+  },
+  "qcm_289": {
+    "correct_index": 2,
+    "correct_answer": "444.3.6.1 Dans les parties entre les répartiteurs, les câbles de puissance et de communication"
+  },
+  "qcm_290": {
+    "correct_index": 0,
+    "correct_answer": "444.3.6.2 Dans les parties terminales entre les répartiteurs et les points d'utilisation, les câbles des"
+  },
+  "qcm_291": {
+    "correct_index": 3,
+    "correct_answer": "444.3.7 Séparation appropriée (éloignement ou blindage) des câbles de puissance et de"
+  },
+  "qcm_292": {
+    "correct_index": 1,
+    "correct_answer": "444.3.8 Réduction des boucles d'induction par le choix d'un cheminement commun pour les"
+  },
+  "qcm_293": {
+    "correct_index": 0,
+    "correct_answer": "444.3.11 Mise en œuvre sous enveloppes métalliques mises à la terre ou équivalent des"
+  },
+  "qcm_294": {
+    "correct_index": 0,
+    "correct_answer": "444.3.12 Eviter le schéma TN-C dans les installations comportant des matériels sensibles"
+  },
+  "qcm_295": {
+    "correct_index": 2,
+    "correct_answer": "444.3.13 Il convient que les canalisations métalliques (par exemple pour l'eau, le gaz ou le"
+  },
+  "qcm_296": {
+    "correct_index": 2,
+    "correct_answer": "444.3.14 Dans le cas de zones ou de bâtiments distincts réalisés avec des liaisons équipotentielles"
+  },
+  "qcm_297": {
+    "correct_index": 2,
+    "correct_answer": "444.4 Mesures de protection des circuits de communication"
+  },
+  "qcm_298": {
+    "correct_index": 0,
+    "correct_answer": "444.4.3 Utilisation locale de transformateurs à deux enroulements pour l'alimentation des matériels"
+  },
+  "qcm_299": {
+    "correct_index": 2,
+    "correct_answer": "444.4.4 Utilisation de cheminements appropriés des canalisations afin de minimiser les aires"
+  },
+  "qcm_300": {
+    "correct_index": 2,
+    "correct_answer": "445.1 Prescriptions générales"
+  },
+  "qcm_301": {
+    "correct_index": 2,
+    "correct_answer": "445.1.1 Des précautions doivent être prises"
+  },
+  "qcm_302": {
+    "correct_index": 0,
+    "correct_answer": "445.1.2 Les dispositifs de protection contre les effets des baisses de tension peuvent être retardés"
+  },
+  "qcm_303": {
+    "correct_index": 0,
+    "correct_answer": "445.1.3 S'il est fait usage de contacteurs, le retard à l'ouverture et à la refermeture ne doit pas"
+  },
+  "qcm_304": {
+    "correct_index": 2,
+    "correct_answer": "445.1.4 Les caractéristiques des dispositifs de protection contre les effets des baisses de tension"
+  },
+  "qcm_305": {
+    "correct_index": 0,
+    "correct_answer": "445.1.5 Lorsque la refermeture d'un dispositif de protection est susceptible de créer une situation"
+  },
+  "qcm_306": {
+    "correct_index": 1,
+    "correct_answer": "461.1 Selon les fonctions désirées, tout dispositif prévu pour le sectionnement ou la"
+  },
+  "qcm_307": {
+    "correct_index": 0,
+    "correct_answer": "461.2 Il doit être placé à l'origine de toute installation un dispositif de commande et un"
+  },
+  "qcm_308": {
+    "correct_index": 1,
+    "correct_answer": "461.3 Dans le schéma TN-C, le conducteur PEN ne doit être ni sectionné ni coupé. Dans le"
+  },
+  "qcm_309": {
+    "correct_index": 2,
+    "correct_answer": "462.1 Tout circuit doit pouvoir être sectionné sur chacun des conducteurs actifs, à l'exception"
+  },
+  "qcm_310": {
+    "correct_index": 3,
+    "correct_answer": "462.2 Des moyens appropriés doivent être prévus pour empêcher toute mise sous tension"
+  },
+  "qcm_311": {
+    "correct_index": 1,
+    "correct_answer": "462.3 Lorsqu'un matériel ou une enveloppe contient des parties actives reliées à plusieurs"
+  },
+  "qcm_312": {
+    "correct_index": 1,
+    "correct_answer": "462.4 Des moyens appropriés doivent être prévus, si nécessaire, pour assurer la décharge de"
+  },
+  "qcm_313": {
+    "correct_index": 2,
+    "correct_answer": "463.1 Des moyens de coupure d'urgence doivent être prévus pour toute partie d'installation"
+  },
+  "qcm_314": {
+    "correct_index": 0,
+    "correct_answer": "463.2 Le dispositif de coupure d'urgence doit couper tous les conducteurs actifs."
+  },
+  "qcm_315": {
+    "correct_index": 3,
+    "correct_answer": "463.3 Les moyens de coupure d'urgence doivent agir aussi directement que possible sur les"
+  },
+  "qcm_316": {
+    "correct_index": 2,
+    "correct_answer": "463.4 Les dispositions du système de coupure d'urgence doivent être telles que son"
+  },
+  "qcm_317": {
+    "correct_index": 1,
+    "correct_answer": "463.5 Le dispositif de coupure d'urgence doit se trouver au niveau des appareils d'utilisation,"
+  },
+  "qcm_318": {
+    "correct_index": 1,
+    "correct_answer": "465.1.1 Un dispositif de commande fonctionnelle doit être prévu sur tout élément de circuit"
+  },
+  "qcm_319": {
+    "correct_index": 2,
+    "correct_answer": "465.1.2 Les dispositifs de commande fonctionnelle ne coupent pas nécessairement tous les"
+  },
+  "qcm_320": {
+    "correct_index": 3,
+    "correct_answer": "465.1.3 En général, tout appareil d'utilisation nécessitant une commande doit être commandé"
+  },
+  "qcm_321": {
+    "correct_index": 0,
+    "correct_answer": "465.1.4 Les prises de courant peuvent assurer la commande fonctionnelle si leur courant"
+  },
+  "qcm_322": {
+    "correct_index": 0,
+    "correct_answer": "465.1.5 Les dispositifs de commande fonctionnelle assurant la permutation de sources"
+  },
+  "qcm_323": {
+    "correct_index": 2,
+    "correct_answer": "465.2 Circuits de commande"
+  },
+  "qcm_324": {
+    "correct_index": 0,
+    "correct_answer": "465.3 Commande des moteurs"
+  },
+  "qcm_325": {
+    "correct_index": 0,
+    "correct_answer": "465.3.1 Les circuits de commande des moteurs doivent être conçus de manière à empêcher"
+  },
+  "qcm_326": {
+    "correct_index": 2,
+    "correct_answer": "465.3.2 Lorsque le freinage par contre-courant d'un moteur est prévu, toutes précautions"
+  },
+  "qcm_327": {
+    "correct_index": 0,
+    "correct_answer": "465.3.3 Lorsque la sécurité dépend du sens de rotation d'un moteur, des dispositions doivent"
+  },
+  "qcm_328": {
+    "correct_index": 0,
+    "correct_answer": "TITRE 5. - Choix et mise en œuvre des matériels"
+  },
+  "qcm_329": {
+    "correct_index": 0,
+    "correct_answer": "Annexe B - Repérage des conducteurs de protection et de mise à la terre"
+  },
+  "qcm_330": {
+    "correct_index": 2,
+    "correct_answer": "511.1 Tout matériel électrique doit être conforme à la norme européenne (EN) ou document"
+  },
+  "qcm_331": {
+    "correct_index": 1,
+    "correct_answer": "511.2 Lorsque pour un matériel électrique donné, il n'existe pas de norme qui puisse lui être"
+  },
+  "qcm_332": {
+    "correct_index": 2,
+    "correct_answer": "511.3 Un procédé d'installation non décrit dans la présente norme doit faire l'objet d'une étude par"
+  },
+  "qcm_333": {
+    "correct_index": 2,
+    "correct_answer": "512.1.1 Tension"
+  },
+  "qcm_334": {
+    "correct_index": 1,
+    "correct_answer": "512.1.2 Courant"
+  },
+  "qcm_335": {
+    "correct_index": 3,
+    "correct_answer": "512.1.3 Fréquence"
+  },
+  "qcm_336": {
+    "correct_index": 0,
+    "correct_answer": "512.1.4 Puissance"
+  },
+  "qcm_337": {
+    "correct_index": 1,
+    "correct_answer": "512.1.5 Compatibilité"
+  },
+  "qcm_338": {
+    "correct_index": 2,
+    "correct_answer": "512.1.6 Tension assignée de tenue aux chocs"
+  },
+  "qcm_339": {
+    "correct_index": 0,
+    "correct_answer": "512.1.7 Autres caractéristiques"
+  },
+  "qcm_340": {
+    "correct_index": 1,
+    "correct_answer": "512.2 Influences externes"
+  },
+  "qcm_341": {
+    "correct_index": 1,
+    "correct_answer": "512.2.10.1.1 Harmoniques,"
+  },
+  "qcm_342": {
+    "correct_index": 0,
+    "correct_answer": "512.2.10.1.9 Champs électriques BF"
+  },
+  "qcm_343": {
+    "correct_index": 1,
+    "correct_answer": "512.2.10.2.5 Phénomènes rayonnés à haute fréquence"
+  },
+  "qcm_344": {
+    "correct_index": 0,
+    "correct_answer": "513.1 Dispositions générales"
+  },
+  "qcm_345": {
+    "correct_index": 1,
+    "correct_answer": "513.2 Contrôle et remplacement des conducteurs et câbles"
+  },
+  "qcm_346": {
+    "correct_index": 3,
+    "correct_answer": "514.1 Généralités"
+  },
+  "qcm_347": {
+    "correct_index": 0,
+    "correct_answer": "514.2 Identification et repérage des canalisations"
+  },
+  "qcm_348": {
+    "correct_index": 0,
+    "correct_answer": "514.3 Repérage des conducteurs isolés"
+  },
+  "qcm_349": {
+    "correct_index": 3,
+    "correct_answer": "514.3.1 Ces prescriptions concernent essentiellement le choix des moyens utilisés pour repérer le"
+  },
+  "qcm_350": {
+    "correct_index": 0,
+    "correct_answer": "514.3.2 L'exclusivité des moyens de repérage"
+  },
+  "qcm_351": {
+    "correct_index": 0,
+    "correct_answer": "514.3.3 Dans le cas particulier d'une installation desservie par un branchement monophasé entre"
+  },
+  "qcm_352": {
+    "correct_index": 3,
+    "correct_answer": "514.4 Dispositifs de protection contre les surintensités"
+  },
+  "qcm_353": {
+    "correct_index": 0,
+    "correct_answer": "514.5.1 Pour toute installation électrique, il y a lieu d'établir des schémas, diagrammes ou tableaux"
+  },
+  "qcm_354": {
+    "correct_index": 1,
+    "correct_answer": "514.5.2 Les symboles utilisés doivent être choisis parmi ceux des normes"
+  },
+  "qcm_355": {
+    "correct_index": 3,
+    "correct_answer": "515.1 Les matériels doivent être choisis et disposés de manière à empêcher toute influence nuisible"
+  },
+  "qcm_356": {
+    "correct_index": 0,
+    "correct_answer": "515.2 Lorsque des matériels parcourus par des courants de natures ou de tensions différentes sont"
+  },
+  "qcm_357": {
+    "correct_index": 1,
+    "correct_answer": "515.3 Compatibilité électromagnétique"
+  },
+  "qcm_358": {
+    "correct_index": 2,
+    "correct_answer": "Annexe A – (normative) – Repérage des conducteurs de protection et"
+  },
+  "qcm_359": {
+    "correct_index": 3,
+    "correct_answer": "Annexe B – (informative) – Liste abrégée des influences externes"
+  },
+  "qcm_360": {
+    "correct_index": 3,
+    "correct_answer": "520.1 Le choix et la mise en œuvre des canalisations doivent tenir compte des principes"
+  },
+  "qcm_361": {
+    "correct_index": 0,
+    "correct_answer": "520.2.1 Profilés, conduits et systèmes de conduits"
+  },
+  "qcm_362": {
+    "correct_index": 1,
+    "correct_answer": "520.2.2 Conducteurs et câbles"
+  },
+  "qcm_363": {
+    "correct_index": 2,
+    "correct_answer": "520.2.3 Presse-étoupe"
+  },
+  "qcm_364": {
+    "correct_index": 0,
+    "correct_answer": "521.1 Généralités"
+  },
+  "qcm_365": {
+    "correct_index": 0,
+    "correct_answer": "521.2 Choix des canalisations"
+  },
+  "qcm_366": {
+    "correct_index": 3,
+    "correct_answer": "521.3 (disponible)"
+  },
+  "qcm_367": {
+    "correct_index": 3,
+    "correct_answer": "521.4 Canalisations préfabriquées"
+  },
+  "qcm_368": {
+    "correct_index": 3,
+    "correct_answer": "521.5 Circuits en courant alternatif et enveloppes en matériau ferromagnétique"
+  },
+  "qcm_369": {
+    "correct_index": 0,
+    "correct_answer": "521.6.1 Des conducteurs appartenant à des circuits différents peuvent emprunter un même câble"
+  },
+  "qcm_370": {
+    "correct_index": 1,
+    "correct_answer": "521.6.2 Les câbles monoconducteurs et les conducteurs isolés, appartenant à un même circuit,"
+  },
+  "qcm_371": {
+    "correct_index": 0,
+    "correct_answer": "521.6.3 Lorsque plusieurs câbles monoconducteurs sont réunis en parallèle, ils sont répartis en"
+  },
+  "qcm_372": {
+    "correct_index": 2,
+    "correct_answer": "521.6.4 Les canalisations doivent être choisies et installées de manière à empêcher pendant la mise"
+  },
+  "qcm_373": {
+    "correct_index": 2,
+    "correct_answer": "521.6.5 Les dimensions intérieures des conduits, des conduits-profilés et des accessoires de"
+  },
+  "qcm_374": {
+    "correct_index": 1,
+    "correct_answer": "521.6.6 Le rayon de courbure d'une canalisation doit être tel que les conducteurs et câbles ne soient"
+  },
+  "qcm_375": {
+    "correct_index": 3,
+    "correct_answer": "521.6.7 Lorsque les conducteurs et câbles ne sont pas supportés sur toute leur longueur par des"
+  },
+  "qcm_376": {
+    "correct_index": 0,
+    "correct_answer": "521.6.8 Lorsque les canalisations sont soumises à une traction permanente (par exemple en raison"
+  },
+  "qcm_377": {
+    "correct_index": 3,
+    "correct_answer": "521.6.9 Les canalisations dans lesquelles des conducteurs ou câbles doivent être tirés doivent"
+  },
+  "qcm_378": {
+    "correct_index": 0,
+    "correct_answer": "521.6.10 Les canalisations encastrées dans les planchers doivent être suffisamment protégées"
+  },
+  "qcm_379": {
+    "correct_index": 2,
+    "correct_answer": "521.6.11 Les parcours des canalisations apparentes qui sont rigidement fixées doivent être"
+  },
+  "qcm_380": {
+    "correct_index": 2,
+    "correct_answer": "521.6.12 Les câbles souples doivent être installés de manière à éviter des efforts de traction"
+  },
+  "qcm_381": {
+    "correct_index": 0,
+    "correct_answer": "521.7 Protection contre les influences externes"
+  },
+  "qcm_382": {
+    "correct_index": 2,
+    "correct_answer": "521.8 Traversées"
+  },
+  "qcm_383": {
+    "correct_index": 2,
+    "correct_answer": "522.1 Sources externes de chaleur"
+  },
+  "qcm_384": {
+    "correct_index": 2,
+    "correct_answer": "522.1.1 Afin d'éviter les effets de la chaleur émise par des sources externes, les méthodes"
+  },
+  "qcm_385": {
+    "correct_index": 1,
+    "correct_answer": "522.3 Influences électromagnétiques, électrostatiques ou ionisantes (AM)"
+  },
+  "qcm_386": {
+    "correct_index": 3,
+    "correct_answer": "523.0 Objet"
+  },
+  "qcm_387": {
+    "correct_index": 2,
+    "correct_answer": "523.1 Généralités"
+  },
+  "qcm_388": {
+    "correct_index": 0,
+    "correct_answer": "523.1.1 Le courant"
+  },
+  "qcm_389": {
+    "correct_index": 3,
+    "correct_answer": "523.1.2 La règle du 523.1.1 est considérée comme satisfaite si le courant dans les conducteurs"
+  },
+  "qcm_390": {
+    "correct_index": 3,
+    "correct_answer": "523.1.3 Les valeurs de courants admissibles et de facteurs de correction satisfaisant aux"
+  },
+  "qcm_391": {
+    "correct_index": 1,
+    "correct_answer": "523.2 Température ambiante"
+  },
+  "qcm_392": {
+    "correct_index": 2,
+    "correct_answer": "523.3 Résistivité thermique du sol"
+  },
+  "qcm_393": {
+    "correct_index": 0,
+    "correct_answer": "523.4.1 Groupement de circuits ou de câbles dans l'air"
+  },
+  "qcm_394": {
+    "correct_index": 0,
+    "correct_answer": "523.4.2 Groupements de conduits dans l'air ou noyés dans le béton"
+  },
+  "qcm_395": {
+    "correct_index": 3,
+    "correct_answer": "523.4.3 Groupement de câbles et de conduits enterrés"
+  },
+  "qcm_396": {
+    "correct_index": 0,
+    "correct_answer": "523.4.4 Charges intermittentes et variables"
+  },
+  "qcm_397": {
+    "correct_index": 3,
+    "correct_answer": "523.4.5 Conducteurs faiblement chargés"
+  },
+  "qcm_398": {
+    "correct_index": 1,
+    "correct_answer": "523.5.1 Le nombre de conducteurs à considérer dans un circuit est celui des conducteurs"
+  },
+  "qcm_399": {
+    "correct_index": 3,
+    "correct_answer": "523.5.2 Lorsque le conducteur neutre transporte un courant sans réduction correspondante de la"
+  },
+  "qcm_400": {
+    "correct_index": 3,
+    "correct_answer": "523.5.3 Les conducteurs utilisés uniquement comme conducteurs de protection ne sont pas pris en"
+  },
+  "qcm_401": {
+    "correct_index": 1,
+    "correct_answer": "523.6 Câbles en parallèle"
+  },
+  "qcm_402": {
+    "correct_index": 0,
+    "correct_answer": "523.7 Variations des conditions d'installation sur un parcours"
+  },
+  "qcm_403": {
+    "correct_index": 0,
+    "correct_answer": "524.1 Section des conducteurs de phase"
+  },
+  "qcm_404": {
+    "correct_index": 1,
+    "correct_answer": "524.2.1 Le conducteur neutre éventuel doit avoir la même section que les conducteurs de phase :"
+  },
+  "qcm_405": {
+    "correct_index": 2,
+    "correct_answer": "524.2.2 Lorsque le taux d'harmoniques de rang 3 et multiple de 3 est supérieur à 33 % en courant, le"
+  },
+  "qcm_406": {
+    "correct_index": 1,
+    "correct_answer": "524.2.3 Dans les circuits polyphasés dont les conducteurs de phase ont une section supérieure à"
+  },
+  "qcm_407": {
+    "correct_index": 0,
+    "correct_answer": "524.2.4 Un conducteur neutre ne peut être commun à plusieurs circuits."
+  },
+  "qcm_408": {
+    "correct_index": 2,
+    "correct_answer": "526.1 Les connexions entre conducteurs et entre conducteurs et autres matériels doivent assurer"
+  },
+  "qcm_409": {
+    "correct_index": 1,
+    "correct_answer": "526.2 Le choix des moyens de connexion doit tenir compte,"
+  },
+  "qcm_410": {
+    "correct_index": 1,
+    "correct_answer": "526.3 Les connexions doivent être accessibles pour vérification, essai et maintenance, sauf dans les"
+  },
+  "qcm_411": {
+    "correct_index": 3,
+    "correct_answer": "526.4 Si nécessaire, des précautions doivent être prises pour que la température atteinte par les"
+  },
+  "qcm_412": {
+    "correct_index": 0,
+    "correct_answer": "526.5 Les connexions doivent présenter un degré de protection IP2X ou IPXXB par construction ou"
+  },
+  "qcm_413": {
+    "correct_index": 1,
+    "correct_answer": "526.6 Hormis le cas des lignes aériennes et celui de lignes de contact alimentant des appareils"
+  },
+  "qcm_414": {
+    "correct_index": 2,
+    "correct_answer": "526.7 Les connexions doivent être en mesure de supporter les contraintes provoquées par les"
+  },
+  "qcm_415": {
+    "correct_index": 3,
+    "correct_answer": "526.8 Le repiquage des conducteurs - c'est-à-dire la connexion sur les bornes d'un appareil des"
+  },
+  "qcm_416": {
+    "correct_index": 2,
+    "correct_answer": "527.1 Précautions à l'intérieur d'un compartiment fermé"
+  },
+  "qcm_417": {
+    "correct_index": 1,
+    "correct_answer": "527.2 Barrières coupe-feu"
+  },
+  "qcm_418": {
+    "correct_index": 1,
+    "correct_answer": "527.2.1 Lorsqu'une canalisation traverse des éléments de construction tels que planchers, murs,"
+  },
+  "qcm_419": {
+    "correct_index": 3,
+    "correct_answer": "527.2.2 Les canalisations telles que conduits, profilés, goulottes, canalisations préfabriquées, qui"
+  },
+  "qcm_420": {
+    "correct_index": 0,
+    "correct_answer": "528.1 Voisinage avec d'autres canalisations électriques"
+  },
+  "qcm_421": {
+    "correct_index": 2,
+    "correct_answer": "528.2 Voisinage avec des canalisations non électriques"
+  },
+  "qcm_422": {
+    "correct_index": 3,
+    "correct_answer": "528.2.1 Au voisinage des canalisations de chauffage ou d'air chaud et des conduits de fumée, les"
+  },
+  "qcm_423": {
+    "correct_index": 0,
+    "correct_answer": "528.2.2 Les canalisations électriques ne doivent pas être placées parallèlement au-dessous des"
+  },
+  "qcm_424": {
+    "correct_index": 3,
+    "correct_answer": "528.2.3 Lorsque des canalisations électriques sont installées au voisinage de canalisations non"
+  },
+  "qcm_425": {
+    "correct_index": 1,
+    "correct_answer": "528.2.4 Lorsqu'une canalisation électrique est placée à proximité immédiate de canalisations non"
+  },
+  "qcm_426": {
+    "correct_index": 3,
+    "correct_answer": "529.1.1 Pose en montage apparent"
+  },
+  "qcm_427": {
+    "correct_index": 3,
+    "correct_answer": "529.1.2.1 Les conduits de degré de protection au moins égal à IK07 ne peuvent être posés avant"
+  },
+  "qcm_428": {
+    "correct_index": 1,
+    "correct_answer": "529.1.2.2 Les conduits qui ne possèdent pas la qualité de non propagation de la flamme et qui sont"
+  },
+  "qcm_429": {
+    "correct_index": 1,
+    "correct_answer": "529.2.1 Les moulures en bois ne sont autorisées qu'en rénovation dans les monuments historiques"
+  },
+  "qcm_430": {
+    "correct_index": 0,
+    "correct_answer": "529.2.2 Les rainures des moulures doivent avoir des dimensions telles que les conducteurs s'y logent"
+  },
+  "qcm_431": {
+    "correct_index": 1,
+    "correct_answer": "529.2.3 Lorsqu'il est fait usage de plinthes rainurées et qui servent de support à des socles de prises"
+  },
+  "qcm_432": {
+    "correct_index": 2,
+    "correct_answer": "529.3 Goulottes"
+  },
+  "qcm_433": {
+    "correct_index": 2,
+    "correct_answer": "529.4 Vides de construction"
+  },
+  "qcm_434": {
+    "correct_index": 0,
+    "correct_answer": "529.4.1 Dans les vides de construction, les canalisations sont constituées de conducteurs isolés"
+  },
+  "qcm_435": {
+    "correct_index": 0,
+    "correct_answer": "529.4.2 Conducteurs isolés posés sous conduit"
+  },
+  "qcm_436": {
+    "correct_index": 1,
+    "correct_answer": "529.4.3 Câbles"
+  },
+  "qcm_437": {
+    "correct_index": 1,
+    "correct_answer": "529.5.1 Seuls sont admis en pose enterrée des câbles dans les conditions suivantes :"
+  },
+  "qcm_438": {
+    "correct_index": 2,
+    "correct_answer": "529.5.2 Les câbles doivent être protégés contre les détériorations causées par le tassement des"
+  },
+  "qcm_439": {
+    "correct_index": 1,
+    "correct_answer": "529.5.3 Lorsqu'une canalisation enterrée croise une autre canalisation électrique enterrée, elles"
+  },
+  "qcm_440": {
+    "correct_index": 2,
+    "correct_answer": "529.5.4 Toute canalisation enterrée doit être signalée par un dispositif avertisseur non corrodable"
+  },
+  "qcm_441": {
+    "correct_index": 1,
+    "correct_answer": "529.6 Canalisations préfabriquées"
+  },
+  "qcm_442": {
+    "correct_index": 0,
+    "correct_answer": "529.7.1 Les règles énoncées ci-après concernent les canalisations établies en conducteurs nus ou"
+  },
+  "qcm_443": {
+    "correct_index": 1,
+    "correct_answer": "529.7.2 Les conducteurs nus doivent se trouver hors d'atteinte. Dans les traversées des cours, leur"
+  },
+  "qcm_444": {
+    "correct_index": 1,
+    "correct_answer": "529.7.3 Les conducteurs isolés assemblés en faisceau doivent être fixés par des accessoires dont"
+  },
+  "qcm_445": {
+    "correct_index": 0,
+    "correct_answer": "530.1 Domaine d’application"
+  },
+  "qcm_446": {
+    "correct_index": 3,
+    "correct_answer": "530.3.1 Les contacts mobiles de tous les pôles des appareils multipolaires doivent être couplés"
+  },
+  "qcm_447": {
+    "correct_index": 2,
+    "correct_answer": "530.3.2 Dans les circuits polyphasés, des dispositifs unipolaires ne doivent pas être installés dans"
+  },
+  "qcm_448": {
+    "correct_index": 2,
+    "correct_answer": "530.3.3 Les dispositifs assurant plusieurs fonctions doivent satisfaire à toutes les prescriptions de"
+  },
+  "qcm_449": {
+    "correct_index": 1,
+    "correct_answer": "530.4.1 Exception faite des appareillages qui sont spécialement établis pour être connectés à des"
+  },
+  "qcm_450": {
+    "correct_index": 0,
+    "correct_answer": "530.4.2 Les conducteurs isolés (par exemple H07 V-U ou R) doivent être disposés de telle manière"
+  },
+  "qcm_451": {
+    "correct_index": 2,
+    "correct_answer": "530.4.3 Lorsque les appareillages sont encastrés dans une paroi, ils doivent être logés dans une"
+  },
+  "qcm_452": {
+    "correct_index": 2,
+    "correct_answer": "530.4.4 Lorsque les appareillages sont fixés sur ou dans des goulottes, des plinthes ou des"
+  },
+  "qcm_453": {
+    "correct_index": 2,
+    "correct_answer": "530.4.5 L'appareillage ne doit pas, à l'usage, se séparer de son support et rendre accessibles les"
+  },
+  "qcm_454": {
+    "correct_index": 1,
+    "correct_answer": "531.1.1 Sc héma TN (411.4)"
+  },
+  "qcm_455": {
+    "correct_index": 2,
+    "correct_answer": "531.1.2 Schéma TT (411.5)"
+  },
+  "qcm_456": {
+    "correct_index": 2,
+    "correct_answer": "531.1.3 Schéma IT (411.6)"
+  },
+  "qcm_457": {
+    "correct_index": 3,
+    "correct_answer": "531.2 Dispositifs de protection à courant différentiel-résiduel (en abrégé DDR)"
+  },
+  "qcm_458": {
+    "correct_index": 3,
+    "correct_answer": "531.2.1.1 Les dispositifs de protection à courant différentiel-résiduel doivent assurer la coupure de"
+  },
+  "qcm_459": {
+    "correct_index": 0,
+    "correct_answer": "531.2.1.2 Le conducteur de protection associé aux conducteurs actifs d’un circuit ne doit pas"
+  },
+  "qcm_460": {
+    "correct_index": 2,
+    "correct_answer": "531.2.1.3 Les dispositifs de protection à courant différentiel-résiduel doivent être choisis en tenant"
+  },
+  "qcm_461": {
+    "correct_index": 2,
+    "correct_answer": "531.2.1.4 Les dispositifs de protection à courant différentiel-résiduel doivent être choisis de façon à"
+  },
+  "qcm_462": {
+    "correct_index": 0,
+    "correct_answer": "531.2.1.5 Influence des composantes continues"
+  },
+  "qcm_463": {
+    "correct_index": 3,
+    "correct_answer": "531.2.1.6 Un même DDR, s’il est à haute sensibilité (I∆n ≤ 30mA), assure à la fois la protection"
+  },
+  "qcm_464": {
+    "correct_index": 3,
+    "correct_answer": "531.2.2 Choix des dispositifs suivant leur mode de fonctionnement"
+  },
+  "qcm_465": {
+    "correct_index": 2,
+    "correct_answer": "531.2.2.1 Les dispositifs de protection à courant différentiel-résiduel peuvent être soit à"
+  },
+  "qcm_466": {
+    "correct_index": 2,
+    "correct_answer": "531.2.2.2 L’utilisation de dispositifs de protection à courant différentiel-résiduel à fonctionnement"
+  },
+  "qcm_467": {
+    "correct_index": 0,
+    "correct_answer": "531.2.3.1 Protection contre les contacts indirects"
+  },
+  "qcm_468": {
+    "correct_index": 3,
+    "correct_answer": "531.2.3.2 Protection complémentaire contre les risques de contact direct"
+  },
+  "qcm_469": {
+    "correct_index": 3,
+    "correct_answer": "531.2.3.3 Protection contre les risques d’incendie"
+  },
+  "qcm_470": {
+    "correct_index": 0,
+    "correct_answer": "531.2.4 Mise en œuvre selon le schéma de liaison à la terre"
+  },
+  "qcm_471": {
+    "correct_index": 1,
+    "correct_answer": "531.2.4.1 Schéma TN"
+  },
+  "qcm_472": {
+    "correct_index": 1,
+    "correct_answer": "531.2.4.2.1 Emplacement des DDR"
+  },
+  "qcm_473": {
+    "correct_index": 3,
+    "correct_answer": "531.2.4.2.2 Choix des caractéristiques des DDR"
+  },
+  "qcm_474": {
+    "correct_index": 0,
+    "correct_answer": "531.2.4.3 Schéma IT"
+  },
+  "qcm_475": {
+    "correct_index": 3,
+    "correct_answer": "531.2.4.3.1 Cas du premier défaut"
+  },
+  "qcm_476": {
+    "correct_index": 1,
+    "correct_answer": "531.2.4.3.2 Cas du deuxième défaut affectant des masses interconnectées"
+  },
+  "qcm_477": {
+    "correct_index": 2,
+    "correct_answer": "531.2.4.3.3 Cas du deuxième défaut affectant des masses non interconnectées"
+  },
+  "qcm_478": {
+    "correct_index": 0,
+    "correct_answer": "531.2.4.3.4 Cas de la protection du conducteur neutre lors du deuxième défaut"
+  },
+  "qcm_479": {
+    "correct_index": 2,
+    "correct_answer": "531.2.5.1 L'emploi de DDR de courant différentiel-résiduel assigné au plus égal à 30 mA est une"
+  },
+  "qcm_480": {
+    "correct_index": 0,
+    "correct_answer": "531.2.5.2 En schéma TT, l'emploi de DDR à haute sensibilité est nécessaire pour assurer la"
+  },
+  "qcm_481": {
+    "correct_index": 1,
+    "correct_answer": "531.2.5.3 L'emploi de DDR à haute sensibilité est imposé notamment lorsque les conditions"
+  },
+  "qcm_482": {
+    "correct_index": 1,
+    "correct_answer": "533.1 Dispositions générales"
+  },
+  "qcm_483": {
+    "correct_index": 2,
+    "correct_answer": "533.1.1 Les fusibles dont les éléments de remplacement sont susceptibles d'être enlevés ou"
+  },
+  "qcm_484": {
+    "correct_index": 3,
+    "correct_answer": "533.1.2 Les disjoncteurs dont la manœuvre peut être assurée par des personnes autres qu'averties"
+  },
+  "qcm_485": {
+    "correct_index": 0,
+    "correct_answer": "533.2 Choix des dispositifs de protection contre les surcharges"
+  },
+  "qcm_486": {
+    "correct_index": 2,
+    "correct_answer": "533.3 Choix des dispositifs de protection contre les courts-circuits"
+  },
+  "qcm_487": {
+    "correct_index": 0,
+    "correct_answer": "533.3.1 Pouvoir de coupure"
+  },
+  "qcm_488": {
+    "correct_index": 0,
+    "correct_answer": "533.3.2 Temps de coupure"
+  },
+  "qcm_489": {
+    "correct_index": 2,
+    "correct_answer": "534.1 Dispositifs de protection contre les surtensions d'origine atmosphérique ou dues à des"
+  },
+  "qcm_490": {
+    "correct_index": 2,
+    "correct_answer": "534.1.1 Nature et rôle des dispositifs"
+  },
+  "qcm_491": {
+    "correct_index": 0,
+    "correct_answer": "534.1.2.1 Lorsque des parafoudres protègent"
+  },
+  "qcm_492": {
+    "correct_index": 3,
+    "correct_answer": "534.1.2.2 Un parafoudre destiné à protéger un matériel d'utilisation particulièrement sensible est"
+  },
+  "qcm_493": {
+    "correct_index": 3,
+    "correct_answer": "534.1.3 Mise en œuvre des parafoudres"
+  },
+  "qcm_494": {
+    "correct_index": 0,
+    "correct_answer": "534.1.3.1 Les parafoudres à l'origine de l'installation doivent être connectés au moins entre les"
+  },
+  "qcm_495": {
+    "correct_index": 2,
+    "correct_answer": "534.1.3.2 Si un parafoudre est installé à l'origine de l'installation, en aval d'un dispositif différentiel-"
+  },
+  "qcm_496": {
+    "correct_index": 1,
+    "correct_answer": "534.1.3.3 Les parafoudres ne doivent pas être installés dans des locaux où existent des risques"
+  },
+  "qcm_497": {
+    "correct_index": 1,
+    "correct_answer": "534.1.3.4 Afin d'assurer une protection optimale contre les surtensions, les conducteurs de"
+  },
+  "qcm_498": {
+    "correct_index": 0,
+    "correct_answer": "534.1.4.1 Les parafoudres doivent être conformes à la norme (16)."
+  },
+  "qcm_499": {
+    "correct_index": 0,
+    "correct_answer": "534.1.4.2 Les parafoudres connectés entre conducteurs actifs et terre doivent être choisis en"
+  },
+  "qcm_500": {
+    "correct_index": 0,
+    "correct_answer": "534.1.4.3 Le parafoudre installé à l'origine d'une installation 230/400 V doit avoir un niveau maximal"
+  },
+  "qcm_501": {
+    "correct_index": 0,
+    "correct_answer": "534.1.5.1 Des moyens doivent être mis en œuvre pour indiquer que le parafoudre n'assure plus sa"
+  },
+  "qcm_502": {
+    "correct_index": 1,
+    "correct_answer": "534.1.5.2 Les parafoudres doivent être disposés de manière, qu'en cas de défaillance, aucun risque"
+  },
+  "qcm_503": {
+    "correct_index": 3,
+    "correct_answer": "534.1.5.3 Des dispositifs de protection contre les courts-circuits, l’emballement thermique et contre"
+  },
+  "qcm_504": {
+    "correct_index": 3,
+    "correct_answer": "534.1.5.4 Une fois installés, les parafoudres et leurs dispositifs éventuels de protection ne doivent"
+  },
+  "qcm_505": {
+    "correct_index": 1,
+    "correct_answer": "534.1.5.5 La protection contre les contacts indirects, conforme à la partie 4-41,"
+  },
+  "qcm_506": {
+    "correct_index": 1,
+    "correct_answer": "534.1.6 Dispositifs de signalisation"
+  },
+  "qcm_507": {
+    "correct_index": 1,
+    "correct_answer": "534.2.1 Nature et rôle des limiteurs de surtension"
+  },
+  "qcm_508": {
+    "correct_index": 2,
+    "correct_answer": "534.2.2 Choix des limiteurs de surtension"
+  },
+  "qcm_509": {
+    "correct_index": 0,
+    "correct_answer": "534.2.3 Niveau de protection effectif assuré par un limiteur de surtension suivant son mode"
+  },
+  "qcm_510": {
+    "correct_index": 1,
+    "correct_answer": "534.2.4 Installation des limiteurs de surtension"
+  },
+  "qcm_511": {
+    "correct_index": 1,
+    "correct_answer": "534.2.5 Liaisons à la terre"
+  },
+  "qcm_512": {
+    "correct_index": 1,
+    "correct_answer": "534.3 Dispositifs de protection contre les effets des baisses de tension"
+  },
+  "qcm_513": {
+    "correct_index": 0,
+    "correct_answer": "535.1 Sélectivité entre dispositifs de protection contre les surintensités"
+  },
+  "qcm_514": {
+    "correct_index": 0,
+    "correct_answer": "535.2 Protection d’accompagnement entre dispositifs de protection contre les surintensités"
+  },
+  "qcm_515": {
+    "correct_index": 2,
+    "correct_answer": "535.3 Association entre les dispositifs de protection à courant différentiel-résiduel et les"
+  },
+  "qcm_516": {
+    "correct_index": 1,
+    "correct_answer": "535.3.1 Lorsqu'un dispositif de protection à courant différentiel-résiduel est incorporé ou combiné"
+  },
+  "qcm_517": {
+    "correct_index": 1,
+    "correct_answer": "535.3.2 Lorsqu'un dispositif de protection à courant différentiel-résiduel n'est ni incorporé ni"
+  },
+  "qcm_518": {
+    "correct_index": 0,
+    "correct_answer": "535.4 Sélectivité entre les dispositifs de protection à courant différentiel-résiduel"
+  },
+  "qcm_519": {
+    "correct_index": 0,
+    "correct_answer": "535.4.1 Lorsque plusieurs DDR sont prévus dans une même installation et si la sélectivité est"
+  },
+  "qcm_520": {
+    "correct_index": 1,
+    "correct_answer": "535.4.2 Sélection des circuits"
+  },
+  "qcm_521": {
+    "correct_index": 3,
+    "correct_answer": "535.4.3 Sélectivité entre dispositifs de protection à courant différentiel-résiduel"
+  },
+  "qcm_522": {
+    "correct_index": 1,
+    "correct_answer": "535.4.3.1 Sélectivité totale"
+  },
+  "qcm_523": {
+    "correct_index": 2,
+    "correct_answer": "535.4.3.2 Sélectivité partielle"
+  },
+  "qcm_524": {
+    "correct_index": 2,
+    "correct_answer": "536.1 Généralités"
+  },
+  "qcm_525": {
+    "correct_index": 2,
+    "correct_answer": "536.2 Dispositifs de sectionnement"
+  },
+  "qcm_526": {
+    "correct_index": 1,
+    "correct_answer": "536.2.1 Les dispositifs de sectionnement doivent couper effectivement tous les conducteurs actifs"
+  },
+  "qcm_527": {
+    "correct_index": 2,
+    "correct_answer": "536.2.1.1 Les dispositifs de sectionnement doivent satisfaire aux deux conditions suivantes :"
+  },
+  "qcm_528": {
+    "correct_index": 0,
+    "correct_answer": "536.2.1.2 La distance d'ouverture entre les contacts du dispositif doit être visible ou être clairement"
+  },
+  "qcm_529": {
+    "correct_index": 1,
+    "correct_answer": "536.2.1.3 Les dispositifs à semiconducteurs ne doivent pas être utilisés comme dispositifs de"
+  },
+  "qcm_530": {
+    "correct_index": 1,
+    "correct_answer": "536.2.2 Les dispositifs de sectionnement doivent être conçus ou installés de façon à empêcher"
+  },
+  "qcm_531": {
+    "correct_index": 1,
+    "correct_answer": "536.2.3 Des dispositions doivent être prises pour protéger les dispositifs de sectionnement contre"
+  },
+  "qcm_532": {
+    "correct_index": 3,
+    "correct_answer": "536.2.4 Les moyens de sectionnement doivent de préférence être assurés par un appareil de"
+  },
+  "qcm_533": {
+    "correct_index": 3,
+    "correct_answer": "536.2.5 Les dispositifs utilisés pour le sectionnement doivent être clairement identifiés, par exemple"
+  },
+  "qcm_534": {
+    "correct_index": 3,
+    "correct_answer": "536.3 Dispositifs de coupure d'urgence"
+  },
+  "qcm_535": {
+    "correct_index": 2,
+    "correct_answer": "536.3.1 Les dispositifs assurant la coupure d'urgence doivent pouvoir couper le courant de pleine"
+  },
+  "qcm_536": {
+    "correct_index": 0,
+    "correct_answer": "536.3.2 Les moyens de coupure d'urgence peuvent être constitués :"
+  },
+  "qcm_537": {
+    "correct_index": 1,
+    "correct_answer": "536.3.3 Les dispositifs de coupure d'urgence doivent assurer la coupure du circuit principal. Ils"
+  },
+  "qcm_538": {
+    "correct_index": 2,
+    "correct_answer": "536.3.4 Les moyens de commande (poignées, boutons-poussoirs, etc.) des dispositifs de coupure"
+  },
+  "qcm_539": {
+    "correct_index": 2,
+    "correct_answer": "536.3.5 Les moyens de commande d'un dispositif de coupure d'urgence doivent pouvoir être"
+  },
+  "qcm_540": {
+    "correct_index": 0,
+    "correct_answer": "536.3.6 Lorsqu'il est nécessaire d'agir sur plusieurs appareils de coupure, l'action sur un seul"
+  },
+  "qcm_541": {
+    "correct_index": 1,
+    "correct_answer": "536.4 Dispositifs de coupure pour entretien mécanique"
+  },
+  "qcm_542": {
+    "correct_index": 1,
+    "correct_answer": "536.5 Dispositifs de commande fonctionnelle"
+  },
+  "qcm_543": {
+    "correct_index": 3,
+    "correct_answer": "536.5.1 Les dispositifs de commande fonctionnelle doivent être appropriés aux conditions les plus"
+  },
+  "qcm_544": {
+    "correct_index": 1,
+    "correct_answer": "536.5.2 Les dispositifs de commande fonctionnelle peuvent interrompre le courant sans ouvrir"
+  },
+  "qcm_545": {
+    "correct_index": 1,
+    "correct_answer": "536.5.3 Les sectionneurs, les fusibles et les barrettes ne doivent pas être utilisés pour la"
+  },
+  "qcm_546": {
+    "correct_index": 2,
+    "correct_answer": "537.1 Contrôleurs permanents d'isolement (CPI)"
+  },
+  "qcm_547": {
+    "correct_index": 2,
+    "correct_answer": "537.1.1 Conformément à la règle énoncée en 411.6.5, un contrôleur permanent d'isolement doit"
+  },
+  "qcm_548": {
+    "correct_index": 2,
+    "correct_answer": "537.1.2 Installation des contrôleurs permanents d'isolement"
+  },
+  "qcm_549": {
+    "correct_index": 1,
+    "correct_answer": "537.1.3 Réglage des contrôleurs permanents d'isolement"
+  },
+  "qcm_550": {
+    "correct_index": 2,
+    "correct_answer": "537.1.4 Choix des contrôleurs permanents d'isolement"
+  },
+  "qcm_551": {
+    "correct_index": 2,
+    "correct_answer": "537.2 Contrôleurs permanents d’isolement pour la surveillance des matériels hors tension"
+  },
+  "qcm_552": {
+    "correct_index": 0,
+    "correct_answer": "537.3 Dispositif de localisation des défauts"
+  },
+  "qcm_553": {
+    "correct_index": 3,
+    "correct_answer": "Annexe C – (informative) – Prises de terre..........................................................................284"
+  },
+  "qcm_554": {
+    "correct_index": 3,
+    "correct_answer": "541.1 Domaine d’application et objet"
+  },
+  "qcm_555": {
+    "correct_index": 2,
+    "correct_answer": "541.2 Définitions"
+  },
+  "qcm_556": {
+    "correct_index": 0,
+    "correct_answer": "542.1.1 Les dispositions de mise à la terre peuvent être utilisées à la fois ou séparément pour"
+  },
+  "qcm_557": {
+    "correct_index": 2,
+    "correct_answer": "542.1.2 Toutes les prises de terre d’un même bâtiment doivent être interconnectées (mise à la"
+  },
+  "qcm_558": {
+    "correct_index": 2,
+    "correct_answer": "542.1.3 L’attention doit être portée sur les dispositions relatives aux prises de terre utilisées en"
+  },
+  "qcm_559": {
+    "correct_index": 2,
+    "correct_answer": "542.1.4 Le choix et la mise en œuvre des matériels assurant la mise à la terre doivent être tels"
+  },
+  "qcm_560": {
+    "correct_index": 0,
+    "correct_answer": "542.2 Prises de terre"
+  },
+  "qcm_561": {
+    "correct_index": 3,
+    "correct_answer": "Annexe 4.1"
+  },
+  "qcm_562": {
+    "correct_index": 0,
+    "correct_answer": "Annexe 4.1"
+  },
+  "qcm_563": {
+    "correct_index": 1,
+    "correct_answer": "542.2.1 Les matériaux et les dimensions des prises de terre doivent être choisis de manière à"
+  },
+  "qcm_564": {
+    "correct_index": 3,
+    "correct_answer": "542.2.2 L'efficacité d'une prise de terre dépend des conditions locales du sol. Une ou plusieurs"
+  },
+  "qcm_565": {
+    "correct_index": 1,
+    "correct_answer": "542.2.3.1 Boucle à fond de fouille"
+  },
+  "qcm_566": {
+    "correct_index": 0,
+    "correct_answer": "542.2.3.2 Autres méthodes de réalisation de prises de terre"
+  },
+  "qcm_567": {
+    "correct_index": 3,
+    "correct_answer": "542.2.4 Le type et la profondeur d'enfouissement des prises de terre doivent être tels que"
+  },
+  "qcm_568": {
+    "correct_index": 3,
+    "correct_answer": "542.2.5 L’attention doit se porter sur la corrosion électrolytique lors de l’utilisation de matériaux"
+  },
+  "qcm_569": {
+    "correct_index": 3,
+    "correct_answer": "542.2.6 Des canalisations métalliques de distribution de liquides ou de gaz ne doivent pas être"
+  },
+  "qcm_570": {
+    "correct_index": 1,
+    "correct_answer": "542.3.1 Les conducteurs de terre doivent satisfaire aux prescriptions de 543.1 et, lorsqu’ils sont"
+  },
+  "qcm_571": {
+    "correct_index": 0,
+    "correct_answer": "542.3.2 La liaison d'un conducteur de terre à une prise de terre doit être soigneusement réalisée"
+  },
+  "qcm_572": {
+    "correct_index": 3,
+    "correct_answer": "542.4.1 Dans toute installation, une borne ou une barre principale de terre doit être prévue et les"
+  },
+  "qcm_573": {
+    "correct_index": 3,
+    "correct_answer": "542.4.2 Chaque conducteur connecté à la borne principale de terre doit pouvoir être déconnecté"
+  },
+  "qcm_574": {
+    "correct_index": 1,
+    "correct_answer": "543.1.1 La section des conducteurs de protection doit satisfaire aux conditions de la coupure"
+  },
+  "qcm_575": {
+    "correct_index": 3,
+    "correct_answer": "543.1.2 La section des conducteurs de protection doit être au moins égale à celle déterminée"
+  },
+  "qcm_576": {
+    "correct_index": 2,
+    "correct_answer": "543.1.3 Les conducteurs de protection qui ne font pas partie de la canalisation d'alimentation"
+  },
+  "qcm_577": {
+    "correct_index": 3,
+    "correct_answer": "543.1.4 Lorsqu’un conducteur de protection est commun à plusieurs circuits, la section de ce"
+  },
+  "qcm_578": {
+    "correct_index": 2,
+    "correct_answer": "543.2.1 Peuvent être utilisés comme conducteurs de protection :"
+  },
+  "qcm_579": {
+    "correct_index": 3,
+    "correct_answer": "543.2.2 Lorsque l'installation comporte des enveloppes ou des châssis d'ensembles montés en"
+  },
+  "qcm_580": {
+    "correct_index": 2,
+    "correct_answer": "543.2.3 L’utilisation des éléments métalliques suivants comme conducteurs de protection ou"
+  },
+  "qcm_581": {
+    "correct_index": 0,
+    "correct_answer": "543.3 Conservation de la continuité électrique des conducteurs de protection"
+  },
+  "qcm_582": {
+    "correct_index": 1,
+    "correct_answer": "543.3.1 Les conducteurs de protection doivent être convenablement protégés contre les"
+  },
+  "qcm_583": {
+    "correct_index": 3,
+    "correct_answer": "543.3.2 Les connexions doivent être accessibles pour vérification et essais, à l'exception:"
+  },
+  "qcm_584": {
+    "correct_index": 2,
+    "correct_answer": "543.3.3 Aucun appareillage ne doit être inséré dans le conducteur de protection, mais des"
+  },
+  "qcm_585": {
+    "correct_index": 0,
+    "correct_answer": "543.3.4 Lorsqu'un dispositif de contrôle de continuité de terre est utilisé, les enroulements ne"
+  },
+  "qcm_586": {
+    "correct_index": 0,
+    "correct_answer": "543.3.5 Les masses des matériels à relier aux conducteurs de protection ne doivent pas être"
+  },
+  "qcm_587": {
+    "correct_index": 1,
+    "correct_answer": "543.4 Conducteurs PEN"
+  },
+  "qcm_588": {
+    "correct_index": 2,
+    "correct_answer": "543.4.1 Un conducteur PEN ne peut être utilisé que dans les installations fixes et, pour des"
+  },
+  "qcm_589": {
+    "correct_index": 0,
+    "correct_answer": "543.4.2 Le conducteur PEN doit être isolé."
+  },
+  "qcm_590": {
+    "correct_index": 2,
+    "correct_answer": "543.4.3 Si, à partir de n'importe quel point de l'installation, le conducteur neutre et le conducteur"
+  },
+  "qcm_591": {
+    "correct_index": 2,
+    "correct_answer": "543.4.4 Les éléments conducteurs ne doivent pas être utilisés comme conducteurs PEN."
+  },
+  "qcm_592": {
+    "correct_index": 1,
+    "correct_answer": "543.5 Conducteur de protection utilisé à des fins de mise à la terre fonctionnelle"
+  },
+  "qcm_593": {
+    "correct_index": 3,
+    "correct_answer": "543.6 Disposition des conducteurs de protection"
+  },
+  "qcm_594": {
+    "correct_index": 3,
+    "correct_answer": "543.7 Conducteurs de protection renforcée pour des courants de fuite supérieurs à 10 mA"
+  },
+  "qcm_595": {
+    "correct_index": 2,
+    "correct_answer": "544.1 Conducteurs d'équipotentialité principale"
+  },
+  "qcm_596": {
+    "correct_index": 3,
+    "correct_answer": "544.2.1 Un conducteur d'équipotentialité supplémentaire reliant deux masses doit avoir une"
+  },
+  "qcm_597": {
+    "correct_index": 3,
+    "correct_answer": "544.2.2 Un conducteur d'équipotentialité supplémentaire reliant une masse à un élément"
+  },
+  "qcm_598": {
+    "correct_index": 2,
+    "correct_answer": "544.2.3 Ces conducteurs doivent satisfaire aux conditions de 543.1.3."
+  },
+  "qcm_599": {
+    "correct_index": 3,
+    "correct_answer": "545.1 Généralités"
+  },
+  "qcm_600": {
+    "correct_index": 3,
+    "correct_answer": "545.2 Ceinturage d'équipotentialité"
+  },
+  "qcm_601": {
+    "correct_index": 1,
+    "correct_answer": "545.2.1 Section du ceinturage d’équipotentialité"
+  },
+  "qcm_602": {
+    "correct_index": 0,
+    "correct_answer": "545.2.2 Connexions au ceinturage d'équipotentialité"
+  },
+  "qcm_603": {
+    "correct_index": 0,
+    "correct_answer": "545.3 Liaisons équipotentielles fonctionnelles"
+  },
+  "qcm_604": {
+    "correct_index": 0,
+    "correct_answer": "545.4 Conducteurs de mise à la terre fonctionnelle"
+  },
+  "qcm_605": {
+    "correct_index": 1,
+    "correct_answer": "545.4.1 Section"
+  },
+  "qcm_606": {
+    "correct_index": 0,
+    "correct_answer": "545.4.2 Types de conducteurs de mise à la terre combinée de protection et fonctionnelle"
+  },
+  "qcm_607": {
+    "correct_index": 0,
+    "correct_answer": "545.5 Transmission des signaux et interconnexions entre des prises terre séparées"
+  },
+  "qcm_608": {
+    "correct_index": 1,
+    "correct_answer": "Annexe A – (normative) – Méthode de calcul du facteur k en 543.1.2"
+  },
+  "qcm_609": {
+    "correct_index": 1,
+    "correct_answer": "Annexe B – (normative) – Exemple d'installation de mise à la terre"
+  },
+  "qcm_610": {
+    "correct_index": 2,
+    "correct_answer": "Annexe C – (informative) – Prises de terre"
+  },
+  "qcm_611": {
+    "correct_index": 2,
+    "correct_answer": "3.1 - Eléments constitutifs"
+  },
+  "qcm_612": {
+    "correct_index": 2,
+    "correct_answer": "3.2 - Établissement des prises de terre"
+  },
+  "qcm_613": {
+    "correct_index": 3,
+    "correct_answer": "551.1 Généralités"
+  },
+  "qcm_614": {
+    "correct_index": 0,
+    "correct_answer": "551.1.1 Prescriptions supplémentaires pour"
+  },
+  "qcm_615": {
+    "correct_index": 2,
+    "correct_answer": "551.1.2 Prescriptions supplémentaires pour"
+  },
+  "qcm_616": {
+    "correct_index": 1,
+    "correct_answer": "551.2.1 Groupes électrogènes"
+  },
+  "qcm_617": {
+    "correct_index": 3,
+    "correct_answer": "553.1 Redresseurs et convertisseurs"
+  },
+  "qcm_618": {
+    "correct_index": 2,
+    "correct_answer": "553.2.1 Généralités"
+  },
+  "qcm_619": {
+    "correct_index": 3,
+    "correct_answer": "553.2.2 Démarreurs à semi-conducteurs"
+  },
+  "qcm_620": {
+    "correct_index": 1,
+    "correct_answer": "553.2.3 Variateurs de vitesse"
+  },
+  "qcm_621": {
+    "correct_index": 1,
+    "correct_answer": "553.3 Alimentations statiques sans interruption (ASI) de type statique"
+  },
+  "qcm_622": {
+    "correct_index": 1,
+    "correct_answer": "553.4 Systèmes de transfert statique"
+  },
+  "qcm_623": {
+    "correct_index": 0,
+    "correct_answer": "554.1 Batteries portatives ou mobiles"
+  },
+  "qcm_624": {
+    "correct_index": 0,
+    "correct_answer": "554.2 Batteries fixes"
+  },
+  "qcm_625": {
+    "correct_index": 3,
+    "correct_answer": "554.2.1 Les batteries d'accumulateurs installés à poste fixe doivent se trouver dans un local"
+  },
+  "qcm_626": {
+    "correct_index": 1,
+    "correct_answer": "554.2.2 Lorsque la tension nominale des batteries est supérieure à 150 volts, il doit être"
+  },
+  "qcm_627": {
+    "correct_index": 0,
+    "correct_answer": "554.2.3 Le local renfermant des batteries d'accumulateurs doit recevoir, par ventilation"
+  },
+  "qcm_628": {
+    "correct_index": 3,
+    "correct_answer": "1.1 - Lorsque le système de charge comporte à la fois des dispositifs de régulation et de"
+  },
+  "qcm_629": {
+    "correct_index": 3,
+    "correct_answer": "1.2 - Lorsque le système de charge ne comporte pas les dispositifs de régulation et de"
+  },
+  "qcm_630": {
+    "correct_index": 2,
+    "correct_answer": "2.1 - Les batteries dites étanches sont habituellement associées à un redresseur-chargeur"
+  },
+  "qcm_631": {
+    "correct_index": 3,
+    "correct_answer": "2.2 - Si par contre, le redresseur-chargeur n'a pas les caractéristiques de fonctionnement"
+  },
+  "qcm_632": {
+    "correct_index": 2,
+    "correct_answer": "554.2.4 Les batteries de démarrage des groupes moteurs thermiques-générateurs, ainsi que"
+  },
+  "qcm_633": {
+    "correct_index": 0,
+    "correct_answer": "554.2.5 Les connexions de batteries peuvent être réalisées en conducteurs nus, mais les"
+  },
+  "qcm_634": {
+    "correct_index": 3,
+    "correct_answer": "555.1.1 Un nombre approprié de socles de prises de courant doit être installé afin de"
+  },
+  "qcm_635": {
+    "correct_index": 1,
+    "correct_answer": "555.1.2 Les socles de prise de courant doivent comporter autant d'organes de contact"
+  },
+  "qcm_636": {
+    "correct_index": 0,
+    "correct_answer": "555.1.3 Lorsque les canalisations comportent un conducteur de protection, il doit être fait"
+  },
+  "qcm_637": {
+    "correct_index": 1,
+    "correct_answer": "555.1.4 Lorsqu'il est fait usage de tensions ou de courants de natures différentes, il est"
+  },
+  "qcm_638": {
+    "correct_index": 2,
+    "correct_answer": "555.1.5 Lorsqu'il est nécessaire d'empêcher la permutation des pôles ou des phases, des"
+  },
+  "qcm_639": {
+    "correct_index": 1,
+    "correct_answer": "555.1.6 Les socles de prise de courant doivent être disposés de façon que les parties actives"
+  },
+  "qcm_640": {
+    "correct_index": 1,
+    "correct_answer": "555.1.7 Les socles de prise de courant 16 A - 250 V doivent être d'un type à obturation."
+  },
+  "qcm_641": {
+    "correct_index": 2,
+    "correct_answer": "555.1.8 Les socles de prise de courant fixés sur les parois des locaux doivent être disposés"
+  },
+  "qcm_642": {
+    "correct_index": 1,
+    "correct_answer": "555.1.9 Les socles de prise de courant installés dans les sols doivent posséder les degrés de"
+  },
+  "qcm_643": {
+    "correct_index": 2,
+    "correct_answer": "555.2 Appareils à courants porteurs"
+  },
+  "qcm_644": {
+    "correct_index": 3,
+    "correct_answer": "556.1 Généralités"
+  },
+  "qcm_645": {
+    "correct_index": 3,
+    "correct_answer": "556.2 Transformateurs de tension"
+  },
+  "qcm_646": {
+    "correct_index": 3,
+    "correct_answer": "556.3 Transformateurs de courant"
+  },
+  "qcm_647": {
+    "correct_index": 0,
+    "correct_answer": "556.4 Transformateurs combinés (tension-courant)"
+  },
+  "qcm_648": {
+    "correct_index": 2,
+    "correct_answer": "556.5 Surveillance de la tension et du courant"
+  },
+  "qcm_649": {
+    "correct_index": 1,
+    "correct_answer": "557.1 Les règles du présent article sont applicables aux condensateurs statiques de"
+  },
+  "qcm_650": {
+    "correct_index": 3,
+    "correct_answer": "557.2 Points à considérer pour le choix des condensateurs"
+  },
+  "qcm_651": {
+    "correct_index": 1,
+    "correct_answer": "557.2.1 Distorsion harmonique"
+  },
+  "qcm_652": {
+    "correct_index": 1,
+    "correct_answer": "557.2.2 Tension assignée"
+  },
+  "qcm_653": {
+    "correct_index": 2,
+    "correct_answer": "557.2.3 Altitude - Les condensateurs sont conçus pour fonctionner jusqu'à 2 000 mètres. Au-"
+  },
+  "qcm_654": {
+    "correct_index": 1,
+    "correct_answer": "557.2.4 Température de service - Les condensateurs sont très sensibles aux températures"
+  },
+  "qcm_655": {
+    "correct_index": 3,
+    "correct_answer": "557.2.5 Surtensions - Le choix et l'installation des condensateurs doivent tenir compte des"
+  },
+  "qcm_656": {
+    "correct_index": 3,
+    "correct_answer": "557.2.6 Surintensités"
+  },
+  "qcm_657": {
+    "correct_index": 2,
+    "correct_answer": "557.2.7 Appareillage de commande et de protection"
+  },
+  "qcm_658": {
+    "correct_index": 2,
+    "correct_answer": "557.2.8 Règles de sécurité"
+  },
+  "qcm_659": {
+    "correct_index": 2,
+    "correct_answer": "558.1 Généralités"
+  },
+  "qcm_660": {
+    "correct_index": 1,
+    "correct_answer": "7.6.5.1 et à 7.6.5.2 de la NF EN 60439-1 ou conforme à leur propre norme."
+  },
+  "qcm_661": {
+    "correct_index": 0,
+    "correct_answer": "558.2 Matériaux"
+  },
+  "qcm_662": {
+    "correct_index": 1,
+    "correct_answer": "558.3.1 Généralités"
+  },
+  "qcm_663": {
+    "correct_index": 3,
+    "correct_answer": "558.3.2.1 Disposition de protection contre les contacts directs (411.2)"
+  },
+  "qcm_664": {
+    "correct_index": 0,
+    "correct_answer": "558.3.2.2.1 Mise à la terre des masses"
+  },
+  "qcm_665": {
+    "correct_index": 1,
+    "correct_answer": "558.3.2.2.2 Mesure de protection par isolation double ou renforcée par installation. (Voir"
+  },
+  "qcm_666": {
+    "correct_index": 3,
+    "correct_answer": "558.3.2.2.2.1 enveloppe conçue pour réaliser un ensemble de niveau d’isolation double"
+  },
+  "qcm_667": {
+    "correct_index": 1,
+    "correct_answer": "558.3.2.2.2.2 autres enveloppes"
+  },
+  "qcm_668": {
+    "correct_index": 3,
+    "correct_answer": "558.4.1 Les appareillages doivent être mis en œuvre conformément aux instructions fournies"
+  },
+  "qcm_669": {
+    "correct_index": 1,
+    "correct_answer": "558.4.2 Les conducteurs et câbles installés dans les ensembles doivent satisfaire aux règles"
+  },
+  "qcm_670": {
+    "correct_index": 3,
+    "correct_answer": "558.4.3 Les distances minimales suivantes doivent être respectées :"
+  },
+  "qcm_671": {
+    "correct_index": 3,
+    "correct_answer": "558.5.1 Tout ensemble doit être pourvu d'une plaque de firme indiquant son constructeur."
+  },
+  "qcm_672": {
+    "correct_index": 1,
+    "correct_answer": "558.5.2 Dans les ensembles, l'appartenance des matériels (tels dispositifs de protection,"
+  },
+  "qcm_673": {
+    "correct_index": 2,
+    "correct_answer": "559.1 Connexion des appareils aux installations"
+  },
+  "qcm_674": {
+    "correct_index": 1,
+    "correct_answer": "559.1.1 Connexion directe des appareils à une canalisation fixe"
+  },
+  "qcm_675": {
+    "correct_index": 2,
+    "correct_answer": "559.1.2.1 Les canalisations mobiles doivent comporter le nombre nécessaire de conducteurs"
+  },
+  "qcm_676": {
+    "correct_index": 2,
+    "correct_answer": "559.1.2.2 Les canalisations mobiles doivent satisfaire aux règles applicables de la partie"
+  },
+  "qcm_677": {
+    "correct_index": 2,
+    "correct_answer": "559.1.2.3 Lorsque la canalisation mobile comporte un conducteur de protection, celui-ci doit"
+  },
+  "qcm_678": {
+    "correct_index": 3,
+    "correct_answer": "559.1.2.4 Les connexions des canalisations mobiles doivent être effectuées à"
+  },
+  "qcm_679": {
+    "correct_index": 0,
+    "correct_answer": "559.2.1 Généralités"
+  },
+  "qcm_680": {
+    "correct_index": 0,
+    "correct_answer": "559.2.2 Prescriptions générales pour l’installation"
+  },
+  "qcm_681": {
+    "correct_index": 1,
+    "correct_answer": "559.2.3.1 La mise en œuvre des luminaires doit prendre en compte leurs effets thermiques"
+  },
+  "qcm_682": {
+    "correct_index": 1,
+    "correct_answer": "559.2.3.2 Les luminaires doivent être installés en respectant les indications fournies par les"
+  },
+  "qcm_683": {
+    "correct_index": 2,
+    "correct_answer": "559.2.4.1 Les moyens de fixation des luminaires suspendus (accessoires, boîtes de"
+  },
+  "qcm_684": {
+    "correct_index": 0,
+    "correct_answer": "559.2.4.2 Le câblage traversant ne peut être réalisé que dans des luminaires prévus à cet"
+  },
+  "qcm_685": {
+    "correct_index": 1,
+    "correct_answer": "559.2.4.3 Les câbles de raccordement doivent être choisis conformément au marquage relatif"
+  },
+  "qcm_686": {
+    "correct_index": 1,
+    "correct_answer": "559.2.5 Appareillage auxiliaire indépendant du luminaire"
+  },
+  "qcm_687": {
+    "correct_index": 2,
+    "correct_answer": "559.2.6 Condensateurs"
+  },
+  "qcm_688": {
+    "correct_index": 0,
+    "correct_answer": "559.2.7 Protection contre les chocs électriques sur les stands de luminaires"
+  },
+  "qcm_689": {
+    "correct_index": 0,
+    "correct_answer": "559.2.8 Effet stroboscopique"
+  },
+  "qcm_690": {
+    "correct_index": 1,
+    "correct_answer": "559.2.9.1 Mise en œuvre"
+  },
+  "qcm_691": {
+    "correct_index": 3,
+    "correct_answer": "559.2.9.2 Fixation des luminaires"
+  },
+  "qcm_692": {
+    "correct_index": 2,
+    "correct_answer": "559.2.9.3 Effets thermiques"
+  },
+  "qcm_693": {
+    "correct_index": 1,
+    "correct_answer": "559.2.9.4 Luminaires Très Basse Tension"
+  },
+  "qcm_694": {
+    "correct_index": 0,
+    "correct_answer": "559.2.10 Chemins lumineux"
+  },
+  "qcm_695": {
+    "correct_index": 1,
+    "correct_answer": "559.3 Appareils électrodomestiques"
+  },
+  "qcm_696": {
+    "correct_index": 0,
+    "correct_answer": "559.4 Appareils électroniques pour usages domestiques et analogues"
+  },
+  "qcm_697": {
+    "correct_index": 3,
+    "correct_answer": "559.5 Appareils de chauffage industriels"
+  },
+  "qcm_698": {
+    "correct_index": 0,
+    "correct_answer": "559.5.1 Appareils de cuisson et fours"
+  },
+  "qcm_699": {
+    "correct_index": 2,
+    "correct_answer": "559.5.2.1 Les appareils de chauffage ou de réchauffage de liquides combustibles ou"
+  },
+  "qcm_700": {
+    "correct_index": 2,
+    "correct_answer": "559.5.2.2 Les appareils comportant des électrodes nues ou résistances non isolées,"
+  },
+  "qcm_701": {
+    "correct_index": 2,
+    "correct_answer": "559.5.2.3 Cordons chauffants"
+  },
+  "qcm_702": {
+    "correct_index": 0,
+    "correct_answer": "559.6 Moteurs"
+  },
+  "qcm_703": {
+    "correct_index": 0,
+    "correct_answer": "559.6.1 Limitation des troubles dus au démarrage des moteurs"
+  },
+  "qcm_704": {
+    "correct_index": 2,
+    "correct_answer": "561.1 Une installation de sécurité devant fonctionner en cas d'incendie, les matériels qui la"
+  },
+  "qcm_705": {
+    "correct_index": 3,
+    "correct_answer": "561.2 Les dispositions de protection contre les contacts indirects n'impliquant pas la coupure"
+  },
+  "qcm_706": {
+    "correct_index": 3,
+    "correct_answer": "561.3 Les matériels des installations de sécurité, y compris les canalisations, doivent être"
+  },
+  "qcm_707": {
+    "correct_index": 3,
+    "correct_answer": "562.1 Les groupes électrogènes doivent être conformes à la NF E 37-312."
+  },
+  "qcm_708": {
+    "correct_index": 0,
+    "correct_answer": "562.2 Les sources de sécurité doivent être installées à poste fixe et de telle manière qu'elles"
+  },
+  "qcm_709": {
+    "correct_index": 1,
+    "correct_answer": "553.3 : Alimentations statiques sans interruption ;"
+  },
+  "qcm_710": {
+    "correct_index": 0,
+    "correct_answer": "562.3 Les sources de sécurité doivent être installées dans un emplacement approprié et être"
+  },
+  "qcm_711": {
+    "correct_index": 0,
+    "correct_answer": "562.4 L'emplacement des sources de sécurité doit être convenablement ventilé de façon que"
+  },
+  "qcm_712": {
+    "correct_index": 3,
+    "correct_answer": "562.5 Des branchements séparés, indépendants et alimentés par un réseau de distribution"
+  },
+  "qcm_713": {
+    "correct_index": 2,
+    "correct_answer": "562.7 Une source de sécurité peut être utilisée pour des installations autres que les"
+  },
+  "qcm_714": {
+    "correct_index": 3,
+    "correct_answer": "562.7 Les paragraphes 562.1 à 562.7 ne s'appliquent pas aux blocs autonomes."
+  },
+  "qcm_715": {
+    "correct_index": 2,
+    "correct_answer": "563.1 Les câbles des installations de sécurité doivent être différents des câbles des"
+  },
+  "qcm_716": {
+    "correct_index": 0,
+    "correct_answer": "563.2 Les circuits des installations de sécurité ne doivent pas traverser des emplacements"
+  },
+  "qcm_717": {
+    "correct_index": 1,
+    "correct_answer": "563.3 Dans certains cas, la protection contre les surcharges, prescrite par le paragraphe"
+  },
+  "qcm_718": {
+    "correct_index": 0,
+    "correct_answer": "563.4 Chaque circuit doit être protégé de telle manière que tout incident électrique l'affectant,"
+  },
+  "qcm_719": {
+    "correct_index": 1,
+    "correct_answer": "563.5 Les dispositifs de protection, de commande et d'alarme, doivent être clairement"
+  },
+  "qcm_720": {
+    "correct_index": 2,
+    "correct_answer": "564.1 Dans les installations d'éclairage, les types de lampes doivent être compatibles avec la"
+  },
+  "qcm_721": {
+    "correct_index": 2,
+    "correct_answer": "564.2 Dans les matériels alimentés par deux circuits différents, un défaut se produisant dans"
+  },
+  "qcm_722": {
+    "correct_index": 1,
+    "correct_answer": "565.1 Toutes précautions doivent être prises pour éviter la mise en parallèle des sources, par"
+  },
+  "qcm_723": {
+    "correct_index": 1,
+    "correct_answer": "565.2 La protection contre les courts-circuits et la protection contre les contacts indirects"
+  },
+  "qcm_724": {
+    "correct_index": 2,
+    "correct_answer": "Titre 6 – Vérifications et entretien des installations"
+  },
+  "qcm_725": {
+    "correct_index": 0,
+    "correct_answer": "610.3 Définitions...........................................................................................................323"
+  },
+  "qcm_726": {
+    "correct_index": 2,
+    "correct_answer": "612.2 Continuité des conducteurs de protection et des liaisons équipotentielles"
+  },
+  "qcm_727": {
+    "correct_index": 2,
+    "correct_answer": "612.6 Vérification des conditions de protection par coupure automatique"
+  },
+  "qcm_728": {
+    "correct_index": 1,
+    "correct_answer": "612.7 Essais fonctionnels .............................................................................................331"
+  },
+  "qcm_729": {
+    "correct_index": 2,
+    "correct_answer": "620.4 Rapport...............................................................................................................332"
+  },
+  "qcm_730": {
+    "correct_index": 3,
+    "correct_answer": "610.1.1 Toute installation doit, pendant la mise en œuvre ou lorsqu'elle est terminée et avant sa"
+  },
+  "qcm_731": {
+    "correct_index": 0,
+    "correct_answer": "610.1.2 Les informations demandées en 514.5 doivent être mises à la disposition des personnes"
+  },
+  "qcm_732": {
+    "correct_index": 1,
+    "correct_answer": "610.1.3 Des précautions doivent être prises pendant la vérification et les essais, pour éviter des"
+  },
+  "qcm_733": {
+    "correct_index": 3,
+    "correct_answer": "610.1.4 Lors d'extensions ou de modifications d'installations existantes, il doit être vérifié que les"
+  },
+  "qcm_734": {
+    "correct_index": 3,
+    "correct_answer": "610.1.5 Les vérifications doivent être réalisées par une personne qualifiée, compétente dans le"
+  },
+  "qcm_735": {
+    "correct_index": 1,
+    "correct_answer": "610.1.6 Suite à la vérification conformément aux prescriptions de la présente partie, un rapport"
+  },
+  "qcm_736": {
+    "correct_index": 1,
+    "correct_answer": "610.3 Définitions"
+  },
+  "qcm_737": {
+    "correct_index": 0,
+    "correct_answer": "611.1 L’inspection visuelle doit précéder les essais et être normalement effectuée, l'ensemble de"
+  },
+  "qcm_738": {
+    "correct_index": 3,
+    "correct_answer": "611.2 L’inspection visuelle est destinée à vérifier si le matériel électrique relié en permanence :"
+  },
+  "qcm_739": {
+    "correct_index": 1,
+    "correct_answer": "611.3 L’inspection visuelle doit comprendre au moins la vérification des conditions suivantes,"
+  },
+  "qcm_740": {
+    "correct_index": 1,
+    "correct_answer": "512.2 et 522) ;"
+  },
+  "qcm_741": {
+    "correct_index": 1,
+    "correct_answer": "612.1 Généralités"
+  },
+  "qcm_742": {
+    "correct_index": 2,
+    "correct_answer": "612.2 Continuité des conducteurs de protection et des"
+  },
+  "qcm_743": {
+    "correct_index": 2,
+    "correct_answer": "612.3 Résistance d'isolement de l'installation électrique"
+  },
+  "qcm_744": {
+    "correct_index": 3,
+    "correct_answer": "612.4 Protection par TBTS ou TBTP ou par séparation des circuits"
+  },
+  "qcm_745": {
+    "correct_index": 3,
+    "correct_answer": "2.4.1 dans le cas d’une protection"
+  },
+  "qcm_746": {
+    "correct_index": 2,
+    "correct_answer": "612.4.1 Protection par TBTS"
+  },
+  "qcm_747": {
+    "correct_index": 3,
+    "correct_answer": "612.4.2 Protection par TBTP"
+  },
+  "qcm_748": {
+    "correct_index": 2,
+    "correct_answer": "612.4.3 Protection par séparation électrique"
+  },
+  "qcm_749": {
+    "correct_index": 2,
+    "correct_answer": "612.5 Résistance des sols et des parois"
+  },
+  "qcm_750": {
+    "correct_index": 1,
+    "correct_answer": "612.6.1 Généralités"
+  },
+  "qcm_751": {
+    "correct_index": 1,
+    "correct_answer": "411.3.2.2 ou 411.3.2.3."
+  },
+  "qcm_752": {
+    "correct_index": 2,
+    "correct_answer": "612.6.2 Mesure de la résistance des prises de terre"
+  },
+  "qcm_753": {
+    "correct_index": 1,
+    "correct_answer": "612.6.3 Mesure de l'impédance de la boucle de défaut"
+  },
+  "qcm_754": {
+    "correct_index": 3,
+    "correct_answer": "612.6.4.1 La vérification consiste à mesurer la résistance entre toute masse et le point le plus"
+  },
+  "qcm_755": {
+    "correct_index": 1,
+    "correct_answer": "612.6.4.2 Lorsque les prescriptions en 612.6.3 ou 612.6.4.1 ne sont pas satisfaites et qu'une"
+  },
+  "qcm_756": {
+    "correct_index": 0,
+    "correct_answer": "612.7 Essais fonctionnels"
+  },
+  "qcm_757": {
+    "correct_index": 1,
+    "correct_answer": "620.1 Généralités"
+  },
+  "qcm_758": {
+    "correct_index": 3,
+    "correct_answer": "620.2 Périodicité des vérifications périodiques"
+  },
+  "qcm_759": {
+    "correct_index": 1,
+    "correct_answer": "620.3 Domaine des vérifications périodiques"
+  },
+  "qcm_760": {
+    "correct_index": 3,
+    "correct_answer": "620.4 Rapport"
+  },
+  "qcm_761": {
+    "correct_index": 3,
+    "correct_answer": "Annexe A – (informative) – Méthode de mesure de la résistance d'isolement"
+  },
+  "qcm_762": {
+    "correct_index": 3,
+    "correct_answer": "Annexe B – (informative) – Vérification du fonctionnement des dispositifs de"
+  },
+  "qcm_763": {
+    "correct_index": 0,
+    "correct_answer": "Annexe C – (informative) – Mesure de la résistance d'une prise de terre"
+  },
+  "qcm_764": {
+    "correct_index": 2,
+    "correct_answer": "TITRE 7. - Règles pour les installations et emplacements spéciaux"
+  },
+  "qcm_765": {
+    "correct_index": 2,
+    "correct_answer": "701.71 Règles complémentaires pour les salles de douches..........................................349"
+  },
+  "qcm_766": {
+    "correct_index": 3,
+    "correct_answer": "701.1 Domaine d'application"
+  },
+  "qcm_767": {
+    "correct_index": 1,
+    "correct_answer": "701.320.1 Les présentes prescriptions considèrent quatre volumes,"
+  },
+  "qcm_768": {
+    "correct_index": 2,
+    "correct_answer": "701.320.2 Dans le cas où il n'y a pas de receveur de douche et où la pomme de douche est"
+  },
+  "qcm_769": {
+    "correct_index": 1,
+    "correct_answer": "701.320.3 Les cabines de douche individuelles doivent répondre aux prescriptions des"
+  },
+  "qcm_770": {
+    "correct_index": 0,
+    "correct_answer": "701.320.4 Le volume situé au-dessus du volume 1 jusqu'à une hauteur de 3 m au-dessus du sol"
+  },
+  "qcm_771": {
+    "correct_index": 1,
+    "correct_answer": "701.320.5 L'espace situé au-dessous de la baignoire ou de la douche et sur leurs côtés est"
+  },
+  "qcm_772": {
+    "correct_index": 0,
+    "correct_answer": "701.320.6 Lorsqu'un faux-plafond fermé est disposé dans les volumes 1 et 2, l'espace situé au-"
+  },
+  "qcm_773": {
+    "correct_index": 1,
+    "correct_answer": "701.4 Protection pour assurer la sécurité"
+  },
+  "qcm_774": {
+    "correct_index": 0,
+    "correct_answer": "701.41 Protection contre les chocs électriques"
+  },
+  "qcm_775": {
+    "correct_index": 0,
+    "correct_answer": "701.414.1 Lorsque la TBTS est utilisée, la protection contre les contacts directs doit être"
+  },
+  "qcm_776": {
+    "correct_index": 3,
+    "correct_answer": "701.414.2 Dans le volume 0, seule la mesure de protection par TBTS de tension nominale au"
+  },
+  "qcm_777": {
+    "correct_index": 1,
+    "correct_answer": "701.414.3 Tous les matériels électriques situés hors volumes 0, 1, 2, 3 dans les locaux"
+  },
+  "qcm_778": {
+    "correct_index": 0,
+    "correct_answer": "701.415.2 Liaison équipotentielle supplémentaire"
+  },
+  "qcm_779": {
+    "correct_index": 2,
+    "correct_answer": "701.5 Choix et mise en œuvre des matériels électriques"
+  },
+  "qcm_780": {
+    "correct_index": 3,
+    "correct_answer": "701.512.2 Influences externes"
+  },
+  "qcm_781": {
+    "correct_index": 0,
+    "correct_answer": "701.52 Canalisations"
+  },
+  "qcm_782": {
+    "correct_index": 0,
+    "correct_answer": "701.520.01 Les canalisations doivent présenter une isolation satisfaisant aux règles de la"
+  },
+  "qcm_783": {
+    "correct_index": 3,
+    "correct_answer": "701.520.02 Dans le volume 0, aucune canalisation n'est admise, sauf TBTS limitée à 12 V en"
+  },
+  "qcm_784": {
+    "correct_index": 1,
+    "correct_answer": "701.520.03 Les boîtes de connexion ne sont pas admises dans les volumes 0, 1 et 2."
+  },
+  "qcm_785": {
+    "correct_index": 3,
+    "correct_answer": "701.53 Appareillage"
+  },
+  "qcm_786": {
+    "correct_index": 1,
+    "correct_answer": "701.55 Autres matériels"
+  },
+  "qcm_787": {
+    "correct_index": 3,
+    "correct_answer": "701.415.2 soient satisfaites et que le volume situé au-dessous de la baignoire soit accessible"
+  },
+  "qcm_788": {
+    "correct_index": 2,
+    "correct_answer": "701.71 Règles complémentaires pour les salles de douches"
+  },
+  "qcm_789": {
+    "correct_index": 2,
+    "correct_answer": "701.71.1 Cabines de douches individuelles"
+  },
+  "qcm_790": {
+    "correct_index": 0,
+    "correct_answer": "701.71.2 Douches collectives"
+  },
+  "qcm_791": {
+    "correct_index": 1,
+    "correct_answer": "702.55 Autres matériels............................................................................................................ 359"
+  },
+  "qcm_792": {
+    "correct_index": 1,
+    "correct_answer": "702.11 Domaine d'application"
+  },
+  "qcm_793": {
+    "correct_index": 2,
+    "correct_answer": "702.2 Définitions"
+  },
+  "qcm_794": {
+    "correct_index": 0,
+    "correct_answer": "702.2.21 Bassins des fontaines"
+  },
+  "qcm_795": {
+    "correct_index": 3,
+    "correct_answer": "702.32 Classification des volumes"
+  },
+  "qcm_796": {
+    "correct_index": 3,
+    "correct_answer": "702.411.3.1 Volumes 0 et 1 des piscines"
+  },
+  "qcm_797": {
+    "correct_index": 3,
+    "correct_answer": "702.411.3.2 Volumes 0 et 1 des fontaines"
+  },
+  "qcm_798": {
+    "correct_index": 0,
+    "correct_answer": "702.411.3.3 Volume 2 des piscines"
+  },
+  "qcm_799": {
+    "correct_index": 0,
+    "correct_answer": "702.414.1.1 Lorsque la TBTS est utilisée, quelle que soit sa tension nominale, la protection"
+  },
+  "qcm_800": {
+    "correct_index": 2,
+    "correct_answer": "702.415.2 Liaison équipotentielle supplémentaire"
+  },
+  "qcm_801": {
+    "correct_index": 0,
+    "correct_answer": "702.46 Sectionnement et commande"
+  },
+  "qcm_802": {
+    "correct_index": 1,
+    "correct_answer": "702.512.2 Influences externes"
+  },
+  "qcm_803": {
+    "correct_index": 1,
+    "correct_answer": "702.522.21 Mise en œuvre selon les volumes"
+  },
+  "qcm_804": {
+    "correct_index": 2,
+    "correct_answer": "702.522.22 Limitation des canalisations selon les volumes"
+  },
+  "qcm_805": {
+    "correct_index": 2,
+    "correct_answer": "702.522.23 Prescriptions complémentaires pour les canalisations des fontaines"
+  },
+  "qcm_806": {
+    "correct_index": 1,
+    "correct_answer": "702.522.24 Boîtes de connexion"
+  },
+  "qcm_807": {
+    "correct_index": 2,
+    "correct_answer": "702.53 Appareillage"
+  },
+  "qcm_808": {
+    "correct_index": 1,
+    "correct_answer": "702.55.1.1 Généralités"
+  },
+  "qcm_809": {
+    "correct_index": 1,
+    "correct_answer": "702.55.1.2 Prescriptions particulières pour des matériels électriques basse tension"
+  },
+  "qcm_810": {
+    "correct_index": 3,
+    "correct_answer": "702.55.2 Appareils d'éclairage subaquatiques"
+  },
+  "qcm_811": {
+    "correct_index": 0,
+    "correct_answer": "702.55.3 Matériels électriques des fontaines"
+  },
+  "qcm_812": {
+    "correct_index": 3,
+    "correct_answer": "703.53 Appareillage ............................................................................................................369"
+  },
+  "qcm_813": {
+    "correct_index": 1,
+    "correct_answer": "703.1 Domaine d'application"
+  },
+  "qcm_814": {
+    "correct_index": 1,
+    "correct_answer": "703.2.09.01 Sauna à air chaud : Local ou emplacement dans lequel l'air est chauffé en service"
+  },
+  "qcm_815": {
+    "correct_index": 0,
+    "correct_answer": "703.414.4.7 Lorsque la TBTS est utilisée, la protection contre les contacts directs doit être"
+  },
+  "qcm_816": {
+    "correct_index": 3,
+    "correct_answer": "703.512.2 Les matériels électriques doivent posséder au moins les degrés de protection IP24."
+  },
+  "qcm_817": {
+    "correct_index": 1,
+    "correct_answer": "703.52 Canalisations"
+  },
+  "qcm_818": {
+    "correct_index": 1,
+    "correct_answer": "412.2 et ne doivent comporter aucun revêtement"
+  },
+  "qcm_819": {
+    "correct_index": 3,
+    "correct_answer": "703.53 Appareillage"
+  },
+  "qcm_820": {
+    "correct_index": 0,
+    "correct_answer": "704.536 Dispositifs de commande et de sectionnement.......................................................377"
+  },
+  "qcm_821": {
+    "correct_index": 3,
+    "correct_answer": "704.1 Domaine d'application"
+  },
+  "qcm_822": {
+    "correct_index": 2,
+    "correct_answer": "704.1.5 Dans les chantiers, les installations fixes sont limitées à l'ensemble comprenant"
+  },
+  "qcm_823": {
+    "correct_index": 2,
+    "correct_answer": "704.312.2 Types de schémas de liaisons à la terre"
+  },
+  "qcm_824": {
+    "correct_index": 0,
+    "correct_answer": "704.313 Alimentation"
+  },
+  "qcm_825": {
+    "correct_index": 3,
+    "correct_answer": "704.35 Installations de sécurité"
+  },
+  "qcm_826": {
+    "correct_index": 1,
+    "correct_answer": "704.351 Éclairage de sécurité"
+  },
+  "qcm_827": {
+    "correct_index": 1,
+    "correct_answer": "704.352 Autres circuits de sécurité"
+  },
+  "qcm_828": {
+    "correct_index": 2,
+    "correct_answer": "704.411.1 Généralités"
+  },
+  "qcm_829": {
+    "correct_index": 1,
+    "correct_answer": "704.411.1.1 Protection contre les contacts directs"
+  },
+  "qcm_830": {
+    "correct_index": 3,
+    "correct_answer": "704.411.1.2 Mesures de protection"
+  },
+  "qcm_831": {
+    "correct_index": 1,
+    "correct_answer": "704.43 Protection contre les surintensités"
+  },
+  "qcm_832": {
+    "correct_index": 3,
+    "correct_answer": "704.433 Protection contre les surcharges"
+  },
+  "qcm_833": {
+    "correct_index": 3,
+    "correct_answer": "704.434 Protection contre les courts-circuits"
+  },
+  "qcm_834": {
+    "correct_index": 2,
+    "correct_answer": "704.511.1 Les ensembles de chantier doivent être conformes aux prescriptions de la norme"
+  },
+  "qcm_835": {
+    "correct_index": 0,
+    "correct_answer": "704.512.2 Choix et mise en œuvre des matériels en fonction des influences externes"
+  },
+  "qcm_836": {
+    "correct_index": 0,
+    "correct_answer": "704.52 Canalisations"
+  },
+  "qcm_837": {
+    "correct_index": 1,
+    "correct_answer": "704.522.8.1.8 Afin d’éviter la détérioration des câbles, ceux-ci ne doivent pas être posés dans"
+  },
+  "qcm_838": {
+    "correct_index": 1,
+    "correct_answer": "704.525 Chutes de tension dans les installations"
+  },
+  "qcm_839": {
+    "correct_index": 3,
+    "correct_answer": "704.536 Dispositifs de commande et de sectionnement"
+  },
+  "qcm_840": {
+    "correct_index": 3,
+    "correct_answer": "704.542.2 Prise de terre"
+  },
+  "qcm_841": {
+    "correct_index": 3,
+    "correct_answer": "704.555.1 Prises de courant"
+  },
+  "qcm_842": {
+    "correct_index": 0,
+    "correct_answer": "705.443 Protection contre les surtensions d’origine atmosphérique ou dues"
+  },
+  "qcm_843": {
+    "correct_index": 1,
+    "correct_answer": "705.55 Autres matériels ......................................................................................................380"
+  },
+  "qcm_844": {
+    "correct_index": 1,
+    "correct_answer": "705.1 Domaine d'application"
+  },
+  "qcm_845": {
+    "correct_index": 3,
+    "correct_answer": "705.353 Source de sécurité ou de remplacement"
+  },
+  "qcm_846": {
+    "correct_index": 1,
+    "correct_answer": "705.414 Lorsque la TBTS ou la TBTP est utilisée, la protection contre les contacts directs doit"
+  },
+  "qcm_847": {
+    "correct_index": 1,
+    "correct_answer": "705.415.1 Les circuits alimentant des prises de courant, quel que soit leur courant assigné,"
+  },
+  "qcm_848": {
+    "correct_index": 1,
+    "correct_answer": "705.415.2 Liaison équipotentielle supplémentaire"
+  },
+  "qcm_849": {
+    "correct_index": 1,
+    "correct_answer": "705.422 Règles complémentaires de protection contre l'incendie"
+  },
+  "qcm_850": {
+    "correct_index": 0,
+    "correct_answer": "705.443 Protection contre les surtensions d’origine atmosphérique ou dues à des"
+  },
+  "qcm_851": {
+    "correct_index": 1,
+    "correct_answer": "705.512 Les matériels électriques doivent posséder au moins les degrés de protection tels"
+  },
+  "qcm_852": {
+    "correct_index": 2,
+    "correct_answer": "705.536 Dispositifs de sectionnement et de commande"
+  },
+  "qcm_853": {
+    "correct_index": 2,
+    "correct_answer": "705.55 Autres matériels"
+  },
+  "qcm_854": {
+    "correct_index": 0,
+    "correct_answer": "706.4 Protection pour assurer la sécurité ............................................................................383"
+  },
+  "qcm_855": {
+    "correct_index": 2,
+    "correct_answer": "706.1 Domaine d'application"
+  },
+  "qcm_856": {
+    "correct_index": 1,
+    "correct_answer": "706.410.3 Généralités"
+  },
+  "qcm_857": {
+    "correct_index": 3,
+    "correct_answer": "706.415.2 Liaison équipotentielle supplémentaire"
+  },
+  "qcm_858": {
+    "correct_index": 2,
+    "correct_answer": "708.530 Généralités et règles communes............................................................................388"
+  },
+  "qcm_859": {
+    "correct_index": 2,
+    "correct_answer": "708.1 Domaine d'application"
+  },
+  "qcm_860": {
+    "correct_index": 1,
+    "correct_answer": "708.2.1 Véhicule de loisirs"
+  },
+  "qcm_861": {
+    "correct_index": 2,
+    "correct_answer": "708.2.1.1 Caravane"
+  },
+  "qcm_862": {
+    "correct_index": 0,
+    "correct_answer": "708.2.1.2 Caravane à moteur (camping car)"
+  },
+  "qcm_863": {
+    "correct_index": 1,
+    "correct_answer": "708.2.1.3 Résidence mobile de loisirs"
+  },
+  "qcm_864": {
+    "correct_index": 3,
+    "correct_answer": "708.2.2 Emplacement de caravane"
+  },
+  "qcm_865": {
+    "correct_index": 3,
+    "correct_answer": "708.2.3 Parc de caravanes"
+  },
+  "qcm_866": {
+    "correct_index": 0,
+    "correct_answer": "708.2.4 Point d'alimentation électrique de caravane"
+  },
+  "qcm_867": {
+    "correct_index": 1,
+    "correct_answer": "708.31 Tensions normalisées"
+  },
+  "qcm_868": {
+    "correct_index": 0,
+    "correct_answer": "708.411.4 Dans le cas d’un schéma TN, seul le schéma TN-S doit être utilisé."
+  },
+  "qcm_869": {
+    "correct_index": 2,
+    "correct_answer": "708.415.1 Protection complémentaire par dispositifs à courant différentiel résiduel"
+  },
+  "qcm_870": {
+    "correct_index": 1,
+    "correct_answer": "708.51 Influences externes"
+  },
+  "qcm_871": {
+    "correct_index": 3,
+    "correct_answer": "708.52 Canalisations"
+  },
+  "qcm_872": {
+    "correct_index": 2,
+    "correct_answer": "708.529.5 Canalisations enterrées"
+  },
+  "qcm_873": {
+    "correct_index": 1,
+    "correct_answer": "708.529.7 Lignes aériennes"
+  },
+  "qcm_874": {
+    "correct_index": 2,
+    "correct_answer": "708.530.1 Le point d'alimentation électrique doit être placé au bord de l'emplacement et à"
+  },
+  "qcm_875": {
+    "correct_index": 1,
+    "correct_answer": "708.530.2.1 Chaque socle de prise de courant et son enveloppe constituant une partie du"
+  },
+  "qcm_876": {
+    "correct_index": 2,
+    "correct_answer": "708.530.2.2 Les socles de prise de courant doivent être placés à une hauteur comprise entre"
+  },
+  "qcm_877": {
+    "correct_index": 3,
+    "correct_answer": "708.530.2.3 Le courant assigné des socles de prise de courant doit correspondre à la"
+  },
+  "qcm_878": {
+    "correct_index": 1,
+    "correct_answer": "708.530.2.4 Un socle de prise de courant au moins doit être prévu pour la connexion de tout"
+  },
+  "qcm_879": {
+    "correct_index": 1,
+    "correct_answer": "708.530.3 Un socle de prise de courant doit alimenter seulement une caravane."
+  },
+  "qcm_880": {
+    "correct_index": 0,
+    "correct_answer": "708.530.4 Quatre socles de prises de courant, au plus, peuvent être groupés dans un coffret"
+  },
+  "qcm_881": {
+    "correct_index": 2,
+    "correct_answer": "708.531.1 Chaque socle de prise de courant doit être protégé individuellement par un"
+  },
+  "qcm_882": {
+    "correct_index": 1,
+    "correct_answer": "708.533 Protection contre les surintensités"
+  },
+  "qcm_883": {
+    "correct_index": 3,
+    "correct_answer": "708.559.1 Connexion de la caravane"
+  },
+  "qcm_884": {
+    "correct_index": 0,
+    "correct_answer": "708.559.1.1 Eléments du dispositif de connexion"
+  },
+  "qcm_885": {
+    "correct_index": 3,
+    "correct_answer": "708.559.1.2 Longueur du câble"
+  },
+  "qcm_886": {
+    "correct_index": 0,
+    "correct_answer": "708.559.1.3 Section du câble"
+  },
+  "qcm_887": {
+    "correct_index": 3,
+    "correct_answer": "708.559.1.4 Mise en œuvre des câbles"
+  },
+  "qcm_888": {
+    "correct_index": 0,
+    "correct_answer": "708.559.1.5 Information des utilisateurs"
+  },
+  "qcm_889": {
+    "correct_index": 0,
+    "correct_answer": "709.559 Matériels d’utilisation.............................................................................................395"
+  },
+  "qcm_890": {
+    "correct_index": 2,
+    "correct_answer": "709.1 Domaine d'application"
+  },
+  "qcm_891": {
+    "correct_index": 0,
+    "correct_answer": "709.2.1 Bateau de plaisance"
+  },
+  "qcm_892": {
+    "correct_index": 2,
+    "correct_answer": "709.2.2 Marina"
+  },
+  "qcm_893": {
+    "correct_index": 1,
+    "correct_answer": "709.2.3 Point d'amarrage"
+  },
+  "qcm_894": {
+    "correct_index": 3,
+    "correct_answer": "709.313 Tensions nominales d’alimentation"
+  },
+  "qcm_895": {
+    "correct_index": 3,
+    "correct_answer": "709.411.4 Dans le cas d’un schéma TN, seul le schéma TN-S doit être utilisé."
+  },
+  "qcm_896": {
+    "correct_index": 3,
+    "correct_answer": "709.415.1 Protection complémentaire par dispositifs à courant différentiel-résiduel"
+  },
+  "qcm_897": {
+    "correct_index": 3,
+    "correct_answer": "709.51 Influences externes"
+  },
+  "qcm_898": {
+    "correct_index": 1,
+    "correct_answer": "709.52.1 Canalisations des marinas"
+  },
+  "qcm_899": {
+    "correct_index": 0,
+    "correct_answer": "709.52.1.1 Les canalisations suivantes ne doivent pas être utilisées :"
+  },
+  "qcm_900": {
+    "correct_index": 2,
+    "correct_answer": "709.52.1.2 Les câbles doivent être choisis et installés de façon que les dommages"
+  },
+  "qcm_901": {
+    "correct_index": 2,
+    "correct_answer": "709.530.1 Les coffrets avec des socles de prises de courant pour l'alimentation des bateaux"
+  },
+  "qcm_902": {
+    "correct_index": 0,
+    "correct_answer": "709.530.2 Les tableaux de distribution et les coffrets de socles de prises de courant installés"
+  },
+  "qcm_903": {
+    "correct_index": 0,
+    "correct_answer": "709.530.3 Un socle de prise de courant doit alimenter seulement un bateau de plaisance."
+  },
+  "qcm_904": {
+    "correct_index": 2,
+    "correct_answer": "709.530.4 Quatre socles de prises de courant, au plus, peuvent être groupés dans un coffret"
+  },
+  "qcm_905": {
+    "correct_index": 1,
+    "correct_answer": "709.531.2 Dispositifs à courant différentiel-résiduel"
+  },
+  "qcm_906": {
+    "correct_index": 3,
+    "correct_answer": "709.533 Dispositifs de protection contre les surintensités"
+  },
+  "qcm_907": {
+    "correct_index": 3,
+    "correct_answer": "709.559.1.1 Eléments du dispositif de connexion"
+  },
+  "qcm_908": {
+    "correct_index": 0,
+    "correct_answer": "709.559.1.2 Longueur du câble"
+  },
+  "qcm_909": {
+    "correct_index": 2,
+    "correct_answer": "709.559.1.3 Section du câble"
+  },
+  "qcm_910": {
+    "correct_index": 2,
+    "correct_answer": "709.559.1.4 Mise en œuvre des câbles"
+  },
+  "qcm_911": {
+    "correct_index": 3,
+    "correct_answer": "709.559.1.5 Information des utilisateurs"
+  },
+  "qcm_912": {
+    "correct_index": 1,
+    "correct_answer": "711.6 Vérification ................................................................................................................401"
+  },
+  "qcm_913": {
+    "correct_index": 3,
+    "correct_answer": "711.1 Domaine d'application"
+  },
+  "qcm_914": {
+    "correct_index": 1,
+    "correct_answer": "711.313 Alimentation"
+  },
+  "qcm_915": {
+    "correct_index": 3,
+    "correct_answer": "711.411.3.2 Coupure automatique de l'alimentation"
+  },
+  "qcm_916": {
+    "correct_index": 0,
+    "correct_answer": "711.411.4 Schéma TN"
+  },
+  "qcm_917": {
+    "correct_index": 2,
+    "correct_answer": "711.411.6 Schéma IT"
+  },
+  "qcm_918": {
+    "correct_index": 0,
+    "correct_answer": "711.415.1 Protection complémentaire"
+  },
+  "qcm_919": {
+    "correct_index": 3,
+    "correct_answer": "711.415.2 Liaison équipotentielle supplémentaire"
+  },
+  "qcm_920": {
+    "correct_index": 1,
+    "correct_answer": "711.421 Règles générales de protection contre l'incendie"
+  },
+  "qcm_921": {
+    "correct_index": 0,
+    "correct_answer": "711.422.1.13 Les moteurs commandés automatiquement ou à distance, ou non surveillés en"
+  },
+  "qcm_922": {
+    "correct_index": 3,
+    "correct_answer": "711.462 Sectionnement et coupure en charge"
+  },
+  "qcm_923": {
+    "correct_index": 0,
+    "correct_answer": "711.463 Coupure d'urgence"
+  },
+  "qcm_924": {
+    "correct_index": 2,
+    "correct_answer": "711.526 Connexions électriques"
+  },
+  "qcm_925": {
+    "correct_index": 3,
+    "correct_answer": "711.53 Les dispositifs de protection contre les contacts indirects et contre les surintensités, des"
+  },
+  "qcm_926": {
+    "correct_index": 3,
+    "correct_answer": "711.551 Groupes générateurs à basse tension"
+  },
+  "qcm_927": {
+    "correct_index": 2,
+    "correct_answer": "711.559.2.1 Luminaires"
+  },
+  "qcm_928": {
+    "correct_index": 3,
+    "correct_answer": "711.559.2.2 Douilles"
+  },
+  "qcm_929": {
+    "correct_index": 0,
+    "correct_answer": "711.559.2.3 Lampes dans les stands de tir"
+  },
+  "qcm_930": {
+    "correct_index": 1,
+    "correct_answer": "711.559.2.4 Projecteurs"
+  },
+  "qcm_931": {
+    "correct_index": 2,
+    "correct_answer": "711.559.2.5 Risque d'incendie par les luminaires et les projecteurs"
+  },
+  "qcm_932": {
+    "correct_index": 0,
+    "correct_answer": "711.559.2.6 Enseignes et tubes lumineux à décharge fonctionnant à une tension de sortie"
+  },
+  "qcm_933": {
+    "correct_index": 3,
+    "correct_answer": "711.559.2.7 Installations d'éclairage TBTS"
+  },
+  "qcm_934": {
+    "correct_index": 2,
+    "correct_answer": "711.6 Vérification"
+  },
+  "qcm_935": {
+    "correct_index": 3,
+    "correct_answer": "717.555 Matériels d’installation............................................................................................406"
+  },
+  "qcm_936": {
+    "correct_index": 3,
+    "correct_answer": "717.1 Domaine d’application"
+  },
+  "qcm_937": {
+    "correct_index": 1,
+    "correct_answer": "717.312.2.1 Schéma TN"
+  },
+  "qcm_938": {
+    "correct_index": 0,
+    "correct_answer": "717.313 Alimentation"
+  },
+  "qcm_939": {
+    "correct_index": 3,
+    "correct_answer": "717.411 Protection par coupure automatique de l'alimentation"
+  },
+  "qcm_940": {
+    "correct_index": 2,
+    "correct_answer": "717.411.3.1.1 Liaison équipotentielle principale"
+  },
+  "qcm_941": {
+    "correct_index": 2,
+    "correct_answer": "717.411.3.1.2 Equipotentialité des masses"
+  },
+  "qcm_942": {
+    "correct_index": 1,
+    "correct_answer": "717.411.3.1.3 Si plusieurs unités sont électriquement interconnectées et alimentées par la"
+  },
+  "qcm_943": {
+    "correct_index": 1,
+    "correct_answer": "711.411.3.1.4 Si un groupe générateur BT situé à l’extérieur est utilisé, sa masse doit être"
+  },
+  "qcm_944": {
+    "correct_index": 1,
+    "correct_answer": "717.411.4 Schéma TN"
+  },
+  "qcm_945": {
+    "correct_index": 1,
+    "correct_answer": "717.411.6 Schéma IT"
+  },
+  "qcm_946": {
+    "correct_index": 3,
+    "correct_answer": "717.415.1 Protection complémentaire par DDR"
+  },
+  "qcm_947": {
+    "correct_index": 0,
+    "correct_answer": "717.512 Influences externes"
+  },
+  "qcm_948": {
+    "correct_index": 0,
+    "correct_answer": "717.514 Identification"
+  },
+  "qcm_949": {
+    "correct_index": 2,
+    "correct_answer": "717.521.2 Canalisations"
+  },
+  "qcm_950": {
+    "correct_index": 3,
+    "correct_answer": "717.555 Matériels d’installation"
+  },
+  "qcm_951": {
+    "correct_index": 3,
+    "correct_answer": "717.555.2 Les socles de prises de courant situés à l’extérieur de l’unité doivent être équipés"
+  },
+  "qcm_952": {
+    "correct_index": 2,
+    "correct_answer": "717.559.1.1 Eléments des dispositifs de connexion à l’alimentation"
+  },
+  "qcm_953": {
+    "correct_index": 1,
+    "correct_answer": "752.55 Autres matériels ......................................................................................................416"
+  },
+  "qcm_954": {
+    "correct_index": 2,
+    "correct_answer": "752.1 Domaine d’application"
+  },
+  "qcm_955": {
+    "correct_index": 3,
+    "correct_answer": "752.46 Coupure d’urgence"
+  },
+  "qcm_956": {
+    "correct_index": 0,
+    "correct_answer": "752.51 Emplacements dangereux"
+  },
+  "qcm_957": {
+    "correct_index": 1,
+    "correct_answer": "752.52 Canalisations"
+  },
+  "qcm_958": {
+    "correct_index": 1,
+    "correct_answer": "752.53 Appareillage"
+  },
+  "qcm_959": {
+    "correct_index": 3,
+    "correct_answer": "752.542 Installation de mise à la terre"
+  },
+  "qcm_960": {
+    "correct_index": 2,
+    "correct_answer": "752.55 Autres matériels"
+  },
+  "qcm_961": {
+    "correct_index": 1,
+    "correct_answer": "753.5 Equipements de chauffage électrique installés en"
+  },
+  "qcm_962": {
+    "correct_index": 2,
+    "correct_answer": "753.6 Chauffage avec émetteurs muraux (convecteur, panneau rayonnant et"
+  },
+  "qcm_963": {
+    "correct_index": 0,
+    "correct_answer": "753.1 Domaine d’application et règles communes"
+  },
+  "qcm_964": {
+    "correct_index": 2,
+    "correct_answer": "753.2.1 Eléments chauffants pour planchers rayonnants"
+  },
+  "qcm_965": {
+    "correct_index": 1,
+    "correct_answer": "753.2.2 Equipements de chauffage électriques installés en ou au plafond"
+  },
+  "qcm_966": {
+    "correct_index": 0,
+    "correct_answer": "753.2.3 Emetteur mural direct"
+  },
+  "qcm_967": {
+    "correct_index": 1,
+    "correct_answer": "753.2.4 Emetteur à accumulation"
+  },
+  "qcm_968": {
+    "correct_index": 2,
+    "correct_answer": "753.3 Dossier technique"
+  },
+  "qcm_969": {
+    "correct_index": 1,
+    "correct_answer": "753.4.1.1 Les équipements de chauffage électrique comportant des éléments chauffants isolés,"
+  },
+  "qcm_970": {
+    "correct_index": 1,
+    "correct_answer": "753.4.1.2 Les équipements de chauffage comportant des conducteurs isolés, sans armure,"
+  },
+  "qcm_971": {
+    "correct_index": 2,
+    "correct_answer": "753.4.1.3 L'armure, la gaine ou le revêtement métallique de tout élément chauffant lorsqu’il"
+  },
+  "qcm_972": {
+    "correct_index": 1,
+    "correct_answer": "753.4.1.4 Des éléments électriques chauffants noyés dans le sol, destinés au chauffage d’un"
+  },
+  "qcm_973": {
+    "correct_index": 1,
+    "correct_answer": "753.4.1.5 Des conducteurs nus ou légèrement isolés incorporés dans un matériau ou dans le"
+  },
+  "qcm_974": {
+    "correct_index": 0,
+    "correct_answer": "753.4.2 Protection contre les surintensités"
+  },
+  "qcm_975": {
+    "correct_index": 3,
+    "correct_answer": "753.4.3 Mise en œuvre des éléments chauffants"
+  },
+  "qcm_976": {
+    "correct_index": 1,
+    "correct_answer": "753.5.1 Protection contre les courants de défaut"
+  },
+  "qcm_977": {
+    "correct_index": 0,
+    "correct_answer": "753.5.2 Mise en œuvre des équipements de plafond rayonnant plâtre ou modulaire"
+  },
+  "qcm_978": {
+    "correct_index": 3,
+    "correct_answer": "753.6 Chauffage avec émetteurs muraux (convecteur, panneau rayonnant et émetteurs à"
+  },
+  "qcm_979": {
+    "correct_index": 2,
+    "correct_answer": "753.6.1 Généralités"
+  },
+  "qcm_980": {
+    "correct_index": 1,
+    "correct_answer": "753.6.2 Sectionnement"
+  },
+  "qcm_981": {
+    "correct_index": 1,
+    "correct_answer": "771.443 Protection contre les surtensions d'origine at"
+  },
+  "qcm_982": {
+    "correct_index": 0,
+    "correct_answer": "771.558 Panneaux de contrôle, tableaux de répartition et de communication - Gaine"
+  },
+  "qcm_983": {
+    "correct_index": 0,
+    "correct_answer": "Annexe B – (normative) – Installations électriques alimentées par une source d’énergie"
+  },
+  "qcm_984": {
+    "correct_index": 2,
+    "correct_answer": "Annexe C – (informative) – Exemple de lett"
+  },
+  "qcm_985": {
+    "correct_index": 2,
+    "correct_answer": "Annexe D – (informative) – Système de gestion ou appareillage utilisant les"
+  },
+  "qcm_986": {
+    "correct_index": 2,
+    "correct_answer": "771.11 Domaine d'application"
+  },
+  "qcm_987": {
+    "correct_index": 3,
+    "correct_answer": "771.14 Alimentation"
+  },
+  "qcm_988": {
+    "correct_index": 2,
+    "correct_answer": "771.314.2 Circuits terminaux"
+  },
+  "qcm_989": {
+    "correct_index": 0,
+    "correct_answer": "771.314.2.1 Socles de prise de courant"
+  },
+  "qcm_990": {
+    "correct_index": 1,
+    "correct_answer": "771.314.2.2 Circuits spécialisés"
+  },
+  "qcm_991": {
+    "correct_index": 2,
+    "correct_answer": "771.314.2.3 Eclairage"
+  },
+  "qcm_992": {
+    "correct_index": 3,
+    "correct_answer": "771.314.2.4 Points d’utilisation extérieurs"
+  },
+  "qcm_993": {
+    "correct_index": 0,
+    "correct_answer": "771.314.2.5 Appareils de chauffage"
+  },
+  "qcm_994": {
+    "correct_index": 2,
+    "correct_answer": "771.411.3.2 Coupure automatique de l’alimentation"
+  },
+  "qcm_995": {
+    "correct_index": 0,
+    "correct_answer": "771.411.3.3 Tous"
+  },
+  "qcm_996": {
+    "correct_index": 2,
+    "correct_answer": "771.443 Protection contre les surtensions d'origine atmosphérique (parafoudre)"
+  },
+  "qcm_997": {
+    "correct_index": 2,
+    "correct_answer": "771.462.1 Sectionnement à l’origine des circuits"
+  },
+  "qcm_998": {
+    "correct_index": 0,
+    "correct_answer": "771.462.2 Sectionnement du fil pilote des installations individuelles de chauffage"
+  },
+  "qcm_999": {
+    "correct_index": 3,
+    "correct_answer": "771.463 Coupure d’urgence"
+  },
+  "qcm_1000": {
+    "correct_index": 0,
+    "correct_answer": "771.465.1 Socles de prise de courant commandés"
+  },
+  "qcm_1001": {
+    "correct_index": 0,
+    "correct_answer": "771.465.2 Commande de la ventilation mécanique contrôlée (VMC) et de ventilation"
+  },
+  "qcm_1002": {
+    "correct_index": 3,
+    "correct_answer": "771.514 Identification des circuits"
+  },
+  "qcm_1003": {
+    "correct_index": 0,
+    "correct_answer": "771.514.5 Schémas"
+  },
+  "qcm_1004": {
+    "correct_index": 1,
+    "correct_answer": "771.524 Section des conducteurs"
+  },
+  "qcm_1005": {
+    "correct_index": 0,
+    "correct_answer": "771.314.2 concernant"
+  },
+  "qcm_1006": {
+    "correct_index": 2,
+    "correct_answer": "771.530.4 Fixation des appareillages"
+  },
+  "qcm_1007": {
+    "correct_index": 3,
+    "correct_answer": "771.531.2.3.2.1 Tous les circuits de l’installation, quel que soit le schéma des liaisons à la"
+  },
+  "qcm_1008": {
+    "correct_index": 2,
+    "correct_answer": "771.533 Dispositifs de protection contre les surintensités"
+  },
+  "qcm_1009": {
+    "correct_index": 2,
+    "correct_answer": "771.536.5 Dispositifs de commande fonctionnelle"
+  },
+  "qcm_1010": {
+    "correct_index": 0,
+    "correct_answer": "771.555.1.6 Prises de courant"
+  },
+  "qcm_1011": {
+    "correct_index": 1,
+    "correct_answer": "771.558 Panneaux de contrôle, tableaux de répartition et de communication - Gaine"
+  },
+  "qcm_1012": {
+    "correct_index": 2,
+    "correct_answer": "771.558.1 Généralités"
+  },
+  "qcm_1013": {
+    "correct_index": 0,
+    "correct_answer": "771.558.2.1 Généralités"
+  },
+  "qcm_1014": {
+    "correct_index": 0,
+    "correct_answer": "771.558.2.2 Emplacement"
+  },
+  "qcm_1015": {
+    "correct_index": 2,
+    "correct_answer": "771.558.2.3 Destination"
+  },
+  "qcm_1016": {
+    "correct_index": 1,
+    "correct_answer": "771.558.2.4 Réalisation"
+  },
+  "qcm_1017": {
+    "correct_index": 1,
+    "correct_answer": "771.558.2.5 Organisation"
+  },
+  "qcm_1018": {
+    "correct_index": 3,
+    "correct_answer": "771.558.3 Panneau de contrôle"
+  },
+  "qcm_1019": {
+    "correct_index": 1,
+    "correct_answer": "771.558.4 Tableaux de répartition"
+  },
+  "qcm_1020": {
+    "correct_index": 1,
+    "correct_answer": "771.558.4.1 Tableau de répartition principal"
+  },
+  "qcm_1021": {
+    "correct_index": 0,
+    "correct_answer": "771.558.4.2 Tableaux de répartition divisionnaires"
+  },
+  "qcm_1022": {
+    "correct_index": 3,
+    "correct_answer": "771.558.5 Tableau de communication"
+  },
+  "qcm_1023": {
+    "correct_index": 0,
+    "correct_answer": "771.559.6.1.1 Circuits de communication (téléphonie incluse)"
+  },
+  "qcm_1024": {
+    "correct_index": 0,
+    "correct_answer": "771.559.6.1.2 Radiodiffusion / Télévision"
+  },
+  "qcm_1025": {
+    "correct_index": 1,
+    "correct_answer": "771.559.6.2 Position et emplacement des prises de communication"
+  },
+  "qcm_1026": {
+    "correct_index": 1,
+    "correct_answer": "771.559.6.3 Passage des câbles."
+  },
+  "qcm_1027": {
+    "correct_index": 3,
+    "correct_answer": "Annexe B – (normative) – Installations électriques alimentées par une source"
+  },
+  "qcm_1028": {
+    "correct_index": 1,
+    "correct_answer": "Annexe C – (informative) – Exemple de lettre pour sensibiliser les différents"
+  },
+  "qcm_1029": {
+    "correct_index": 2,
+    "correct_answer": "Annexe D – (informative) – Raccordement d'un système de gestion ou"
+  },
+  "qcm_1030": {
+    "correct_index": 0,
+    "correct_answer": "772.2 Choix et mise en œuvre des matériels électr"
+  },
+  "qcm_1031": {
+    "correct_index": 1,
+    "correct_answer": "772.3 Prescriptions spéciales aux locaux techniques des services généraux,"
+  },
+  "qcm_1032": {
+    "correct_index": 2,
+    "correct_answer": "772.4 Installation d'alarme et de signalisation .....................................................................465"
+  },
+  "qcm_1033": {
+    "correct_index": 1,
+    "correct_answer": "772.1.1 Domaine d'application"
+  },
+  "qcm_1034": {
+    "correct_index": 1,
+    "correct_answer": "772.1.2 Structure des installations"
+  },
+  "qcm_1035": {
+    "correct_index": 0,
+    "correct_answer": "772.2.1 Circuits divisionnaires"
+  },
+  "qcm_1036": {
+    "correct_index": 1,
+    "correct_answer": "772.2.2 Canalisations"
+  },
+  "qcm_1037": {
+    "correct_index": 0,
+    "correct_answer": "772.2.3.1 Eclairement"
+  },
+  "qcm_1038": {
+    "correct_index": 3,
+    "correct_answer": "772.2.3.2 Foyer lumineux et appareils d'éclairage"
+  },
+  "qcm_1039": {
+    "correct_index": 2,
+    "correct_answer": "772.2.3.3 Dispositifs de commande des appareils d'éclairage"
+  },
+  "qcm_1040": {
+    "correct_index": 1,
+    "correct_answer": "772.2.3.4.1 Vestibules d'entrée d'immeubles, escaliers, coursives, couloirs"
+  },
+  "qcm_1041": {
+    "correct_index": 0,
+    "correct_answer": "772.2.3.4.2 Garages et parcs couverts collectifs, pour voitures automobiles"
+  },
+  "qcm_1042": {
+    "correct_index": 3,
+    "correct_answer": "772.2.3.4.3 Alimentation des caves, boxes ou garages, individuels"
+  },
+  "qcm_1043": {
+    "correct_index": 3,
+    "correct_answer": "772.2.3.4.4 Installations de sécurité"
+  },
+  "qcm_1044": {
+    "correct_index": 2,
+    "correct_answer": "772.2.3.5 Circuits issus des parties communes alimentant des installations privatives"
+  },
+  "qcm_1045": {
+    "correct_index": 0,
+    "correct_answer": "772.2.3.6 Circuits issus des installations privatives alimentant des appareils électriques"
+  },
+  "qcm_1046": {
+    "correct_index": 2,
+    "correct_answer": "772.3 Prescriptions spéciales aux locaux techniques des services généraux,"
+  },
+  "qcm_1047": {
+    "correct_index": 1,
+    "correct_answer": "772.3.0 Domaine d'application"
+  },
+  "qcm_1048": {
+    "correct_index": 3,
+    "correct_answer": "772.3.1.1 Alimentation principale"
+  },
+  "qcm_1049": {
+    "correct_index": 3,
+    "correct_answer": "772.3.1.2 Alimentation éclairage"
+  },
+  "qcm_1050": {
+    "correct_index": 2,
+    "correct_answer": "772.3.1.3 Eclairage"
+  },
+  "qcm_1051": {
+    "correct_index": 2,
+    "correct_answer": "772.3.1.4 Socles de prises de courant"
+  },
+  "qcm_1052": {
+    "correct_index": 0,
+    "correct_answer": "772.3.1.5 Réseau d'alarmes techniques et de signalisation"
+  },
+  "qcm_1053": {
+    "correct_index": 0,
+    "correct_answer": "772.3.2 Ascenseurs"
+  },
+  "qcm_1054": {
+    "correct_index": 3,
+    "correct_answer": "772.3.2.1 Caractéristiques des locaux et choix des matériels électriques en fonction des"
+  },
+  "qcm_1055": {
+    "correct_index": 0,
+    "correct_answer": "772.3.2.2 Canalisations"
+  },
+  "qcm_1056": {
+    "correct_index": 3,
+    "correct_answer": "772.3.2.3 Local des machines"
+  },
+  "qcm_1057": {
+    "correct_index": 1,
+    "correct_answer": "772.3.2.4 Eclairage des paliers d'ascenseurs des bâtiments collectifs"
+  },
+  "qcm_1058": {
+    "correct_index": 2,
+    "correct_answer": "772.3.2.3 a)."
+  },
+  "qcm_1059": {
+    "correct_index": 2,
+    "correct_answer": "772.3.2.5 Local des poulies"
+  },
+  "qcm_1060": {
+    "correct_index": 2,
+    "correct_answer": "772.3.2.6 Eclairage de remplacement ou de sécurité"
+  },
+  "qcm_1061": {
+    "correct_index": 2,
+    "correct_answer": "772.3.3 Chaufferie"
+  },
+  "qcm_1062": {
+    "correct_index": 0,
+    "correct_answer": "772.4.1 Les installations d'alarme et/ou de signalisation sont demandées soit par un texte"
+  },
+  "qcm_1063": {
+    "correct_index": 3,
+    "correct_answer": "772.4.2 Les alarmes et signalisations du domaine de la sécurité nécessitent, en général, une"
+  },
+  "qcm_1064": {
+    "correct_index": 0,
+    "correct_answer": "773.411.3 Protection contre les contacts indirects"
+  },
+  "qcm_1065": {
+    "correct_index": 3,
+    "correct_answer": "781.5 Dispositions concernant les locaux de service électrique............................................474"
+  },
+  "qcm_1066": {
+    "correct_index": 2,
+    "correct_answer": "781.0 Domaine d'application"
+  },
+  "qcm_1067": {
+    "correct_index": 0,
+    "correct_answer": "781.1 Généralités"
+  },
+  "qcm_1068": {
+    "correct_index": 2,
+    "correct_answer": "781.2 Protection au moyen d'obstacles ou par mise hors de portée par éloignement"
+  },
+  "qcm_1069": {
+    "correct_index": 0,
+    "correct_answer": "781.3 Absence de protection contre les contacts directs"
+  },
+  "qcm_1070": {
+    "correct_index": 1,
+    "correct_answer": "781.4 Distances minimales à respecter dans les passages de service"
+  },
+  "qcm_1071": {
+    "correct_index": 3,
+    "correct_answer": "781.4.1 Les distances indiquées ci-après doivent être observées lorsqu'une protection au moyen"
+  },
+  "qcm_1072": {
+    "correct_index": 0,
+    "correct_answer": "781.4.2 Dans les locaux dans lesquels aucune mesure de protection n'est prévue, les cotes"
+  },
+  "qcm_1073": {
+    "correct_index": 3,
+    "correct_answer": "781.4.3 Les passages de service d'une longueur supérieure à 20 m doivent être accessibles aux"
+  },
+  "qcm_1074": {
+    "correct_index": 0,
+    "correct_answer": "781.5.1 Emplacement"
+  },
+  "qcm_1075": {
+    "correct_index": 1,
+    "correct_answer": "781.5.2 Dimensions"
+  },
+  "qcm_1076": {
+    "correct_index": 0,
+    "correct_answer": "781.5.3 Ventilation et conditionnement"
+  }
+}

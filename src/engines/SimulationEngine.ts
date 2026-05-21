@@ -10,7 +10,7 @@
  * Architecture modulaire avec solveurs spécialisés.
  */
 
-import { GraphStore } from '@/stores/GraphStore';
+
 
 export interface ShortCircuitResult {
   faultLocation: string;
@@ -32,7 +32,7 @@ export interface CoordinationResult {
 
 export interface HarmonicAnalysis {
   thd: number; // Taux de distorsion harmonique total (%)
-  harmonics: { order: number; amplitude: number; phase: number }[];
+  harmonics: {order: number;amplitude: number;phase: number;}[];
   sources: string[]; // Équipements non-linéaires
   mitigation: string[]; // Solutions recommandées
   compliance: boolean;
@@ -96,7 +96,7 @@ export class ShortCircuitEngine {
     const selectivity = this.checkSelectivity(graph, faultNodeId, protection?.id);
 
     const recommendations: string[] = [];
-    if (faultCurrent > 1000) { // > 1kA
+    if (faultCurrent > 1000) {// > 1kA
       recommendations.push('Risque élevé - Vérifier la tenue des équipements');
     }
     if (!selectivity) {
@@ -117,9 +117,9 @@ export class ShortCircuitEngine {
   private static findSourcePath(graph: GraphStore, startNodeId: string): string[] {
     // Recherche BFS pour trouver le chemin vers une source
     const visited = new Set<string>();
-    const queue: { nodeId: string; path: string[] }[] = [
-      { nodeId: startNodeId, path: [startNodeId] }
-    ];
+    const queue: {nodeId: string;path: string[];}[] = [
+    { nodeId: startNodeId, path: [startNodeId] }];
+
 
     while (queue.length > 0) {
       const { nodeId, path } = queue.shift()!;
@@ -220,7 +220,7 @@ export class CoordinationEngine {
     // Vérifier les ratios de courant
     protections.forEach((prot, i) => {
       const downstreamProtections = this.findDownstreamProtections(graph, prot.id);
-      downstreamProtections.forEach(downstream => {
+      downstreamProtections.forEach((downstream) => {
         const ratio = downstream.current / prot.current;
         if (ratio > 0.8) {
           compliance = compliance === 'CONFORME' ? 'AVERTISSEMENT' : compliance;
@@ -346,7 +346,7 @@ export class HarmonicEngine {
     const harmonicSources = this.identifyHarmonicSources(graph);
 
     let thd = 0;
-    const harmonics: { order: number; amplitude: number; phase: number }[] = [];
+    const harmonics: {order: number;amplitude: number;phase: number;}[] = [];
 
     if (harmonicSources.length > 0) {
       // Calcul simplifié du THD
@@ -386,9 +386,9 @@ export class HarmonicEngine {
       if (node.type === 'RECEPTOR') {
         const equipment = node.params?.equipment;
         if (equipment?.includes('variateur') ||
-            equipment?.includes('onduleur') ||
-            equipment?.includes('led') ||
-            equipment?.includes('chargeur')) {
+        equipment?.includes('onduleur') ||
+        equipment?.includes('led') ||
+        equipment?.includes('chargeur')) {
           sources.push(nodeId);
         }
       }
@@ -445,7 +445,7 @@ export class PowerFlowEngine {
     // Vérifier les tensions
     for (const [nodeId, voltage] of nodeVoltages) {
       const deviation = Math.abs(voltage - nominalVoltage) / nominalVoltage;
-      if (deviation > 0.03) { // > 3%
+      if (deviation > 0.03) {// > 3%
         recommendations.push(`Tension hors tolérance au nœud ${nodeId}`);
       }
     }
@@ -459,13 +459,13 @@ export class PowerFlowEngine {
     };
   }
 
-  private static calculateResistance(edge: any): number {
+  private static calculateResistance(edge: unknown): number {
     const longueur = edge.properties.length || 0;
     const section = edge.properties.section || 1.5;
     const materiau = edge.properties.materiau || 'Cu';
 
     const resistivite = materiau === 'Cu' ? 0.0175 : 0.0280;
-    return (2 * longueur * resistivite) / section;
+    return 2 * longueur * resistivite / section;
   }
 
   private static calculateLoadBalance(graph: GraphStore): number {
@@ -549,11 +549,11 @@ export class SimulationEngine {
     let overallCompliance: 'CONFORME' | 'AVERTISSEMENT' | 'NON_CONFORME' = 'CONFORME';
 
     if (coordination.compliance === 'NON_CONFORME' ||
-        !harmonics.compliance ||
-        powerFlow.recommendations.length > 3) {
+    !harmonics.compliance ||
+    powerFlow.recommendations.length > 3) {
       overallCompliance = 'NON_CONFORME';
     } else if (coordination.compliance === 'AVERTISSEMENT' ||
-               powerFlow.recommendations.length > 0) {
+    powerFlow.recommendations.length > 0) {
       overallCompliance = 'AVERTISSEMENT';
     }
 

@@ -3,12 +3,12 @@ import { useExternalIntegrations } from '@/hooks/useDynamicSystems';
 
 declare global {
   interface Window {
-    gtag?: any;
-    dataLayer?: any[];
-    fbq?: any;
-    _paq?: any;
-    Intercom?: any;
-    $crisp?: any;
+    gtag?: unknown;
+    dataLayer?: unknown[];
+    fbq?: unknown;
+    _paq?: unknown;
+    Intercom?: unknown;
+    $crisp?: unknown;
   }
 }
 
@@ -18,7 +18,7 @@ export function ExternalIntegrationsLoader() {
   useEffect(() => {
     if (!integrations) return;
 
-    integrations.forEach(integration => {
+    integrations.forEach((integration) => {
       loadIntegration(integration);
     });
   }, [integrations]);
@@ -26,7 +26,7 @@ export function ExternalIntegrationsLoader() {
   return null;
 }
 
-function loadIntegration(integration: any) {
+function loadIntegration(integration: unknown) {
   const { type, provider, config } = integration;
 
   switch (type) {
@@ -47,7 +47,7 @@ function loadIntegration(integration: any) {
   }
 }
 
-function loadAnalyticsIntegration(provider: string, config: any) {
+function loadAnalyticsIntegration(provider: string, config: unknown) {
   switch (provider) {
     case 'google-analytics':
       if (!window.gtag) {
@@ -58,7 +58,7 @@ function loadAnalyticsIntegration(provider: string, config: any) {
         document.head.appendChild(script);
 
         window.dataLayer = window.dataLayer || [];
-        function gtag(...args: any[]) {
+        function gtag(...args: unknown[]) {
           window.dataLayer!.push(args);
         }
         window.gtag = gtag;
@@ -93,7 +93,7 @@ function loadAnalyticsIntegration(provider: string, config: any) {
   }
 }
 
-function loadCRMIntegration(provider: string, config: any) {
+function loadCRMIntegration(provider: string, config: unknown) {
   switch (provider) {
     case 'intercom':
       if (!window.Intercom) {
@@ -102,7 +102,7 @@ function loadCRMIntegration(provider: string, config: any) {
         script.src = `https://widget.intercom.io/widget/${config.appId}`;
         document.head.appendChild(script);
 
-        window.Intercom = function(...args: any[]) {
+        window.Intercom = function (...args: unknown[]) {
           window.Intercom.q = window.Intercom.q || [];
           window.Intercom.q.push(args);
         };
@@ -134,7 +134,7 @@ function loadCRMIntegration(provider: string, config: any) {
   }
 }
 
-function loadSocialIntegration(provider: string, config: any) {
+function loadSocialIntegration(provider: string, config: unknown) {
   switch (provider) {
     case 'facebook-pixel':
       if (!window.fbq) {
@@ -171,7 +171,7 @@ function loadSocialIntegration(provider: string, config: any) {
   }
 }
 
-function loadPaymentIntegration(provider: string, config: any) {
+function loadPaymentIntegration(provider: string, config: unknown) {
   switch (provider) {
     case 'stripe':
       if (!document.querySelector('#stripe-js')) {
@@ -200,17 +200,17 @@ export function useIntegration(type: string, provider?: string) {
   const { data: integrations } = useExternalIntegrations(type);
 
   if (provider) {
-    return integrations?.find(i => i.provider === provider);
+    return integrations?.find((i) => i.provider === provider);
   }
 
   return integrations?.[0];
 }
 
 // Fonction utilitaire pour tracker des événements
-export function trackEvent(event: string, properties?: Record<string, any>) {
+export function trackEvent(event: string, properties?: Record<string, unknown>) {
   const analyticsIntegrations = useExternalIntegrations('analytics');
 
-  analyticsIntegrations?.data?.forEach(integration => {
+  analyticsIntegrations?.data?.forEach((integration) => {
     switch (integration.provider) {
       case 'google-analytics':
         if (window.gtag) {

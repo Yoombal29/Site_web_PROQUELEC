@@ -1,6 +1,5 @@
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 
 interface AnalyticsEvent {
   event_type: string;
@@ -9,7 +8,7 @@ interface AnalyticsEvent {
   referrer: string;
   session_id: string;
   user_id?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 interface PageView {
@@ -41,8 +40,8 @@ export function useAdvancedAnalytics() {
     interactions: []
   });
 
-  // Tracking des événements
-  const trackEvent = useCallback(async (eventType: string, metadata?: Record<string, any>) => {
+  // Tracking des événements - using local API
+  const trackEvent = useCallback(async (eventType: string, metadata?: Record<string, unknown>) => {
     try {
       const event: AnalyticsEvent = {
         event_type: eventType,
@@ -53,16 +52,17 @@ export function useAdvancedAnalytics() {
         metadata
       };
 
-      const { error } = await supabase
-        .from('analytics_events')
-        .insert([{
+      // Send to local analytics API
+      await fetch('/api/analytics-events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
           ...event,
           created_at: new Date().toISOString()
-        }]);
-
-      if (error) {
-        console.error('Erreur tracking événement:', error);
-      }
+        })
+      });
     } catch (error) {
       console.error('Erreur tracking:', error);
     }
@@ -85,9 +85,9 @@ export function useAdvancedAnalytics() {
   const trackScroll = useCallback(() => {
     const scrollTop = window.pageYOffset;
     const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollDepth = Math.round((scrollTop / documentHeight) * 100);
-    
-    setUserBehavior(prev => ({
+    const scrollDepth = Math.round(scrollTop / documentHeight * 100);
+
+    setUserBehavior((prev) => ({
       ...prev,
       scroll_depth: Math.max(prev.scroll_depth, scrollDepth)
     }));
@@ -101,7 +101,7 @@ export function useAdvancedAnalytics() {
       timestamp: Date.now()
     };
 
-    setUserBehavior(prev => ({
+    setUserBehavior((prev) => ({
       ...prev,
       clicks: type === 'click' ? prev.clicks + 1 : prev.clicks,
       interactions: [...prev.interactions, interaction]
@@ -114,13 +114,13 @@ export function useAdvancedAnalytics() {
 
     const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
     const paintEntries = performance.getEntriesByType('paint');
-    
+
     return {
       page_load_time: navigation ? Math.round(navigation.loadEventEnd - navigation.fetchStart) : 0,
       dom_content_loaded: navigation ? Math.round(navigation.domContentLoadedEventEnd - navigation.fetchStart) : 0,
-      first_contentful_paint: paintEntries.find(entry => entry.name === 'first-contentful-paint')?.startTime || 0,
+      first_contentful_paint: paintEntries.find((entry) => entry.name === 'first-contentful-paint')?.startTime || 0,
       time_to_interactive: navigation ? Math.round(navigation.domInteractive - navigation.fetchStart) : 0,
-      connection_type: (navigator as any).connection?.effectiveType || 'unknown'
+      connection_type: (navigator as unknown).connection?.effectiveType || 'unknown'
     };
   }, []);
 
@@ -168,7 +168,7 @@ export function useAdvancedAnalytics() {
 
     // Tracking périodique du temps passé
     const timeInterval = setInterval(() => {
-      setUserBehavior(prev => ({
+      setUserBehavior((prev) => ({
         ...prev,
         time_on_page: Date.now() - pageStartTime
       }));

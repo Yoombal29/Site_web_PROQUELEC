@@ -1,0 +1,4 @@
+pandas
+jsonlines
+pypdf2
+pathlib

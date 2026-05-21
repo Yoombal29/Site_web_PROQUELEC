@@ -6,7 +6,7 @@
  * Statut : Verrouillé — Aucune modification sans validation architecture
  */
 
-import type { GraphNode, GraphEdge } from '@/stores/GraphStore';
+
 
 // ============================================================================
 // 1️⃣ RÉSULTAT DE VALIDATION
@@ -44,7 +44,7 @@ export interface CalculationResult {
   timestamp: number;
   metrics: CalculationMetric[];
   verdict: 'CONFORME' | 'NON_CONFORME' | 'AVERTISSEMENT' | 'INCOMPLET';
-  details: Record<string, any>;
+  details: Record<string, unknown>;
   graphHash: string; // Pour traçabilité
 }
 
@@ -62,7 +62,7 @@ export interface Report {
   attachments?: {
     name: string;
     type: 'TABLE' | 'CHART' | 'DIAGRAM' | 'TEXT';
-    content: any;
+    content: unknown;
   }[];
 }
 
@@ -70,7 +70,7 @@ export interface ReportSection {
   title: string;
   content: string;
   subsections?: ReportSection[];
-  data?: any;
+  data?: unknown;
 }
 
 // ============================================================================
@@ -80,14 +80,14 @@ export interface ReportSection {
 export interface ObjectBehavior {
   objectId: string;
   rubriquId: string;
-  
+
   // Paramètres visibles et requis pour cette rubrique
   visibleParams: string[];
   requiredParams: string[];
-  
+
   // Validations spécifiques
   validators: ((node: GraphNode) => ValidationError | null)[];
-  
+
   // Calcul associé
   contributes_to_calculation: boolean;
   calculation_role?: 'SOURCE' | 'PROTECTION' | 'LOAD' | 'CONNECTION' | 'OTHER';
@@ -106,22 +106,22 @@ export interface Graph {
 export interface CalculationEngine {
   name: string;
   version: string;
-  
+
   /**
    * Valider le graphe avant calcul
    */
   validate(graph: Graph): ValidationResult;
-  
+
   /**
    * Effectuer les calculs
    */
   calculate(graph: Graph): CalculationResult;
-  
+
   /**
    * Générer un rapport
    */
   generateReport(result: CalculationResult, graph: Graph): Report;
-  
+
   /**
    * Propriétés de calcul
    */
@@ -139,88 +139,88 @@ export interface CalculationEngine {
 
 export interface RubriqueSchema {
   // ========== IDENTIFIANT ET MÉTADONNÉES ==========
-  
+
   /** Identifiant unique */
   id: RubriqueId;
-  
+
   /** Nom lisible */
   name: string;
-  
+
   /** Description détaillée */
   description: string;
-  
+
   /** Version de la rubrique */
   version: string;
-  
+
   /** Ordre d'affichage dans l'UI */
   displayPriority: number;
-  
+
   /** Statut de maturité */
   maturity: 'ALPHA' | 'BETA' | 'STABLE' | 'DEPRECATED';
-  
+
   /** Icône emoji */
   icon: string;
-  
+
   // ========== MOTEUR MÉTIER ==========
-  
+
   /** Moteur de calcul associé */
   engine: CalculationEngine;
-  
+
   // ========== BIBLIOTHÈQUE D'OBJETS ==========
-  
+
   /**
    * Retourner la liste des objets disponibles pour cette rubrique
    */
   getAvailableObjects(): ObjectDefinition[];
-  
+
   /**
    * Retourner le comportement d'un objet dans cette rubrique
    */
   getObjectBehavior(objectId: string): ObjectBehavior | null;
-  
+
   /**
    * Vérifier si un objet peut être utilisé dans cette rubrique
    */
   isObjectAllowed(objectId: string): boolean;
-  
+
   // ========== VALIDATIONS ==========
-  
+
   /**
    * Valider le graphe complet
    */
   validateGraph(graph: Graph): ValidationResult;
-  
+
   /**
    * Valider un nœud (objet)
    */
   validateNode(node: GraphNode): ValidationResult;
-  
+
   /**
    * Valider une arête (câble/connexion)
    */
   validateEdge(edge: GraphEdge): ValidationResult;
-  
+
   // ========== CALCULS ==========
-  
+
   /**
    * Effectuer les calculs métier
    */
   calculate(graph: Graph): CalculationResult;
-  
+
   // ========== RAPPORT ==========
-  
+
   /**
    * Générer un rapport complet
    */
   generateReport(result: CalculationResult, graph: Graph): Report;
-  
+
   /**
    * Exporter le rapport en différents formats
    */
   exportReport(report: Report, format: 'PDF' | 'HTML' | 'JSON'): Blob;
-  
+
   // ========== RÈGLES NORMATIVES ==========
-  
+
   /**
    * Références normatives applicables
    */
@@ -229,19 +229,19 @@ export interface RubriqueSchema {
     articles: string[];
     description: string;
   }[];
-  
+
   // ========== INTERFACE GRAPHIQUE ADAPTÉE ==========
-  
+
   /**
    * Composants React personnalisés pour cette rubrique
    */
   getCustomComponents(): {
-    sidebar?: React.ComponentType<any>;
-    toolbar?: React.ComponentType<any>;
-    inspector?: React.ComponentType<any>;
-    resultPanel?: React.ComponentType<any>;
+    sidebar?: React.ComponentType<unknown>;
+    toolbar?: React.ComponentType<unknown>;
+    inspector?: React.ComponentType<unknown>;
+    resultPanel?: React.ComponentType<unknown>;
   };
-  
+
   /**
    * Couleurs et styles personnalisés
    */
@@ -250,16 +250,16 @@ export interface RubriqueSchema {
     edgeColors: Record<string, string>;
     accentColor: string;
   };
-  
+
   // ========== FONCTIONNALITÉS AVANCÉES ==========
-  
+
   /**
    * Scénarios de calcul (si supportés)
    */
   supportsScenarios: boolean;
   getScenarios?(): string[];
   calculateScenario?(graph: Graph, scenarioId: string): CalculationResult;
-  
+
   /**
    * Comparaison (si supportée)
    */
@@ -296,7 +296,7 @@ export interface ObjectDefinition {
   icon: string;
   description?: string;
   params: ObjectParameter[];
-  defaultParams: Record<string, any>;
+  defaultParams: Record<string, unknown>;
 }
 
 export interface ObjectParameter {
@@ -304,22 +304,22 @@ export interface ObjectParameter {
   name: string;
   type: 'NUMBER' | 'STRING' | 'SELECT' | 'BOOLEAN' | 'ARRAY';
   required: boolean;
-  default?: any;
+  default?: unknown;
   unit?: string;
-  options?: { label: string; value: any }[];
+  options?: {label: string;value: unknown;}[];
 }
 
 // ============================================================================
 // 9️⃣ ÉNUMÉRATION DES RUBRIQUES
 // ============================================================================
 
-export type RubriqueId = 
-  | 'VOLTAGE_DROP'      // Calcul de chute de tension
-  | 'UNIFILAIRE'        // Schéma unifilaire BT
-  | 'PROTECTION'        // Schéma de protection
-  | 'THERMAL'           // Étude thermique
-  | 'REGULATORY'        // Dossier réglementaire
-  | 'SIMULATION';       // Simulation avancée
+export type RubriqueId =
+'VOLTAGE_DROP' // Calcul de chute de tension
+| 'UNIFILAIRE' // Schéma unifilaire BT
+| 'PROTECTION' // Schéma de protection
+| 'THERMAL' // Étude thermique
+| 'REGULATORY' // Dossier réglementaire
+| 'SIMULATION'; // Simulation avancée
 
 // ============================================================================
 // 🔟 REGISTRY DE RUBRIQUES
@@ -330,22 +330,22 @@ export interface RubriqueRegistry {
    * Enregistrer une nouvelle rubrique
    */
   register(rubrique: RubriqueSchema): void;
-  
+
   /**
    * Récupérer une rubrique par ID
    */
   get(id: RubriqueId): RubriqueSchema | null;
-  
+
   /**
    * Lister toutes les rubriques disponibles
    */
   getAll(): RubriqueSchema[];
-  
+
   /**
    * Lister les rubriques actives (non deprecated)
    */
   getActive(): RubriqueSchema[];
-  
+
   /**
    * Vérifier si une rubrique existe
    */
@@ -361,12 +361,12 @@ export interface RubriqueFactory {
    * Créer une instance d'une rubrique
    */
   create(id: RubriqueId): RubriqueSchema;
-  
+
   /**
    * Créer et initialiser une rubrique
    */
-  createAndInitialize(id: RubriqueId, config?: any): RubriqueSchema;
-  
+  createAndInitialize(id: RubriqueId, config?: unknown): RubriqueSchema;
+
   /**
    * Cloner une rubrique
    */
@@ -382,27 +382,27 @@ export interface RubriqueContext {
    * La rubrique active
    */
   rubrique: RubriqueSchema;
-  
+
   /**
    * Graphe courant
    */
   graph: Graph;
-  
+
   /**
    * Résultat du dernier calcul
    */
   lastResult?: CalculationResult;
-  
+
   /**
    * Erreurs et avertissements courants
    */
   validationResult?: ValidationResult;
-  
+
   /**
    * État personnalisé de la rubrique
    */
-  state: Record<string, any>;
-  
+  state: Record<string, unknown>;
+
   /**
    * Historique des calculs
    */

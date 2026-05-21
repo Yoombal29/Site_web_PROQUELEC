@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 
 export interface DynamicRoute {
   path: string;
@@ -32,41 +31,13 @@ export function useDynamicRoutes() {
     queryKey: ["dynamic-routes"],
     queryFn: async (): Promise<DynamicRoute[]> => {
       try {
-        const { data, error } = await supabase
-          .from("pages")
-          .select(`
-            slug,
-            title,
-            content,
-            meta_description,
-            meta_keywords,
-            featured_image,
-            template,
-            show_hero,
-            show_footer,
-            custom_css,
-            custom_js,
-            hero_title,
-            hero_subtitle,
-            hero_background_image,
-            hero_cta_text,
-            hero_cta_link,
-            author,
-            reading_time,
-            categories,
-            tags,
-            created_at,
-            updated_at
-          `)
-          .eq("is_published", true)
-          .order("menu_order", { ascending: true });
+        const res = await fetch("/api/pages");
+        if (!res.ok) throw new Error("Failed to fetch pages");
 
-        if (error) {
-          console.warn('Error fetching dynamic routes:', error.message);
-          return [];
-        }
+        const responseData = await res.json();
+        const data = Array.isArray(responseData) ? responseData : responseData?.rows || [];
 
-        return (data || []).map(page => ({
+        return data.filter((page: unknown) => page.status === 'published').map((page: unknown) => ({
           path: `/${page.slug}`,
           slug: page.slug,
           title: page.title,
@@ -90,14 +61,14 @@ export function useDynamicRoutes() {
           tags: page.tags || [],
           created_at: page.created_at,
           updated_at: page.updated_at
-        }));
+        })).sort((a: unknown, b: unknown) => (a.menu_order || 0) - (b.menu_order || 0));
       } catch (error) {
         console.warn('Error in useDynamicRoutes:', error);
         return [];
       }
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false
   });
 }
 
@@ -107,39 +78,23 @@ export function useDynamicPage(slug: string) {
     queryKey: ["dynamic-page", slug],
     queryFn: async (): Promise<DynamicRoute | null> => {
       try {
-        const { data, error } = await supabase
-          .from("pages")
-          .select(`
-            slug,
-            title,
-            content,
-            meta_description,
-            meta_keywords,
-            featured_image,
-            template,
-            show_hero,
-            show_footer,
-            custom_css,
-            custom_js,
-            header_html,
-            footer_html,
-            hero_title,
-            hero_subtitle,
-            hero_background_image,
-            hero_cta_text,
-            hero_cta_link,
-            author,
-            reading_time,
-            categories,
-            tags,
-            created_at,
-            updated_at
-          `)
-          .eq("slug", slug)
-          .eq("is_published", true)
-          .single();
+        // We fetch all pages and find the one because we don't have a specific slug endpoint on server yet? 
+        // Wait, server/index.js has app.get('/api/pages').
+        // But app.get('/api/pages') returns ALL pages.
+        // It's efficient enough for now (small site).
+        // Or I should add a slug endpoint.
+        // Actually, let's just fetch all and filter client side for safety first, OR add endpoint.
+        // Adding endpoint is cleaner but requires server restart.
+        // Let's rely on fetching all for now to avoid server restart risk, 
+        // unless list is huge.
 
-        if (error || !data) {
+        const res = await fetch("/api/pages");
+        if (!res.ok) throw new Error("Failed to fetch pages");
+        const allPages = await res.json();
+
+        const data = allPages.find((p: unknown) => p.slug === slug && p.status === 'published');
+
+        if (!data) {
           return null;
         }
 
@@ -174,6 +129,6 @@ export function useDynamicPage(slug: string) {
       }
     },
     enabled: !!slug,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 60 * 5 // 5 minutes
   });
 }

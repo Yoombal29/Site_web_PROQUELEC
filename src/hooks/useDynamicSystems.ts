@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { apiFetch } from '@/lib/api-client';
 
 export interface DynamicComponent {
   id: string;
@@ -7,8 +7,8 @@ export interface DynamicComponent {
   component_type: string;
   title?: string;
   subtitle?: string;
-  content: Record<string, any>;
-  settings: Record<string, any>;
+  content: Record<string, unknown>;
+  settings: Record<string, unknown>;
   is_active: boolean;
   display_order: number;
 }
@@ -18,30 +18,17 @@ export function useDynamicComponents(type?: string) {
     queryKey: ['dynamic-components', type],
     queryFn: async () => {
       try {
-        let query = supabase
-          .from('dynamic_components')
-          .select('*')
-          .eq('is_active', true)
-          .order('display_order', { ascending: true });
-
-        if (type) {
-          query = query.eq('component_type', type);
-        }
-
-        const { data, error } = await query;
-
-        if (error) {
-          console.warn('Dynamic components table not available:', error.message);
-          return [];
-        }
-
+        const url = type ?
+        `/api/dynamic-components?type=${encodeURIComponent(type)}` :
+        '/api/dynamic-components';
+        const data = await apiFetch<DynamicComponent[]>(url);
         return data || [];
       } catch (err) {
         console.warn('Error fetching dynamic components:', err);
         return [];
       }
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000 // 5 minutes
   });
 }
 
@@ -60,24 +47,14 @@ export function useActiveTheme() {
     queryKey: ['active-theme'],
     queryFn: async () => {
       try {
-        const { data, error } = await supabase
-          .from('theme_configurations')
-          .select('*')
-          .eq('is_active', true)
-          .single();
-
-        if (error) {
-          console.warn('Theme configurations table not available:', error.message);
-          return null;
-        }
-
-        return data as ThemeConfiguration;
+        const data = await apiFetch<ThemeConfiguration>('/api/theme-settings');
+        return data;
       } catch (err) {
         console.warn('Error fetching active theme:', err);
         return null;
       }
     },
-    staleTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 10 * 60 * 1000 // 10 minutes
   });
 }
 
@@ -86,8 +63,8 @@ export interface DynamicForm {
   name: string;
   title?: string;
   description?: string;
-  fields: any[];
-  settings: Record<string, any>;
+  fields: unknown[];
+  settings: Record<string, unknown>;
   submit_action: string;
   is_active: boolean;
 }
@@ -97,23 +74,14 @@ export function useDynamicForms() {
     queryKey: ['dynamic-forms'],
     queryFn: async () => {
       try {
-        const { data, error } = await supabase
-          .from('dynamic_forms')
-          .select('*')
-          .eq('is_active', true);
-
-        if (error) {
-          console.warn('Dynamic forms table not available:', error.message);
-          return [];
-        }
-
-        return data as DynamicForm[];
+        const data = await apiFetch<DynamicForm[]>('/api/dynamic-forms');
+        return data || [];
       } catch (err) {
         console.warn('Error fetching dynamic forms:', err);
         return [];
       }
     },
-    staleTime: 5 * 60 * 1000,
+    staleTime: 5 * 60 * 1000
   });
 }
 
@@ -122,7 +90,7 @@ export interface ExternalIntegration {
   name: string;
   type: string;
   provider: string;
-  config: Record<string, any>;
+  config: Record<string, unknown>;
   is_active: boolean;
 }
 
@@ -131,28 +99,16 @@ export function useExternalIntegrations(type?: string) {
     queryKey: ['external-integrations', type],
     queryFn: async () => {
       try {
-        let query = supabase
-          .from('external_integrations')
-          .select('*')
-          .eq('is_active', true);
-
-        if (type) {
-          query = query.eq('type', type);
-        }
-
-        const { data, error } = await query;
-
-        if (error) {
-          console.warn('External integrations table not available:', error.message);
-          return [];
-        }
-
-        return data as ExternalIntegration[];
+        const url = type ?
+        `/api/external-integrations?type=${encodeURIComponent(type)}` :
+        '/api/external-integrations';
+        const data = await apiFetch<ExternalIntegration[]>(url);
+        return data || [];
       } catch (err) {
         console.warn('Error fetching external integrations:', err);
         return [];
       }
     },
-    staleTime: 15 * 60 * 1000, // 15 minutes
+    staleTime: 15 * 60 * 1000 // 15 minutes
   });
 }

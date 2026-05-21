@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Eye, EyeOff, Lock } from 'lucide-react';
-import { useSession } from '@/hooks/useSession';
+
+
+
+import { Lock } from 'lucide-react';
+
 
 
 interface ConstructionPageProps {
@@ -16,7 +16,7 @@ const ConstructionPage: React.FC<ConstructionPageProps> = () => {
     <div className="min-h-screen bg-gradient-to-br from-proqblue-dark via-proqblue to-blue-400 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Background blur effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-proqblue-dark/20 via-proqblue/10 to-transparent backdrop-blur-sm"></div>
-      
+
       {/* Animated background circles */}
       <div className="absolute top-20 left-20 w-72 h-72 bg-white/5 rounded-full blur-xl animate-pulse"></div>
       <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-300/10 rounded-full blur-2xl animate-pulse delay-1000"></div>
@@ -26,10 +26,14 @@ const ConstructionPage: React.FC<ConstructionPageProps> = () => {
       <div className="relative z-10 max-w-md w-full space-y-8 text-center">
         {/* Logo/Brand */}
         <div className="space-y-4">
-          <div className="mx-auto w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20">
+          <a
+            href="/connexion"
+            title="Accès Administration"
+            className="mx-auto w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 transition-all active:scale-95 cursor-default">
+            
             <Lock className="w-10 h-10 text-white" />
-          </div>
-          
+          </a>
+
           <div className="space-y-2">
             <h1 className="text-4xl font-bold text-white font-roboto">
               PROQUELEC.SN
@@ -47,7 +51,7 @@ const ConstructionPage: React.FC<ConstructionPageProps> = () => {
               🚧 Site en Construction
             </h2>
             <p className="text-blue-100 text-base leading-relaxed">
-              Notre nouveau site web est actuellement en développement. 
+              Notre nouveau site web est actuellement en développement.
               Nous travaillons dur pour vous offrir une expérience exceptionnelle.
             </p>
             <p className="text-blue-200 text-sm mt-3 font-medium">
@@ -59,17 +63,28 @@ const ConstructionPage: React.FC<ConstructionPageProps> = () => {
         </div>
 
         {/* Footer info */}
-        <div className="text-center space-y-2">
+        <div className="text-center space-y-4">
           <p className="text-blue-200 text-sm">
             Depuis 1995 • Sécurité • Qualité • Formation
           </p>
-          <p className="text-blue-300 text-xs">
-            © 2024 PROQUELEC - Tous droits réservés
-          </p>
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-blue-300 text-xs">
+              © 2024 PROQUELEC - Tous droits réservés
+            </p>
+            {/* Lien secret pour l'admin */}
+            <a
+              href="/connexion"
+              className="text-white/5 hover:text-white/20 transition-colors text-[10px] mt-4 flex items-center gap-1"
+              title="Accès Administration">
+              
+              <Lock className="w-2 h-2" />
+              <span>Accès réservé</span>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    </div>);
+
+};
 
 export default ConstructionPage;

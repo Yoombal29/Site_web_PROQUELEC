@@ -1,6 +1,6 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { apiFetch } from "@/lib/api-client";
 
 export interface ElectricalCertification {
   id: string;
@@ -21,18 +21,13 @@ export function useElectricalCertifications() {
   return useQuery({
     queryKey: ["electrical-certifications"],
     queryFn: async (): Promise<ElectricalCertification[]> => {
-      const { data, error } = await supabase
-        .from('electrical_certifications')
-        .select('*')
-        .eq('is_active', true)
-        .order('name');
-
-      if (error) {
+      try {
+        const data = await apiFetch<ElectricalCertification[]>('/api/electrical-certifications');
+        return data || [];
+      } catch (error) {
         console.error('Erreur certifications:', error);
         throw error;
       }
-
-      return data || [];
     },
     staleTime: 1000 * 60 * 10, // 10 minutes
   });
@@ -43,13 +38,10 @@ export function useCreateCertification() {
 
   return useMutation({
     mutationFn: async (certification: Omit<ElectricalCertification, 'id' | 'created_at' | 'updated_at'>) => {
-      const { data, error } = await supabase
-        .from('electrical_certifications')
-        .insert([certification])
-        .select()
-        .single();
-
-      if (error) throw error;
+      const data = await apiFetch('/api/electrical-certifications', {
+        method: 'POST',
+        body: JSON.stringify(certification)
+      });
       return data;
     },
     onSuccess: () => {

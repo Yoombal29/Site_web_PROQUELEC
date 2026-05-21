@@ -1,0 +1,90 @@
+/**
+ * Styles pour la carte interactive du Sénégal (Leaflet Version)
+ */
+
+.senegal-map {
+  background: linear-gradient(135deg,
+      hsl(174 40% 98%) 0%,
+      hsl(180 30% 95%) 50%,
+      hsl(174 20% 92%) 100%);
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.map-container-card {
+  box-shadow:
+    0 10px 40px -10px hsl(220 100% 10% / 0.1),
+    0 0 0 1px hsl(220 30% 95%);
+  background: white;
+  border: 0 !important;
+  border-radius: 2rem !important;
+}
+
+@keyframes flash {
+  0% { fill-opacity: 0.6; }
+  50% { fill-opacity: 0.9; fill: #3b82f6; }
+  100% { fill-opacity: 0.6; }
+}
+
+.radar-flash {
+  animation: flash 1s ease-in-out infinite;
+}
+
+.region-polygon {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  stroke: white;
+  stroke-width: 1;
+}
+
+.filter-glow {
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+}
+
+/* Tooltips */
+.region-tooltip {
+  background: rgba(15, 23, 42, 0.9) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 8px 12px !important;
+  color: white !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(4px);
+}
+
+.tooltip-content {
+  text-align: center;
+}
+
+.tooltip-name {
+  font-weight: 800;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tooltip-capital {
+  font-size: 10px;
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+/* Custom Zoom Controls */
+.leaflet-control-zoom {
+  border: none !important;
+  margin: 20px !important;
+}
+
+.leaflet-control-zoom a {
+  background: white !important;
+  color: #1e293b !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  margin-bottom: 4px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #f8fafc !important;
+  color: #3b82f6 !important;
+}

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { DesignEditor } from '@/components/admin/DesignEditor';
 import { FileText, Eye, Zap, Save, X, Copy, Plus } from 'lucide-react';
-import { getSupabaseClient } from '@/utils/supabaseClient';
+import { apiFetch } from '@/lib/api-client';
 import { LAYOUT_TEMPLATES, getDefaultDesignForLayout } from '@/utils/pageLayouts';
 import type { PageRecord, PageDesignOptions, PageSeoOptions } from '@/types/PageSystem';
 import { useToast } from '@/hooks/use-toast';
@@ -43,14 +44,9 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
 
   const loadPage = async () => {
     try {
-      const supabase = getSupabaseClient();
-      const { data, error } = await supabase
-        .from('pages')
-        .select('*')
-        .eq('id', pageId)
-        .single();
+      const data = await apiFetch<PageRecord>(`/api/pages/${pageId}`);
 
-      if (error || !data) {
+      if (!data) {
         toast({
           title: 'Erreur',
           description: 'Impossible de charger la page',
@@ -123,7 +119,6 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
 
     setIsSaving(true);
     try {
-      const supabase = getSupabaseClient();
       const pageToSave = {
         ...page,
         design_options: JSON.stringify(page.design_options),
@@ -133,12 +128,11 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
 
       if (page.id) {
         // Mise à jour
-        const { error } = await supabase
-          .from('pages')
-          .update(pageToSave)
-          .eq('id', page.id);
+        await apiFetch(`/api/pages/${page.id}`, {
+          method: 'PUT',
+          body: JSON.stringify(pageToSave)
+        });
 
-        if (error) throw error;
         toast({
           title: 'Succès',
           description: 'Page mise à jour',
@@ -146,13 +140,11 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
         });
       } else {
         // Création
-        const { data, error } = await supabase
-          .from('pages')
-          .insert([pageToSave])
-          .select()
-          .single();
+        const data = await apiFetch<PageRecord>('/api/pages', {
+          method: 'POST',
+          body: JSON.stringify(pageToSave)
+        });
 
-        if (error) throw error;
         setPage(data);
         toast({
           title: 'Succès',
@@ -196,13 +188,13 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
     setPage((prev) =>
       prev
         ? {
-            ...prev,
-            layout_type: layoutType as any,
-            design_options: {
-              ...prev.design_options,
-              ...defaultDesign
-            }
+          ...prev,
+          layout_type: layoutType as any,
+          design_options: {
+            ...prev.design_options,
+            ...defaultDesign
           }
+        }
         : null
     );
     setUnsavedChanges(true);
@@ -318,148 +310,27 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
 
               <div className="flex items-center gap-2">
                 <input
+                  id="page-published"
                   type="checkbox"
                   checked={page.is_published}
                   onChange={(e) => updatePageField('is_published', e.target.checked)}
                   className="w-4 h-4"
                 />
-                <label className="font-medium">Publier cette page</label>
+                <label htmlFor="page-published" className="font-medium">Publier cette page</label>
               </div>
             </CardContent>
           </Card>
-
-          {/* Hero Section */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Hero Section</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label>Titre du Hero</Label>
-                <Input
-                  value={page.hero_title || ''}
-                  onChange={(e) => updatePageField('hero_title', e.target.value)}
-                  placeholder="Titre principal"
-                  className="mt-2"
-                />
-              </div>
-
-              <div>
-                <Label>Sous-titre</Label>
-                <Input
-                  value={page.hero_subtitle || ''}
-                  onChange={(e) => updatePageField('hero_subtitle', e.target.value)}
-                  placeholder="Sous-titre optionnel"
-                  className="mt-2"
-                />
-              </div>
-
-              <div>
-                <Label>Image de fond</Label>
-                <Input
-                  value={page.hero_background_image || ''}
-                  onChange={(e) => updatePageField('hero_background_image', e.target.value)}
-                  placeholder="URL de l'image"
-                  className="mt-2"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label>Texte du CTA</Label>
-                  <Input
-                    value={page.hero_cta_text || ''}
-                    onChange={(e) => updatePageField('hero_cta_text', e.target.value)}
-                    placeholder="ex: Découvrir"
-                    className="mt-2"
-                  />
-                </div>
-
-                <div>
-                  <Label>Lien du CTA</Label>
-                  <Input
-                    value={page.hero_cta_link || ''}
-                    onChange={(e) => updatePageField('hero_cta_link', e.target.value)}
-                    placeholder="ex: #contact"
-                    className="mt-2"
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Contenu Principal */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Contenu Principal</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label>HTML Contenu</Label>
-                <Textarea
-                  value={page.content || ''}
-                  onChange={(e) => updatePageField('content', e.target.value)}
-                  placeholder="Entrez votre HTML ou markdown..."
-                  className="font-mono text-sm resize-vertical"
-                  rows={15}
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Meta Description */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Métadonnées</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label>Description Meta</Label>
-                <Textarea
-                  value={page.meta_description || ''}
-                  onChange={(e) => updatePageField('meta_description', e.target.value)}
-                  placeholder="Description pour les moteurs de recherche"
-                  maxLength={160}
-                  rows={2}
-                  className="mt-2 resize-none"
-                />
-                <span className="text-xs text-gray-600">{(page.meta_description || '').length}/160</span>
-              </div>
-
-              <div>
-                <Label>Mots-clés</Label>
-                <Input
-                  value={page.meta_keywords || ''}
-                  onChange={(e) => updatePageField('meta_keywords', e.target.value)}
-                  placeholder="Mots-clés séparés par des virgules"
-                  className="mt-2"
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* TAB: DESIGN */}
-        <TabsContent value="design">
-          <DesignEditor
-            page={page}
-            onDesignChange={handleDesignChange}
-            onSeoChange={handleSeoChange}
-            onLayoutChange={handleLayoutChange}
-            previewMode={previewMode}
-            onPreviewModeChange={setPreviewMode}
-          />
-        </TabsContent>
-
-        {/* TAB: APERÇU */}
-        <TabsContent value="preview" className="space-y-4">
-          <div className="bg-gray-100 p-4 rounded-lg">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              {previewMode === 'desktop' && (
-                <div className="w-full" style={{ aspectRatio: '16/9' }}>
-                  {/* Aperçu Desktop */}
-                  <iframe
-                    srcDoc={`<!DOCTYPE html>
+          ...
+          {/* TAB: APERÇU */}
+          <TabsContent value="preview" className="space-y-4">
+            <div className="bg-gray-100 p-4 rounded-lg">
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                {previewMode === 'desktop' && (
+                  <div className="w-full aspect-[16/9]">
+                    {/* Aperçu Desktop */}
+                    <iframe
+                      title="Preview"
+                      srcDoc={`<!DOCTYPE html>
 <html>
 <head>
   <style>
@@ -478,23 +349,23 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
   <p>${page.hero_subtitle || ''}</p>
 </body>
 </html>`}
-                    className="w-full h-full border-none"
-                  />
-                </div>
-              )}
-              {previewMode === 'tablet' && (
-                <div className="mx-auto" style={{ width: '768px', maxWidth: '100%' }}>
-                  <p className="text-center p-4 text-gray-600">Aperçu Tablet (768px)</p>
-                </div>
-              )}
-              {previewMode === 'mobile' && (
-                <div className="mx-auto" style={{ width: '375px', maxWidth: '100%' }}>
-                  <p className="text-center p-4 text-gray-600">Aperçu Mobile (375px)</p>
-                </div>
-              )}
+                      className="w-full h-full border-none"
+                    />
+                  </div>
+                )}
+                {previewMode === 'tablet' && (
+                  <div className="mx-auto w-[768px] max-w-full">
+                    <p className="text-center p-4 text-gray-600">Aperçu Tablet (768px)</p>
+                  </div>
+                )}
+                {previewMode === 'mobile' && (
+                  <div className="mx-auto w-[375px] max-w-full">
+                    <p className="text-center p-4 text-gray-600">Aperçu Mobile (375px)</p>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        </TabsContent>
+          </TabsContent>
       </Tabs>
     </div>
   );

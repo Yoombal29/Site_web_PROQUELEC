@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "primary_color": "#010db2",
+    "secondary_color": "#054393",
+    "logo_url": null,
+    "favicon_url": null,
+    "custom_css": null,
+    "updated_at": "2026-02-13T17:48:03.426Z",
+    "accent_color": "#ea580c",
+    "background_color": "#f8f9fa",
+    "text_color": "#333333",
+    "font_family": "Roboto",
+    "footer_background_url": ""
+  }
+]

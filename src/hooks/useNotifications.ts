@@ -1,7 +1,6 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-// import { supabase } from '@/integrations/supabase/client';
 
 export interface Notification {
   id: string;
@@ -32,7 +31,7 @@ export function useNotifications() {
       const stored = localStorage.getItem('notifications');
       if (stored) {
         const parsed = JSON.parse(stored);
-        return parsed.map((n: any) => ({
+        return parsed.map((n: unknown) => ({
           ...n,
           timestamp: new Date(n.timestamp)
         }));
@@ -47,7 +46,7 @@ export function useNotifications() {
     setIsLoading(true);
 
     // Simulation d'un délai pour l'UX
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     const newNotification: Notification = {
       id: Date.now().toString(),
@@ -55,10 +54,10 @@ export function useNotifications() {
       message: notification.message,
       type: notification.type,
       timestamp: new Date(),
-      read: false,
+      read: false
     };
 
-    setNotifications(prev => {
+    setNotifications((prev) => {
       const updated = [newNotification, ...prev];
       saveToLocalStorage(updated);
       return updated;
@@ -69,7 +68,7 @@ export function useNotifications() {
     toast({
       title: notification.title,
       description: notification.message,
-      variant: notification.type === "error" ? "destructive" : "default",
+      variant: notification.type === "error" ? "destructive" : "default"
     });
 
     return newNotification.id;
@@ -77,11 +76,11 @@ export function useNotifications() {
 
   const markAsRead = useCallback(async (id: string) => {
     // Simulation d'un délai pour l'UX
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 50));
 
-    setNotifications(prev => {
-      const updated = prev.map(notification =>
-        notification.id === id ? { ...notification, read: true } : notification
+    setNotifications((prev) => {
+      const updated = prev.map((notification) =>
+      notification.id === id ? { ...notification, read: true } : notification
       );
       saveToLocalStorage(updated);
       return updated;
@@ -90,10 +89,10 @@ export function useNotifications() {
 
   const removeNotification = useCallback(async (id: string) => {
     // Simulation d'un délai pour l'UX
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 50));
 
-    setNotifications(prev => {
-      const updated = prev.filter(notification => notification.id !== id);
+    setNotifications((prev) => {
+      const updated = prev.filter((notification) => notification.id !== id);
       saveToLocalStorage(updated);
       return updated;
     });
@@ -101,13 +100,13 @@ export function useNotifications() {
 
   const clearAll = useCallback(async () => {
     // Simulation d'un délai pour l'UX
-    await new Promise(resolve => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 50));
 
     setNotifications([]);
     saveToLocalStorage([]);
   }, [saveToLocalStorage]);
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   // Charger les notifications depuis localStorage au montage
   useEffect(() => {
@@ -122,5 +121,6 @@ export function useNotifications() {
     removeNotification,
     clearAll,
     unreadCount,
+    isLoading // Export isLoading for completeness
   };
 }

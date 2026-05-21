@@ -1,220 +1,168 @@
-
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { HeroSection } from "@/components/HeroSection";
 import { SEO } from "@/components/SEO";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import {
-  BookOpen,
-  Clock,
-  MapPin,
-  CheckCircle2,
-  ArrowRight,
-  Zap,
-  ShieldCheck,
-  GraduationCap,
-  Calendar,
-  Layers
-} from "lucide-react";
+  BookOpen, Clock, CheckCircle2, ArrowRight, Zap,
+  ShieldCheck, GraduationCap, Calendar, Layers, BarChart3,
+  Award, Target } from
+"lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
+import { useLiveSettings } from "@/hooks/useLiveSettings";
+import { motion } from "framer-motion";
+
+const iconMap: Record<string, unknown> = {
+  Layers, ShieldCheck, Zap, BookOpen, Clock, GraduationCap, BarChart3, Calendar, Award, Target
+};
 
 const Trainings = () => {
-  const formationCategories = [
-    {
-      title: "Installations & Normes",
-      icon: Layers,
-      formations: [
-        {
-          title: "Basse Tension (NFC 15-100)",
-          duration: "40h (5 jours)",
-          level: "Tous niveaux",
-          description: "Maîtrisez les règles de conception et de réalisation des installations électriques basse tension."
-        },
-        {
-          title: "Mise à la Terre & Parasurtenseurs",
-          duration: "16h (2 jours)",
-          level: "Intermédiaire",
-          description: "Spécialisation sur la protection des équipements et la sécurité des personnes."
-        }
-      ]
-    },
-    {
-      title: "Sécurité & Habilitation",
-      icon: ShieldCheck,
-      formations: [
-        {
-          title: "Habilitation Électrique (B1, B2, BR, BC)",
-          duration: "24h (3 jours)",
-          level: "Professionnel",
-          description: "Préparation à l'habilitation pour l'exécution de travaux sur ou au voisinage des installations."
-        },
-        {
-          title: "Risques Électriques & Prévention",
-          duration: "8h (1 jour)",
-          level: "Sensibilisation",
-          description: "Fondamentaux de la sécurité pour tout personnel intervenant en environnement électrique."
-        }
-      ]
-    },
-    {
-      title: "Expertise & Audit",
-      icon: Zap,
-      formations: [
-        {
-          title: "Audit Énergétique du Bâtiment",
-          duration: "32h (4 jours)",
-          level: "Avancé",
-          description: "Méthodologie de diagnostic et préconisations pour l'efficacité énergétique."
-        },
-        {
-          title: "Contrôle de Conformité Réglementaire",
-          duration: "24h (3 jours)",
-          level: "Expert",
-          description: "Devenir inspecteur technique pour la validation officielle des installations."
-        }
-      ]
-    }
-  ];
+  const { settings } = useLiveSettings();
+  const pageData = settings?.page_sections?.trainings;
+
+  if (!pageData) return null;
+
+  const heroData = pageData.content?.hero;
+  const categoriesData = pageData.content?.categories;
+  const statsData = pageData.content?.stats;
+
+  const categories = categoriesData?.features?.map((f: string) => {
+    const [title, iconName, desc] = f.split('|').map((s) => s.trim());
+    return { title, desc, icon: iconMap[iconName] || Layers };
+  }) || [];
+
+  const stats = statsData?.features?.map((f: string) => {
+    const [value, label, desc] = f.split('|').map((s) => s.trim());
+    return { value, label, desc };
+  }) || [];
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50/50 flex flex-col font-sans">
       <SEO
-        title="Catalogue des Formations - PROQUELEC"
-        description="Améliorez vos compétences avec les formations expertes de PROQUELEC. Basse tension, sécurité, audit énergétique et habilitations électriques."
-      />
+        title="Centre de Formation - PROQUELEC"
+        description="Améliorez vos compétences avec les formations expertes de PROQUELEC. Excellence et sécurité électrique." />
+      
 
-      <Header />
+      <Header solid={true} />
 
-      <main>
-        <HeroSection
-          badge="Centre de Formation Agrée"
-          title="Développez votre Expertise"
-          subtitle="Des formations d'élite pour les professionnels de l'électricité"
-          description="PROQUELEC propose des programmes pédagogiques de haut niveau, alliant théorie rigoureuse et pratique intensive sur bancs d'essais modernes."
-          gradient="bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900"
-          buttons={[
-            { label: "Voir le calendrier", href: "/events", variant: "primary" },
-            { label: "S'inscrire", href: "/contact", variant: "secondary" }
-          ]}
-        />
+      <main className="flex-grow pt-24">
+        {/* Immersive Hero */}
+        <section className="bg-slate-900 pt-32 pb-48 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/p5.png')] opacity-10"></div>
+          {/* Ambient Lighting */}
+          <div className="absolute bottom-[-20%] left-[20%] w-[60%] h-[80%] bg-blue-600/10 blur-[150px] rounded-full"></div>
+          <div className="absolute top-[-20%] right-[10%] w-[40%] h-[60%] bg-indigo-600/10 blur-[120px] rounded-full"></div>
 
-        {/* Categories Section */}
-        <section className="py-24 px-4">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Explorez nos parcours</h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Nos formations sont structurées par domaines d'expertise pour répondre précisément aux besoins du marché sénégalais.
+          <div className="container max-w-7xl mx-auto px-4 relative z-10 text-center space-y-8">
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-xs font-black uppercase tracking-[0.2em]">
+              
+              <GraduationCap className="w-4 h-4" /> Académie Nationale
+            </motion.div>
+            <h1 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-tight">
+              Propulsez Votre <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Expertise</span>.
+            </h1>
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">
+              Le centre de formation PROQUELEC accompagne les professionnels du Sénégal vers la maîtrise totale des normes et de la sécurité électrique.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 pt-4">
+              <Link to="/formation-certification#catalogue">
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-black h-16 px-10 text-lg rounded-2xl shadow-2xl shadow-blue-600/20">
+                  Explorer le Catalogue
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Highlight Categories */}
+        <section className="py-32 px-4 bg-white relative">
+          <div className="container max-w-7xl mx-auto">
+            <div className="text-center mb-24 space-y-4">
+              <h2 className="text-5xl font-black text-slate-900 uppercase tracking-tighter">{categoriesData?.title || "Nos Domaines"}</h2>
+              <p className="text-xl text-slate-500 font-light max-w-2xl mx-auto italic">
+                {categoriesData?.subtitle || "Une expertise répartie sur 3 piliers fondamentaux."}
               </p>
             </div>
 
-            <div className="space-y-20">
-              {formationCategories.map((cat, idx) => (
-                <div key={idx} className="relative">
-                  <div className="flex items-center gap-4 mb-10">
-                    <div className="p-3 bg-blue-600 text-white rounded-2xl shadow-lg">
-                      <cat.icon className="w-8 h-8" />
-                    </div>
-                    <h3 className="text-3xl font-bold text-slate-900">{cat.title}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {categories.map((cat: unknown, idx: number) =>
+              <motion.div
+                key={idx}
+                whileHover={{ y: -12 }}
+                className="group p-12 rounded-[3rem] bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-2xl hover:border-blue-200 transition-all duration-500">
+                
+                  <div className="w-20 h-20 bg-blue-600 text-white rounded-3xl flex items-center justify-center mb-10 shadow-xl shadow-blue-600/20 group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                    <cat.icon className="w-10 h-10" />
                   </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {cat.formations.map((f, fIdx) => (
-                      <div key={fIdx} className="group bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                        <div className="flex justify-between items-start mb-6">
-                          <Badge className="bg-slate-100 text-slate-600 border-none font-bold px-3 py-1">
-                            {f.level}
-                          </Badge>
-                          <div className="flex items-center gap-2 text-blue-600 font-bold text-sm">
-                            <Clock className="w-4 h-4" />
-                            {f.duration}
-                          </div>
-                        </div>
-                        <h4 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">
-                          {f.title}
-                        </h4>
-                        <p className="text-slate-600 leading-relaxed mb-8">
-                          {f.description}
-                        </p>
-                        <Link to="/contact">
-                          <Button variant="ghost" className="p-0 text-blue-600 font-bold hover:bg-transparent flex items-center gap-2 group-hover:gap-4 transition-all">
-                            Détails du programme <ArrowRight className="w-5 h-5" />
-                          </Button>
-                        </Link>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                  <h3 className="text-3xl font-black text-slate-900 mb-6 tracking-tight uppercase leading-none">{cat.title}</h3>
+                  <p className="text-slate-600 text-lg leading-relaxed font-light mb-10">
+                    {cat.desc}
+                  </p>
+                  <Link to="/formation-certification" className="inline-flex items-center gap-2 text-blue-600 font-black uppercase tracking-widest text-xs hover:gap-4 transition-all">
+                    Détails du programme <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </motion.div>
+              )}
             </div>
           </div>
         </section>
 
-        {/* Stats / Why Proquelec */}
-        <section className="py-24 bg-slate-900 text-white overflow-hidden relative">
-          <div className="absolute top-0 left-0 w-full h-full opacity-10">
-            <div className="absolute top-10 left-10 w-64 h-64 bg-blue-500 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500 rounded-full blur-3xl"></div>
-          </div>
-
-          <div className="max-w-7xl mx-auto px-4 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-              <div>
-                <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight">Pourquoi choisir le centre PROQUELEC ?</h2>
-                <div className="space-y-6">
-                  {[
-                    { title: "Experts Métiers", desc: "Formateurs en activité possédant une expérience terrain significative." },
-                    { title: "Infrastructures Modernes", desc: "Plateaux techniques équipés des dernières technologies de contrôle." },
-                    { title: "Certification d'État", desc: "Diplômes et attestations reconnus par les autorités nationales." }
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex gap-6">
-                      <div className="flex-shrink-0 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                        <CheckCircle2 className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h4 className="text-xl font-bold mb-2">{item.title}</h4>
-                        <p className="text-slate-400">{item.desc}</p>
-                      </div>
+        {/* Elegant Stats */}
+        <section className="py-32 bg-slate-900 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-transparent"></div>
+          <div className="container max-w-7xl mx-auto px-4 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-24 items-center">
+              <div className="space-y-10">
+                <h2 className="text-5xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none">{statsData?.title || "La Force du Réseau"}</h2>
+                <p className="text-2xl text-slate-400 font-light italic leading-relaxed">{statsData?.subtitle || "Plus de 25 ans d'engagement pour l'excellence."}</p>
+                <div className="grid grid-cols-2 gap-6 pt-4">
+                  {stats.map((stat: unknown, idx: number) =>
+                  <div key={idx} className="bg-white/5 backdrop-blur-md p-10 rounded-[2.5rem] border border-white/10 group hover:bg-white/10 transition-colors">
+                      <div className="text-5xl font-black text-blue-400 mb-2 group-hover:scale-110 transition-transform">{stat.value}</div>
+                      <div className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-1">{stat.label}</div>
+                      <div className="text-sm text-slate-500 font-light">{stat.desc}</div>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-white/5 backdrop-blur-md p-10 rounded-3xl border border-white/10 text-center">
-                  <div className="text-5xl font-black text-blue-400 mb-2">98%</div>
-                  <div className="text-sm font-bold uppercase tracking-widest text-slate-300">Taux de succès</div>
+              <div className="relative">
+                <div className="aspect-square rounded-[3rem] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-all duration-700">
+                  <img
+                    src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80"
+                    alt="Formation PROQUELEC"
+                    className="w-full h-full object-cover" loading="lazy" />
+                  
+                  <div className="absolute inset-0 bg-blue-900/20"></div>
                 </div>
-                <div className="bg-white/5 backdrop-blur-md p-10 rounded-3xl border border-white/10 text-center">
-                  <div className="text-5xl font-black text-blue-400 mb-2">500+</div>
-                  <div className="text-sm font-bold uppercase tracking-widest text-slate-300">Certifiés / an</div>
-                </div>
-                <div className="bg-white/5 backdrop-blur-md p-10 rounded-3xl border border-white/10 text-center">
-                  <div className="text-5xl font-black text-blue-400 mb-2">15</div>
-                  <div className="text-sm font-bold uppercase tracking-widest text-slate-300">Formateurs</div>
-                </div>
-                <div className="bg-white/5 backdrop-blur-md p-10 rounded-3xl border border-white/10 text-center">
-                  <div className="text-5xl font-black text-blue-400 mb-2">25</div>
-                  <div className="text-sm font-bold uppercase tracking-widest text-slate-300">Ans d'histoire</div>
+                <div className="absolute -bottom-8 -left-8 bg-white p-10 rounded-3xl shadow-xl space-y-4 max-w-[280px]">
+                  <CheckCircle2 className="w-10 h-10 text-green-500" />
+                  <p className="text-slate-900 font-bold leading-tight uppercase tracking-tight">Certification Reconnue par l'État du Sénégal</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-24 px-4 bg-white text-center">
-          <div className="max-w-4xl mx-auto">
-            <GraduationCap className="w-16 h-16 text-blue-600 mx-auto mb-8" />
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-8">Boostez vos compétences techniques</h2>
-            <p className="text-xl text-slate-600 mb-12">
-              Que vous soyez indépendant, salarié ou chef d'entreprise, nos formations s'adaptent à vos ambitions professionnelles.
+        {/* Global CTA */}
+        <section className="py-32 bg-white relative overflow-hidden text-center">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-50 rounded-full blur-[150px] -z-10"></div>
+          <div className="container max-w-4xl mx-auto px-4 space-y-12">
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-blue-50 rounded-[2rem] text-blue-600 mb-4">
+              <GraduationCap className="w-12 h-12" />
+            </div>
+            <h2 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter leading-none">
+              Inscrivez-vous <br /><span className="text-blue-600 text-6xl md:text-8xl">Maintenant</span>.
+            </h2>
+            <p className="text-2xl text-slate-500 font-light italic leading-relaxed">
+              Ne laissez pas vos compétences stagner. Rejoignez la prochaine session certifiante.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-wrap justify-center gap-6 pt-6">
               <Link to="/contact">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-14 px-10 text-lg rounded-xl">
-                  S'inscrire à la prochaine session
+                <Button size="lg" className="bg-slate-900 hover:bg-slate-800 text-white font-black h-20 px-12 text-2xl rounded-[2rem] shadow-2xl hover:scale-105 transition-all">
+                  Contacter un Conseiller
                 </Button>
               </Link>
             </div>
@@ -223,9 +171,9 @@ const Trainings = () => {
       </main>
 
       <Footer />
-      <ScrollToTopButton />
-    </div>
-  );
+      <ScrollToTopButton aria-label="Action" />
+    </div>);
+
 };
 
 export default Trainings;

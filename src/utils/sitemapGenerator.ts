@@ -1,5 +1,5 @@
 
-import { supabase } from '@/integrations/supabase/client';
+import { apiFetch } from '@/lib/api-client';
 
 interface SitemapUrl {
   loc: string;
@@ -32,14 +32,11 @@ export class SitemapGenerator {
     );
 
     try {
-      // Pages dynamiques depuis la base de données
-      const { data: pages } = await supabase
-        .from('pages')
-        .select('slug, updated_at')
-        .eq('is_published', true);
+      // Pages dynamiques depuis la base de données (API locale)
+      const pages = await apiFetch<unknown[]>('/api/pages');
 
       if (pages) {
-        urls.push(...pages.map(page => ({
+        urls.push(...pages.filter((p) => p.is_published).map((page) => ({
           loc: `/${page.slug}`,
           lastmod: page.updated_at,
           changefreq: 'monthly' as const,
@@ -48,13 +45,10 @@ export class SitemapGenerator {
       }
 
       // Articles de blog
-      const { data: posts } = await supabase
-        .from('blog_posts')
-        .select('slug, published_at')
-        .not('published_at', 'is', null);
+      const posts = await apiFetch<unknown[]>('/api/blog-posts');
 
       if (posts) {
-        urls.push(...posts.map(post => ({
+        urls.push(...posts.filter((p) => p.published_at).map((post) => ({
           loc: `/blog/${post.slug}`,
           lastmod: post.published_at,
           changefreq: 'monthly' as const,
@@ -63,13 +57,11 @@ export class SitemapGenerator {
       }
 
       // Événements
-      const { data: events } = await supabase
-        .from('events')
-        .select('id, date')
-        .gte('date', new Date().toISOString());
+      const events = await apiFetch<unknown[]>('/api/events');
 
       if (events) {
-        urls.push(...events.map(event => ({
+        const now = new Date().toISOString();
+        urls.push(...events.filter((e) => e.date >= now).map((event) => ({
           loc: `/events#${event.id}`,
           lastmod: new Date().toISOString(),
           changefreq: 'weekly' as const,
@@ -85,22 +77,22 @@ export class SitemapGenerator {
   }
 
   private generateXML(urls: SitemapUrl[]): string {
-    const urlElements = urls.map(url => {
+    const urlElements = urls.map((url) => {
       const fullUrl = `${this.baseUrl}${url.loc}`;
       let xml = `    <url>\n      <loc>${fullUrl}</loc>\n`;
-      
+
       if (url.lastmod) {
         xml += `      <lastmod>${new Date(url.lastmod).toISOString()}</lastmod>\n`;
       }
-      
+
       if (url.changefreq) {
         xml += `      <changefreq>${url.changefreq}</changefreq>\n`;
       }
-      
+
       if (url.priority !== undefined) {
         xml += `      <priority>${url.priority}</priority>\n`;
       }
-      
+
       xml += '    </url>';
       return xml;
     }).join('\n');
@@ -116,7 +108,7 @@ ${urlElements}
       const sitemap = await this.generateSitemap();
       const blob = new Blob([sitemap], { type: 'application/xml' });
       const url = URL.createObjectURL(blob);
-      
+
       const a = document.createElement('a');
       a.href = url;
       a.download = 'sitemap.xml';

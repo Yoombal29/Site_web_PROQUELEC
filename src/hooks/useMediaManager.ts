@@ -1,9 +1,8 @@
 
-import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { sanitizeFileName } from '@/utils/fileUtils';
+
+import { useSession } from './useSession';
 
 export interface MediaFile {
   id: string;
@@ -17,141 +16,130 @@ export interface MediaFile {
   category: 'image' | 'document' | 'video' | 'other';
 }
 
+const EMPTY_ARRAY: MediaFile[] = [];
+
 export const useMediaManager = () => {
   const queryClient = useQueryClient();
+  const { session, user } = useSession();
+
+  const getFullUrl = (path: string) => {
+    const normalizeUploadUrl = (value: string) => {
+      try {
+        const parsed = new URL(value);
+        if (parsed.pathname.startsWith('/uploads/')) {
+          return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+        }
+        return value;
+      } catch {
+        return value;
+      }
+    };
+
+    if (path.startsWith('http')) return normalizeUploadUrl(path);
+    // Base URL for local uploads served via the proxy
+    return `/uploads/${path}`;
+  };
 
   const uploadFile = useMutation({
-    mutationFn: async ({ file, bucket }: { file: File; bucket: string }) => {
-      console.log(`Téléversement de ${file.name} vers le bucket ${bucket}`);
+    mutationFn: async ({ file, bucket, projectId }: { file: File; bucket?: string; projectId?: string; }) => {
 
-      // Vérifier que l'utilisateur est authentifié
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError || !session?.user) {
+      if (!session || !session.access_token) {
         toast.error('Vous devez être connecté pour téléverser des fichiers');
-        throw new Error('Vous devez être connecté pour téléverser des fichiers');
+        throw new Error('Vous devez être connecté');
       }
 
-      const user = session.user;
-      console.log('Utilisateur connecté pour téléversement:', user.id);
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('category', getFileCategory(file.type));
+      if (projectId) formData.append('project_id', projectId);
 
-      const fileName = `${Date.now()}-${sanitizeFileName(file.name)}`;
-      const { data, error } = await supabase.storage
-        .from(bucket)
-        .upload(fileName, file);
+      // CHANGED: Use /api/storage/upload (Standardized Backend Route)
+      const response = await fetch('/api/storage/upload', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
+        },
+        body: formData
+      });
 
-      if (error) {
-        toast.error('Erreur lors du téléversement.');
-        throw new Error(error.message);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Erreur lors du téléversement');
       }
 
-      console.log('Fichier téléversé:', data);
+      const result = await response.json();
 
-      const { data: publicUrlData } = supabase.storage
-        .from(bucket)
-        .getPublicUrl(data.path);
-
-      if (!publicUrlData) {
-        throw new Error("Impossible d'obtenir l'URL publique du fichier.");
-      }
-
-      console.log('URL publique générée:', publicUrlData.publicUrl);
-
-      // Enregistrer les métadonnées du fichier dans la base de données
-      try {
-        const mediaFileData = {
-          file_name: file.name,
-          file_path: data.path,
-          file_size: file.size,
-          mime_type: file.type,
-          file_type: getFileCategory(file.type),
-          bucket: bucket, // Stockage du bucket source
-          uploaded_by: user.id,
-          is_active: true,
-          uploaded_at: new Date().toISOString()
-        };
-
-        const { error: dbError } = await (supabase as any)
-          .from('media_files')
-          .insert(mediaFileData);
-
-        if (dbError) {
-          toast.error('Le fichier a été téléversé mais les métadonnées n\'ont pas pu être enregistrées');
-        }
-      } catch (metaError) {
-        toast.error('Le fichier a été téléversé mais les métadonnées n\'ont pas pu être enregistrées');
-      }
 
       return {
-        path: data.path,
-        url: publicUrlData.publicUrl,
-        name: file.name,
-        size: file.size,
-        type: file.type,
+        id: result.id, // backend returns full object
+        path: result.file_path,
+        url: getFullUrl(result.file_path),
+        name: result.file_name,
+        size: result.file_size,
+        type: result.mime_type,
         bucket
       };
     },
-    onSuccess: () => {
+    onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['media-files'] });
+      // Invalidate project documents if uploaded to a project
+      if (variables.projectId) {
+        queryClient.invalidateQueries({ queryKey: ['project-docs', variables.projectId] });
+        queryClient.invalidateQueries({ queryKey: ['project', variables.projectId] });
+      }
       toast.success('Fichier téléversé avec succès');
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error(`Erreur: ${error.message}`);
     }
   });
 
   const deleteFile = useMutation({
-    mutationFn: async ({ bucket, path }: { bucket: string; path: string }) => {
-      console.log(`Suppression du fichier ${path} du bucket ${bucket}`);
+    mutationFn: async ({ id, path: filePath }: { id: string; path: string; }) => {
+      if (!session || !session.access_token) throw new Error('Vous devez être connecté');
 
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session?.user) throw new Error('Vous devez être connecté');
+      const response = await fetch(`/api/storage/files/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
+        }
+      });
 
-      const { error } = await supabase.storage.from(bucket).remove([path]);
-      if (error) throw new Error(error.message);
-
-      const { error: dbError } = await (supabase as any).from('media_files').delete().eq('file_path', path);
-      if (dbError) console.error('Erreur meta delete:', dbError);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Erreur lors de la suppression');
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['media-files'] });
+      queryClient.invalidateQueries({ queryKey: ['project-docs'] }); // Invalidate all project docs just in case
       toast.success('Fichier supprimé');
+    },
+    onError: (error: unknown) => {
+      // toast.error(`Erreur: ${error.message}`); // Silent fail better
     }
   });
 
   const deleteMultipleFiles = useMutation({
-    mutationFn: async (filesToDelete: { bucket: string; path: string }[]) => {
-      console.log(`Suppression groupée de ${filesToDelete.length} fichiers`);
+    mutationFn: async (filesToDelete: { id: string; path: string; }[]) => {
+      if (!session || !session.access_token) throw new Error('Vous devez être connecté');
 
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session?.user) throw new Error('Vous devez être connecté');
-
-      // Grouper par bucket pour optimiser la suppression storage
-      const groupedByBucket = filesToDelete.reduce((acc, file) => {
-        if (!acc[file.bucket]) acc[file.bucket] = [];
-        acc[file.bucket].push(file.path);
-        return acc;
-      }, {} as Record<string, string[]>);
-
-      // Suppression physique Storage par groupe de buckets
-      for (const bucket in groupedByBucket) {
-        const { error } = await supabase.storage.from(bucket).remove(groupedByBucket[bucket]);
-        if (error) console.error(`Erreur suppression bucket ${bucket}:`, error);
+      for (const file of filesToDelete) {
+        // CHANGED: Use /api/storage/files/:id
+        const response = await fetch(`/api/storage/files/${file.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`
+          }
+        });
+        if (!response.ok) console.error(`Erreur suppression file ${file.id}`);
       }
-
-      // Suppression logique Base de données (en une fois ou par path)
-      const allPaths = filesToDelete.map(f => f.path);
-      const { error: dbError } = await (supabase as any)
-        .from('media_files')
-        .delete()
-        .in('file_path', allPaths);
-
-      if (dbError) throw new Error(dbError.message);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['media-files'] });
       toast.success('Fichiers supprimés avec succès');
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error(`Erreur suppression groupée: ${error.message}`);
     }
   });
@@ -159,46 +147,46 @@ export const useMediaManager = () => {
   const getMediaFiles = useQuery({
     queryKey: ['media-files'],
     queryFn: async (): Promise<MediaFile[]> => {
-      console.log('Récupération des fichiers média...');
 
-      const { data, error } = await (supabase as any)
-        .from('media_files')
-        .select('*')
-        .eq('is_active', true)
-        .order('uploaded_at', { ascending: false });
 
-      if (error) {
-        toast.error('Erreur lors de la récupération des fichiers.');
-        throw error;
+      const token = localStorage.getItem('token');
+      if (!token) return EMPTY_ARRAY;
+
+      // CHANGED: Use /api/storage/files (Standardized Backend Route)
+      const response = await fetch('/api/storage/files', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur récupération médias');
       }
 
-      console.log(`${data?.length || 0} fichiers récupérés`);
+      const data = await response.json();
 
-      return (data || []).map(file => {
-        const bucketName = file.bucket || 'images'; // Fallback legacy
-        const { data: publicUrlData } = supabase.storage
-          .from(bucketName)
-          .getPublicUrl(file.file_path);
 
-        return {
-          id: file.id,
-          name: file.file_name,
-          url: publicUrlData.publicUrl,
-          size: file.file_size,
-          type: file.mime_type,
-          bucket: bucketName,
-          path: file.file_path,
-          uploadedAt: new Date(file.uploaded_at || ''),
-          category: getFileCategory(file.mime_type)
-        };
-      });
-    }
+      return (data || []).map((file: any) => ({
+        id: file.id,
+        name: file.file_name,
+        url: getFullUrl(file.file_path),
+        size: file.file_size,
+        type: file.mime_type,
+        bucket: 'uploads',
+        path: file.file_path,
+        uploadedAt: new Date(file.uploaded_at),
+        category: getFileCategory(file.mime_type)
+      }));
+    },
+    enabled: !!localStorage.getItem('token')
   });
 
   const getFileCategory = (type: string): MediaFile['category'] => {
-    if (type.startsWith('image/')) return 'image';
-    if (type.startsWith('video/')) return 'video';
-    if (type.includes('pdf') || type.includes('document') || type.includes('text')) return 'document';
+    if (!type) return 'other';
+    const lowerType = type.toLowerCase();
+    if (lowerType.startsWith('image/')) return 'image';
+    if (lowerType.startsWith('video/')) return 'video';
+    if (lowerType.includes('pdf') || lowerType.includes('document') || lowerType.includes('text') || lowerType.includes('msword')) return 'document';
     return 'other';
   };
 
@@ -207,7 +195,7 @@ export const useMediaManager = () => {
     deleteFile,
     deleteMultipleFiles,
     getFileCategory,
-    mediaFiles: getMediaFiles.data || [],
+    mediaFiles: getMediaFiles.data || EMPTY_ARRAY,
     isLoading: getMediaFiles.isLoading,
     error: getMediaFiles.error
   };

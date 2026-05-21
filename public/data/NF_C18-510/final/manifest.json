@@ -1,0 +1,101 @@
+{
+  "generated_at": "2026-02-05T08:16:26",
+  "files": [
+    {
+      "path": "convert_to_yaml.js",
+      "size_bytes": 45624,
+      "modified": "2026-02-05T06:48:25",
+      "sha256": "a0c8b59e091938d68a3cc9920aaa5c09a5a04f89889a83ae8288e669ff1aa65b"
+    },
+    {
+      "path": "datasets\\fiches_objectifs.json",
+      "size_bytes": 4394,
+      "modified": "2026-02-05T08:16:26",
+      "sha256": "6bda288620d22891a30ee095d8b18058c3041ea0def533e0ed36722a8a40b816"
+    },
+    {
+      "path": "datasets\\questions_quiz.json",
+      "size_bytes": 3797,
+      "modified": "2026-02-05T08:16:26",
+      "sha256": "6b88dff157a701d640c99d1d1733674cf1753b77f6910d380ed1b26b5c199572"
+    },
+    {
+      "path": "datasets\\scenarios.json",
+      "size_bytes": 1569,
+      "modified": "2026-02-05T08:16:26",
+      "sha256": "54c786a4382d51241fd4808a47fac9b76ef5b36ad2827da931afd69bcb90d33a"
+    },
+    {
+      "path": "extract_nfc18510.py",
+      "size_bytes": 16421,
+      "modified": "2026-02-05T07:27:03",
+      "sha256": "bc00f642682b28d5889716221f29c77cbc1672a59df57b8bf10d759d5bd89840"
+    },
+    {
+      "path": "index_recherche.json",
+      "size_bytes": 48887,
+      "modified": "2026-02-05T08:16:26",
+      "sha256": "61c7bba00b1da98099b600562c577d8bf2bf427addb5912a11848ef0a59ebce0"
+    },
+    {
+      "path": "manifest.json",
+      "size_bytes": 3415,
+      "modified": "2026-02-05T08:13:14",
+      "sha256": "bbe59699fe2f1bdc96f91c8ec0511f4dd6285aa10a19c09da70bacebd61e7213"
+    },
+    {
+      "path": "mapping.json",
+      "size_bytes": 3573,
+      "modified": "2026-02-05T08:16:26",
+      "sha256": "591dfa0b93a06ba81362555e6cf4a85e4a9e1865360017b46bc833c113a05ffb"
+    },
+    {
+      "path": "missing_subsections.json",
+      "size_bytes": 784,
+      "modified": "2026-02-05T07:48:45",
+      "sha256": "4e14a8cefde846b879875a333af0f7542e8fe44cf6373deb2d365807d3d8b89d"
+    },
+    {
+      "path": "missing_subsections_titles.json",
+      "size_bytes": 482,
+      "modified": "2026-02-05T07:58:58",
+      "sha256": "03d37ce8289e450021c334228f2ff306a3f50fb75b1e2535289dceeb65bcb11c"
+    },
+    {
+      "path": "NF C18 510.md",
+      "size_bytes": 646121,
+      "modified": "2026-02-05T08:15:37",
+      "sha256": "8d340987f0df30fe1f17ffa7e9d899e65b2181cb39f307c2059af697f14d8f6b"
+    },
+    {
+      "path": "NF_C18-510_extrait_FRANCAIS.json",
+      "size_bytes": 13981,
+      "modified": "2026-02-03T04:15:22",
+      "sha256": "87c022b16d6b0f18804639900e7377af34f186be1cda7496df92b07a9943ad7d"
+    },
+    {
+      "path": "NF_C18-510_Original.pdf",
+      "size_bytes": 6309668,
+      "modified": "2023-12-31T21:55:58",
+      "sha256": "eb6156222b5f9fa2757b7f2211feb3cf7eb74abe0afce1bd078a50bc24f19c61"
+    },
+    {
+      "path": "nf_c18_510_atomise.json",
+      "size_bytes": 1978738,
+      "modified": "2026-02-05T08:15:45",
+      "sha256": "0d49546dc1c64c3965e81ab917d92d7a2046769f2f286e967f4eaa921933c39b"
+    },
+    {
+      "path": "nf_c18_510_pedagogique.yaml",
+      "size_bytes": 79361,
+      "modified": "2026-02-05T08:15:52",
+      "sha256": "f006c0cf707e3228f92fbc3c6efa0517052a5636dd087e1c89a2cc18054eb373"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 1032,
+      "modified": "2026-02-05T07:27:35",
+      "sha256": "ea3d871ff83e2d235d757c283092e5e5ead12806ef063947e10602cf752d6406"
+    }
+  ]
+}

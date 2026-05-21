@@ -9,240 +9,296 @@ import {
   FileText,
   Menu,
   PenTool,
-  Image,
+
   Calendar,
   Mail,
   Palette,
   Zap,
   Shield,
   Users,
-  ClipboardList,
+  Database,
+
   Activity,
   FolderOpen,
-  FileImage,
-  FileVideo,
-  Folder,
+
+  HardHat,
+
+
   Construction,
   Award,
   GraduationCap,
   Wrench,
   BookOpen,
   Sliders,
-  Layout
-} from "lucide-react";
+  Layout,
+  Terminal,
+
+  HelpCircle,
+  Newspaper,
+  Share2,
+
+  Brain
+} from
+
+  "lucide-react";
 
 interface AdminSidebarProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
+  role?: string;
 }
 
-const menuItems = [
+export const menuItems = [
+  // --- 1. PILOTAGE & STRATÉGIE ---
   {
     id: "overview",
     label: "Vue d'ensemble",
     icon: Home,
-    category: "principal",
-    roles: ["admin", "secondary_admin", "partner"]
+    category: "pilotage",
+    roles: ["admin", "secondary_admin"]
   },
   {
-    id: "features",
-    label: "Fonctionnalités du site",
-    icon: Zap,
-    category: "principal",
-    roles: ["admin"]
+    id: "projects",
+    label: "Projets & Chantiers",
+    icon: HardHat,
+    category: "pilotage",
+    roles: ["admin", "secondary_admin"]
   },
   {
     id: "analytics",
-    label: "Analytics",
+    label: "Analytics & Trafic",
     icon: BarChart3,
-    category: "principal",
+    category: "pilotage",
     roles: ["admin"]
   },
   {
     id: "construction",
-    label: "Construction",
+    label: "Mode Construction",
     icon: Construction,
-    category: "principal",
+    category: "pilotage",
     roles: ["admin", "secondary_admin"]
   },
+
+  // --- 2. CORTEX IA (SOUVERAIN) ---
   {
-    id: "pages",
-    label: "Pages",
-    icon: FileText,
-    category: "contenu",
-    roles: ["admin", "secondary_admin"]
-  },
-  {
-    id: "menu",
-    label: "Menus",
-    icon: Menu,
-    category: "contenu",
+    id: "expert_lab",
+    label: "CORTEX SOUVERAIN (QG)",
+    icon: Brain,
+    category: "ia",
     roles: ["admin"]
   },
   {
-    id: "blog",
-    label: "Blog",
-    icon: PenTool,
-    category: "contenu",
-    roles: ["admin", "secondary_admin"]
-  },
-  {
-    id: "media",
-    label: "Médiathèque (Fichiers)",
-    icon: FolderOpen,
-    category: "media",
-    roles: ["admin", "secondary_admin", "partner"]
-  },
-  {
-    id: "documents",
-    label: "Bibliothèque (Guides/PDF)",
-    icon: Folder,
-    category: "media",
-    roles: ["admin", "secondary_admin"]
-  },
-  {
-    id: "gallery",
-    label: "Showcase (Hotspots)",
-    icon: FileVideo,
-    category: "media",
-    roles: ["admin", "secondary_admin"]
-  },
-  {
-    id: "download_buttons",
-    label: "Boutons de téléchargement",
-    icon: ClipboardList,
-    category: "media",
+    id: "ai_providers",
+    label: "Gestion API modèle",
+    icon: Brain,
+    category: "ia",
     roles: ["admin"]
   },
   {
-    id: "events",
-    label: "Événements",
-    icon: Calendar,
-    category: "contenu",
-    roles: ["admin", "secondary_admin", "partner"]
-  },
-  {
-    id: "newsletter",
-    label: "Newsletter",
-    icon: Mail,
-    category: "communication",
-    roles: ["admin"]
-  },
-  {
-    id: "certifications",
-    label: "Certifications",
-    icon: Award,
-    category: "électrique",
-    roles: ["admin", "secondary_admin"]
-  },
-  {
-    id: "training",
-    label: "Formations",
-    icon: GraduationCap,
-    category: "électrique",
-    roles: ["admin", "secondary_admin"]
-  },
-  {
-    id: "equipment",
-    label: "Équipements",
-    icon: Wrench,
-    category: "électrique",
-    roles: ["admin", "secondary_admin"]
-  },
-  {
-    id: "standards",
-    label: "Normes",
+    id: "ia_docs",
+    label: "📚 Documentation IA",
     icon: BookOpen,
-    category: "électrique",
-    roles: ["admin", "secondary_admin"]
-  },
-  {
-    id: "design",
-    label: "Thème",
-    icon: Palette,
-    category: "apparence",
+    category: "ia",
     roles: ["admin"]
   },
   {
-    id: "admin-dashboard",
-    label: "Dashboard Avancé",
-    icon: BarChart3,
-    category: "apparence",
+    id: "agents",
+    label: "Agents Autonomes",
+    icon: Terminal,
+    category: "ia",
     roles: ["admin"]
   },
   {
-    id: "admin-content",
-    label: "Gestionnaire Contenu",
-    icon: FileText,
-    category: "apparence",
+    id: "academy_ai",
+    label: "Académie IA (KEBE)",
+    icon: GraduationCap,
+    category: "ia",
     roles: ["admin"]
   },
   {
-    id: "admin-design",
-    label: "Designer UI",
-    icon: Sliders,
-    category: "apparence",
-    roles: ["admin"]
-  },
-  {
-    id: "users",
-    label: "Utilisateurs",
-    icon: Users,
-    category: "gestion",
-    roles: ["admin"]
-  },
-  {
-    id: "performance",
-    label: "Performance",
-    icon: Zap,
-    category: "technique",
-    roles: ["admin"]
-  },
-  {
-    id: "security",
-    label: "Sécurité",
-    icon: Shield,
-    category: "technique",
-    roles: ["admin"]
-  },
-  {
-    id: "audit",
-    label: "Audit",
-    icon: ClipboardList,
-    category: "technique",
+    id: "auto_repair",
+    label: "Maintenance IA (Auto-Repair)",
+    icon: Wrench,
+    category: "ia",
     roles: ["admin"]
   },
   {
     id: "monitoring",
-    label: "Monitoring",
+    label: "Surveillance Temps Réel (IA)",
     icon: Activity,
-    category: "technique",
+    category: "ia",
     roles: ["admin"]
+  },
+
+  // --- 3. MÉTIER & ÉLECTRICITÉ (CORE BUSINESS) ---
+  {
+    id: "certifications",
+    label: "Certifications",
+    icon: Award,
+    category: "metier",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "training",
+    label: "Formations Pro",
+    icon: BookOpen,
+    category: "metier",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "standards",
+    label: "Normes & Réglementation",
+    icon: Shield,
+    category: "metier",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "equipment",
+    label: "Catalogue Équipements",
+    icon: Zap,
+    category: "metier",
+    roles: ["admin", "secondary_admin"]
+  },
+
+  // --- 4. GESTION DE CONTENU (CMS) ---
+  {
+    id: "pages",
+    label: "Pages & Architecture",
+    icon: Layout,
+    category: "cms",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "dynamic_content",
+    label: "Sections & Contenus",
+    icon: FileText,
+    category: "cms",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "blog",
+    label: "Blog & Actualités",
+    icon: PenTool,
+    category: "cms",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "media",
+    label: "Médiathèque & Fichiers",
+    icon: FolderOpen,
+    category: "cms",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "menu",
+    label: "Menus & Navigation",
+    icon: Menu,
+    category: "cms",
+    roles: ["admin"]
+  },
+  {
+    id: "events",
+    label: "Agenda & Événements",
+    icon: Calendar,
+    category: "cms",
+    roles: ["admin", "secondary_admin"]
+  },
+
+  // --- 5. COMMUNAUTÉ & VISIBILITÉ ---
+  {
+    id: "users",
+    label: "Utilisateurs & Accès",
+    icon: Users,
+    category: "communaute",
+    roles: ["admin"]
+  },
+  {
+    id: "partners",
+    label: "Réseau Partenaires",
+    icon: Share2,
+    category: "communaute",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "newsletter",
+    label: "Newsletter & Campagnes",
+    icon: Mail,
+    category: "communaute",
+    roles: ["admin"]
+  },
+  {
+    id: "espace_presse",
+    label: "Espace Presse",
+    icon: Newspaper,
+    category: "communaute",
+    roles: ["admin", "secondary_admin"]
+  },
+
+  // --- 6. SYSTÈME & CONFIGURATION ---
+  {
+    id: "site_settings",
+    label: "Configuration Globale",
+    icon: Sliders,
+    category: "systeme",
+    roles: ["admin"]
+  },
+  {
+    id: "infrastructure",
+    label: "Infrastructure Docker",
+    icon: Terminal,
+    category: "systeme",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "design",
+    label: "Apparence & Thème",
+    icon: Palette,
+    category: "systeme",
+    roles: ["admin"]
+  },
+  {
+    id: "database",
+    label: "Base de Données",
+    icon: Database,
+    category: "systeme",
+    roles: ["admin"]
+  },
+  {
+    id: "security",
+    label: "Sécurité & Logs",
+    icon: Shield,
+    category: "systeme",
+    roles: ["admin"]
+  },
+  {
+    id: "performance",
+    label: "Performance Système",
+    icon: Activity,
+    category: "systeme",
+    roles: ["admin"]
+  },
+  {
+    id: "help",
+    label: "Aide & Support",
+    icon: HelpCircle,
+    category: "systeme",
+    roles: ["admin", "secondary_admin"]
   }
 ];
 
-import { AppRole } from "@/hooks/useUserRole";
 
-interface AdminSidebarProps {
-  activeTab: string;
-  onTabChange: (tab: string) => void;
-  role?: AppRole;
-}
-
-const categories = {
-  "principal": "Principal",
-  "contenu": "Contenu",
-  "media": "Médias",
-  "communication": "Communication",
-  "électrique": "Secteur Électrique",
-  "apparence": "Apparence",
-  "gestion": "Gestion",
-  "technique": "Technique"
+export const categories: Record<string, string> = {
+  "pilotage": "🚀 Pilotage & Stratégie",
+  "ia": "🧠 Cortex IA (Souverain)",
+  "metier": "⚡ Métier & Électricité",
+  "cms": "📝 Gestion de Contenu",
+  "communaute": "👥 Communauté & Réseaux",
+  "systeme": "🔧 Système & Infrastructure"
 };
 
 export function AdminSidebar({ activeTab, onTabChange, role = 'admin' }: AdminSidebarProps) {
-  const filteredItems = menuItems.filter(item =>
-    item.roles.includes(role as any)
+  const filteredItems = menuItems.filter((item) =>
+    item.roles.includes(role as string)
   );
 
   const groupedItems = filteredItems.reduce((acc, item) => {
@@ -254,10 +310,10 @@ export function AdminSidebar({ activeTab, onTabChange, role = 'admin' }: AdminSi
   }, {} as Record<string, typeof menuItems>);
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 h-[calc(100vh-4rem)] flex flex-col">
-      <div className="p-4 border-b border-gray-200">
+    <div className="w-64 bg-card border-r border-border h-[calc(100vh-4rem)] flex flex-col">
+      <div className="p-4 border-b border-border">
         <h2 className="font-semibold text-proqblue">Administration</h2>
-        <p className="text-sm text-gray-600">Gestion complète du site</p>
+        <p className="text-sm text-muted-foreground">Gestion complète du site</p>
       </div>
 
       <ScrollArea className="flex-1 px-4 py-2">
@@ -268,7 +324,7 @@ export function AdminSidebar({ activeTab, onTabChange, role = 'admin' }: AdminSi
 
             return (
               <div key={categoryKey}>
-                <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2 px-2">
+                <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 px-2">
                   {categoryLabel}
                 </h3>
                 <div className="space-y-1">
@@ -282,19 +338,19 @@ export function AdminSidebar({ activeTab, onTabChange, role = 'admin' }: AdminSi
                           "w-full justify-start gap-3 h-10",
                           activeTab === item.id && "bg-proqblue text-white hover:bg-proqblue/90"
                         )}
-                        onClick={() => onTabChange(item.id)}
-                      >
+                        onClick={() => onTabChange(item.id)}>
+
                         <Icon className="h-4 w-4" />
                         {item.label}
-                      </Button>
-                    );
+                      </Button>);
+
                   })}
                 </div>
-              </div>
-            );
+              </div>);
+
           })}
         </div>
       </ScrollArea>
-    </div>
-  );
+    </div>);
+
 }

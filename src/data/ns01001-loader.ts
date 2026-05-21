@@ -3,8 +3,8 @@
  * Chargement et gestion de la norme sénégalaise NS 01-001
  */
 
-import ns01001Data from '../../public/docs/NS01001/FINAL_DATA/NS01001_v2_core.json';
-import sommaireData from '../../public/docs/NS01001/FINAL_DATA/sommaire_gold.json';
+import ns01001Data from '../docs/NS01001/FINAL_DATA/NS01001_v2_core.json';
+import sommaireData from '../docs/NS01001/FINAL_DATA/sommaire_gold.json';
 
 export interface NS01001Rule {
     id: string;

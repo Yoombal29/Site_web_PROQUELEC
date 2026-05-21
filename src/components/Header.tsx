@@ -1,35 +1,76 @@
 
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronRight, BookOpen, Award, Phone, Home, Info, LogOut, User, LayoutDashboard, Wrench } from "lucide-react";
+import { Menu, X, ChevronRight, ChevronDown, BookOpen, Award, Phone, Home, Info, LogOut, User, LayoutDashboard, Wrench, Bell, Star, Shield, Zap, Search, HelpCircle, FileText, Briefcase, GraduationCap, PenTool, MoreHorizontal, Globe, Sparkles } from "lucide-react";
 
-import { Link, useNavigate } from "react-router-dom";
+// Icon mapping for dynamic icons from DB
+const ICON_MAP: Record<string, unknown> = {
+  BookOpen, Award, Phone, Home, Info, LayoutDashboard, Wrench, Bell, Star, Shield, Zap, Search, HelpCircle, FileText, Briefcase, GraduationCap, Globe, Sparkles
+};
+
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useLiveSettings } from "@/hooks/useLiveSettings";
 import { useMenuItems } from "@/hooks/useMenuItems";
 import { useSession } from "@/hooks/useSession";
-import { DynamicMenu } from "@/components/DynamicMenu";
-import { supabase } from "@/integrations/supabase/client";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
+import { SearchGlobal } from "@/components/SearchGlobal";
+import { useRef, useLayoutEffect } from "react";
+import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
+import { getDashboardPath } from "@/utils/navigation";
 
-export const Header = () => {
+interface HeaderProps {
+  solid?: boolean;
+}
+
+export const Header = ({ solid = false }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { isAdmin } = useIsAdmin();
+  const location = useLocation();
   const { settings } = useLiveSettings();
+  const { schema } = useSiteConfig();
   const { data: menuItems } = useMenuItems();
-  const { user, isLoading } = useSession();
+  const { user, isLoading, signOut } = useSession();
   const navigate = useNavigate();
 
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [dropdownTimeout, setDropdownTimeout] = useState<number | null>(null);
+  const [visibleItemsCount, setVisibleItemsCount] = useState<number>(20); // High default
+  const navContainerRef = useRef<HTMLDivElement>(null);
 
-  // Nettoyage du timeout lors du démontage
-  useEffect(() => {
-    return () => {
-      if (dropdownTimeout) {
-        clearTimeout(dropdownTimeout);
+  useLayoutEffect(() => {
+    const handleResize = () => {
+      if (!navContainerRef.current) return;
+      const container = navContainerRef.current;
+      const containerWidth = container.offsetWidth;
+      const items = Array.from(container.children) as HTMLElement[];
+
+      let currentWidth = 0;
+      let count = 0;
+      const buffer = 150; // Reserve space for "More" and CTAs
+
+      for (let i = 0; i < items.length; i++) {
+        // Ignore the "hidden" items and the "More" button itself for measurement
+        if (items[i].classList.contains('overflow-trigger')) continue;
+
+        currentWidth += items[i].offsetWidth + 8; // width + gap
+        if (currentWidth > containerWidth - buffer) {
+          break;
+        }
+        count++;
       }
+      setVisibleItemsCount(count);
     };
-  }, [dropdownTimeout]);
+
+    const observer = new ResizeObserver(handleResize);
+    if (navContainerRef.current) observer.observe(navContainerRef.current);
+    handleResize(); // Initial check
+
+    return () => observer.disconnect();
+  }, [menuItems]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
@@ -43,9 +84,9 @@ export const Header = () => {
   };
 
   const handleDropdownLeave = () => {
-    const timeout = setTimeout(() => {
+    const timeout = window.setTimeout(() => {
       setActiveDropdown(null);
-    }, 150); // Délai de 150ms pour éviter la fermeture accidentelle
+    }, 150);
     setDropdownTimeout(timeout);
   };
 
@@ -54,478 +95,655 @@ export const Header = () => {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await signOut();
     setIsUserMenuOpen(false);
     navigate("/");
   };
 
-  const dynamicStyle = {
-    backgroundColor: settings?.primary_color || '#2376df',
-    color: settings?.text_color || '#ffffff',
-    boxShadow: scrolled ? '0 8px 32px rgba(35, 118, 223, 0.2)' : 'none',
-    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 20);
+      });
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  // Navigation links organisés par domaine d'expertise
-  const mainNavLinks = [
-    { label: "Accueil", path: "/", icon: Home },
+  const headerConfig = schema?.globals?.header || {};
+  const isCompact = scrolled || solid;
+
+  // Secondary menu items
+  const dbSecondaryMenuItems = menuItems?.
+  filter((item) => item.is_active && (item.menu_type === 'secondary' || item.menu_type === 'top')).
+  sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0)) || [];
+
+  useEffect(() => {
+    const alertH = headerConfig.alertEnabled ? 40 : 0;
+    const topBarH = !scrolled && dbSecondaryMenuItems.length > 0 ? 36 : 0;
+    const mainH = parseInt(headerConfig.height ?? (isCompact ? '80' : '110'));
+    const total = alertH + topBarH + mainH;
+    document.documentElement.style.setProperty('--effective-header-height', `${total}px`);
+  }, [scrolled, solid, headerConfig, dbSecondaryMenuItems, isCompact]);
+
+  const headerVars = {
+    '--header-height':
+    headerConfig.height ?? (isCompact ? '80px' : '110px'),
+
+    '--alert-height': headerConfig.alertEnabled ? '40px' : '0px',
+
+    '--header-bg': isCompact ?
+    headerConfig.backgroundColor || settings?.primary_color || '#09264bff' :
+    headerConfig.transparentBackground || 'rgba(0, 0, 0, 0.25)',
+
+    '--header-blur': headerConfig.glassmorphism === false ?
+    'none' :
+    isCompact ? 'blur(12px)' : 'blur(8px)',
+
+    '--header-color': headerConfig.textColor || '#ffffff',
+
+    '--header-shadow': isCompact ?
+    headerConfig.shadow || '0 10px 30px rgba(0,0,0,0.15)' :
+    'none',
+
+    '--header-border': `1px solid ${isCompact ? headerConfig.borderColor || 'rgba(255,255,255,0.1)' : headerConfig.borderColorTop || 'rgba(255,255,255,0.05)'}`,
+
+    '--logo-scale': (settings as unknown)?.logo_scale || headerConfig.logoScale || 1.2,
+
+    '--logo-height': `${(settings as unknown)?.logo_height || (
+    headerConfig.logoHeight ? parseInt(headerConfig.logoHeight) : 50)}px`,
+
+    '--logo-brightness': `${(settings as unknown)?.logo_brightness || 100}%`,
+    '--logo-contrast': `${(settings as unknown)?.logo_contrast || 100}%`,
+
+    '--text-shadow': !isCompact ?
+    '0 1px 2px rgba(0,0,0,0.5)' :
+    'none'
+  } as React.CSSProperties;
+
+  // Filtrer les éléments de menu actifs
+  const dbMainMenuItems = menuItems?.
+  filter((item) => item.is_active && item.menu_type === 'main').
+  sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0)) || [];
+
+  // Navigation links - Prioritize DB if exists, otherwise fallback to defaults
+  const mainNavLinks = dbMainMenuItems.length > 0 ?
+  dbMainMenuItems.
+  filter((item) => !item.parent_id) // Only top level for main nav
+  .map((item) => ({
+    id: item.id,
+    label: item.title,
+    path: item.url,
+    icon: Home, // Default icon, could be dynamic
+    submenu: dbMainMenuItems.
+    filter((sub) => sub.parent_id === item.id).
+    map((sub) => ({ id: sub.id, label: sub.title, path: sub.url }))
+  })) :
+  [
+  { label: "Accueil", path: "/", icon: Home },
+  {
+    label: "À Propos",
+    path: "/about",
+    icon: Info,
+    submenu: [
+    { label: "À propos de PROQUELEC", path: "/about" }]
+
+  }];
+
+
+  // Mega menu groupé par sections (Dynamique depuis DB si possible)
+  const dbMegaItems = menuItems?.filter((item) => item.is_active && item.menu_type === 'mega') || [];
+
+  const megaMenuSections = dbMegaItems.length > 0 ?
+  dbMegaItems.
+  filter((item) => !item.parent_id).
+  sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0)).
+  map((section) => ({
+    label: section.title,
+    icon: ICON_MAP[section.icon || 'BookOpen'] || BookOpen,
+    columns: dbMegaItems.
+    filter((col) => col.parent_id === section.id).
+    sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0)).
+    map((col) => ({
+      title: col.title,
+      items: dbMegaItems.
+      filter((item) => item.parent_id === col.id).
+      sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0)).
+      map((item) => ({ label: item.title, path: item.url }))
+    }))
+  })) :
+  [
+  {
+    label: "Services & Expertise",
+    icon: BookOpen,
+    columns: [
     {
-      label: "À Propos",
-      path: "/about",
-      icon: Info,
-      submenu: [
-        { label: "À propos de PROQUELEC", path: "/about" }
-      ]
+      title: "Ingénierie",
+      items: [
+      { label: "Formations", path: "/formations" },
+      { label: "Certifications", path: "/certifications" },
+      { label: "Expertises", path: "/expertises-techniques" },
+      { label: "Expert Lab", path: "/expert-lab" }]
+
     },
-  ];
-
-  // Mega menu groupé par sections
-  const megaMenuSections = [
     {
-      label: "Formation & Services",
-      icon: BookOpen,
-      columns: [
-        {
-          title: "Formations",
-          items: [
-            { label: "Catalogue Formations", path: "/formations" }
-          ]
-        },
-        {
-          title: "Certifications & Labels",
-          items: [
-            { label: "Programme Certification", path: "/certifications" },
-            { label: "Labels PROQUELEC", path: "/labels" }
-          ]
-        },
-        {
-          title: "Expertise Technique",
-          items: [
-            { label: "Solutions & Expertises", path: "/expertises-techniques" }
-          ]
-        }
-      ]
+      title: "Labels & Activités",
+      items: [
+      { label: "Labels PROQUELEC", path: "/labels" },
+      { label: "Nos Activités", path: "/activities" },
+      { label: "Showroom", path: "/showroom" }]
+
     },
     {
-      label: "Ressources",
-      icon: ChevronRight,
-      columns: [
-        {
-          title: "Nos Activités",
-          items: [
-            { label: "Activités & Services", path: "/activities" },
-            { label: "Showroom Technique", path: "/showroom" }
-          ]
-        },
-        {
-          title: "Documentation & Outils",
-          items: [
-            { label: "Documents & Ressources", path: "/documents" },
-            { label: "Base de Données Matériaux", path: "/outils" }
-          ]
-        },
-        {
-          title: "Événements",
-          items: [
-            { label: "Événements & Actualités", path: "/events" }
-          ]
-        }
-      ]
-    }
-  ];
+      title: "Ressources",
+      items: [
+      { label: "Documents", path: "/documents" },
+      { label: "Événements", path: "/events" },
+      { label: "Outils métier", path: "/outils" }]
 
-  // Filtrer les éléments de menu actifs et les trier
-  // Exclure les URLs déjà présentes dans les menus principaux
+    },
+    {
+      title: "Espaces Métiers",
+      items: [
+      { label: "Espace Autorités", path: "/autorites" },
+      { label: "Espace Ménages", path: "/menages" },
+      { label: "Espace Professionnels", path: "/professionnels" },
+      { label: "Espace Presse", path: "/presse" },
+      { label: "Réseaux & Social", path: "/social" }]
+
+    }]
+
+  }];
+
+
+  // Rest of active items (not in main nav and not excluded)
   const excludedUrls = [
-    "/",
-    "/about",
-    "/activities",
-    "/labels",
-    "/documents",
-    "/events",
-    "/certifications",
-    "/formations",
-    "/blog",
-    "/contact",
-    "/actualites",
-    "/showroom"
-  ];
+  "/",
+  "/about",
+  "/activities",
+  "/labels",
+  "/documents",
+  "/events",
+  "/certifications",
+  "/formations",
+  "/blog",
+  "/contact",
+  "/actualites",
+  "/showroom"];
 
-  const activeMenuItems = menuItems
-    ?.filter(item => item.is_active && !excludedUrls.includes(item.url))
-    .sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0)) || [];
 
-  const NavLink = ({ to, children, icon: Icon, isHighlight = false }) => (
-    <Link
-      to={to}
-      className={`group flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${isHighlight
-        ? 'bg-white bg-opacity-20 hover:bg-opacity-30'
-        : 'hover:bg-white hover:bg-opacity-10'
-        }`}
-      onClick={() => setIsMenuOpen(false)}
-    >
-      {Icon && <Icon className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />}
+  const activeMenuItems = menuItems?.
+  filter((item) => item.is_active && item.menu_type !== 'main' && !excludedUrls.includes(item.url)).
+  map((item) => ({ id: item.id, title: item.title, url: item.url, menu_order: item.menu_order })).
+  sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0)) || [];
+
+  const NavLink = ({ to, children, icon: Icon, isHighlight = false, isActive = false }) =>
+  <Link
+    to={to}
+    className={cn(
+      "group relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300",
+      scrolled || solid ? "text-white" : "text-white/90 hover:text-white",
+      isActive && "bg-white/10 shadow-[0_0_20px_rgba(255,255,255,0.05)] text-white"
+    )}
+    onClick={() => setIsMenuOpen(false)}>
+    
+      {isActive &&
+    <motion.div
+      layoutId="nav-bg"
+      className="absolute inset-0 bg-white/10 rounded-xl -z-10 border border-white/20"
+      transition={{ type: "spring", bounce: 0.25, duration: 0.5 }} />
+
+    }
+      {Icon && <Icon className={cn("h-4 w-4 transition-transform group-hover:scale-110", isActive && "text-blue-400")} />}
       {children}
-    </Link>
-  );
+      {!isActive && <div className="absolute bottom-1.5 left-4 right-4 h-0.5 bg-white scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-full opacity-50" />}
+    </Link>;
 
-  const MegaMenuLink = ({ section, isHighlight = false }) => {
+
+  const MegaMenuLink = ({ section }) => {
+    const isActive = activeDropdown === section.label;
     return (
       <div
         className="relative"
         onMouseEnter={() => handleDropdownEnter(section.label)}
-        onMouseLeave={handleDropdownLeave}
-      >
+        onMouseLeave={handleDropdownLeave}>
+        
         <button
-          className={`group flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${isHighlight
-            ? 'bg-white bg-opacity-20 hover:bg-opacity-30'
-            : 'hover:bg-white hover:bg-opacity-10'
-            }`}
-          onClick={() => handleDropdownClick(section.label)}
-        >
-          {section.icon && <section.icon className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />}
+          className={cn(
+            "group relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300",
+            scrolled || solid ? "text-white" : "text-white/90 hover:text-white",
+            isActive && "bg-white/20 text-white"
+          )}
+          onClick={() => handleDropdownClick(section.label)} aria-label="Action">
+          
+          {section.icon && <section.icon className="h-4 w-4 transition-transform group-hover:scale-110" />}
           {section.label}
-          <ChevronRight className={`h-3 w-3 transition-transform duration-200 ${activeDropdown === section.label ? 'rotate-90' : ''}`} />
+          <ChevronDown className={cn("h-3 w-3 transition-transform duration-300 opacity-50", isActive && "rotate-180")} />
         </button>
 
-        {activeDropdown === section.label && (
-          <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50 grid grid-cols-3 gap-0 min-w-max">
-            {section.columns.map((column, colIdx) => (
-              <div key={colIdx} className="px-6 py-4 border-r border-gray-100 last:border-r-0">
-                <h3 className="text-xs font-bold text-gray-900 uppercase tracking-wider mb-3">{column.title}</h3>
-                <ul className="space-y-2">
-                  {column.items.map((item, idx) => (
-                    <li key={idx}>
-                      <Link
-                        to={item.path}
-                        className="text-sm text-gray-700 hover:text-blue-600 hover:pl-1 transition-all duration-150 block"
-                        onClick={() => {
-                          setActiveDropdown(null);
-                          setIsMenuOpen(false);
-                          if (dropdownTimeout) {
-                            clearTimeout(dropdownTimeout);
-                            setDropdownTimeout(null);
-                          }
-                        }}
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    );
+        <AnimatePresence>
+          {isActive &&
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            className="absolute top-full left-0 mt-4 bg-white/95 backdrop-blur-2xl rounded-[2.5rem] shadow-[0_30px_90px_rgba(0,0,0,0.3)] border border-white/40 overflow-hidden z-[110] grid grid-cols-4 gap-0 min-w-[950px] origin-top-left">
+            
+              {section.columns.map((column, colIdx) =>
+            <div key={colIdx} className="px-8 py-12 border-r border-slate-100 last:border-r-0">
+                  <h3 className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mb-8 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+                    {column.title}
+                  </h3>
+                  <ul className="space-y-5">
+                    {column.items.map((item, idx) =>
+                <li key={idx}>
+                        <Link
+                    to={item.path}
+                    className="text-sm font-bold text-slate-700 hover:text-blue-600 hover:translate-x-2 transition-all duration-300 block group/item flex items-center gap-2"
+                    onClick={() => {
+                      setActiveDropdown(null);
+                      setIsMenuOpen(false);
+                    }}>
+                    
+                          <span className="w-0 group-hover/item:w-4 h-[2px] bg-blue-600 transition-all" />
+                          {item.label}
+                        </Link>
+                      </li>
+                )}
+                  </ul>
+                </div>
+            )}
+            </motion.div>
+          }
+        </AnimatePresence>
+      </div>);
+
   };
 
   const DropdownNavLink = ({ item, isHighlight = false }) => {
     const hasSubmenu = item.submenu && item.submenu.length > 0;
+    const isActive = activeDropdown === item.label || location.pathname === item.path;
 
     if (!hasSubmenu) {
       return (
-        <NavLink to={item.path} icon={item.icon} isHighlight={isHighlight}>
+        <NavLink to={item.path} icon={item.icon} isHighlight={isHighlight} isActive={location.pathname === item.path}>
           {item.label}
-        </NavLink>
-      );
+        </NavLink>);
+
     }
 
     return (
       <div
         className="relative"
         onMouseEnter={() => handleDropdownEnter(item.label)}
-        onMouseLeave={handleDropdownLeave}
-      >
+        onMouseLeave={handleDropdownLeave}>
+        
         <button
-          className={`group flex items-center gap-2 px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${isHighlight
-            ? 'bg-white bg-opacity-20 hover:bg-opacity-30'
-            : 'hover:bg-white hover:bg-opacity-10'
-            }`}
-          onClick={() => handleDropdownClick(item.label)}
-        >
-          {item.icon && <item.icon className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />}
+          className={cn(
+            "group relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300",
+            scrolled || solid ? "text-white" : "text-white/90 hover:text-white",
+            activeDropdown === item.label && "bg-white/10 text-white"
+          )}
+          onClick={() => handleDropdownClick(item.label)} aria-label="Action">
+          
+          {item.icon && <item.icon className="h-4 w-4 transition-transform group-hover:scale-110" />}
           {item.label}
-          <ChevronRight className={`h-3 w-3 transition-transform duration-200 ${activeDropdown === item.label ? 'rotate-90' : ''}`} />
+          <ChevronDown className={cn("h-3 w-3 transition-transform duration-300 opacity-50", activeDropdown === item.label && "rotate-180")} />
         </button>
 
-        {activeDropdown === item.label && (
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 w-64 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50">
-            {item.submenu.map((subItem, index) => (
-              <Link
-                key={index}
-                to={subItem.path}
-                className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-b border-gray-100 last:border-b-0"
-                onClick={() => {
-                  setActiveDropdown(null);
-                  setIsMenuOpen(false);
-                  if (dropdownTimeout) {
-                    clearTimeout(dropdownTimeout);
-                    setDropdownTimeout(null);
-                  }
-                }}
-              >
-                {subItem.label}
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  };
-
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-smooth" style={dynamicStyle}>
-      {/* Navigation principale */}
-      <nav className="px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 md:py-4">
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
-          {/* Logo et nom */}
-          {/* Logo et nom */}
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 flex-shrink-0 min-w-0 group">
-            {settings?.logo_url ? (
-              <img
-                src={settings.logo_url}
-                alt={settings?.site_name || "Logo"}
-                className="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105"
-              />
-            ) : (
-              <div className="block min-w-0">
-                <h1 className="text-base sm:text-lg md:text-xl font-bold leading-tight" style={{ fontFamily: settings?.font_family }}>
-                  {settings?.site_name || "PROQUELEC"}
-                </h1>
-                <p className="text-xs opacity-70">
-                  {settings?.slogan || "Information · Sensibilisation · Conseil"}
-                </p>
-              </div>
-            )}
-          </Link>
-
-          {/* Navigation desktop */}
-          <div className="hidden lg:flex items-center justify-between flex-1 max-w-4xl">
-            {/* Liens de navigation */}
-            <div className="flex items-center gap-1 xl:gap-2">
-              {/* Liens principaux */}
-              {mainNavLinks.map((link) => (
-                <DropdownNavLink key={link.path} item={link} />
-              ))}
-
-              {/* Mega menus groupés */}
-              {megaMenuSections.map((section) => (
-                <MegaMenuLink key={section.label} section={section} isHighlight={true} />
-              ))}
-
-              {/* Actualités */}
-              <NavLink to="/blog" icon={ChevronRight}>
-                Actualités
-              </NavLink>
-
-              {/* Pages CMS dynamiques */}
-              {activeMenuItems.map((menuItem) => (
-                <NavLink key={menuItem.id} to={menuItem.url} icon={ChevronRight}>
-                  {menuItem.title}
-                </NavLink>
-              ))}
-            </div>
-
-            {/* Section authentification */}
-            <div className="flex items-center gap-2 ml-4 pl-4 border-l border-white border-opacity-20 flex-shrink-0">
-              <Link to="/contact">
-                <Button
-                  className="text-xs md:text-sm px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-semibold rounded-lg transition-all duration-200 flex items-center gap-2"
-                >
-                  <Phone className="h-4 w-4" />
-                  <span className="hidden xl:inline">Contact</span>
-                </Button>
-              </Link>
-
-              {!isLoading && user ? (
-                /* Menu utilisateur connecté */
-                <div className="relative">
-                  <button
-                    onClick={toggleUserMenu}
-                    className="text-xs md:text-sm px-3 py-2 bg-white text-blue-600 hover:bg-gray-100 font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center gap-2"
-                  >
-                    <User className="h-4 w-4" />
-                    <span className="hidden md:inline">{user.email?.split('@')[0]}</span>
-                  </button>
-
-                  {isUserMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                      <div className="px-4 py-3 border-b border-gray-100">
-                        <p className="text-sm font-semibold text-gray-900">{user.email}</p>
-                        <p className="text-xs text-gray-500">Connecté</p>
-                      </div>
-                      <Link
-                        to="/dashboard"
-                        onClick={() => setIsUserMenuOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                      >
-                        <LayoutDashboard className="h-4 w-4" />
-                        Tableau de bord
-                      </Link>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100"
-                      >
-                        <LogOut className="h-4 w-4" />
-                        Déconnexion
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                /* Bouton connexion */
-                <Link to="/connexion">
-                  <Button
-                    className="text-xs md:text-sm px-4 py-2 bg-white text-blue-600 hover:bg-blue-50 font-semibold rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl border border-blue-200"
-                  >
-                    Connexion
-                  </Button>
-                </Link>
-              )}
-            </div>
-          </div>
-
-          {/* Navigation tablet/mobile */}
-          <div className="lg:hidden flex items-center gap-2">
-            <button
-              onClick={toggleMenu}
-              className="text-white p-2 hover:bg-white hover:bg-opacity-10 rounded-lg transition-all duration-200"
-              aria-label="Menu"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Menu mobile/tablet */}
-        {isMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 space-y-3 border-t border-white border-opacity-10 pt-4 animate-in fade-in slide-in-from-top-2 duration-200">
-            {/* Groupe : PROQUELEC */}
-            <div className="space-y-1">
-              <p className="px-3 py-1 text-xs font-semibold opacity-60 uppercase tracking-wider">Navigation</p>
-              {mainNavLinks.map((link) => (
-                <NavLink key={link.path} to={link.path} icon={link.icon}>
-                  {link.label}
-                </NavLink>
-              ))}
-              {mainNavLinks[1]?.submenu?.map((subItem, index) => (
-                <Link
-                  key={index}
-                  to={subItem.path}
-                  className="flex items-center gap-2 px-6 py-2 text-sm hover:bg-white hover:bg-opacity-10 rounded-lg transition-all duration-200 ml-4 border-l border-white border-opacity-20"
-                  onClick={() => setIsMenuOpen(false)}
-                >
+        <AnimatePresence>
+          {activeDropdown === item.label &&
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-72 bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-[0_30px_90px_rgba(0,0,0,0.25)] border border-white/40 p-3 overflow-hidden z-[110] origin-top">
+            
+              {item.submenu.map((subItem, index) =>
+            <Link
+              key={subItem.id || `sub-${index}`}
+              to={subItem.path}
+              className="group flex items-center gap-3 px-5 py-4 text-sm font-bold text-slate-700 hover:text-blue-600 hover:bg-blue-50/50 rounded-2xl transition-all"
+              onClick={() => {
+                setActiveDropdown(null);
+                setIsMenuOpen(false);
+              }}>
+              
+                  <div className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-blue-600 group-hover:scale-125 transition-all" />
                   {subItem.label}
                 </Link>
-              ))}
-            </div>
-
-            {/* Divider */}
-            <div className="border-t border-white border-opacity-10 my-2"></div>
-
-            {/* Mega Menus - Formation & Services */}
-            <div className="space-y-1">
-              <p className="px-3 py-1 text-xs font-semibold opacity-60 uppercase tracking-wider">Formation & Services</p>
-              <NavLink to="/formations" icon={BookOpen} isHighlight={true}>
-                Formations
-              </NavLink>
-              <NavLink to="/certifications" icon={Award} isHighlight={true}>
-                Certifications
-              </NavLink>
-              <NavLink to="/labels" icon={ChevronRight} isHighlight={true}>
-                Labellisation
-              </NavLink>
-            </div>
-
-            {/* Divider */}
-            <div className="border-t border-white border-opacity-10 my-2"></div>
-
-            {/* Mega Menus - Ressources */}
-            <div className="space-y-1">
-              <p className="px-3 py-1 text-xs font-semibold opacity-60 uppercase tracking-wider">Ressources</p>
-              <NavLink to="/activities" icon={ChevronRight}>
-                Activités
-              </NavLink>
-              <NavLink to="/showroom" icon={ChevronRight}>
-                Showroom Technique
-              </NavLink>
-              <NavLink to="/documents" icon={ChevronRight}>
-                Documents
-              </NavLink>
-              <NavLink to="/events" icon={ChevronRight}>
-                Événements
-              </NavLink>
-            </div>
-
-            {/* Groupe : Pages CMS (si des éléments existent) */}
-            {activeMenuItems.length > 0 && (
-              <>
-                {/* Divider */}
-                <div className="border-t border-white border-opacity-10 my-2"></div>
-
-                <div className="space-y-1">
-                  <p className="px-3 py-1 text-xs font-semibold opacity-60 uppercase tracking-wider">Plus</p>
-                  <NavLink to="/actualites" icon={ChevronRight}>
-                    Actualités
-                  </NavLink>
-                  {activeMenuItems.map((menuItem) => (
-                    <NavLink key={menuItem.id} to={menuItem.url} icon={ChevronRight}>
-                      {menuItem.title}
-                    </NavLink>
-                  ))}
-                </div>
-              </>
             )}
+            </motion.div>
+          }
+        </AnimatePresence>
+      </div>);
 
-            {/* Divider */}
-            <div className="border-t border-white border-opacity-10 my-2"></div>
+  };
 
-            {/* Boutons action */}
-            <div className="space-y-2 pt-2">
-              <Link to="/contact" onClick={() => setIsMenuOpen(false)} className="block">
-                <Button
-                  className="w-full text-white bg-white bg-opacity-20 hover:bg-opacity-30 transition-all font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2"
-                >
-                  <Phone className="h-4 w-4" />
-                  Nous contacter
-                </Button>
+  const getAlertStyles = (type: string) => {
+    switch (type) {
+      case 'success':return 'bg-green-600 text-white';
+      case 'warning':return 'bg-amber-500 text-white';
+      case 'error':return 'bg-red-600 text-white';
+      default:return 'bg-proqblue text-white';
+    }
+  };
+
+
+
+  return (
+    <header
+      id="site-header"
+      className="sticky top-0 left-0 right-0 z-[100] w-full transition-all duration-500 ease-in-out"
+      style={headerVars}>
+      
+      {/* Top Bar (Secondary Menu) */}
+      {!scrolled && dbSecondaryMenuItems.length > 0 &&
+      <div className="w-full bg-slate-900/40 backdrop-blur-md border-b border-white/5 py-2 px-6 hidden sm:block">
+          <div className="container mx-auto flex justify-end gap-6">
+            {dbSecondaryMenuItems.filter((item) => !item.parent_id).map((item) =>
+          <Link
+            key={item.id}
+            to={item.url}
+            className="text-[10px] font-bold text-white/60 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-2 group">
+            
+                <div className="w-1 h-1 rounded-full bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                {item.title}
               </Link>
-              {!isLoading && user ? (
-                <>
-                  <Link to="/dashboard" onClick={() => setIsMenuOpen(false)} className="block">
+          )}
+          </div>
+        </div>
+      }
+
+      {/* Barre d'alerte dynamique */}
+      {headerConfig.alertEnabled && headerConfig.alertText &&
+      <div className={`w-full h-[var(--alert-height)] flex items-center justify-center px-4 overflow-hidden relative z-[101] ${getAlertStyles(headerConfig.alertType)}`}>
+          <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold uppercase tracking-wider animate-in fade-in slide-in-from-top-1 duration-500">
+            <Bell className="h-3 w-3 animate-bounce" />
+            <span className="truncate">{headerConfig.alertText}</span>
+          </div>
+        </div>
+      }
+
+      {/* Main Header Container */}
+      <div
+        className="w-full h-[var(--header-height)] relative transition-all duration-500 flex items-center header-container-vars">
+        
+        <div className="container mx-auto px-4 md:px-6 h-full flex items-center">
+          <div className="flex items-center justify-between w-full mx-auto">
+            {/* Logo et nom */}
+            <Link to="/" className="flex items-center gap-3 sm:gap-5 flex-shrink-0 min-w-0 group relative">
+              <div className="relative">
+                <div className="absolute inset-0 bg-white/10 rounded-full blur-xl scale-125 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <img
+                  src={settings?.logo_url || "/logo.png"}
+                  alt={settings?.site_name || "PROQUELEC"}
+                  className="w-auto object-contain transition-all duration-700 group-hover:scale-[1.3] drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] header-logo-filter header-logo-dynamic"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (target.src !== "/logo.png") {
+                      target.src = "/logo.png";
+                    }
+                  }} loading="lazy" />
+                
+              </div>
+
+              <div className="flex flex-col justify-center border-l border-white/20 pl-4 py-1">
+                <h1
+                  className="text-lg sm:text-xl md:text-2xl font-black leading-none text-white uppercase tracking-tighter text-shadow-md">
+                  
+                  {settings?.site_name?.replace('S?N?GAL', 'SÉNÉGAL')?.replace('S?n?gal', 'Sénégal')?.replace(' SÉNÉGAL', '') || "PROQUELEC"}
+                </h1>
+                <p className="text-[10px] sm:text-[11px] font-bold text-white/70 uppercase tracking-[0.1em] mt-1 text-shadow-sm">
+                  {settings?.slogan?.replace('S?curit?', 'Sécurité')?.replace('Qualit?', 'Qualité')?.replace('S?n?gal', 'Sénégal') || "Sécurité · Qualité · Formation"}
+                </p>
+              </div>
+            </Link>
+
+            {/* Barre de recherche (Position: LEFT) */}
+            {headerConfig.searchEnabled && headerConfig.searchPosition === 'left' &&
+            <div className="hidden xl:flex ml-8 max-w-[200px] 2xl:max-w-xs transition-all duration-300">
+                <SearchGlobal />
+              </div>
+            }
+
+            {/* Navigation desktop intelligente */}
+            <div className="hidden lg:flex items-center gap-2 xl:gap-4 flex-1 justify-end">
+              <div
+                ref={navContainerRef}
+                className="flex items-center gap-1 xl:gap-2 flex-1 justify-end overflow-visible max-h-[50px] transition-all duration-500">
+                
+                {/* Combinaison dynamique de tous les liens pour le calcul d'overflow */}
+                {[
+                ...mainNavLinks.map((l) => ({ ...l, type: 'nav' })),
+                ...megaMenuSections.map((s) => ({ ...s, type: 'mega' })),
+                ...activeMenuItems.map((m) => ({ label: m.title, path: m.url, type: 'extra' }))].
+                map((item: unknown, idx) => {
+                  // Gérer l'affichage conditionnel basé sur le calcul d'overflow
+                  const isVisible = idx < visibleItemsCount;
+
+                  if (!isVisible) return null;
+
+                  if (item.type === 'mega') return <MegaMenuLink key={item.label} section={item} />;
+                  return <DropdownNavLink key={item.id || item.path || item.label} item={item} />;
+                })}
+
+                {/* Bouton "Plus" intelligent si overflow */}
+                {[
+                ...mainNavLinks.map((l) => ({ ...l, type: 'nav' })),
+                ...megaMenuSections.map((s) => ({ ...s, type: 'mega' })),
+                ...activeMenuItems.map((m) => ({ label: m.title, path: m.url, type: 'extra' }))].
+                length > visibleItemsCount &&
+                <div className="overflow-trigger">
+                      <DropdownNavLink
+                    item={{
+                      label: "Plus",
+                      path: "#",
+                      id: "smart-plus-menu",
+                      icon: MoreHorizontal,
+                      submenu: [
+                      ...mainNavLinks.slice(visibleItemsCount).map((l) => ({ id: l.id, label: l.label, path: l.path })),
+                      ...megaMenuSections.slice(Math.max(0, visibleItemsCount - mainNavLinks.length)).map((s) => ({ id: s.label, label: s.label, path: '#' })), // Mega menu placeholders
+                      ...activeMenuItems.slice(Math.max(0, visibleItemsCount - mainNavLinks.length - megaMenuSections.length)).map((m) => ({ id: m.id, label: m.title, path: m.url }))].
+                      filter(Boolean)
+                    }} />
+                  
+                    </div>
+                }
+              </div>
+
+              {/* Barre de recherche (Position: CENTER) */}
+              {headerConfig.searchEnabled && (headerConfig.searchPosition === 'center' || !headerConfig.searchPosition) &&
+              <div className="hidden xl:flex mx-4 max-w-[180px] transition-all duration-300">
+                  <SearchGlobal />
+                </div>
+              }
+
+              <div className="flex items-center gap-2 ml-4 pl-4 border-l border-white/20 flex-shrink-0">
+                {/* CTA dynamique 1 (Primaire) */}
+                {settings?.cta_primary_text &&
+                <Link to={settings.cta_primary_url || "/contact"}>
                     <Button
-                      className="w-full text-white bg-white bg-opacity-20 hover:bg-opacity-30 transition-all font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2"
-                    >
-                      <LayoutDashboard className="h-4 w-4" />
+                    className="text-xs md:text-sm px-4 py-2 font-semibold rounded-lg transition-all duration-200 flex items-center gap-2 shadow-sm bg-white/20 hover:bg-white/30 text-white border border-white/20">
+                    
+                      <Zap className="h-4 w-4" />
+                      <span className="hidden xl:inline">{settings.cta_primary_text}</span>
+                    </Button>
+                  </Link>
+                }
+
+                {/* CTA dynamique 2 (Secondaire) */}
+                {settings?.cta_secondary_text &&
+                <Link to={settings.cta_secondary_url || "#"}>
+                    <Button
+                    variant="outline"
+                    className="hidden sm:flex text-xs md:text-sm px-4 py-2 font-semibold rounded-lg transition-all duration-200 items-center gap-2 bg-transparent border-white/30 text-white hover:bg-white/10">
+                    
+                      <Star className="h-4 w-4" />
+                      <span className="hidden xl:inline">{settings.cta_secondary_text}</span>
+                    </Button>
+                  </Link>
+                }
+
+                {/* Fallback si aucun CTA défini */}
+                {!settings?.cta_primary_text && !settings?.cta_secondary_text &&
+                <Link to="/contact">
+                    <Button
+                    className="text-xs md:text-sm px-4 py-2 font-semibold rounded-lg transition-all duration-200 flex items-center gap-2 shadow-sm bg-white/20 hover:bg-white/30 text-white border border-white/20">
+                    
+                      <Phone className="h-4 w-4" />
+                      <span className="hidden xl:inline">Contact</span>
+                    </Button>
+                  </Link>
+                }
+
+                {/* Barre de recherche (Position: RIGHT) */}
+                {headerConfig.searchEnabled && headerConfig.searchPosition === 'right' &&
+                <div className="hidden lg:flex ml-2 max-w-[150px] xl:max-w-[200px] transition-all duration-300">
+                    <SearchGlobal />
+                  </div>
+                }
+
+                {!isLoading && user ?
+                <div className="flex items-center gap-2">
+                    <div className="relative">
+                      <button
+                      onClick={toggleUserMenu}
+                      className="text-xs md:text-sm px-3 py-2 font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2 bg-white text-blue-600" aria-label="Action">
+                      
+                        <User className="h-4 w-4" />
+                        <span className="hidden md:inline">{user.email?.split('@')[0]}</span>
+                      </button>
+
+                      {isUserMenuOpen &&
+                    <div className="absolute right-0 mt-2 w-52 bg-card rounded-xl shadow-2xl border border-border overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-[100]">
+                          <div className="px-4 py-4 border-b border-border bg-muted/30">
+                            <p className="text-sm font-bold text-foreground truncate">{user.email}</p>
+                            <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Session Active</p>
+                          </div>
+                          <div className="p-1">
+                            <Link
+                          to={user ? getDashboardPath(user.role) : "/dashboard"}
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors">
+                          
+                              <LayoutDashboard className="h-4 w-4 text-proqblue" />
+                              Tableau de bord
+                            </Link>
+                            {isAdmin &&
+                        <Link
+                          to="/admin?tab=pages"
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors border-t border-border mt-1 font-bold text-emerald-600">
+                          
+                                <PenTool className="h-4 w-4" />
+                                BE Builder (Pages)
+                              </Link>
+                        }
+                            <button
+                          onClick={handleLogout}
+                          className="w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition-colors border-t border-border mt-1">
+                          
+                              <LogOut className="h-4 w-4" />
+                              Déconnexion
+                            </button>
+                          </div>
+                        </div>
+                    }
+                    </div>
+                    {/* Notification Bell */}
+                    <div className="relative">
+                      <button
+                      className="p-2 rounded-full hover:bg-white/10 transition-colors relative group"
+                      aria-label="Notifications">
+                      
+                        <Bell className="h-5 w-5 text-white" />
+                        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
+                      </button>
+                    </div>
+                  </div> :
+
+                <Link to="/connexion">
+                    <Button
+                    className="text-xs md:text-sm px-4 py-2 font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg bg-white text-blue-600 hover:bg-blue-50">
+                    
+                      Connexion
+                    </Button>
+                  </Link>
+                }
+              </div>
+            </div>
+
+            {/* Navigation tablet/mobile */}
+            <div className="lg:hidden flex items-center gap-2">
+              <button
+                onClick={toggleMenu}
+                className="p-2 rounded-lg transition-all duration-200 text-white hover:bg-white/10"
+                aria-label="Menu">
+                
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Menu mobile/tablet */}
+      {isMenuOpen &&
+      <div className="lg:hidden mt-0 pb-4 space-y-3 border-t border-border pt-4 animate-in fade-in slide-in-from-top-2 duration-200 max-h-[80vh] overflow-y-auto bg-card shadow-2xl">
+          <div className="px-4 space-y-4">
+            <div className="space-y-1">
+              <p className="px-3 py-1 text-[10px] font-bold opacity-60 uppercase tracking-widest text-muted-foreground">Navigation</p>
+              {mainNavLinks.map((link) =>
+            <NavLink key={link.id || link.path} to={link.path} icon={link.icon}>
+                  {link.label}
+                </NavLink>
+            )}
+            </div>
+
+            <div className="space-y-1">
+              <p className="px-3 py-1 text-[10px] font-bold opacity-60 uppercase tracking-widest text-muted-foreground">Espace Information</p>
+              <NavLink to="/blog" icon={ChevronRight}>Actualités</NavLink>
+              <NavLink to="/documents" icon={ChevronRight}>Documents</NavLink>
+              <NavLink to="/showroom" icon={ChevronRight}>Showroom</NavLink>
+            </div>
+
+            <div className="pt-3 flex flex-col gap-2">
+              {!isLoading && user ?
+            <>
+                  <Link to={getDashboardPath(user.role)} onClick={() => setIsMenuOpen(false)}>
+                    <Button className="w-full bg-proqblue text-white justify-center gap-2 rounded-lg py-6 shadow-lg shadow-proqblue/20">
+                      <LayoutDashboard className="h-5 w-5" />
                       Tableau de bord
                     </Button>
                   </Link>
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setIsMenuOpen(false);
-                    }}
-                    className="w-full text-red-600 bg-white hover:bg-gray-100 transition-all font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2"
-                  >
+                  <Button
+                variant="destructive"
+                onClick={() => {handleLogout();setIsMenuOpen(false);}}
+                className="w-full justify-center gap-2 rounded-lg py-4">
+                
                     <LogOut className="h-4 w-4" />
                     Déconnexion
-                  </button>
-                </>
-              ) : (
-                <Link to="/connexion" onClick={() => setIsMenuOpen(false)} className="block">
-                  <Button
-                    className="w-full text-blue-600 bg-white hover:bg-gray-100 transition-all font-semibold py-2.5 rounded-lg"
-                  >
-                    Connexion
+                  </Button>
+                </> :
+
+            <Link to="/connexion" onClick={() => setIsMenuOpen(false)}>
+                  <Button className="w-full bg-proqblue text-white justify-center rounded-lg py-6 shadow-lg shadow-proqblue/20">
+                    Accès Membre / Admin
                   </Button>
                 </Link>
-              )}
+            }
+              <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                <Button variant="outline" className="w-full justify-center gap-2 rounded-lg py-4 border-proqblue text-proqblue">
+                  <Phone className="h-4 w-4" />
+                  Nous Contacter
+                </Button>
+              </Link>
             </div>
           </div>
-        )}
-      </nav>
-    </header>
-  );
+        </div>
+      }
+    </header>);
+
 };

@@ -41,31 +41,31 @@ export const AdminConstructionModePanel: React.FC = () => {
             onCheckedChange={handleToggle}
           />
         </div>
-        
-        <div className="p-4 bg-gray-50 rounded-lg">
+
+        <div className="p-4 bg-muted/50 rounded-lg">
           <div className="flex items-center gap-2 mb-2">
             {isConstructionMode ? (
               <>
-                <Construction className="w-4 h-4 text-orange-500" />
-                <span className="font-medium text-orange-700">Mode construction activé</span>
+                <Construction className="w-4 h-4 text-orange-500 dark:text-orange-400" />
+                <span className="font-medium text-orange-700 dark:text-orange-300">Mode construction activé</span>
               </>
             ) : (
               <>
-                <Globe className="w-4 h-4 text-green-500" />
-                <span className="font-medium text-green-700">Site accessible</span>
+                <Globe className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+                <span className="font-medium text-emerald-700 dark:text-emerald-300">Site accessible</span>
               </>
             )}
           </div>
-          <p className="text-sm text-gray-600">
-            {isConstructionMode 
+          <p className="text-sm text-muted-foreground">
+            {isConstructionMode
               ? "Les visiteurs verront la page de construction avec le mot de passe d'accès."
               : "Le site est accessible normalement par tous les visiteurs."
             }
           </p>
         </div>
-        
-        <div className="text-xs text-gray-500 bg-blue-50 p-3 rounded">
-          <strong>Note :</strong> Le mot de passe d'accès est <code className="bg-white px-1 rounded">1995Proquelec</code>
+
+        <div className="text-xs text-muted-foreground bg-primary/10 p-3 rounded">
+          <strong>Note :</strong> Le mot de passe d'accès est <code className="bg-background px-1 rounded border border-border">1995Proquelec</code>
         </div>
       </CardContent>
     </Card>

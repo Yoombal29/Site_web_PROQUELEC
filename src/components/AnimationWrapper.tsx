@@ -1,5 +1,5 @@
 
-import { ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
 interface AnimationWrapperProps {
@@ -9,11 +9,11 @@ interface AnimationWrapperProps {
   type?: 'fade' | 'slide' | 'scale' | 'bounce';
 }
 
-export function AnimationWrapper({ 
-  children, 
-  className, 
-  delay = 0, 
-  type = 'fade' 
+export function AnimationWrapper({
+  children,
+  className,
+  delay = 0,
+  type = 'fade'
 }: AnimationWrapperProps) {
   const animationClass = {
     fade: 'animate-fade-in',
@@ -23,11 +23,10 @@ export function AnimationWrapper({
   }[type];
 
   return (
-    <div 
-      className={cn(animationClass, className)}
-      style={{ animationDelay: `${delay}ms` }}
-    >
+    <div
+      className={cn(animationClass, className, `[animation-delay:${delay}ms]`)}>
+      
       {children}
-    </div>
-  );
+    </div>);
+
 }

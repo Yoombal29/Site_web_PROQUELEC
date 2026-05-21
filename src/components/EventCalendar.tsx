@@ -313,7 +313,7 @@ export function EventCalendar() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="category">Catégorie</Label>
-                      <select
+                      <select title="Sélectionner une option"
                         id="category"
                         value={eventForm.category || 'autre'}
                         onChange={(e) => setEventForm(prev => ({ ...prev, category: e.target.value as Event['category'] }))}
@@ -511,7 +511,7 @@ export function EventCalendar() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="edit-status">Statut</Label>
-                <select
+                <select title="Sélectionner une option"
                   id="edit-status"
                   value={eventForm.status || 'planifie'}
                   onChange={(e) => setEventForm(prev => ({ ...prev, status: e.target.value as Event['status'] }))}
@@ -525,7 +525,7 @@ export function EventCalendar() {
               </div>
               <div>
                 <Label htmlFor="edit-category">Catégorie</Label>
-                <select
+                <select title="Sélectionner une option"
                   id="edit-category"
                   value={eventForm.category || 'autre'}
                   onChange={(e) => setEventForm(prev => ({ ...prev, category: e.target.value as Event['category'] }))}

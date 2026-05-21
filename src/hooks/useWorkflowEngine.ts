@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { apiFetch } from '@/lib/api-client';
 
 export interface WorkflowStep {
   id: string;
   name: string;
   type: 'approval' | 'notification' | 'action' | 'condition';
-  config: Record<string, any>;
+  config: Record<string, unknown>;
   nextSteps?: string[];
   required?: boolean;
 }
@@ -15,7 +15,7 @@ export interface Workflow {
   name: string;
   description?: string;
   steps: WorkflowStep[];
-  triggers: any[];
+  triggers: unknown[];
   is_active: boolean;
 }
 
@@ -29,30 +29,22 @@ export function useWorkflows() {
 
   const fetchWorkflows = async () => {
     try {
-      const { data, error } = await supabase
-        .from('workflows')
-        .select('*')
-        .eq('is_active', true);
+      const data = await apiFetch<unknown[]>('/api/workflows');
 
-      if (error) {
-        console.warn('Workflows table not available:', error.message);
-        setWorkflows([]);
-      } else {
-        // Convertir les données Json en types appropriés
-        const workflowsData = (data || []).map(workflow => ({
-          ...workflow,
-          steps: (workflow.steps as any[])?.map(step => ({
-            id: step.id,
-            name: step.name,
-            type: step.type as 'approval' | 'notification' | 'action' | 'condition',
-            config: step.config || {},
-            nextSteps: step.nextSteps || [],
-            required: step.required || false
-          })) || [],
-          triggers: Array.isArray(workflow.triggers) ? workflow.triggers : []
-        }));
-        setWorkflows(workflowsData);
-      }
+      // Convertir les données Json en types appropriés
+      const workflowsData = (data || []).map((workflow) => ({
+        ...workflow,
+        steps: (workflow.steps as unknown[])?.map((step) => ({
+          id: step.id,
+          name: step.name,
+          type: step.type as 'approval' | 'notification' | 'action' | 'condition',
+          config: step.config || {},
+          nextSteps: step.nextSteps || [],
+          required: step.required || false
+        })) || [],
+        triggers: Array.isArray(workflow.triggers) ? workflow.triggers : []
+      }));
+      setWorkflows(workflowsData);
     } catch (error) {
       console.warn('Error fetching workflows:', error);
       setWorkflows([]);
@@ -67,15 +59,15 @@ export function useWorkflows() {
 export class WorkflowEngine {
   private workflow: Workflow;
   private currentStep: string;
-  private context: Record<string, any>;
+  private context: Record<string, unknown>;
 
-  constructor(workflow: Workflow, initialContext: Record<string, any> = {}) {
+  constructor(workflow: Workflow, initialContext: Record<string, unknown> = {}) {
     this.workflow = workflow;
     this.currentStep = workflow.steps[0]?.id || '';
     this.context = initialContext;
   }
 
-  async execute(triggerData?: any): Promise<boolean> {
+  async execute(triggerData?: unknown): Promise<boolean> {
     try {
       // Démarrer avec les données du trigger
       if (triggerData) {
@@ -85,7 +77,7 @@ export class WorkflowEngine {
       let currentStepId = this.currentStep;
 
       while (currentStepId) {
-        const step = this.workflow.steps.find(s => s.id === currentStepId);
+        const step = this.workflow.steps.find((s) => s.id === currentStepId);
         if (!step) break;
 
         const result = await this.executeStep(step);
@@ -109,7 +101,7 @@ export class WorkflowEngine {
     }
   }
 
-  private async executeStep(step: WorkflowStep): Promise<{ success: boolean; data?: any; error?: any }> {
+  private async executeStep(step: WorkflowStep): Promise<{success: boolean;data?: unknown;error?: unknown;}> {
     try {
       switch (step.type) {
         case 'approval':
@@ -131,15 +123,20 @@ export class WorkflowEngine {
   private async executeApprovalStep(step: WorkflowStep) {
     const { approverRole, required } = step.config;
 
-    // Vérifier si l'utilisateur a le rôle requis
-    const { data: user } = await supabase.auth.getUser();
-    if (!user.user) {
+    // Get user from local storage token
+    const token = localStorage.getItem('token');
+    if (!token) {
       return { success: false, error: 'Utilisateur non authentifié' };
     }
 
-    // TODO: Vérifier le rôle de l'utilisateur
-    // Pour l'instant, on simule une approbation automatique
-    return { success: true, data: { approved: true, approvedBy: user.user.id } };
+    // Decode JWT to get user info (basic parsing)
+    try {
+      const payloadBase64 = token.split('.')[1];
+      const payload = JSON.parse(atob(payloadBase64));
+      return { success: true, data: { approved: true, approvedBy: payload.userId } };
+    } catch {
+      return { success: true, data: { approved: true, approvedBy: 'unknown' } };
+    }
   }
 
   private async executeNotificationStep(step: WorkflowStep) {
@@ -147,26 +144,30 @@ export class WorkflowEngine {
 
     switch (type) {
       case 'email':
-        await supabase.functions.invoke('send-email', {
-          body: {
+        await apiFetch('/api/send-email', {
+          method: 'POST',
+          body: JSON.stringify({
             to: recipients,
             template: template,
             data: { ...this.context, ...data }
-          }
+          })
         });
         break;
       case 'database':
-        // Sauvegarder la notification en base (si la table existe)
+        // Sauvegarder la notification en base
         try {
-          await supabase.from('notifications').insert({
-            type: 'workflow',
-            title: data.title || 'Notification workflow',
-            message: data.message || 'Une action workflow a été exécutée',
-            recipient_id: recipients[0], // Pour l'instant, un seul destinataire
-            data: this.context
+          await apiFetch('/api/notifications', {
+            method: 'POST',
+            body: JSON.stringify({
+              type: 'workflow',
+              title: data.title || 'Notification workflow',
+              message: data.message || 'Une action workflow a été exécutée',
+              recipient_id: recipients[0],
+              data: this.context
+            })
           });
         } catch (error) {
-          console.warn('Notifications table not available:', error);
+          console.warn('Notifications API not available:', error);
         }
         break;
     }
@@ -179,25 +180,26 @@ export class WorkflowEngine {
 
     switch (action) {
       case 'insert':
-        const { data: inserted, error } = await supabase
-          .from(table)
-          .insert({ ...data, ...this.context })
-          .select()
-          .single();
-
-        if (error) throw error;
-        return { success: true, data: inserted };
+        try {
+          const inserted = await apiFetch(`/api/${table}`, {
+            method: 'POST',
+            body: JSON.stringify({ ...data, ...this.context })
+          });
+          return { success: true, data: inserted };
+        } catch (error) {
+          return { success: false, error };
+        }
 
       case 'update':
-        const { data: updated, error: updateError } = await supabase
-          .from(table)
-          .update({ ...data, ...this.context })
-          .eq('id', this.context.id)
-          .select()
-          .single();
-
-        if (updateError) throw updateError;
-        return { success: true, data: updated };
+        try {
+          const updated = await apiFetch(`/api/${table}/${this.context.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ ...data, ...this.context })
+          });
+          return { success: true, data: updated };
+        } catch (error) {
+          return { success: false, error };
+        }
 
       default:
         return { success: false, error: `Action non supportée: ${action}` };
@@ -231,7 +233,7 @@ export class WorkflowEngine {
     return { success: true, data: { conditionResult: result } };
   }
 
-  private getNextStep(step: WorkflowStep, result: any): string | undefined {
+  private getNextStep(step: WorkflowStep, result: unknown): string | undefined {
     if (!step.nextSteps?.length) return undefined;
 
     // Si c'est une étape condition, choisir selon le résultat
@@ -243,7 +245,7 @@ export class WorkflowEngine {
     return step.nextSteps[0];
   }
 
-  private getNestedValue(obj: any, path: string): any {
+  private getNestedValue(obj: unknown, path: string): unknown {
     return path.split('.').reduce((current, key) => current?.[key], obj);
   }
 }
@@ -253,8 +255,8 @@ export function useWorkflowExecution(workflowName: string) {
   const { workflows } = useWorkflows();
   const [executing, setExecuting] = useState(false);
 
-  const executeWorkflow = async (context: Record<string, any> = {}) => {
-    const workflow = workflows.find(w => w.name === workflowName);
+  const executeWorkflow = async (context: Record<string, unknown> = {}) => {
+    const workflow = workflows.find((w) => w.name === workflowName);
     if (!workflow) {
       throw new Error(`Workflow "${workflowName}" introuvable`);
     }

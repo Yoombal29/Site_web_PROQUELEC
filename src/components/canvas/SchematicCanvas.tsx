@@ -18,10 +18,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Konva from 'konva';
 import { Stage, Layer, Circle, Text, Line, Group, Rect } from 'react-konva';
-import { GraphStore, GraphNode, GraphEdge } from '@/stores/GraphStore';
-import { getObjectDefinition, OBJECTS_BY_CATEGORY } from '@/constants/ObjectLibrary';
+import { GraphNode, GraphEdge } from '@/stores/GraphStore';
+import { getObjectDefinition } from '@/constants/ObjectLibrary';
 import { ELECTRICAL_SYMBOLS } from '@/symbols/ElectricalSymbols';
-import { Ruler } from './Ruler';
+
 import { appStore } from '@/app/AppStore';
 import { ValidationResult } from '@/engines/ValidationEngine';
 import { ChargeEditor } from '@/components/tools/ChargeEditor';
@@ -51,7 +51,7 @@ export function SchematicCanvas({
   onNodeSelect,
   onEdgeSelect,
   width = 1600, // Élargi par défaut
-  height = 900,  // Élargi par défaut
+  height = 900, // Élargi par défaut
   showGrid: initialShowGrid = true,
   showAxes: initialShowAxes = true,
   showGuides: initialShowGuides = true,
@@ -72,7 +72,7 @@ export function SchematicCanvas({
   // Connexion câble simplifiée
   const [connectingFromNodeId, setConnectingFromNodeId] = useState<string | null>(null);
   const [isDraggingNewEdge, setIsDraggingNewEdge] = useState(false);
-  const [newEdgeStart, setNewEdgeStart] = useState<{ x: number; y: number } | null>(null);
+  const [newEdgeStart, setNewEdgeStart] = useState<{x: number;y: number;} | null>(null);
 
   // Édition
   const [editingNodeId, setEditingNodeId] = useState<string | null>(null);
@@ -85,7 +85,7 @@ export function SchematicCanvas({
 
   // Validation temps réel
   const [validationResults, setValidationResults] = useState<ValidationResult[]>([]);
-  const [voltageDropResults, setVoltageDropResults] = useState<any>(null);
+  const [voltageDropResults, setVoltageDropResults] = useState<unknown>(null);
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [editingDistance, setEditingDistance] = useState<string>('');
@@ -93,7 +93,7 @@ export function SchematicCanvas({
   const [panX, setPanX] = useState<number>(0);
   const [panY, setPanY] = useState<number>(0);
   const [isDraggingPan, setIsDraggingPan] = useState(false);
-  const [panStartPos, setPanStartPos] = useState<{ x: number; y: number } | null>(null);
+  const [panStartPos, setPanStartPos] = useState<{x: number;y: number;} | null>(null);
 
   // Contrôles visuels
   const [showGrid, setShowGrid] = useState<boolean>(true);
@@ -254,7 +254,7 @@ export function SchematicCanvas({
     );
 
     if (confirmed) {
-      console.log('Suppression du nœud:', nodeId);
+
       appStore.removeNode(nodeId);
       setSelectedNodeId(null);
       // Forcer la mise à jour du canvas
@@ -275,7 +275,7 @@ export function SchematicCanvas({
     );
 
     if (confirmed) {
-      console.log('Suppression du câble:', edgeId);
+
       graphStore.removeEdge(edgeId);
       setSelectedEdgeId(null);
       // Forcer la mise à jour du canvas
@@ -305,7 +305,7 @@ export function SchematicCanvas({
       link.click();
       document.body.removeChild(link);
 
-      console.log('✅ Schéma exporté');
+
     } catch (error) {
       console.error('❌ Erreur lors de l\'export:', error);
       alert('Erreur lors de l\'export du schéma');
@@ -318,7 +318,7 @@ export function SchematicCanvas({
    * Mettre à jour l'état canvas depuis le graphe
    */
   function updateCanvasState() {
-    console.log('Mise à jour du canvas, nœuds avant:', nodes.size);
+
     const newNodes = new Map<string, NodeWithSymbol>();
 
     for (const [nodeId, node] of graphStore.nodes.entries()) {
@@ -327,7 +327,7 @@ export function SchematicCanvas({
       newNodes.set(nodeId, { ...node, symbolDisplay: symbol });
     }
 
-    console.log('Nœuds après mise à jour:', newNodes.size);
+
     setNodes(newNodes);
     setEdges(new Map(graphStore.edges));
 
@@ -347,20 +347,20 @@ export function SchematicCanvas({
     if (isSelected) return '#EF4444'; // Rouge si sélectionné
 
     // Vérifier les erreurs de validation pour cette arête
-    const edgeValidations = validationResults.filter(v =>
-      v.targetId === edge.id && v.targetType === 'edge'
+    const edgeValidations = validationResults.filter((v) =>
+    v.targetId === edge.id && v.targetType === 'edge'
     );
 
-    if (edgeValidations.some(v => v.severity === 'error')) {
+    if (edgeValidations.some((v) => v.severity === 'error')) {
       return '#DC2626'; // Rouge pour erreurs
     }
-    if (edgeValidations.some(v => v.severity === 'warning')) {
+    if (edgeValidations.some((v) => v.severity === 'warning')) {
       return '#F59E0B'; // Orange pour avertissements
     }
 
     // Vérifier la conformité de chute de tension
     if (voltageDropResults) {
-      const edgeResult = voltageDropResults.edges.find((e: any) => e.id === edge.id);
+      const edgeResult = voltageDropResults.edges.find((e: unknown) => e.id === edge.id);
       if (edgeResult && !edgeResult.compliant) {
         return '#DC2626'; // Rouge si chute de tension non conforme
       }
@@ -377,14 +377,14 @@ export function SchematicCanvas({
     if (isSelected) return '#EF4444'; // Rouge si sélectionné
 
     // Vérifier les erreurs de validation pour ce nœud
-    const nodeValidations = validationResults.filter(v =>
-      v.targetId === nodeId && v.targetType === 'node'
+    const nodeValidations = validationResults.filter((v) =>
+    v.targetId === nodeId && v.targetType === 'node'
     );
 
-    if (nodeValidations.some(v => v.severity === 'error')) {
+    if (nodeValidations.some((v) => v.severity === 'error')) {
       return '#DC2626'; // Rouge pour erreurs
     }
-    if (nodeValidations.some(v => v.severity === 'warning')) {
+    if (nodeValidations.some((v) => v.severity === 'warning')) {
       return '#F59E0B'; // Orange pour avertissements
     }
 
@@ -589,7 +589,7 @@ export function SchematicCanvas({
     if (pointer) {
       const mousePointTo = {
         x: (pointer.x - panX) / oldScale,
-        y: (pointer.y - panY) / oldScale,
+        y: (pointer.y - panY) / oldScale
       };
 
       const newPanX = pointer.x - mousePointTo.x * newScale;
@@ -757,30 +757,30 @@ export function SchematicCanvas({
               <button
                 onClick={() => setShowGrid(!showGrid)}
                 className={`px-2 py-1 rounded text-xs font-mono ${showGrid ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-400'} hover:bg-blue-500 transition-colors`}
-                title="Grille"
-              >
+                title="Grille">
+                
                 ⬜
               </button>
               <button
                 onClick={() => setShowAxes(!showAxes)}
                 className={`px-2 py-1 rounded text-xs font-mono ${showAxes ? 'bg-red-600 text-white' : 'bg-slate-700 text-slate-400'} hover:bg-red-500 transition-colors`}
-                title="Axes"
-              >
+                title="Axes">
+                
                 ⊕
               </button>
               <button
                 onClick={() => setShowGuides(!showGuides)}
                 className={`px-2 py-1 rounded text-xs font-mono ${showGuides ? 'bg-green-600 text-white' : 'bg-slate-700 text-slate-400'} hover:bg-green-500 transition-colors`}
-                title="Guides"
-              >
+                title="Guides">
+                
                 🎯
               </button>
               <div className="w-px h-4 bg-slate-600 mx-1"></div>
               <button
                 onClick={() => setCanvasWidth(Math.max(800, canvasWidth - 200))}
                 className="px-2 py-1 rounded text-xs font-mono bg-slate-700 text-slate-400 hover:bg-slate-600 transition-colors"
-                title="Réduire canvas"
-              >
+                title="Réduire canvas">
+                
                 ➖
               </button>
               <span className="text-xs text-slate-500 font-mono px-1 min-w-[80px] text-center">
@@ -789,8 +789,8 @@ export function SchematicCanvas({
               <button
                 onClick={() => setCanvasWidth(Math.min(2400, canvasWidth + 200))}
                 className="px-2 py-1 rounded text-xs font-mono bg-slate-700 text-slate-400 hover:bg-slate-600 transition-colors"
-                title="Agrandir canvas"
-              >
+                title="Agrandir canvas">
+                
                 ➕
               </button>
               <div className="w-px h-4 bg-slate-600 mx-1"></div>
@@ -798,8 +798,8 @@ export function SchematicCanvas({
                 onClick={handleExport}
                 disabled={isExporting}
                 className="px-2 py-1 rounded text-xs font-mono bg-purple-600 text-white hover:bg-purple-500 transition-colors disabled:opacity-50"
-                title="Exporter"
-              >
+                title="Exporter">
+                
                 💾
               </button>
             </div>
@@ -808,8 +808,8 @@ export function SchematicCanvas({
       </div>
 
       {/* Guide d'aide contextuel */}
-      {nodes.size === 0 && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      {nodes.size === 0 &&
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="text-center text-slate-400 bg-slate-900/90 backdrop-blur-sm px-8 py-6 rounded-xl border border-slate-600/50 shadow-xl max-w-md">
             <div className="text-4xl mb-4">🚀</div>
             <h3 className="text-lg font-semibold text-slate-200 mb-2">Bienvenue dans PROQUELEC</h3>
@@ -824,11 +824,11 @@ export function SchematicCanvas({
             </div>
           </div>
         </div>
-      )}
+      }
 
       {/* Indicateur de connexion en cours */}
-      {connectingFromNodeId && (
-        <div className="absolute bottom-3 left-3 z-10 text-xs text-slate-300 bg-slate-900/90 backdrop-blur-sm px-4 py-3 rounded-lg border border-green-500/50 shadow-lg">
+      {connectingFromNodeId &&
+      <div className="absolute bottom-3 left-3 z-10 text-xs text-slate-300 bg-slate-900/90 backdrop-blur-sm px-4 py-3 rounded-lg border border-green-500/50 shadow-lg">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             <div>
@@ -837,11 +837,11 @@ export function SchematicCanvas({
             </div>
           </div>
         </div>
-      )}
+      }
 
       {/* Indicateur de mode édition */}
-      {(editingNodeId || editingEdgeId) && (
-        <div className="absolute bottom-3 right-3 z-10 text-xs text-slate-300 bg-slate-900/90 backdrop-blur-sm px-4 py-3 rounded-lg border border-blue-500/50 shadow-lg">
+      {(editingNodeId || editingEdgeId) &&
+      <div className="absolute bottom-3 right-3 z-10 text-xs text-slate-300 bg-slate-900/90 backdrop-blur-sm px-4 py-3 rounded-lg border border-blue-500/50 shadow-lg">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
             <div>
@@ -852,7 +852,7 @@ export function SchematicCanvas({
             </div>
           </div>
         </div>
-      )}
+      }
 
       <Stage
         ref={stageRef}
@@ -867,8 +867,8 @@ export function SchematicCanvas({
         onMouseMove={handleStageMouseMove}
         onMouseUp={handleStageMouseUp}
         onMouseDown={handleStagePanStart}
-        onWheel={handleStageWheel}
-      >
+        onWheel={handleStageWheel}>
+        
         <Layer ref={layerRef}>
           {/* ========== GRILLE ET REPÈRES ========== */}
 
@@ -881,9 +881,9 @@ export function SchematicCanvas({
                 points={[x, 0, x, canvasHeight]}
                 stroke="#1E293B"
                 strokeWidth={0.5}
-                opacity={0.3}
-              />
-            );
+                opacity={0.3} />);
+
+
           })}
 
           {/* Grille de fond (lignes horizontales) */}
@@ -895,9 +895,9 @@ export function SchematicCanvas({
                 points={[0, y, canvasWidth, y]}
                 stroke="#1E293B"
                 strokeWidth={0.5}
-                opacity={0.3}
-              />
-            );
+                opacity={0.3} />);
+
+
           })}
 
           {/* Axe X principal (rouge) */}
@@ -905,16 +905,16 @@ export function SchematicCanvas({
             points={[0, canvasHeight / 2, canvasWidth, canvasHeight / 2]}
             stroke="#DC2626"
             strokeWidth={1}
-            opacity={0.6}
-          />}
+            opacity={0.6} />
+          }
 
           {/* Axe Y principal (rouge) */}
           {showAxes && <Line
             points={[canvasWidth / 2, 0, canvasWidth / 2, canvasHeight]}
             stroke="#DC2626"
             strokeWidth={1}
-            opacity={0.6}
-          />}
+            opacity={0.6} />
+          }
 
           {/* Centre du canvas (point rouge) */}
           {showAxes && <Circle
@@ -922,8 +922,8 @@ export function SchematicCanvas({
             y={canvasHeight / 2}
             radius={3}
             fill="#DC2626"
-            opacity={0.8}
-          />}
+            opacity={0.8} />
+          }
 
           {/* Repères de coordonnées (tous les 100px) */}
           {showAxes && Array.from({ length: Math.ceil(canvasWidth / 100) + 1 }, (_, i) => {
@@ -936,16 +936,16 @@ export function SchematicCanvas({
                   text={x.toString()}
                   fill="#94A3B8"
                   fontSize={8}
-                  fontFamily="monospace"
-                />
+                  fontFamily="monospace" />
+                
                 <Line
                   points={[x, canvasHeight / 2 - 3, x, canvasHeight / 2 + 3]}
                   stroke="#94A3B8"
                   strokeWidth={1}
-                  opacity={0.7}
-                />
-              </Group>
-            );
+                  opacity={0.7} />
+                
+              </Group>);
+
           })}
 
           {showAxes && Array.from({ length: Math.ceil(canvasHeight / 100) + 1 }, (_, i) => {
@@ -958,16 +958,16 @@ export function SchematicCanvas({
                   text={y.toString()}
                   fill="#94A3B8"
                   fontSize={8}
-                  fontFamily="monospace"
-                />
+                  fontFamily="monospace" />
+                
                 <Line
                   points={[width / 2 - 3, y, width / 2 + 3, y]}
                   stroke="#94A3B8"
                   strokeWidth={1}
-                  opacity={0.7}
-                />
-              </Group>
-            );
+                  opacity={0.7} />
+                
+              </Group>);
+
           })}
 
           {/* Bordure de la zone de dessin */}
@@ -979,8 +979,8 @@ export function SchematicCanvas({
             stroke="#475569"
             strokeWidth={2}
             fill="transparent"
-            opacity={0.5}
-          />
+            opacity={0.5} />
+          
 
           {/* Indicateur de zone de travail */}
           <Text
@@ -990,11 +990,11 @@ export function SchematicCanvas({
             fill="#64748B"
             fontSize={10}
             fontFamily="monospace"
-            fontStyle="bold"
-          />
+            fontStyle="bold" />
+          
 
           {/* Afficher arêtes (câbles) */}
-          {Array.from(edges.values()).map(edge => {
+          {Array.from(edges.values()).map((edge) => {
             const fromNode = nodes.get(edge.from);
             const toNode = nodes.get(edge.to);
 
@@ -1015,8 +1015,8 @@ export function SchematicCanvas({
                   lineJoin="round"
                   onClick={() => handleEdgeClick(edge.id)}
                   onDblClick={() => handleEdgeDoubleClick(edge.id)}
-                  onContextMenu={(e) => e.evt.preventDefault()}
-                />
+                  onContextMenu={(e) => e.evt.preventDefault()} />
+                
 
                 {/* Étiquette longueur (au milieu du câble) */}
                 <Text
@@ -1027,14 +1027,14 @@ export function SchematicCanvas({
                   fontSize={10}
                   fontFamily="monospace"
                   onClick={() => handleEdgeDistanceClick(edge.id, edge.properties.length)}
-                  style={{ cursor: 'pointer' }}
-                />
-              </Group>
-            );
+                  style={{ cursor: 'pointer' }} />
+                
+              </Group>);
+
           })}
 
           {/* Afficher nœuds (objets normatifs) */}
-          {Array.from(nodes.values()).map(node => {
+          {Array.from(nodes.values()).map((node) => {
             // Récupérer les infos du symbole électrique associé
             const nodeDef = getObjectDefinition(node.params?.objectId);
 
@@ -1096,8 +1096,8 @@ export function SchematicCanvas({
                 x={node.position.x}
                 y={node.position.y}
                 draggable
-                onDragEnd={(e) => handleNodeDragEnd(node.id, e)}
-              >
+                onDragEnd={(e) => handleNodeDragEnd(node.id, e)}>
+                
                 {/* Cercle de base (fond) */}
                 <Circle
                   x={0}
@@ -1112,34 +1112,34 @@ export function SchematicCanvas({
                   onContextMenu={(e) => handleNodeContextMenu(node.id, e)}
                   onMouseEnter={() => setHoveredNode(node)}
                   onMouseLeave={() => setHoveredNode(null)}
-                  style={{ cursor: 'pointer' }}
-                />
+                  style={{ cursor: 'pointer' }} />
+                
 
                 {/* Cercle de sélection (source en attente) */}
-                {connectingFromNodeId === node.id && (
-                  <Circle
-                    x={0}
-                    y={0}
-                    radius={42}
-                    fill="transparent"
-                    stroke="#10B981"
-                    strokeWidth={3}
-                    dash={[4, 4]}
-                  />
-                )}
+                {connectingFromNodeId === node.id &&
+                <Circle
+                  x={0}
+                  y={0}
+                  radius={42}
+                  fill="transparent"
+                  stroke="#10B981"
+                  strokeWidth={3}
+                  dash={[4, 4]} />
+
+                }
 
                 {/* Cercle de sélection classique (ou destination) */}
-                {selectedNodeId === node.id && connectingFromNodeId !== node.id && (
-                  <Circle
-                    x={0}
-                    y={0}
-                    radius={42}
-                    fill="transparent"
-                    stroke="#FBBF24"
-                    strokeWidth={3}
-                    dash={[5, 5]}
-                  />
-                )}
+                {selectedNodeId === node.id && connectingFromNodeId !== node.id &&
+                <Circle
+                  x={0}
+                  y={0}
+                  radius={42}
+                  fill="transparent"
+                  stroke="#FBBF24"
+                  strokeWidth={3}
+                  dash={[5, 5]} />
+
+                }
 
                 {/* Symbole emoji (icône) */}
                 <Text
@@ -1151,8 +1151,8 @@ export function SchematicCanvas({
                   fontFamily="Arial"
                   onClick={() => handleNodeClick(node.id)}
                   onDblClick={() => handleNodeDoubleClick(node.id)}
-                  style={{ cursor: 'pointer' }}
-                />
+                  style={{ cursor: 'pointer' }} />
+                
 
                 {/* Label texte (type court) */}
                 <Text
@@ -1164,47 +1164,47 @@ export function SchematicCanvas({
                   fontFamily="monospace"
                   fontStyle="bold"
                   align="center"
-                  width={36}
-                />
+                  width={36} />
+                
 
                 {/* Indicateur de charges (pour RECEPTOR) */}
-                {node.type === 'RECEPTOR' && node.charges && node.charges.length > 0 && (
-                  <Group>
+                {node.type === 'RECEPTOR' && node.charges && node.charges.length > 0 &&
+                <Group>
                     {/* Cercle indicateur de charges */}
                     <Circle
-                      x={25}
-                      y={-25}
-                      radius={8}
-                      fill="#10B981"
-                      stroke="#065F46"
-                      strokeWidth={1}
-                    />
+                    x={25}
+                    y={-25}
+                    radius={8}
+                    fill="#10B981"
+                    stroke="#065F46"
+                    strokeWidth={1} />
+                  
                     {/* Nombre de charges */}
                     <Text
-                      x={21}
-                      y={-29}
-                      text={node.charges.length.toString()}
-                      fill="white"
-                      fontSize={10}
-                      fontFamily="Arial"
-                      fontStyle="bold"
-                      align="center"
-                      width={8}
-                    />
+                    x={21}
+                    y={-29}
+                    text={node.charges.length.toString()}
+                    fill="white"
+                    fontSize={10}
+                    fontFamily="Arial"
+                    fontStyle="bold"
+                    align="center"
+                    width={8} />
+                  
                     {/* Puissance totale (en kW) */}
                     <Text
-                      x={-25}
-                      y={42}
-                      text={`${(node.charges.reduce((sum, c) => sum + c.puissance, 0) / 1000).toFixed(1)}kW`}
-                      fill="#10B981"
-                      fontSize={8}
-                      fontFamily="monospace"
-                      fontStyle="bold"
-                      align="center"
-                      width={50}
-                    />
+                    x={-25}
+                    y={42}
+                    text={`${(node.charges.reduce((sum, c) => sum + c.puissance, 0) / 1000).toFixed(1)}kW`}
+                    fill="#10B981"
+                    fontSize={8}
+                    fontFamily="monospace"
+                    fontStyle="bold"
+                    align="center"
+                    width={50} />
+                  
                   </Group>
-                )}
+                }
 
                 {/* Tooltip au survol : nom du symbole */}
                 <Text
@@ -1214,111 +1214,111 @@ export function SchematicCanvas({
                   fill="#E2E8F0"
                   fontSize={10}
                   fontFamily="Arial"
-                  opacity={0.8}
-                />
+                  opacity={0.8} />
+                
 
                 {/* Tooltip détaillé des charges (au survol) */}
-                {node.type === 'RECEPTOR' && node.charges && node.charges.length > 0 && (
-                  <Group opacity={0.95}>
+                {node.type === 'RECEPTOR' && node.charges && node.charges.length > 0 &&
+                <Group opacity={0.95}>
                     <Rect
-                      x={-80}
-                      y={-80}
-                      width={160}
-                      height={node.charges.length * 18 + 50}
-                      fill="#1E293B"
-                      stroke="#334155"
-                      strokeWidth={1}
-                      cornerRadius={6}
-                    />
+                    x={-80}
+                    y={-80}
+                    width={160}
+                    height={node.charges.length * 18 + 50}
+                    fill="#1E293B"
+                    stroke="#334155"
+                    strokeWidth={1}
+                    cornerRadius={6} />
+                  
                     <Text
-                      x={-75}
-                      y={-75}
-                      text="📊 Charges Électriques"
-                      fill="#F1F5F9"
-                      fontSize={10}
-                      fontFamily="Arial"
-                      fontStyle="bold"
-                    />
+                    x={-75}
+                    y={-75}
+                    text="📊 Charges Électriques"
+                    fill="#F1F5F9"
+                    fontSize={10}
+                    fontFamily="Arial"
+                    fontStyle="bold" />
+                  
                     {node.charges.map((charge, index) => {
-                      const current = charge.puissance / (charge.tension * charge.cosPhi);
-                      return (
-                        <Group key={charge.id}>
+                    const current = charge.puissance / (charge.tension * charge.cosPhi);
+                    return (
+                      <Group key={charge.id}>
                           <Text
-                            x={-75}
-                            y={-55 + index * 18}
-                            text={`• ${charge.nom.substring(0, 10)}`}
-                            fill="#CBD5E1"
-                            fontSize={9}
-                            fontFamily="Arial"
-                            fontStyle="bold"
-                          />
+                          x={-75}
+                          y={-55 + index * 18}
+                          text={`• ${charge.nom.substring(0, 10)}`}
+                          fill="#CBD5E1"
+                          fontSize={9}
+                          fontFamily="Arial"
+                          fontStyle="bold" />
+                        
                           <Text
-                            x={-75}
-                            y={-45 + index * 18}
-                            text={`${charge.puissance}W • ${current.toFixed(1)}A • cosφ=${charge.cosPhi}`}
-                            fill="#94A3B8"
-                            fontSize={8}
-                            fontFamily="Arial"
-                          />
-                        </Group>
-                      );
-                    })}
+                          x={-75}
+                          y={-45 + index * 18}
+                          text={`${charge.puissance}W • ${current.toFixed(1)}A • cosφ=${charge.cosPhi}`}
+                          fill="#94A3B8"
+                          fontSize={8}
+                          fontFamily="Arial" />
+                        
+                        </Group>);
+
+                  })}
                     {/* Total */}
                     {(() => {
-                      const totalPower = node.charges.reduce((sum, c) => sum + c.puissance, 0);
-                      const totalCurrent = node.charges.reduce((sum, c) => sum + (c.puissance / (c.tension * c.cosPhi)), 0);
-                      return (
-                        <Group>
+                    const totalPower = node.charges.reduce((sum, c) => sum + c.puissance, 0);
+                    const totalCurrent = node.charges.reduce((sum, c) => sum + c.puissance / (c.tension * c.cosPhi), 0);
+                    return (
+                      <Group>
                           <Text
-                            x={-75}
-                            y={-55 + node.charges.length * 18 + 5}
-                            text={`Total: ${totalPower}W • ${totalCurrent.toFixed(1)}A`}
-                            fill="#10B981"
-                            fontSize={9}
-                            fontFamily="Arial"
-                            fontStyle="bold"
-                          />
-                        </Group>
-                      );
-                    })()}
+                          x={-75}
+                          y={-55 + node.charges.length * 18 + 5}
+                          text={`Total: ${totalPower}W • ${totalCurrent.toFixed(1)}A`}
+                          fill="#10B981"
+                          fontSize={9}
+                          fontFamily="Arial"
+                          fontStyle="bold" />
+                        
+                        </Group>);
+
+                  })()}
                   </Group>
-                )}
-              </Group>
-            );
+                }
+              </Group>);
+
           })}
         </Layer>
       </Stage>
 
       {/* Indicateur de zone centrale (pointillé) - CONDITIONNEL */}
-      {showGuides && (
-        <div className="absolute inset-0 pointer-events-none">
+      {showGuides &&
+      <div className="absolute inset-0 pointer-events-none">
           <div
-            className="absolute border-2 border-dashed border-blue-500/30 rounded-lg"
-            style={{
-              left: '20%',
-              top: '20%',
-              width: '60%',
-              height: '60%',
-            }}
-          />
+          className="absolute border-2 border-dashed border-blue-500/30 rounded-lg"
+          style={{
+            left: '20%',
+            top: '20%',
+            width: '60%',
+            height: '60%'
+          }} />
+        
           <div className="absolute text-xs text-blue-400 font-mono" style={{ left: '20%', top: '18%' }}>
             ZONE OPTIMALE
           </div>
           {/* Indicateur de point d'insertion central */}
           <div
-            className="absolute w-6 h-6 border-2 border-green-400 rounded-full bg-green-400/20 flex items-center justify-center"
-            style={{
-              left: 'calc(50% - 12px)',
-              top: 'calc(50% - 12px)',
-            }}
-          >
+          className="absolute w-6 h-6 border-2 border-green-400 rounded-full bg-green-400/20 flex items-center justify-center"
+          style={{
+            left: 'calc(50% - 12px)',
+            top: 'calc(50% - 12px)'
+          }}>
+          
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
           </div>
           <div className="absolute text-xs text-green-400 font-mono" style={{ left: 'calc(50% + 20px)', top: 'calc(50% - 8px)' }}>
             POINT CENTRAL
           </div>
         </div>
-      )}
+      }
 
       {/* ========== PANNEAUX REPOSITIONNÉS ========== */}
 
@@ -1327,22 +1327,22 @@ export function SchematicCanvas({
         <button
           onClick={handleZoomOut}
           className="p-2 bg-slate-700/60 hover:bg-slate-600/80 text-white rounded font-bold text-sm transition-all hover:scale-105"
-          title="Zoom - (Ctrl + molette)"
-        >
+          title="Zoom - (Ctrl + molette)">
+          
           −
         </button>
         <button
           onClick={handleResetView}
           className="p-2 bg-slate-700/60 hover:bg-slate-600/80 text-white rounded font-bold text-sm transition-all hover:scale-105"
-          title="Réinitialiser"
-        >
+          title="Réinitialiser">
+          
           ⊙
         </button>
         <button
           onClick={handleZoomIn}
           className="p-2 bg-slate-700/60 hover:bg-slate-600/80 text-white rounded font-bold text-sm transition-all hover:scale-105"
-          title="Zoom + (Ctrl + molette)"
-        >
+          title="Zoom + (Ctrl + molette)">
+          
           +
         </button>
       </div>
@@ -1371,8 +1371,8 @@ export function SchematicCanvas({
       </div>
 
       {/* 4. SELECTED NODE INFO - Bottom-left */}
-      {selectedNodeId && nodes.has(selectedNodeId) && (
-        <div className="absolute bottom-3 left-3 z-20 text-xs bg-slate-900/85 backdrop-blur-sm p-3 rounded-lg border border-slate-600/50 max-w-xs space-y-1 shadow-lg">
+      {selectedNodeId && nodes.has(selectedNodeId) &&
+      <div className="absolute bottom-3 left-3 z-20 text-xs bg-slate-900/85 backdrop-blur-sm p-3 rounded-lg border border-slate-600/50 max-w-xs space-y-1 shadow-lg">
           <div className="font-bold text-amber-400 font-mono text-sm">{selectedNodeId}</div>
           <div className="text-slate-300 text-xs grid grid-cols-2 gap-2">
             <div><span className="text-slate-500">X:</span> <span className="text-slate-200 font-mono">{nodes.get(selectedNodeId)?.position.x.toFixed(0)}</span></div>
@@ -1382,7 +1382,7 @@ export function SchematicCanvas({
             Type: <span className="text-slate-300 font-mono">{nodes.get(selectedNodeId)?.type}</span>
           </div>
         </div>
-      )}
+      }
 
       {/* ========== PALETTE D'OBJETS - Bottom (full width) ========== */}
       <div className="flex gap-2 overflow-x-auto p-3 bg-gradient-to-t from-slate-900/95 via-slate-900/80 to-transparent backdrop-blur-sm border-t border-slate-700/50">
@@ -1391,8 +1391,8 @@ export function SchematicCanvas({
             const nodeId = addNodeToCanvas('source_type_a');
             if (nodeId) handleNodeClick(nodeId);
           }}
-          className="px-3 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap transition-all shadow-lg hover:scale-105"
-        >
+          className="px-3 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap transition-all shadow-lg hover:scale-105">
+          
           ⚡ Source
         </button>
         <button
@@ -1400,8 +1400,8 @@ export function SchematicCanvas({
             const nodeId = addNodeToCanvas('tgbt');
             if (nodeId) handleNodeClick(nodeId);
           }}
-          className="px-3 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap transition-all shadow-lg hover:scale-105"
-        >
+          className="px-3 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap transition-all shadow-lg hover:scale-105">
+          
           📦 TGBT
         </button>
         <button
@@ -1409,8 +1409,8 @@ export function SchematicCanvas({
             const nodeId = addNodeToCanvas('breaker_6a');
             if (nodeId) handleNodeClick(nodeId);
           }}
-          className="px-3 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap transition-all shadow-lg hover:scale-105"
-        >
+          className="px-3 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap transition-all shadow-lg hover:scale-105">
+          
           🚨 Disjoncteur
         </button>
         <button
@@ -1418,8 +1418,8 @@ export function SchematicCanvas({
             const nodeId = addNodeToCanvas('lighting_led');
             if (nodeId) handleNodeClick(nodeId);
           }}
-          className="px-3 py-2 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-500 hover:to-yellow-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap transition-all shadow-lg hover:scale-105"
-        >
+          className="px-3 py-2 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-500 hover:to-yellow-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap transition-all shadow-lg hover:scale-105">
+          
           💡 Éclairage
         </button>
         <button
@@ -1427,109 +1427,109 @@ export function SchematicCanvas({
             const nodeId = addNodeToCanvas('outlets_16a');
             if (nodeId) handleNodeClick(nodeId);
           }}
-          className="px-3 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap transition-all shadow-lg hover:scale-105"
-        >
+          className="px-3 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap transition-all shadow-lg hover:scale-105">
+          
           🔌 Prises
         </button>
       </div>
 
       {/* Dialog édition distance */}
       {
-        editingEdgeId && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+      editingEdgeId &&
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
             <div className="bg-slate-800 p-6 rounded-xl border border-slate-600 shadow-2xl max-w-sm">
               <h3 className="text-white font-bold text-lg mb-4">Éditer distance du câble</h3>
               <input
-                type="number"
-                value={editingDistance}
-                onChange={(e) => setEditingDistance(e.target.value)}
-                placeholder="Distance en mètres"
-                className="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg mb-4 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
-                autoFocus
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') handleDistanceConfirm();
-                  if (e.key === 'Escape') {
-                    setEditingEdgeId(null);
-                    setEditingDistance('');
-                  }
-                }}
-              />
+            type="number"
+            value={editingDistance}
+            onChange={(e) => setEditingDistance(e.target.value)}
+            placeholder="Distance en mètres"
+            className="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg mb-4 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+            autoFocus
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') handleDistanceConfirm();
+              if (e.key === 'Escape') {
+                setEditingEdgeId(null);
+                setEditingDistance('');
+              }
+            }} />
+          
               <div className="flex gap-2">
                 <button
-                  onClick={handleDistanceConfirm}
-                  className="flex-1 px-3 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-semibold rounded-lg transition-all"
-                >
+              onClick={handleDistanceConfirm}
+              className="flex-1 px-3 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-semibold rounded-lg transition-all">
+              
                   ✓ Appliquer
                 </button>
                 <button
-                  onClick={() => {
-                    setEditingEdgeId(null);
-                    setEditingDistance('');
-                  }}
-                  className="flex-1 px-3 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-semibold rounded-lg transition-all"
-                >
+              onClick={() => {
+                setEditingEdgeId(null);
+                setEditingDistance('');
+              }}
+              className="flex-1 px-3 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-semibold rounded-lg transition-all">
+              
                   ✕ Annuler
                 </button>
               </div>
             </div>
           </div>
-        )
+
       }
 
       {/* Dialog édition de nœud */}
       {
-        editingNodeId && nodes.has(editingNodeId) && (() => {
-          const node = nodes.get(editingNodeId)!;
-          const isReceptor = node.type === 'RECEPTOR';
+      editingNodeId && nodes.has(editingNodeId) && (() => {
+        const node = nodes.get(editingNodeId)!;
+        const isReceptor = node.type === 'RECEPTOR';
 
-          return (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+        return (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
               <div className={`bg-slate-800 p-6 rounded-xl border border-slate-600 shadow-2xl ${isReceptor ? 'max-w-4xl max-h-[90vh] overflow-y-auto' : 'max-w-sm'}`}>
                 <h3 className="text-white font-bold text-lg mb-4">
                   Éditer {isReceptor ? 'charge' : 'paramètres'} du nœud
                 </h3>
 
-                {isReceptor ? (
-                  <div className="space-y-4">
+                {isReceptor ?
+              <div className="space-y-4">
                     <ChargeEditor
-                      nodeId={editingNodeId}
-                      charges={graphStore.getCharges(editingNodeId)}
-                      onAddCharge={graphStore.addCharge.bind(graphStore, editingNodeId)}
-                      onUpdateCharge={graphStore.updateCharge.bind(graphStore, editingNodeId)}
-                      onRemoveCharge={graphStore.removeCharge.bind(graphStore, editingNodeId)}
-                      onClose={() => setEditingNodeId(null)}
-                    />
-                  </div>
-                ) : (
-                  <NodeParameterEditor node={node} onClose={() => setEditingNodeId(null)} />
-                )}
+                  nodeId={editingNodeId}
+                  charges={graphStore.getCharges(editingNodeId)}
+                  onAddCharge={graphStore.addCharge.bind(graphStore, editingNodeId)}
+                  onUpdateCharge={graphStore.updateCharge.bind(graphStore, editingNodeId)}
+                  onRemoveCharge={graphStore.removeCharge.bind(graphStore, editingNodeId)}
+                  onClose={() => setEditingNodeId(null)} />
+                
+                  </div> :
 
-                {!isReceptor && (
-                  <div className="flex gap-2">
+              <NodeParameterEditor node={node} onClose={() => setEditingNodeId(null)} />
+              }
+
+                {!isReceptor &&
+              <div className="flex gap-2">
                     <button
-                      onClick={() => setEditingNodeId(null)}
-                      className="flex-1 px-3 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-semibold rounded-lg transition-all"
-                    >
+                  onClick={() => setEditingNodeId(null)}
+                  className="flex-1 px-3 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-semibold rounded-lg transition-all">
+                  
                       ✓ Fermer
                     </button>
                     <button
-                      onClick={() => setEditingNodeId(null)}
-                      className="flex-1 px-3 py-2 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 text-white font-semibold rounded-lg transition-all"
-                    >
+                  onClick={() => setEditingNodeId(null)}
+                  className="flex-1 px-3 py-2 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 text-white font-semibold rounded-lg transition-all">
+                  
                       Annuler
                     </button>
                   </div>
-                )}
+              }
               </div>
-            </div>
-          );
-        })()
+            </div>);
+
+      })()
       }
 
       {/* Dialog édition de câble */}
       {
-        editingEdgeId && edges.has(editingEdgeId) && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+      editingEdgeId && edges.has(editingEdgeId) &&
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
             <div className="bg-slate-800 p-6 rounded-xl border border-slate-600 shadow-2xl max-w-sm">
               <h3 className="text-white font-bold text-lg mb-4">Éditer paramètres du câble</h3>
               <div className="space-y-3 mb-4">
@@ -1537,34 +1537,34 @@ export function SchematicCanvas({
                 <div>
                   <label className="text-slate-300 text-sm font-medium">Section (mm²)</label>
                   <input
-                    type="number"
-                    value={editingEdgeValues.section}
-                    onChange={(e) => setEditingEdgeValues(prev => ({ ...prev, section: parseFloat(e.target.value) || 1.5 }))}
-                    placeholder="Section"
-                    className="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
-                  />
+                type="number"
+                value={editingEdgeValues.section}
+                onChange={(e) => setEditingEdgeValues((prev) => ({ ...prev, section: parseFloat(e.target.value) || 1.5 }))}
+                placeholder="Section"
+                className="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30" />
+              
                 </div>
 
                 {/* Courant (A) */}
                 <div>
                   <label className="text-slate-300 text-sm font-medium">Courant (A)</label>
                   <input
-                    type="number"
-                    value={editingEdgeValues.courant}
-                    onChange={(e) => setEditingEdgeValues(prev => ({ ...prev, courant: parseFloat(e.target.value) || 10 }))}
-                    placeholder="Courant"
-                    className="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
-                  />
+                type="number"
+                value={editingEdgeValues.courant}
+                onChange={(e) => setEditingEdgeValues((prev) => ({ ...prev, courant: parseFloat(e.target.value) || 10 }))}
+                placeholder="Courant"
+                className="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30" />
+              
                 </div>
 
                 {/* Matériau */}
                 <div>
                   <label className="text-slate-300 text-sm font-medium">Matériau</label>
-                  <select
-                    value={editingEdgeValues.materiau}
-                    onChange={(e) => setEditingEdgeValues(prev => ({ ...prev, materiau: e.target.value as 'Cu' | 'Al' }))}
-                    className="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
-                  >
+                  <select title="Sélectionner une option"
+              value={editingEdgeValues.materiau}
+              onChange={(e) => setEditingEdgeValues((prev) => ({ ...prev, materiau: e.target.value as 'Cu' | 'Al' }))}
+              className="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30">
+                
                     <option value="Cu">Cuivre (Cu)</option>
                     <option value="Al">Aluminium (Al)</option>
                   </select>
@@ -1573,46 +1573,46 @@ export function SchematicCanvas({
 
               <div className="flex gap-2">
                 <button
-                  onClick={() => {
-                    // Confirmation avant sauvegarde
-                    const confirmed = window.confirm(
-                      `Confirmer la sauvegarde des propriétés du câble ?\n\n` +
-                      `Section: ${editingEdgeValues.section} mm²\n` +
-                      `Courant: ${editingEdgeValues.courant} A\n` +
-                      `Matériau: ${editingEdgeValues.materiau}\n\n` +
-                      `Les calculs de chute de tension seront mis à jour.`
-                    );
+              onClick={() => {
+                // Confirmation avant sauvegarde
+                const confirmed = window.confirm(
+                  `Confirmer la sauvegarde des propriétés du câble ?\n\n` +
+                  `Section: ${editingEdgeValues.section} mm²\n` +
+                  `Courant: ${editingEdgeValues.courant} A\n` +
+                  `Matériau: ${editingEdgeValues.materiau}\n\n` +
+                  `Les calculs de chute de tension seront mis à jour.`
+                );
 
-                    if (!confirmed) return;
+                if (!confirmed) return;
 
-                    const edge = edges.get(editingEdgeId);
-                    if (edge) {
-                      graphStore.updateEdgeProperties(editingEdgeId, {
-                        ...edge.properties,
-                        section: editingEdgeValues.section,
-                        courant: editingEdgeValues.courant,
-                        materiau: editingEdgeValues.materiau
-                      });
-                    }
-                    setEditingEdgeId(null);
-                  }}
-                  className="flex-1 px-3 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-semibold rounded-lg transition-all"
-                >
+                const edge = edges.get(editingEdgeId);
+                if (edge) {
+                  graphStore.updateEdgeProperties(editingEdgeId, {
+                    ...edge.properties,
+                    section: editingEdgeValues.section,
+                    courant: editingEdgeValues.courant,
+                    materiau: editingEdgeValues.materiau
+                  });
+                }
+                setEditingEdgeId(null);
+              }}
+              className="flex-1 px-3 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 text-white font-semibold rounded-lg transition-all">
+              
                   💾 Sauvegarder
                 </button>
                 <button
-                  onClick={() => setEditingEdgeId(null)}
-                  className="flex-1 px-3 py-2 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 text-white font-semibold rounded-lg transition-all"
-                >
+              onClick={() => setEditingEdgeId(null)}
+              className="flex-1 px-3 py-2 bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 text-white font-semibold rounded-lg transition-all">
+              
                   ❌ Annuler
                 </button>
               </div>
             </div>
           </div>
-        )
+
       }
-    </div>
-  );
+    </div>);
+
 }
 
 export default SchematicCanvas;

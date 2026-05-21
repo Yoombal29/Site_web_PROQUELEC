@@ -2,7 +2,7 @@
  * Layouts/Templates disponibles (comme WordPress theme templates)
  */
 
-import type { LayoutTemplate, PageDesignOptions } from '@/types/PageSystem';
+
 
 export const DEFAULT_DESIGN_OPTIONS: PageDesignOptions = {
   layout: 'default',
@@ -36,28 +36,28 @@ export const LAYOUT_TEMPLATES: Record<string, LayoutTemplate> = {
       sidebar_enabled: false
     },
     sections: [
-      {
-        id: 'hero',
-        name: 'Hero Section',
-        component: 'HeroSection',
-        defaultConfig: { height: 'medium', overlay: 0.3 },
-        editable: true
-      },
-      {
-        id: 'content',
-        name: 'Contenu Principal',
-        component: 'ContentSection',
-        defaultConfig: { width: 'default' },
-        editable: true
-      },
-      {
-        id: 'cta',
-        name: 'Call-to-Action',
-        component: 'CTASection',
-        defaultConfig: { enabled: true },
-        editable: true
-      }
-    ]
+    {
+      id: 'hero',
+      name: 'Hero Section',
+      component: 'HeroSection',
+      defaultConfig: { height: 'medium', overlay: 0.3 },
+      editable: true
+    },
+    {
+      id: 'content',
+      name: 'Contenu Principal',
+      component: 'ContentSection',
+      defaultConfig: { width: 'default' },
+      editable: true
+    },
+    {
+      id: 'cta',
+      name: 'Call-to-Action',
+      component: 'CTASection',
+      defaultConfig: { enabled: true },
+      editable: true
+    }]
+
   },
 
   landing: {
@@ -73,35 +73,35 @@ export const LAYOUT_TEMPLATES: Record<string, LayoutTemplate> = {
       sidebar_enabled: false
     },
     sections: [
-      {
-        id: 'hero',
-        name: 'Hero Grand Format',
-        component: 'FullscreenHero',
-        defaultConfig: { height: 'fullscreen' },
-        editable: true
-      },
-      {
-        id: 'benefits',
-        name: 'Avantages',
-        component: 'BenefitsSection',
-        defaultConfig: { columns: 3 },
-        editable: true
-      },
-      {
-        id: 'testimonials',
-        name: 'Témoignages',
-        component: 'TestimonialsSection',
-        defaultConfig: { count: 3 },
-        editable: true
-      },
-      {
-        id: 'cta_final',
-        name: 'CTA Final',
-        component: 'CTASection',
-        defaultConfig: { style: 'prominent' },
-        editable: true
-      }
-    ]
+    {
+      id: 'hero',
+      name: 'Hero Grand Format',
+      component: 'FullscreenHero',
+      defaultConfig: { height: 'fullscreen' },
+      editable: true
+    },
+    {
+      id: 'benefits',
+      name: 'Avantages',
+      component: 'BenefitsSection',
+      defaultConfig: { columns: 3 },
+      editable: true
+    },
+    {
+      id: 'testimonials',
+      name: 'Témoignages',
+      component: 'TestimonialsSection',
+      defaultConfig: { count: 3 },
+      editable: true
+    },
+    {
+      id: 'cta_final',
+      name: 'CTA Final',
+      component: 'CTASection',
+      defaultConfig: { style: 'prominent' },
+      editable: true
+    }]
+
   },
 
   blog: {
@@ -117,35 +117,35 @@ export const LAYOUT_TEMPLATES: Record<string, LayoutTemplate> = {
       sidebar_position: 'right'
     },
     sections: [
-      {
-        id: 'hero',
-        name: 'En-tête Article',
-        component: 'ArticleHeader',
-        defaultConfig: { showMeta: true },
-        editable: true
-      },
-      {
-        id: 'toc',
-        name: 'Table des Matières',
-        component: 'TableOfContents',
-        defaultConfig: { enabled: true },
-        editable: true
-      },
-      {
-        id: 'content',
-        name: 'Contenu Article',
-        component: 'ArticleContent',
-        defaultConfig: { width: 'default' },
-        editable: true
-      },
-      {
-        id: 'sidebar',
-        name: 'Sidebar',
-        component: 'Sidebar',
-        defaultConfig: { width: 'sidebar' },
-        editable: false
-      }
-    ]
+    {
+      id: 'hero',
+      name: 'En-tête Article',
+      component: 'ArticleHeader',
+      defaultConfig: { showMeta: true },
+      editable: true
+    },
+    {
+      id: 'toc',
+      name: 'Table des Matières',
+      component: 'TableOfContents',
+      defaultConfig: { enabled: true },
+      editable: true
+    },
+    {
+      id: 'content',
+      name: 'Contenu Article',
+      component: 'ArticleContent',
+      defaultConfig: { width: 'default' },
+      editable: true
+    },
+    {
+      id: 'sidebar',
+      name: 'Sidebar',
+      component: 'Sidebar',
+      defaultConfig: { width: 'sidebar' },
+      editable: false
+    }]
+
   },
 
   gallery: {
@@ -160,21 +160,21 @@ export const LAYOUT_TEMPLATES: Record<string, LayoutTemplate> = {
       sidebar_enabled: false
     },
     sections: [
-      {
-        id: 'hero',
-        name: 'En-tête',
-        component: 'SimpleHeader',
-        defaultConfig: {},
-        editable: true
-      },
-      {
-        id: 'gallery',
-        name: 'Galerie d\'Images',
-        component: 'ImageGallery',
-        defaultConfig: { columns: 3, style: 'grid' },
-        editable: true
-      }
-    ]
+    {
+      id: 'hero',
+      name: 'En-tête',
+      component: 'SimpleHeader',
+      defaultConfig: {},
+      editable: true
+    },
+    {
+      id: 'gallery',
+      name: 'Galerie d\'Images',
+      component: 'ImageGallery',
+      defaultConfig: { columns: 3, style: 'grid' },
+      editable: true
+    }]
+
   },
 
   contact: {
@@ -189,28 +189,28 @@ export const LAYOUT_TEMPLATES: Record<string, LayoutTemplate> = {
       sidebar_enabled: false
     },
     sections: [
-      {
-        id: 'hero',
-        name: 'En-tête',
-        component: 'SimpleHeader',
-        defaultConfig: {},
-        editable: true
-      },
-      {
-        id: 'info_contact',
-        name: 'Informations Contact',
-        component: 'ContactInfo',
-        defaultConfig: { columns: 3 },
-        editable: true
-      },
-      {
-        id: 'form',
-        name: 'Formulaire Contact',
-        component: 'ContactForm',
-        defaultConfig: { fields: ['name', 'email', 'message'] },
-        editable: true
-      }
-    ]
+    {
+      id: 'hero',
+      name: 'En-tête',
+      component: 'SimpleHeader',
+      defaultConfig: {},
+      editable: true
+    },
+    {
+      id: 'info_contact',
+      name: 'Informations Contact',
+      component: 'ContactInfo',
+      defaultConfig: { columns: 3 },
+      editable: true
+    },
+    {
+      id: 'form',
+      name: 'Formulaire Contact',
+      component: 'ContactForm',
+      defaultConfig: { fields: ['name', 'email', 'message'] },
+      editable: true
+    }]
+
   },
 
   pricing: {
@@ -225,28 +225,28 @@ export const LAYOUT_TEMPLATES: Record<string, LayoutTemplate> = {
       sidebar_enabled: false
     },
     sections: [
-      {
-        id: 'hero',
-        name: 'En-tête',
-        component: 'SimpleHeader',
-        defaultConfig: {},
-        editable: true
-      },
-      {
-        id: 'pricing_cards',
-        name: 'Cartes Tarifaires',
-        component: 'PricingCards',
-        defaultConfig: { columns: 3 },
-        editable: true
-      },
-      {
-        id: 'faq',
-        name: 'FAQ',
-        component: 'FAQSection',
-        defaultConfig: {},
-        editable: true
-      }
-    ]
+    {
+      id: 'hero',
+      name: 'En-tête',
+      component: 'SimpleHeader',
+      defaultConfig: {},
+      editable: true
+    },
+    {
+      id: 'pricing_cards',
+      name: 'Cartes Tarifaires',
+      component: 'PricingCards',
+      defaultConfig: { columns: 3 },
+      editable: true
+    },
+    {
+      id: 'faq',
+      name: 'FAQ',
+      component: 'FAQSection',
+      defaultConfig: {},
+      editable: true
+    }]
+
   },
 
   services: {
@@ -261,28 +261,28 @@ export const LAYOUT_TEMPLATES: Record<string, LayoutTemplate> = {
       sidebar_enabled: false
     },
     sections: [
-      {
-        id: 'hero',
-        name: 'En-tête',
-        component: 'SimpleHeader',
-        defaultConfig: {},
-        editable: true
-      },
-      {
-        id: 'services_grid',
-        name: 'Grille de Services',
-        component: 'ServicesGrid',
-        defaultConfig: { columns: 3 },
-        editable: true
-      },
-      {
-        id: 'features',
-        name: 'Caractéristiques',
-        component: 'FeaturesSection',
-        defaultConfig: {},
-        editable: true
-      }
-    ]
+    {
+      id: 'hero',
+      name: 'En-tête',
+      component: 'SimpleHeader',
+      defaultConfig: {},
+      editable: true
+    },
+    {
+      id: 'services_grid',
+      name: 'Grille de Services',
+      component: 'ServicesGrid',
+      defaultConfig: { columns: 3 },
+      editable: true
+    },
+    {
+      id: 'features',
+      name: 'Caractéristiques',
+      component: 'FeaturesSection',
+      defaultConfig: {},
+      editable: true
+    }]
+
   },
 
   testimonials: {
@@ -297,21 +297,21 @@ export const LAYOUT_TEMPLATES: Record<string, LayoutTemplate> = {
       sidebar_enabled: false
     },
     sections: [
-      {
-        id: 'hero',
-        name: 'En-tête',
-        component: 'SimpleHeader',
-        defaultConfig: {},
-        editable: true
-      },
-      {
-        id: 'testimonials_carousel',
-        name: 'Carrousel Témoignages',
-        component: 'TestimonialsCarousel',
-        defaultConfig: { itemsPerPage: 3 },
-        editable: true
-      }
-    ]
+    {
+      id: 'hero',
+      name: 'En-tête',
+      component: 'SimpleHeader',
+      defaultConfig: {},
+      editable: true
+    },
+    {
+      id: 'testimonials_carousel',
+      name: 'Carrousel Témoignages',
+      component: 'TestimonialsCarousel',
+      defaultConfig: { itemsPerPage: 3 },
+      editable: true
+    }]
+
   },
 
   team: {
@@ -326,21 +326,21 @@ export const LAYOUT_TEMPLATES: Record<string, LayoutTemplate> = {
       sidebar_enabled: false
     },
     sections: [
-      {
-        id: 'hero',
-        name: 'En-tête',
-        component: 'SimpleHeader',
-        defaultConfig: {},
-        editable: true
-      },
-      {
-        id: 'team_members',
-        name: 'Membres de l\'Équipe',
-        component: 'TeamGrid',
-        defaultConfig: { columns: 3 },
-        editable: true
-      }
-    ]
+    {
+      id: 'hero',
+      name: 'En-tête',
+      component: 'SimpleHeader',
+      defaultConfig: {},
+      editable: true
+    },
+    {
+      id: 'team_members',
+      name: 'Membres de l\'Équipe',
+      component: 'TeamGrid',
+      defaultConfig: { columns: 3 },
+      editable: true
+    }]
+
   },
 
   portfolio: {
@@ -355,21 +355,21 @@ export const LAYOUT_TEMPLATES: Record<string, LayoutTemplate> = {
       sidebar_enabled: false
     },
     sections: [
-      {
-        id: 'hero',
-        name: 'En-tête',
-        component: 'SimpleHeader',
-        defaultConfig: {},
-        editable: true
-      },
-      {
-        id: 'portfolio_grid',
-        name: 'Grille de Projets',
-        component: 'PortfolioGrid',
-        defaultConfig: { columns: 3, filter: true },
-        editable: true
-      }
-    ]
+    {
+      id: 'hero',
+      name: 'En-tête',
+      component: 'SimpleHeader',
+      defaultConfig: {},
+      editable: true
+    },
+    {
+      id: 'portfolio_grid',
+      name: 'Grille de Projets',
+      component: 'PortfolioGrid',
+      defaultConfig: { columns: 3, filter: true },
+      editable: true
+    }]
+
   }
 };
 

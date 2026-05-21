@@ -2,14 +2,14 @@ import React, { createContext, useContext, useEffect } from 'react';
 import { useActiveTheme } from '@/hooks/useDynamicSystems';
 
 interface ThemeContextType {
-  theme: any;
+  theme: unknown;
   isLoading: boolean;
-  error: any;
+  error: unknown;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }: {children: React.ReactNode;}) {
   const { data: theme, isLoading, error } = useActiveTheme();
 
   useEffect(() => {
@@ -50,8 +50,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <ThemeContext.Provider value={{ theme, isLoading, error }}>
       {children}
-    </ThemeContext.Provider>
-  );
+    </ThemeContext.Provider>);
+
 }
 
 export function useTheme() {
@@ -80,14 +80,14 @@ export function useThemeValue(key: string, defaultValue?: string) {
 }
 
 // Composant pour appliquer des styles dynamiques
-export function DynamicStyle({ children, style: customStyle }: {
-  children: React.ReactNode;
-  style?: Record<string, any>;
-}) {
+export function DynamicStyle({ children, style: customStyle
+
+
+}: {children: React.ReactNode;style?: Record<string, unknown>;}) {
   const { theme } = useTheme();
 
   const dynamicStyle = {
-    ...customStyle,
+    ...customStyle
   };
 
   // Appliquer les styles du thème si disponible

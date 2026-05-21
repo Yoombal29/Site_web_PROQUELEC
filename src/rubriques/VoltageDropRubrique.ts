@@ -6,19 +6,19 @@
  */
 
 import type {
-  RubriqueSchema,
-  CalculationEngine,
-  CalculationResult,
-  ValidationResult,
-  ObjectBehavior,
-  Report,
-  ObjectDefinition,
-  ObjectParameter,
-  Graph,
-} from '@/types/Rubrique';
-import type { GraphNode, GraphEdge, GraphStore } from '@/stores/GraphStore';
+
+  CalculationEngine } from
+
+
+
+
+
+
+
+'@/types/Rubrique';
+import type { GraphNode, GraphStore } from '@/stores/GraphStore';
 import { OBJECT_DEFINITIONS } from '@/constants/ObjectLibrary';
-import { NetworkEngine, NetworkResult } from '@/engines/NetworkEngine';
+import { NetworkEngine } from '@/engines/NetworkEngine';
 
 /**
  * Génère un nom lisible pour un nœud basé sur son type
@@ -26,16 +26,16 @@ import { NetworkEngine, NetworkResult } from '@/engines/NetworkEngine';
 function getReadableNodeName(node: GraphNode, graph: Graph): string {
   // Compteurs par type pour numéroter séquentiellement
   const typeCounters: Record<string, number> = {};
-  
+
   // Compter tous les nœuds du même type avant celui-ci
   for (const [id, otherNode] of graph.nodes) {
     if (otherNode.type === node.type && id !== node.id) {
       typeCounters[node.type] = (typeCounters[node.type] || 0) + 1;
     }
   }
-  
+
   const count = (typeCounters[node.type] || 0) + 1;
-  
+
   // Mapping des types vers des noms lisibles
   const typeNames: Record<string, string> = {
     'SOURCE': 'Source',
@@ -49,7 +49,7 @@ function getReadableNodeName(node: GraphNode, graph: Graph): string {
     'GROUND': 'Terre',
     'CABLE': 'Câble'
   };
-  
+
   const baseName = typeNames[node.type] || 'Noeud';
   return `${baseName}${count}`;
 }
@@ -65,7 +65,7 @@ class VoltageDropEngine implements CalculationEngine {
     supportsBatchCalculation: true,
     supportsScenarios: false,
     supportsComparison: true,
-    estimatedCalculationTime: 100,
+    estimatedCalculationTime: 100
   };
 
   /**
@@ -77,25 +77,25 @@ class VoltageDropEngine implements CalculationEngine {
 
     // Au moins une source
     const sources = Array.from(graph.nodes.values()).filter((n: GraphNode) =>
-      n.type === 'SOURCE' || (n.id as string).includes('source')
+    n.type === 'SOURCE' || (n.id as string).includes('source')
     );
     if (sources.length === 0) {
       errors.push({
         id: 'NO_SOURCE',
         severity: 'ERROR',
-        message: 'Au moins une source est requise',
+        message: 'Au moins une source est requise'
       });
     }
 
     // Au moins une charge
     const loads = Array.from(graph.nodes.values()).filter((n: GraphNode) =>
-      n.type === 'RECEPTOR' || (n.id as string).includes('load')
+    n.type === 'RECEPTOR' || (n.id as string).includes('load')
     );
     if (loads.length === 0) {
       warnings.push({
         id: 'NO_LOAD',
         severity: 'WARNING',
-        message: 'Aucune charge détectée',
+        message: 'Aucune charge détectée'
       });
     }
 
@@ -106,7 +106,7 @@ class VoltageDropEngine implements CalculationEngine {
           id: `INCOMPLETE_NODE_${node.id}`,
           severity: 'WARNING',
           message: `Nœud ${getReadableNodeName(node, graph)} : paramètres incomplets (section/longueur)`,
-          nodeId: node.id,
+          nodeId: node.id
         });
       }
     }
@@ -115,7 +115,7 @@ class VoltageDropEngine implements CalculationEngine {
       isValid: errors.length === 0,
       errors,
       warnings,
-      score: Math.max(0, 100 - errors.length * 20 - warnings.length * 10),
+      score: Math.max(0, 100 - errors.length * 20 - warnings.length * 10)
     };
   }
 
@@ -125,7 +125,7 @@ class VoltageDropEngine implements CalculationEngine {
   calculate(graph: Graph): CalculationResult {
     try {
       // Utiliser le NetworkEngine pour calcul complet de réseau
-      const networkResult: NetworkResult = NetworkEngine.calculateNetwork(graph as any as GraphStore);
+      const networkResult: NetworkResult = NetworkEngine.calculateNetwork(graph as unknown as GraphStore);
 
       const metrics = [];
       const details = {
@@ -144,7 +144,7 @@ class VoltageDropEngine implements CalculationEngine {
         value: networkResult.chuteMaxPercent,
         unit: '%',
         status: networkResult.chuteMaxPercent <= 3 ? 'OK' : networkResult.chuteMaxPercent <= 5 ? 'WARNING' : 'ERROR',
-        normative: 'NF C 15-100 Art. 523 : ≤ 3% (éclairage) / ≤ 5% (autres)',
+        normative: 'NF C 15-100 Art. 523 : ≤ 3% (éclairage) / ≤ 5% (autres)'
       });
 
       metrics.push({
@@ -152,21 +152,21 @@ class VoltageDropEngine implements CalculationEngine {
         value: networkResult.chuteMax,
         unit: 'V',
         status: networkResult.chuteMax <= 11.5 ? 'OK' : networkResult.chuteMax <= 19.2 ? 'WARNING' : 'ERROR',
-        normative: '230V × 5% = 11.5V limite / 230V × 8.3% = 19.2V avertissement',
+        normative: '230V × 5% = 11.5V limite / 230V × 8.3% = 19.2V avertissement'
       });
 
       metrics.push({
         name: 'Nombre de chemins',
         value: networkResult.chemins.length,
         unit: 'chemins',
-        status: 'OK',
+        status: 'OK'
       });
 
       metrics.push({
         name: 'Nombre de tronçons',
         value: networkResult.tronçonsCalcules.length,
         unit: 'tronçons',
-        status: 'OK',
+        status: 'OK'
       });
 
       // Métriques par chemin critique
@@ -175,7 +175,7 @@ class VoltageDropEngine implements CalculationEngine {
           name: 'Longueur chemin critique',
           value: networkResult.cheminPlusDefavorise.longueurTotale,
           unit: 'm',
-          status: networkResult.cheminPlusDefavorise.longueurTotale <= 50 ? 'OK' : 'WARNING',
+          status: networkResult.cheminPlusDefavorise.longueurTotale <= 50 ? 'OK' : 'WARNING'
         });
       }
 
@@ -185,7 +185,7 @@ class VoltageDropEngine implements CalculationEngine {
         metrics,
         verdict: networkResult.verdictGlobal === 'AVERTISSEMENT' ? 'NON_CONFORME' : networkResult.verdictGlobal,
         details,
-        graphHash: graph.getHash(),
+        graphHash: graph.getHash()
       };
 
     } catch (error) {
@@ -200,11 +200,11 @@ class VoltageDropEngine implements CalculationEngine {
           value: 0,
           unit: 'N/A',
           status: 'ERROR',
-          normative: 'Calcul impossible - vérifier la topologie du réseau',
+          normative: 'Calcul impossible - vérifier la topologie du réseau'
         }],
         verdict: 'NON_CONFORME',
         details: { error: error.message },
-        graphHash: graph.getHash(),
+        graphHash: graph.getHash()
       };
     }
   }
@@ -213,7 +213,7 @@ class VoltageDropEngine implements CalculationEngine {
    * Générer un rapport détaillé selon cahier des câbles
    */
   generateReport(result: CalculationResult): Report {
-    const details = result.details as any;
+    const details = result.details as unknown;
 
     // Vérifier si c'est un résultat NetworkResult
     if (details.error) {
@@ -225,8 +225,8 @@ class VoltageDropEngine implements CalculationEngine {
         verdict: 'NON_CONFORME',
         sections: [{
           title: 'Erreur',
-          content: details.error,
-        }],
+          content: details.error
+        }]
       };
     }
 
@@ -239,13 +239,13 @@ class VoltageDropEngine implements CalculationEngine {
       summary: `Réseau analysé: ${networkResult.chemins.length} chemins, chute max: ${networkResult.chuteMaxPercent.toFixed(2)}%`,
       verdict: networkResult.verdictGlobal === 'AVERTISSEMENT' ? 'NON_CONFORME' : networkResult.verdictGlobal,
       sections: [
-        {
-          title: 'Schéma logique du réseau',
-          content: this.generateNetworkSchema(networkResult),
-        },
-        {
-          title: 'Résumé exécutif',
-          content: `Analyse complète du réseau selon NF C 15-100 (méthode du cahier des câbles).
+      {
+        title: 'Schéma logique du réseau',
+        content: this.generateNetworkSchema(networkResult)
+      },
+      {
+        title: 'Résumé exécutif',
+        content: `Analyse complète du réseau selon NF C 15-100 (méthode du cahier des câbles).
 
 **Verdict Global:** ${networkResult.verdictGlobal === 'CONFORME' ? '✅ CONFORME' : networkResult.verdictGlobal === 'AVERTISSEMENT' ? '⚠️ AVERTISSEMENT' : '❌ NON CONFORME'}
 
@@ -257,34 +257,34 @@ class VoltageDropEngine implements CalculationEngine {
 **Statistiques:**
 - Nombre de chemins: ${networkResult.chemins.length}
 - Nombre de tronçons: ${networkResult.tronçonsCalcules.length}
-- Chute maximale: ${networkResult.chuteMaxPercent.toFixed(2)}%`,
-        },
-        {
-          title: 'Tableau "Cahier des câbles"',
-          content: 'Détail de chaque tronçon avec calculs normatifs',
-          data: this.generateCableBookTable(networkResult.tronçonsCalcules),
-        },
-        {
-          title: 'Analyse par chemin',
-          content: 'Chutes de tension cumulées le long de chaque chemin électrique',
-          data: this.generatePathsAnalysis(networkResult.chemins),
-        },
-        {
-          title: 'Recommandations techniques',
-          content: networkResult.recommandations.length > 0
-            ? networkResult.recommandations.join('\n\n')
-            : '✅ Aucune recommandation - réseau conforme',
-        },
-        {
-          title: 'Références normatives',
-          content: `- NF C 15-100 Article 523 : Chute de tension admissible
+- Chute maximale: ${networkResult.chuteMaxPercent.toFixed(2)}%`
+      },
+      {
+        title: 'Tableau "Cahier des câbles"',
+        content: 'Détail de chaque tronçon avec calculs normatifs',
+        data: this.generateCableBookTable(networkResult.tronçonsCalcules)
+      },
+      {
+        title: 'Analyse par chemin',
+        content: 'Chutes de tension cumulées le long de chaque chemin électrique',
+        data: this.generatePathsAnalysis(networkResult.chemins)
+      },
+      {
+        title: 'Recommandations techniques',
+        content: networkResult.recommandations.length > 0 ?
+        networkResult.recommandations.join('\n\n') :
+        '✅ Aucune recommandation - réseau conforme'
+      },
+      {
+        title: 'Références normatives',
+        content: `- NF C 15-100 Article 523 : Chute de tension admissible
   • ≤ 3% pour circuits d'éclairage (entre source et point d'utilisation)
   • ≤ 5% pour autres circuits (entre source et point d'utilisation)
 - NF C 15-100 Article 525 : Coordination des protections
 - Méthodologie : Calcul aval → amont, cumul le long des chemins
-- Référence tension : 230V monophasé / 400V triphasé`,
-        },
-      ],
+- Référence tension : 230V monophasé / 400V triphasé`
+      }]
+
     };
   }
 
@@ -295,7 +295,7 @@ class VoltageDropEngine implements CalculationEngine {
     let schema = 'SCHÉMA LOGIQUE DU RÉSEAU\n\n';
 
     for (const chemin of networkResult.chemins) {
-      const nodes = chemin.nodes.map(id => id.replace('node_', 'N')).join(' → ');
+      const nodes = chemin.nodes.map((id) => id.replace('node_', 'N')).join(' → ');
       schema += `Chemin ${chemin.id.replace('path_', '')}:\n`;
       schema += `${nodes}\n`;
       schema += `Longueur: ${chemin.longueurTotale.toFixed(1)}m | Courant: ${chemin.courant.toFixed(1)}A | Chute: ${chemin.chuteTotalePercent.toFixed(2)}%\n\n`;
@@ -307,8 +307,8 @@ class VoltageDropEngine implements CalculationEngine {
   /**
    * Générer le tableau "Cahier des câbles"
    */
-  private generateCableBookTable(tronçons: any[]): any[] {
-    return tronçons.map(tronçon => ({
+  private generateCableBookTable(tronçons: unknown[]): unknown[] {
+    return tronçons.map((tronçon) => ({
       'Tronçon': tronçon.name,
       'Nœud départ': tronçon.from,
       'Nœud arrivée': tronçon.to,
@@ -325,8 +325,8 @@ class VoltageDropEngine implements CalculationEngine {
   /**
    * Générer l'analyse par chemin
    */
-  private generatePathsAnalysis(chemins: any[]): any[] {
-    return chemins.map(chemin => ({
+  private generatePathsAnalysis(chemins: unknown[]): unknown[] {
+    return chemins.map((chemin) => ({
       'Chemin': chemin.id,
       'Longueur totale (m)': chemin.longueurTotale.toFixed(1),
       'Courant (A)': chemin.courant.toFixed(1),
@@ -347,7 +347,7 @@ export const RUBRIQUE_VOLTAGE_DROP: RubriqueSchema = {
   id: 'VOLTAGE_DROP',
   name: '📐 Calcul de Chute de Tension',
   description:
-    'Calcul normatif de chute de tension selon NF C 15-100 Articles 523/525. Dimensionnement automatique des sections.',
+  'Calcul normatif de chute de tension selon NF C 15-100 Articles 523/525. Dimensionnement automatique des sections.',
   version: '1.0.0',
   displayPriority: 1,
   maturity: 'STABLE',
@@ -358,52 +358,52 @@ export const RUBRIQUE_VOLTAGE_DROP: RubriqueSchema = {
 
   // Objets disponibles
   getAvailableObjects(): ObjectDefinition[] {
-    return Array.from(OBJECT_DEFINITIONS as any).map((v: any) => v);
+    return Array.from(OBJECT_DEFINITIONS as unknown).map((v: unknown) => v);
   },
 
   getObjectBehavior(objectId: string): ObjectBehavior | null {
-    const def = (OBJECT_DEFINITIONS as any).get?.(objectId);
+    const def = (OBJECT_DEFINITIONS as unknown).get?.(objectId);
     if (!def) return null;
 
     // Comportement par catégorie
     const baseCategory = def.category || 'COMPONENT';
 
     let role: 'SOURCE' | 'PROTECTION' | 'LOAD' | 'CONNECTION' | 'OTHER' = 'OTHER';
-    if (baseCategory === 'SOURCE') role = 'SOURCE';
-    else if (baseCategory.includes('BREAKER') || baseCategory.includes('DISJONCTEUR'))
-      role = 'PROTECTION';
-    else if (baseCategory === 'LOAD') role = 'LOAD';
+    if (baseCategory === 'SOURCE') role = 'SOURCE';else
+    if (baseCategory.includes('BREAKER') || baseCategory.includes('DISJONCTEUR'))
+    role = 'PROTECTION';else
+    if (baseCategory === 'LOAD') role = 'LOAD';
 
     return {
       objectId,
       rubriquId: 'VOLTAGE_DROP',
       visibleParams: [
-        'section', // Section du câble
-        'length', // Longueur
-        'current', // Courant nominal
-        'material', // Matériau (Cu/Al)
+      'section', // Section du câble
+      'length', // Longueur
+      'current', // Courant nominal
+      'material' // Matériau (Cu/Al)
       ],
       requiredParams: ['section', 'length'],
       validators: [
-        (node: GraphNode) => {
-          if (!node.params?.section || node.params.section <= 0) {
-            return {
-              id: 'INVALID_SECTION',
-              severity: 'ERROR',
-              message: `Nœud ${getReadableNodeName(node, graph)} : Section invalide`,
-              nodeId: node.id,
-            };
-          }
-          return null;
-        },
-      ],
+      (node: GraphNode) => {
+        if (!node.params?.section || node.params.section <= 0) {
+          return {
+            id: 'INVALID_SECTION',
+            severity: 'ERROR',
+            message: `Nœud ${getReadableNodeName(node, graph)} : Section invalide`,
+            nodeId: node.id
+          };
+        }
+        return null;
+      }],
+
       contributes_to_calculation: true,
-      calculation_role: role,
+      calculation_role: role
     };
   },
 
   isObjectAllowed(objectId: string): boolean {
-    return (OBJECT_DEFINITIONS as any).has?.(objectId) ?? true;
+    return (OBJECT_DEFINITIONS as unknown).has?.(objectId) ?? true;
   },
 
   // Validations
@@ -417,14 +417,14 @@ export const RUBRIQUE_VOLTAGE_DROP: RubriqueSchema = {
       return {
         isValid: false,
         errors: [
-          {
-            id: 'UNKNOWN_OBJECT',
-            severity: 'ERROR',
-            message: `Objet ${node.type} non reconnu`,
-            nodeId: node.id,
-          },
-        ],
-        warnings: [],
+        {
+          id: 'UNKNOWN_OBJECT',
+          severity: 'ERROR',
+          message: `Objet ${node.type} non reconnu`,
+          nodeId: node.id
+        }],
+
+        warnings: []
       };
     }
 
@@ -442,7 +442,7 @@ export const RUBRIQUE_VOLTAGE_DROP: RubriqueSchema = {
           id: `MISSING_PARAM_${paramKey}`,
           severity: 'ERROR',
           message: `Nœud ${getReadableNodeName(node, graph)} : Paramètre requis manquant : ${paramKey}`,
-          nodeId: node.id,
+          nodeId: node.id
         });
       }
     }
@@ -450,7 +450,7 @@ export const RUBRIQUE_VOLTAGE_DROP: RubriqueSchema = {
     return {
       isValid: errors.length === 0,
       errors,
-      warnings,
+      warnings
     };
   },
 
@@ -459,14 +459,14 @@ export const RUBRIQUE_VOLTAGE_DROP: RubriqueSchema = {
       return {
         isValid: false,
         errors: [
-          {
-            id: 'INVALID_LENGTH',
-            severity: 'ERROR',
-            message: `Câble ${edge.id} : Longueur invalide`,
-            edgeId: edge.id,
-          },
-        ],
-        warnings: [],
+        {
+          id: 'INVALID_LENGTH',
+          severity: 'ERROR',
+          message: `Câble ${edge.id} : Longueur invalide`,
+          edgeId: edge.id
+        }],
+
+        warnings: []
       };
     }
     return { isValid: true, errors: [], warnings: [] };
@@ -485,49 +485,49 @@ export const RUBRIQUE_VOLTAGE_DROP: RubriqueSchema = {
   exportReport(report: Report, format: 'PDF' | 'HTML' | 'JSON'): Blob {
     const content = JSON.stringify(report, null, 2);
     return new Blob([content], {
-      type: format === 'JSON' ? 'application/json' : 'text/plain',
+      type: format === 'JSON' ? 'application/json' : 'text/plain'
     });
   },
 
   // Références normatives
   normativeReferences: [
-    {
-      standard: 'NF C 15-100',
-      articles: ['523', '525'],
-      description: 'Chute de tension admissible et coordination des protections',
-    },
-    {
-      standard: 'NF C 13-100',
-      articles: ['8.3'],
-      description: 'Calcul de chute de tension en courant alternatif',
-    },
-  ],
+  {
+    standard: 'NF C 15-100',
+    articles: ['523', '525'],
+    description: 'Chute de tension admissible et coordination des protections'
+  },
+  {
+    standard: 'NF C 13-100',
+    articles: ['8.3'],
+    description: 'Calcul de chute de tension en courant alternatif'
+  }],
+
 
   // UI
   getCustomComponents() {
     return {
-      // À implémenter ultérieurement
-    };
-  },
 
+
+      // À implémenter ultérieurement
+    };},
   getTheme() {
     return {
       nodeColors: {
         SOURCE: '#3B82F6',
         PROTECTION: '#F59E0B',
         LOAD: '#EF4444',
-        CONNECTION: '#8B5CF6',
+        CONNECTION: '#8B5CF6'
       },
       edgeColors: {
         CABLE_CU: '#6B7280',
-        CABLE_AL: '#9CA3AF',
+        CABLE_AL: '#9CA3AF'
       },
-      accentColor: '#3B82F6',
+      accentColor: '#3B82F6'
     };
   },
 
   supportsScenarios: false,
-  supportsComparison: false,
+  supportsComparison: false
 };
 
 export default RUBRIQUE_VOLTAGE_DROP;

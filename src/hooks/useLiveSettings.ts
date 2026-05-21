@@ -1,6 +1,6 @@
 
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+
 import { useEffect } from "react";
 
 interface LiveSettings {
@@ -21,30 +21,46 @@ interface LiveSettings {
   background_color?: string;
   text_color?: string;
   font_family?: string;
+  footer_background_url?: string;
+  audience_section_title?: string;
+  audience_section_subtitle?: string;
+  audience_title_electrician?: string;
+  audience_subtitle_electrician?: string;
+  audience_desc_electrician?: string;
+  audience_title_company?: string;
+  audience_subtitle_company?: string;
+  audience_desc_company?: string;
+  audience_title_member?: string;
+  audience_subtitle_member?: string;
+  audience_desc_member?: string;
+  cta_primary_text?: string;
+  cta_primary_url?: string;
+  cta_secondary_text?: string;
+  cta_secondary_url?: string;
+  page_sections?: Record<string, unknown>;
 }
 
 const fetchLiveSettings = async (): Promise<LiveSettings> => {
   // console.log('Récupération des paramètres en temps réel...');
-  
-  // Récupérer les paramètres du site
-  const { data: siteData, error: siteError } = await supabase
-    .from("site_settings")
-    .select("*")
-    .single();
 
-  if (siteError) {
-    console.error('Erreur paramètres site:', siteError);
-  }
+  let siteData = null;
+  let themeData = null;
 
-  // Récupérer les paramètres de thème
-  const { data: themeData, error: themeError } = await supabase
-    .from("theme_settings")
-    .select("*")
-    .single();
+  try {
+    const siteRes = await fetch('/api/site-settings');
+    if (siteRes.ok) {
+      const rawSite = await siteRes.json();
+      siteData = Array.isArray(rawSite) ? rawSite[0] : rawSite;
+    }
+  } catch (e) {console.error('Error fetching site settings', e);}
 
-  if (themeError) {
-    console.error('Erreur paramètres thème:', themeError);
-  }
+  try {
+    const themeRes = await fetch('/api/theme-settings');
+    if (themeRes.ok) {
+      const rawTheme = await themeRes.json();
+      themeData = Array.isArray(rawTheme) ? rawTheme[0] : rawTheme;
+    }
+  } catch (e) {console.error('Error fetching theme settings', e);}
 
   // Combiner les données
   const settings = {
@@ -65,6 +81,25 @@ const fetchLiveSettings = async (): Promise<LiveSettings> => {
     background_color: themeData?.background_color || "#f8f9fa",
     text_color: themeData?.text_color || "#333333",
     font_family: themeData?.font_family || "Roboto",
+    footer_background_url: themeData?.footer_background_url,
+    // CTA mapping
+    cta_primary_text: siteData?.cta_primary_text,
+    cta_primary_url: siteData?.cta_primary_url,
+    cta_secondary_text: siteData?.cta_secondary_text,
+    cta_secondary_url: siteData?.cta_secondary_url,
+    // Audience mapping
+    audience_section_title: siteData?.audience_section_title || 'Des Services Sur-Mesure',
+    audience_section_subtitle: siteData?.audience_section_subtitle || "Que vous soyez indépendant, une entreprise ou un expert membre, PROQUELEC vous accompagne avec des outils dédiés.",
+    audience_title_electrician: siteData?.audience_title_electrician || 'Électriciens',
+    audience_subtitle_electrician: siteData?.audience_subtitle_electrician || 'Indépendants & Artisans',
+    audience_desc_electrician: siteData?.audience_desc_electrician || 'Accédez aux normes gratuites, nos calculateurs pro et le générateur de schémas pour vos dossiers.',
+    audience_title_company: siteData?.audience_title_company || 'Professionnels',
+    audience_subtitle_company: siteData?.audience_subtitle_company || 'Entreprises & Installateurs',
+    audience_desc_company: siteData?.audience_desc_company || "Gérez vos chantiers, vos certifications et bénéficiez d'une visibilité accrue sur l'annuaire national.",
+    audience_title_member: siteData?.audience_title_member || 'Membres',
+    audience_subtitle_member: siteData?.audience_subtitle_member || 'Association & Experts',
+    audience_desc_member: siteData?.audience_desc_member || "Participez à la vie de l'institution, bénéficiez d'un support prioritaire et de la veille normative en avant-première.",
+    page_sections: siteData?.page_sections || {}
   };
 
   // console.log('Paramètres récupérés:', settings);
@@ -76,34 +111,34 @@ export function useLiveSettings() {
     queryKey: ["liveSettings"],
     queryFn: fetchLiveSettings,
     refetchInterval: 30000, // Rafraîchir toutes les 30 secondes au lieu de 2
-    staleTime: 10000, // Considérer comme périmé après 10 secondes
+    staleTime: 10000 // Considérer comme périmé après 10 secondes
   });
 
   // Appliquer les styles CSS dynamiquement
   useEffect(() => {
     if (settings) {
       const root = document.documentElement;
-      
+
       // Appliquer les couleurs
       root.style.setProperty('--color-proqblue', settings.primary_color);
       root.style.setProperty('--color-proqblue-dark', settings.secondary_color);
       root.style.setProperty('--color-accent', settings.accent_color);
       root.style.setProperty('--color-background', settings.background_color);
       root.style.setProperty('--color-text', settings.text_color);
-      
+
       // Appliquer la police
       document.body.style.fontFamily = settings.font_family;
-      
+
       // Mettre à jour le titre et favicon
       document.title = settings.site_name;
-      
+
       if (settings.favicon_url) {
         const favicon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
         if (favicon) {
           favicon.href = settings.favicon_url;
         }
       }
-      
+
       // console.log('Styles appliqués:', settings);
     }
   }, [settings]);

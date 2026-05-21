@@ -29,7 +29,7 @@ export function MenuManager() {
     menu_type: 'main',
     menu_order: 0,
     is_active: true,
-    target: '_self',
+    target: '_self'
   });
 
   const [editItem, setEditItem] = useState<MenuItem | null>(null);
@@ -49,7 +49,7 @@ export function MenuManager() {
         is_active: true,
         menu_type: newItem.menu_type as 'main' | 'footer' | 'social',
         icon: newItem.icon,
-        label: newItem.label,
+        label: newItem.label
       });
 
       setNewItem({
@@ -58,20 +58,20 @@ export function MenuManager() {
         menu_type: 'main',
         menu_order: 0,
         is_active: true,
-        target: '_self',
+        target: '_self'
       });
     } catch (error) {
       console.error('Erreur lors de l\'ajout:', error);
     }
   };
 
-  const handleUpdateMenuItem = async (item: any) => {
+  const handleUpdateMenuItem = async (item: unknown) => {
     if (!editItem) return;
 
     try {
       await updateMutation.mutateAsync({
         id: item.id,
-        ...editItem,
+        ...editItem
       });
       setEditingId(null);
       setEditItem(null);
@@ -90,9 +90,9 @@ export function MenuManager() {
     }
   };
 
-  const mainMenuItems = menuItems.filter((item: any) => item.menu_type === 'main');
-  const footerMenuItems = menuItems.filter((item: any) => item.menu_type === 'footer');
-  const socialMenuItems = menuItems.filter((item: any) => item.menu_type === 'social');
+  const mainMenuItems = menuItems.filter((item: unknown) => item.menu_type === 'main');
+  const footerMenuItems = menuItems.filter((item: unknown) => item.menu_type === 'footer');
+  const socialMenuItems = menuItems.filter((item: unknown) => item.menu_type === 'social');
 
   if (isLoading) {
     return <div>Chargement du menu...</div>;
@@ -111,20 +111,21 @@ export function MenuManager() {
             placeholder="Titre du menu"
             value={newItem.title}
             onChange={(e) => setNewItem({ ...newItem, title: e.target.value })}
-            className="p-2 border rounded"
-          />
+            className="p-2 border rounded" />
+          
           <Input
             type="text"
             placeholder="URL (ex: /formations, /about)"
             value={newItem.url}
             onChange={(e) => setNewItem({ ...newItem, url: e.target.value })}
-            className="p-2 border rounded"
-          />
-          <select
-            value={newItem.menu_type}
-            onChange={(e) => setNewItem({ ...newItem, menu_type: e.target.value as any })}
-            className="p-2 border rounded"
-          >
+            className="p-2 border rounded" />
+          
+          <select title="Sélectionner une option"
+          value={newItem.menu_type}
+          onChange={(e) => setNewItem({ ...newItem, menu_type: e.target.value as unknown })}
+          className="p-2 border rounded"
+          title="Type de menu">
+            
             <option value="main">Menu Principal</option>
             <option value="footer">Pied de page</option>
             <option value="social">Social</option>
@@ -134,14 +135,14 @@ export function MenuManager() {
             placeholder="Icône (optionnel)"
             value={newItem.icon || ''}
             onChange={(e) => setNewItem({ ...newItem, icon: e.target.value })}
-            className="p-2 border rounded"
-          />
+            className="p-2 border rounded" />
+          
         </div>
         <Button
           onClick={handleAddMenuItem}
           disabled={createMutation.isPending}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          
           <Plus className="w-4 h-4 mr-2" />
           Ajouter
         </Button>
@@ -158,7 +159,7 @@ export function MenuManager() {
           setEditItem({ ...item });
         }}
         onSave={() => {
-          const item = mainMenuItems.find((i: any) => i.id === editingId);
+          const item = mainMenuItems.find((i: unknown) => i.id === editingId);
           if (item) handleUpdateMenuItem(item);
         }}
         onCancel={() => {
@@ -166,8 +167,8 @@ export function MenuManager() {
           setEditItem(null);
         }}
         onDelete={handleDeleteMenuItem}
-        onEditChange={setEditItem}
-      />
+        onEditChange={setEditItem} />
+      
 
       {/* Menu Pied de page */}
       <MenuSection
@@ -180,7 +181,7 @@ export function MenuManager() {
           setEditItem({ ...item });
         }}
         onSave={() => {
-          const item = footerMenuItems.find((i: any) => i.id === editingId);
+          const item = footerMenuItems.find((i: unknown) => i.id === editingId);
           if (item) handleUpdateMenuItem(item);
         }}
         onCancel={() => {
@@ -188,8 +189,8 @@ export function MenuManager() {
           setEditItem(null);
         }}
         onDelete={handleDeleteMenuItem}
-        onEditChange={setEditItem}
-      />
+        onEditChange={setEditItem} />
+      
 
       {/* Menu Social */}
       <MenuSection
@@ -202,7 +203,7 @@ export function MenuManager() {
           setEditItem({ ...item });
         }}
         onSave={() => {
-          const item = socialMenuItems.find((i: any) => i.id === editingId);
+          const item = socialMenuItems.find((i: unknown) => i.id === editingId);
           if (item) handleUpdateMenuItem(item);
         }}
         onCancel={() => {
@@ -210,10 +211,10 @@ export function MenuManager() {
           setEditItem(null);
         }}
         onDelete={handleDeleteMenuItem}
-        onEditChange={setEditItem}
-      />
-    </div>
-  );
+        onEditChange={setEditItem} />
+      
+    </div>);
+
 }
 
 function MenuSection({
@@ -225,83 +226,83 @@ function MenuSection({
   onSave,
   onCancel,
   onDelete,
-  onEditChange,
-}: {
-  title: string;
-  items: any[];
-  editingId: string | null;
-  editItem: any;
-  onEdit: (item: any) => void;
-  onSave: () => void;
-  onCancel: () => void;
-  onDelete: (id: string) => void;
-  onEditChange: (item: any) => void;
-}) {
+  onEditChange
+
+
+
+
+
+
+
+
+
+
+}: {title: string;items: unknown[];editingId: string | null;editItem: unknown;onEdit: (item: unknown) => void;onSave: () => void;onCancel: () => void;onDelete: (id: string) => void;onEditChange: (item: unknown) => void;}) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 mb-6">
       <h2 className="text-xl font-semibold mb-4">{title}</h2>
-      {items.length === 0 ? (
-        <p className="text-gray-500">Aucun menu configuré</p>
-      ) : (
-        <div className="space-y-2">
-          {items.map((item: any) => (
-            <div
-              key={item.id}
-              className="flex items-center justify-between p-4 border rounded bg-gray-50 hover:bg-gray-100"
-            >
-              {editingId === item.id && editItem ? (
-                <div className="flex-1 flex gap-2">
+      {items.length === 0 ?
+      <p className="text-gray-500">Aucun menu configuré</p> :
+
+      <div className="space-y-2">
+          {items.map((item: unknown) =>
+        <div
+          key={item.id}
+          className="flex items-center justify-between p-4 border rounded bg-gray-50 hover:bg-gray-100">
+          
+              {editingId === item.id && editItem ?
+          <div className="flex-1 flex gap-2">
                   <Input
-                    type="text"
-                    value={editItem.title}
-                    onChange={(e) => onEditChange({ ...editItem, title: e.target.value })}
-                    className="flex-1 p-2 border rounded"
-                  />
+              type="text"
+              value={editItem.title}
+              onChange={(e) => onEditChange({ ...editItem, title: e.target.value })}
+              className="flex-1 p-2 border rounded" />
+            
                   <Input
-                    type="text"
-                    value={editItem.url}
-                    onChange={(e) => onEditChange({ ...editItem, url: e.target.value })}
-                    className="flex-1 p-2 border rounded"
-                  />
+              type="text"
+              value={editItem.url}
+              onChange={(e) => onEditChange({ ...editItem, url: e.target.value })}
+              className="flex-1 p-2 border rounded" />
+            
                   <Button
-                    onClick={onSave}
-                    className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
-                  >
+              onClick={onSave}
+              className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
+              
                     <Save className="w-4 h-4" />
                   </Button>
                   <Button
-                    onClick={onCancel}
-                    className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700"
-                  >
+              onClick={onCancel}
+              className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700">
+              
                     <X className="w-4 h-4" />
                   </Button>
-                </div>
-              ) : (
-                <>
+                </div> :
+
+          <>
                   <div className="flex-1">
                     <p className="font-semibold">{item.title}</p>
                     <p className="text-sm text-gray-600">{item.url}</p>
                   </div>
                   <div className="flex gap-2">
                     <Button
-                      onClick={() => onEdit(item)}
-                      className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                    >
+                onClick={() => onEdit(item)}
+                className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                
                       <Edit2 className="w-4 h-4" />
                     </Button>
                     <Button
-                      onClick={() => onDelete(item.id)}
-                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                    >
+                onClick={() => onDelete(item.id)}
+                className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
+                
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
                 </>
-              )}
+          }
             </div>
-          ))}
+        )}
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }

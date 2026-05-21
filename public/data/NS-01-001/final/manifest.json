@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-02-05T14:52:14",
+  "files": [
+    {
+      "path": "Guide d'utilisation NS.md",
+      "size_bytes": 17968,
+      "modified": "2026-02-05T08:34:59",
+      "sha256": "9d3f717a9e831bdc3ab7d4713143785bb9f2883b6a17136c8045711ecee04fd1"
+    },
+    {
+      "path": "index_recherche.json",
+      "size_bytes": 280620,
+      "modified": "2026-02-05T13:37:34",
+      "sha256": "f87e8d8f5d934156101141f4d93f7a9bcd54883eb2c29a3432b0c09966a74fb0"
+    },
+    {
+      "path": "manifest.json",
+      "size_bytes": 1736,
+      "modified": "2026-02-05T13:37:34",
+      "sha256": "f80c9af7e2ff9824d68f786a72978e40ceeea38579c69f7c5ae91858175f7b1e"
+    },
+    {
+      "path": "mapping.json",
+      "size_bytes": 215639,
+      "modified": "2026-02-05T13:37:34",
+      "sha256": "61809334d5d6fc2be6cf0472592d9e505e9aa59e8322e9e98b994189d7ac5362"
+    },
+    {
+      "path": "NS 01 001.md",
+      "size_bytes": 1220530,
+      "modified": "2026-02-05T11:15:15",
+      "sha256": "c556c6b04e1977fe6cbc1098deac8dc1c18c504c509ea7595bdbc0b528dedd1e"
+    },
+    {
+      "path": "NS 01 001_clean.md",
+      "size_bytes": 1161944,
+      "modified": "2026-02-05T14:49:36",
+      "sha256": "dc7c4692be45f3c9164c638e0d78b4dcb333370335fb1426f8afa03464067155"
+    },
+    {
+      "path": "NS_01_001.pdf",
+      "size_bytes": 6222118,
+      "modified": "2021-10-20T12:15:00",
+      "sha256": "c9b45966b62b4dedbccb3f75d4b4ae5dfd50f306a6b5b74a9c19eb1f26ed302a"
+    },
+    {
+      "path": "ns_01_001_atomise.json",
+      "size_bytes": 1637499,
+      "modified": "2026-02-05T14:50:11",
+      "sha256": "6a60b05dc7e532c85f80f74d375ed633b8a22244838577e069f2fced8ac0c587"
+    },
+    {
+      "path": "NS_01_001_extrait_SENEGAL.json",
+      "size_bytes": 3926,
+      "modified": "2026-02-05T14:49:46",
+      "sha256": "45458b251397e80413c3bd2b9cc85ad1eab87338fe6a6dac23a6cb7bfd258a50"
+    },
+    {
+      "path": "ns_01_001_pedagogique.yaml",
+      "size_bytes": 406752,
+      "modified": "2026-02-05T14:50:11",
+      "sha256": "9e1bcdf660d5cf320b24b5615eb660396cca2d278f5ac07f9712044877d79bed"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 398,
+      "modified": "2026-02-05T13:37:34",
+      "sha256": "347227453037a4292113517e4abae81443611433839e2af68162e1234fa39144"
+    }
+  ]
+}

@@ -1,0 +1,365 @@
+{
+  "metadonnees": {
+    "type_document": "Norme Française",
+    "numero_norme": "NF C 18-510",
+    "titre": "Opérations sur les ouvrages et installations électriques et dans un environnement électrique - Prévention du risque électrique",
+    "titre_anglais": "Operations on electrical network and installations and in an electrical environment - Electrical risk prevention",
+    "titre_allemand": "Arbeitsvorgang auf elektrische Werke und Anlagen und in einer elektrischen Umgebung - Verhütung von elektrischen Gefährdungen",
+    "date_publication": "Janvier 2012",
+    "date_approbation": "21 décembre 2011",
+    "date_effet": "21 janvier 2012",
+    "indice_classement": "C 18-510",
+    "codes_ics": [
+      "13.100",
+      "13.260"
+    ],
+    "editeur": {
+      "principal": "Union Technique de l'Electricité (UTE)",
+      "adresse": "Tour Chantecoq - 5, rue Chantecoq - 92808 Puteaux Cedex",
+      "telephone": "+33 (0) 1 49 07 62 00",
+      "fax": "+33 (0) 1 47 78 73 51",
+      "courriel": "ute@ute.asso.fr",
+      "site_web": "http://www.ute-fr.com/"
+    },
+    "distributeur": {
+      "nom": "Association Française de Normalisation (AFNOR)",
+      "adresse": "11, rue Francis de Pressensé - 93571 La Plaine Saint-Denis Cedex",
+      "telephone": "+33 (0) 1 41 62 80 00"
+    },
+    "droits_auteur": "UTE 2012 - Reproduction interdite",
+    "date_extraction": "2026-02-03T04:05:23.794556",
+    "nombre_pages": 248
+  },
+  "resume_document": {
+    "correspondance": "Le présent document n'a pas d'équivalent à la CEI ou au CENELEC.",
+    "analyse": "Le présent document propose des mesures de prévention en vue d'assurer la sécurité des personnes contre les dangers d'origine électrique lorsqu'elles effectuent un travail dans un environnement électrique.",
+    "mots_cles": [
+      "Réseau électrique",
+      "distribution d'énergie électrique",
+      "travaux sous tension",
+      "travaux hors tension",
+      "sécurité du travail",
+      "installation électrique",
+      "installation très basse tension",
+      "installation basse tension",
+      "installation haute tension",
+      "maintenance",
+      "mesures de prévention",
+      "protection de la personne",
+      "protection contre les chocs électriques",
+      "protection contre les courts-circuits",
+      "règles de sécurité",
+      "habilitation",
+      "réparation",
+      "entretien",
+      "dépannage",
+      "travaux",
+      "intervention",
+      "opération"
+    ]
+  },
+  "avant_propos": {
+    "commission": "Commission U21 « Prévention des accidents » de l'UTE",
+    "version_precedente": "recueil UTE C 18-510",
+    "principales_mises_a_jour": [
+      "l'application des principes généraux de prévention dans les prescriptions, incluant l'évaluation et l'analyse du risque électrique",
+      "l'intégration des règles d'organisation des OPERATIONS comprenant notamment la préparation du travail",
+      "la clarification des OPERATIONS d'ORDRE ELECTRIQUE et des OPERATIONS d'ORDRE NON ELECTRIQUE",
+      "la consolidation des notions d'ENVIRONNEMENT électrique, en particulier en basse tension avec la création d'un article spécifique",
+      "les précisions concernant tous les types d'INTERVENTIONS BT",
+      "la consolidation des prescriptions de formation et d'HABILITATION",
+      "la limitation des prescriptions aux aspects électriques",
+      "la simplification de la formulation des définitions",
+      "le report dans les articles spécifiques des prescriptions qui étaient précédemment incluses dans les définitions"
+    ],
+    "note": "mais ne remplace pas le document UTE C 18-510 qui sera révisé ultérieurement"
+  },
+  "guide_lecture": {
+    "typographie": {
+      "prescriptions": "Caractères droits de taille normale",
+      "notes": "Caractères droits de taille réduite",
+      "termes_definis": "PETITES MAJUSCULES"
+    }
+  },
+  "table_des_matieres": [
+    {
+      "section": "1",
+      "title": "DOMAINE D'APPLICATION",
+      "page": 13,
+      "subsections": [
+        {
+          "section": "1.1",
+          "title": "Domaine d'application du présent document",
+          "page": 13
+        },
+        {
+          "section": "1.2",
+          "title": "Lien entre la norme et la réglementation",
+          "page": 13
+        }
+      ]
+    },
+    {
+      "section": "2",
+      "title": "REFERENCES NORMATIVES",
+      "page": 15
+    },
+    {
+      "section": "3",
+      "title": "TERMES ET DEFINITIONS",
+      "page": 17,
+      "subsections": [
+        {
+          "section": "3.1",
+          "title": "Définitions relatives aux structures et aux personnes",
+          "page": 17
+        },
+        {
+          "section": "3.1.1",
+          "title": "Entreprise exploitante",
+          "page": 17
+        },
+        {
+          "section": "3.1.2",
+          "title": "Entreprise extérieure",
+          "page": 17
+        },
+        {
+          "section": "3.1.3",
+          "title": "Donneur d'ordre",
+          "page": 17
+        },
+        {
+          "section": "3.1.4",
+          "title": "Employeur",
+          "page": 17
+        },
+        {
+          "section": "3.1.5",
+          "title": "Chef d'établissement",
+          "page": 17
+        },
+        {
+          "section": "3.1.6",
+          "title": "Chargé d'exploitation électrique",
+          "page": 17
+        }
+      ]
+    }
+  ],
+  "normes_referencees": {
+    "normes_travaux_sous_tension": [
+      {
+        "standard": "NF EN 62192 (C 18-408)",
+        "title": "Travaux sous tension - Cordes isolantes"
+      },
+      {
+        "standard": "NF EN 62237 (C 18-430)",
+        "title": "Travaux sous tension - Conduits flexibles isolants avec raccords utilisés avec les outils et matériels hydrauliques"
+      },
+      {
+        "standard": "NF EN 61472 (C 18-472)",
+        "title": "Travaux sous tension - Distances minimales d'approche pour des réseaux à courant alternatif de tension comprise entre 72,5 kV et 800 kV - Une méthode de calcul"
+      },
+      {
+        "standard": "NF EN 61477 (C 18-477)",
+        "title": "Travaux sous tension - Exigences minimales pour l'utilisation des outils, dispositifs et équipements"
+      },
+      {
+        "standard": "CEI/TR 61328",
+        "title": "Travaux sous tension - Lignes directives pour l'installation de conducteurs et câbles de garde des lignes de transport - Equipement de déroulage et accessoires"
+      },
+      {
+        "standard": "CEI/TR 61911",
+        "title": "Travaux sous tension - Lignes directrices pour l'installation des conducteurs des lignes de distribution - Equipement de déroulage et accessoires"
+      },
+      {
+        "standard": "CEI/TR 62263",
+        "title": "Travaux sous tension - Lignes directrices pour l'installation et la maintenance de câbles à fibres optiques sur des lignes électriques aériennes"
+      }
+    ],
+    "normes_protection_personnes": [
+      {
+        "standard": "NF EN 388 (S 75-502)",
+        "title": "Gants de protection contre les risques mécaniques"
+      },
+      {
+        "standard": "NF EN ISO 20345 (S 73-502)",
+        "title": "Équipement de protection individuelle - Chaussures de sécurité"
+      },
+      {
+        "standard": "NF EN ISO 20346 (S 73-503)",
+        "title": "Équipement de protection individuelle - Chaussures de protection"
+      },
+      {
+        "standard": "NF EN ISO 20347 (S 73-504)",
+        "title": "Équipement de protection individuelle - Chaussures de travail"
+      },
+      {
+        "standard": "NF EN 60895 (C 18-405)",
+        "title": "Travaux sous tension - Vêtements conducteurs pour usage jusqu'à 800 kV de tension nominale en courant alternatif et +/- 600 kV en courant continu"
+      },
+      {
+        "standard": "NF EN 60984 (C 18-404)",
+        "title": "Protège-bras en matériaux isolants pour travaux électriques"
+      },
+      {
+        "standard": "CEI 61482-2",
+        "title": "Travaux sous tension - Vêtements de protection contre les dangers thermiques d'un arc électrique - Partie 2: Exigences"
+      }
+    ],
+    "normes_generales": [
+      {
+        "standard": "NF C 01-195",
+        "title": "Vocabulaire électrotechnique - Chapitre 195 : Mise à la terre et protection contre les chocs électriques"
+      },
+      {
+        "standard": "NF C 01-482",
+        "title": "Vocabulaire Electrotechnique - Chapitre 482 : Piles et accumulateurs électriques"
+      },
+      {
+        "standard": "NF C 01-651",
+        "title": "Vocabulaire électrotechnique - Chapitre 651 : Travaux sous tension"
+      },
+      {
+        "standard": "NF C 01-826",
+        "title": "Vocabulaire Electrotechnique - Chapitre 826 : Installations électriques"
+      },
+      {
+        "standard": "NF EN 13306 (X 60-319)",
+        "title": "Maintenance - Terminologie de la maintenance"
+      },
+      {
+        "standard": "NF EN 50110-1 (C 18-501)",
+        "title": "Exploitation des installations électriques"
+      },
+      {
+        "standard": "NF EN 50110-2 (C 18-502)",
+        "title": "Exploitation des Installations électriques - Partie 2 : Annexes nationales"
+      },
+      {
+        "standard": "UTE C 11-001",
+        "title": "Conditions techniques auxquelles doivent satisfaire les distributions d'énergie électrique - Arrêté technique du 17 mai 2001"
+      }
+    ]
+  },
+  "commission_normalisation": {
+    "nom": "UTE/U21 - Prévention des accidents",
+    "secretariat": "UTE",
+    "organismes_representes": [
+      "AFPA INGENIERIE",
+      "BNITH (BUREAU DE NORMALISATION DES INDUSTRIES TEXTILES ET DE L'HABILLEMENT)",
+      "CEA POLE MAITRISE DES RISQUES",
+      "CGT",
+      "CITELUM",
+      "COPREC",
+      "DL SECURITE ELECTRIQUE",
+      "EDF (ELECTRICITE DE FRANCE)",
+      "ESG Automotive",
+      "EUROGIP",
+      "FACOM",
+      "FFB (FEDERATION FRANCAISE DU BATIMENT)",
+      "FFIE (FEDERATION FRANCAISE DES ENTREPRISES DE GENIE ELECTRIQUE ET ENERGETIQUE)",
+      "GDF SUEZ",
+      "GIMELEC (GROUPEMENT DES INDUSTRIES DE L'EQUIPEMENT ELECTRIQUE, DU CONTRÔLE-COMMANDE ET DES SERVICES ASSOCIES)",
+      "GNFA (GROUPEMENT NATIONAL POUR LA FORMATION AUTOMOBILE)",
+      "GROUPEMENT DES APAVE (GAPAVE)",
+      "IMEXCO",
+      "ISFME (INSTITUT SUPERIEUR DE FORMATION AUX METIERS DE L ENERGIE)",
+      "MINISTERE DE L'AGRICULTURE ET DE LA PECHE",
+      "MINISTERE DE L'ECONOMIE, DE L'INDUSTRIE ET DE L'EMPLOI",
+      "MINISTERE DE L'EDUCATION NATIONALE",
+      "MINISTERE DE L'INTERIEUR",
+      "MINISTERE DU TRAVAIL, DES RELATIONS SOCIALES, DE LA FAMILLE, DE LA SOLIDARITE ET DE LA VILLE",
+      "RATP (REGIE AUTONOME DES TRANSPORTS PARISIENS)",
+      "RTE (RESEAU DE TRANSPORT DE L'ELECTRICITE)",
+      "SAMERA",
+      "SER (SYNDICAT DES ENERGIES RENOUVELABLES)",
+      "SERCE (SYNDICAT DES ENTREPRISES DE GENIE ELECTRIQUE ET CLIMATIQUE)",
+      "SNCF (SOCIETE NATIONALE DES CHEMINS DE FER FRANCAIS)"
+    ]
+  },
+  "structure_document": {
+    "nombre_total_pages": 248,
+    "sections_principales": [
+      "Domaine d'application",
+      "Références normatives",
+      "Termes et définitions",
+      "Normes pour travaux sous tension",
+      "Normes pour la protection des personnes",
+      "Normes générales et guides"
+    ],
+    "langue": "Français",
+    "traductions_disponibles": [
+      "Anglais",
+      "Allemand"
+    ]
+  },
+  "concepts_cles": {
+    "themes_principaux": [
+      "Opérations de sécurité électrique",
+      "Prévention des risques",
+      "Travaux électriques sous tension",
+      "Travaux hors tension",
+      "Sécurité de l'environnement de travail",
+      "Installations électriques (très basse tension, basse tension, haute tension)",
+      "Opérations de maintenance",
+      "Protection des personnes",
+      "Protection contre les chocs électriques",
+      "Protection contre les courts-circuits",
+      "Règles de sécurité",
+      "Autorisation et qualification (habilitation)",
+      "Réparation et maintenance",
+      "Dépannage",
+      "Interventions"
+    ],
+    "classifications_tension": [
+      "Très basse tension (TBT)",
+      "Basse tension (BT)",
+      "Haute tension (HT)"
+    ],
+    "types_operations": [
+      "Opérations d'ordre électrique",
+      "Opérations d'ordre non électrique",
+      "Interventions basse tension (BT)",
+      "Travaux sous tension",
+      "Travaux hors tension"
+    ]
+  },
+  "cas_usage_pedagogique": [
+    "Programmes de formation à la sécurité électrique",
+    "Cours de certification professionnelle",
+    "Formation à l'évaluation des risques",
+    "Développement de protocoles de sécurité",
+    "Programme d'études en génie électrique",
+    "Formation à la sécurité au travail",
+    "Formation réglementaire et conformité",
+    "Référence de documentation technique",
+    "Développement de procédures opératoires normalisées",
+    "Programmes de prévention des accidents"
+  ],
+  "metadonnees_traitement_ia": {
+    "categorie_document": "Norme Technique",
+    "domaine": "Sécurité Électrique",
+    "langue_principale": "Français",
+    "statut_reglementaire": "Norme Française Officielle",
+    "public_cible": [
+      "Ingénieurs électriciens",
+      "Responsables de sécurité",
+      "Travailleurs électriques",
+      "Personnel de maintenance",
+      "Professionnels de la formation",
+      "Responsables de conformité réglementaire"
+    ],
+    "type_contenu": "Prescriptif et normatif",
+    "methode_extraction": "Analyse PDF avec préservation de la structure",
+    "champs_recherchables": [
+      "numero_norme",
+      "mots_cles",
+      "normes_referencees",
+      "organismes",
+      "sections",
+      "definitions"
+    ]
+  }
+}

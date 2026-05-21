@@ -1,0 +1,50 @@
+﻿[
+  {
+    "title": "Installations Électriques",
+    "subtitle": "Sécurité  Qualité  Formation",
+    "description": "Expert en installations électriques au Sénégal. Nous garantissons la sécurité, la qualité et la conformité de vos projets électriques.",
+    "gradient": "bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900",
+    "background_url": "/uploads/senegal_28.png",
+    "badge": " PROQUELEC SÉNÉGAL",
+    "buttons": [
+      {
+        "label": "Nos Services",
+        "href": "#services",
+        "variant": "primary"
+      },
+      {
+        "label": "Contactez-nous",
+        "href": "/contact",
+        "variant": "secondary"
+      }
+    ]
+  },
+  {
+    "title": "Formation Professionnelle",
+    "subtitle": "Formations Qualifiantes & Certifications",
+    "description": "Développez vos compétences avec nos programmes de formation agréés. Devenez un expert reconnu dans le domaine électrique.",
+    "gradient": "bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900",
+    "badge": " ACADÉMIE PROQUELEC",
+    "buttons": [
+      {
+        "label": "Voir les Formations",
+        "href": "/formations",
+        "variant": "primary"
+      }
+    ]
+  },
+  {
+    "title": "Corpus Normatif Digital",
+    "subtitle": "Accédez aux Normes en un Clic",
+    "description": "Notre plateforme exclusive vous donne accès à toutes les régulations et normes électriques en vigueur au Sénégal.",
+    "gradient": "bg-gradient-to-br from-slate-900 via-emerald-900 to-teal-900",
+    "badge": " RÉFÉRENTIEL OFFICIEL",
+    "buttons": [
+      {
+        "label": "Consulter les Normes",
+        "href": "/documents",
+        "variant": "primary"
+      }
+    ]
+  }
+]

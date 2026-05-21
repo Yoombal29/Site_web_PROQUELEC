@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Loader2, Calendar, User, ArrowLeft, Share2, Clock } from "lucide-react";
+import { Loader2, Calendar, ArrowLeft, Share2, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useGetBlogPostBySlug } from "@/hooks/useBlogPosts";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { SEO } from "@/components/SEO";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 
 export default function BlogPost() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams<{slug: string;}>();
   const { data: post, isLoading, error } = useGetBlogPostBySlug(slug);
 
   const formatDate = (dateString: string) => {
@@ -21,24 +21,24 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen bg-white">
-      {post && (
-        <SEO
-          title={`${post.title} | Blog PROQUELEC`}
-          description={post.excerpt || post.title}
-        />
-      )}
+      {post &&
+      <SEO
+        title={`${post.title} | Blog PROQUELEC`}
+        description={post.excerpt || post.title} />
+
+      }
       <Header />
 
       <main className="pt-24 pb-20">
-        {isLoading && (
-          <div className="flex flex-col justify-center items-center py-40">
+        {isLoading &&
+        <div className="flex flex-col justify-center items-center py-40">
             <Loader2 className="h-12 w-12 animate-spin text-blue-600 mb-4" />
             <p className="text-slate-500 font-medium">Chargement de l'article...</p>
           </div>
-        )}
+        }
 
-        {error && (
-          <div className="max-w-xl mx-auto text-center py-20 px-4">
+        {error &&
+        <div className="max-w-xl mx-auto text-center py-20 px-4">
             <div className="bg-red-50 text-red-600 p-8 rounded-3xl border border-red-100">
               <h2 className="text-2xl font-bold mb-4">Oups !</h2>
               <p className="mb-6">Une erreur est survenue lors du chargement de l'article.</p>
@@ -47,10 +47,10 @@ export default function BlogPost() {
               </Link>
             </div>
           </div>
-        )}
+        }
 
-        {!isLoading && !error && post && (
-          <article className="animate-fade-in">
+        {!isLoading && !error && post &&
+        <article className="animate-fade-in">
             {/* Post Header */}
             <header className="py-12 md:py-20 bg-slate-50 border-b border-slate-100 mb-12">
               <div className="container max-w-4xl mx-auto px-4">
@@ -60,11 +60,11 @@ export default function BlogPost() {
                 </Link>
 
                 <div className="flex flex-wrap gap-3 mb-6">
-                  {post.blog_categories?.name && (
-                    <Badge className="bg-blue-600 hover:bg-blue-700 transition-colors px-4 py-1 text-sm font-bold border-none">
+                  {post.blog_categories?.name &&
+                <Badge className="bg-blue-600 hover:bg-blue-700 transition-colors px-4 py-1 text-sm font-bold border-none">
                       {post.blog_categories.name}
                     </Badge>
-                  )}
+                }
                   <Badge variant="outline" className="border-slate-200 text-slate-500 bg-white flex items-center gap-1.5 px-3">
                     <Clock className="w-3 h-3" />
                     5 min de lecture
@@ -91,28 +91,40 @@ export default function BlogPost() {
             </header>
 
             {/* Featured Image */}
-            {post.cover_image_url && (
-              <div className="container max-w-5xl mx-auto px-4 -mt-20 mb-16">
+            {post.cover_image_url &&
+          <div className="container max-w-5xl mx-auto px-4 -mt-20 mb-16">
                 <div className="rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
                   <img
-                    src={post.cover_image_url}
-                    alt={post.title}
-                    className="w-full h-full max-h-[500px] object-cover"
-                  />
+                src={post.cover_image_url}
+                alt={post.title}
+                className="w-full h-full max-h-[500px] object-cover" loading="lazy" />
+              
                 </div>
               </div>
-            )}
+          }
 
             {/* Post Content */}
             <div className="container max-w-3xl mx-auto px-4">
               <div
-                className="prose prose-lg md:prose-xl max-w-none text-slate-700 
+              className="prose prose-lg md:prose-xl max-w-none text-slate-700 
                            prose-headings:text-slate-900 prose-headings:font-black 
                            prose-a:text-blue-600 prose-a:font-bold prose-a:no-underline hover:prose-a:underline
                            prose-strong:text-slate-900 prose-img:rounded-3xl prose-img:shadow-lg
                            prose-blockquote:border-l-4 prose-blockquote:border-blue-600 prose-blockquote:bg-blue-50 prose-blockquote:py-4 prose-blockquote:px-8 prose-blockquote:rounded-r-2xl prose-blockquote:italic"
-                dangerouslySetInnerHTML={{ __html: post.content || '' }}
-              />
+
+
+
+
+
+
+
+
+
+
+
+
+              dangerouslySetInnerHTML={{ __html: post.content || '' }} />
+            
 
               {/* Share and Footer */}
               <div className="mt-16 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -132,10 +144,10 @@ export default function BlogPost() {
               </div>
             </div>
           </article>
-        )}
+        }
 
-        {!isLoading && !error && !post && (
-          <div className="max-w-xl mx-auto text-center py-20 px-4">
+        {!isLoading && !error && !post &&
+        <div className="max-w-xl mx-auto text-center py-20 px-4">
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Article non trouvé</h2>
             <p className="text-lg text-slate-600 mb-8">Désolé, nous n'avons pas pu trouver l'article que vous cherchez.</p>
             <Link to="/blog">
@@ -144,11 +156,11 @@ export default function BlogPost() {
               </Button>
             </Link>
           </div>
-        )}
+        }
       </main>
 
-      <ScrollToTopButton />
+      <ScrollToTopButton aria-label="Action" />
       <Footer />
-    </div>
-  );
+    </div>);
+
 }

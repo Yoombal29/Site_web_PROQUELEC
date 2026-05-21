@@ -1,0 +1,1971 @@
+# NF C18-510 - Format pédagogique optimisé pour l'IA et l'exploitation pédagogique
+# Généré automatiquement à partir du fichier JSON atomisé
+# Date de génération: 2026-02-05
+
+norme:
+  reference: NF C18-510
+  titre: OPERATIONS SUR LES OUVRAGES ET INSTALLATIONS ELECTRIQUES
+  version: Janvier 2012
+  domaine: "Sécurité électrique"
+
+metadata:
+  extraction_date: 2026-02-05
+  total_articles: 13
+  total_definitions: 70
+  total_annexes: 6
+  fichier_source: NF C18 510.md
+  total_lignes: 16757
+
+domaines_tension:
+  - code: TBT
+    nom: "Très Basse Tension"
+    limite: "≤ 50V AC ou 120V DC"
+    description: "Tension la plus faible, utilisée pour les applications de sécurité"
+    articles_concernes: []
+
+  - code: BT
+    nom: "Basse Tension"
+    limite: "50V < U ≤ 1000V AC ou 120V < U ≤ 1500V DC"
+    description: "Domaine des installations domestiques et tertiaires"
+    articles_concernes: ["7", "8", "9", "10"]
+
+  - code: HTA
+    nom: "Haute Tension A"
+    limite: "1000V < U ≤ 50000V AC"
+    description: "Domaine de la distribution électrique moyenne tension"
+    articles_concernes: ["7", "8", "9", "11"]
+
+  - code: HTB
+    nom: "Haute Tension B"
+    limite: "> 50000V AC"
+    description: "Domaine du transport d'énergie électrique"
+    articles_concernes: ["7", "8", "9", "11"]
+
+types_operations:
+  - type: "hors_tension"
+    nom: "Opérations hors tension"
+    article_principal: "7"
+    description: "Travaux effectués après consignation complète de l'installation"
+    caracteristiques:
+      - "Suppression des tensions"
+      - "Condamnation des organes de séparation"
+      - "Vérification d'absence de tension (VAT)"
+      - "Mise à la terre et en court-circuit (MALT)"
+    habilitations_requises: ["B0", "H0", "B1", "B2", "H1", "H2", "BC", "HC"]
+    niveau_risque: "minimal"
+
+  - type: "sous_tension"
+    nom: "Travaux sous tension"
+    article_principal: "8"
+    description: "Travaux au contact de pièces nues sous tension"
+    caracteristiques:
+      - "Personnel spécialisé et formé"
+      - "Méthodes et outillages spécifiques"
+      - "Surveillance permanente"
+      - "EPI isolants obligatoires"
+    habilitations_requises: ["B2T", "H2T"]
+    niveau_risque: "très élevé"
+
+  - type: "intervention_bt"
+    nom: "Interventions BT"
+    article_principal: "10"
+    description: "Interventions de courte durée en Basse Tension uniquement"
+    caracteristiques:
+      - "Opérations de courte durée"
+      - "Uniquement en BT"
+      - "Remplacement, raccordement, maintenance"
+    habilitations_requises: ["BS", "BE Manœuvre", "BE Mesurage", "BE Vérification"]
+    niveau_risque: "modéré"
+
+  - type: "operations_specifiques"
+    nom: "Opérations spécifiques"
+    article_principal: "11"
+    description: "Essais, mesurages, vérifications, manœuvres"
+    caracteristiques:
+      - "Opérations particulières nécessitant des compétences"
+      - "Essais et mesures électriques"
+      - "Vérifications réglementaires"
+      - "Manœuvres d'exploitation"
+    habilitations_requises: ["BE Essai", "BE Mesurage", "BE Vérification", "HE Essai", "HE Mesurage", "HE Vérification", "BC/HC Manœuvre"]
+    niveau_risque: "variable selon l'opération"
+
+articles:
+  - numero: "1"
+    titre: "DOMAINE D'APPLICATION"
+    niveau: 1
+    ligne_debut: 1060
+    ligne_fin: 1164
+    objectifs_pedagogiques:
+      - "Comprendre le champ d'application de la norme NF C18-510"
+      - Identifier les situations et opérations couvertes par la norme
+      - "Connaître les exclusions et limites d'application"
+    mots_cles:
+      - sous tension
+      - travaux
+      - essai
+      - protection
+      - risque électrique
+      - employeur
+    contenu_resume: "Les prescriptions du présent document sont établies en vue d'assurer la sécurité des"
+    sous_articles:
+      - numero: 1.1
+        titre: "Domaine d'application du présent document"
+        niveau: 2
+      - numero: 1.2
+        titre: Lien entre la norme et la réglementation
+        niveau: 2
+
+  - numero: "2"
+    titre: REFERENCES NORMATIVES
+    niveau: 1
+    ligne_debut: 1165
+    ligne_fin: 1270
+    objectifs_pedagogiques:
+      - Connaître les références normatives applicables
+      - "Identifier les normes d'équipements de protection"
+      - Comprendre la hiérarchie des textes normatifs
+    mots_cles:
+      - haute tension
+      - basse tension
+      - sous tension
+      - travaux
+      - essai
+      - protection
+    contenu_resume: "Les documents normatifs suivants sont indispensables pour l'application du present"
+
+  - numero: "3"
+    titre: TERMES ET DEFINITIONS
+    niveau: 1
+    ligne_debut: 1271
+    ligne_fin: 1890
+    objectifs_pedagogiques:
+      - Maîtriser les définitions essentielles de la norme
+      - Comprendre les termes techniques spécifiques
+      - "Distinguer les différents types d'acteurs et d'opérations"
+    mots_cles:
+      - TBT
+      - BT
+      - HTA
+      - HTB
+      - haute tension
+      - basse tension
+      - très basse tension
+      - hors tension
+      - sous tension
+      - intervention
+      - travaux
+      - manœuvre
+      - essai
+      - mesurage
+      - vérification
+      - consignation
+      - habilitation
+      - EPI
+      - protection
+      - risque électrique
+      - VAT
+      - employeur
+      - exécutant
+      - "chargé d'exploitation"
+    contenu_resume: Les termes génériques suivants sont définis pour les besoins du présent document. Dans
+    sous_articles:
+      - numero: 3.1
+        titre: Définitions relatives aux structures et aux personnes
+        niveau: 2
+      - numero: 3.2
+        titre: Définitions relatives aux installations et aux ouvrages électriques
+        niveau: 2
+      - numero: 3.3
+        titre: Définitions relatives aux grandeurs électriques
+        niveau: 2
+      - numero: 3.4
+        titre: Définitions relatives aux operations
+        niveau: 2
+      - numero: 3.5
+        titre: Définitions relatives aux distances, zones et locaux
+        niveau: 2
+      - numero: 3.6
+        titre: Définitions relatives aux équipements de travail et aux eQUIPEMENTS de protection
+        niveau: 2
+      - numero: 3.7
+        titre: Liste des documents écrits (voir Annexe A)
+        niveau: 2
+
+  - numero: "4"
+    titre: DISPOSITIONS GENERALES
+    niveau: 1
+    ligne_debut: 1891
+    ligne_fin: 3086
+    objectifs_pedagogiques:
+      - Comprendre les responsabilités de chaque acteur
+      - "Identifier les rôles de l'employeur, du chargé de travaux, des exécutants"
+      - Connaître les obligations de chacun
+    mots_cles:
+      - TBT
+      - BT
+      - HTA
+      - HTB
+      - haute tension
+      - basse tension
+      - très basse tension
+      - hors tension
+      - sous tension
+      - intervention
+      - travaux
+      - manœuvre
+      - essai
+      - mesurage
+      - consignation
+      - habilitation
+      - EPI
+      - protection
+      - risque électrique
+      - employeur
+      - chargé de consignation
+      - exécutant
+      - "chargé d'exploitation"
+    contenu_resume: Cet article énonce les prescriptions générales de prévention du risque électrique applicables
+    sous_articles:
+      - numero: 4.1
+        titre: Analyse du risque élecTRIQUE
+        niveau: 2
+      - numero: 4.2
+        titre: Environnement des ouvrages ou des installations
+        niveau: 2
+      - numero: 4.3
+        titre: Prévention du risque électrique
+        niveau: 2
+      - numero: 4.4
+        titre: Réalisation et mise en œuvre des opérations
+        niveau: 2
+      - numero: 4.5
+        titre: Les acteurs
+        niveau: 2
+
+  - numero: "5"
+    titre: FORMATION ET HABILITATION
+    niveau: 1
+    ligne_debut: 3087
+    ligne_fin: 4009
+    objectifs_pedagogiques:
+      - "Maîtriser le système d'habilitation électrique"
+      - "Comprendre la structure des symboles d'habilitation"
+      - Connaître les limites de chaque habilitation
+    mots_cles:
+      - TBT
+      - BT
+      - HTA
+      - HTB
+      - haute tension
+      - basse tension
+      - très basse tension
+      - hors tension
+      - sous tension
+      - intervention
+      - travaux
+      - manœuvre
+      - essai
+      - mesurage
+      - vérification
+      - consignation
+      - habilitation
+      - risque électrique
+      - VAT
+      - employeur
+      - chargé de travaux
+      - exécutant
+    contenu_resume: Cet article énonce les prescriptions à appliquer en matière de formation à la prévention du
+    sous_articles:
+      - numero: 5.1
+        titre: "Principes de fonctionnement et champ d'application"
+        niveau: 2
+      - numero: 5.2
+        titre: Evaluation du besoin initial
+        niveau: 2
+      - numero: 5.3
+        titre: "Conditions d'attribution de l'habilitation"
+        niveau: 2
+      - numero: 5.4
+        titre: "Suivi de l'habilitation"
+        niveau: 2
+      - numero: 5.5
+        titre: Maintien des compétences - Recyclage
+        niveau: 2
+      - numero: 5.6
+        titre: Formation à la prévention du risque électrique
+        niveau: 2
+      - numero: 5.7
+        titre: "Formalisation en cas d'habilitation"
+        niveau: 2
+      - numero: 5.8
+        titre: Disposition en cas de non habilitation
+        niveau: 2
+
+  - numero: "6"
+    titre: "DÉTERMINATION DE L'ENVIRONNEMENT DES OPÉRATIONS"
+    niveau: 1
+    ligne_debut: 4010
+    ligne_fin: 4849
+    objectifs_pedagogiques:
+      - Identifier les domaines de tension
+      - "Comprendre les zones d'environnement électrique"
+      - Connaître les distances de sécurité
+    mots_cles:
+      - TBT
+      - BT
+      - HTA
+      - HTB
+      - haute tension
+      - basse tension
+      - sous tension
+      - travaux
+      - manœuvre
+      - essai
+      - EPI
+      - protection
+      - risque électrique
+    contenu_resume: "# 6 DÉTERMINATION DE L'ENVIRONNEMENT DES OPÉRATIONS"
+    sous_articles:
+      - numero: 6.1
+        titre: Généralités et présentation
+        niveau: 2
+      - numero: 6.2
+        titre: Distances limites et zones définies autour des pièces nues sous tension en
+        niveau: 2
+      - numero: 6.3
+        titre: "Distances limites et zones définies dans les locaux et emplacements d'accès"
+        niveau: 2
+      - numero: 6.4
+        titre: Distances limites et zones définies autour des supports de lignes aériennes
+        niveau: 2
+      - numero: 6.5
+        titre: "Distances limites et zones définies par l'ouverture d'une armoire, d'un coffret ou"
+        niveau: 2
+      - numero: 6.6
+        titre: Distances limites et zones définies autour des canalisations isolées
+        niveau: 2
+      - numero: 6.7
+        titre: "Environnement autour d'un circuit de terre"
+        niveau: 2
+      - numero: 6.8
+        titre: Cas particulier des canalisations gainées
+        niveau: 2
+
+  - numero: "7"
+    titre: OPERATIONS HORS TENSION
+    niveau: 1
+    ligne_debut: 4850
+    ligne_fin: 6358
+    objectifs_pedagogiques:
+      - Maîtriser les opérations hors tension
+      - Connaître la procédure de consignation
+      - Appliquer les mesures de sécurité
+    mots_cles:
+      - TBT
+      - BT
+      - HTA
+      - HTB
+      - haute tension
+      - basse tension
+      - hors tension
+      - sous tension
+      - intervention
+      - travaux
+      - manœuvre
+      - essai
+      - mesurage
+      - vérification
+      - consignation
+      - habilitation
+      - protection
+      - risque électrique
+      - VAT
+      - employeur
+      - chargé de travaux
+      - chargé de consignation
+      - exécutant
+      - "chargé d'exploitation"
+    contenu_resume: Cet article définit les prescriptions à appliquer pour exécuter les OPERATIONS HORS TENSION.
+    sous_articles:
+      - numero: 7.1
+        titre: Procédure de consignation
+        niveau: 2
+      - numero: 7.2
+        titre: Procédure de mise hors tension
+        niveau: 2
+      - numero: 7.3
+        titre: Organisation de la consignation et de la mise hors tension
+        niveau: 2
+      - numero: 7.4
+        titre: "Rôle des différents acteurs dans le cadre d'un travail hors tension ou d'une"
+        niveau: 2
+      - numero: 7.5
+        titre: Formation à la prévention du risque électrique et Habilitation
+        niveau: 2
+
+  - numero: "8"
+    titre: TRAVAUX SOUS TENSION
+    niveau: 1
+    ligne_debut: 6359
+    ligne_fin: 7081
+    objectifs_pedagogiques:
+      - Comprendre les principes des travaux sous tension
+      - Connaître les exigences spécifiques TST
+      - Identifier les EPI et outillages nécessaires
+    mots_cles:
+      - TBT
+      - BT
+      - haute tension
+      - basse tension
+      - hors tension
+      - sous tension
+      - travaux
+      - essai
+      - vérification
+      - habilitation
+      - protection
+      - risque électrique
+      - VAT
+      - employeur
+      - exécutant
+      - "chargé d'exploitation"
+    contenu_resume: Cet article énonce les prescriptions applicables aux TRAVAUX SOUS TENSION relevant de deux
+    sous_articles:
+      - numero: 8.1
+        titre: Généralités
+        niveau: 2
+      - numero: 8.2
+        titre: Formation et habilitation
+        niveau: 2
+      - numero: 8.3
+        titre: Méthodes de travail sous tension
+        niveau: 2
+      - numero: 8.4
+        titre: "Chantier comportant différents types d'opérations"
+        niveau: 2
+      - numero: 8.5
+        titre: Documents de référence
+        niveau: 2
+      - numero: 8.6
+        titre: Outil, matériel, équipement de travail, équipement de protection individuelle,
+        niveau: 2
+      - numero: 8.7
+        titre: "Régime spécial d'exploitation"
+        niveau: 2
+      - numero: 8.8
+        titre: Conditions atmosphériques
+        niveau: 2
+      - numero: 8.9
+        titre: Organisation des travaux
+        niveau: 2
+      - numero: 8.10
+        titre: Cas particuliers
+        niveau: 2
+      - numero: 8.11
+        titre: Travaux de nettoyage sous tension
+        niveau: 2
+      - numero: 8.12
+        titre: Rôle des différents acteurs
+        niveau: 2
+
+  - numero: "9"
+    titre: "OPERATIONS DANS L'ENVIRONNEMENT"
+    niveau: 1
+    ligne_debut: 7082
+    ligne_fin: 8769
+    objectifs_pedagogiques:
+      - Comprendre les opérations au voisinage
+      - Respecter les distances de sécurité
+      - Appliquer les mesures de protection adaptées
+    mots_cles:
+      - TBT
+      - BT
+      - HTA
+      - HTB
+      - haute tension
+      - basse tension
+      - hors tension
+      - sous tension
+      - intervention
+      - travaux
+      - manœuvre
+      - essai
+      - mesurage
+      - vérification
+      - consignation
+      - habilitation
+      - EPI
+      - protection
+      - risque électrique
+      - VAT
+      - employeur
+      - chargé de travaux
+      - exécutant
+    contenu_resume: Le présent article donne les prescriptions à appliquer pour les OPERATIONS à réaliser dans
+    sous_articles:
+      - numero: 9.1
+        titre: "Principes de prévention vis-à-vis de l'environnement électrique"
+        niveau: 2
+      - numero: 9.2
+        titre: Mise hors de portée par éloignement, par obstacle ou par isolation
+        niveau: 2
+      - numero: 9.3
+        titre: Présence de pièces nues sous tension en champ libre
+        niveau: 2
+      - numero: 9.4
+        titre: "Locaux et emplacements d'accès réservé aux électriciens"
+        niveau: 2
+      - numero: 9.5
+        titre: "Ouverture d'une enveloppe électrique en basse tension"
+        niveau: 2
+      - numero: 9.6
+        titre: Ascension et travaux sur les supports de lignes aériennes
+        niveau: 2
+      - numero: 9.7
+        titre: Canalisations isolées
+        niveau: 2
+      - numero: 9.8
+        titre: "Rôle et compétence des différents acteurs dans l'environnement"
+        niveau: 2
+
+  - numero: "10"
+    titre: INTERVENTIONS BT
+    niveau: 1
+    ligne_debut: 8770
+    ligne_fin: 9680
+    objectifs_pedagogiques:
+      - Maîtriser les interventions en BT
+      - "Connaître les types d'interventions"
+      - "Appliquer les procédures d'intervention"
+    mots_cles:
+      - TBT
+      - BT
+      - hors tension
+      - sous tension
+      - intervention
+      - travaux
+      - manœuvre
+      - essai
+      - mesurage
+      - vérification
+      - consignation
+      - habilitation
+      - EPI
+      - protection
+      - risque électrique
+      - VAT
+      - employeur
+      - exécutant
+      - "chargé d'exploitation"
+    contenu_resume: Cet article expose les principes et procédés généraux applicables aux INTERVENTIONS BASSE
+    sous_articles:
+      - numero: 10.1
+        titre: "Critères généraux d'une intervention BT"
+        niveau: 2
+      - numero: 10.2
+        titre: "Règles s'appliquant à toutes les interventions BT"
+        niveau: 2
+      - numero: 10.3
+        titre: Intervention BT générale
+        niveau: 2
+      - numero: 10.4
+        titre: Interventions BT élémentaires
+        niveau: 2
+      - numero: 10.5
+        titre: Rôle des différents acteurs
+        niveau: 2
+      - numero: 10.6
+        titre: Formation Habilitation à la prévention du risque électrique et
+        niveau: 2
+
+  - numero: "11"
+    titre: "OPERATIONS SPECIFIQUES D'ESSAI, DE MESURAGE, DE VÉRIFICATION ET"
+    niveau: 1
+    ligne_debut: 9681
+    ligne_fin: 10387
+    objectifs_pedagogiques:
+      - Comprendre les opérations spécifiques
+      - Maîtriser les essais, mesurages, vérifications
+      - Appliquer les procédures de manœuvre
+    mots_cles:
+      - BT
+      - HTA
+      - HTB
+      - hors tension
+      - sous tension
+      - intervention
+      - travaux
+      - manœuvre
+      - essai
+      - mesurage
+      - vérification
+      - consignation
+      - habilitation
+      - EPI
+      - protection
+      - risque électrique
+      - employeur
+      - exécutant
+    contenu_resume: "# 11 OPERATIONS SPECIFIQUES D'ESSAI, DE MESURAGE, DE VÉRIFICATION ET"
+    sous_articles:
+      - numero: 11.1
+        titre: Présentation
+        niveau: 2
+      - numero: 11.2
+        titre: Essais
+        niveau: 2
+      - numero: 11.3
+        titre: Mesurages
+        niveau: 2
+      - numero: 11.4
+        titre: Vérifications
+        niveau: 2
+      - numero: 11.5
+        titre: Manœuvres
+        niveau: 2
+      - numero: 11.6
+        titre: Formation à la prévention du risque électrique et Habilitation
+        niveau: 2
+      - numero: 11.7
+        titre: Tableau des compétences
+        niveau: 2
+
+  - numero: "12"
+    titre: OPÉRATIONS PARTICULIÈRES
+    niveau: 1
+    ligne_debut: 10388
+    ligne_fin: 11349
+    objectifs_pedagogiques:
+      - Connaître les équipements de protection
+      - Utiliser correctement les EPI et EPC
+      - Entretenir les équipements de protection
+    mots_cles:
+      - TBT
+      - BT
+      - HTA
+      - haute tension
+      - basse tension
+      - hors tension
+      - sous tension
+      - intervention
+      - travaux
+      - manœuvre
+      - essai
+      - mesurage
+      - vérification
+      - consignation
+      - habilitation
+      - protection
+      - risque électrique
+      - VAT
+      - employeur
+    contenu_resume: Cet article définit, en complément des articles précédents, des prescriptions particulières
+    sous_articles:
+      - numero: 12.1
+        titre: Opérations sur les lignes aériennes sur supports communs
+        niveau: 2
+      - numero: 12.2
+        titre: "Opérations sur les installations d'éclairage extérieur"
+        niveau: 2
+      - numero: 12.3
+        titre: "Opérations de remplacement de lampes et d'accessoires"
+        niveau: 2
+      - numero: 12.4
+        titre: Opérations de remplacement de fusibles BT
+        niveau: 2
+      - numero: 12.5
+        titre: Opérations de remplacement de fusibles HTA
+        niveau: 2
+      - numero: 12.6
+        titre: Opérations sur les transformateurs de puissance et de tension
+        niveau: 2
+      - numero: 12.7
+        titre: Matériels alimentes en BT et TBT comportant des circuits HT
+        niveau: 2
+      - numero: 12.8
+        titre: Travaux et interventions BT sur les accumulateurs et les batteries
+        niveau: 2
+      - numero: 12.9
+        titre: Travaux et interventions BT sur la partie en courant continu des installations
+        niveau: 2
+      - numero: 12.10
+        titre: Poste de travail soumis à induction magnétique ou couplage capacitif
+        niveau: 2
+      - numero: 12.11
+        titre: Opérations sur les circuits de terre
+        niveau: 2
+
+  - numero: "13"
+    titre: INCENDIE ET ACCIDENTS SUR OU PRES DES OUVRAGES ET
+    niveau: 1
+    ligne_debut: 11350
+    ligne_fin: 16757
+    objectifs_pedagogiques:
+      - Réagir face à un incendie électrique
+      - "Porter secours en cas d'accident électrique"
+      - Appliquer les gestes de premiers secours
+    mots_cles:
+      - TBT
+      - BT
+      - HTA
+      - HTB
+      - haute tension
+      - basse tension
+      - hors tension
+      - sous tension
+      - intervention
+      - travaux
+      - manœuvre
+      - essai
+      - mesurage
+      - vérification
+      - consignation
+      - habilitation
+      - EPI
+      - protection
+      - risque électrique
+      - VAT
+      - employeur
+      - chargé de travaux
+      - chargé de consignation
+      - exécutant
+      - "chargé d'exploitation"
+    contenu_resume: "# 13 INCENDIE ET ACCIDENTS SUR OU PRES DES OUVRAGES ET"
+    sous_articles:
+      - numero: 13.1
+        titre: Généralités
+        niveau: 2
+      - numero: 13.2
+        titre: Incendie sur ou près des ouvrages ou des installations électriques
+        niveau: 2
+      - numero: 13.3
+        titre: "Conduite à tenir en cas d'accident d'origine électrique sur les ouvrages, les"
+        niveau: 2
+      - numero: 13.4
+        titre: "Incident en zone présentant des risques d'explosion"
+        niveau: 2
+
+definitions:
+  description: "Termes et définitions essentiels pour la compréhension de la norme"
+  categories:
+    - numero: 3.1
+      titre: Définitions relatives aux structures et aux personnes
+      termes:
+        - terme: Entreprise exploitante
+          numero: 3.1.1
+          definition: entreprise qui utilise les INSTALLATIONS ou qui exploite les OUVRAGES en tant que propriétaire, ou par délégation, ou par contrat
+          exemples: []
+        - terme: Entreprise extérieure
+          numero: 3.1.2
+          definition: "entreprise qui intervient pour réaliser des OPERATIONS au profit du DONNEUR D'ORDRE (convention, contrat, etc.)"
+          exemples: []
+        - terme: "Donneur d'ordre"
+          numero: 3.1.3
+          definition: personne physique ou morale, en général entreprise utilisatrice, qui décide de faire réaliser des OPERATIONS par une entreprise operant soit sur un OUVRAGE ou une INSTALLATION ELECTRIQUE, soit dans leur ENVIRONNEMENT
+          exemples: []
+        - terme: Employeur
+          numero: 3.1.4
+          definition: personne physique qui emploie du personnel et a autorité sur lui
+          exemples: []
+        - terme: "Chef d'établissement"
+          numero: 3.1.5
+          definition: "personne physique qui assume la responsabilité d'une entreprise exploitante"
+          exemples: []
+        - terme: "Chargé d'exploitation électrique"
+          numero: 3.1.6
+          definition: "personne chargée d'assurer les opérations d'EXPLOITATION (conduite, utilisation, entretien, maintenance, dépannage, surveillance, accès, etc.) d'un OUVRAGE ou d'une INSTALLATION électrique"
+          exemples: []
+        - terme: Personne qualifiée (en électricité)
+          numero: 3.1.7
+          definition: "personne ayant une formation, une connaissance et une expérience appropriées en électricité pour lui permettre d'analyser le risque électrique et d'éviter les dangers que peut présenter l'électricité [3.2.3, NF EN 50110-1 modifiée] sécurité électrique."
+          exemples: []
+        - terme: Personne avertie
+          numero: 3.1.8
+          definition: "personne suffisamment informée par des PERSONNES QUALIFIEES pour lui permettre d'éviter les dangers que peut présenter l'électricité [3.2.4, NF EN 50110-1]"
+          exemples: []
+        - terme: Personne ordinaire
+          numero: 3.1.9
+          definition: "personne qui n'est ni une PERSONNE QUALIFIEE, ni une PERSONNE AVERTIE [3.2.5, NF EN 50110-1]"
+          exemples: []
+        - terme: Opérateur
+          numero: 3.1.10
+          definition: "personne réalisant, ou participant à, ou assurant la direction des OPERATIONS d'ORDRE ELECTRIQUE ou d'ORDRE NON ELECTRIQUE soit sur des OUVRAGES ou des INSTALLATIONS, soit dans leur ENVIRONNEMENT"
+          exemples: []
+        - terme: Charge de consignation
+          numero: 3.1.11
+          definition: "personne chargée d'effectuer ou de faire effectuer les opérations de la CONSIGNATION électrique"
+          exemples: []
+        - terme: Charge de travaux
+          numero: 3.1.12
+          definition: "personne chargee d'assurer la direction effective des TRAVAUX d'ORDRE ELECTRIQUE OU d'ORDRE NON ELECTRIQUE"
+          exemples: []
+        - terme: "Chargé d'intervention"
+          numero: 3.1.13
+          definition: "personne chargée d'assurer la réalisation des INTERVENTIONS BT en Basse Tension CHARGE D'INTERVENTION GENERALE OU CHARGE D'INTERVENTION ELEMENTAIRE."
+          exemples: []
+        - terme: "Chargé d'opérations spécifiques"
+          numero: 3.1.14
+          definition: "terme désignant indistinctement la personne chargée d'assurer la direction des ESSAIS, MESURAGES, VERIFICATIONS OU MANŒUVRES ou de proceder elle-même a des ESSAIS, MESURAGES, VERIFICATIONS OU MANŒUVRES"
+          exemples: []
+        - terme: Charge de chantier
+          numero: 3.1.15
+          definition: "personne chargée d'assurer la direction des TRAVAUX d'ORDRE NON ELECTRIQUE"
+          exemples: []
+        - terme: Exécutant
+          numero: 3.1.16
+          definition: "personne assurant l'exécution des OPERATIONS. Cette personne opère sous la conduite d'un CHARGE DE TRAVAUX, d'un CHARGE D'INTERVENTION GENERALE, d'un CHARGE D'OPERATIONS SPECIFIQUES ou d'un CHARGE DE CHANTIER"
+          exemples: []
+        - terme: Surveillant de sécurité électrique
+          numero: 3.1.17
+          definition: "personne possédant la connaissance nécessaire pour surveiller une ou plusieurs personnes pendant le déroulement d'une OPERATION déterminée conformément à des instructions reçues Dans le présent document, le SURVEILLANT DE SECURITE ELECTRIQUE est nommé, selon la nature de la surveillance, SURVEILLANT DE SECURITE ELECTRIQUE D'OPERATION et D'ACCOMPAGNEMENT, OU SURVEILLANT DE SECURITE ELECTRIQUE DE LIMITE"
+          exemples: []
+        - terme: Habilitation - personne habilitée
+          numero: 3.1.18
+          definition: "reconnaissance par l'EMPLOYEUR de la capacité d'une personne placée sous son autorité à accomplir les tâches qui lui sont confiées en sécurité vis-à-vis du risque électrique"
+          exemples: []
+    - numero: 3.2
+      titre: Définitions relatives aux installations et aux ouvrages électriques
+      termes:
+        - terme: Installation électrique - ouvrage électrique
+          numero: 3.2.1
+          definition: "ensemble des MATERIELS électriques mis en œuvre pour la production, la conversion, la distribution ou l'utilisation de l'énergie électrique Dans le présent document, le qualificatif électrique est omis lorsqu'il n'y a pas d'ambiguïté. Le terme « OUVRAGE > est exclusivement réservé, dans le présent document, aux réseaux publics de transport et de distribution d'électricité et à leurs annexes. Le terme « INSTALLATION > s'applique, dans le présent document, à toute INSTALLATION électrique à l'exclusion des OUVRAGES."
+          exemples: []
+        - terme: Matériel électrique
+          numero: 3.2.2
+          definition: "matériel utilisé pour la production, la transformation, la distribution ou l'utilisation de l'énergie électrique, tel que machine, transformateur, appareillage électrique, appareil de mesure, dispositif de protection, canalisation électrique, matériels d'utilisation [VEI 826-16-01]"
+          exemples: []
+        - terme: Ligne électrique aérienne
+          numero: 3.2.3
+          definition: "ensemble de conducteurs nus ou isolés, fixes en élévation sur des supports (poteaux, pylônes, potelets, façades d'immeuble, etc.) au moyen d'isolateurs ou de systèmes de suspension adéquats"
+          exemples: []
+        - terme: Canalisation électrique isolée - Canalisation isolée
+          numero: 3.2.4
+          definition: ensemble constitué par un ou plusieurs conducteurs électriques isolés et les éléments assurant leur fixation et leur protection mécanique ou sous goulotte.
+          exemples: []
+        - terme: Canalisation encastrée
+          numero: 3.2.5
+          definition: "le terme encastré signifie présence d'un côté affleurant"
+          exemples: []
+        - terme: Canalisation noyée
+          numero: 3.2.6
+          definition: le terme noyé signifie complètement enrobé
+          exemples: []
+        - terme: Partie active
+          numero: 3.2.7
+          definition: "conducteur ou partie conductrice destiné à être mis sous tension en service normal, y compris le conducteur neutre. Par convention, le conducteur PEN n'est pas considéré comme un conducteur actif [VEI 826-12-08 modifié] [VEI 195-02-19 modifié]"
+          exemples: []
+        - terme: Conducteur PEN
+          numero: 3.2.8
+          definition: conducteur assurant à la fois les fonctions de conducteur de protection et de conducteur neutre N pour le conducteur neutre.
+          exemples: []
+        - terme: "Elément (d'accumulateur)"
+          numero: 3.2.9
+          definition: "unité fonctionnelle de base, consistant en un assemblage d'électrodes, d'électrolyte, de conteneur, de bornes et généralement de séparateurs, qui est une source d'énergie électrique obtenue par transformation directe d'énergie chimique [VEI 482-01-01]"
+          exemples: []
+        - terme: Accumulateur
+          numero: 3.2.10
+          definition: élément qui est conçu pour être rechargé électriquement [VEI 482-01-03]
+          exemples: []
+        - terme: "Batterie d'accumulateurs"
+          numero: 3.2.11
+          definition: "un ou plusieurs éléments équipés des dispositifs nécessaires pour l'emploi, par exemple boîtier, bornes, marquage et dispositifs de protection [VEI 482-01-04 Modifié] accouplés pour générer un courant donné sous une tension donnée."
+          exemples: []
+    - numero: 3.3
+      titre: Définitions relatives aux grandeurs électriques
+      termes:
+        - terme: Tension nominale
+          numero: 3.3.1
+          definition: "valeur de la tension par laquelle l'installation électrique ou une partie de l'installation électrique est désignée et identifiée [VEI 826-11-01]"
+          exemples: []
+        - terme: Domaines de tension
+          numero: 3.3.2
+          definition: "le classement des tensions nominales est effectué, dans ce présent document, par domaine de tension (voir Tableau 1) En basse tension et en exploitation normale, la tension réelle d'un OUVRAGE ou d'une partie d'OUVRAGE peut excéder de 10 % au maximum sa valeur nominale, sans que cela entraîne une modification du domaine de tension. Tableau 1 - Tableau des domaines de tensions Domaines de tension Valeur de la tension nominale Un exprimée en volts en courant alternatif en courant continu lisse (1) Très basse tension Un ≤ 50 Un ≤ 120 (domaine TBT) Basse tension 50 < Un ≤ 1 000 120 < Un ≤ 1 500 (domaine BT) Haute Domaine HTA 1 000 < Un ≤ 50 000 1 500 < Un ≤ 75 000 Tension Domaine HTB Un > 50 000 Un > 75 000 (1) Le courant continu lisse est celui défini conventionnellement par un taux d'ondulation non supérieur à 10 % en valeur efficace, la valeur maximale de crête ne devant pas être supérieure à 15 %. Pour les autres courants continus, les valeurs des tensions nominales sont les mêmes que pour le courant alternatif."
+          exemples: []
+        - terme: Très basse tension de sécurité (TBTS)
+          numero: 3.3.3
+          definition: "caractéristiques techniques des INSTALLATIONS du domaine TBT dont : . toutes les PARTIES ACTIVES sont séparées des PARTIES ACTIVES de toute autre INSTALLATION par une isolation double ou renforcée ; . toutes les PARTIES ACTIVES sont isolées de la terre et de tout conducteur de protection appartenant à toute autre INSTALLATION."
+          exemples: []
+        - terme: Très Basse Tension de Protection (TBTP)
+          numero: 3.3.4
+          definition: caractéristiques techniques des INSTALLATIONS du domaine TBT qui répondent à la première condition de la TBTS, mais pas à la seconde condition
+          exemples: []
+        - terme: Très Basse Tension Fonctionnelle (TBTF)
+          numero: 3.3.5
+          definition: caractéristiques techniques des INSTALLATIONS du domaine TBT qui ne sont ni TBTS, ni TBTP
+          exemples: []
+    - numero: 3.4
+      titre: Définitions relatives aux operations
+      termes:
+        - terme: Exploitation
+          numero: 3.4.1
+          definition: "toutes les activités nécessaires pour permettre le fonctionnement d'un OUVRAGE ou d'une INSTALLATION électriques. Ces activités comprennent notamment les travaux, les MANŒUVRES, les commandes, la surveillance et la maintenance"
+          exemples: []
+        - terme: Opération
+          numero: 3.4.2
+          definition: "activité exercée, soit directement sur les OUVRAGES ou les INSTALLATIONS électriques, soit dans un ENVIRONNEMENT électrique. Elle peut être de deux natures : · OPERATION d'ORDRE ELECTRIQUE ; . OPERATION d'ORDRE NON ELECTRIQUE."
+          exemples: []
+        - terme: "Opération d'ordre électrique"
+          numero: 3.4.3
+          definition: "OPERATION qui, pour un OUVRAGE ou une INSTALLATION en exploitation électrique, concerne les PARTIES ACTIVES, leurs isolants, la continuité des masses et autres parties conductrices des MATERIELS (les circuits magnétiques, etc.) ainsi que les conducteurs de protection. effectuées soit sur les OUVRAGES ou les INSTALLATIONS électriques, soit dans l'ENVIRONNEMENT de pièces nues sous tension."
+          exemples: []
+        - terme: "Type d'opérations d'ordre électrique"
+          numero: 3.4.4
+          definition: "On distingue les types d'OPERATIONS d'ORDRE ELECTRIQUE suivants : . TRAVAIL HORS TENSION ; · TRAVAIL SOUS TENSION ; • TRAVAIL AU VOISINAGE SIMPLE ; · TRAVAIL AU VOISINAGE RENFORCE ; · INTERVENTION EN BASSE TENSION ; · OPERATIONS SPECIFIQUES comprenant les ESSAIS, les MESURAGES, les VERIFICATIONS et les MANŒUVRES."
+          exemples: []
+        - terme: Essai
+          numero: 3.4.5
+          definition: "OPERATION destinée à s'assurer du bon fonctionnement ou de l'état électrique, mécanique ou autre d'un OUVRAGE ou d'une INSTALLATION électrique"
+          exemples: []
+        - terme: Mesurage
+          numero: 3.4.6
+          definition: "OPERATION destinée à mesurer des grandeurs électriques, ou des grandeurs physiques (distance, température ou autres) 3.4.7 Vérification OPERATION destinée à s'assurer qu'un OUVRAGE ou une INSTALLATION est conforme à un référentiel"
+          exemples: []
+        - terme: Manœuvre
+          numero: 3.4.8
+          definition: "OPERATION conduisant à un changement de la configuration électrique d'un OUVRAGE, d'une INSTALLATION ou de l'alimentation électrique d'un MATERIEL. Les MANŒUVRES sont effectuées au moyen d'appareillages spécialement prévus à cet effet, tels qu'interrupteurs, disjoncteurs, sectionneurs, ponts, etc. manœuvres d'urgence."
+          exemples: []
+        - terme: "Opération d'ordre non électrique"
+          numero: 3.4.9
+          definition: "OPERATION qui ne répond pas à la définition d'une OPERATION d'ORDRE ELECTRIQUE, telle que : · celle liée à la construction, à la réalisation, au démantèlement ou à la maintenance dans le VOISINAGE ou sur un OUVRAGE ou une INSTALLATION électrique, tels que les travaux du BTP, de nettoyage, de désherbage, etc. ; • celle liee a une OPERATION ne concernant pas directement un OUVRAGE ou une INSTALLATION électrique, mais effectuée dans l'ENVIRONNEMENT de cet OUVRAGE ou cette INSTALLATION, tels que les travaux du BTP, les activités de livraison, de déménagement etc. Peut également être considérée comme une OPERATION d'ORDRE NON ELECTRIQUE au VOISINAGE d'un OUVRAGE ou d'une INSTALLATION d'un domaine de tension basse tension ou haute tension, toute OPERATION d'ORDRE ELECTRIQUE effectuée sur un OUVRAGE ou sur une INSTALLATION d'un autre domaine de tension, respectivement haute tension ou basse tension"
+          exemples: []
+        - terme: Consignation
+          numero: 3.4.10
+          definition: "procédure d'ordre électrique destinée à assurer la protection des personnes et des OUVRAGES ou des INSTALLATIONS contre les conséquences de tout maintien accidentel ou de toute apparition ou réapparition intempestive de tension sur ces OUVRAGES ou ces INSTALLATIONS"
+          exemples: []
+        - terme: Déconsignation
+          numero: 3.4.11
+          definition: "procédure d'ordre électrique destinée à remettre un OUVRAGE ou une INSTALLATION précédemment consigné dans un état qui permet sa remise en service"
+          exemples: []
+        - terme: Mise hors tension
+          numero: 3.4.12
+          definition: "procédure d'ordre électrique destinée à réduire le risque électrique en supprimant la tension sur un OUVRAGE ou une INSTALLATION réapparition intempestive de tension."
+          exemples: []
+        - terme: Mise hors de portée
+          numero: 3.4.13
+          definition: "moyen de protection des personnes vis-à-vis d'un contact avec une pièce nue sous tension réalisé, soit par ELOIGNEMENT, soit par interposition d'un OBSTACLE, soit par ISOLATION de la pièce nue sous tension"
+          exemples: []
+        - terme: Réquisition ou essai sous alimentation autonome
+          numero: 3.4.14
+          definition: "procédure qui permet, après une CONSIGNATION ou une première étape de CONSIGNATION d'un OUVRAGE ou d'une INSTALLATION, de réalimenter l'OUVRAGE ou l'INSTALLATION par une ou des sources autonomes"
+          exemples: []
+        - terme: Situation de travail
+          numero: 3.4.15
+          definition: "combinaison du type d'OPERATIONS avec l'une ou plusieurs des conditions d'ENVIRONNEMENT électrique suivantes : · présence ou non d'induction ou de couplage capacitif ; · présence ou non d'atmosphère explosive ; · situation météorologique."
+          exemples: []
+        - terme: Phase de travail
+          numero: 3.4.16
+          definition: "enchaînement des gestes élémentaires nécessaires à la mise en œuvre des outils et des matériels sur l'OUVRAGE ou l'INSTALLATION ou dans son ENVIRONNEMENT. Elle a un objectif prédéfini et s'achève sur un état stable"
+          exemples: []
+    - numero: 3.5
+      titre: Définitions relatives aux distances, zones et locaux
+      termes:
+        - terme: Environnement électrique
+          numero: 3.5.1
+          definition: "volume géographique autour d'une pièce nue sous tension ou d'une CANALISATION ISOLEE, limite par la DISTANCE LIMITE D'INVESTIGATION (50 m), utilisé dans le cadre des OPERATIONS d'ORDRE ELECTRIQUE ou d'ORDRE NON ELECTRIQUE"
+          exemples: []
+        - terme: Voisinage
+          numero: 3.5.2
+          definition: "en présence de pièces nues sous tension, le VOISINAGE est l'espace compris en haute tension entre la DISTANCE LIMITE DE VOISINAGE SIMPLE (DLVS) et la DISTANCE MINIMALE D'APPROCHE (DMA) et en basse tension entre la DISTANCE LIMITE DE VOISINAGE SIMPLE (DLVS) et la pièce nue. Le VOISINAGE comprend deux zones : le VOISINAGE SIMPLE et le VOISINAGE RENFORCE"
+          exemples: []
+        - terme: Champ libre
+          numero: 3.5.3
+          definition: espace sans OBSTACLE entourant une pièce nue sous tension
+          exemples: []
+        - terme: Zone de travail
+          numero: 3.5.4
+          definition: zone située sur un OUVRAGE, une INSTALLATION ou dans leur ENVIRONNEMENT, dans laquelle le ou les OPERATEURS sont amenés à évoluer avec les outils, équipements et matériels. Cette zone est définie lors de la préparation du travail et délimitée
+          exemples: []
+        - terme: Poste de travail
+          numero: 3.5.5
+          definition: "emplacement occupé par un OPERATEUR dans la ZONE DE TRAVAIL pendant l'exécution d'une PHASE DE TRAVAIL"
+          exemples: []
+        - terme: "Zone d'évolution"
+          numero: 3.5.6
+          definition: "volume autour du POSTE DE TRAVAIL de chaque OPERATEUR dans lequel celui-ci est susceptible d'évoluer avec ses outils, équipements et matériels"
+          exemples: []
+        - terme: "Local ou emplacement d'accès reserve aux électriciens (local ou emplacement"
+          numero: 3.5.7
+          definition: "à risque spécifique électrique) local ou emplacement contenant des parties d'OUVRAGE ou d'INSTALLATION comportant des pièces nues susceptibles d'être sous tension et accessibles dans lequel au moins l'une des conditions ci-après existe : · la protection contre les contacts directs n'est pas assurée par construction (en basse tension seulement) ; · la protection contre les contacts directs est assurée par ELOIGNEMENT, ce mode de protection pouvant être annule par une personne ignorant le risque ; . la protection contre les contacts directs est assurée par OBSTACLE, ce mode de protection pouvant être contourne par une personne ignorant le risque."
+          exemples: []
+    - numero: 3.6
+      titre: Définitions relatives aux équipements de travail et aux eQUIPEMENTS de protection
+      termes:
+        - terme: Equipement de protection individuelle (EPI)
+          numero: 3.6.1
+          definition: dispositif ou moyen destiné à être porté par une personne en vue de la protéger contre un ou plusieurs risques susceptibles de menacer sa sécurité ou sa santé
+          exemples: []
+        - terme: Pavé de terre
+          numero: 3.6.2
+          definition: "dispositif limiteur de tension, destiné à protéger le personnel contre les remises sous tension intempestives lors d'ESSAIS ou de TRAVAUX"
+          exemples: []
+        - terme: "Dispositif de vérification d'absence de tension (VAT)"
+          numero: 3.6.3
+          definition: "dispositif conçu spécifiquement à cet effet, destiné à fournir la preuve indiscutable de l'absence de tension nominale"
+          exemples: []
+        - terme: Equipement portable de mise à la terre et en court-circuit (MALT/CC)
+          numero: 3.6.4
+          definition: "équipement portable conçu à cet effet, raccordé aux parties électriques d'un OUVRAGE ou d'une INSTALLATION, en vue de réaliser la mise à la terre, la mise en court-circuit ou la mise à la terre et en court-circuit"
+          exemples: []
+        - terme: Outil isolant
+          numero: 3.6.5
+          definition: outil essentiellement ou totalement réalisé en matériau(x) isolant(s) [VEI 651-01-26 modifié]
+          exemples: []
+        - terme: Outil isolé
+          numero: 3.6.6
+          definition: outil en matériau(x) conducteur(s) partiellement ou complètement recouvert(s) de matériau(x) isolant(s) [VEI 651-01-25 modifié]
+          exemples: []
+        - terme: Enveloppe
+          numero: 3.6.7
+          definition: élément assurant la protection des MATERIELS électriques contre certaines influences externes (chocs, intempéries, corrosions, etc.) et la protection des personnes contre le risque de contacts directs
+          exemples: []
+        - terme: Nappage
+          numero: 3.6.8
+          definition: action qui consiste à mettre en place ou a tendre une NAPPE ISOLANTE souple, sans contact direct avec les pièces nues sous tension, pour éviter aux OPERATEURS tout risque de contact fortuit
+          exemples: []
+        - terme: Habillage
+          numero: 3.6.9
+          definition: action qui consiste à recouvrir une pièce nue sous tension par contact direct de façon à rendre impossible tout contact avec un OPERATEUR
+          exemples: []
+        - terme: Nappe isolante
+          numero: 3.6.10
+          definition: dispositif de protection isolant souple dispose sur ou devant les pièces nues sous tension
+          exemples: []
+        - terme: Ecran
+          numero: 3.6.11
+          definition: dispositif de protection isolant ou conducteur, disposé à distance des pièces nues sous tension
+          exemples: []
+        - terme: Protecteur
+          numero: 3.6.12
+          definition: dispositif rigide ou souple, réalisé en matériau isolant et utilisé pour recouvrir de façon amovible les pièces nues sous tension, de manière a prevenir tout risque de contact fortuit avec celles-ci. Il concerne des produits divers, tels que profilés, capuchons, etc.
+          exemples: []
+        - terme: Isolation
+          numero: 3.6.13
+          definition: "moyen permettant de protéger les personnes contre un risque électrique à l'aide de matériau isolant ou de dispositif en matériau isolant"
+          exemples: []
+        - terme: Balisage
+          numero: 3.6.14
+          definition: moyen permettant de délimiter et de signaler une zone définie
+          exemples: []
+    - numero: 3.7
+      titre: Liste des documents écrits (voir Annexe A)
+      termes:
+    - numero: 3.7
+      titre: Liste des documents écrits (voir Annexe A)
+      termes:
+
+habilitations:
+  description: "Symboles d'habilitation électrique selon la norme NF C18-510"
+  structure_symbole:
+    - "1er caractère: Domaine de tension (B=BT, H=HT)"
+    - "2ème caractère: Type d'opération (0=Non électricien, 1=Exécutant, 2=Chargé de travaux)"
+    - "3ème caractère (optionnel): Nature de l'opération (T=Sous tension, V=Voisinage, N=Nettoyage)"
+    - "Attribut (optionnel): Fonction particulière (C=Consignation, R=Intervention, E=Essai)"
+
+  symboles:
+    # Basse Tension - Non électriciens
+    - code: "B0"
+      domaine: "BT"
+      type: "Exécutant non électricien"
+      operations_autorisees:
+        - "Travaux d'ordre non électrique"
+        - "Accès aux locaux électriques"
+      restrictions:
+        - "Aucune opération d'ordre électrique"
+        - "Surveillance par personne habilitée"
+      formation_requise: "Module Tronc Commun (7h)"
+      recyclage: "3 ans"
+
+    - code: "B0V"
+      domaine: "BT"
+      type: "Exécutant non électricien au voisinage"
+      operations_autorisees:
+        - "Travaux d'ordre non électrique au voisinage de pièces nues sous tension BT"
+      restrictions:
+        - "Respecter les distances de sécurité"
+        - "Zone de travail délimitée"
+      formation_requise: "Module Tronc Commun + Module Voisinage (10.5h)"
+      recyclage: "3 ans"
+
+    # Basse Tension - Électriciens hors tension
+    - code: "B1"
+      domaine: "BT"
+      type: "Exécutant électricien"
+      operations_autorisees:
+        - "Travaux d'ordre électrique hors tension"
+        - "Réalisation d'installations"
+      restrictions:
+        - "Travaux sous la direction d'un chargé de travaux B2"
+      formation_requise: "Module Tronc Commun + Module BT (21h)"
+      recyclage: "3 ans"
+
+    - code: "B1V"
+      domaine: "BT"
+      type: "Exécutant électricien au voisinage"
+      operations_autorisees:
+        - "Travaux d'ordre électrique hors tension au voisinage HT"
+      restrictions:
+        - "Respecter les distances de voisinage HT"
+      formation_requise: "Module Tronc Commun + Module BT + Voisinage HT (24.5h)"
+      recyclage: "3 ans"
+
+    - code: "B2"
+      domaine: "BT"
+      type: "Chargé de travaux"
+      operations_autorisees:
+        - "Direction et surveillance de travaux hors tension BT"
+        - "Définition des mesures de sécurité"
+        - "Surveillance des exécutants"
+      restrictions:
+        - "Responsabilité de la sécurité de l'équipe"
+      formation_requise: "Module Tronc Commun + Module BT + Chargé de travaux (28h)"
+      recyclage: "3 ans"
+
+    - code: "B2V"
+      domaine: "BT"
+      type: "Chargé de travaux au voisinage"
+      operations_autorisees:
+        - "Direction de travaux hors tension BT au voisinage HT"
+      restrictions:
+        - "Respecter les distances de voisinage HT"
+      formation_requise: "Module Tronc Commun + Module BT + Chargé de travaux + Voisinage HT (31.5h)"
+      recyclage: "3 ans"
+
+    # Basse Tension - Sous tension
+    - code: "B2T"
+      domaine: "BT"
+      type: "Chargé de travaux sous tension BT"
+      operations_autorisees:
+        - "Travaux sous tension en Basse Tension"
+        - "Direction d'équipe de travaux sous tension"
+      restrictions:
+        - "Formation spécialisée obligatoire"
+        - "Outillage isolé adapté"
+        - "EPI spécifiques"
+      formation_requise: "Formation spécialisée TST BT (70h minimum)"
+      recyclage: "3 ans"
+
+    # Basse Tension - Interventions
+    - code: "BS"
+      domaine: "BT"
+      type: "Chargé d'intervention élémentaire"
+      operations_autorisees:
+        - "Remplacement à l'identique (fusibles, lampes, prises, interrupteurs)"
+        - "Raccordements simples"
+        - "Réarmement de dispositifs de protection"
+      restrictions:
+        - "Interventions limitées et simples"
+        - "Installation en bon état apparent"
+      formation_requise: "Module Tronc Commun + Module BS (14h)"
+      recyclage: "3 ans"
+
+    - code: "BE Manœuvre"
+      domaine: "BT"
+      type: "Chargé d'opérations spécifiques - Manœuvres"
+      operations_autorisees:
+        - "Manœuvres d'exploitation"
+        - "Manœuvres de consignation"
+      restrictions:
+        - "Opérations définies par l'employeur"
+      formation_requise: "Module Tronc Commun + Module BE Manœuvre (17.5h)"
+      recyclage: "3 ans"
+
+    - code: "BE Mesurage"
+      domaine: "BT"
+      type: "Chargé d'opérations spécifiques - Mesurages"
+      operations_autorisees:
+        - "Mesures électriques"
+        - "Essais et contrôles"
+      restrictions:
+        - "Utilisation d'appareils de mesure"
+      formation_requise: "Module Tronc Commun + Module BE Mesurage (17.5h)"
+      recyclage: "3 ans"
+
+    - code: "BE Vérification"
+      domaine: "BT"
+      type: "Chargé d'opérations spécifiques - Vérifications"
+      operations_autorisees:
+        - "Vérifications réglementaires"
+        - "Contrôles d'installations"
+      restrictions:
+        - "Compétences en métrologie"
+      formation_requise: "Module Tronc Commun + Module BE Vérification (17.5h)"
+      recyclage: "3 ans"
+
+    - code: "BE Essai"
+      domaine: "BT"
+      type: "Chargé d'opérations spécifiques - Essais"
+      operations_autorisees:
+        - "Essais de fonctionnement"
+        - "Mise en service"
+      restrictions:
+        - "Travaux de mise en service"
+      formation_requise: "Module Tronc Commun + Module BE Essai (17.5h)"
+      recyclage: "3 ans"
+
+    # Basse Tension - Consignation
+    - code: "BC"
+      domaine: "BT"
+      type: "Chargé de consignation"
+      operations_autorisees:
+        - "Consignation d'installations BT"
+        - "Délivrance d'attestations de consignation"
+      restrictions:
+        - "Connaissance approfondie des installations"
+      formation_requise: "Module Tronc Commun + Module BC (21h)"
+      recyclage: "3 ans"
+
+    # Haute Tension - Non électriciens
+    - code: "H0"
+      domaine: "HT"
+      type: "Exécutant non électricien"
+      operations_autorisees:
+        - "Travaux d'ordre non électrique en zone HT"
+      restrictions:
+        - "Aucune opération électrique"
+        - "Surveillance obligatoire"
+      formation_requise: "Module Tronc Commun + Module HT (14h)"
+      recyclage: "3 ans"
+
+    - code: "H0V"
+      domaine: "HT"
+      type: "Exécutant non électricien au voisinage"
+      operations_autorisees:
+        - "Travaux d'ordre non électrique au voisinage HT"
+      restrictions:
+        - "Distances de sécurité strictes"
+      formation_requise: "Module Tronc Commun + Module HT + Voisinage (17.5h)"
+      recyclage: "3 ans"
+
+    # Haute Tension - Électriciens hors tension
+    - code: "H1"
+      domaine: "HT"
+      type: "Exécutant électricien"
+      operations_autorisees:
+        - "Travaux d'ordre électrique hors tension HT"
+      restrictions:
+        - "Sous la direction d'un H2"
+      formation_requise: "Module Tronc Commun + Module HT + Électricien (28h)"
+      recyclage: "3 ans"
+
+    - code: "H1V"
+      domaine: "HT"
+      type: "Exécutant électricien au voisinage"
+      operations_autorisees:
+        - "Travaux hors tension HT au voisinage d'autres installations HT"
+      restrictions:
+        - "Distances de voisinage"
+      formation_requise: "Module Tronc Commun + Module HT + Électricien + Voisinage (31.5h)"
+      recyclage: "3 ans"
+
+    - code: "H2"
+      domaine: "HT"
+      type: "Chargé de travaux"
+      operations_autorisees:
+        - "Direction et surveillance de travaux hors tension HT"
+      restrictions:
+        - "Responsabilité de la sécurité"
+      formation_requise: "Module Tronc Commun + Module HT + Chargé de travaux (35h)"
+      recyclage: "3 ans"
+
+    - code: "H2V"
+      domaine: "HT"
+      type: "Chargé de travaux au voisinage"
+      operations_autorisees:
+        - "Direction de travaux HT au voisinage"
+      restrictions:
+        - "Gestion du voisinage"
+      formation_requise: "Module Tronc Commun + Module HT + Chargé de travaux + Voisinage (38.5h)"
+      recyclage: "3 ans"
+
+    # Haute Tension - Sous tension
+    - code: "H2T"
+      domaine: "HT"
+      type: "Chargé de travaux sous tension HT"
+      operations_autorisees:
+        - "Travaux sous tension en Haute Tension"
+      restrictions:
+        - "Formation très spécialisée"
+        - "EPI spécifiques HT"
+      formation_requise: "Formation spécialisée TST HT (minimum 140h)"
+      recyclage: "3 ans"
+
+    # Haute Tension - Opérations spécifiques
+    - code: "HE Manœuvre"
+      domaine: "HT"
+      type: "Chargé d'opérations spécifiques - Manœuvres"
+      operations_autorisees:
+        - "Manœuvres d'exploitation HT"
+      restrictions:
+        - "Procédures strictes"
+      formation_requise: "Module Tronc Commun + Module HE Manœuvre (24.5h)"
+      recyclage: "3 ans"
+
+    - code: "HE Essai"
+      domaine: "HT"
+      type: "Chargé d'opérations spécifiques - Essais"
+      operations_autorisees:
+        - "Essais HT"
+      restrictions:
+        - "Compétences spécifiques"
+      formation_requise: "Module Tronc Commun + Module HE Essai (24.5h)"
+      recyclage: "3 ans"
+
+    - code: "HE Mesurage"
+      domaine: "HT"
+      type: "Chargé d'opérations spécifiques - Mesurages"
+      operations_autorisees:
+        - "Mesures électriques HT"
+      restrictions:
+        - "Appareils de mesure HT"
+      formation_requise: "Module Tronc Commun + Module HE Mesurage (24.5h)"
+      recyclage: "3 ans"
+
+    - code: "HE Vérification"
+      domaine: "HT"
+      type: "Chargé d'opérations spécifiques - Vérifications"
+      operations_autorisees:
+        - "Vérifications réglementaires HT"
+      restrictions:
+        - "Compétences en métrologie HT"
+      formation_requise: "Module Tronc Commun + Module HE Vérification (24.5h)"
+      recyclage: "3 ans"
+
+    # Haute Tension - Consignation
+    - code: "HC"
+      domaine: "HT"
+      type: "Chargé de consignation"
+      operations_autorisees:
+        - "Consignation d'installations HT"
+        - "Délivrance d'attestations"
+      restrictions:
+        - "Connaissance approfondie des installations HT"
+      formation_requise: "Module Tronc Commun + Module HC (28h)"
+      recyclage: "3 ans"
+
+modules_formation:
+  description: "Modules de formation selon l'Annexe D de la norme"
+  duree_unite: "heures"
+
+  modules:
+    - module: "Module 1"
+      titre: "Tronc commun nº1"
+      duree_heures: 7
+      public: "Tous les niveaux d'habilitation"
+      objectifs:
+        - "Connaître les dangers de l'électricité"
+        - "Être capable d'identifier et de connaître le risque électrique"
+        - "Connaître les prescriptions de la norme NF C18-510"
+        - "Reconnaître l'appartenance d'un matériel à un domaine de tension"
+      contenu:
+        - "Les grandeurs électriques (tension, intensité, résistance)"
+        - "Les effets du courant électrique sur le corps humain"
+        - "Les domaines de tension"
+        - "Les zones d'environnement électrique"
+        - "Le principe d'une habilitation électrique"
+        - "Les symboles d'habilitation"
+        - "Les prescriptions associées aux zones de travail"
+        - "Les équipements de protection collective et individuelle"
+      evaluation:
+        - "QCM théorique (10 questions minimum)"
+        - "Mise en situation pratique"
+
+    - module: "Module 2"
+      titre: "Tronc commun nº2"
+      duree_heures: 3.5
+      public: "Personnel réalisant des travaux ou interventions"
+      prerequis: ["Module 1"]
+      objectifs:
+        - "Identifier les équipements électriques et les risques associés"
+        - "Lire les documents applicables dans son activité"
+        - "Respecter les instructions de sécurité"
+      contenu:
+        - "Les acteurs concernés par les travaux"
+        - "Les rôles de chacun"
+        - "Les documents applicables"
+        - "Les moyens de protection"
+        - "Les opérations d'ordre électrique et non électrique"
+      evaluation:
+        - "QCM théorique"
+        - "Exercice de lecture de documents"
+
+    - module: "Module 3"
+      titre: "Tronc commun nº3"
+      duree_heures: 3.5
+      public: "Chargé de travaux, chargé de consignation"
+      prerequis: ["Module 1", "Module 2"]
+      objectifs:
+        - "Identifier les risques liés à l'utilisation et à la manipulation des matériels et outillages"
+        - "Connaître et mettre en œuvre les procédures de consignation"
+      contenu:
+        - "Les séquences de la mise en sécurité d'un circuit"
+        - "La consignation et ses étapes"
+        - "Les documents de consignation"
+        - "Les rôles des différents acteurs"
+      evaluation:
+        - "Mise en situation pratique de consignation"
+
+    - module: "Module 4"
+      titre: "Module Basse Tension (BT)"
+      duree_heures: 7
+      public: "Personnel BT (B1, B2, BC, BR, BE)"
+      prerequis: ["Module 1"]
+      objectifs:
+        - "Maîtriser les spécificités du domaine BT"
+        - "Être capable de réaliser des opérations en BT en sécurité"
+      contenu:
+        - "Limites du domaine BT"
+        - "Caractéristiques des installations BT"
+        - "Les dangers spécifiques BT"
+        - "Les moyens de protection en BT"
+        - "Les procédures d'intervention en BT"
+      evaluation:
+        - "QCM spécifique BT"
+        - "Mise en situation pratique BT"
+
+    - module: "Module 5"
+      titre: "Module Haute Tension (HT)"
+      duree_heures: 7
+      public: "Personnel HT (H0, H1, H2, HC, HE)"
+      prerequis: ["Module 1"]
+      objectifs:
+        - "Maîtriser les spécificités du domaine HT"
+        - "Être capable de réaliser des opérations en HT en sécurité"
+      contenu:
+        - "Limites des domaines HTA et HTB"
+        - "Caractéristiques des ouvrages HT"
+        - "Les dangers spécifiques HT"
+        - "Les moyens de protection en HT"
+        - "Les procédures d'intervention en HT"
+        - "Les distances de sécurité en HT"
+      evaluation:
+        - "QCM spécifique HT"
+        - "Mise en situation pratique HT"
+
+    - module: "Module 6"
+      titre: "Module Voisinage"
+      duree_heures: 3.5
+      public: "Personnel travaillant au voisinage (B0V, H0V, B1V, H1V, etc.)"
+      prerequis: ["Module 1"]
+      objectifs:
+        - "Identifier et respecter les zones de voisinage"
+        - "Appliquer les prescriptions de sécurité au voisinage"
+      contenu:
+        - "Définition du voisinage"
+        - "Les zones de voisinage simple et renforcé"
+        - "Les distances limites"
+        - "Les mesures de protection"
+        - "La surveillance et le balisage"
+      evaluation:
+        - "QCM voisinage"
+        - "Reconnaissance des zones"
+
+    - module: "Module 7"
+      titre: "Module BS (Intervention élémentaire)"
+      duree_heures: 7
+      public: "Personnel réalisant des interventions élémentaires"
+      prerequis: ["Module 1"]
+      objectifs:
+        - "Réaliser des interventions de remplacement et de raccordement simples"
+        - "Respecter les limites de l'habilitation BS"
+      contenu:
+        - "Définition des interventions élémentaires"
+        - "Les limites du BS"
+        - "Remplacement à l'identique"
+        - "Raccordements simples"
+        - "Réarmement de protections"
+        - "Les EPI pour les interventions"
+      evaluation:
+        - "QCM théorique"
+        - "Mise en situation pratique (remplacement fusible, prise, etc.)"
+
+    - module: "Module 8"
+      titre: "Module BE/HE Manœuvre"
+      duree_heures: 3.5
+      public: "Personnel réalisant des manœuvres"
+      prerequis: ["Module 1", "Module 4 ou 5"]
+      objectifs:
+        - "Réaliser des manœuvres d'exploitation en sécurité"
+      contenu:
+        - "Les types de manœuvres"
+        - "Les documents de manœuvre"
+        - "Les procédures de manœuvre"
+        - "La condamnation"
+      evaluation:
+        - "Exercice de manœuvre"
+
+    - module: "Module 9"
+      titre: "Module BE/HE Mesurage"
+      duree_heures: 3.5
+      public: "Personnel réalisant des mesurages"
+      prerequis: ["Module 1", "Module 4 ou 5"]
+      objectifs:
+        - "Réaliser des mesures électriques en sécurité"
+      contenu:
+        - "Les appareils de mesure"
+        - "Les procédures de mesurage"
+        - "Les précautions à prendre"
+      evaluation:
+        - "Mise en situation de mesurage"
+
+    - module: "Module 10"
+      titre: "Module BE/HE Vérification"
+      duree_heures: 3.5
+      public: "Personnel réalisant des vérifications"
+      prerequis: ["Module 1", "Module 4 ou 5"]
+      objectifs:
+        - "Réaliser des vérifications réglementaires"
+      contenu:
+        - "Les types de vérifications"
+        - "Les méthodes de vérification"
+        - "La rédaction de rapports"
+      evaluation:
+        - "Exercice de vérification"
+
+    - module: "Module 11"
+      titre: "Module BE/HE Essai"
+      duree_heures: 3.5
+      public: "Personnel réalisant des essais"
+      prerequis: ["Module 1", "Module 4 ou 5"]
+      objectifs:
+        - "Réaliser des essais en sécurité"
+      contenu:
+        - "Les types d'essais"
+        - "Les procédures d'essai"
+        - "Les mesures de sécurité pendant les essais"
+      evaluation:
+        - "Mise en situation d'essai"
+
+cas_usage_pedagogique:
+  description: "Parcours de formation types selon les profils"
+
+  parcours:
+    - profil: "Non électricien - Travaux BT"
+      code_habilitation: "B0"
+      modules: ["Module 1"]
+      duree_totale: "7 heures"
+      public: "Personnel effectuant des travaux d'ordre non électrique (peinture, maçonnerie, etc.)"
+      validation: "Attestation de formation + Titre d'habilitation délivré par l'employeur"
+
+    - profil: "Non électricien - Travaux BT au voisinage"
+      code_habilitation: "B0V"
+      modules: ["Module 1", "Module 6"]
+      duree_totale: "10.5 heures"
+      public: "Personnel effectuant des travaux non électriques près d'installations BT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Électricien BT - Exécutant"
+      code_habilitation: "B1 / B1V"
+      modules: ["Module 1", "Module 2", "Module 4"]
+      duree_totale: "17.5 heures"
+      public: "Électriciens réalisant des travaux hors tension en BT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Électricien BT - Chargé de travaux"
+      code_habilitation: "B2 / B2V"
+      modules: ["Module 1", "Module 2", "Module 3", "Module 4"]
+      duree_totale: "21 heures"
+      public: "Électriciens dirigeant des travaux hors tension en BT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Chargé de consignation BT"
+      code_habilitation: "BC"
+      modules: ["Module 1", "Module 2", "Module 3", "Module 4"]
+      duree_totale: "21 heures"
+      public: "Personnel réalisant des consignations BT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Intervention élémentaire BT"
+      code_habilitation: "BS"
+      modules: ["Module 1", "Module 7"]
+      duree_totale: "14 heures"
+      public: "Personnel réalisant des interventions simples (remplacement, raccordement)"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Intervention BT générale"
+      code_habilitation: "BR"
+      modules: ["Module 1", "Module 2", "Module 4"]
+      duree_totale: "17.5 heures"
+      public: "Personnel réalisant des interventions générales en BT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Chargé d'opérations spécifiques BT"
+      code_habilitation: "BE Manœuvre / BE Mesurage / BE Vérification / BE Essai"
+      modules: ["Module 1", "Module 4", "Module 8 ou 9 ou 10 ou 11"]
+      duree_totale: "17.5 heures"
+      public: "Personnel réalisant des opérations spécifiques en BT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Non électricien HT"
+      code_habilitation: "H0 / H0V"
+      modules: ["Module 1", "Module 5"]
+      duree_totale: "14 heures"
+      public: "Personnel non électricien travaillant en zone HT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Électricien HT - Exécutant"
+      code_habilitation: "H1 / H1V"
+      modules: ["Module 1", "Module 2", "Module 5"]
+      duree_totale: "17.5 heures"
+      public: "Électriciens réalisant des travaux hors tension en HT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Électricien HT - Chargé de travaux"
+      code_habilitation: "H2 / H2V"
+      modules: ["Module 1", "Module 2", "Module 3", "Module 5"]
+      duree_totale: "21 heures"
+      public: "Électriciens dirigeant des travaux hors tension en HT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Chargé de consignation HT"
+      code_habilitation: "HC"
+      modules: ["Module 1", "Module 2", "Module 3", "Module 5"]
+      duree_totale: "21 heures"
+      public: "Personnel réalisant des consignations HT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Chargé d'opérations spécifiques HT"
+      code_habilitation: "HE Manœuvre / HE Mesurage / HE Vérification / HE Essai"
+      modules: ["Module 1", "Module 5", "Module 8 ou 9 ou 10 ou 11"]
+      duree_totale: "17.5 heures"
+      public: "Personnel réalisant des opérations spécifiques en HT"
+      validation: "Attestation de formation + Titre d'habilitation"
+
+    - profil: "Travaux sous tension BT"
+      code_habilitation: "B2T"
+      modules: ["Formation spécialisée TST BT"]
+      duree_totale: "70 heures minimum"
+      public: "Électriciens spécialisés en travaux sous tension BT"
+      validation: "Attestation de formation spécialisée + Titre d'habilitation"
+      remarque: "Formation très spécialisée, nécessite expérience préalable"
+
+    - profil: "Travaux sous tension HT"
+      code_habilitation: "H2T"
+      modules: ["Formation spécialisée TST HT"]
+      duree_totale: "140 heures minimum"
+      public: "Électriciens spécialisés en travaux sous tension HT"
+      validation: "Attestation de formation spécialisée + Titre d'habilitation"
+      remarque: "Formation très spécialisée, niveau expert requis"
+
+  recyclages:
+    description: "Formations de recyclage (obligatoires tous les 3 ans)"
+    duree_standard: "10.5 heures (1.5 jours)"
+    contenu:
+      - "Rappel des dangers de l'électricité"
+      - "Évolutions réglementaires"
+      - "Analyse d'accidents"
+      - "Retour d'expérience"
+      - "Mise en situation pratique"
+    modules_recyclage:
+      - profil: "Recyclage B0/H0"
+        duree: "7 heures"
+        contenu: "Tronc commun n°1"
+
+      - profil: "Recyclage électricien (B1, B2, H1, H2, BC, HC)"
+        duree: "10.5 heures"
+        contenu: "Tronc commun n°1 + Partie spécifique"
+
+      - profil: "Recyclage BS"
+        duree: "10.5 heures"
+        contenu: "Tronc commun n°1 + Partie BS"
+
+      - profil: "Recyclage BE/HE"
+        duree: "10.5 heures"
+        contenu: "Tronc commun n°1 + Partie opérations spécifiques"
+
+annexes:
+  description: "Annexes de la norme NF C18-510"
+  liste:
+    - lettre: A
+      titre: Documents - Définitions et exemples 163
+      type: informative
+      ligne_debut: 873
+      ligne_fin: 901
+      utilite_pedagogique: Modèles de documents pour mise en pratique (attestations, autorisations, certificats)
+      points_cles: ["Modèles d'attestation de consignation","Modèles d'autorisation de travail","Certificats pour tiers"]
+    - lettre: B
+      titre: "Elements d'analyse des opérations 185"
+      type: informative
+      ligne_debut: 902
+      ligne_fin: 903
+      utilite_pedagogique: "Grille d'analyse pour évaluation des risques et préparation des opérations"
+      points_cles: ["Méthode d'analyse des opérations","Évaluation des risques","Choix des mesures de protection"]
+    - lettre: C
+      titre: Emploi et entretien des principaux équipements de protection
+      type: normative
+      ligne_debut: 904
+      ligne_fin: 915
+      utilite_pedagogique: "Guide pratique pour l'utilisation et l'entretien des EPI et outillages"
+      points_cles: ["Spécifications des EPI","Contrôles et vérifications","Durées de vie et entretien"]
+    - lettre: D
+      titre: REFERENTIELS DES SAVOIRS Formation initiale et recyclage 199
+      type: informative
+      ligne_debut: 916
+      ligne_fin: 927
+      utilite_pedagogique: "Référentiel complet de formation : modules, durées, évaluations"
+      points_cles: ["Modules de formation initiale","Modules de recyclage","Modalités d'évaluation"]
+    - lettre: E
+      titre: "Exemples de titre d'habilitation 241"
+      type: informative
+      ligne_debut: 928
+      ligne_fin: 935
+      utilite_pedagogique: "Modèles de titres d'habilitation à personnaliser"
+      points_cles: ["Format de titre d'habilitation","Informations obligatoires","Validité"]
+    - lettre: F
+      titre: "Reçu du recueil d'instructions générales de sécurité"
+      type: informative
+      ligne_debut: 936
+      ligne_fin: 16591
+      utilite_pedagogique: "Modèle de reçu du recueil d'instructions"
+      points_cles: ["Traçabilité de la remise du recueil","Engagement du salarié"]
+
+equipements_protection:
+  description: "Équipements de Protection Individuelle et Collective"
+
+  epi_obligatoires:
+    - type: "Casque isolant"
+      norme: "NF EN 50365"
+      domaine: ["BT", "HT"]
+      situations:
+        - "Travaux hors tension"
+        - "Interventions BT"
+        - "Opérations au voisinage"
+
+    - type: "Gants isolants"
+      norme: "NF EN 60903"
+      domaine: ["BT", "HT"]
+      classes:
+        - classe: "00"
+          tension_max: "500V AC"
+        - classe: "0"
+          tension_max: "1000V AC"
+        - classe: "1"
+          tension_max: "7500V AC"
+        - classe: "2"
+          tension_max: "17000V AC"
+        - classe: "3"
+          tension_max: "26500V AC"
+        - classe: "4"
+          tension_max: "36000V AC"
+      situations:
+        - "Travaux sous tension"
+        - "Interventions"
+        - "Opérations au voisinage renforcé"
+
+    - type: "Écran facial"
+      norme: "NF EN 166"
+      domaine: ["BT", "HT"]
+      situations:
+        - "Opérations avec risque d'arc électrique"
+        - "Travaux sous tension"
+
+    - type: "Vêtements de travail"
+      norme: "NF EN 50286"
+      domaine: ["BT"]
+      caracteristiques:
+        - "Non inflammable"
+        - "Isolant électrique"
+        - "Protection contre l'arc électrique"
+
+    - type: "Chaussures de sécurité isolantes"
+      norme: "NF EN 50321"
+      domaine: ["BT"]
+      situations:
+        - "Travaux sur installations BT"
+        - "Interventions BT"
+
+  epc_equipements:
+    - type: "Tapis isolant"
+      norme: "NF EN 61111"
+      utilisation: "Protection contre les contacts indirects"
+
+    - type: "Nappe isolante"
+      norme: "NF EN 61112"
+      utilisation: "Isolation des pièces nues sous tension"
+
+    - type: "Pancarte de consignation"
+      utilisation: "Signalisation des organes de coupure consignés"
+
+    - type: "VAT (Vérificateur d'Absence de Tension)"
+      norme: "NF EN 61243"
+      types:
+        - "VAT BT bipolaire (NF EN 61243-3)"
+        - "VAT HT capacitif (NF EN 61243-1)"
+        - "VAT HT résistif (NF EN 61243-2)"
+
+    - type: "Dispositif de MALT"
+      norme: "NF EN 61230"
+      utilisation: "Mise à la terre et en court-circuit"
+
+    - type: "Balisage et signalisation"
+      elements:
+        - "Ruban de balisage"
+        - "Panneaux de signalisation"
+        - "Cônes et barrières"
+
+procedures_securite:
+  description: "Procédures de sécurité essentielles"
+
+  consignation:
+    etapes:
+      - numero: 1
+        nom: "Séparation"
+        description: "Séparer l'ouvrage ou l'installation des sources de tension"
+        actions:
+          - "Identifier les sources d'alimentation"
+          - "Ouvrir les organes de séparation"
+
+      - numero: 2
+        nom: "Condamnation"
+        description: "Condamner en position ouverte les organes de séparation"
+        actions:
+          - "Verrouiller mécaniquement"
+          - "Poser une pancarte de consignation"
+
+      - numero: 3
+        nom: "Identification"
+        description: "Identifier l'ouvrage ou l'installation"
+        actions:
+          - "Vérifier la correspondance"
+          - "S'assurer de l'ouvrage concerné"
+
+      - numero: 4
+        nom: "VAT"
+        description: "Vérifier l'Absence de Tension"
+        actions:
+          - "Utiliser un VAT adapté"
+          - "Vérifier sur toutes les phases"
+          - "Vérifier entre phases et terre"
+
+      - numero: 5
+        nom: "MALT"
+        description: "Mise à la terre et en court-circuit"
+        actions:
+          - "Installer les dispositifs de MALT"
+          - "Raccorder d'abord à la terre puis aux conducteurs"
+
+    responsables:
+      - role: "Chargé de consignation (BC/HC)"
+        responsabilites:
+          - "Réaliser la consignation"
+          - "Délivrer l'attestation de consignation"
+
+      - role: "Chargé de travaux (B2/H2)"
+        responsabilites:
+          - "Recevoir l'attestation"
+          - "Vérifier les mesures de sécurité"
+          - "Diriger les travaux"
+
+  zones_travail:
+    - zone: "Zone 0"
+      description: "Hors voisinage"
+      distance_bt: "> 30 cm"
+      distance_ht: "Variable selon tension (> DLV)"
+      prescriptions: "Aucune prescription particulière"
+
+    - zone: "Zone 1"
+      description: "Voisinage simple"
+      distance_bt: "Non applicable"
+      distance_ht: "Entre DLV et DMA"
+      prescriptions:
+        - "Habilitation avec attribut V"
+        - "Surveillance ou balisage"
+        - "EPI adaptés"
+
+    - zone: "Zone 2"
+      description: "Voisinage renforcé"
+      distance_bt: "≤ 30 cm"
+      distance_ht: "< DMA"
+      prescriptions:
+        - "Habilitation spécifique"
+        - "Mesures de protection renforcées"
+        - "EPI isolants obligatoires"
+
+    - zone: "Zone 3"
+      description: "Au contact (TST)"
+      distance_bt: "Contact"
+      distance_ht: "Contact"
+      prescriptions:
+        - "Travaux sous tension uniquement"
+        - "Habilitation TST (B2T/H2T)"
+        - "Méthodes et outillages spécifiques"
+
+ressources_complementaires:
+  documents_reference:
+    - titre: "Recueil d'instructions générales de sécurité"
+      type: "Document interne obligatoire"
+      contenu: "Instructions de sécurité adaptées à l'établissement"
+
+    - titre: "Carnet de prescriptions"
+      type: "Document de travail"
+      contenu: "Prescriptions applicables aux opérations"
+
+    - titre: "Autorisation de travail"
+      type: "Document de suivi"
+      contenu: "Autorisation formelle de réaliser les travaux"
+
+  outils_pedagogiques:
+    - outil: "Plateforme de simulation"
+      description: "Simulation virtuelle d'installations électriques"
+      usage: "Formation pratique sans risque"
+
+    - outil: "Armoires pédagogiques"
+      description: "Équipements réels en environnement sécurisé"
+      usage: "Mise en situation réelle"
+
+    - outil: "QCM interactifs"
+      description: "Tests de connaissance"
+      usage: "Évaluation des acquis"
+
+    - outil: "Vidéos d'accidents"
+      description: "Retours d'expérience filmés"
+      usage: "Sensibilisation aux risques"
+
+glossaire_termes_essentiels:
+  - terme: "DMA"
+    signification: "Distance Minimale d'Approche"
+    definition: "Distance minimale qu'il ne faut pas dépasser lors d'une approche de pièces nues sous tension"
+
+  - terme: "DLV"
+    signification: "Distance Limite de Voisinage"
+    definition: "Distance délimitant la zone de voisinage autour des pièces nues sous tension"
+
+  - terme: "VAT"
+    signification: "Vérification d'Absence de Tension"
+    definition: "Opération destinée à vérifier qu'une installation est effectivement hors tension"
+
+  - terme: "MALT"
+    signification: "Mise à la Terre et en Court-circuit"
+    definition: "Opération de sécurité réalisée après la VAT pour éviter la remise sous tension"
+
+  - terme: "TST"
+    signification: "Travaux Sous Tension"
+    definition: "Travaux durant lesquels un opérateur est en contact avec des pièces nues sous tension"
+
+  - terme: "Consignation"
+    signification: "Ensemble d'opérations de mise hors tension"
+    definition: "Procédure en 5 étapes garantissant la mise hors tension sécurisée d'une installation"
+
+  - terme: "Habilitation"
+    signification: "Reconnaissance de capacité"
+    definition: "Reconnaissance par l'employeur de la capacité d'une personne à effectuer des opérations électriques en sécurité"
+
+  - terme: "EPI"
+    signification: "Équipement de Protection Individuelle"
+    definition: "Équipement destiné à protéger une personne contre les risques"
+
+  - terme: "EPC"
+    signification: "Équipement de Protection Collective"
+    definition: "Équipement destiné à protéger plusieurs personnes simultanément"
+
+  - terme: "Chargé de consignation"
+    signification: "Personne chargée d'effectuer la consignation"
+    definition: "Personne habilitée (BC/HC) réalisant les opérations de consignation"
+
+  - terme: "Chargé de travaux"
+    signification: "Personne dirigeant les travaux"
+    definition: "Personne habilitée (B2/H2) assurant la direction effective des travaux et la sécurité de l'équipe"
+
+  - terme: "Exécutant"
+    signification: "Personne exécutant les travaux"
+    definition: "Personne habilitée (B1/H1) réalisant les travaux sous la direction d'un chargé de travaux"
+

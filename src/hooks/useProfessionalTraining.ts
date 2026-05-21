@@ -1,6 +1,5 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 export interface ProfessionalTraining {
@@ -35,24 +34,36 @@ export interface TrainingRegistration {
   special_requirements: string | null;
 }
 
+// Helper for authorized fetch
+const authFetch = async (url: string, options: RequestInit = {}) => {
+  const token = localStorage.getItem('token');
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+  };
+
+  const res = await fetch(url, { ...options, headers: { ...headers, ...options.headers } });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || 'Request failed');
+  }
+  return res.json();
+};
+
 export function useProfessionalTraining() {
   return useQuery({
     queryKey: ["professional-training"],
     queryFn: async (): Promise<ProfessionalTraining[]> => {
-      const { data, error } = await supabase
-        .from('professional_training')
-        .select('*')
-        .eq('is_active', true)
-        .order('created_at', { ascending: false });
-
-      if (error) {
+      try {
+        const res = await fetch("/api/professional-training");
+        if (!res.ok) throw new Error("Failed to fetch trainings");
+        return await res.json();
+      } catch (error) {
         toast.error('Erreur lors de la récupération des formations.');
-        throw error;
+        return [];
       }
-
-      return (data || []) as ProfessionalTraining[];
     },
-    staleTime: 1000 * 60 * 10,
+    staleTime: 1000 * 60 * 10
   });
 }
 
@@ -60,19 +71,15 @@ export function useTrainingRegistrations() {
   return useQuery({
     queryKey: ["training-registrations"],
     queryFn: async (): Promise<TrainingRegistration[]> => {
-      const { data, error } = await supabase
-        .from('training_registrations')
-        .select('*')
-        .order('registration_date', { ascending: false });
-
-      if (error) {
+      try {
+        const res = await authFetch("/api/training-registrations");
+        return res as TrainingRegistration[];
+      } catch (error) {
         toast.error('Erreur lors de la récupération des inscriptions.');
-        throw error;
+        return [];
       }
-
-      return (data || []) as TrainingRegistration[];
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5
   });
 }
 
@@ -81,49 +88,25 @@ export function useRegisterForTraining() {
 
   return useMutation({
     mutationFn: async (registration: Omit<TrainingRegistration, 'id' | 'registration_date'>) => {
-      console.log('Tentative d\'inscription:', registration);
-      
-      // Vérifier que l'utilisateur est authentifié
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError || !session?.user) {
+
+
+      const token = localStorage.getItem('token');
+      if (!token) {
         toast.error('Vous devez être connecté pour vous inscrire');
         throw new Error('Vous devez être connecté pour vous inscrire');
       }
 
-      const user = session.user;
-      console.log('Utilisateur connecté pour inscription:', user.id);
-
-      // Préparer les données d'inscription
-      const registrationData = {
-        ...registration,
-        user_id: user.id, // S'assurer que l'ID utilisateur est correct
-        registration_date: new Date().toISOString(),
-        status: 'pending',
-        payment_status: 'pending'
-      };
-
-      console.log('Données d\'inscription à insérer:', registrationData);
-
-      const { data, error } = await supabase
-        .from('training_registrations')
-        .insert([registrationData])
-        .select()
-        .single();
-
-      if (error) {
-        toast.error('Erreur lors de l\'inscription.');
-        throw new Error(`Erreur d'inscription: ${error.message}`);
-      }
-
-      console.log('Inscription réussie:', data);
-      return data;
+      return await authFetch("/api/training-registrations", {
+        method: 'POST',
+        body: JSON.stringify(registration)
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["training-registrations"] });
       toast.success('Inscription enregistrée avec succès');
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast.error(`Erreur d'inscription: ${error.message}`);
-    },
+    }
   });
 }

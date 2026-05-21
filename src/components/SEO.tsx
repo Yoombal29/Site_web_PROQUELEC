@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { useLiveSettings } from '@/hooks/useLiveSettings';
 
 interface SEOProps {
   title: string;
@@ -10,7 +11,7 @@ interface SEOProps {
   twitterCard?: string;
   keywords?: string | string[];
   robots?: string;
-  schema?: Record<string, any>;
+  schema?: Record<string, unknown>;
   path?: string;
   type?: string;
 }
@@ -19,8 +20,8 @@ export function SEO({
   title,
   description,
   canonical,
-  image = 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1200&h=630&fit=crop',
-  author = 'PROQUELEC',
+  image,
+  author,
   ogType = 'website',
   twitterCard = 'summary_large_image',
   keywords = '',
@@ -28,35 +29,43 @@ export function SEO({
   schema,
   path = '/'
 }: SEOProps) {
-  const fullTitle = `${title} | PROQUELEC - Qualité Électrique au Sénégal`;
-  const baseUrl = 'https://proquelec.sn';
+  const { settings } = useLiveSettings();
+
+  const siteName = settings?.site_name || 'PROQUELEC';
+  const fullTitle = `${title} | ${siteName} - Qualité Électrique au Sénégal`;
+  const baseUrl = window.location.origin;
   const canonicalUrl = canonical || `${baseUrl}${path}`;
-  
+  const defaultImage = settings?.logo_url || 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&h=630&fit=crop';
+  const siteImage = image || defaultImage;
+  const siteAuthor = author || siteName;
+
   // Convert keywords array to string if needed
   const keywordsString = Array.isArray(keywords) ? keywords.join(', ') : keywords;
 
   const schemaMarkup = schema || {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'PROQUELEC',
+    name: siteName,
     url: baseUrl,
-    logo: 'https://proquelec.sn/logo.png',
-    description: description,
-    image: image,
+    logo: settings?.logo_url || `${baseUrl}/logo.png`,
+    description: description || settings?.slogan,
+    image: siteImage,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Immeubles Coumba Castel',
+      streetAddress: settings?.address || 'Dakar',
       addressLocality: 'Dakar',
       addressCountry: 'SN'
     },
-    telephone: '+221 76 644 76 06',
-    email: 'omarkebe@proquelec.sn',
+    telephone: settings?.phone_number || '+221 76 644 76 06',
+    email: settings?.contact_email || 'contact@proquelec.sn',
     sameAs: [
-      'https://facebook.com/proquelec',
-      'https://linkedin.com/company/proquelec',
-      'https://twitter.com/proquelec'
-    ]
+    settings?.facebook_url,
+    settings?.linkedin_url,
+    settings?.twitter_url].
+    filter(Boolean)
   };
+
+  const themeColor = settings?.primary_color || '#2376df';
 
   return (
     <Helmet>
@@ -65,7 +74,7 @@ export function SEO({
       <meta name="title" content={fullTitle} />
       <meta name="description" content={description} />
       <meta name="keywords" content={keywordsString} />
-      <meta name="author" content={author} />
+      <meta name="author" content={siteAuthor} />
       <meta name="robots" content={robots} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta charSet="utf-8" />
@@ -76,8 +85,8 @@ export function SEO({
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:site_name" content="PROQUELEC" />
+      <meta property="og:image" content={siteImage} />
+      <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content="fr_FR" />
 
       {/* Twitter */}
@@ -85,21 +94,21 @@ export function SEO({
       <meta property="twitter:url" content={canonicalUrl} />
       <meta property="twitter:title" content={fullTitle} />
       <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={image} />
-      <meta property="twitter:creator" content="@proquelec" />
+      <meta property="twitter:image" content={siteImage} />
+      <meta property="twitter:creator" content={`@${siteName.toLowerCase().replace(/\s+/g, '')}`} />
 
       {/* Additional Tags */}
-      <meta name="theme-color" content="#2376df" />
+      <meta name="theme-color" content={themeColor} />
       <meta name="color-scheme" content="light dark" />
-      <meta name="msapplication-TileColor" content="#2376df" />
+      <meta name="msapplication-TileColor" content={themeColor} />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
       {/* Schema.org Structured Data */}
       <script type="application/ld+json">
         {JSON.stringify(schemaMarkup)}
       </script>
-    </Helmet>
-  );
+    </Helmet>);
+
 }
 
 export default SEO;

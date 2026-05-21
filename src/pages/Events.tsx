@@ -5,7 +5,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { SEO } from "@/components/SEO";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import {
-  Calendar,
+
   MapPin,
   Clock,
   ArrowRight,
@@ -13,61 +13,61 @@ import {
   ShieldCheck,
   Handshake,
   CalendarCheck,
-  Plus
-} from "lucide-react";
+  Plus } from
+"lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const Events = () => {
   const officialEvents = [
-    {
-      title: "Conférence Technique : Normes 2025",
-      type: "Présentiel",
-      date: "15 Février 2026",
-      time: "09:00 - 13:00",
-      location: "Siège PROQUELEC, Dakar",
-      category: "Conférence",
-      featured: true,
-      description: "Une session exclusive pour décrypter les évolutions majeures des normes d'installation électrique au Sénégal."
-    },
-    {
-      title: "Atelier Pratique : Solaire & Stockage",
-      type: "Présentiel",
-      date: "5 Mars 2026",
-      time: "08:30 - 17:30",
-      location: "Centre de Formation PROQUELEC",
-      category: "Atelier",
-      description: "Mise en œuvre concrète de systèmes photovoltaïques avec gestion intelligente de l'énergie."
-    }
-  ];
+  {
+    title: "Conférence Technique : Normes 2025",
+    type: "Présentiel",
+    date: "15 Février 2026",
+    time: "09:00 - 13:00",
+    location: "Siège PROQUELEC, Dakar",
+    category: "Conférence",
+    featured: true,
+    description: "Une session exclusive pour décrypter les évolutions majeures des normes d'installation électrique au Sénégal."
+  },
+  {
+    title: "Atelier Pratique : Solaire & Stockage",
+    type: "Présentiel",
+    date: "5 Mars 2026",
+    time: "08:30 - 17:30",
+    location: "Centre de Formation PROQUELEC",
+    category: "Atelier",
+    description: "Mise en œuvre concrète de systèmes photovoltaïques avec gestion intelligente de l'énergie."
+  }];
+
 
   const partnerEvents = [
-    {
-      title: "Salon de l'Énergie Renouvelable",
-      organizer: "EnergiTech Sénégal",
-      type: "Exposition",
-      date: "20 Mars 2026",
-      time: "10:00 - 18:00",
-      location: "Place du Souvenir, Dakar",
-      category: "Salon",
-      description: "Le rendez-vous incontournable des acteurs locaux du renouvelable avec démonstrations en direct."
-    },
-    {
-      title: "Webinaire : Domotique & Sécurité",
-      organizer: "SmartHome Africa",
-      type: "En ligne",
-      date: "28 Mars 2026",
-      time: "14:00 - 15:30",
-      location: "Lien envoyé par email",
-      category: "Webinaire",
-      description: "Comment intégrer des solutions connectées tout en respectant les fondamentaux de la sécurité électrique."
-    }
-  ];
+  {
+    title: "Salon de l'Énergie Renouvelable",
+    organizer: "EnergiTech Sénégal",
+    type: "Exposition",
+    date: "20 Mars 2026",
+    time: "10:00 - 18:00",
+    location: "Place du Souvenir, Dakar",
+    category: "Salon",
+    description: "Le rendez-vous incontournable des acteurs locaux du renouvelable avec démonstrations en direct."
+  },
+  {
+    title: "Webinaire : Domotique & Sécurité",
+    organizer: "SmartHome Africa",
+    type: "En ligne",
+    date: "28 Mars 2026",
+    time: "14:00 - 15:30",
+    location: "Lien envoyé par email",
+    category: "Webinaire",
+    description: "Comment intégrer des solutions connectées tout en respectant les fondamentaux de la sécurité électrique."
+  }];
 
-  const EventCard = ({ event, isOfficial = false }: { event: any, isOfficial?: boolean }) => (
-    <div
-      className={`group bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 flex flex-col md:flex-row transition-all duration-300 hover:shadow-2xl ${isOfficial ? "border-l-8 border-l-blue-600" : "border-l-8 border-l-indigo-400"}`}
-    >
+
+  const EventCard = ({ event, isOfficial = false }: {event: unknown;isOfficial?: boolean;}) =>
+  <div
+    className={`group bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 flex flex-col md:flex-row transition-all duration-300 hover:shadow-2xl ${isOfficial ? "border-l-8 border-l-blue-600" : "border-l-8 border-l-indigo-400"}`}>
+    
       {/* Date Sidebar */}
       <div className={`${isOfficial ? 'bg-slate-900' : 'bg-slate-800'} text-white p-8 md:w-48 flex flex-col items-center justify-center text-center`}>
         <span className="text-sm font-bold opacity-60 uppercase mb-1">{event.date.split(' ')[2]}</span>
@@ -81,18 +81,18 @@ const Events = () => {
           <Badge variant="secondary" className={`${isOfficial ? 'bg-blue-50 text-blue-700' : 'bg-indigo-50 text-indigo-700'} hover:bg-opacity-80 border-none font-bold`}>
             {event.category}
           </Badge>
-          {!isOfficial && (
-            <div className="flex items-center gap-1 text-indigo-600 text-sm font-bold bg-indigo-50 px-3 py-1 rounded-full">
+          {!isOfficial &&
+        <div className="flex items-center gap-1 text-indigo-600 text-sm font-bold bg-indigo-50 px-3 py-1 rounded-full">
               <Handshake className="w-4 h-4" />
               {event.organizer}
             </div>
-          )}
-          {isOfficial && (
-            <div className="flex items-center gap-1 text-blue-600 text-sm font-bold bg-blue-50 px-3 py-1 rounded-full">
+        }
+          {isOfficial &&
+        <div className="flex items-center gap-1 text-blue-600 text-sm font-bold bg-blue-50 px-3 py-1 rounded-full">
               <ShieldCheck className="w-4 h-4" />
               Officiel PROQUELEC
             </div>
-          )}
+        }
         </div>
 
         <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">
@@ -124,15 +124,15 @@ const Events = () => {
           Détails <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </div>
-    </div>
-  );
+    </div>;
+
 
   return (
     <div className="min-h-screen bg-slate-50 font-roboto">
       <SEO
         title="Événements & Agenda - PROQUELEC"
-        description="Découvrez les événements officiels de PROQUELEC et les initiatives de nos partenaires pour l'expertise électrique au Sénégal."
-      />
+        description="Découvrez les événements officiels de PROQUELEC et les initiatives de nos partenaires pour l'expertise électrique au Sénégal." />
+      
 
       <Header />
 
@@ -144,10 +144,10 @@ const Events = () => {
           description="Participez aux moments forts du secteur : des conférences institutionnelles PROQUELEC aux initiatives innovantes de nos partenaires."
           gradient="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900"
           buttons={[
-            { label: "Voir les événements officiels", href: "#official", variant: "primary" },
-            { label: "Événements partenaires", href: "#partners", variant: "secondary" }
-          ]}
-        />
+          { label: "Voir les événements officiels", href: "#official", variant: "primary" },
+          { label: "Événements partenaires", href: "#partners", variant: "secondary" }]
+          } />
+        
 
         {/* Official Events Section */}
         <section id="official" className="py-24 px-4 bg-white relative overflow-hidden">
@@ -169,9 +169,9 @@ const Events = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-12">
-              {officialEvents.map((event, idx) => (
-                <EventCard key={idx} event={event} isOfficial={true} />
-              ))}
+              {officialEvents.map((event, idx) =>
+              <EventCard key={idx} event={event} isOfficial={true} />
+              )}
             </div>
           </div>
         </section>
@@ -198,9 +198,9 @@ const Events = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-12">
-              {partnerEvents.map((event, idx) => (
-                <EventCard key={idx} event={event} isOfficial={false} />
-              ))}
+              {partnerEvents.map((event, idx) =>
+              <EventCard key={idx} event={event} isOfficial={false} />
+              )}
             </div>
           </div>
         </section>
@@ -234,9 +234,9 @@ const Events = () => {
       </main>
 
       <Footer />
-      <ScrollToTopButton />
-    </div>
-  );
+      <ScrollToTopButton aria-label="Action" />
+    </div>);
+
 };
 
 export default Events;

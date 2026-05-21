@@ -1,0 +1,147 @@
+{
+  "objectifs_par_article": [
+    {
+      "article_numero": "1",
+      "article_titre": "DOMAINE D'APPLICATION",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 1.",
+        "Identifier les obligations de securite liees a l'article 1."
+      ],
+      "source_ref": {
+        "article_id": "art_1"
+      }
+    },
+    {
+      "article_numero": "2",
+      "article_titre": "REFERENCES NORMATIVES",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 2.",
+        "Identifier les obligations de securite liees a l'article 2."
+      ],
+      "source_ref": {
+        "article_id": "art_2"
+      }
+    },
+    {
+      "article_numero": "3",
+      "article_titre": "TERMES ET DEFINITIONS",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 3.",
+        "Identifier les obligations de securite liees a l'article 3."
+      ],
+      "source_ref": {
+        "article_id": "art_3"
+      }
+    },
+    {
+      "article_numero": "4",
+      "article_titre": "DISPOSITIONS GENERALES",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 4.",
+        "Identifier les obligations de securite liees a l'article 4."
+      ],
+      "source_ref": {
+        "article_id": "art_4"
+      }
+    },
+    {
+      "article_numero": "5",
+      "article_titre": "FORMATION ET HABILITATION",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 5.",
+        "Identifier les obligations de securite liees a l'article 5."
+      ],
+      "source_ref": {
+        "article_id": "art_5"
+      }
+    },
+    {
+      "article_numero": "6",
+      "article_titre": "DÉTERMINATION DE L'ENVIRONNEMENT DES OPÉRATIONS",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 6.",
+        "Identifier les obligations de securite liees a l'article 6."
+      ],
+      "source_ref": {
+        "article_id": "art_6"
+      }
+    },
+    {
+      "article_numero": "7",
+      "article_titre": "OPERATIONS HORS TENSION",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 7.",
+        "Identifier les obligations de securite liees a l'article 7."
+      ],
+      "source_ref": {
+        "article_id": "art_7"
+      }
+    },
+    {
+      "article_numero": "8",
+      "article_titre": "TRAVAUX SOUS TENSION",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 8.",
+        "Identifier les obligations de securite liees a l'article 8."
+      ],
+      "source_ref": {
+        "article_id": "art_8"
+      }
+    },
+    {
+      "article_numero": "9",
+      "article_titre": "OPERATIONS DANS L'ENVIRONNEMENT",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 9.",
+        "Identifier les obligations de securite liees a l'article 9."
+      ],
+      "source_ref": {
+        "article_id": "art_9"
+      }
+    },
+    {
+      "article_numero": "10",
+      "article_titre": "INTERVENTIONS BT",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 10.",
+        "Identifier les obligations de securite liees a l'article 10."
+      ],
+      "source_ref": {
+        "article_id": "art_10"
+      }
+    },
+    {
+      "article_numero": "11",
+      "article_titre": "OPERATIONS SPECIFIQUES D'ESSAI, DE MESURAGE, DE VÉRIFICATION ET",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 11.",
+        "Identifier les obligations de securite liees a l'article 11."
+      ],
+      "source_ref": {
+        "article_id": "art_11"
+      }
+    },
+    {
+      "article_numero": "12",
+      "article_titre": "OPÉRATIONS PARTICULIÈRES",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 12.",
+        "Identifier les obligations de securite liees a l'article 12."
+      ],
+      "source_ref": {
+        "article_id": "art_12"
+      }
+    },
+    {
+      "article_numero": "13",
+      "article_titre": "INCENDIE ET ACCIDENTS SUR OU PRES DES OUVRAGES ET",
+      "objectifs": [
+        "Comprendre les exigences principales de l'article 13.",
+        "Identifier les obligations de securite liees a l'article 13."
+      ],
+      "source_ref": {
+        "article_id": "art_13"
+      }
+    }
+  ]
+}

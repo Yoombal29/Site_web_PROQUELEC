@@ -1,0 +1,130 @@
+{
+  "metadonnees": {
+    "type_document": "Norme technique nationale",
+    "numero_norme": "NS 01-001",
+    "titre": "Regles des installations electriques a basse tension",
+    "date_publication": "Juin 2008",
+    "equivalence": "NF C 15-100 (2002)",
+    "editeur": "Association Senegalaise de Normalisation (ASN)",
+    "date_extraction": "2026-02-05",
+    "fichier_source": "NS_01_001.pdf"
+  },
+  "resume_document": {
+    "aper?u": "Norme senegalaise sur les regles des installations electriques a basse tension, structuree en 7 titres couvrant l'ensemble des prescriptions techniques.",
+    "titres_principaux": [
+      "TITRE 1 : Domaine d'application, objet et principes fondamentaux",
+      "TITRE 2 : Definitions",
+      "TITRE 3 : Determination des caracteristiques generales",
+      "TITRE 4 : Protection pour assurer la securite",
+      "TITRE 5 : Choix et mise en oeuvre des materiels",
+      "TITRE 6 : Verifications et entretien des installations",
+      "TITRE 7 : Regles pour les installations et emplacements specifiques"
+    ]
+  },
+  "index_alphabetique": {
+    "description": "Index alphabetique des termes techniques et renvois d'articles.",
+    "volume_estime": "> 500 entrees"
+  },
+  "structure_titres": {
+    "nombre_titres": 7,
+    "liste": [
+      "TITRE 1",
+      "TITRE 2",
+      "TITRE 3",
+      "TITRE 4",
+      "TITRE 5",
+      "TITRE 6",
+      "TITRE 7"
+    ]
+  },
+  "definitions_techniques": {
+    "total_definitions": 232,
+    "categories": [
+      "Caracteristiques des installations",
+      "Tensions",
+      "Protection contre les chocs electriques",
+      "Mises a la terre",
+      "Circuits electriques",
+      "Canalisations",
+      "Materiels",
+      "Sectionnement et commande",
+      "Competence des personnes"
+    ]
+  },
+  "concepts_cles": {
+    "schemas_liaison_terre": [
+      "TN",
+      "TN-S",
+      "TN-C",
+      "TN-C-S",
+      "TT",
+      "IT"
+    ],
+    "mesures_protection": [
+      "Coupure automatique",
+      "Isolation double/renforcee",
+      "Separation electrique",
+      "TBTS",
+      "TBTP",
+      "TBTF"
+    ],
+    "influences_externes": "22 classes d'influences",
+    "installations_specifiques": [
+      "Salles d'eau",
+      "Piscines",
+      "Saunas",
+      "Locaux d'habitation",
+      "Etablissements agricoles",
+      "Chantiers",
+      "Installations temporaires",
+      "Marinas",
+      "Bateaux"
+    ]
+  },
+  "references_legales": {
+    "senegal": [
+      "Code du travail",
+      "Code de l'urbanisme",
+      "Code de l'environnement",
+      "Loi 98-29 du 14 avril 1998 relative au secteur de l'electricite",
+      "Loi 2002-01 du 10 janvier 2002",
+      "Lettre de politique de developpement du secteur de l'electricite",
+      "Decret 84-1129 du 04 octobre 1984",
+      "Decret 72-611 du 23 mai 1972",
+      "Decret 62-297 du 26 juillet 1962",
+      "Arrete interministeriel du 30 mars 1976",
+      "Arrete interministeriel 59 45/M.INT/PC du 14 mai 1969"
+    ]
+  },
+  "tableaux_annexes": {
+    "tableaux": "52 tableaux (52A a 52L)",
+    "annexes": "Annexes techniques A1 a D1"
+  },
+  "cas_usage_professionnel": [
+    "Conception d'installations electriques",
+    "Verification de conformite",
+    "Formation des electriciens",
+    "Audit de securite",
+    "Dimensionnement des canalisations",
+    "Choix des dispositifs de protection",
+    "Etude des schemas de mise a la terre",
+    "Analyse des influences externes"
+  ],
+  "metadonnees_traitement_ia": {
+    "domaine": "Installations electriques basse tension",
+    "portee": "Senegal",
+    "langue": "Francais technique",
+    "type": "Norme prescriptive",
+    "public": [
+      "Electriciens",
+      "Bureaux d'etudes",
+      "Verificateurs"
+    ],
+    "niveau": "Professionnel"
+  },
+  "table_des_matieres": [
+    "INTRODUCTION",
+    "Sommaire",
+    "Avant-propos"
+  ]
+}

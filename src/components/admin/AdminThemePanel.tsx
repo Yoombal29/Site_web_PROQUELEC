@@ -10,29 +10,31 @@ import { useToast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
 
 export default function AdminThemePanel() {
-  const { data: themeSettings, isLoading } = useThemeSettings();
+  const { data: themeSettings, isLoading } = useThemeSettings() as unknown;
   const updateTheme = useUpdateThemeSettings();
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const [formData, setFormData] = useState({
     primary_color: "#2376df",
-    secondary_color: "#054393",
+    secondary_color: "#2C2C2C",
     accent_color: "#1a73e8",
     background_color: "#f8f9fa",
     text_color: "#333333",
-    font_family: "Roboto"
+    font_family: "Roboto",
+    footer_background_url: ""
   });
 
   useEffect(() => {
     if (themeSettings) {
       setFormData({
         primary_color: themeSettings.primary_color || "#2376df",
-        secondary_color: themeSettings.secondary_color || "#054393",
+        secondary_color: themeSettings.secondary_color || "#2C2C2C",
         accent_color: themeSettings.accent_color || "#1a73e8",
         background_color: themeSettings.background_color || "#f8f9fa",
         text_color: themeSettings.text_color || "#333333",
-        font_family: themeSettings.font_family || "Roboto"
+        font_family: themeSettings.font_family || "Roboto",
+        footer_background_url: themeSettings.footer_background_url || ""
       });
     }
   }, [themeSettings]);
@@ -41,19 +43,19 @@ export default function AdminThemePanel() {
     e.preventDefault();
     try {
       await updateTheme.mutateAsync(formData);
-      
+
       // Invalider le cache des paramètres en temps réel
       queryClient.invalidateQueries({ queryKey: ["liveSettings"] });
-      
-      toast({ 
+
+      toast({
         title: "Paramètres de thème mis à jour avec succès",
         description: "Les changements sont visibles immédiatement sur le site"
       });
     } catch (error) {
-      toast({ 
-        title: "Erreur", 
-        description: "Une erreur est survenue", 
-        variant: "destructive" 
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue",
+        variant: "destructive"
       });
     }
   };
@@ -77,33 +79,33 @@ export default function AdminThemePanel() {
                 <Input
                   id="primary_color"
                   type="color"
-                  value={formData.primary_color}
-                  onChange={(e) => setFormData(prev => ({ ...prev, primary_color: e.target.value }))}
-                  className="w-16 h-10"
-                />
+                  value={formData.primary_color || "#2376df"}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, primary_color: e.target.value }))}
+                  className="w-16 h-10" />
+                
                 <Input
                   value={formData.primary_color}
-                  onChange={(e) => setFormData(prev => ({ ...prev, primary_color: e.target.value }))}
-                  placeholder="#2376df"
-                />
+                  onChange={(e) => setFormData((prev) => ({ ...prev, primary_color: e.target.value }))}
+                  placeholder="#2376df" />
+                
               </div>
             </div>
 
             <div>
-              <Label htmlFor="secondary_color">Couleur secondaire</Label>
+              <Label htmlFor="secondary_color">Couleur secondaire (Footer)</Label>
               <div className="flex gap-2">
                 <Input
                   id="secondary_color"
                   type="color"
-                  value={formData.secondary_color}
-                  onChange={(e) => setFormData(prev => ({ ...prev, secondary_color: e.target.value }))}
-                  className="w-16 h-10"
-                />
+                  value={formData.secondary_color || "#2C2C2C"}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, secondary_color: e.target.value }))}
+                  className="w-16 h-10" />
+                
                 <Input
                   value={formData.secondary_color}
-                  onChange={(e) => setFormData(prev => ({ ...prev, secondary_color: e.target.value }))}
-                  placeholder="#054393"
-                />
+                  onChange={(e) => setFormData((prev) => ({ ...prev, secondary_color: e.target.value }))}
+                  placeholder="#2C2C2C" />
+                
               </div>
             </div>
 
@@ -113,15 +115,15 @@ export default function AdminThemePanel() {
                 <Input
                   id="accent_color"
                   type="color"
-                  value={formData.accent_color}
-                  onChange={(e) => setFormData(prev => ({ ...prev, accent_color: e.target.value }))}
-                  className="w-16 h-10"
-                />
+                  value={formData.accent_color || "#1a73e8"}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, accent_color: e.target.value }))}
+                  className="w-16 h-10" />
+                
                 <Input
                   value={formData.accent_color}
-                  onChange={(e) => setFormData(prev => ({ ...prev, accent_color: e.target.value }))}
-                  placeholder="#1a73e8"
-                />
+                  onChange={(e) => setFormData((prev) => ({ ...prev, accent_color: e.target.value }))}
+                  placeholder="#1a73e8" />
+                
               </div>
             </div>
 
@@ -131,15 +133,15 @@ export default function AdminThemePanel() {
                 <Input
                   id="background_color"
                   type="color"
-                  value={formData.background_color}
-                  onChange={(e) => setFormData(prev => ({ ...prev, background_color: e.target.value }))}
-                  className="w-16 h-10"
-                />
+                  value={formData.background_color || "#f8f9fa"}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, background_color: e.target.value }))}
+                  className="w-16 h-10" />
+                
                 <Input
                   value={formData.background_color}
-                  onChange={(e) => setFormData(prev => ({ ...prev, background_color: e.target.value }))}
-                  placeholder="#f8f9fa"
-                />
+                  onChange={(e) => setFormData((prev) => ({ ...prev, background_color: e.target.value }))}
+                  placeholder="#f8f9fa" />
+                
               </div>
             </div>
 
@@ -149,24 +151,24 @@ export default function AdminThemePanel() {
                 <Input
                   id="text_color"
                   type="color"
-                  value={formData.text_color}
-                  onChange={(e) => setFormData(prev => ({ ...prev, text_color: e.target.value }))}
-                  className="w-16 h-10"
-                />
+                  value={formData.text_color || "#333333"}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, text_color: e.target.value }))}
+                  className="w-16 h-10" />
+                
                 <Input
                   value={formData.text_color}
-                  onChange={(e) => setFormData(prev => ({ ...prev, text_color: e.target.value }))}
-                  placeholder="#333333"
-                />
+                  onChange={(e) => setFormData((prev) => ({ ...prev, text_color: e.target.value }))}
+                  placeholder="#333333" />
+                
               </div>
             </div>
 
             <div>
               <Label htmlFor="font_family">Police de caractères</Label>
-              <Select 
-                value={formData.font_family} 
-                onValueChange={(value) => setFormData(prev => ({ ...prev, font_family: value }))}
-              >
+              <Select
+                value={formData.font_family}
+                onValueChange={(value) => setFormData((prev) => ({ ...prev, font_family: value }))}>
+                
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -180,6 +182,19 @@ export default function AdminThemePanel() {
                 </SelectContent>
               </Select>
             </div>
+
+            <div className="md:col-span-2">
+              <Label>Image de fond du Footer (optionnelle)</Label>
+              <Input
+                value={formData.footer_background_url || ""}
+                onChange={(e) => setFormData((prev) => ({ ...prev, footer_background_url: e.target.value }))}
+                placeholder="https://exemple.com/image.jpg"
+                className="mb-2" />
+              
+              <p className="text-xs text-muted-foreground mt-1">
+                Laisse vide pour utiliser uniquement la couleur secondaire. Une image texturée ou un dégradé sombre est recommandé.
+              </p>
+            </div>
           </div>
 
           <div className="flex justify-end">
@@ -190,6 +205,6 @@ export default function AdminThemePanel() {
           </div>
         </form>
       </CardContent>
-    </Card>
-  );
+    </Card>);
+
 }

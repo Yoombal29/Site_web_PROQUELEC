@@ -1,6 +1,6 @@
 
 import { useState, useRef } from "react";
-import { Upload, X, Edit, Download, Trash2, Search, Filter, Grid, List } from "lucide-react";
+import { Upload, Edit, Download, Trash2, Search, Grid, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { useMediaManager } from "@/hooks/useMediaManager";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 
 interface ImageFile {
   id: string;
@@ -30,27 +30,27 @@ export function ImageManager() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [previewImage, setPreviewImage] = useState<ImageFile | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { uploadFile, deleteFile, getFileCategory } = useMediaManager();
 
   const categories = [
-    { value: 'all', label: 'Toutes les images' },
-    { value: 'formations', label: 'Formations' },
-    { value: 'projets', label: 'Projets' },
-    { value: 'equipe', label: 'Équipe' },
-    { value: 'installations', label: 'Installations' },
-    { value: 'certifications', label: 'Certifications' },
-    { value: 'general', label: 'Général' }
-  ];
+  { value: 'all', label: 'Toutes les images' },
+  { value: 'formations', label: 'Formations' },
+  { value: 'projets', label: 'Projets' },
+  { value: 'equipe', label: 'Équipe' },
+  { value: 'installations', label: 'Installations' },
+  { value: 'certifications', label: 'Certifications' },
+  { value: 'general', label: 'Général' }];
+
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files) return;
 
     setIsUploading(true);
-    
+
     for (const file of Array.from(files)) {
       if (file.type.startsWith('image/')) {
         try {
@@ -66,37 +66,37 @@ export function ImageManager() {
             category: 'general',
             alt: file.name.replace(/\.[^/.]+$/, '')
           };
-          
-          setImages(prev => [...prev, newImage]);
+
+          setImages((prev) => [...prev, newImage]);
         } catch (error) {
           console.error('Upload error:', error);
         }
       }
     }
-    
+
     setIsUploading(false);
     toast({
       title: "Images uploadées",
-      description: `${files.length} image(s) ajoutée(s) avec succès`,
+      description: `${files.length} image(s) ajoutée(s) avec succès`
     });
   };
 
   const handleDeleteImage = async (id: string) => {
-    const image = images.find(img => img.id === id);
+    const image = images.find((img) => img.id === id);
     if (!image) return;
 
     try {
-      await deleteFile.mutateAsync({ 
-        bucket: 'images', 
-        path: image.url.split('/').pop() || '' 
+      await deleteFile.mutateAsync({
+        bucket: 'images',
+        path: image.url.split('/').pop() || ''
       });
-      
-      setImages(prev => prev.filter(img => img.id !== id));
-      setSelectedImages(prev => prev.filter(imgId => imgId !== id));
-      
+
+      setImages((prev) => prev.filter((img) => img.id !== id));
+      setSelectedImages((prev) => prev.filter((imgId) => imgId !== id));
+
       toast({
         title: "Image supprimée",
-        description: "L'image a été supprimée avec succès",
+        description: "L'image a été supprimée avec succès"
       });
     } catch (error) {
       console.error('Delete error:', error);
@@ -119,10 +119,10 @@ export function ImageManager() {
   };
 
   const toggleImageSelection = (id: string) => {
-    setSelectedImages(prev => 
-      prev.includes(id) 
-        ? prev.filter(imgId => imgId !== id)
-        : [...prev, id]
+    setSelectedImages((prev) =>
+    prev.includes(id) ?
+    prev.filter((imgId) => imgId !== id) :
+    [...prev, id]
     );
   };
 
@@ -135,16 +135,16 @@ export function ImageManager() {
     document.body.removeChild(link);
   };
 
-  const filteredImages = images.filter(image => {
+  const filteredImages = images.filter((image) => {
     const matchesSearch = image.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         image.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    image.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesCategory = selectedCategory === 'all' || image.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const updateImageMetadata = (id: string, updates: Partial<ImageFile>) => {
-    setImages(prev => prev.map(img => 
-      img.id === id ? { ...img, ...updates } : img
+    setImages((prev) => prev.map((img) =>
+    img.id === id ? { ...img, ...updates } : img
     ));
   };
 
@@ -155,21 +155,21 @@ export function ImageManager() {
           <div className="flex items-center justify-between">
             <CardTitle>Gestionnaire d'images</CardTitle>
             <div className="flex gap-2">
-              {selectedImages.length > 0 && (
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={deleteSelected}
-                >
+              {selectedImages.length > 0 &&
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={deleteSelected}>
+                
                   <Trash2 className="h-4 w-4 mr-2" />
                   Supprimer ({selectedImages.length})
                 </Button>
-              )}
+              }
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-              >
+                onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}>
+                
                 {viewMode === 'grid' ? <List className="h-4 w-4" /> : <Grid className="h-4 w-4" />}
               </Button>
               <Button onClick={() => fileInputRef.current?.click()} disabled={isUploading}>
@@ -187,8 +187,8 @@ export function ImageManager() {
             multiple
             accept="image/*"
             onChange={handleFileSelect}
-            className="hidden"
-          />
+            className="hidden" />
+          
           
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="relative flex-1">
@@ -197,75 +197,75 @@ export function ImageManager() {
                 placeholder="Rechercher des images..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
+                className="pl-10" />
+              
             </div>
             
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="p-2 border rounded-md min-w-48"
-            >
-              {categories.map(cat => (
-                <option key={cat.value} value={cat.value}>
+            <select title="Sélectionner une option"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="p-2 border rounded-md min-w-48">
+              
+              {categories.map((cat) =>
+              <option key={cat.value} value={cat.value}>
                   {cat.label}
                 </option>
-              ))}
+              )}
             </select>
           </div>
           
-          {filteredImages.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
+          {filteredImages.length === 0 ?
+          <div className="text-center py-8 text-muted-foreground">
               <Upload className="h-12 w-12 mx-auto mb-4 opacity-50" />
               <p>Aucune image. Cliquez sur "Ajouter des images" pour commencer.</p>
-            </div>
-          ) : viewMode === 'grid' ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-              {filteredImages.map((image) => (
-                <div
-                  key={image.id}
-                  className={`relative group border rounded-lg overflow-hidden cursor-pointer transition-all ${
-                    selectedImages.includes(image.id) ? 'ring-2 ring-primary' : ''
-                  }`}
-                  onClick={() => toggleImageSelection(image.id)}
-                >
+            </div> :
+          viewMode === 'grid' ?
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+              {filteredImages.map((image) =>
+            <div
+              key={image.id}
+              className={`relative group border rounded-lg overflow-hidden cursor-pointer transition-all ${
+              selectedImages.includes(image.id) ? 'ring-2 ring-primary' : ''}`
+              }
+              onClick={() => toggleImageSelection(image.id)}>
+              
                   <div className="aspect-square relative">
                     <img
-                      src={image.url}
-                      alt={image.alt}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
+                  src={image.url}
+                  alt={image.alt}
+                  className="w-full h-full object-cover"
+                  loading="lazy" />
+                
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <div className="flex gap-1">
-                        <Button 
-                          size="sm" 
-                          variant="secondary"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setPreviewImage(image);
-                          }}
-                        >
+                        <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPreviewImage(image);
+                      }}>
+                      
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button 
-                          size="sm" 
-                          variant="secondary"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            downloadImage(image);
-                          }}
-                        >
+                        <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        downloadImage(image);
+                      }}>
+                      
                           <Download className="h-4 w-4" />
                         </Button>
-                        <Button 
-                          size="sm" 
-                          variant="destructive"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDeleteImage(image.id);
-                          }}
-                        >
+                        <Button
+                      size="sm"
+                      variant="destructive"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteImage(image.id);
+                      }}>
+                      
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -281,39 +281,39 @@ export function ImageManager() {
                         {formatFileSize(image.size)}
                       </span>
                     </div>
-                    {image.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {image.tags.slice(0, 2).map(tag => (
-                          <Badge key={tag} variant="outline" className="text-xs">
+                    {image.tags.length > 0 &&
+                <div className="flex flex-wrap gap-1 mt-1">
+                        {image.tags.slice(0, 2).map((tag) =>
+                  <Badge key={tag} variant="outline" className="text-xs">
                             {tag}
                           </Badge>
-                        ))}
-                        {image.tags.length > 2 && (
-                          <span className="text-xs text-gray-500">+{image.tags.length - 2}</span>
-                        )}
+                  )}
+                        {image.tags.length > 2 &&
+                  <span className="text-xs text-gray-500">+{image.tags.length - 2}</span>
+                  }
                       </div>
-                    )}
+                }
                   </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {filteredImages.map((image) => (
-                <Card 
-                  key={image.id} 
-                  className={`cursor-pointer transition-all ${
-                    selectedImages.includes(image.id) ? 'ring-2 ring-primary' : ''
-                  }`}
-                  onClick={() => toggleImageSelection(image.id)}
-                >
+            )}
+            </div> :
+
+          <div className="space-y-4">
+              {filteredImages.map((image) =>
+            <Card
+              key={image.id}
+              className={`cursor-pointer transition-all ${
+              selectedImages.includes(image.id) ? 'ring-2 ring-primary' : ''}`
+              }
+              onClick={() => toggleImageSelection(image.id)}>
+              
                   <CardContent className="p-4">
                     <div className="flex items-center space-x-4">
                       <img
-                        src={image.url}
-                        alt={image.alt}
-                        className="w-16 h-16 object-cover rounded"
-                      />
+                    src={image.url}
+                    alt={image.alt}
+                    className="w-16 h-16 object-cover rounded" loading="lazy" />
+                  
                       <div className="flex-1 min-w-0">
                         <h3 className="font-medium truncate">{image.name}</h3>
                         <p className="text-sm text-gray-500">
@@ -322,54 +322,54 @@ export function ImageManager() {
                         <p className="text-sm text-gray-500">
                           {image.uploadedAt.toLocaleDateString('fr-FR')}
                         </p>
-                        {image.tags.length > 0 && (
-                          <div className="flex flex-wrap gap-1 mt-2">
-                            {image.tags.map(tag => (
-                              <Badge key={tag} variant="outline" className="text-xs">
+                        {image.tags.length > 0 &&
+                    <div className="flex flex-wrap gap-1 mt-2">
+                            {image.tags.map((tag) =>
+                      <Badge key={tag} variant="outline" className="text-xs">
                                 {tag}
                               </Badge>
-                            ))}
+                      )}
                           </div>
-                        )}
+                    }
                       </div>
                       <div className="flex items-center space-x-2">
                         <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setPreviewImage(image);
-                          }}
-                        >
+                      variant="outline"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPreviewImage(image);
+                      }}>
+                      
                           <Edit className="h-4 w-4" />
                         </Button>
                         <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            downloadImage(image);
-                          }}
-                        >
+                      variant="outline"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        downloadImage(image);
+                      }}>
+                      
                           <Download className="h-4 w-4" />
                         </Button>
                         <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDeleteImage(image.id);
-                          }}
-                        >
+                      variant="destructive"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteImage(image.id);
+                      }}>
+                      
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-              ))}
+            )}
             </div>
-          )}
+          }
         </CardContent>
       </Card>
 
@@ -379,57 +379,57 @@ export function ImageManager() {
           <DialogHeader>
             <DialogTitle>Modifier l'image</DialogTitle>
           </DialogHeader>
-          {previewImage && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {previewImage &&
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div>
                 <img
-                  src={previewImage.url}
-                  alt={previewImage.alt}
-                  className="w-full h-auto rounded-lg"
-                />
+                src={previewImage.url}
+                alt={previewImage.alt}
+                className="w-full h-auto rounded-lg" loading="lazy" />
+              
               </div>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Nom</label>
                   <Input
-                    value={previewImage.name}
-                    onChange={(e) => updateImageMetadata(previewImage.id, { name: e.target.value })}
-                  />
+                  value={previewImage.name}
+                  onChange={(e) => updateImageMetadata(previewImage.id, { name: e.target.value })} />
+                
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium mb-2">Texte alternatif</label>
                   <Input
-                    value={previewImage.alt}
-                    onChange={(e) => updateImageMetadata(previewImage.id, { alt: e.target.value })}
-                    placeholder="Description de l'image pour l'accessibilité"
-                  />
+                  value={previewImage.alt}
+                  onChange={(e) => updateImageMetadata(previewImage.id, { alt: e.target.value })}
+                  placeholder="Description de l'image pour l'accessibilité" />
+                
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium mb-2">Catégorie</label>
-                  <select
-                    value={previewImage.category}
-                    onChange={(e) => updateImageMetadata(previewImage.id, { category: e.target.value })}
-                    className="w-full p-2 border rounded-md"
-                  >
-                    {categories.filter(cat => cat.value !== 'all').map(cat => (
-                      <option key={cat.value} value={cat.value}>
+                  <select title="Sélectionner une option"
+                value={previewImage.category}
+                onChange={(e) => updateImageMetadata(previewImage.id, { category: e.target.value })}
+                className="w-full p-2 border rounded-md">
+                  
+                    {categories.filter((cat) => cat.value !== 'all').map((cat) =>
+                  <option key={cat.value} value={cat.value}>
                         {cat.label}
                       </option>
-                    ))}
+                  )}
                   </select>
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium mb-2">Tags (séparés par des virgules)</label>
                   <Input
-                    value={previewImage.tags.join(', ')}
-                    onChange={(e) => updateImageMetadata(previewImage.id, { 
-                      tags: e.target.value.split(',').map(tag => tag.trim()).filter(Boolean) 
-                    })}
-                    placeholder="électricité, formation, sécurité"
-                  />
+                  value={previewImage.tags.join(', ')}
+                  onChange={(e) => updateImageMetadata(previewImage.id, {
+                    tags: e.target.value.split(',').map((tag) => tag.trim()).filter(Boolean)
+                  })}
+                  placeholder="électricité, formation, sécurité" />
+                
                 </div>
                 
                 <div className="text-sm text-gray-500">
@@ -440,30 +440,30 @@ export function ImageManager() {
                 
                 <div className="flex gap-2">
                   <Button
-                    variant="outline"
-                    onClick={() => downloadImage(previewImage)}
-                    className="flex-1"
-                  >
+                  variant="outline"
+                  onClick={() => downloadImage(previewImage)}
+                  className="flex-1">
+                  
                     <Download className="h-4 w-4 mr-2" />
                     Télécharger
                   </Button>
                   <Button
-                    variant="destructive"
-                    onClick={() => {
-                      handleDeleteImage(previewImage.id);
-                      setPreviewImage(null);
-                    }}
-                    className="flex-1"
-                  >
+                  variant="destructive"
+                  onClick={() => {
+                    handleDeleteImage(previewImage.id);
+                    setPreviewImage(null);
+                  }}
+                  className="flex-1">
+                  
                     <Trash2 className="h-4 w-4 mr-2" />
                     Supprimer
                   </Button>
                 </div>
               </div>
             </div>
-          )}
+          }
         </DialogContent>
       </Dialog>
-    </div>
-  );
+    </div>);
+
 }

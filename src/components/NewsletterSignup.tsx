@@ -1,11 +1,10 @@
-
 import { useState } from 'react';
-import { Mail, Check, Send, Sparkles, ArrowRight } from 'lucide-react';
+import { Mail, Check, Send, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
+import { apiFetch } from '@/lib/api-client';
 
 interface NewsletterSignupProps {
   variant?: 'inline' | 'card' | 'footer' | 'banner';
@@ -20,7 +19,7 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !email.includes('@')) {
       toast({
         title: 'Email invalide',
@@ -33,57 +32,35 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
     setIsLoading(true);
 
     try {
-      // Vérifier si l'email existe déjà
-      const { data: existing } = await supabase
-        .from('newsletter_subscribers')
-        .select('id')
-        .eq('email', email)
-        .single();
-
-      if (existing) {
-        toast({
-          title: 'Déjà inscrit',
-          description: 'Cette adresse email est déjà inscrite à notre newsletter.',
-          variant: 'default'
-        });
-        setIsLoading(false);
-        return;
-      }
-
-      // Inscription à la newsletter
-      const { error } = await supabase
-        .from('newsletter_subscribers')
-        .insert([{
+      // Direct POST call to local API
+      // The local backend handles duplicates with ON CONFLICT
+      await apiFetch('/api/newsletter-subscribers', {
+        method: 'POST',
+        body: JSON.stringify({
           email,
-          subscribed_at: new Date().toISOString(),
-          is_active: true,
           source: 'website'
-        }]);
-
-      if (error) throw error;
+        })
+      });
 
       setIsSubscribed(true);
       setEmail('');
-      
+
       toast({
         title: 'Inscription réussie ! ✅',
         description: 'Merci ! Vous recevrez bientôt nos actualités et conseils techniques.',
         variant: 'default'
       });
 
-      // Analytics
-      console.log('Newsletter signup:', email);
-
       // Reset after 3 seconds
       setTimeout(() => {
         setIsSubscribed(false);
       }, 3000);
 
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Erreur inscription newsletter:', error);
       toast({
         title: 'Erreur',
-        description: 'Une erreur est survenue. Veuillez réessayer.',
+        description: error.message || 'Une erreur est survenue. Veuillez réessayer.',
         variant: 'destructive'
       });
     } finally {
@@ -96,43 +73,43 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
       <div className={`flex items-center gap-2 text-green-600 animate-in fade-in ${className}`}>
         <Check className="h-5 w-5" />
         <span>Merci pour votre inscription !</span>
-      </div>
-    );
+      </div>);
+
   }
 
-  const content = (
-    <form onSubmit={handleSubmit} className="space-y-4">
+  const content =
+  <form onSubmit={handleSubmit} className="space-y-4">
       <div className="flex flex-col sm:flex-row gap-2">
         <Input
-          type="email"
-          placeholder="Votre adresse email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="flex-1 h-12 rounded-lg bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:border-white/50"
-          required
-          aria-label="Adresse email pour la newsletter"
-        />
-        <Button 
-          type="submit" 
-          disabled={isLoading}
-          className="h-12 bg-white text-proqblue hover:bg-gray-100 font-semibold rounded-lg transition-all whitespace-nowrap"
-        >
-          {isLoading ? (
-            <div className="animate-spin h-4 w-4 border-2 border-proqblue border-t-transparent rounded-full" />
-          ) : (
-            <>
+        type="email"
+        placeholder="Votre adresse email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="flex-1 h-12 rounded-lg bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:border-white/50"
+        required
+        aria-label="Adresse email pour la newsletter" />
+      
+        <Button
+        type="submit"
+        disabled={isLoading}
+        className="h-12 bg-white text-proqblue hover:bg-gray-100 font-semibold rounded-lg transition-all whitespace-nowrap">
+        
+          {isLoading ?
+        <div className="animate-spin h-4 w-4 border-2 border-proqblue border-t-transparent rounded-full" /> :
+
+        <>
               <Send className="h-4 w-4 mr-2" />
               <span className="hidden sm:inline">S'inscrire</span>
               <span className="sm:hidden">OK</span>
             </>
-          )}
+        }
         </Button>
       </div>
       <p className="text-xs text-white/70">
         📬 Recevez nos actualités, conseils techniques et informations sur les formations directement dans votre boîte mail.
       </p>
-    </form>
-  );
+    </form>;
+
 
   // Variante Banner (pour Homepage)
   if (variant === 'banner') {
@@ -177,8 +154,8 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
             </div>
           </div>
         </div>
-      </section>
-    );
+      </section>);
+
   }
 
   // Variante Inline (pour blog, etc)
@@ -198,8 +175,8 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
           Recevez nos actualités et conseils techniques. Désinscription à tout moment.
         </p>
         {content}
-      </div>
-    );
+      </div>);
+
   }
 
   // Variante Card (default)
@@ -220,6 +197,6 @@ export function NewsletterSignup({ variant = 'card', className = '' }: Newslette
         </p>
         {content}
       </CardContent>
-    </Card>
-  );
+    </Card>);
+
 }

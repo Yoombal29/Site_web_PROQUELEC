@@ -9,7 +9,7 @@ import React from 'react';
 import { Cable, AlertTriangle, CheckCircle, XCircle, Zap } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
+
 
 interface CableRecommendation {
   tronçonId: string;
@@ -30,19 +30,19 @@ export const CableRecommendationsDisplay: React.FC<CableRecommendationsDisplayPr
 }) => {
   const getConformityIcon = (conformite: string) => {
     switch (conformite) {
-      case 'CONFORME': return <CheckCircle className="w-4 h-4 text-green-600" />;
-      case 'AVERTISSEMENT': return <AlertTriangle className="w-4 h-4 text-yellow-600" />;
-      case 'NON_CONFORME': return <XCircle className="w-4 h-4 text-red-600" />;
-      default: return <Zap className="w-4 h-4 text-gray-600" />;
+      case 'CONFORME':return <CheckCircle className="w-4 h-4 text-green-600" />;
+      case 'AVERTISSEMENT':return <AlertTriangle className="w-4 h-4 text-yellow-600" />;
+      case 'NON_CONFORME':return <XCircle className="w-4 h-4 text-red-600" />;
+      default:return <Zap className="w-4 h-4 text-gray-600" />;
     }
   };
 
   const getConformityColor = (conformite: string) => {
     switch (conformite) {
-      case 'CONFORME': return 'text-green-700 bg-green-50 border-green-200';
-      case 'AVERTISSEMENT': return 'text-yellow-700 bg-yellow-50 border-yellow-200';
-      case 'NON_CONFORME': return 'text-red-700 bg-red-50 border-red-200';
-      default: return 'text-gray-700 bg-gray-50 border-gray-200';
+      case 'CONFORME':return 'text-green-700 bg-green-50 border-green-200';
+      case 'AVERTISSEMENT':return 'text-yellow-700 bg-yellow-50 border-yellow-200';
+      case 'NON_CONFORME':return 'text-red-700 bg-red-50 border-red-200';
+      default:return 'text-gray-700 bg-gray-50 border-gray-200';
     }
   };
 
@@ -51,9 +51,9 @@ export const CableRecommendationsDisplay: React.FC<CableRecommendationsDisplayPr
   };
 
   const stats = {
-    conforme: recommandations.filter(r => r.conformite === 'CONFORME').length,
-    avertissement: recommandations.filter(r => r.conformite === 'AVERTISSEMENT').length,
-    nonConforme: recommandations.filter(r => r.conformite === 'NON_CONFORME').length,
+    conforme: recommandations.filter((r) => r.conformite === 'CONFORME').length,
+    avertissement: recommandations.filter((r) => r.conformite === 'AVERTISSEMENT').length,
+    nonConforme: recommandations.filter((r) => r.conformite === 'NON_CONFORME').length,
     total: recommandations.length
   };
 
@@ -90,8 +90,8 @@ export const CableRecommendationsDisplay: React.FC<CableRecommendationsDisplayPr
 
       {/* Liste des recommandations */}
       <div className="space-y-3">
-        {recommandations.map((rec, index) => (
-          <Card key={index} className={`border ${getConformityColor(rec.conformite)}`}>
+        {recommandations.map((rec, index) =>
+        <Card key={index} className={`border ${getConformityColor(rec.conformite)}`}>
             <CardContent className="p-4">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
@@ -129,7 +129,7 @@ export const CableRecommendationsDisplay: React.FC<CableRecommendationsDisplayPr
               </div>
             </CardContent>
           </Card>
-        ))}
+        )}
       </div>
 
       {/* Résumé et conseils */}
@@ -139,32 +139,32 @@ export const CableRecommendationsDisplay: React.FC<CableRecommendationsDisplayPr
         </CardHeader>
         <CardContent>
           <div className="space-y-2 text-sm">
-            {stats.nonConforme > 0 && (
-              <div className="flex items-start gap-2">
+            {stats.nonConforme > 0 &&
+            <div className="flex items-start gap-2">
                 <XCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
                 <span>
                   <strong>{stats.nonConforme} tronçon{stats.nonConforme > 1 ? 's' : ''} non conforme{stats.nonConforme > 1 ? 's' : ''}:</strong> Les sections actuelles sont insuffisantes pour le courant transporté. Risque de surchauffe et non-conformité NF C 15-100.
                 </span>
               </div>
-            )}
+            }
 
-            {stats.avertissement > 0 && (
-              <div className="flex items-start gap-2">
+            {stats.avertissement > 0 &&
+            <div className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                 <span>
                   <strong>{stats.avertissement} tronçon{stats.avertissement > 1 ? 's' : ''} avec avertissement{stats.avertissement > 1 ? 's' : ''}:</strong> Les sections actuelles sont acceptables mais une marge de sécurité limitée est recommandée.
                 </span>
               </div>
-            )}
+            }
 
-            {stats.conforme > 0 && (
-              <div className="flex items-start gap-2">
+            {stats.conforme > 0 &&
+            <div className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 <span>
                   <strong>{stats.conforme} tronçon{stats.conforme > 1 ? 's' : ''} conforme{stats.conforme > 1 ? 's' : ''}:</strong> Sections adaptées avec bonne marge de sécurité.
                 </span>
               </div>
-            )}
+            }
 
             <div className="flex items-start gap-2 mt-4 pt-2 border-t">
               <Cable className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
@@ -175,6 +175,6 @@ export const CableRecommendationsDisplay: React.FC<CableRecommendationsDisplayPr
           </div>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
+
 };

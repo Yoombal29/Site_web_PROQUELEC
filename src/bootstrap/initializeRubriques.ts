@@ -11,7 +11,7 @@ import { RUBRIQUE_VOLTAGE_DROP } from '@/rubriques/VoltageDropRubrique';
  * Initialiser toutes les rubriques
  */
 export function initializeRubriques(): void {
-  console.log('🚀 Initialisation des rubriques...');
+
 
   try {
     // RUBRIQUE 1 — Calcul de chute de tension (STABLE)
@@ -23,9 +23,9 @@ export function initializeRubriques(): void {
     // ... etc
 
     const allRubriques = rubriqueRegistry.getAll();
-    console.log(`✅ ${allRubriques.length} rubrique(s) enregistrée(s)`);
+
     allRubriques.forEach((r) => {
-      console.log(`   - ${r.icon} ${r.name} (${r.maturity})`);
+
     });
   } catch (error) {
     console.error('❌ Erreur lors de l\'initialisation des rubriques :', error);

@@ -1,0 +1,206 @@
+﻿[dotenv@17.2.3] injecting env (8) from .env -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+🔍 Analyzing menu structure...
+
+📊 Total menu items: 96
+
+📋 Breakdown by type:
+  - Main menu: 90 items
+  - Footer menu: 6 items
+  - Social menu: 0 items
+
+⚠️  Inactive menus: 49
+   Items: "Catalogue des formations", "Sensibilisation & Vulgarisation", "Marchés sécurisés", "Toute l'actualité", "Formations", "Pour les Autorités", "Normes électriques", "Présentation de PROQUELEC", "Expertises & Solutions", "Certifications", "Demande de conseil", "Guides pratiques", "Demande de diagnostic", "Pour les Ménages", "Diagnostics électriques", "Calendrier des sessions", "Partenariat avec SENELEC", "Évènements à venir", "Historique (1995 → aujourd’hui)", "Nous trouver", "Nos labels", "Communiqués de presse", "Inscription en ligne", "Mementos téléchargeables", "Pour les Professionnels", "Photos avant/après", "Mise en conformité", "Vision & Valeurs", "UTILITÉ PUBLIQUE", "Pour les Collectivités locales", "Fiches conseils", "Activités", "NOS ACTIONS", "Sécurisation des marchés", "Équipe dirigeante", "Certification des électriciens", "Ressources pédagogiques", "Gouvernance", "FORMATION & CERTIFICATION", "Études et expertises", "Pour les Marchés", "FAQ", "Partenaires institutionnels", "Documents", "Evènements", "Rapport annuel", "PROJETS & RÉALISATIONS", "ACTUALITÉS & ÉVÉNEMENTS", "A propos"
+
+🔎 Potential duplicates (same title): 36 groups
+
+  "catalogue des formations" (2 items):
+    - ID: da004770... | URL: /formations | Active: false | Order: 0
+    - ID: 86d6dd08... | URL: /formations | Active: true | Order: 1
+
+  "sensibilisation & vulgarisation" (2 items):
+    - ID: a292d3b4... | URL: /activities#awareness | Active: false | Order: 0
+    - ID: a4b9243e... | URL: /activities#awareness | Active: true | Order: 0
+
+  "marchés sécurisés" (2 items):
+    - ID: 35f7b956... | URL: /showroom#markets | Active: false | Order: 0
+    - ID: 16a3ec48... | URL: /showroom#markets | Active: true | Order: 0
+
+  "toute l'actualité" (2 items):
+    - ID: adaf7d8d... | URL: /blog | Active: false | Order: 0
+    - ID: b5708883... | URL: /blog | Active: true | Order: 1
+
+  "présentation de proquelec" (2 items):
+    - ID: baa3334b... | URL: /about | Active: true | Order: 0
+    - ID: a3c4615c... | URL: /about | Active: false | Order: 1
+
+  "pour les autorités" (2 items):
+    - ID: 98809518... | URL: /avantages?type=member | Active: true | Order: 0
+    - ID: 61ed0ab6... | URL: /avantages?type=member | Active: false | Order: 0
+
+  "demande de diagnostic" (2 items):
+    - ID: 75ad5f3e... | URL: /contact?type=diagnostic | Active: true | Order: 0
+    - ID: 50e4b505... | URL: /contact?type=diagnostic | Active: false | Order: 1
+
+  "normes électriques" (2 items):
+    - ID: 6e9392a3... | URL: /documents#norms | Active: true | Order: 0
+    - ID: c9071d1f... | URL: /documents#norms | Active: false | Order: 0
+
+  "pour les ménages" (2 items):
+    - ID: 030938f8... | URL: /avantages?type=electrician | Active: true | Order: 1
+    - ID: a6e11135... | URL: /avantages?type=electrician | Active: false | Order: 1
+
+  "demande de conseil" (2 items):
+    - ID: 92dd9d52... | URL: /contact?type=conseil | Active: false | Order: 1
+    - ID: 84cf6516... | URL: /contact?type=conseil | Active: true | Order: 1
+
+  "guides pratiques" (2 items):
+    - ID: 6ef32a3a... | URL: /documents#guides | Active: false | Order: 1
+    - ID: 29136701... | URL: /documents#guides | Active: true | Order: 1
+
+  "diagnostics électriques" (2 items):
+    - ID: 7f373813... | URL: /activities#diagnostics | Active: false | Order: 1
+    - ID: a2d766b2... | URL: /activities#diagnostics | Active: true | Order: 1
+
+  "calendrier des sessions" (2 items):
+    - ID: 6ce79124... | URL: /events?type=formation | Active: false | Order: 1
+    - ID: ee7b62c8... | URL: /events?type=formation | Active: true | Order: 1
+
+  "partenariat avec senelec" (2 items):
+    - ID: 795497e2... | URL: /showroom#senelec | Active: false | Order: 1
+    - ID: 5553caae... | URL: /showroom#senelec | Active: true | Order: 1
+
+  "évènements à venir" (2 items):
+    - ID: 16b47545... | URL: /events | Active: false | Order: 1
+    - ID: 277ed80a... | URL: /events | Active: true | Order: 1
+
+  "historique (1995 → aujourd’hui)" (2 items):
+    - ID: 10bf8fd7... | URL: /about#history | Active: true | Order: 1
+    - ID: 882e9539... | URL: /about#history | Active: false | Order: 1
+
+  "pour les professionnels" (2 items):
+    - ID: 932347b3... | URL: /avantages?type=company | Active: true | Order: 2
+    - ID: 655d6a89... | URL: /avantages?type=company | Active: false | Order: 2
+
+  "nous trouver" (2 items):
+    - ID: 98b66a90... | URL: /contact#map | Active: false | Order: 2
+    - ID: 322be5b2... | URL: /contact#map | Active: true | Order: 2
+
+  "inscription en ligne" (2 items):
+    - ID: 4d14e32f... | URL: /contact?subject=inscription | Active: true | Order: 2
+    - ID: 42371fca... | URL: /contact?subject=inscription | Active: false | Order: 2
+
+  "communiqués de presse" (2 items):
+    - ID: 29f6df0d... | URL: /blog?category=presse | Active: false | Order: 2
+    - ID: bf5acbf2... | URL: /blog?category=presse | Active: true | Order: 2
+
+  "mementos téléchargeables" (2 items):
+    - ID: 9e694f0b... | URL: /documents#mementos | Active: false | Order: 2
+    - ID: 3e0184f8... | URL: /documents#mementos | Active: true | Order: 2
+
+  "vision & valeurs" (2 items):
+    - ID: 82e2a903... | URL: /about#values | Active: true | Order: 2
+    - ID: 52432357... | URL: /about#values | Active: false | Order: 2
+
+  "photos avant/après" (2 items):
+    - ID: feecf357... | URL: /showroom#gallery | Active: false | Order: 2
+    - ID: 85092c73... | URL: /showroom#gallery | Active: true | Order: 2
+
+  "mise en conformité" (2 items):
+    - ID: bd28d64f... | URL: /activities#compliance | Active: false | Order: 2
+    - ID: e20e527f... | URL: /activities#compliance | Active: true | Order: 2
+
+  "pour les collectivités locales" (2 items):
+    - ID: c26f4ccd... | URL: /avantages?type=member#collectivities | Active: false | Order: 3
+    - ID: 66679f73... | URL: /avantages?type=member#collectivities | Active: true | Order: 3
+
+  "fiches conseils" (2 items):
+    - ID: b0b5f7e9... | URL: /documents#tips | Active: false | Order: 3
+    - ID: 1bb964ba... | URL: /documents#tips | Active: true | Order: 3
+
+  "équipe dirigeante" (2 items):
+    - ID: 4c9a1f6a... | URL: /about#leadership | Active: true | Order: 3
+    - ID: 78c597d5... | URL: /about#leadership | Active: false | Order: 3
+
+  "certification des électriciens" (2 items):
+    - ID: 272bee12... | URL: /certifications | Active: true | Order: 3
+    - ID: 5c1ec7cd... | URL: /certifications | Active: false | Order: 3
+
+  "sécurisation des marchés" (2 items):
+    - ID: ec625045... | URL: /activities#markets | Active: true | Order: 3
+    - ID: 49198ab1... | URL: /activities#markets | Active: false | Order: 3
+
+  "ressources pédagogiques" (2 items):
+    - ID: 50a777bc... | URL: /documents#pedagogy | Active: false | Order: 4
+    - ID: 15e861df... | URL: /documents#pedagogy | Active: true | Order: 4
+
+  "pour les marchés" (2 items):
+    - ID: 96c35c63... | URL: /showroom#markets | Active: true | Order: 4
+    - ID: 8cee04d9... | URL: /showroom#markets | Active: false | Order: 4
+
+  "gouvernance" (2 items):
+    - ID: 73ae33b8... | URL: /about#governance | Active: true | Order: 4
+    - ID: dfbddf6c... | URL: /about#governance | Active: false | Order: 4
+
+  "faq" (2 items):
+    - ID: 6b8d49ae... | URL: /faq | Active: true | Order: 4
+    - ID: a2a11757... | URL: /faq | Active: false | Order: 4
+
+  "études et expertises" (2 items):
+    - ID: 85ac49a7... | URL: /activities#studies | Active: false | Order: 4
+    - ID: 225e31a2... | URL: /activities#studies | Active: true | Order: 4
+
+  "partenaires institutionnels" (2 items):
+    - ID: d5e99322... | URL: /about#partners | Active: false | Order: 5
+    - ID: d31ac881... | URL: /about#partners | Active: true | Order: 5
+
+  "rapport annuel" (2 items):
+    - ID: 05cf71e7... | URL: /documents#reports | Active: true | Order: 6
+    - ID: 18db8802... | URL: /documents#reports | Active: false | Order: 6
+
+
+🧹 CLEANUP RECOMMENDATIONS:
+
+1️⃣  Delete 49 inactive menu items
+2️⃣  For "catalogue des formations": Keep ID da004770... (order: 0), remove 1 duplicate(s)
+2️⃣  For "sensibilisation & vulgarisation": Keep ID a292d3b4... (order: 0), remove 1 duplicate(s)
+2️⃣  For "marchés sécurisés": Keep ID 35f7b956... (order: 0), remove 1 duplicate(s)
+2️⃣  For "toute l'actualité": Keep ID adaf7d8d... (order: 0), remove 1 duplicate(s)
+2️⃣  For "présentation de proquelec": Keep ID baa3334b... (order: 0), remove 1 duplicate(s)
+2️⃣  For "pour les autorités": Keep ID 98809518... (order: 0), remove 1 duplicate(s)
+2️⃣  For "demande de diagnostic": Keep ID 75ad5f3e... (order: 0), remove 1 duplicate(s)
+2️⃣  For "normes électriques": Keep ID 6e9392a3... (order: 0), remove 1 duplicate(s)
+2️⃣  For "pour les ménages": Keep ID 030938f8... (order: 1), remove 1 duplicate(s)
+2️⃣  For "demande de conseil": Keep ID 92dd9d52... (order: 1), remove 1 duplicate(s)
+2️⃣  For "guides pratiques": Keep ID 6ef32a3a... (order: 1), remove 1 duplicate(s)
+2️⃣  For "diagnostics électriques": Keep ID 7f373813... (order: 1), remove 1 duplicate(s)
+2️⃣  For "calendrier des sessions": Keep ID 6ce79124... (order: 1), remove 1 duplicate(s)
+2️⃣  For "partenariat avec senelec": Keep ID 795497e2... (order: 1), remove 1 duplicate(s)
+2️⃣  For "évènements à venir": Keep ID 16b47545... (order: 1), remove 1 duplicate(s)
+2️⃣  For "historique (1995 → aujourd’hui)": Keep ID 10bf8fd7... (order: 1), remove 1 duplicate(s)
+2️⃣  For "pour les professionnels": Keep ID 932347b3... (order: 2), remove 1 duplicate(s)
+2️⃣  For "nous trouver": Keep ID 98b66a90... (order: 2), remove 1 duplicate(s)
+2️⃣  For "inscription en ligne": Keep ID 4d14e32f... (order: 2), remove 1 duplicate(s)
+2️⃣  For "communiqués de presse": Keep ID 29f6df0d... (order: 2), remove 1 duplicate(s)
+2️⃣  For "mementos téléchargeables": Keep ID 9e694f0b... (order: 2), remove 1 duplicate(s)
+2️⃣  For "vision & valeurs": Keep ID 82e2a903... (order: 2), remove 1 duplicate(s)
+2️⃣  For "photos avant/après": Keep ID feecf357... (order: 2), remove 1 duplicate(s)
+2️⃣  For "mise en conformité": Keep ID bd28d64f... (order: 2), remove 1 duplicate(s)
+2️⃣  For "pour les collectivités locales": Keep ID c26f4ccd... (order: 3), remove 1 duplicate(s)
+2️⃣  For "fiches conseils": Keep ID b0b5f7e9... (order: 3), remove 1 duplicate(s)
+2️⃣  For "équipe dirigeante": Keep ID 4c9a1f6a... (order: 3), remove 1 duplicate(s)
+2️⃣  For "certification des électriciens": Keep ID 272bee12... (order: 3), remove 1 duplicate(s)
+2️⃣  For "sécurisation des marchés": Keep ID ec625045... (order: 3), remove 1 duplicate(s)
+2️⃣  For "ressources pédagogiques": Keep ID 50a777bc... (order: 4), remove 1 duplicate(s)
+2️⃣  For "pour les marchés": Keep ID 96c35c63... (order: 4), remove 1 duplicate(s)
+2️⃣  For "gouvernance": Keep ID 73ae33b8... (order: 4), remove 1 duplicate(s)
+2️⃣  For "faq": Keep ID 6b8d49ae... (order: 4), remove 1 duplicate(s)
+2️⃣  For "études et expertises": Keep ID 85ac49a7... (order: 4), remove 1 duplicate(s)
+2️⃣  For "partenaires institutionnels": Keep ID d5e99322... (order: 5), remove 1 duplicate(s)
+2️⃣  For "rapport annuel": Keep ID 05cf71e7... (order: 6), remove 1 duplicate(s)
+
+📌 Total items to delete: 85
+
+⚠️  Do you want to proceed with cleanup? (This will delete the items listed above)
+   To execute: Run this script with --execute flag
+
+ℹ️  No changes made. Add --execute to apply cleanup.

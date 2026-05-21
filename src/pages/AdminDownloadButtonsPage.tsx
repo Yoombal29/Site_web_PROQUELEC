@@ -1,11 +1,11 @@
 import { useDownloadButtons } from '../hooks/useDownloadButtons';
 import { DownloadButtonAdminForm } from '../components/DownloadButtonAdminForm';
-import { ConfigurableDownloadButton, type DownloadButtonConfig } from '../components/ConfigurableDownloadButton';
+import { ConfigurableDownloadButton } from '../components/ConfigurableDownloadButton';
 import { useState } from 'react';
 import {
-  Plus, Edit2, Trash2, Settings2, Info,
-  Search, Filter, ChevronLeft, Loader2, ClipboardList
-} from 'lucide-react';
+  Plus, Edit2, Trash2, Settings2,
+  ChevronLeft, Loader2, ClipboardList } from
+'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -31,7 +31,7 @@ export default function AdminDownloadButtonsPage() {
       await upsertButton(config);
       toast.success("Bouton configuré avec succès !");
       handleCancel();
-    } catch (err: any) {
+    } catch (err: unknown) {
       toast.error(`Erreur: ${err.message}`);
     }
   };
@@ -41,7 +41,7 @@ export default function AdminDownloadButtonsPage() {
       try {
         await deleteButton(id);
         toast.success("Bouton supprimé.");
-      } catch (err: any) {
+      } catch (err: unknown) {
         toast.error("Erreur lors de la suppression.");
       }
     }
@@ -58,39 +58,39 @@ export default function AdminDownloadButtonsPage() {
           </h2>
           <p className="text-slate-500 mt-1">Configurez des boutons intelligents liés à vos ressources industrielles.</p>
         </div>
-        {!isAdding && !editingId && (
-          <Button onClick={() => setIsAdding(true)} className="bg-proqblue hover:bg-proqblue/90 h-12 px-6 rounded-xl font-bold shadow-lg">
+        {!isAdding && !editingId &&
+        <Button onClick={() => setIsAdding(true)} className="bg-proqblue hover:bg-proqblue/90 h-12 px-6 rounded-xl font-bold shadow-lg">
             <Plus className="mr-2 h-5 w-5" /> Ajouter un bouton
           </Button>
-        )}
+        }
       </div>
 
       {/* Zone Formulaire (Mode Ajout ou Édition) */}
-      {(isAdding || editingId) && (
-        <div className="max-w-3xl mx-auto space-y-4">
+      {(isAdding || editingId) &&
+      <div className="max-w-3xl mx-auto space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <Button variant="ghost" size="sm" onClick={handleCancel} className="text-slate-500">
               <ChevronLeft className="h-4 w-4 mr-1" /> Retour à la liste
             </Button>
           </div>
           <DownloadButtonAdminForm
-            buttonConfig={buttons.find(b => b.id === editingId)}
-            onSave={onSave}
-            onCancel={handleCancel}
-          />
+          buttonConfig={buttons.find((b) => b.id === editingId)}
+          onSave={onSave}
+          onCancel={handleCancel} aria-label="Action" />
+        
         </div>
-      )}
+      }
 
       {/* Liste des Boutons */}
-      {!isAdding && !editingId && (
-        <div className="space-y-6">
-          {loading ? (
-            <div className="h-64 flex flex-col items-center justify-center text-slate-400">
+      {!isAdding && !editingId &&
+      <div className="space-y-6">
+          {loading ?
+        <div className="h-64 flex flex-col items-center justify-center text-slate-400">
               <Loader2 className="animate-spin h-10 w-10 mb-4" />
               <p>Synchronisation des configurations...</p>
-            </div>
-          ) : buttons.length === 0 ? (
-            <div className="bg-white border-2 border-dashed border-slate-200 rounded-3xl p-16 text-center">
+            </div> :
+        buttons.length === 0 ?
+        <div className="bg-white border-2 border-dashed border-slate-200 rounded-3xl p-16 text-center">
               <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Settings2 className="h-10 w-10 text-slate-300" />
               </div>
@@ -99,16 +99,16 @@ export default function AdminDownloadButtonsPage() {
               <Button onClick={() => setIsAdding(true)} variant="outline" className="rounded-xl border-slate-200">
                 Lancer la première config
               </Button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {buttons.map(btn => (
-                <Card key={btn.id} className="group overflow-hidden border-slate-200 hover:border-proqblue/30 transition-all rounded-2xl shadow-sm hover:shadow-md">
+            </div> :
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {buttons.map((btn) =>
+          <Card key={btn.id} className="group overflow-hidden border-slate-200 hover:border-proqblue/30 transition-all rounded-2xl shadow-sm hover:shadow-md">
                   <CardContent className="p-0">
                     <div className="flex flex-col md:flex-row">
                       {/* Section Prévisualisation */}
                       <div className="md:w-56 bg-slate-50 p-6 flex items-center justify-center border-b md:border-b-0 md:border-r border-slate-100">
-                        <ConfigurableDownloadButton buttonConfig={btn} />
+                        <ConfigurableDownloadButton buttonConfig={btn} aria-label="Action" />
                       </div>
 
                       {/* Section Infos */}
@@ -120,24 +120,24 @@ export default function AdminDownloadButtonsPage() {
                               <Badge variant="secondary" className="font-mono text-[10px] uppercase">
                                 {btn.bucket}
                               </Badge>
-                              {!btn.visible && (
-                                <Badge variant="outline" className="text-red-500 border-red-100 bg-red-50 text-[10px]">
+                              {!btn.visible &&
+                        <Badge variant="outline" className="text-red-500 border-red-100 bg-red-50 text-[10px]">
                                   MASQUÉ
                                 </Badge>
-                              )}
+                        }
                             </div>
                           </div>
                           <div className="flex gap-2">
                             <button
-                              onClick={() => handleEdit(btn.id)}
-                              className="p-2 text-slate-400 hover:text-proqblue hover:bg-blue-50 rounded-lg transition-colors"
-                            >
+                        onClick={() => handleEdit(btn.id)}
+                        className="p-2 text-slate-400 hover:text-proqblue hover:bg-blue-50 rounded-lg transition-colors" aria-label="Action">
+                        
                               <Edit2 className="h-4 w-4" />
                             </button>
                             <button
-                              onClick={() => onDelete(btn.id)}
-                              className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                            >
+                        onClick={() => onDelete(btn.id)}
+                        className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors" aria-label="Action">
+                        
                               <Trash2 className="h-4 w-4" />
                             </button>
                           </div>
@@ -153,11 +153,11 @@ export default function AdminDownloadButtonsPage() {
                     </div>
                   </CardContent>
                 </Card>
-              ))}
-            </div>
           )}
+            </div>
+        }
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }

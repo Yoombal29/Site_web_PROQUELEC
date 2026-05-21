@@ -3,7 +3,11 @@ import React from 'react';
 import { useActivityLogs } from '../../hooks/useActivityLogs';
 
 const AdminAuditTrailPanel: React.FC = () => {
-  const { logs, isLoading } = useActivityLogs();
+  const { logs, isLoading, fetchLogs } = useActivityLogs();
+
+  React.useEffect(() => {
+    fetchLogs();
+  }, [fetchLogs]);
   return (
     <section className="bg-white p-6 rounded-lg shadow-md animate-fade-in">
       <h2 className="text-2xl font-semibold mb-4 text-proqblue">Audit Trail (Historique d'activité)</h2>

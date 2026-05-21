@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { apiFetch } from "@/lib/api-client";
 
 export interface DynamicPageData {
   id: string;
@@ -40,21 +40,10 @@ export function useDynamicPage(slug: string) {
     queryKey: ["dynamic-page", slug],
     queryFn: async (): Promise<DynamicPageData | null> => {
       try {
-        const { data, error } = await supabase
-          .from("pages")
-          .select("*")
-          .eq("slug", slug)
-          .eq("is_published", true)
-          .single();
-
-        if (error) {
-          console.error("Error fetching dynamic page:", error);
-          return null;
-        }
-
+        const data = await apiFetch<DynamicPageData>(`/api/pages/${slug}`);
         return data;
       } catch (error) {
-        console.error("Error in useDynamicPage:", error);
+        console.error("Error fetching dynamic page:", error);
         return null;
       }
     },

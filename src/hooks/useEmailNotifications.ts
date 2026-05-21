@@ -1,5 +1,5 @@
 
-import { supabase } from '@/integrations/supabase/client';
+import { apiFetch } from '@/lib/api-client';
 
 interface EmailNotification {
   to: string[];
@@ -11,27 +11,23 @@ interface EmailNotification {
 export function useEmailNotifications() {
   const sendNotification = async (notification: EmailNotification) => {
     try {
-      const { data, error } = await supabase.functions.invoke('send-notification-email', {
-        body: notification,
+      const data = await apiFetch('/api/send-email', {
+        method: 'POST',
+        body: JSON.stringify(notification)
       });
 
-      if (error) {
-        console.error('Erreur envoi email:', error);
-        return { success: false, error };
-      }
-
       return { success: true, data };
-    } catch (error) {
-      console.error('Erreur:', error);
+    } catch (error: unknown) {
+      console.error('Erreur envoi email:', error);
       return { success: false, error };
     }
   };
 
   const sendTrainingRegistrationConfirmation = async (
-    email: string,
-    participantName: string,
-    trainingTitle: string
-  ) => {
+  email: string,
+  participantName: string,
+  trainingTitle: string) =>
+  {
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #2376df;">Confirmation d'inscription - PROQUELEC</h2>
@@ -50,16 +46,16 @@ export function useEmailNotifications() {
     return sendNotification({
       to: [email],
       subject: `Confirmation d'inscription - ${trainingTitle}`,
-      html,
+      html
     });
   };
 
   const sendCertificationReminder = async (
-    email: string,
-    userName: string,
-    certificationName: string,
-    expiryDate: string
-  ) => {
+  email: string,
+  userName: string,
+  certificationName: string,
+  expiryDate: string) =>
+  {
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #2376df;">Rappel de renouvellement - PROQUELEC</h2>
@@ -74,13 +70,13 @@ export function useEmailNotifications() {
     return sendNotification({
       to: [email],
       subject: `Rappel de renouvellement - ${certificationName}`,
-      html,
+      html
     });
   };
 
   return {
     sendNotification,
     sendTrainingRegistrationConfirmation,
-    sendCertificationReminder,
+    sendCertificationReminder
   };
 }

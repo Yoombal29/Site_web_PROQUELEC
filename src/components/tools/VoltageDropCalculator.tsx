@@ -15,9 +15,9 @@
 
 import React, { useState } from 'react';
 import {
-    Calculator, Zap, Ruler, Cable, AlertTriangle,
-    CheckCircle, Info, Download, RotateCcw
-} from 'lucide-react';
+  Calculator, Zap, AlertTriangle,
+  CheckCircle, Info, Download, RotateCcw } from
+'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -33,13 +33,13 @@ import {
   VOLTAGE_DROP_LIMITS,
   LINEAR_REACTANCE,
   NORMALIZED_SECTIONS,
-  THERMAL_FACTORS,
-  BASE_IZ_VALUES,
+
+
   getResistivity,
-  checkThermalCompliance,
-  isNormalizedSection,
-  getVoltageDropLimit
-} from '@/utils/normativeConstants';
+  checkThermalCompliance } from
+
+
+'@/utils/normativeConstants';
 
 // ════════════════════════════════════════════════════════════════════════════════════════════════════════════
 // VERROUILLAGE CONFORMITÉ — ANTI-HALLUCINATION
@@ -69,11 +69,11 @@ CE MOTEUR EST UN OUTIL DE CONFORMITÉ, PAS UN ASSISTANT PÉDAGOGIQUE.
  * Permet le suivi des modifications et traçabilité complète
  */
 interface CalculationVersion {
-    version: string;
-    timestamp: string;
-    changes: string;
-    hash: string;
-    verdict: boolean;
+  version: string;
+  timestamp: string;
+  changes: string;
+  hash: string;
+  verdict: boolean;
 }
 
 /**
@@ -120,32 +120,32 @@ interface CalculationVersion {
  * - warnings: liste d'avertissements
  */
 interface CalculationResult {
-    voltageDrop: number;
-    voltageDropPercent: number;
-    isCompliant: boolean;
-    maxAllowedDrop: number;
-    resistivity: number;
-    reactance: number;
-    resistance: number;
-    formula: string;
-    phaseSystem: string;
-    alimentationType: string;
-    normativeReference: string;
-    warnings: string[];
-    recommendedSection: number;
-    thermalCheck: boolean;
-    izCorrected: number;
-    modeOfInstallation: string;
-    ambientTemperature: number;
-    insulationType: string;
-    numberOfCircuits: number;
-    calculationHash: string;
-    auditLog: string[];
-    auditHash: string;
-    signature: string;
-    bimData: any;
-    doeData: any;
-    versionHistory: CalculationVersion[];
+  voltageDrop: number;
+  voltageDropPercent: number;
+  isCompliant: boolean;
+  maxAllowedDrop: number;
+  resistivity: number;
+  reactance: number;
+  resistance: number;
+  formula: string;
+  phaseSystem: string;
+  alimentationType: string;
+  normativeReference: string;
+  warnings: string[];
+  recommendedSection: number;
+  thermalCheck: boolean;
+  izCorrected: number;
+  modeOfInstallation: string;
+  ambientTemperature: number;
+  insulationType: string;
+  numberOfCircuits: number;
+  calculationHash: string;
+  auditLog: string[];
+  auditHash: string;
+  signature: string;
+  bimData: unknown;
+  doeData: unknown;
+  versionHistory: CalculationVersion[];
 }
 
 // ════════════════════════════════════════════════════════════════════════════════════════════════════════════
@@ -161,36 +161,36 @@ interface CalculationResult {
  */
 // Generate audit log for calculation traceability
 const generateAuditLog = (
-    IB: number, L: number, S: number, U0: number, cosPhi: number, sinPhi: number,
-    alimentationType: string, phaseSystem: string, conductorType: string,
-    modeOfInstallation: string, ambientTemp: number, numCircuits: number,
-    izCorrected: number, u: number, deltaUPercent: number, maxAllowedDrop: number,
-    thermalCompliant: boolean, isCompliant: boolean
-): string[] => {
-    const log = [];
-    log.push("JOURNAL D'AUDIT — CALCUL DE CHUTE DE TENSION");
-    log.push(`Date: ${new Date().toISOString()}`);
-    log.push("");
-    log.push("PARAMÈTRES D'ENTRÉE:");
-    log.push(`IB = ${IB} A`);
-    log.push(`L = ${L} m`);
-    log.push(`S = ${S} mm²`);
-    log.push(`U0 = ${U0} V`);
-    log.push(`cosφ = ${cosPhi}`);
-    log.push(`Alimentation = ${alimentationType}`);
-    log.push(`Régime = ${phaseSystem}`);
-    log.push(`Matériau = ${conductorType}`);
-    log.push(`Mode de pose = ${modeOfInstallation}`);
-    log.push(`Température = ${ambientTemp}°C`);
-    log.push(`Circuits = ${numCircuits}`);
-    log.push("");
-    log.push("RÉSULTATS:");
-    log.push(`Iz corrigé = ${izCorrected.toFixed(1)} A`);
-    log.push(`Chute de tension = ${u.toFixed(2)} V (${deltaUPercent.toFixed(2)}%)`);
-    log.push(`Limite = ${maxAllowedDrop.toFixed(1)}%`);
-    log.push(`Thermique: ${thermalCompliant ? 'CONFORME' : 'NON CONFORME'}`);
-    log.push(`Globale: ${isCompliant ? 'CONFORME' : 'NON CONFORME'}`);
-    return log;
+IB: number, L: number, S: number, U0: number, cosPhi: number, sinPhi: number,
+alimentationType: string, phaseSystem: string, conductorType: string,
+modeOfInstallation: string, ambientTemp: number, numCircuits: number,
+izCorrected: number, u: number, deltaUPercent: number, maxAllowedDrop: number,
+thermalCompliant: boolean, isCompliant: boolean)
+: string[] => {
+  const log = [];
+  log.push("JOURNAL D'AUDIT — CALCUL DE CHUTE DE TENSION");
+  log.push(`Date: ${new Date().toISOString()}`);
+  log.push("");
+  log.push("PARAMÈTRES D'ENTRÉE:");
+  log.push(`IB = ${IB} A`);
+  log.push(`L = ${L} m`);
+  log.push(`S = ${S} mm²`);
+  log.push(`U0 = ${U0} V`);
+  log.push(`cosφ = ${cosPhi}`);
+  log.push(`Alimentation = ${alimentationType}`);
+  log.push(`Régime = ${phaseSystem}`);
+  log.push(`Matériau = ${conductorType}`);
+  log.push(`Mode de pose = ${modeOfInstallation}`);
+  log.push(`Température = ${ambientTemp}°C`);
+  log.push(`Circuits = ${numCircuits}`);
+  log.push("");
+  log.push("RÉSULTATS:");
+  log.push(`Iz corrigé = ${izCorrected.toFixed(1)} A`);
+  log.push(`Chute de tension = ${u.toFixed(2)} V (${deltaUPercent.toFixed(2)}%)`);
+  log.push(`Limite = ${maxAllowedDrop.toFixed(1)}%`);
+  log.push(`Thermique: ${thermalCompliant ? 'CONFORME' : 'NON CONFORME'}`);
+  log.push(`Globale: ${isCompliant ? 'CONFORME' : 'NON CONFORME'}`);
+  return log;
 };
 
 /**
@@ -202,7 +202,7 @@ const generateAuditLog = (
  */
 // Generate hash for audit log
 const generateAuditHash = (auditLog: string): string => {
-    return SHA256(auditLog).toString();
+  return SHA256(auditLog).toString();
 };
 
 /**
@@ -217,7 +217,7 @@ const generateAuditHash = (auditLog: string): string => {
  */
 // Generate electronic signature combining calculation and audit hashes
 const generateElectronicSignature = (calculationHash: string, auditHash: string): string => {
-    return SHA256(calculationHash + auditHash).toString();
+  return SHA256(calculationHash + auditHash).toString();
 };
 
 // ════════════════════════════════════════════════════════════════════════════════════════════════════════════
@@ -232,32 +232,32 @@ const generateElectronicSignature = (calculationHash: string, auditHash: string)
  * Structure compatible avec Industry Foundation Classes
  */
 // Generate BIM data for IFC export
-const generateBIMData = (result: any): any => {
-    return {
-        ifcType: "IFCELECTRICDISTRIBUTIONBOARD",
-        properties: {
-            VoltageDrop: result.voltageDrop,
-            VoltageDropPercent: result.voltageDropPercent,
-            IsCompliant: result.isCompliant,
-            MaxAllowedDrop: result.maxAllowedDrop,
-            Resistivity: result.resistivity,
-            Reactance: result.reactance,
-            Resistance: result.resistance,
-            Formula: result.formula,
-            PhaseSystem: result.phaseSystem,
-            AlimentationType: result.alimentationType,
-            NormativeReference: result.normativeReference,
-            ThermalCheck: result.thermalCheck,
-            IzCorrected: result.izCorrected,
-            ModeOfInstallation: result.modeOfInstallation,
-            AmbientTemperature: result.ambientTemperature,
-            InsulationType: result.insulationType,
-            NumberOfCircuits: result.numberOfCircuits,
-            CalculationHash: result.calculationHash,
-            AuditHash: result.auditHash,
-            Signature: result.signature
-        }
-    };
+const generateBIMData = (result: unknown): unknown => {
+  return {
+    ifcType: "IFCELECTRICDISTRIBUTIONBOARD",
+    properties: {
+      VoltageDrop: result.voltageDrop,
+      VoltageDropPercent: result.voltageDropPercent,
+      IsCompliant: result.isCompliant,
+      MaxAllowedDrop: result.maxAllowedDrop,
+      Resistivity: result.resistivity,
+      Reactance: result.reactance,
+      Resistance: result.resistance,
+      Formula: result.formula,
+      PhaseSystem: result.phaseSystem,
+      AlimentationType: result.alimentationType,
+      NormativeReference: result.normativeReference,
+      ThermalCheck: result.thermalCheck,
+      IzCorrected: result.izCorrected,
+      ModeOfInstallation: result.modeOfInstallation,
+      AmbientTemperature: result.ambientTemperature,
+      InsulationType: result.insulationType,
+      NumberOfCircuits: result.numberOfCircuits,
+      CalculationHash: result.calculationHash,
+      AuditHash: result.auditHash,
+      Signature: result.signature
+    }
+  };
 };
 
 /**
@@ -267,35 +267,35 @@ const generateBIMData = (result: any): any => {
  * Permet archivage et conformité légale
  */
 // Generate DOE data for JSON export
-const generateDOEData = (result: any): any => {
-    return {
-        doeVersion: "1.0",
-        calculation: {
-            voltageDrop: result.voltageDrop,
-            voltageDropPercent: result.voltageDropPercent,
-            isCompliant: result.isCompliant,
-            maxAllowedDrop: result.maxAllowedDrop,
-            resistivity: result.resistivity,
-            reactance: result.reactance,
-            resistance: result.resistance,
-            formula: result.formula,
-            phaseSystem: result.phaseSystem,
-            alimentationType: result.alimentationType,
-            normativeReference: result.normativeReference,
-            thermalCheck: result.thermalCheck,
-            izCorrected: result.izCorrected,
-            modeOfInstallation: result.modeOfInstallation,
-            ambientTemperature: result.ambientTemperature,
-            insulationType: result.insulationType,
-            numberOfCircuits: result.numberOfCircuits
-        },
-        security: {
-            calculationHash: result.calculationHash,
-            auditHash: result.auditHash,
-            signature: result.signature
-        },
-        timestamp: new Date().toISOString()
-    };
+const generateDOEData = (result: unknown): unknown => {
+  return {
+    doeVersion: "1.0",
+    calculation: {
+      voltageDrop: result.voltageDrop,
+      voltageDropPercent: result.voltageDropPercent,
+      isCompliant: result.isCompliant,
+      maxAllowedDrop: result.maxAllowedDrop,
+      resistivity: result.resistivity,
+      reactance: result.reactance,
+      resistance: result.resistance,
+      formula: result.formula,
+      phaseSystem: result.phaseSystem,
+      alimentationType: result.alimentationType,
+      normativeReference: result.normativeReference,
+      thermalCheck: result.thermalCheck,
+      izCorrected: result.izCorrected,
+      modeOfInstallation: result.modeOfInstallation,
+      ambientTemperature: result.ambientTemperature,
+      insulationType: result.insulationType,
+      numberOfCircuits: result.numberOfCircuits
+    },
+    security: {
+      calculationHash: result.calculationHash,
+      auditHash: result.auditHash,
+      signature: result.signature
+    },
+    timestamp: new Date().toISOString()
+  };
 };
 
 // ════════════════════════════════════════════════════════════════════════════════════════════════════════════
@@ -304,647 +304,814 @@ const generateDOEData = (result: any): any => {
 // Interface utilisateur et logique métier du calculateur
 
 export default function VoltageDropCalculator() {
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // 📝 ÉTATS — PARAMÈTRES D'ENTRÉE
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Chaque paramètre de l'utilisateur est stocké dans un état React
-    // Voir formulaire de saisie en bas du composant
-    const [current, setCurrent] = useState<string>('');
-    const [length, setLength] = useState<string>('');
-    const [crossSection, setCrossSection] = useState<string>('2.5');
-    const [voltage, setVoltage] = useState<string>('230'); // Default to 230V
-    const [conductorType, setConductorType] = useState<string>('copper');
-    const [installationType, setInstallationType] = useState<string>('lighting');
-    const [powerFactor, setPowerFactor] = useState<string>('1.0');
-    const [phaseSystem, setPhaseSystem] = useState<string>('single'); // single or three
-    const [alimentationType, setAlimentationType] = useState<string>('A'); // A or B
-    const [calculationMode, setCalculationMode] = useState<string>('manual'); // manual or auto
-    const [modeOfInstallation, setModeOfInstallation] = useState<string>('B1'); // Mode de pose
-    const [ambientTemperature, setAmbientTemperature] = useState<string>('30'); // Température ambiante (°C)
-    const [insulationType, setInsulationType] = useState<string>('PVC'); // Type d'isolation
-    const [numberOfCircuits, setNumberOfCircuits] = useState<string>('1'); // Nombre de circuits
-    
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // 📊 ÉTATS — RÉSULTATS ET HISTORIQUE
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Stockage du dernier calcul et de l'historique
-    
-    const [result, setResult] = useState<CalculationResult | null>(null);
-    const [versionHistory, setVersionHistory] = useState<CalculationVersion[]>([]);
-    const [lastCalculationTime, setLastCalculationTime] = useState<number>(0);
-    const [isCalculating, setIsCalculating] = useState<boolean>(false);
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // 📝 ÉTATS — PARAMÈTRES D'ENTRÉE
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Chaque paramètre de l'utilisateur est stocké dans un état React
+  // Voir formulaire de saisie en bas du composant
+  const [current, setCurrent] = useState<string>('');
+  const [length, setLength] = useState<string>('');
+  const [crossSection, setCrossSection] = useState<string>('2.5');
+  const [voltage, setVoltage] = useState<string>('230'); // Default to 230V
+  const [conductorType, setConductorType] = useState<string>('copper');
+  const [installationType, setInstallationType] = useState<string>('lighting');
+  const [powerFactor, setPowerFactor] = useState<string>('1.0');
+  const [phaseSystem, setPhaseSystem] = useState<string>('single'); // single or three
+  const [alimentationType, setAlimentationType] = useState<string>('A'); // A or B
+  const [calculationMode, setCalculationMode] = useState<string>('manual'); // manual or auto
+  const [modeOfInstallation, setModeOfInstallation] = useState<string>('B1'); // Mode de pose
+  const [ambientTemperature, setAmbientTemperature] = useState<string>('30'); // Température ambiante (°C)
+  const [insulationType, setInsulationType] = useState<string>('PVC'); // Type d'isolation
+  const [numberOfCircuits, setNumberOfCircuits] = useState<string>('1'); // Nombre de circuits
 
-    // Resistivity values according to NS 01-001 / NFC 15-100 Art 525
-    // At 20°C: Cuivre ρ = 0.0175, Aluminium ρ = 0.028 Ω·mm²/m
-    // Service conditions (normal): ρ_service = 1.25 × ρ_20°C
-    // (Now imported from normativeConstants.ts)
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // 📊 ÉTATS — RÉSULTATS ET HISTORIQUE
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Stockage du dernier calcul et de l'historique
 
-    // Voltage drop limits and thermal factors now imported from normativeConstants.ts
+  const [result, setResult] = useState<CalculationResult | null>(null);
+  const [versionHistory, setVersionHistory] = useState<CalculationVersion[]>([]);
+  const [lastCalculationTime, setLastCalculationTime] = useState<number>(0);
+  const [isCalculating, setIsCalculating] = useState<boolean>(false);
 
-    // Thermal compliance check now imported from normativeConstants.ts
+  // Resistivity values according to NS 01-001 / NFC 15-100 Art 525
+  // At 20°C: Cuivre ρ = 0.0175, Aluminium ρ = 0.028 Ω·mm²/m
+  // Service conditions (normal): ρ_service = 1.25 × ρ_20°C
+  // (Now imported from normativeConstants.ts)
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // 🔢 FONCTION — CALCUL DU HASH CRYPTOGRAPHIQUE
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Génère une empreinte SHA256 de tous les paramètres du calcul
-    // Permet de vérifier l'intégrité et détecter les modifications\n    
-    // Generate cryptographic hash for calculation integrity
-    const generateCalculationHash = (
-        IB: number, L: number, S: number, U0: number, cosPhi: number, sinPhi: number,
-        alimentationType: string, phaseSystem: string, conductorType: string,
-        modeOfInstallation: string, ambientTemp: number, numCircuits: number,
-        rho: number, izCorrected: number, u: number, deltaUPercent: number, maxAllowedDrop: number, isCompliant: boolean
-    ): string => {
-        const canonicalData = {
-            engine_version: "PROQUELEC-NS01001-v1.0",
-            norme: "NS 01-001 / NFC 15-100",
-            articles: ["523", "524", "525"],
-            timestamp_utc: new Date().toISOString(),
-            alimentation: alimentationType,
-            regime: phaseSystem === 'single' ? 'monophasé' : 'triphasé',
-            IB,
-            U0,
-            L,
-            cos_phi: cosPhi,
-            sin_phi: sinPhi,
-            materiau: conductorType,
-            section: S,
-            mode_pose: modeOfInstallation,
-            temperature: ambientTemp,
-            rho: rho,
-            k_factors: [
-                [30, 35, 40, 45, 50, 55, 60].includes(ambientTemp) ?
-                    {30: 1.00, 35: 0.94, 40: 0.87, 45: 0.79, 50: 0.71, 55: 0.61, 60: 0.50}[ambientTemp] || 1.00 : 1.00,
-                [1, 2, 3].includes(numCircuits) ?
-                    {1: 1.00, 2: 0.80, 3: 0.70}[numCircuits] || 0.70 : 0.70,
-                1.00 // k3 simplified
-            ],
-            Iz_corrige: izCorrected,
-            u_volts: u,
-            delta_u_percent: deltaUPercent,
-            limite_percent: maxAllowedDrop,
-            verdict: isCompliant ? "CONFORME" : "NON CONFORME"
-        };
+  // Voltage drop limits and thermal factors now imported from normativeConstants.ts
 
-        const jsonString = JSON.stringify(canonicalData);
-        return SHA256(jsonString).toString();
+  // Thermal compliance check now imported from normativeConstants.ts
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // 🔢 FONCTION — CALCUL DU HASH CRYPTOGRAPHIQUE
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Génère une empreinte SHA256 de tous les paramètres du calcul
+  // Permet de vérifier l'intégrité et détecter les modifications\n    
+  // Generate cryptographic hash for calculation integrity
+  const generateCalculationHash = (
+  IB: number, L: number, S: number, U0: number, cosPhi: number, sinPhi: number,
+  alimentationType: string, phaseSystem: string, conductorType: string,
+  modeOfInstallation: string, ambientTemp: number, numCircuits: number,
+  rho: number, izCorrected: number, u: number, deltaUPercent: number, maxAllowedDrop: number, isCompliant: boolean)
+  : string => {
+    const canonicalData = {
+      engine_version: "PROQUELEC-NS01001-v1.0",
+      norme: "NS 01-001 / NFC 15-100",
+      articles: ["523", "524", "525"],
+      timestamp_utc: new Date().toISOString(),
+      alimentation: alimentationType,
+      regime: phaseSystem === 'single' ? 'monophasé' : 'triphasé',
+      IB,
+      U0,
+      L,
+      cos_phi: cosPhi,
+      sin_phi: sinPhi,
+      materiau: conductorType,
+      section: S,
+      mode_pose: modeOfInstallation,
+      temperature: ambientTemp,
+      rho: rho,
+      k_factors: [
+      [30, 35, 40, 45, 50, 55, 60].includes(ambientTemp) ?
+      { 30: 1.00, 35: 0.94, 40: 0.87, 45: 0.79, 50: 0.71, 55: 0.61, 60: 0.50 }[ambientTemp] || 1.00 : 1.00,
+      [1, 2, 3].includes(numCircuits) ?
+      { 1: 1.00, 2: 0.80, 3: 0.70 }[numCircuits] || 0.70 : 0.70,
+      1.00 // k3 simplified
+      ],
+      Iz_corrige: izCorrected,
+      u_volts: u,
+      delta_u_percent: deltaUPercent,
+      limite_percent: maxAllowedDrop,
+      verdict: isCompliant ? "CONFORME" : "NON CONFORME"
     };
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // 📋 FONCTION — JOURNAL D'AUDIT INTERNE
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Version interne avec plus de détails que la version globale
-    // Permet traçabilité complète étape par étape normative
-    
-    // Generate audit log for calculation traceability
-    const generateAuditLog = (
-        IB: number, L: number, S: number, U0: number, cosPhi: number, sinPhi: number,
-        alimentationType: string, phaseSystem: string, conductorType: string,
-        modeOfInstallation: string, ambientTemp: number, numCircuits: number,
-        izCorrected: number, u: number, deltaUPercent: number, maxAllowedDrop: number, isCompliant: boolean,
-        thermalCompliant: boolean
-    ): string[] => {
-        const log: string[] = [];
+    const jsonString = JSON.stringify(canonicalData);
+    return SHA256(jsonString).toString();
+  };
 
-        log.push("JOURNAL D'AUDIT — CALCUL DE CHUTE DE TENSION");
-        log.push("");
-        log.push("────────────────────────────────");
-        log.push("ÉTAPES NORMATIVES");
-        log.push("────────────────────────────────");
-        log.push("");
-        log.push("[01] Validation périmètre");
-        log.push("✔ BT ≤ 1 kV");
-        log.push("✔ AC sinusoïdal");
-        log.push("✔ Hors transitoires");
-        log.push("");
-        log.push("[02] Validation données obligatoires");
-        log.push("✔ Toutes les données requises présentes");
-        log.push("");
-        log.push("[03] Détermination alimentation");
-        log.push(`→ Type ${alimentationType} (${alimentationType === 'A' ? 'réseau public BT' : 'poste HT/BT ou TGBT'})`);
-        log.push("Réf : Tableau 52V");
-        log.push("");
-        log.push("[04] Détermination régime");
-        log.push(`→ ${phaseSystem === 'single' ? 'Monophasé' : 'Triphasé équilibré'}`);
-        log.push("Réf : Art 525");
-        log.push("");
-        log.push("[05] Chargement constantes normatives");
-        const resistivityValue = getResistivity(conductorType, ambientTemp);
-        const resistivityLabel = ambientTemp === 20 ? 'à 20°C' : 'service normal';
-        log.push(`ρ = ${resistivityValue.toFixed(3)} Ω·mm²/m (${conductorType === 'copper' ? 'Cuivre' : 'Aluminium'} - ${resistivityLabel})`);
-        log.push("λ = 0.08 mΩ/m");
-        log.push("");
-        log.push("[06] Calcul sinφ");
-        log.push(`sinφ = √(1 − cos²φ) = ${sinPhi.toFixed(2)}`);
-        log.push("");
-        log.push("[07] Vérification thermique");
-        log.push(`Iz corrigé = ${izCorrected.toFixed(1)} A`);
-        log.push(`IB = ${IB} A`);
-        log.push(`${thermalCompliant ? '✔' : '✗'} ${thermalCompliant ? 'Conforme' : 'Non conforme'} Art 523`);
-        log.push("");
-        log.push("[08] Calcul chute de tension");
-        log.push(`Formule ${phaseSystem === 'single' ? 'monophasée' : 'triphasée'} Art 525`);
-        log.push(`u = ${u.toFixed(2)} V`);
-        log.push("");
-        log.push("[09] Calcul chute relative");
-        log.push(`Δu = ${deltaUPercent.toFixed(2)} %`);
-        log.push("");
-        log.push("[10] Détermination limite admissible");
-        log.push(`Type ${alimentationType} – ${installationType === 'lighting' ? 'Éclairage' : 'Autres usages'}`);
-        log.push(`Limite = ${maxAllowedDrop.toFixed(1)} %`);
-        log.push("");
-        log.push("[11] Comparaison");
-        log.push(`${deltaUPercent.toFixed(2)} % ≤ ${maxAllowedDrop.toFixed(1)} % → ${isCompliant ? 'Conforme' : 'Non conforme'}`);
-        log.push("");
-        log.push("[12] Verdict final");
-        log.push(`${isCompliant ? '✔' : '✗'} ${isCompliant ? 'CONFORME' : 'NON CONFORME'}`);
-        log.push("");
-        log.push("────────────────────────────────");
-        log.push("RÉFÉRENCES NORMATIVES");
-        log.push("────────────────────────────────");
-        log.push("NS 01-001 / NFC 15-100");
-        log.push("Articles 523, 524, 525");
-        log.push("Tableau 52V");
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // 📋 FONCTION — JOURNAL D'AUDIT INTERNE
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Version interne avec plus de détails que la version globale
+  // Permet traçabilité complète étape par étape normative
 
-        return log;
+  // Generate audit log for calculation traceability
+  const generateAuditLog = (
+  IB: number, L: number, S: number, U0: number, cosPhi: number, sinPhi: number,
+  alimentationType: string, phaseSystem: string, conductorType: string,
+  modeOfInstallation: string, ambientTemp: number, numCircuits: number,
+  izCorrected: number, u: number, deltaUPercent: number, maxAllowedDrop: number, isCompliant: boolean,
+  thermalCompliant: boolean)
+  : string[] => {
+    const log: string[] = [];
+
+    log.push("JOURNAL D'AUDIT — CALCUL DE CHUTE DE TENSION");
+    log.push("");
+    log.push("────────────────────────────────");
+    log.push("ÉTAPES NORMATIVES");
+    log.push("────────────────────────────────");
+    log.push("");
+    log.push("[01] Validation périmètre");
+    log.push("✔ BT ≤ 1 kV");
+    log.push("✔ AC sinusoïdal");
+    log.push("✔ Hors transitoires");
+    log.push("");
+    log.push("[02] Validation données obligatoires");
+    log.push("✔ Toutes les données requises présentes");
+    log.push("");
+    log.push("[03] Détermination alimentation");
+    log.push(`→ Type ${alimentationType} (${alimentationType === 'A' ? 'réseau public BT' : 'poste HT/BT ou TGBT'})`);
+    log.push("Réf : Tableau 52V");
+    log.push("");
+    log.push("[04] Détermination régime");
+    log.push(`→ ${phaseSystem === 'single' ? 'Monophasé' : 'Triphasé équilibré'}`);
+    log.push("Réf : Art 525");
+    log.push("");
+    log.push("[05] Chargement constantes normatives");
+    const resistivityValue = getResistivity(conductorType, ambientTemp);
+    const resistivityLabel = ambientTemp === 20 ? 'à 20°C' : 'service normal';
+    log.push(`ρ = ${resistivityValue.toFixed(3)} Ω·mm²/m (${conductorType === 'copper' ? 'Cuivre' : 'Aluminium'} - ${resistivityLabel})`);
+    log.push("λ = 0.08 mΩ/m");
+    log.push("");
+    log.push("[06] Calcul sinφ");
+    log.push(`sinφ = √(1 − cos²φ) = ${sinPhi.toFixed(2)}`);
+    log.push("");
+    log.push("[07] Vérification thermique");
+    log.push(`Iz corrigé = ${izCorrected.toFixed(1)} A`);
+    log.push(`IB = ${IB} A`);
+    log.push(`${thermalCompliant ? '✔' : '✗'} ${thermalCompliant ? 'Conforme' : 'Non conforme'} Art 523`);
+    log.push("");
+    log.push("[08] Calcul chute de tension");
+    log.push(`Formule ${phaseSystem === 'single' ? 'monophasée' : 'triphasée'} Art 525`);
+    log.push(`u = ${u.toFixed(2)} V`);
+    log.push("");
+    log.push("[09] Calcul chute relative");
+    log.push(`Δu = ${deltaUPercent.toFixed(2)} %`);
+    log.push("");
+    log.push("[10] Détermination limite admissible");
+    log.push(`Type ${alimentationType} – ${installationType === 'lighting' ? 'Éclairage' : 'Autres usages'}`);
+    log.push(`Limite = ${maxAllowedDrop.toFixed(1)} %`);
+    log.push("");
+    log.push("[11] Comparaison");
+    log.push(`${deltaUPercent.toFixed(2)} % ≤ ${maxAllowedDrop.toFixed(1)} % → ${isCompliant ? 'Conforme' : 'Non conforme'}`);
+    log.push("");
+    log.push("[12] Verdict final");
+    log.push(`${isCompliant ? '✔' : '✗'} ${isCompliant ? 'CONFORME' : 'NON CONFORME'}`);
+    log.push("");
+    log.push("────────────────────────────────");
+    log.push("RÉFÉRENCES NORMATIVES");
+    log.push("────────────────────────────────");
+    log.push("NS 01-001 / NFC 15-100");
+    log.push("Articles 523, 524, 525");
+    log.push("Tableau 52V");
+
+    return log;
+  };
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // 🔐 FONCTION — HASH DE L'AUDIT
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Crée une empreinte SHA256 du journal d'audit complet
+
+  // Generate audit hash
+  const generateAuditHash = (auditLog: string[]): string => {
+    const auditText = auditLog.join('\n');
+    return SHA256(auditText).toString();
+  };
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // ✍️ FONCTION — SIGNATURE NUMÉRIQUE
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Combine les 2 hashes (calcul + audit) pour créer une signature
+  // Note: Version simulée; en production utiliser certificat eIDAS qualifié
+
+  // Simulate electronic signature (in production, use qualified certificate)
+  const generateElectronicSignature = (calculationHash: string, auditHash: string): string => {
+    const signatureData = {
+      engine_version: "PROQUELEC-NS01001-v1.0",
+      norme: "NS 01-001 / NFC 15-100",
+      articles: ["523", "524", "525"],
+      timestamp_utc: new Date().toISOString(),
+      signataire: "Moteur Normatif Automatisé PROQUELEC",
+      role: "IA Certifiée Bureau d'Études",
+      hash_calcul: calculationHash,
+      hash_audit: auditHash,
+      conformite_eidas: "Signature électronique simulée (eIDAS compliant en production)"
     };
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // 🔐 FONCTION — HASH DE L'AUDIT
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Crée une empreinte SHA256 du journal d'audit complet
-    
-    // Generate audit hash
-    const generateAuditHash = (auditLog: string[]): string => {
-        const auditText = auditLog.join('\n');
-        return SHA256(auditText).toString();
+    const jsonString = JSON.stringify(signatureData, null, 2);
+    // In production, this would be signed with qualified certificate
+    return SHA256(jsonString).toString(); // Simulated signature
+  };
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // 📄 FONCTION — RAPPORT PDF CALCUL
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Génère un PDF professionnel avec tous les résultats
+  // Inclut paramètres, résultats, verdict, et empreinte cryptographique
+
+  // Generate PDF calculation report
+  const generateCalculationPDF = (result: unknown): Uint8Array => {
+    const doc = new jsPDF();
+
+    // Header
+    doc.setFontSize(20);
+    doc.setFont("helvetica", "bold");
+    doc.text("RAPPORT DE CALCUL DE CHUTE DE TENSION", 20, 30);
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.text("PROQUELEC - Conformité Électrique", 20, 45);
+    doc.text(`Date: ${new Date().toLocaleDateString('fr-FR')}`, 20, 55);
+
+    // Normative reference
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("RÉFÉRENCE NORMATIVE", 20, 75);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text("NS 01-001 / NFC 15-100", 20, 85);
+    doc.text("Articles 523, 524, 525 - Tableau 52V", 20, 95);
+
+    // Parameters
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("PARAMÈTRES DE CALCUL", 20, 115);
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    let yPos = 125;
+    doc.text(`Courant nominal (IB): ${current} A`, 20, yPos);
+    doc.text(`Longueur (L): ${length} m`, 110, yPos);yPos += 10;
+    doc.text(`Section (S): ${crossSection} mm²`, 20, yPos);
+    doc.text(`Tension (U0): ${voltage} V`, 110, yPos);yPos += 10;
+    doc.text(`Facteur de puissance (cosφ): ${powerFactor}`, 20, yPos);
+    doc.text(`Matériau: ${conductorType === 'copper' ? 'Cuivre' : 'Aluminium'}`, 110, yPos);yPos += 10;
+    doc.text(`Type d'alimentation: ${alimentationType}`, 20, yPos);
+    doc.text(`Régime: ${phaseSystem === 'single' ? 'Monophasé' : 'Triphasé'}`, 110, yPos);yPos += 10;
+    doc.text(`Mode de pose: ${modeOfInstallation}`, 20, yPos);
+    doc.text(`Température ambiante: ${ambientTemperature}°C`, 110, yPos);
+
+    // Results
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("RÉSULTATS", 20, yPos + 20);
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    yPos += 30;
+    doc.text(`Chute de tension calculée: ${(result.voltageDropPercent * 100).toFixed(2)}%`, 20, yPos);
+    doc.text(`(${result.voltageDrop.toFixed(2)} V)`, 140, yPos);yPos += 15;
+    doc.text(`Limite autorisée: ${result.maxAllowedDrop.toFixed(1)}%`, 20, yPos);yPos += 15;
+
+    // Verdict
+    const isCompliant = result.isCompliant;
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text(isCompliant ? "VERDICT: CONFORME" : "VERDICT: NON CONFORME", 20, yPos + 10);
+
+    if (!isCompliant) {
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text("⚠️ La chute de tension dépasse la limite autorisée selon NS 01-001", 20, yPos + 25);
+    }
+
+    // Cryptographic hash
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Hash de calcul: ${result.calculationHash?.substring(0, 16)}...`, 20, 280);
+
+    return new Uint8Array(doc.output('arraybuffer'));
+  };
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // 📚 FONCTION — PDF EXTRAITS NORMATIFS
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Document de référence avec articles clés de la norme
+  // Pour aider à comprendre les calculs effectués
+
+  // Generate PDF normative extracts
+  const generateNormativePDF = (): Uint8Array => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text("EXTRAITS NORMATIFS", 20, 30);
+    doc.text("NS 01-001 / NFC 15-100", 20, 45);
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Article 523 - COURANT ADMISSIBLE", 20, 70);
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    const text523 = "Le courant admissible Iz doit être déterminé avant tout calcul de chute de tension. " +
+    "Iz dépend de la section du conducteur, du matériau, du mode de pose, " +
+    "de la température ambiante et du type d'isolation.";
+    const lines523 = doc.splitTextToSize(text523, 170);
+    doc.text(lines523, 20, 85);
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Article 524 - CHUTE DE TENSION", 20, 110);
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    const text524 = "La chute de tension entre l'origine de l'installation et tout point d'utilisation " +
+    "ne doit pas dépasser les valeurs limites fixées au tableau 52V.";
+    const lines524 = doc.splitTextToSize(text524, 170);
+    doc.text(lines524, 20, 125);
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Tableau 52V - LIMITES DE CHUTE DE TENSION", 20, 150);
+
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.text("Type A (réseau public BT):", 20, 165);
+    doc.text("- Éclairage: 3%", 30, 175);
+    doc.text("- Autres usages: 5%", 30, 185);
+
+    doc.text("Type B (poste HT/BT):", 20, 200);
+    doc.text("- Éclairage: 6%", 30, 210);
+    doc.text("- Autres usages: 8%", 30, 220);
+
+    return new Uint8Array(doc.output('arraybuffer'));
+  };
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // 🏆 FONCTION — ATTESTATION DE CONFORMITÉ
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Document légal attestant la conformité au calcul
+  // Peut être utilisé pour dossiers administratifs/audit
+
+  // Generate PDF attestation
+  const generateAttestationPDF = (result: unknown): Uint8Array => {
+    const doc = new jsPDF();
+
+    // Header
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text("ATTESTATION DE CONFORMITÉ", 20, 40);
+    doc.text("PROQUELEC - QUALITÉ ÉLECTRIQUE", 20, 55);
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.text("Le présent document atteste que le calcul de chute de tension", 20, 75);
+    doc.text("effectué respecte les exigences de la norme NS 01-001 / NFC 15-100.", 20, 85);
+
+    // Results summary
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("RÉSUMÉ DU CALCUL", 20, 105);
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Chute de tension: ${(result.voltageDropPercent * 100).toFixed(2)}%`, 20, 120);
+    doc.text(`Limite autorisée: ${result.maxAllowedDrop.toFixed(1)}%`, 20, 135);
+    doc.text(`Verdict: ${result.isCompliant ? 'CONFORME' : 'NON CONFORME'}`, 20, 150);
+
+    // Signature
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Signature Électronique Qualifiée", 20, 180);
+
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Empreinte cryptographique: ${result.calculationHash?.substring(0, 32)}...`, 20, 195);
+    doc.text(`Date: ${new Date().toLocaleDateString('fr-FR')}`, 20, 210);
+
+    return new Uint8Array(doc.output('arraybuffer'));
+  };
+
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // 🏗️ FONCTION — GÉNÉRATEUR BIM/IFC
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Exporte les données au format BIM compatible CAO (Revit, ArchiCAD)
+
+  // Generate BIM data (IFC Property Set)
+  const generateBIMData = (result: CalculationResult): unknown => {
+    return {
+      ifcType: "IFCELECTRICALCIRCUIT",
+      properties: {
+        Pset_ElectricalCalculation: {
+          Norme: "NS 01-001 / NFC 15-100",
+          Article: "523-524-525",
+          IB: current,
+          U0: voltage,
+          L: length,
+          cosPhi: powerFactor,
+          Section: crossSection,
+          Materiau: conductorType === 'copper' ? 'Cuivre' : 'Aluminium',
+          Resistivite: `${result.resistivity.toFixed(3)} Ω·mm²/m`,
+          TypeAlimentation: alimentationType,
+          DeltaU: result.voltageDropPercent.toFixed(2),
+          Limite: result.maxAllowedDrop.toFixed(1),
+          Verdict: result.isCompliant ? 'CONFORME' : 'NON CONFORME',
+          HashCalcul: result.calculationHash
+        }
+      }
     };
+  };
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // ✍️ FONCTION — SIGNATURE NUMÉRIQUE
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Combine les 2 hashes (calcul + audit) pour créer une signature
-    // Note: Version simulée; en production utiliser certificat eIDAS qualifié
-    
-    // Simulate electronic signature (in production, use qualified certificate)
-    const generateElectronicSignature = (calculationHash: string, auditHash: string): string => {
-        const signatureData = {
-            engine_version: "PROQUELEC-NS01001-v1.0",
-            norme: "NS 01-001 / NFC 15-100",
-            articles: ["523", "524", "525"],
-            timestamp_utc: new Date().toISOString(),
-            signataire: "Moteur Normatif Automatisé PROQUELEC",
-            role: "IA Certifiée Bureau d'Études",
-            hash_calcul: calculationHash,
-            hash_audit: auditHash,
-            conformite_eidas: "Signature électronique simulée (eIDAS compliant en production)"
-        };
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // 📊 FONCTION — GÉNÉRATEUR DOE/JSON
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Exporte les données au format standard DOE/JSON
+  // Permet interopérabilité avec autres systèmes et archivage
 
-        const jsonString = JSON.stringify(signatureData, null, 2);
-        // In production, this would be signed with qualified certificate
-        return SHA256(jsonString).toString(); // Simulated signature
+  // Generate DOE data
+  const generateDOEData = (result: CalculationResult): unknown => {
+    return {
+      type: "calcul_electrique",
+      norme: "NS 01-001 / NFC 15-100",
+      chapitre: 52,
+      sections: [523, 524, 525],
+      installation: "BT ≤ 1 kV",
+      calcul: {
+        parametres: {
+          materiau: conductorType === 'copper' ? 'Cuivre' : 'Aluminium',
+          resistivite: `${result.resistivity.toFixed(3)} Ω·mm²/m`,
+          temperature: `${result.ambientTemperature}°C`
+        },
+        chute_tension: {
+          valeur: result.voltageDrop.toFixed(2),
+          unite: "V",
+          pourcentage: result.voltageDropPercent.toFixed(2),
+          limite: result.maxAllowedDrop.toFixed(1),
+          conforme: result.isCompliant
+        },
+        thermique: {
+          iz_corrige: result.izCorrected?.toFixed(1),
+          conforme: result.thermalCheck
+        }
+      },
+      hash: result.calculationHash,
+      timestamp: new Date().toISOString()
     };
+  };
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // 📄 FONCTION — RAPPORT PDF CALCUL
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Génère un PDF professionnel avec tous les résultats
-    // Inclut paramètres, résultats, verdict, et empreinte cryptographique
-    
-    // Generate PDF calculation report
-    const generateCalculationPDF = (result: any): Uint8Array => {
-        const doc = new jsPDF();
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // ⚡ FONCTION PRINCIPALE — CALCUL DE CHUTE DE TENSION
+  // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+  // Effectue le calcul complet avec validation thermique
+  // Génère hash, audit log, et signature
+  // Modes: MANUEL (données fixes) ou AUTO (dimensionnement)
 
-        // Header
-        doc.setFontSize(20);
-        doc.setFont("helvetica", "bold");
-        doc.text("RAPPORT DE CALCUL DE CHUTE DE TENSION", 20, 30);
+  const calculateVoltageDrop = () => {
+    // Rate limiting: prevent calculations more frequent than 1 per second
+    const now = Date.now();
+    if (now - lastCalculationTime < 1000) {
+      return; // Ignore if less than 1 second since last calculation
+    }
+    if (isCalculating) {
+      return; // Prevent concurrent calculations
+    }
 
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "normal");
-        doc.text("PROQUELEC - Conformité Électrique", 20, 45);
-        doc.text(`Date: ${new Date().toLocaleDateString('fr-FR')}`, 20, 55);
+    setIsCalculating(true);
+    setLastCalculationTime(now);
 
-        // Normative reference
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("RÉFÉRENCE NORMATIVE", 20, 75);
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "normal");
-        doc.text("NS 01-001 / NFC 15-100", 20, 85);
-        doc.text("Articles 523, 524, 525 - Tableau 52V", 20, 95);
+    try {
+      const IB = parseFloat(current);
+      const L = parseFloat(length);
+      const S = parseFloat(crossSection);
+      const U0 = parseFloat(voltage);
+      const cosPhi = parseFloat(powerFactor);
+      const ambientTemp = parseFloat(ambientTemperature);
+      const numCircuits = parseInt(numberOfCircuits);
+      const rho = getResistivity(conductorType, ambientTemp);
 
-        // Parameters
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("PARAMÈTRES DE CALCUL", 20, 115);
+      // Vérifications normatives strictes (NS 01-001 Art 525)
+      const warnings: string[] = [];
 
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "normal");
-        let yPos = 125;
-        doc.text(`Courant nominal (IB): ${current} A`, 20, yPos);
-        doc.text(`Longueur (L): ${length} m`, 110, yPos); yPos += 10;
-        doc.text(`Section (S): ${crossSection} mm²`, 20, yPos);
-        doc.text(`Tension (U0): ${voltage} V`, 110, yPos); yPos += 10;
-        doc.text(`Facteur de puissance (cosφ): ${powerFactor}`, 20, yPos);
-        doc.text(`Matériau: ${conductorType === 'copper' ? 'Cuivre' : 'Aluminium'}`, 110, yPos); yPos += 10;
-        doc.text(`Type d'alimentation: ${alimentationType}`, 20, yPos);
-        doc.text(`Régime: ${phaseSystem === 'single' ? 'Monophasé' : 'Triphasé'}`, 110, yPos); yPos += 10;
-        doc.text(`Mode de pose: ${modeOfInstallation}`, 20, yPos);
-        doc.text(`Température ambiante: ${ambientTemperature}°C`, 110, yPos);
+      // Données obligatoires
+      if (!alimentationType || alimentationType !== 'A' && alimentationType !== 'B') {
+        warnings.push("Type d'alimentation invalide - doit être A ou B");
+        return;
+      }
+      if (!phaseSystem || phaseSystem !== 'single' && phaseSystem !== 'three') {
+        warnings.push("Régime électrique invalide - doit être monophasé ou triphasé");
+        return;
+      }
+      if (!IB || IB <= 0) {
+        warnings.push("Courant d'emploi IB invalide - doit être > 0");
+        return;
+      }
+      if (!L || L <= 0) {
+        warnings.push("Longueur L invalide - doit être > 0");
+        return;
+      }
+      if (!S || S <= 0) {
+        warnings.push("Section S invalide - doit être > 0");
+        return;
+      }
+      if (!U0 || U0 <= 0) {
+        warnings.push("Tension nominale U0 invalide - doit être > 0");
+        return;
+      }
+      if (!cosPhi || cosPhi <= 0 || cosPhi > 1) {
+        warnings.push("Facteur de puissance cosφ invalide - doit être 0 < cosφ ≤ 1");
+        return;
+      }
+      if (!conductorType || conductorType !== 'copper' && conductorType !== 'aluminum') {
+        warnings.push("Matériau invalide - cuivre ou aluminium uniquement");
+        return;
+      }
+      if (!modeOfInstallation) {
+        warnings.push("Mode de pose obligatoire - sélectionner explicitement");
+        return;
+      }
+      if (!ambientTemp || ambientTemp < 20 || ambientTemp > 60) {
+        warnings.push("Température ambiante invalide - doit être entre 20°C et 60°C");
+        return;
+      }
+      if (!insulationType) {
+        warnings.push("Type d'isolation obligatoire");
+        return;
+      }
+      if (!numCircuits || numCircuits < 1) {
+        warnings.push("Nombre de circuits invalide - doit être ≥ 1");
+        return;
+      }
 
-        // Results
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("RÉSULTATS", 20, yPos + 20);
+      // Vérifications normalisées des sections
+      if (!NORMALIZED_SECTIONS.includes(S)) {
+        warnings.push("Section non normalisée - utiliser uniquement les sections normalisées NS 01-001");
+        return;
+      }
+      if (S < 1.5) {
+        warnings.push("Sections < 1.5 mm² interdites en BT selon NS 01-001");
+        return;
+      }
+      if (conductorType === 'aluminum' && S < 16) {
+        warnings.push("Aluminium interdit en sections < 16 mm² sauf justification normative explicite");
+        return;
+      }
 
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "normal");
-        yPos += 30;
-        doc.text(`Chute de tension calculée: ${(result.voltageDropPercent * 100).toFixed(2)}%`, 20, yPos);
-        doc.text(`(${result.voltageDrop.toFixed(2)} V)`, 140, yPos); yPos += 15;
-        doc.text(`Limite autorisée: ${result.maxAllowedDrop.toFixed(1)}%`, 20, yPos); yPos += 15;
+      // Vérification thermique (Art 523)
+      const { izCorrected, isCompliant: thermalCompliant } = checkThermalCompliance(IB, S, conductorType, modeOfInstallation, ambientTemp, insulationType, numCircuits);
+      if (!thermalCompliant) {
+        warnings.push(`Section insuffisante pour les critères thermiques (Art 523) - Iz corrigé = ${izCorrected.toFixed(1)} A < IB = ${IB} A`);
+      }
 
-        // Verdict
-        const isCompliant = result.isCompliant;
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text(isCompliant ? "VERDICT: CONFORME" : "VERDICT: NON CONFORME", 20, yPos + 10);
+      warnings.push("La section choisie doit également satisfaire aux critères thermiques (Section 523) et de protection contre les surintensités.");
+      warnings.push("Ce calcul ne prend pas en compte les chutes de tension amont (distribution). La chute totale cumulée doit être vérifiée.");
+      warnings.push("Circuits triphasés déséquilibrés (une seule phase chargée) considérés comme monophasés (Section 525).");
+      warnings.push("Une chute supérieure peut être admise temporairement pour les moteurs au démarrage.");
+      warnings.push("Calcul limité au régime permanent sinusoïdal (hors harmoniques et surtensions transitoires).");
 
-        if (!isCompliant) {
-            doc.setFontSize(10);
-            doc.setFont("helvetica", "normal");
-            doc.text("⚠️ La chute de tension dépasse la limite autorisée selon NS 01-001", 20, yPos + 25);
-        }
+      // Calcul de la chute de tension selon Art 525
+      const sinPhi = Math.sqrt(1 - cosPhi * cosPhi);
+      let u: number;
+      let formula: string;
+      let phaseSystemLabel: string;
 
-        // Cryptographic hash
-        doc.setFontSize(8);
-        doc.setFont("helvetica", "normal");
-        doc.text(`Hash de calcul: ${result.calculationHash?.substring(0, 16)}...`, 20, 280);
+      if (phaseSystem === 'single') {
+        // Monophasé: u = 2 × (ρ × L / S × cosφ + λ × L × sinφ) × IB
+        u = 2 * (rho * L / S * cosPhi + LINEAR_REACTANCE * L * sinPhi) * IB;
+        formula = "u = 2 × (ρ × L / S × cosφ + λ × L × sinφ) × IB";
+        phaseSystemLabel = "Monophasé";
+      } else {
+        // Triphasé: u = √3 × (ρ × L / S × cosφ + λ × L × sinφ) × IB
+        u = Math.sqrt(3) * (rho * L / S * cosPhi + LINEAR_REACTANCE * L * sinPhi) * IB;
+        formula = "u = √3 × (ρ × L / S × cosφ + λ × L × sinφ) × IB";
+        phaseSystemLabel = "Triphasé";
+      }
 
-        return new Uint8Array(doc.output('arraybuffer'));
-    };
+      const deltaUPercent = 100 * u / U0;
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // 📚 FONCTION — PDF EXTRAITS NORMATIFS
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Document de référence avec articles clés de la norme
-    // Pour aider à comprendre les calculs effectués
-    
-    // Generate PDF normative extracts
-    const generateNormativePDF = (): Uint8Array => {
-        const doc = new jsPDF();
+      // Limites admissibles selon Tableau 52V
+      let baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
+      let maxAllowedDrop = baseLimit;
 
-        doc.setFontSize(16);
-        doc.setFont("helvetica", "bold");
-        doc.text("EXTRAITS NORMATIFS", 20, 30);
-        doc.text("NS 01-001 / NFC 15-100", 20, 45);
+      // Correction pour L > 100 m
+      if (L > 100) {
+        const additional = Math.min(0.005 * (L - 100) / 100, 0.005); // 0.005% par mètre, max +0.5%
+        maxAllowedDrop += additional;
+      }
 
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "bold");
-        doc.text("Article 523 - COURANT ADMISSIBLE", 20, 70);
+      const isCompliant = deltaUPercent <= maxAllowedDrop * 100; // Convert to %
+      const resistance = 2 * rho * L / S; // Résistance de ligne (aller-retour)
 
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "normal");
-        const text523 = "Le courant admissible Iz doit être déterminé avant tout calcul de chute de tension. " +
-                       "Iz dépend de la section du conducteur, du matériau, du mode de pose, " +
-                       "de la température ambiante et du type d'isolation.";
-        const lines523 = doc.splitTextToSize(text523, 170);
-        doc.text(lines523, 20, 85);
+      // Référence normative complète
+      const normativeReference = `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`;
 
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "bold");
-        doc.text("Article 524 - CHUTE DE TENSION", 20, 110);
+      // Generate cryptographic hash
+      const calculationHash = generateCalculationHash(
+        IB, L, S, U0, cosPhi, sinPhi, alimentationType, phaseSystem, conductorType,
+        modeOfInstallation, ambientTemp, numCircuits, rho, izCorrected, u, deltaUPercent, maxAllowedDrop * 100, isCompliant
+      );
 
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "normal");
-        const text524 = "La chute de tension entre l'origine de l'installation et tout point d'utilisation " +
-                       "ne doit pas dépasser les valeurs limites fixées au tableau 52V.";
-        const lines524 = doc.splitTextToSize(text524, 170);
-        doc.text(lines524, 20, 125);
+      // Generate audit log
+      const auditLog = generateAuditLog(
+        IB, L, S, U0, cosPhi, sinPhi, alimentationType, phaseSystem, conductorType,
+        modeOfInstallation, ambientTemp, numCircuits, izCorrected, u, deltaUPercent, maxAllowedDrop * 100, thermalCompliant, isCompliant
+      );
 
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "bold");
-        doc.text("Tableau 52V - LIMITES DE CHUTE DE TENSION", 20, 150);
+      // Generate audit hash
+      const auditHash = generateAuditHash(auditLog);
 
-        doc.setFontSize(9);
-        doc.setFont("helvetica", "normal");
-        doc.text("Type A (réseau public BT):", 20, 165);
-        doc.text("- Éclairage: 3%", 30, 175);
-        doc.text("- Autres usages: 5%", 30, 185);
+      // Generate electronic signature
+      const signature = generateElectronicSignature(calculationHash, auditHash);
 
-        doc.text("Type B (poste HT/BT):", 20, 200);
-        doc.text("- Éclairage: 6%", 30, 210);
-        doc.text("- Autres usages: 8%", 30, 220);
+      // Generate BIM and DOE data
+      const bimData = {}; // generateBIMData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference, warnings, recommendedSection: S, thermalCheck: thermalCompliant, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
+      const doeData = {}; // generateDOEData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference, warnings, recommendedSection: S, thermalCheck: thermalCompliant, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
 
-        return new Uint8Array(doc.output('arraybuffer'));
-    };
+      // Create new version
+      const newVersion: CalculationVersion = {
+        version: `v${versionHistory.length + 1}.0`,
+        timestamp: new Date().toISOString(),
+        changes: "Calcul initial",
+        hash: calculationHash,
+        verdict: isCompliant
+      };
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // 🏆 FONCTION — ATTESTATION DE CONFORMITÉ
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Document légal attestant la conformité au calcul
-    // Peut être utilisé pour dossiers administratifs/audit
-    
-    // Generate PDF attestation
-    const generateAttestationPDF = (result: any): Uint8Array => {
-        const doc = new jsPDF();
+      setVersionHistory((prev) => [...prev, newVersion]);
 
-        // Header
-        doc.setFontSize(18);
-        doc.setFont("helvetica", "bold");
-        doc.text("ATTESTATION DE CONFORMITÉ", 20, 40);
-        doc.text("PROQUELEC - QUALITÉ ÉLECTRIQUE", 20, 55);
+      setResult({
+        voltageDrop: u,
+        voltageDropPercent: deltaUPercent,
+        isCompliant,
+        maxAllowedDrop: maxAllowedDrop * 100, // Convert to %
+        resistivity: rho,
+        reactance: LINEAR_REACTANCE,
+        resistance,
+        formula,
+        phaseSystem: phaseSystemLabel,
+        alimentationType,
+        normativeReference,
+        warnings,
+        recommendedSection: S,
+        thermalCheck: thermalCompliant,
+        izCorrected,
+        modeOfInstallation,
+        ambientTemperature: ambientTemp,
+        insulationType,
+        numberOfCircuits: numCircuits,
+        calculationHash,
+        auditLog,
+        auditHash,
+        signature,
+        bimData,
+        doeData,
+        versionHistory: [...versionHistory, newVersion]
+      });
+    } finally {
+      setIsCalculating(false);
+    }
+  };
 
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "normal");
-        doc.text("Le présent document atteste que le calcul de chute de tension", 20, 75);
-        doc.text("effectué respecte les exigences de la norme NS 01-001 / NFC 15-100.", 20, 85);
+  const calculateAutomaticSizing = () => {
+    // Rate limiting: prevent calculations more frequent than 1 per second
+    const now = Date.now();
+    if (now - lastCalculationTime < 1000) {
+      return; // Ignore if less than 1 second since last calculation
+    }
+    if (isCalculating) {
+      return; // Prevent concurrent calculations
+    }
 
-        // Results summary
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("RÉSUMÉ DU CALCUL", 20, 105);
+    setIsCalculating(true);
+    setLastCalculationTime(now);
 
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "normal");
-        doc.text(`Chute de tension: ${(result.voltageDropPercent * 100).toFixed(2)}%`, 20, 120);
-        doc.text(`Limite autorisée: ${result.maxAllowedDrop.toFixed(1)}%`, 20, 135);
-        doc.text(`Verdict: ${result.isCompliant ? 'CONFORME' : 'NON CONFORME'}`, 20, 150);
+    try {
+      const IB = parseFloat(current);
+      const L = parseFloat(length);
+      const U0 = parseFloat(voltage);
+      const cosPhi = parseFloat(powerFactor);
+      const ambientTemp = parseFloat(ambientTemperature);
+      const numCircuits = parseInt(numberOfCircuits);
+      const rho = getResistivity(conductorType, ambientTemp);
 
-        // Signature
-        doc.setFontSize(12);
-        doc.setFont("helvetica", "bold");
-        doc.text("Signature Électronique Qualifiée", 20, 180);
+      // Vérifications préalables
+      const warnings: string[] = [];
 
-        doc.setFontSize(8);
-        doc.setFont("helvetica", "normal");
-        doc.text(`Empreinte cryptographique: ${result.calculationHash?.substring(0, 32)}...`, 20, 195);
-        doc.text(`Date: ${new Date().toLocaleDateString('fr-FR')}`, 20, 210);
+      if (!alimentationType || alimentationType !== 'A' && alimentationType !== 'B') {
+        warnings.push("Type d'alimentation invalide");
+        return;
+      }
+      if (!IB || IB <= 0 || !L || L <= 0 || !U0 || U0 <= 0 || !cosPhi || cosPhi <= 0 || cosPhi > 1) {
+        warnings.push("Paramètres d'entrée invalides");
+        return;
+      }
+      if (!modeOfInstallation) {
+        warnings.push("Mode de pose obligatoire");
+        return;
+      }
+      if (!ambientTemp || ambientTemp < 20 || ambientTemp > 60) {
+        warnings.push("Température ambiante invalide");
+        return;
+      }
+      if (!insulationType) {
+        warnings.push("Type d'isolation obligatoire");
+        return;
+      }
+      if (!numCircuits || numCircuits < 1) {
+        warnings.push("Nombre de circuits invalide");
+        return;
+      }
 
-        return new Uint8Array(doc.output('arraybuffer'));
-    };
+      warnings.push("Dimensionnement automatique selon Sections 523 + 525");
+      warnings.push("ATTENTION: Vérification thermique complète avec facteurs de correction");
+      warnings.push("Pour un dimensionnement réel, spécifier: mode de pose, température ambiante, type d'isolation");
+      warnings.push("Ce calcul ne prend pas en compte les chutes de tension amont.");
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // 🏗️ FONCTION — GÉNÉRATEUR BIM/IFC
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Exporte les données au format BIM compatible CAO (Revit, ArchiCAD)
-    
-    // Generate BIM data (IFC Property Set)
-    const generateBIMData = (result: CalculationResult): any => {
-        return {
-            ifcType: "IFCELECTRICALCIRCUIT",
-            properties: {
-                Pset_ElectricalCalculation: {
-                    Norme: "NS 01-001 / NFC 15-100",
-                    Article: "523-524-525",
-                    IB: current,
-                    U0: voltage,
-                    L: length,
-                    cosPhi: powerFactor,
-                    Section: crossSection,
-                    Materiau: conductorType === 'copper' ? 'Cuivre' : 'Aluminium',
-                    Resistivite: `${result.resistivity.toFixed(3)} Ω·mm²/m`,
-                    TypeAlimentation: alimentationType,
-                    DeltaU: result.voltageDropPercent.toFixed(2),
-                    Limite: result.maxAllowedDrop.toFixed(1),
-                    Verdict: result.isCompliant ? 'CONFORME' : 'NON CONFORME',
-                    HashCalcul: result.calculationHash
-                }
-            }
-        };
-    };
+      // Tester les sections normalisées dans l'ordre croissant
+      let recommendedSection: number | undefined;
+      let bestResult: CalculationResult | null = null;
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // 📊 FONCTION — GÉNÉRATEUR DOE/JSON
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Exporte les données au format standard DOE/JSON
-    // Permet interopérabilité avec autres systèmes et archivage
-    
-    // Generate DOE data
-    const generateDOEData = (result: CalculationResult): any => {
-        return {
-            type: "calcul_electrique",
-            norme: "NS 01-001 / NFC 15-100",
-            chapitre: 52,
-            sections: [523, 524, 525],
-            installation: "BT ≤ 1 kV",
-            calcul: {
-                parametres: {
-                    materiau: conductorType === 'copper' ? 'Cuivre' : 'Aluminium',
-                    resistivite: `${result.resistivity.toFixed(3)} Ω·mm²/m`,
-                    temperature: `${result.ambientTemperature}°C`
-                },
-                chute_tension: {
-                    valeur: result.voltageDrop.toFixed(2),
-                    unite: "V",
-                    pourcentage: result.voltageDropPercent.toFixed(2),
-                    limite: result.maxAllowedDrop.toFixed(1),
-                    conforme: result.isCompliant
-                },
-                thermique: {
-                    iz_corrige: result.izCorrected?.toFixed(1),
-                    conforme: result.thermalCheck
-                }
-            },
-            hash: result.calculationHash,
-            timestamp: new Date().toISOString()
-        };
-    };
+      for (const S of NORMALIZED_SECTIONS) {
+        // Vérifier les contraintes de matériau
+        if (S < 1.5) continue;
+        if (conductorType === 'aluminum' && S < 16) continue;
 
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // ⚡ FONCTION PRINCIPALE — CALCUL DE CHUTE DE TENSION
-    // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-    // Effectue le calcul complet avec validation thermique
-    // Génère hash, audit log, et signature
-    // Modes: MANUEL (données fixes) ou AUTO (dimensionnement)
-    
-    const calculateVoltageDrop = () => {
-        // Rate limiting: prevent calculations more frequent than 1 per second
-        const now = Date.now();
-        if (now - lastCalculationTime < 1000) {
-            return; // Ignore if less than 1 second since last calculation
-        }
-        if (isCalculating) {
-            return; // Prevent concurrent calculations
-        }
+        // Vérification thermique d'abord (Art 523)
+        const { izCorrected, isCompliant: thermalOk } = checkThermalCompliance(IB, S, conductorType, modeOfInstallation, ambientTemp, insulationType, numCircuits);
+        if (!thermalOk) continue;
 
-        setIsCalculating(true);
-        setLastCalculationTime(now);
-
-        try {
-            const IB = parseFloat(current);
-            const L = parseFloat(length);
-            const S = parseFloat(crossSection);
-        const U0 = parseFloat(voltage);
-        const cosPhi = parseFloat(powerFactor);
-        const ambientTemp = parseFloat(ambientTemperature);
-        const numCircuits = parseInt(numberOfCircuits);
-        const rho = getResistivity(conductorType, ambientTemp);
-
-        // Vérifications normatives strictes (NS 01-001 Art 525)
-        const warnings: string[] = [];
-
-        // Données obligatoires
-        if (!alimentationType || (alimentationType !== 'A' && alimentationType !== 'B')) {
-            warnings.push("Type d'alimentation invalide - doit être A ou B");
-            return;
-        }
-        if (!phaseSystem || (phaseSystem !== 'single' && phaseSystem !== 'three')) {
-            warnings.push("Régime électrique invalide - doit être monophasé ou triphasé");
-            return;
-        }
-        if (!IB || IB <= 0) {
-            warnings.push("Courant d'emploi IB invalide - doit être > 0");
-            return;
-        }
-        if (!L || L <= 0) {
-            warnings.push("Longueur L invalide - doit être > 0");
-            return;
-        }
-        if (!S || S <= 0) {
-            warnings.push("Section S invalide - doit être > 0");
-            return;
-        }
-        if (!U0 || U0 <= 0) {
-            warnings.push("Tension nominale U0 invalide - doit être > 0");
-            return;
-        }
-        if (!cosPhi || cosPhi <= 0 || cosPhi > 1) {
-            warnings.push("Facteur de puissance cosφ invalide - doit être 0 < cosφ ≤ 1");
-            return;
-        }
-        if (!conductorType || (conductorType !== 'copper' && conductorType !== 'aluminum')) {
-            warnings.push("Matériau invalide - cuivre ou aluminium uniquement");
-            return;
-        }
-        if (!modeOfInstallation) {
-            warnings.push("Mode de pose obligatoire - sélectionner explicitement");
-            return;
-        }
-        if (!ambientTemp || ambientTemp < 20 || ambientTemp > 60) {
-            warnings.push("Température ambiante invalide - doit être entre 20°C et 60°C");
-            return;
-        }
-        if (!insulationType) {
-            warnings.push("Type d'isolation obligatoire");
-            return;
-        }
-        if (!numCircuits || numCircuits < 1) {
-            warnings.push("Nombre de circuits invalide - doit être ≥ 1");
-            return;
-        }
-
-        // Vérifications normalisées des sections
-        if (!NORMALIZED_SECTIONS.includes(S)) {
-            warnings.push("Section non normalisée - utiliser uniquement les sections normalisées NS 01-001");
-            return;
-        }
-        if (S < 1.5) {
-            warnings.push("Sections < 1.5 mm² interdites en BT selon NS 01-001");
-            return;
-        }
-        if (conductorType === 'aluminum' && S < 16) {
-            warnings.push("Aluminium interdit en sections < 16 mm² sauf justification normative explicite");
-            return;
-        }
-
-        // Vérification thermique (Art 523)
-        const { izCorrected, isCompliant: thermalCompliant } = checkThermalCompliance(IB, S, conductorType, modeOfInstallation, ambientTemp, insulationType, numCircuits);
-        if (!thermalCompliant) {
-            warnings.push(`Section insuffisante pour les critères thermiques (Art 523) - Iz corrigé = ${izCorrected.toFixed(1)} A < IB = ${IB} A`);
-        }
-
-        warnings.push("La section choisie doit également satisfaire aux critères thermiques (Section 523) et de protection contre les surintensités.");
-        warnings.push("Ce calcul ne prend pas en compte les chutes de tension amont (distribution). La chute totale cumulée doit être vérifiée.");
-        warnings.push("Circuits triphasés déséquilibrés (une seule phase chargée) considérés comme monophasés (Section 525).");
-        warnings.push("Une chute supérieure peut être admise temporairement pour les moteurs au démarrage.");
-        warnings.push("Calcul limité au régime permanent sinusoïdal (hors harmoniques et surtensions transitoires).");
-
-        // Calcul de la chute de tension selon Art 525
+        // Calcul de chute de tension (Art 525)
         const sinPhi = Math.sqrt(1 - cosPhi * cosPhi);
         let u: number;
         let formula: string;
         let phaseSystemLabel: string;
 
         if (phaseSystem === 'single') {
-            // Monophasé: u = 2 × (ρ × L / S × cosφ + λ × L × sinφ) × IB
-            u = 2 * (rho * L / S * cosPhi + LINEAR_REACTANCE * L * sinPhi) * IB;
-            formula = "u = 2 × (ρ × L / S × cosφ + λ × L × sinφ) × IB";
-            phaseSystemLabel = "Monophasé";
+          u = 2 * (rho * L / S * cosPhi + LINEAR_REACTANCE * L * sinPhi) * IB;
+          formula = "u = 2 × (ρ × L / S × cosφ + λ × L × sinφ) × IB";
+          phaseSystemLabel = "Monophasé";
         } else {
-            // Triphasé: u = √3 × (ρ × L / S × cosφ + λ × L × sinφ) × IB
-            u = Math.sqrt(3) * (rho * L / S * cosPhi + LINEAR_REACTANCE * L * sinPhi) * IB;
-            formula = "u = √3 × (ρ × L / S × cosφ + λ × L × sinφ) × IB";
-            phaseSystemLabel = "Triphasé";
+          u = Math.sqrt(3) * (rho * L / S * cosPhi + LINEAR_REACTANCE * L * sinPhi) * IB;
+          formula = "u = √3 × (ρ × L / S × cosφ + λ × L × sinφ) × IB";
+          phaseSystemLabel = "Triphasé";
         }
 
         const deltaUPercent = 100 * u / U0;
 
-        // Limites admissibles selon Tableau 52V
+        // Limites admissibles
         let baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
         let maxAllowedDrop = baseLimit;
 
-        // Correction pour L > 100 m
         if (L > 100) {
-            const additional = Math.min(0.005 * (L - 100) / 100, 0.005); // 0.005% par mètre, max +0.5%
-            maxAllowedDrop += additional;
+          const additional = Math.min(0.005 * (L - 100) / 100, 0.005);
+          maxAllowedDrop += additional;
         }
 
-        const isCompliant = deltaUPercent <= maxAllowedDrop * 100; // Convert to %
-        const resistance = 2 * rho * L / S; // Résistance de ligne (aller-retour)
+        const isCompliant = deltaUPercent <= maxAllowedDrop * 100;
 
-        // Référence normative complète
-        const normativeReference = `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`;
+        if (isCompliant) {
+          recommendedSection = S;
+          const resistance = 2 * rho * L / S;
 
-        // Generate cryptographic hash
-        const calculationHash = generateCalculationHash(
+          // Generate cryptographic hash
+          const calculationHash = generateCalculationHash(
             IB, L, S, U0, cosPhi, sinPhi, alimentationType, phaseSystem, conductorType,
             modeOfInstallation, ambientTemp, numCircuits, rho, izCorrected, u, deltaUPercent, maxAllowedDrop * 100, isCompliant
-        );
+          );
 
-        // Generate audit log
-        const auditLog = generateAuditLog(
+          // Generate audit log
+          const auditLog = generateAuditLog(
             IB, L, S, U0, cosPhi, sinPhi, alimentationType, phaseSystem, conductorType,
-            modeOfInstallation, ambientTemp, numCircuits, izCorrected, u, deltaUPercent, maxAllowedDrop * 100, thermalCompliant, isCompliant
-        );
+            modeOfInstallation, ambientTemp, numCircuits, izCorrected, u, deltaUPercent, maxAllowedDrop * 100, true, isCompliant
+          );
 
-        // Generate audit hash
-        const auditHash = generateAuditHash(auditLog);
+          // Generate audit hash
+          const auditHash = generateAuditHash(auditLog);
 
-        // Generate electronic signature
-        const signature = generateElectronicSignature(calculationHash, auditHash);
+          // Generate electronic signature
+          const signature = generateElectronicSignature(calculationHash, auditHash);
 
-        // Generate BIM and DOE data
-        const bimData = {}; // generateBIMData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference, warnings, recommendedSection: S, thermalCheck: thermalCompliant, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
-        const doeData = {}; // generateDOEData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference, warnings, recommendedSection: S, thermalCheck: thermalCompliant, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
+          // Generate BIM and DOE data
+          const bimData = {}; // generateBIMData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference: `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`, warnings, recommendedSection: S, thermalCheck: true, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
+          const doeData = {}; // generateDOEData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference: `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`, warnings, recommendedSection: S, thermalCheck: true, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
 
-        // Create new version
-        const newVersion: CalculationVersion = {
+          // Create new version
+          const newVersion: CalculationVersion = {
             version: `v${versionHistory.length + 1}.0`,
             timestamp: new Date().toISOString(),
-            changes: "Calcul initial",
+            changes: "Dimensionnement automatique",
             hash: calculationHash,
             verdict: isCompliant
-        };
+          };
 
-        setVersionHistory(prev => [...prev, newVersion]);
+          setVersionHistory((prev) => [...prev, newVersion]);
 
-        setResult({
+          bestResult = {
             voltageDrop: u,
             voltageDropPercent: deltaUPercent,
             isCompliant,
-            maxAllowedDrop: maxAllowedDrop * 100, // Convert to %
+            maxAllowedDrop: maxAllowedDrop * 100,
             resistivity: rho,
             reactance: LINEAR_REACTANCE,
             resistance,
             formula,
             phaseSystem: phaseSystemLabel,
             alimentationType,
-            normativeReference,
+            normativeReference: `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`,
             warnings,
             recommendedSection: S,
-            thermalCheck: thermalCompliant,
+            thermalCheck: true,
             izCorrected,
             modeOfInstallation,
             ambientTemperature: ambientTemp,
@@ -957,211 +1124,44 @@ export default function VoltageDropCalculator() {
             bimData,
             doeData,
             versionHistory: [...versionHistory, newVersion]
-        });
-        } finally {
-            setIsCalculating(false);
+          };
+          break; // S'arrêter à la première section conforme
         }
-    };
+      }
 
-    const calculateAutomaticSizing = () => {
-        // Rate limiting: prevent calculations more frequent than 1 per second
-        const now = Date.now();
-        if (now - lastCalculationTime < 1000) {
-            return; // Ignore if less than 1 second since last calculation
-        }
-        if (isCalculating) {
-            return; // Prevent concurrent calculations
-        }
+      if (!recommendedSection) {
+        warnings.push("Aucune section normalisée ne satisfait les critères thermiques et de chute de tension");
+      }
 
-        setIsCalculating(true);
-        setLastCalculationTime(now);
+      setResult(bestResult);
+    } finally {
+      setIsCalculating(false);
+    }
+  };
 
-        try {
-            const IB = parseFloat(current);
-            const L = parseFloat(length);
-            const U0 = parseFloat(voltage);
-            const cosPhi = parseFloat(powerFactor);
-            const ambientTemp = parseFloat(ambientTemperature);
-        const numCircuits = parseInt(numberOfCircuits);
-        const rho = getResistivity(conductorType, ambientTemp);
+  const resetCalculator = () => {
+    setCurrent('');
+    setLength('');
+    setCrossSection('2.5');
+    setVoltage('230');
+    setConductorType('copper');
+    setInstallationType('lighting');
+    setPowerFactor('1.0');
+    setPhaseSystem('single');
+    setAlimentationType('A');
+    setCalculationMode('manual');
+    setModeOfInstallation('B1');
+    setAmbientTemperature('30');
+    setInsulationType('PVC');
+    setNumberOfCircuits('1');
+    setResult(null);
+    setVersionHistory([]);
+  };
 
-        // Vérifications préalables
-        const warnings: string[] = [];
+  const exportResults = () => {
+    if (!result) return;
 
-        if (!alimentationType || (alimentationType !== 'A' && alimentationType !== 'B')) {
-            warnings.push("Type d'alimentation invalide");
-            return;
-        }
-        if (!IB || IB <= 0 || !L || L <= 0 || !U0 || U0 <= 0 || !cosPhi || cosPhi <= 0 || cosPhi > 1) {
-            warnings.push("Paramètres d'entrée invalides");
-            return;
-        }
-        if (!modeOfInstallation) {
-            warnings.push("Mode de pose obligatoire");
-            return;
-        }
-        if (!ambientTemp || ambientTemp < 20 || ambientTemp > 60) {
-            warnings.push("Température ambiante invalide");
-            return;
-        }
-        if (!insulationType) {
-            warnings.push("Type d'isolation obligatoire");
-            return;
-        }
-        if (!numCircuits || numCircuits < 1) {
-            warnings.push("Nombre de circuits invalide");
-            return;
-        }
-
-        warnings.push("Dimensionnement automatique selon Sections 523 + 525");
-        warnings.push("ATTENTION: Vérification thermique complète avec facteurs de correction");
-        warnings.push("Pour un dimensionnement réel, spécifier: mode de pose, température ambiante, type d'isolation");
-        warnings.push("Ce calcul ne prend pas en compte les chutes de tension amont.");
-
-        // Tester les sections normalisées dans l'ordre croissant
-        let recommendedSection: number | undefined;
-        let bestResult: CalculationResult | null = null;
-
-        for (const S of NORMALIZED_SECTIONS) {
-            // Vérifier les contraintes de matériau
-            if (S < 1.5) continue;
-            if (conductorType === 'aluminum' && S < 16) continue;
-
-            // Vérification thermique d'abord (Art 523)
-            const { izCorrected, isCompliant: thermalOk } = checkThermalCompliance(IB, S, conductorType, modeOfInstallation, ambientTemp, insulationType, numCircuits);
-            if (!thermalOk) continue;
-
-            // Calcul de chute de tension (Art 525)
-            const sinPhi = Math.sqrt(1 - cosPhi * cosPhi);
-            let u: number;
-            let formula: string;
-            let phaseSystemLabel: string;
-
-            if (phaseSystem === 'single') {
-                u = 2 * (rho * L / S * cosPhi + LINEAR_REACTANCE * L * sinPhi) * IB;
-                formula = "u = 2 × (ρ × L / S × cosφ + λ × L × sinφ) × IB";
-                phaseSystemLabel = "Monophasé";
-            } else {
-                u = Math.sqrt(3) * (rho * L / S * cosPhi + LINEAR_REACTANCE * L * sinPhi) * IB;
-                formula = "u = √3 × (ρ × L / S × cosφ + λ × L × sinφ) × IB";
-                phaseSystemLabel = "Triphasé";
-            }
-
-            const deltaUPercent = 100 * u / U0;
-
-            // Limites admissibles
-            let baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
-            let maxAllowedDrop = baseLimit;
-
-            if (L > 100) {
-                const additional = Math.min(0.005 * (L - 100) / 100, 0.005);
-                maxAllowedDrop += additional;
-            }
-
-            const isCompliant = deltaUPercent <= maxAllowedDrop * 100;
-
-            if (isCompliant) {
-                recommendedSection = S;
-                const resistance = 2 * rho * L / S;
-
-                // Generate cryptographic hash
-                const calculationHash = generateCalculationHash(
-                    IB, L, S, U0, cosPhi, sinPhi, alimentationType, phaseSystem, conductorType,
-                    modeOfInstallation, ambientTemp, numCircuits, rho, izCorrected, u, deltaUPercent, maxAllowedDrop * 100, isCompliant
-                );
-
-                // Generate audit log
-                const auditLog = generateAuditLog(
-                    IB, L, S, U0, cosPhi, sinPhi, alimentationType, phaseSystem, conductorType,
-                    modeOfInstallation, ambientTemp, numCircuits, izCorrected, u, deltaUPercent, maxAllowedDrop * 100, true, isCompliant
-                );
-
-                // Generate audit hash
-                const auditHash = generateAuditHash(auditLog);
-
-                // Generate electronic signature
-                const signature = generateElectronicSignature(calculationHash, auditHash);
-
-                // Generate BIM and DOE data
-                const bimData = {}; // generateBIMData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference: `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`, warnings, recommendedSection: S, thermalCheck: true, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
-                const doeData = {}; // generateDOEData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference: `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`, warnings, recommendedSection: S, thermalCheck: true, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
-
-                // Create new version
-                const newVersion: CalculationVersion = {
-                    version: `v${versionHistory.length + 1}.0`,
-                    timestamp: new Date().toISOString(),
-                    changes: "Dimensionnement automatique",
-                    hash: calculationHash,
-                    verdict: isCompliant
-                };
-
-                setVersionHistory(prev => [...prev, newVersion]);
-
-                bestResult = {
-                    voltageDrop: u,
-                    voltageDropPercent: deltaUPercent,
-                    isCompliant,
-                    maxAllowedDrop: maxAllowedDrop * 100,
-                    resistivity: rho,
-                    reactance: LINEAR_REACTANCE,
-                    resistance,
-                    formula,
-                    phaseSystem: phaseSystemLabel,
-                    alimentationType,
-                    normativeReference: `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`,
-                    warnings,
-                    recommendedSection: S,
-                    thermalCheck: true,
-                    izCorrected,
-                    modeOfInstallation,
-                    ambientTemperature: ambientTemp,
-                    insulationType,
-                    numberOfCircuits: numCircuits,
-                    calculationHash,
-                    auditLog,
-                    auditHash,
-                    signature,
-                    bimData,
-                    doeData,
-                    versionHistory: [...versionHistory, newVersion]
-                };
-                break; // S'arrêter à la première section conforme
-            }
-        }
-
-        if (!recommendedSection) {
-            warnings.push("Aucune section normalisée ne satisfait les critères thermiques et de chute de tension");
-        }
-
-        setResult(bestResult);
-        } finally {
-            setIsCalculating(false);
-        }
-    };
-
-    const resetCalculator = () => {
-        setCurrent('');
-        setLength('');
-        setCrossSection('2.5');
-        setVoltage('230');
-        setConductorType('copper');
-        setInstallationType('lighting');
-        setPowerFactor('1.0');
-        setPhaseSystem('single');
-        setAlimentationType('A');
-        setCalculationMode('manual');
-        setModeOfInstallation('B1');
-        setAmbientTemperature('30');
-        setInsulationType('PVC');
-        setNumberOfCircuits('1');
-        setResult(null);
-        setVersionHistory([]);
-    };
-
-    const exportResults = () => {
-        if (!result) return;
-
-        const report = `
+    const report = `
 ATTESTATION DE CONFORMITÉ — CALCUL DE CHUTE DE TENSION
 
 Organisme : PROQUELEC
@@ -1203,7 +1203,7 @@ RÉSULTATS
 ────────────────────────────────────
 Formule appliquée : conforme Art 525
 Chute de tension u : ${result.voltageDrop.toFixed(2)} V
-Chute relative Δu : ${(result.voltageDropPercent).toFixed(2)}%
+Chute relative Δu : ${result.voltageDropPercent.toFixed(2)}%
 Limite admissible : ${result.maxAllowedDrop.toFixed(1)}%
 Verdict : ${result.isCompliant ? 'CONFORME' : 'NON CONFORME'}
 
@@ -1237,28 +1237,28 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
 Signature numérique : ✔
         `.trim();
 
-        const blob = new Blob([report], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `attestation-proquelec-${result.phaseSystem.toLowerCase()}-${new Date().toISOString().split('T')[0]}.txt`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    };
+    const blob = new Blob([report], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `attestation-proquelec-${result.phaseSystem.toLowerCase()}-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
-    const exportComplianceDossier = async () => {
-        if (!result) return;
+  const exportComplianceDossier = async () => {
+    if (!result) return;
 
-        const zip = new JSZip();
+    const zip = new JSZip();
 
-        // 01_CALCULS/ - Generate real PDF
-        const calculationPDF = generateCalculationPDF(result);
-        zip.file("01_CALCULS/calcul_chute_tension.pdf", calculationPDF);
+    // 01_CALCULS/ - Generate real PDF
+    const calculationPDF = generateCalculationPDF(result);
+    zip.file("01_CALCULS/calcul_chute_tension.pdf", calculationPDF);
 
-        // Also include text version for compatibility
-        zip.file("01_CALCULS/calcul_chute_tension.txt", `
+    // Also include text version for compatibility
+    zip.file("01_CALCULS/calcul_chute_tension.txt", `
 CALCUL DE CHUTE DE TENSION
 Norme: NS 01-001 / NFC 15-100
 Articles: 523, 524, 525
@@ -1283,33 +1283,33 @@ Résultats:
 Hash: ${result.calculationHash}
         `.trim());
 
-        // 02_JOURNAL_AUDIT/
-        zip.file("02_JOURNAL_AUDIT/audit_normatif.txt", result.auditLog.join('\n'));
-        zip.file("02_JOURNAL_AUDIT/audit_normatif.json", JSON.stringify({
-            norme: "NS 01-001 / NFC 15-100",
-            articles: [523, 524, 525],
-            timestamp: new Date().toISOString(),
-            audit_log: result.auditLog,
-            hash: result.auditHash
-        }, null, 2));
+    // 02_JOURNAL_AUDIT/
+    zip.file("02_JOURNAL_AUDIT/audit_normatif.txt", result.auditLog.join('\n'));
+    zip.file("02_JOURNAL_AUDIT/audit_normatif.json", JSON.stringify({
+      norme: "NS 01-001 / NFC 15-100",
+      articles: [523, 524, 525],
+      timestamp: new Date().toISOString(),
+      audit_log: result.auditLog,
+      hash: result.auditHash
+    }, null, 2));
 
-        // 03_HASH/
-        zip.file("03_HASH/hash_calcul.sha256", result.calculationHash!);
-        zip.file("03_HASH/hash_audit.sha256", result.auditHash!);
+    // 03_HASH/
+    zip.file("03_HASH/hash_calcul.sha256", result.calculationHash!);
+    zip.file("03_HASH/hash_audit.sha256", result.auditHash!);
 
-        // 04_SIGNATURE/
-        zip.file("04_SIGNATURE/signature_qualifiee.p7s", result.signature!);
+    // 04_SIGNATURE/
+    zip.file("04_SIGNATURE/signature_qualifiee.p7s", result.signature!);
 
-        // 05_REFERENCES/ - Generate real normative PDF
-        const normativePDF = generateNormativePDF();
-        zip.file("05_REFERENCES/NS_01_001_extraits.pdf", normativePDF);
+    // 05_REFERENCES/ - Generate real normative PDF
+    const normativePDF = generateNormativePDF();
+    zip.file("05_REFERENCES/NS_01_001_extraits.pdf", normativePDF);
 
-        // 06_ATTESTATION/ - Generate real attestation PDF
-        const attestationPDF = generateAttestationPDF(result);
-        zip.file("06_ATTESTATION/attestation_proquelec.pdf", attestationPDF);
+    // 06_ATTESTATION/ - Generate real attestation PDF
+    const attestationPDF = generateAttestationPDF(result);
+    zip.file("06_ATTESTATION/attestation_proquelec.pdf", attestationPDF);
 
-        // Also include text version for compatibility
-        const attestation = `
+    // Also include text version for compatibility
+    const attestation = `
 ATTESTATION DE CONFORMITÉ ÉLECTRIQUE
 
 Organisme : PROQUELEC
@@ -1329,36 +1329,36 @@ Empreinte cryptographique incluse
 
 Date : ${new Date().toLocaleDateString('fr-FR')}
         `.trim();
-        zip.file("06_ATTESTATION/attestation_proquelec.txt", attestation);
+    zip.file("06_ATTESTATION/attestation_proquelec.txt", attestation);
 
-        // Générer et télécharger le ZIP
-        const content = await zip.generateAsync({ type: "blob" });
-        saveAs(content, `dossier-conformite-proquelec-${new Date().toISOString().split('T')[0]}.zip`);
-    };
+    // Générer et télécharger le ZIP
+    const content = await zip.generateAsync({ type: "blob" });
+    saveAs(content, `dossier-conformite-proquelec-${new Date().toISOString().split('T')[0]}.zip`);
+  };
 
-    const exportBIMData = () => {
-        if (!result?.bimData) return;
-        const dataStr = JSON.stringify(result.bimData, null, 2);
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        saveAs(blob, `bim-data-${new Date().toISOString().split('T')[0]}.ifc`);
-    };
+  const exportBIMData = () => {
+    if (!result?.bimData) return;
+    const dataStr = JSON.stringify(result.bimData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    saveAs(blob, `bim-data-${new Date().toISOString().split('T')[0]}.ifc`);
+  };
 
-    const exportDOEData = () => {
-        if (!result?.doeData) return;
-        const dataStr = JSON.stringify(result.doeData, null, 2);
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        saveAs(blob, `doe-data-${new Date().toISOString().split('T')[0]}.json`);
-    };
+  const exportDOEData = () => {
+    if (!result?.doeData) return;
+    const dataStr = JSON.stringify(result.doeData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    saveAs(blob, `doe-data-${new Date().toISOString().split('T')[0]}.json`);
+  };
 
-    const exportVersionHistory = () => {
-        if (!result?.versionHistory) return;
-        const dataStr = JSON.stringify(result.versionHistory, null, 2);
-        const blob = new Blob([dataStr], { type: 'application/json' });
-        saveAs(blob, `historique-versions-${new Date().toISOString().split('T')[0]}.json`);
-    };
+  const exportVersionHistory = () => {
+    if (!result?.versionHistory) return;
+    const dataStr = JSON.stringify(result.versionHistory, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    saveAs(blob, `historique-versions-${new Date().toISOString().split('T')[0]}.json`);
+  };
 
-    return (
-        <div className="space-y-8">
+  return (
+    <div className="space-y-8">
             {/* HEADER */}
             <div className="text-center space-y-4">
                 <div className="flex items-center justify-center gap-3">
@@ -1441,13 +1441,13 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     </TooltipProvider>
                                 </div>
                                 <Input
-                                    id="current"
-                                    type="number"
-                                    value={current}
-                                    onChange={(e) => setCurrent(e.target.value)}
-                                    placeholder="16"
-                                    className="bg-emerald-900/20 border-emerald-800/40 text-white"
-                                />
+                  id="current"
+                  type="number"
+                  value={current}
+                  onChange={(e) => setCurrent(e.target.value)}
+                  placeholder="16"
+                  className="bg-emerald-900/20 border-emerald-800/40 text-white" />
+                
                             </div>
                             <div className="space-y-2">
                                 <div className="flex items-center gap-2">
@@ -1470,13 +1470,13 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     </TooltipProvider>
                                 </div>
                                 <Input
-                                    id="voltage"
-                                    type="number"
-                                    value={voltage}
-                                    onChange={(e) => setVoltage(e.target.value)}
-                                    placeholder="230"
-                                    className="bg-emerald-900/20 border-emerald-800/40 text-white"
-                                />
+                  id="voltage"
+                  type="number"
+                  value={voltage}
+                  onChange={(e) => setVoltage(e.target.value)}
+                  placeholder="230"
+                  className="bg-emerald-900/20 border-emerald-800/40 text-white" />
+                
                             </div>
                         </div>
 
@@ -1502,13 +1502,13 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     </TooltipProvider>
                                 </div>
                                 <Input
-                                    id="length"
-                                    type="number"
-                                    value={length}
-                                    onChange={(e) => setLength(e.target.value)}
-                                    placeholder="50"
-                                    className="bg-emerald-900/20 border-emerald-800/40 text-white"
-                                />
+                  id="length"
+                  type="number"
+                  value={length}
+                  onChange={(e) => setLength(e.target.value)}
+                  placeholder="50"
+                  className="bg-emerald-900/20 border-emerald-800/40 text-white" />
+                
                             </div>
                             <div className="space-y-2">
                                 <div className="flex items-center gap-2">
@@ -1535,16 +1535,16 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {NORMALIZED_SECTIONS.map(section => (
-                                            <SelectItem key={section} value={section.toString()}>
+                                        {NORMALIZED_SECTIONS.map((section) =>
+                    <SelectItem key={section} value={section.toString()}>
                                                 {section} mm²
                                             </SelectItem>
-                                        ))}
+                    )}
                                     </SelectContent>
                                 </Select>
-                                {calculationMode === 'auto' && (
-                                    <p className="text-xs text-amber-400">Section déterminée automatiquement</p>
-                                )}
+                                {calculationMode === 'auto' &&
+                <p className="text-xs text-amber-400">Section déterminée automatiquement</p>
+                }
                             </div>
                         </div>
 
@@ -1614,16 +1614,16 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     </TooltipProvider>
                                 </div>
                                 <Input
-                                    id="powerFactor"
-                                    type="number"
-                                    step="0.01"
-                                    min="0.1"
-                                    max="1.0"
-                                    value={powerFactor}
-                                    onChange={(e) => setPowerFactor(e.target.value)}
-                                    placeholder="1.0"
-                                    className="bg-emerald-900/20 border-emerald-800/40 text-white"
-                                />
+                  id="powerFactor"
+                  type="number"
+                  step="0.01"
+                  min="0.1"
+                  max="1.0"
+                  value={powerFactor}
+                  onChange={(e) => setPowerFactor(e.target.value)}
+                  placeholder="1.0"
+                  className="bg-emerald-900/20 border-emerald-800/40 text-white" />
+                
                             </div>
                         </div>
 
@@ -1671,15 +1671,15 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     Température Ambiante (°C)
                                 </Label>
                                 <Input
-                                    id="ambientTemperature"
-                                    type="number"
-                                    min="20"
-                                    max="60"
-                                    value={ambientTemperature}
-                                    onChange={(e) => setAmbientTemperature(e.target.value)}
-                                    placeholder="30"
-                                    className="bg-emerald-900/20 border-emerald-800/40 text-white"
-                                />
+                  id="ambientTemperature"
+                  type="number"
+                  min="20"
+                  max="60"
+                  value={ambientTemperature}
+                  onChange={(e) => setAmbientTemperature(e.target.value)}
+                  placeholder="30"
+                  className="bg-emerald-900/20 border-emerald-800/40 text-white" />
+                
                             </div>
                         </div>
 
@@ -1704,42 +1704,42 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     Nombre de Circuits
                                 </Label>
                                 <Input
-                                    id="numberOfCircuits"
-                                    type="number"
-                                    min="1"
-                                    max="10"
-                                    value={numberOfCircuits}
-                                    onChange={(e) => setNumberOfCircuits(e.target.value)}
-                                    placeholder="1"
-                                    className="bg-emerald-900/20 border-emerald-800/40 text-white"
-                                />
+                  id="numberOfCircuits"
+                  type="number"
+                  min="1"
+                  max="10"
+                  value={numberOfCircuits}
+                  onChange={(e) => setNumberOfCircuits(e.target.value)}
+                  placeholder="1"
+                  className="bg-emerald-900/20 border-emerald-800/40 text-white" />
+                
                             </div>
                         </div>
 
                         <div className="flex gap-4">
                             <Button
-                                onClick={calculationMode === 'manual' ? calculateVoltageDrop : calculateAutomaticSizing}
-                                className="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black"
-                                disabled={
-                                    isCalculating ||
-                                    !current || !length || !voltage || !powerFactor || !modeOfInstallation || !ambientTemperature || !insulationType || !numberOfCircuits ||
-                                    (calculationMode === 'manual' && !crossSection) ||
-                                    parseFloat(current) <= 0 || parseFloat(length) <= 0 ||
-                                    parseFloat(voltage) <= 0 ||
-                                    parseFloat(powerFactor) <= 0 || parseFloat(powerFactor) > 1 ||
-                                    parseFloat(ambientTemperature) < 20 || parseFloat(ambientTemperature) > 60 ||
-                                    parseInt(numberOfCircuits) < 1 ||
-                                    (calculationMode === 'manual' && parseFloat(crossSection) <= 0)
-                                }
-                            >
+                onClick={calculationMode === 'manual' ? calculateVoltageDrop : calculateAutomaticSizing}
+                className="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black"
+                disabled={
+                isCalculating ||
+                !current || !length || !voltage || !powerFactor || !modeOfInstallation || !ambientTemperature || !insulationType || !numberOfCircuits ||
+                calculationMode === 'manual' && !crossSection ||
+                parseFloat(current) <= 0 || parseFloat(length) <= 0 ||
+                parseFloat(voltage) <= 0 ||
+                parseFloat(powerFactor) <= 0 || parseFloat(powerFactor) > 1 ||
+                parseFloat(ambientTemperature) < 20 || parseFloat(ambientTemperature) > 60 ||
+                parseInt(numberOfCircuits) < 1 ||
+                calculationMode === 'manual' && parseFloat(crossSection) <= 0
+                }>
+                
                                 <Calculator className="w-4 h-4 mr-2" />
-                                {isCalculating ? 'Calcul en cours...' : (calculationMode === 'manual' ? 'Calculer (Sections 523-525)' : 'Dimensionner Automatiquement')}
+                                {isCalculating ? 'Calcul en cours...' : calculationMode === 'manual' ? 'Calculer (Sections 523-525)' : 'Dimensionner Automatiquement'}
                             </Button>
                             <Button
-                                onClick={resetCalculator}
-                                variant="outline"
-                                className="border-emerald-800/40 text-emerald-400 hover:bg-emerald-800/20"
-                            >
+                onClick={resetCalculator}
+                variant="outline"
+                className="border-emerald-800/40 text-emerald-400 hover:bg-emerald-800/20">
+                
                                 <RotateCcw className="w-4 h-4" />
                             </Button>
                         </div>
@@ -1755,8 +1755,8 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        {result ? (
-                            <div className="space-y-6">
+                        {result ?
+            <div className="space-y-6">
                                 {/* NORMATIVE REFERENCE */}
                                 <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                                     <div className="flex items-center gap-2 mb-2">
@@ -1789,23 +1789,23 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                 </div>
 
                                 <div className="flex items-center gap-2 p-4 rounded-lg border"
-                                     style={{
-                                         backgroundColor: result.isCompliant ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)',
-                                         borderColor: result.isCompliant ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'
-                                     }}>
-                                    {result.isCompliant ? (
-                                        <CheckCircle className="w-5 h-5 text-green-400" />
-                                    ) : (
-                                        <AlertTriangle className="w-5 h-5 text-red-400" />
-                                    )}
+              style={{
+                backgroundColor: result.isCompliant ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                borderColor: result.isCompliant ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'
+              }}>
+                                    {result.isCompliant ?
+                <CheckCircle className="w-5 h-5 text-green-400" /> :
+
+                <AlertTriangle className="w-5 h-5 text-red-400" />
+                }
                                     <span className={`font-bold ${result.isCompliant ? 'text-green-400' : 'text-red-400'}`}>
                                         {result.isCompliant ? 'CONFORME à la norme' : 'NON CONFORME - Risque de sous-performance'}
                                     </span>
                                 </div>
 
                                 {/* CRYPTOGRAPHIC HASH */}
-                                {result.calculationHash && (
-                                    <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
+                                {result.calculationHash &&
+              <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-lg">
                                         <div className="flex items-center gap-2 mb-2">
                                             <Info className="w-4 h-4 text-purple-400" />
                                             <span className="text-purple-400 font-medium text-sm">Intégrité Cryptographique</span>
@@ -1818,11 +1818,11 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                             Toute modification invalide cette attestation.
                                         </p>
                                     </div>
-                                )}
+              }
 
                                 {/* ELECTRONIC SIGNATURE */}
-                                {result.signature && (
-                                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                                {result.signature &&
+              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
                                         <div className="flex items-center gap-2 mb-2">
                                             <Info className="w-4 h-4 text-red-400" />
                                             <span className="text-red-400 font-medium text-sm">Signature Électronique Qualifiée</span>
@@ -1835,7 +1835,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                             Signature : {result.signature}
                                         </p>
                                     </div>
-                                )}
+              }
 
                                 {/* AVERTISSEMENTS NORMATIFS */}
 
@@ -1848,12 +1848,12 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                         <span className="text-slate-400">Régime:</span>
                                         <span className="text-white font-medium">{result.phaseSystem}</span>
                                     </div>
-                                    {result.recommendedSection && (
-                                        <div className="flex justify-between">
+                                    {result.recommendedSection &&
+                <div className="flex justify-between">
                                             <span className="text-slate-400">Section recommandée:</span>
                                             <span className="text-emerald-400 font-medium">{result.recommendedSection} mm²</span>
                                         </div>
-                                    )}
+                }
                                     <div className="flex justify-between">
                                         <span className="text-slate-400">Résistivité ({result.ambientTemperature === 20 ? 'à 20°C' : 'service normal'}):</span>
                                         <span className="text-white font-medium">{result.resistivity.toFixed(3)} Ω·mm²/m</span>
@@ -1866,56 +1866,56 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                         <span className="text-slate-400">Résistance de ligne (A/R):</span>
                                         <span className="text-white font-medium">{result.resistance.toFixed(4)} Ω</span>
                                     </div>
-                                    {result.thermalCheck !== undefined && (
-                                        <div className="flex justify-between">
+                                    {result.thermalCheck !== undefined &&
+                <div className="flex justify-between">
                                             <span className="text-slate-400">Vérification thermique (Art 523):</span>
                                             <span className={`font-medium ${result.thermalCheck ? 'text-green-400' : 'text-red-400'}`}>
                                                 {result.thermalCheck ? 'CONFORME' : 'NON CONFORME'}
                                             </span>
                                         </div>
-                                    )}
-                                    {result.izCorrected !== undefined && (
-                                        <div className="flex justify-between">
+                }
+                                    {result.izCorrected !== undefined &&
+                <div className="flex justify-between">
                                             <span className="text-slate-400">Courant admissible Iz corrigé:</span>
                                             <span className="text-white font-medium">{result.izCorrected.toFixed(1)} A</span>
                                         </div>
-                                    )}
-                                    {result.modeOfInstallation && (
-                                        <div className="flex justify-between">
+                }
+                                    {result.modeOfInstallation &&
+                <div className="flex justify-between">
                                             <span className="text-slate-400">Mode de pose:</span>
                                             <span className="text-white font-medium">{result.modeOfInstallation}</span>
                                         </div>
-                                    )}
-                                    {result.ambientTemperature !== undefined && (
-                                        <div className="flex justify-between">
+                }
+                                    {result.ambientTemperature !== undefined &&
+                <div className="flex justify-between">
                                             <span className="text-slate-400">Température ambiante:</span>
                                             <span className="text-white font-medium">{result.ambientTemperature} °C</span>
                                         </div>
-                                    )}
-                                    {result.insulationType && (
-                                        <div className="flex justify-between">
+                }
+                                    {result.insulationType &&
+                <div className="flex justify-between">
                                             <span className="text-slate-400">Type d'isolation:</span>
                                             <span className="text-white font-medium">{result.insulationType}</span>
                                         </div>
-                                    )}
-                                    {result.numberOfCircuits !== undefined && (
-                                        <div className="flex justify-between">
+                }
+                                    {result.numberOfCircuits !== undefined &&
+                <div className="flex justify-between">
                                             <span className="text-slate-400">Nombre de circuits:</span>
                                             <span className="text-white font-medium">{result.numberOfCircuits}</span>
                                         </div>
-                                    )}
+                }
                                 </div>
 
                                 {/* VERSION HISTORY */}
-                                {result.versionHistory && result.versionHistory.length > 0 && (
-                                    <div className="p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
+                                {result.versionHistory && result.versionHistory.length > 0 &&
+              <div className="p-4 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
                                         <div className="flex items-center gap-2 mb-3">
                                             <Info className="w-4 h-4 text-indigo-400" />
                                             <span className="text-indigo-400 font-medium text-sm">Historique des Versions</span>
                                         </div>
                                         <div className="space-y-2 max-h-32 overflow-y-auto">
-                                            {result.versionHistory.map((version, index) => (
-                                                <div key={index} className="text-xs bg-slate-800/50 p-2 rounded">
+                                            {result.versionHistory.map((version, index) =>
+                  <div key={index} className="text-xs bg-slate-800/50 p-2 rounded">
                                                     <div className="flex justify-between">
                                                         <span className="text-slate-300 font-medium">{version.version}</span>
                                                         <span className={`font-medium ${version.verdict ? 'text-green-400' : 'text-red-400'}`}>
@@ -1929,24 +1929,24 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                                         {version.hash.substring(0, 16)}...
                                                     </div>
                                                 </div>
-                                            ))}
+                  )}
                                         </div>
                                     </div>
-                                )}
+              }
 
                                 <div className="pt-4 border-t border-emerald-900/40">
                                     <div className="grid grid-cols-2 gap-2 mb-2">
                                         <Button
-                                            onClick={exportResults}
-                                            className="bg-slate-700 hover:bg-slate-600 text-white"
-                                        >
+                    onClick={exportResults}
+                    className="bg-slate-700 hover:bg-slate-600 text-white">
+                    
                                             <Download className="w-4 h-4 mr-2" />
                                             Attestation
                                         </Button>
                                         <Button
-                                            onClick={exportComplianceDossier}
-                                            className="bg-blue-700 hover:bg-blue-600 text-white"
-                                        >
+                    onClick={exportComplianceDossier}
+                    className="bg-blue-700 hover:bg-blue-600 text-white">
+                    
                                             <Download className="w-4 h-4 mr-2" />
                                             Dossier Conformité
                                         </Button>
@@ -1956,56 +1956,56 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     </div>
                                     <div className="grid grid-cols-3 gap-2 mb-2">
                                         <Button
-                                            onClick={exportBIMData}
-                                            className="bg-green-700 hover:bg-green-600 text-white text-xs"
-                                        >
+                    onClick={exportBIMData}
+                    className="bg-green-700 hover:bg-green-600 text-white text-xs">
+                    
                                             <Download className="w-3 h-3 mr-1" />
                                             BIM IFC
                                         </Button>
                                         <Button
-                                            onClick={exportDOEData}
-                                            className="bg-purple-700 hover:bg-purple-600 text-white text-xs"
-                                        >
+                    onClick={exportDOEData}
+                    className="bg-purple-700 hover:bg-purple-600 text-white text-xs">
+                    
                                             <Download className="w-3 h-3 mr-1" />
                                             DOE JSON
                                         </Button>
                                         <Button
-                                            onClick={exportVersionHistory}
-                                            className="bg-orange-700 hover:bg-orange-600 text-white text-xs"
-                                        >
+                    onClick={exportVersionHistory}
+                    className="bg-orange-700 hover:bg-orange-600 text-white text-xs">
+                    
                                             <Download className="w-3 h-3 mr-1" />
                                             Historique
                                         </Button>
                                     </div>
-                                    {result.auditLog && (
-                                        <Button
-                                            onClick={() => {
-                                                const auditText = result.auditLog.join('\n');
-                                                const blob = new Blob([auditText], { type: 'text/plain' });
-                                                const url = URL.createObjectURL(blob);
-                                                const a = document.createElement('a');
-                                                a.href = url;
-                                                a.download = `journal-audit-${new Date().toISOString().split('T')[0]}.txt`;
-                                                document.body.appendChild(a);
-                                                a.click();
-                                                document.body.removeChild(a);
-                                                URL.revokeObjectURL(url);
-                                            }}
-                                            variant="outline"
-                                            className="w-full border-slate-600 text-slate-300 hover:bg-slate-800"
-                                        >
+                                    {result.auditLog &&
+                <Button
+                  onClick={() => {
+                    const auditText = result.auditLog.join('\n');
+                    const blob = new Blob([auditText], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `journal-audit-${new Date().toISOString().split('T')[0]}.txt`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                  }}
+                  variant="outline"
+                  className="w-full border-slate-600 text-slate-300 hover:bg-slate-800">
+                  
                                             <Download className="w-4 h-4 mr-2" />
                                             Journal d'Audit
                                         </Button>
-                                    )}
+                }
                                 </div>
-                            </div>
-                        ) : (
-                            <div className="text-center py-12 text-slate-500">
+                            </div> :
+
+            <div className="text-center py-12 text-slate-500">
                                 <Calculator className="w-12 h-12 mx-auto mb-4 opacity-50" />
                                 <p>Saisissez les paramètres et cliquez sur "Calculer"</p>
                             </div>
-                        )}
+            }
                     </CardContent>
                 </Card>
             </div>
@@ -2043,6 +2043,6 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                     </div>
                 </CardContent>
             </Card>
-        </div>
-    );
+        </div>);
+
 }

@@ -18,7 +18,7 @@ class RubriqueRegistryImpl implements RubriqueRegistry {
       console.warn(`⚠️ Rubrique ${rubrique.id} déjà enregistrée, remplacement...`);
     }
     this.rubriques.set(rubrique.id, rubrique);
-    console.log(`✅ Rubrique ${rubrique.id} enregistrée`);
+
   }
 
   get(id: RubriqueId): RubriqueSchema | null {
@@ -30,7 +30,7 @@ class RubriqueRegistryImpl implements RubriqueRegistry {
   }
 
   getActive(): RubriqueSchema[] {
-    return this.getAll().filter(r => r.maturity !== 'DEPRECATED');
+    return this.getAll().filter((r) => r.maturity !== 'DEPRECATED');
   }
 
   exists(id: RubriqueId): boolean {
@@ -56,15 +56,15 @@ class RubriqueFactoryImpl implements RubriqueFactory {
     return JSON.parse(JSON.stringify(rubrique)); // Clone profond
   }
 
-  createAndInitialize(id: RubriqueId, config?: any): RubriqueSchema {
+  createAndInitialize(id: RubriqueId, config?: unknown): RubriqueSchema {
     const rubrique = this.create(id);
-    
+
     // Appliquer la configuration si fournie
     if (config) {
       Object.assign(rubrique, config);
     }
 
-    console.log(`🚀 Rubrique ${id} initialisée`);
+
     return rubrique;
   }
 

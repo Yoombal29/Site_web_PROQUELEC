@@ -1,5 +1,5 @@
 /**
- * Sanitize a filename to be safe for cloud storage (Supabase, S3, etc.)
+ * Sanitize a filename to be safe for cloud storage (Cloud, Local, etc.)
  * - Removes accents/diacritics (é -> e, œ -> oe)
  * - Converts to lowercase (optional, but recommended for consistency)
  * - Replaces non-alphanumeric characters (except dots) with hyphens

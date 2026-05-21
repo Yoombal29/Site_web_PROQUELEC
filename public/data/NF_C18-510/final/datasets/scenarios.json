@@ -1,0 +1,64 @@
+{
+  "scenarios": [
+    {
+      "type_operation": "Opérations d'ordre électrique",
+      "scenario": "",
+      "consignes": [
+        "Decrire le contexte",
+        "Identifier les risques",
+        "Lister les mesures de prevention"
+      ],
+      "source_ref": {
+        "concept": "types_operations"
+      }
+    },
+    {
+      "type_operation": "Opérations d'ordre non électrique",
+      "scenario": "",
+      "consignes": [
+        "Decrire le contexte",
+        "Identifier les risques",
+        "Lister les mesures de prevention"
+      ],
+      "source_ref": {
+        "concept": "types_operations"
+      }
+    },
+    {
+      "type_operation": "Interventions basse tension (BT)",
+      "scenario": "",
+      "consignes": [
+        "Decrire le contexte",
+        "Identifier les risques",
+        "Lister les mesures de prevention"
+      ],
+      "source_ref": {
+        "concept": "types_operations"
+      }
+    },
+    {
+      "type_operation": "Travaux sous tension",
+      "scenario": "",
+      "consignes": [
+        "Decrire le contexte",
+        "Identifier les risques",
+        "Lister les mesures de prevention"
+      ],
+      "source_ref": {
+        "concept": "types_operations"
+      }
+    },
+    {
+      "type_operation": "Travaux hors tension",
+      "scenario": "",
+      "consignes": [
+        "Decrire le contexte",
+        "Identifier les risques",
+        "Lister les mesures de prevention"
+      ],
+      "source_ref": {
+        "concept": "types_operations"
+      }
+    }
+  ]
+}

@@ -5,6 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useProfessionalTraining, useTrainingRegistrations } from '@/hooks/useProfessionalTraining';
 import { GraduationCap, Users, MapPin, Clock, Euro } from 'lucide-react';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from "@/components/ui/pagination";
 
 export const AdminProfessionalTrainingPanel: React.FC = () => {
   const { data: trainings, isLoading: trainingsLoading } = useProfessionalTraining();
@@ -28,11 +34,11 @@ export const AdminProfessionalTrainingPanel: React.FC = () => {
 
   const getLevelColor = (level: string | null) => {
     switch (level) {
-      case 'débutant': return 'bg-green-100 text-green-800';
-      case 'intermédiaire': return 'bg-blue-100 text-blue-800';
-      case 'avancé': return 'bg-orange-100 text-orange-800';
-      case 'expert': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'débutant': return 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-400';
+      case 'intermédiaire': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-400';
+      case 'avancé': return 'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-400';
+      case 'expert': return 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-400';
+      default: return 'bg-muted text-muted-foreground';
     }
   };
 
@@ -48,11 +54,11 @@ export const AdminProfessionalTrainingPanel: React.FC = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-semibold text-proqblue flex items-center gap-2">
+          <h2 className="text-2xl font-semibold text-primary flex items-center gap-2">
             <GraduationCap className="w-6 h-6" />
             Formations Professionnelles
           </h2>
-          <p className="text-gray-600">Gestion des formations et inscriptions</p>
+          <p className="text-muted-foreground">Gestion des formations et inscriptions</p>
         </div>
       </div>
 
@@ -60,30 +66,30 @@ export const AdminProfessionalTrainingPanel: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-proqblue">{trainings?.length || 0}</div>
-            <div className="text-sm text-gray-600">Formations actives</div>
+            <div className="text-2xl font-bold text-primary">{trainings?.length || 0}</div>
+            <div className="text-sm text-muted-foreground">Formations actives</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-600">{registrations?.length || 0}</div>
-            <div className="text-sm text-gray-600">Inscriptions totales</div>
+            <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{registrations?.length || 0}</div>
+            <div className="text-sm text-muted-foreground">Inscriptions totales</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-orange-600">
+            <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
               {registrations?.filter(r => r.status === 'pending').length || 0}
             </div>
-            <div className="text-sm text-gray-600">En attente</div>
+            <div className="text-sm text-muted-foreground">En attente</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">
+            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
               {registrations?.filter(r => r.status === 'confirmed').length || 0}
             </div>
-            <div className="text-sm text-gray-600">Confirmées</div>
+            <div className="text-sm text-muted-foreground">Confirmées</div>
           </CardContent>
         </Card>
       </div>
@@ -94,7 +100,7 @@ export const AdminProfessionalTrainingPanel: React.FC = () => {
         placeholder="Rechercher par titre, lieu ou formateur..."
         value={search}
         onChange={e => { setSearch(e.target.value); setPage(1); }}
-        className="mb-4 px-3 py-2 border rounded w-full max-w-xs text-sm"
+        className="mb-4 px-3 py-2 border border-border bg-background text-foreground rounded w-full max-w-xs text-sm"
       />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {paginatedTrainings.map((training) => (
@@ -111,7 +117,7 @@ export const AdminProfessionalTrainingPanel: React.FC = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               {training.description && (
-                <p className="text-sm text-gray-600">{training.description}</p>
+                <p className="text-sm text-muted-foreground">{training.description}</p>
               )}
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center gap-2">
@@ -130,7 +136,7 @@ export const AdminProfessionalTrainingPanel: React.FC = () => {
                 )}
                 {training.price && (
                   <div className="flex items-center gap-2">
-                    <Euro className="w-4 h-4 text-gray-400" />
+                    <Euro className="w-4 h-4 text-muted-foreground/50" />
                     <span>{training.price}€</span>
                   </div>
                 )}
@@ -143,7 +149,7 @@ export const AdminProfessionalTrainingPanel: React.FC = () => {
               {training.prerequisites && training.prerequisites.length > 0 && (
                 <div>
                   <p className="text-sm font-medium mb-2">Prérequis:</p>
-                  <ul className="text-xs text-gray-600 space-y-1">
+                  <ul className="text-xs text-muted-foreground space-y-1">
                     {training.prerequisites.map((prereq, index) => (
                       <li key={index} className="flex items-start gap-1">
                         <span>•</span>
@@ -156,7 +162,7 @@ export const AdminProfessionalTrainingPanel: React.FC = () => {
               {training.learning_objectives && training.learning_objectives.length > 0 && (
                 <div>
                   <p className="text-sm font-medium mb-2">Objectifs:</p>
-                  <ul className="text-xs text-gray-600 space-y-1">
+                  <ul className="text-xs text-muted-foreground space-y-1">
                     {training.learning_objectives.slice(0, 3).map((objective, index) => (
                       <li key={index} className="flex items-start gap-1">
                         <span>•</span>
@@ -170,7 +176,7 @@ export const AdminProfessionalTrainingPanel: React.FC = () => {
                 <Button size="sm" variant="outline">
                   Voir détails
                 </Button>
-                <Button size="sm" className="bg-proqblue hover:bg-proqblue-dark">
+                <Button size="sm" className="bg-primary hover:opacity-90 transition">
                   Gérer inscriptions
                 </Button>
               </div>
@@ -204,8 +210,8 @@ export const AdminProfessionalTrainingPanel: React.FC = () => {
       {trainings?.length === 0 && (
         <Card>
           <CardContent className="text-center py-8">
-            <GraduationCap className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500">Aucune formation disponible</p>
+            <GraduationCap className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
+            <p className="text-muted-foreground">Aucune formation disponible</p>
           </CardContent>
         </Card>
       )}

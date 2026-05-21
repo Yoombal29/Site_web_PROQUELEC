@@ -1,0 +1,131 @@
+{
+  "generated_at": "2026-02-06T17:55:51",
+  "files": [
+    {
+      "path": "datasets\\fiches_cours.html",
+      "size_bytes": 1259507,
+      "modified": "2026-02-05T14:51:11",
+      "sha256": "6f38cc4558eac20a37b8fb605d90ae50d3bb67e1a7f2dae0f44375b4cf41d7ad"
+    },
+    {
+      "path": "datasets\\fiches_cours.md",
+      "size_bytes": 1133506,
+      "modified": "2026-02-05T14:51:11",
+      "sha256": "f973ccbb22bd405586db6d5a6629957298fdd81ec3d680c60febfe7fd3560762"
+    },
+    {
+      "path": "datasets\\fiches_cours.pdf",
+      "size_bytes": 1196301,
+      "modified": "2026-02-05T14:51:31",
+      "sha256": "ac9f022287ae7bfab07924e3d332e75ba399e74b3785e98a9a727f3587887544"
+    },
+    {
+      "path": "datasets\\fiches_cours.pptx",
+      "size_bytes": 1250541,
+      "modified": "2026-02-05T14:51:52",
+      "sha256": "35ff90e34d7535e4bf0314bcbd347fe524e7a15a370aae1a9e928d45ea250451"
+    },
+    {
+      "path": "datasets\\qcm.json",
+      "size_bytes": 588586,
+      "modified": "2026-02-05T14:51:11",
+      "sha256": "f264a2aa739c927b64c6a76b24593c8c990866398fe219c8b87486b256af3d99"
+    },
+    {
+      "path": "datasets\\qcm_corrections.json",
+      "size_bytes": 148487,
+      "modified": "2026-02-05T14:51:11",
+      "sha256": "f04a5052c7d1acb96c0ed69ae614d46f49aae291ec4f0c9a4fb9c5d6d8c56dbe"
+    },
+    {
+      "path": "datasets\\qcm_multi.json",
+      "size_bytes": 528240,
+      "modified": "2026-02-05T14:51:11",
+      "sha256": "81deef9d70a3ee3bc42b240b89425f4fb3713e40b8d95fc21d2864fc0cbc2508"
+    },
+    {
+      "path": "datasets\\questions_ouvertes.json",
+      "size_bytes": 306917,
+      "modified": "2026-02-05T14:50:44",
+      "sha256": "10eda555b3da5e5adac4d9cc610a89fdddab32ea70f370937275d966fe9167ed"
+    },
+    {
+      "path": "embed_chunks.py",
+      "size_bytes": 1271,
+      "modified": "2026-02-05T17:23:47",
+      "sha256": "21083db89c7df51dccbfc2149c771e588641998c6869325ee488b05ccd8e43b4"
+    },
+    {
+      "path": "manifest.json",
+      "size_bytes": 4482,
+      "modified": "2026-02-05T17:23:57",
+      "sha256": "6252d19a1b5772cc10f06729106e6279e27768b489f6e3a0a089cf6166808dc4"
+    },
+    {
+      "path": "NS 01 001.md",
+      "size_bytes": 1220530,
+      "modified": "2026-02-05T13:35:54",
+      "sha256": "c556c6b04e1977fe6cbc1098deac8dc1c18c504c509ea7595bdbc0b528dedd1e"
+    },
+    {
+      "path": "NS 01 001_clean.md",
+      "size_bytes": 1161944,
+      "modified": "2026-02-05T14:50:44",
+      "sha256": "dc7c4692be45f3c9164c638e0d78b4dcb333370335fb1426f8afa03464067155"
+    },
+    {
+      "path": "NS_01_001.pdf",
+      "size_bytes": 6222118,
+      "modified": "2026-02-05T14:50:44",
+      "sha256": "c9b45966b62b4dedbccb3f75d4b4ae5dfd50f306a6b5b74a9c19eb1f26ed302a"
+    },
+    {
+      "path": "ns_01_001_atomise.json",
+      "size_bytes": 1637499,
+      "modified": "2026-02-05T14:50:44",
+      "sha256": "6a60b05dc7e532c85f80f74d375ed633b8a22244838577e069f2fced8ac0c587"
+    },
+    {
+      "path": "NS_01_001_extrait_SENEGAL.json",
+      "size_bytes": 3926,
+      "modified": "2026-02-05T14:50:44",
+      "sha256": "45458b251397e80413c3bd2b9cc85ad1eab87338fe6a6dac23a6cb7bfd258a50"
+    },
+    {
+      "path": "ns_01_001_full.json",
+      "size_bytes": 2947667,
+      "modified": "2026-02-05T14:50:44",
+      "sha256": "a686a2b03fe0bdfc37fd081799e5badd8597b38ac2e7725c008fbfaf57c887a7"
+    },
+    {
+      "path": "ns_01_001_pedagogique.yaml",
+      "size_bytes": 406752,
+      "modified": "2026-02-05T14:50:44",
+      "sha256": "9e1bcdf660d5cf320b24b5615eb660396cca2d278f5ac07f9712044877d79bed"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 931,
+      "modified": "2026-02-05T13:37:12",
+      "sha256": "eba044feb398bee0513b142ffe3430a269bb09a8941dc630df42f19e22f50cbe"
+    },
+    {
+      "path": "train\\chunks.jsonl",
+      "size_bytes": 1274460,
+      "modified": "2026-02-06T17:54:07",
+      "sha256": "888f457ea64bd8d414b9031210261aa6799b86ea2d52f2a287d543ecb8f39547"
+    },
+    {
+      "path": "train\\instruction.jsonl",
+      "size_bytes": 1198062,
+      "modified": "2026-02-05T14:51:11",
+      "sha256": "52dedcef210a8636358a2a299d57ed37c2c2e69db442a0e8577ed43c8268051c"
+    },
+    {
+      "path": "train\\sft.jsonl",
+      "size_bytes": 3660898,
+      "modified": "2026-02-05T14:51:11",
+      "sha256": "b664a804807e7f3ce76f665aecc282ae8a0282496036c56d1cbfb1a4c2aadee0"
+    }
+  ]
+}

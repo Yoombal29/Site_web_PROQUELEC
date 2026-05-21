@@ -1,0 +1,121 @@
+{
+    "AgentCalculNormatif": {
+        "id": "agent-calc-001",
+        "version": "1.2.0",
+        "roles": [
+            "admin",
+            "secondary_admin",
+            "partner",
+            "user"
+        ],
+        "engine": {
+            "primary": "gemini-pro",
+            "fallback": "openai-gpt-4o",
+            "weight": 0.8
+        },
+        "parameters": {
+            "temperature": 0.1,
+            "max_tokens": 1000,
+            "top_p": 0.9,
+            "context_window": 8192
+        },
+        "features": {
+            "rag_enabled": true,
+            "rag_collection": "norms_nf_c15_100",
+            "deterministic_tool": "voltage_drop_calc_v2",
+            "output_format": "json_structured"
+        }
+    },
+    "AgentNormatifExpert": {
+        "id": "agent-normes-001",
+        "version": "1.1.0",
+        "roles": [
+            "admin",
+            "secondary_admin",
+            "partner"
+        ],
+        "engine": {
+            "primary": "gemini-pro",
+            "fallback": "openai-gpt-4o"
+        },
+        "parameters": {
+            "temperature": 0.3,
+            "max_tokens": 2000
+        }
+    },
+    "AgentSchemaUnifilaire": {
+        "id": "agent-schema-001",
+        "version": "1.0.5",
+        "roles": [
+            "admin",
+            "secondary_admin",
+            "partner"
+        ],
+        "engine": {
+            "primary": "openai-gpt-4o",
+            "fallback": "gemini-pro"
+        },
+        "parameters": {
+            "temperature": 0.2,
+            "max_tokens": 1500
+        }
+    },
+    "AgentRapportCertifie": {
+        "id": "agent-rapport-001",
+        "version": "1.0.0",
+        "roles": [
+            "admin",
+            "secondary_admin"
+        ],
+        "engine": {
+            "primary": "gemini-pro",
+            "fallback": "openai-gpt-4o"
+        }
+    },
+    "AgentFormation": {
+        "id": "agent-form-001",
+        "version": "1.0.2",
+        "roles": [
+            "admin",
+            "secondary_admin",
+            "partner",
+            "user"
+        ],
+        "engine": {
+            "primary": "gemini-pro"
+        },
+        "parameters": {
+            "temperature": 0.7
+        }
+    },
+    "AgentAdminProquelec": {
+        "id": "agent-admin-001",
+        "version": "0.9.5",
+        "roles": [
+            "admin",
+            "secondary_admin"
+        ],
+        "engine": {
+            "primary": "gemini-pro"
+        },
+        "parameters": {
+            "temperature": 0.5
+        }
+    },
+    "AgentStrategie": {
+        "id": "agent-strat-001",
+        "version": "0.9.0",
+        "roles": [
+            "admin"
+        ],
+        "engine": {
+            "primary": "gemini-pro"
+        },
+        "parameters": {
+            "temperature": 0.7,
+            "chaining": [
+                "AgentAdminProquelec"
+            ]
+        }
+    }
+}

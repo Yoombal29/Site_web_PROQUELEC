@@ -4,9 +4,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   FileText, Download, Shield, Zap, BookOpen,
-  File, FileArchive, Video, Save, X, Eye, EyeOff
-} from 'lucide-react';
-import type { DownloadButtonConfig } from '../components/ConfigurableDownloadButton';
+  File, FileArchive, Video, Save, X, Eye, EyeOff } from
+'lucide-react';
+
 
 interface Props {
   buttonConfig?: DownloadButtonConfig;
@@ -15,15 +15,15 @@ interface Props {
 }
 
 const AVAILABLE_ICONS = [
-  { name: 'download', icon: Download },
-  { name: 'file', icon: File },
-  { name: 'file-text', icon: FileText },
-  { name: 'shield', icon: Shield },
-  { name: 'zap', icon: Zap },
-  { name: 'book', icon: BookOpen },
-  { name: 'archive', icon: FileArchive },
-  { name: 'video', icon: Video },
-];
+{ name: 'download', icon: Download },
+{ name: 'file', icon: File },
+{ name: 'file-text', icon: FileText },
+{ name: 'shield', icon: Shield },
+{ name: 'zap', icon: Zap },
+{ name: 'book', icon: BookOpen },
+{ name: 'archive', icon: FileArchive },
+{ name: 'video', icon: Video }];
+
 
 export function DownloadButtonAdminForm({ buttonConfig, onSave, onCancel }: Props) {
   const [title, setTitle] = useState(buttonConfig?.title || 'Télécharger le Document');
@@ -43,7 +43,7 @@ export function DownloadButtonAdminForm({ buttonConfig, onSave, onCancel }: Prop
         path,
         icon,
         color,
-        visible,
+        visible
       });
     }
   };
@@ -57,19 +57,19 @@ export function DownloadButtonAdminForm({ buttonConfig, onSave, onCancel }: Prop
             <Label className="font-bold mb-1.5 block">Titre du bouton</Label>
             <Input
               value={title}
-              onChange={e => setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="Ex: Manuel de Sécurité"
-              required
-            />
+              required />
+            
           </div>
 
           <div className="flex items-center space-x-2 pt-2">
             <button
               type="button"
               onClick={() => setVisible(!visible)}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${visible ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600'
-                }`}
-            >
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${visible ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600'}`
+              } aria-label="Action">
+              
               {visible ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
               {visible ? 'VISIBLE SUR LE SITE' : 'MASQUÉ'}
             </button>
@@ -81,11 +81,11 @@ export function DownloadButtonAdminForm({ buttonConfig, onSave, onCancel }: Prop
           <div>
             <Label className="font-bold mb-1.5 block">Localisation (Bucket / Chemin)</Label>
             <div className="flex gap-2">
-              <select
-                className="w-1/3 h-10 px-3 rounded-md border border-slate-200 bg-white text-sm"
-                value={bucket}
-                onChange={e => setBucket(e.target.value)}
-              >
+              <select title="Sélectionner une option"
+              className="w-1/3 h-10 px-3 rounded-md border border-slate-200 bg-white text-sm"
+              value={bucket}
+              onChange={(e) => setBucket(e.target.value)}>
+                
                 <option value="documents">documents</option>
                 <option value="images">images</option>
                 <option value="videos">videos</option>
@@ -94,10 +94,10 @@ export function DownloadButtonAdminForm({ buttonConfig, onSave, onCancel }: Prop
               <Input
                 className="flex-grow"
                 value={path}
-                onChange={e => setPath(e.target.value)}
+                onChange={(e) => setPath(e.target.value)}
                 placeholder="nom-fichier.pdf"
-                required
-              />
+                required />
+              
             </div>
           </div>
         </div>
@@ -114,14 +114,14 @@ export function DownloadButtonAdminForm({ buttonConfig, onSave, onCancel }: Prop
                     key={item.name}
                     type="button"
                     onClick={() => setIcon(item.name)}
-                    className={`p-2.5 rounded-xl border-2 transition-all ${icon === item.name
-                        ? 'border-proqblue bg-blue-50 text-proqblue'
-                        : 'border-slate-100 bg-white text-slate-400 hover:border-slate-200'
-                      }`}
-                  >
+                    className={`p-2.5 rounded-xl border-2 transition-all ${icon === item.name ?
+                    'border-proqblue bg-blue-50 text-proqblue' :
+                    'border-slate-100 bg-white text-slate-400 hover:border-slate-200'}`
+                    } aria-label="Action">
+                    
                     <IconComponent className="w-5 h-5" />
-                  </button>
-                );
+                  </button>);
+
               })}
             </div>
           </div>
@@ -133,15 +133,15 @@ export function DownloadButtonAdminForm({ buttonConfig, onSave, onCancel }: Prop
             <input
               type="color"
               value={color}
-              onChange={e => setColor(e.target.value)}
-              className="w-12 h-10 rounded cursor-pointer"
-            />
+              onChange={(e) => setColor(e.target.value)}
+              className="w-12 h-10 rounded cursor-pointer" />
+            
             <Input
               value={color}
-              onChange={e => setColor(e.target.value)}
+              onChange={(e) => setColor(e.target.value)}
               className="font-mono text-xs"
-              placeholder="#HEX"
-            />
+              placeholder="#HEX" />
+            
           </div>
         </div>
       </div>
@@ -153,10 +153,10 @@ export function DownloadButtonAdminForm({ buttonConfig, onSave, onCancel }: Prop
           <button
             type="button"
             className="flex items-center gap-2 px-6 py-3 rounded-xl text-white font-bold shadow-lg transition-transform active:scale-95"
-            style={{ backgroundColor: color }}
-          >
-            {AVAILABLE_ICONS.find(i => i.name === icon)?.icon && (() => {
-              const IconComp = AVAILABLE_ICONS.find(i => i.name === icon)!.icon;
+            style={{ backgroundColor: color }} aria-label="Action">
+            
+            {AVAILABLE_ICONS.find((i) => i.name === icon)?.icon && (() => {
+              const IconComp = AVAILABLE_ICONS.find((i) => i.name === icon)!.icon;
               return <IconComp className="w-5 h-5" />;
             })()}
             {title}
@@ -170,13 +170,13 @@ export function DownloadButtonAdminForm({ buttonConfig, onSave, onCancel }: Prop
           <Save className="w-4 h-4 mr-2" />
           {buttonConfig ? 'Mettre à jour' : 'Créer le bouton'}
         </Button>
-        {onCancel && (
-          <Button type="button" variant="outline" onClick={onCancel} className="h-12 rounded-xl px-6">
+        {onCancel &&
+        <Button type="button" variant="outline" onClick={onCancel} className="h-12 rounded-xl px-6">
             <X className="w-4 h-4 mr-2" />
             Annuler
           </Button>
-        )}
+        }
       </div>
-    </form>
-  );
+    </form>);
+
 }

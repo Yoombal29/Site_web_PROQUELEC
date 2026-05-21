@@ -1,6 +1,5 @@
--- ===========================================
--- MIGRATIONS COMPLETES POUR PROQUELEC
--- À exécuter dans Supabase Studio > SQL Editor
+-- À exécuter dans votre client PostgreSQL (ex: pgAdmin, PSQL, ou DBeaver)
+-- Assurez-vous d'être connecté à la base de données proquelec
 -- ===========================================
 
 -- 1. Créer la fonction update_updated_at_column si elle n'existe pas

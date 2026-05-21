@@ -1,0 +1,6735 @@
+norme:
+  reference: NS 01-001
+  titre: Regles des installations electriques a basse tension
+  version: '2008'
+  domaine: Installations electriques BT
+metadata:
+  extraction_date: '2026-02-05'
+  total_sections: 1264
+  fichier_source: NS_01_001.pdf.pdf
+sections:
+- numero: '111'
+  titre: La présente norme s'applique principalement aux installations électriques
+    telles que celles
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '112'
+  titre: 'Elle est applicable :'
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '113'
+  titre: 'La présente norme ne s''applique pas aux :'
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '114'
+  titre: 'La présente norme ne s’applique pas :'
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '115'
+  titre: Les matériels électriques ne sont considérés qu'en ce qui concerne leur choix
+    et leurs
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '116'
+  titre: L'application des présentes règles ne dispense pas de respecter les règlements
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '117'
+  titre: L'exécution des installations nouvelles, les modifications ou extensions
+    d'installations
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '121'
+  titre: La présente norme énumère les règles de conception et de réalisation des
+    installations
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '122'
+  titre: L’article 13 de la présente norme énumère les principes fondamentaux. Il
+    ne contient pas
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '123'
+  titre: Les titres 3 à 7 de la présente norme comportent des prescriptions techniques
+    qui doivent
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '124'
+  titre: Les définitions des principaux termes utilisés dans la présente norme sont
+    traitées dans le
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '131.1'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 131.2.1
+  titre: Protection contre les contacts directs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 131.2.2
+  titre: Protection contre les contacts indirects
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '131.3'
+  titre: Protection contre les effets thermiques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '131.4'
+  titre: Protection contre les surintensités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '131.5'
+  titre: Protection contre les courants de défaut
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '1'
+  titre: '- Il convient d''accorder une attention particulière aux courants de défaut
+    à la terre et aux courants de fuite.'
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '2'
+  titre: '- Pour les conducteurs actifs, la conformité avec 131.4 assure leur protection
+    contre les surintensités résultant de'
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 131.6.1
+  titre: Les personnes, les animaux domestiques et les biens doivent être protégés
+    contre les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 131.6.2
+  titre: Les personnes, les animaux domestiques et les biens doivent être protégés
+    contre les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '44'
+  titre: ':'
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '132'
+  titre: Conception des installations électriques
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '132.1'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.2'
+  titre: Caractéristiques de l'alimentation normale ou de remplacement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 132.2.1
+  titre: 'Nature du courant : courant alternatif ou courant continu'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 132.2.2
+  titre: 'Nature et nombre de conducteurs :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 132.2.3
+  titre: 'Valeurs caractéristiques et tolérances :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 132.2.4
+  titre: Schéma des liaisons à la terre et autres conditions inhérentes à l'alimentation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 132.2.5
+  titre: Exigences particulières du distributeur d'énergie électrique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.3'
+  titre: Nature de la demande
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.4'
+  titre: Alimentation de sécurité ou de remplacement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.5'
+  titre: Conditions d'environnement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.6'
+  titre: Section des conducteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.7'
+  titre: Modes de pose et types de canalisations
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.8'
+  titre: Dispositifs de protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.9'
+  titre: Dispositifs de coupure d'urgence
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.10'
+  titre: Dispositifs de sectionnement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.11'
+  titre: Indépendance de l'installation électrique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '132.12'
+  titre: Accessibilité des matériels électriques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '133.1'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '133.2'
+  titre: Caractéristiques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 133.2.1
+  titre: Tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 133.2.2
+  titre: Courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 133.2.3
+  titre: Fréquence
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 133.2.4
+  titre: Puissance
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '133.3'
+  titre: Conditions d'installation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '133.4'
+  titre: Prévention des effets néfastes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '134'
+  titre: Réalisation des installations électriques et vérifications lors de la mise
+    en
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '134.1'
+  titre: Réalisation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '134.2'
+  titre: Vérification lors de la mise en service
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '141'
+  titre: Origine des installations
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '142'
+  titre: Limite aval des installations
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '21'
+  titre: TERMES RELATIFS AUX CARACTÉRISTIQUES DES INSTALLATIONS..........................18
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '211'
+  titre: Caractéristiques générales.............................................................................................18
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '212'
+  titre: Grandeurs ......................................................................................................................18
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '213'
+  titre: Installations diverses......................................................................................................18
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '214'
+  titre: Isolement .......................................................................................................................19
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '215'
+  titre: Facteurs.........................................................................................................................20
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '216'
+  titre: Influences externes ........................................................................................................20
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '22'
+  titre: TENSIONS.......................................................................................................................20
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '222'
+  titre: Domaines de tensions en courant alternatif ....................................................................21
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '223'
+  titre: Domaines de tensions en courant continu ......................................................................21
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '23'
+  titre: TERMES RELATIFS A LA PROTECTION CONTRE LES CHOCS ÉLECTRIQUES............22
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '236'
+  titre: Isolations........................................................................................................................26
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '237'
+  titre: Classification des matériels en ce qui concerne la protection
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '24'
+  titre: TERMES RELATIFS AUX MISES A LA TERRE ................................................................29
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '25'
+  titre: TERMES RELATIFS AUX CIRCUITS ÉLECTRIQUES.......................................................30
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '252'
+  titre: Termes relatifs aux courants ..........................................................................................31
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '253'
+  titre: Définitions relatives aux dispositifs de sectionnement, de commande et d
+    e protection....32
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '254'
+  titre: Définitions relatives aux caractéristiques des dispositifs de protection............................33
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '26'
+  titre: TERMES RELATIFS AUX CANALISATIONS ....................................................................34
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '261'
+  titre: Termes généraux ...........................................................................................................34
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '262'
+  titre: Modes de pose...............................................................................................................35
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '27'
+  titre: TERMES RELATIFS AUX MATERIELS ............................................................................37
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '270'
+  titre: Termes généraux ...........................................................................................................37
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '271'
+  titre: Te rmes relatifs aux possibilités de déplacement.............................................................37
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '28'
+  titre: SECTIONNEMENT ET COMMANDE ................................................................................38
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '29'
+  titre: COMPÉTENCE DES PERSONNES ..................................................................................38
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '3'
+  titre: '- Un matériel de la classe II sous enveloppe métallique ne peut être muni
+    d''un dispositif pour la connexion à'
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '4'
+  titre: '- Un matériel de la classe II ne peut être muni d''un dispositif de mise
+    à la terre à des fins fonctionnelles (distinct'
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '251'
+  titre: Termes généraux
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '30'
+  titre: GENERALITES ................................................................................................................42
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '31'
+  titre: ALIMENTATIONS ET STRUCTURES...............................................................................42
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '311'
+  titre: Puissance d'alimentation et facteur de simultanéité........................................................42
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '312'
+  titre: Types de schémas de distribution ..................................................................................43
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '313'
+  titre: Alimentation...................................................................................................................53
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '314'
+  titre: Division des installations................................................................................................55
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '32'
+  titre: (Disponible) .....................................................................................................................56
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '33'
+  titre: COMPATIBILITE..............................................................................................................56
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '34'
+  titre: MAINTENABILITÉ............................................................................................................60
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '35'
+  titre: INSTALLATIONS DE SÉCURITÉ .....................................................................................61
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '351'
+  titre: Généralités ....................................................................................................................61
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '352'
+  titre: (Disponible) ...................................................................................................................61
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '353'
+  titre: Sources de sécu rité ou de remplacement.......................................................................61
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '36'
+  titre: INSTALLATIONS TEMPORAIRES....................................................................................61
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '361'
+  titre: Conditions générales .....................................................................................................61
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '362'
+  titre: Installations de dépannage ............................................................................................62
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '363'
+  titre: Installations de travaux ..................................................................................................62
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '364'
+  titre: Installations se mi-permanentes......................................................................................63
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '311.1'
+  titre: Une détermination de la puissance d'alimentation est essentielle pour une
+    conception
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '311.2'
+  titre: En déterminant la puissance d'alimentation d'une installation ou d'une partie
+    de celle-
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '311.3'
+  titre: Détermination du courant d’emploi
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 312.2.1
+  titre: Schéma TN
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 312.2.2
+  titre: Schéma TT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 312.2.3
+  titre: Schéma IT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 312.2.4.1
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 312.2.4.2
+  titre: Schéma TN en courant continu
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 312.2.4.3
+  titre: Schéma TT en courant continu
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 312.2.4.4
+  titre: Schéma IT en courant continu
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 313.1.1
+  titre: 'Les caractéristiques suivantes de l''alimentation doivent être déterminées
+    :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '50'
+  titre: Hz.
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 313.1.2
+  titre: Ces caractéristiques doivent être estimées dans le cas d'une source externe
+    et
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '313.2'
+  titre: Alimentations pour installations de sécurité et alimentations de remplacement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 330.1.1
+  titre: Perturbations à basses fréquences
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 330.1.2
+  titre: Perturbations à hautes fréquences
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 330.1.3
+  titre: Autres causes de perturbations
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '411'
+  titre: Mesure de protection par coupure automatique de l’alimentation....................................67
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '411.1'
+  titre: Généralités................................................................................................................67
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '411.2'
+  titre: Prescriptions pour la protection contre les contacts directs........................................68
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '411.3'
+  titre: Prescriptions pour la protection contre les contacts indirects.....................................68
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '411.4'
+  titre: Schéma TN ...............................................................................................................70
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '411.5'
+  titre: Schéma TT................................................................................................................72
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '411.6'
+  titre: Schéma IT.................................................................................................................74
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '411.7'
+  titre: Très Basse Tension Fonctionnelle (TBTF).................................................................78
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '412'
+  titre: Mesu re de protection par isolation double ou renforcée..................................................78
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '413'
+  titre: Mesure de protection par séparation électrique ..............................................................80
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '414'
+  titre: Mesure de protection par très ba sse tension .......................................................................82
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '415'
+  titre: Protection complémentaire ..................................................................................................86
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '410.1'
+  titre: Domaine d'application
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 410.3.1
+  titre: Une ou plusieurs des mesures de protection suivantes, constituées chacune
+    d’une
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 410.3.2
+  titre: Pour des installations et des emplacements particuliers, les mesures de protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 410.3.3
+  titre: Les mesures de protection, spécifiées en annexe B, par mise en œuvre d’ob
+    stacles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 410.3.4
+  titre: 'Les mesures de protection, spécifiées en annexe C :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 410.3.5
+  titre: Si une mesure de protection n’est pas complètement satisfaite, des dispositions
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 410.3.6
+  titre: On doit s’assurer que des mesures de protection différentes appliquées dans
+    la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 410.3.7
+  titre: Il est permis de se dispenser de dispositions de protection contre les contacts
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '120'
+  titre: V en courant continu lisse pendant un temps tel qu'il puisse en résulter
+    des
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 411.3.1.1
+  titre: Liaison équipotentielle principale
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.3.1.2
+  titre: Mise à la terre des masses
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.3.2.1
+  titre: A l’exception du cas indiqué en 411.3.2.5, un dispositif de protection doit
+    séparer
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.3.2.2
+  titre: Selon la tension nominale entre phase et neutre U , le temps de coupure maximal
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '0'
+  titre: 0 0 0
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 411.3.2.3
+  titre: Un temps de coupure conventionnel non supérieur à 5 s est admis pour les
+    circuits
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.3.2.5
+  titre: Si la coupure automatique conformément à 411.3.2.1 ne peut être réalisée
+    dans les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.3.3
+  titre: Protection complémentaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.4.1
+  titre: Les masses de l'installation doivent être reliées par des conducteurs de
+    protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.4.2
+  titre: Dans les installations fixes, un seul conducteur peut être utilisé à la fois
+    comme
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.4.3
+  titre: Les caractéristiques des dispositifs de protection (voir 411.4.4) et les
+    impédances
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.5.1
+  titre: Toutes les masses protégées par un même dispositif de protection doivent
+    être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.5.2
+  titre: En schéma TT, les dispositifs de protection sont des dispositifs différentiels
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.6.1
+  titre: Dans le schéma IT, l’installation doit être isolée de la terre ou reliée
+    à la terre à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.6.3
+  titre: Un contrôleur permanent d'isolement doit être prévu pour indiquer l'apparition
+    d'un
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.7.1
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.7.2
+  titre: Prescriptions pour la protection contre les contacts directs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.7.3
+  titre: Prescriptions pour la protection contre les contacts indirects
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.7.4
+  titre: Sources
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 411.7.5
+  titre: Prises de courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 412.1.1
+  titre: 'L’isolation double ou renforcée est une mesure de protection dans laquelle
+    :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 412.1.2
+  titre: La mesure de protection par isolation double ou renforcée est applicable
+    dans toutes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '412.2'
+  titre: Prescriptions pour la protection contre les contacts directs et pour la protection
+    contre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 412.2.1
+  titre: 'La protection doit être assurée par l’utilisation :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 412.2.2
+  titre: Enveloppes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 412.2.3
+  titre: L'installation des maté riels énoncés en 412.1.1 (fixation, raccordement
+    des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 412.2.4
+  titre: Un circuit alimentant des matériels de classe II doit comporter un conducteur
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.1.1
+  titre: 'La séparation électrique est une mesure de protection dans laquelle :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.1.2
+  titre: La mesure de protection par séparation électrique est applicable dans toutes
+    les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '413.2'
+  titre: Prescriptions pour la protection contre les contacts directs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.2.1
+  titre: Tous les matériels électriques doivent faire l’objet d’une des dispositions
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.2.2
+  titre: La disposition de protection contre les contacts directs relative à l’isolation
+    des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.2.3
+  titre: Si plus d’un matériel d’utilisation est alimenté par une source séparée isolée
+    de la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '413.3'
+  titre: Prescriptions pour la protection contre les contacts indirects
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.3.1
+  titre: La protection par séparation électrique doit être assurée en respectant les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.3.2
+  titre: Le circuit doit être alimenté par l'intermédiaire d'une source de séparation,
+    c'est-à-
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.3.3
+  titre: Les parties actives du circuit séparé ne doivent avoir aucun point commun
+    avec un
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.3.4
+  titre: Les câbles souples doivent être visibles sur toute leur longueur susceptible
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.3.5
+  titre: Il est recommandé d'utiliser, pour le circuit séparé, une canalisation dédiée.
+    Si on
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 413.3.6
+  titre: Les masses du circuit séparé ne doivent être connectées ni à un conducteur
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.1.1
+  titre: La protection par très basse tension est une mesure de protection constituée
+    par
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.1.2
+  titre: L’utilisation de la TBTS ou de la TBTP est considérée comme une mesure de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.3.1
+  titre: Un transformateur de sécurité conforme à la NF EN 61558-2-6 (C 52-558-2-6).
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.3.2
+  titre: Une source de courant assurant un degré de sécurité équivalent à celui d'un
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.3.3
+  titre: Une source électrochimique (piles ou accumulateurs) ou une autre source qui
+    ne
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.3.4
+  titre: Certains dispositifs électroniques conformes aux normes appropriées, dans
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.3.5
+  titre: Les sources mobiles, telles que transformateurs de sécurité ou groupes moteur-
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '414.4'
+  titre: Prescriptions pour les circuits TBTS et TBTP
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.4.1
+  titre: 'Les circuits TBTS et TBTP doivent présenter :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.4.2
+  titre: La séparation de protection entre les canalisations des circuits TBTS et
+    TBTP et
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.4.3
+  titre: Les prises de courant pour des circuits TBTS et TBTP doivent satisfaire aux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.4.4
+  titre: Les parties actives des circuits TBTS ne doivent pas être reliées électriquement
+    à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.4.5
+  titre: Les masses ne doivent être reliées intentionnellement ni à la terre, ni à
+    des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 414.4.6
+  titre: Lorsque la tension nominale du circuit TBTS est supérieure à 25 V valeur
+    efficace en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '415.1'
+  titre: Protection complémentaire par dispositifs à courant différentiel-résiduel
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 415.1.1
+  titre: L'emploi de dispositifs à courant différentiel-résiduel, dont la valeur du
+    courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 415.1.2
+  titre: L'utilisation de tels dispositifs n'est pas reconnue comme constituant en
+    soi une
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '415.2'
+  titre: Liaison équipotentielle supplémentaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 415.2.1
+  titre: La liaison équipotentielle supplémentaire doit comprendre toutes les parties
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '421'
+  titre: Règles générales de protection contre l'incendie............................................................98
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '422'
+  titre: Règles complémentaires de protection contre l'incendie ................................................99
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '423'
+  titre: Protection contre les risques de brûlures .....................................................................104
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '424'
+  titre: Emplacements à risque d'explosion (emplacements BE3) ............................................104
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '421.1'
+  titre: Les matériels électriques ne doivent pas présenter de danger d'incendie pour
+    les matériaux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '421.2'
+  titre: Lorsque les températures extérieures des matériels fixes peuvent atteindre
+    des valeurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '421.3'
+  titre: Les matériels fixes, susceptibles de produire des arcs ou des étincelles
+    en service normal,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '421.4'
+  titre: Les matériels fixes présentant un effet de focalisation ou de concentration
+    de chaleur doivent
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '421.5'
+  titre: Lorsque les matériels électriques installés dans le même local contiennent
+    une quantité
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '421.6'
+  titre: Les matériaux des enveloppes disposées autour des matériels électriques lors
+    de leur mise
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '422.0'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '422.1'
+  titre: Locaux à risque d'incendie dû à la nature des matières traitées ou entreposées
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.1
+  titre: Dans les locaux classés BE2, les installations doivent être limitées à celles
+    nécessaires à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.2
+  titre: Lorsque des poussières peuvent s'accumuler en quantité suffisante sur des
+    enveloppes de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.3
+  titre: Il est rappelé que les matériels électriques doivent être appropriés à ces
+    locaux ; en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.4
+  titre: En principe, les règles générales relatives aux canalisations sont applicables.
+    Cependant,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.5
+  titre: En complément à 422.1.4, les canalisations électriques qui traversent de
+    tels locaux, mais
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.6
+  titre: Les canalisations qui alimentent ou traversent de tels locaux doivent être
+    protégées contre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.7
+  titre: Les canalisations doivent être protégées contre les défauts d'isolement,
+    à l'exception des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.8
+  titre: Les conducteurs PEN ne sont pas admis à l'exception de ceux appartenant à
+    des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.9
+  titre: Tout conducteur neutre doit pouvoir être sectionné par un dispositif associé
+    conformément
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.10
+  titre: Les conducteurs nus ne sont pas admis.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.11
+  titre: Pour les câbles souples il est recommandé de choisir les câbles et cordons
+    pour usage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.13
+  titre: Les moteurs commandés automatiquement ou à distance, ou non surveillés en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.14
+  titre: Dans les locaux où il existe un risque d'accumulation de poussières sur le
+    luminaire, seuls
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.16
+  titre: Si des systèmes de chauffage électrique ou de ventilation sont utilisés,
+    la présence de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.17
+  titre: Les matériels de chauffage électrique doivent être placés sur des supports
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.1.18
+  titre: Les matériels de chauffage situés à proximité de matériaux combustibles doivent
+    être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '422.2'
+  titre: Locaux construits en matériaux combustibles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.2.1
+  titre: Des précautions doivent être prises pour que les matériels électriques ne
+    puissent
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.2.2
+  titre: Choix et mise en œuvre des matériels dans des parois creuses
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.2.2.1
+  titre: Les matériels électriques, par exemple boîtiers, tableaux de distribution,
+    installés dans
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.2.2.2
+  titre: Si des matériels électriques sont installés dans des parois creuses et ne
+    satisfont pas aux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.2.2.3
+  titre: Les matériels électriques tels que les prises de courant et interrupteurs
+    ne doivent pas
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.2.2.4
+  titre: Les câbles et cordons doivent être non propagateurs de la flamme (Catégorie
+    2).
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.2.2.5
+  titre: Les conduits doivent être conformes à la NF EN 50086 (C 68-110) et être non
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.2.2.6
+  titre: Les boîtes de jonction connectées à des câbles en montage apparent doivent
+    être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '422.4'
+  titre: Structures propagatrices d'incendie
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 422.4.1
+  titre: Dans les structures dont la forme et les dimensions facilitent la propagation
+    d'un incendie,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.1'
+  titre: Dans les emplacements classés BE3, les installations doivent être limitées
+    à celles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.2'
+  titre: Dans le cas d’atmosphères explosives gazeuses (G), les matériels doivent
+    être choisis parmi
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.3'
+  titre: Dans les atmosphères explosives gazeuses, en cas de présence de poussières
+    non
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.4'
+  titre: Les valeurs de courants admissibles dans les conducteurs doivent être réduites
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.5'
+  titre: Lorsque les canalisations ne sont pas noyées dans des matériaux incombustibles
+    tels que
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.6'
+  titre: Lorsqu’une ligne aérienne dessert des emplacements classés BE3, l’alimentation
+    doit
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.7'
+  titre: Les caniveaux, conduits, fourreaux, etc. recevant des câbles doivent être
+    obturés pour
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.8'
+  titre: Les canalisations doivent être mises en œuvre, dans la mesure du possible,
+    de façon à ce
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.9'
+  titre: Les canalisations qui alimentent de tels emplacements doivent être protégées
+    contre les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.10'
+  titre: 'Les canalisations doivent être protégées contre les défauts d''isolement
+    :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.12'
+  titre: Des liaisons équipotentielles doivent être réalisées entre les masses et
+    les éléments
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.13'
+  titre: En dehors des dispositifs de coupure d'urgence éventuellement prévus dans
+    les zones
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.14'
+  titre: Les câbles souples doivent être choisis parmi les câbles et cordons pour
+    usage intensif, par
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.15'
+  titre: Les machines tournantes et les transformateurs doivent être protégés contre
+    les surcharges
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.16'
+  titre: Les éléments remplaçables tels que les lampes doivent être de types et de
+    caractéristiques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '424.17'
+  titre: Certaines installations doivent être protégées contre les effets de la foudre.
+    Il peut être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '430'
+  titre: Règle générale ............................................................................................................112
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '431'
+  titre: Dispositions suivant la nature des circuits....................................................................112
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '432'
+  titre: Nature des dispositifs de protection .............................................................................113
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '433'
+  titre: Protection contre les courants de surcharge ................................................................114
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '434'
+  titre: Protection contre les courants de court-circuit..............................................................120
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '435'
+  titre: Coordination entre la protection contre les surcharges et la protection
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '436'
+  titre: Limitation des surintensités par les caractéristiques de l'alimentation ..........................123
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '430.1'
+  titre: Les conducteurs actifs doivent être protégés par un ou plusieurs dispositifs
+    de coupure
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 431.1.1
+  titre: La détection de surintensité doit être prévue sur tous les conducteurs de
+    phase ; elle doit
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 431.1.2
+  titre: Toutefois, dans les schémas TT et TN, sur les circuits alimentés entre phases
+    et dans
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '431.2'
+  titre: Protection du conducteur neutre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 431.2.2
+  titre: Installations dont le point neutre n'est pas relié directement à la terre
+    (schéma IT)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '431.3'
+  titre: Coupure du conducteur neutre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '432.1'
+  titre: Dispositifs assurant à la fois la protection contre les surcharges et la
+    protection contre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '432.3'
+  titre: Dispositifs assurant uniquement la protection contre les courts-circuits
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '432.4'
+  titre: Caractéristiques des dispositifs de protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '433.0'
+  titre: Règle générale
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '433.2'
+  titre: Emplacement des dispositifs de protection contre les surcharges
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 433.2.2
+  titre: Le dispositif protégeant une canalisation contre les surcharges peut être
+    placé sur le
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '433.3'
+  titre: Dispense de protection contre les surcharges
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '433.4'
+  titre: Emplacement ou dispense de protection contre les surcharges dans le schéma
+    IT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '433.6'
+  titre: Protection contre les surcharges de conducteurs en parallèle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '434.0'
+  titre: Règle générale
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '434.1'
+  titre: Détermination des courants de court-circuit présumés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '434.2'
+  titre: Emplacement des dispositifs de protection contre les courts-circuits
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 434.2.2
+  titre: Déplacement du dispositif de protection contre les courts-circuits
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 434.2.2.1
+  titre: La partie de canalisation comprise entre, d'une part la réduction de section
+    ou autre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '434.3'
+  titre: Dispense de protection contre les courts-circuits
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '434.4'
+  titre: Protection contre les courts-circuits de conducteurs en parallèle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '434.5'
+  titre: Caractéristiques des dispositifs de protection contre les courts-circuits
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 434.5.1
+  titre: Son pouvoir de coupure doit être au moins égal au courant de court-circuit
+    présumé au
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 434.5.2
+  titre: Le temps de coupure de tout courant résultant d'un court-circuit se produisant
+    en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '70'
+  titre: °C 70 °C 90°C 90°C chouc
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '76'
+  titre: 68 66 57 94 93
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '435.1'
+  titre: Protections assurées par le même dispositif
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '440'
+  titre: Introduction..................................................................................................................126
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '441'
+  titre: (disponible)..................................................................................................................126
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '442'
+  titre: Protection des installations à basse tension contre les surtensions
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '443'
+  titre: Protection contre les surtensions d'origine atmosphérique ou dues
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '444'
+  titre: Me sures de limitation des interférences électromagnétiques........................................137
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '445'
+  titre: Protection contre les baisses de tension ......................................................................144
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '442.1'
+  titre: Domaine d'application et objet
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '442.2'
+  titre: Surtensions en cas de défaut à la terre dans les installations à haute tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.1
+  titre: Contraintes de tension admissibles à fréquence industrielle par les matériels
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.2
+  titre: Symboles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.3
+  titre: Mise à la terre dans les postes de transformation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.4
+  titre: Prescriptions applicables suivant le schéma des liaisons à la terre des installations
+    à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.4.1
+  titre: Schéma TN
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.4.2
+  titre: Schéma TT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.4.3
+  titre: Schéma IT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.5
+  titre: Limitation des contraintes de tension dans les matériels à basse tension
+    du poste de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.5.1
+  titre: Schémas TN et TT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.5.2
+  titre: Schéma IT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.6
+  titre: Défauts d'isolement entre installation à haute tension et installation à
+    basse tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.6.1
+  titre: Pour se prémunir contre les surtensions dues à des défauts directs entre
+    installations à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.6.2
+  titre: En outre, dans les installations IT, un dispositif limiteur de surtension
+    doit être connecté à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 442.2.6.3
+  titre: Les canalisations électriques à basse et à haute tension ne doivent pas emprunter
+    les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '442.5'
+  titre: Contraintes de tension en cas de rupture du conducteur neutre en schémas
+    TN et TT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '442.6'
+  titre: Contraintes de tension en cas de premier défaut à la terre en schéma IT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '442.7'
+  titre: Contraintes de tension en cas de court-circuit entre phase et neutre dans
+    l’installation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '443.1'
+  titre: Domaine d'application et objet
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '443.2'
+  titre: Classification des catégories de tenue aux chocs (catégories de surtensions)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 443.2.1
+  titre: Objet de la classification des catégories de tenue aux chocs (catégories
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 443.2.2
+  titre: Description des catégories de tenue aux chocs (catégories de surtensions)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '443.3'
+  titre: Dispositions pour le contrôle des surtensions
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 443.3.1
+  titre: Situation naturelle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 443.3.1.1
+  titre: Lorsqu'une installation est alimentée par un réseau à basse tension entièrement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 443.3.1.2
+  titre: Lorsqu'une installation est alimentée par, ou comprend, une ligne aérienne
+    à basse
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 443.3.2
+  titre: Situation contrôlée
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 443.3.2.1
+  titre: Lorsqu'une installation est alimentée par, ou comprend, une ligne aérienne,
+    une mesure
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 443.3.2.2
+  titre: Dans les conditions de 443.3.2.1, une mesure de protection contre les surtensions
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 443.4.1
+  titre: Les matériels sont choisis de manière que leur tension assignée de tenue
+    aux chocs ne soit
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 443.4.2
+  titre: Les matériels ayant une tension de tenue aux chocs inférieure à celle spécifiée
+    dans le
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '443.5'
+  titre: Caractéristiques des dispositifs de protection contre les surtensions
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '444.0'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '444.1'
+  titre: Domaine d'application
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '444.3'
+  titre: Dispositions à prendre contre les influences électriques et magnétiques sur
+    les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.1
+  titre: Emplacement des sources potentielles de perturbation par rapport aux matériels
+    sensibles.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.2
+  titre: Emplacement des matériels sensibles par rapport à de fortes intensités présentes,
+    par
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.3
+  titre: Mise en œuvre de filtres et/ou de parafoudres dans les circuits alimentant
+    les matériels
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.4
+  titre: Choix de dispositifs de protection avec des retards appropriés pour éviter
+    des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.5
+  titre: Equipotentialité des enveloppes métalliques et des écrans.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.6
+  titre: Séparation appropriée (éloignement ou blindage) des câbles de puissance et
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.6.1
+  titre: Dans les parties entre les répartiteurs, les câbles de puissance et de communication
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.6.2
+  titre: Dans les parties terminales entre les répartiteurs et les points d'utilisation,
+    les câbles des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.7
+  titre: Séparation appropriée (éloignement ou blindage) des câbles de puissance et
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.8
+  titre: Réduction des boucles d'induction par le choix d'un cheminement commun pour
+    les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.9
+  titre: Utilisation de câbles blindés et/ou à paires torsadées pour les circuits
+    de communication.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.10
+  titre: Connexions équipotentielles les plus courtes possibles.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.11
+  titre: Mise en œuvre sous enveloppes métalliques mises à la terre ou équivalent
+    des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.12
+  titre: Eviter le schéma TN-C dans les installations comportant des matériels sensibles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.13
+  titre: Il convient que les canalisations métalliques (par exemple pour l'eau, le
+    gaz ou le
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.3.14
+  titre: Dans le cas de zones ou de bâtiments distincts réalisés avec des liaisons
+    équipotentielles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '444.4'
+  titre: Mesures de protection des circuits de communication
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.4.1
+  titre: Utilisation de fibres optiques pour les liaisons de communication.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.4.3
+  titre: Utilisation locale de transformateurs à deux enroulements pour l'alimentation
+    des matériels
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 444.4.4
+  titre: Utilisation de cheminements appropriés des canalisations afin de minimiser
+    les aires
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 445.1.1
+  titre: Des précautions doivent être prises lorsque la disparition de la tension
+    et son
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 445.1.2
+  titre: Les dispositifs de protection contre les effets des baisses de tension peuvent
+    être retardés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 445.1.3
+  titre: S'il est fait usage de contacteurs, le retard à l'ouverture et à la refermeture
+    ne doit pas
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 445.1.4
+  titre: Les caractéristiques des dispositifs de protection contre les effets des
+    baisses de tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 445.1.5
+  titre: Lorsque la refermeture d'un dispositif de protection est susceptible de créer
+    une situation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '460'
+  titre: Introduction ..................................................................................................................146
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '461'
+  titre: Généralités...................................................................................................................146
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '462'
+  titre: Sectionnement .............................................................................................................146
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '463'
+  titre: Coupure d'urgence .......................................................................................................147
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '464'
+  titre: Coupure pour entretien mécanique...............................................................................148
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '465'
+  titre: Commande fonctionnelle ..............................................................................................148
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '461.1'
+  titre: Selon les fonctions désirées, tout dispositif prévu pour le sectionnement
+    ou la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '461.2'
+  titre: Il doit être placé à l'origine de toute installation un dispositif de commande
+    et un
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '461.3'
+  titre: Dans le schéma TN-C, le conducteur PEN ne doit être ni sectionné ni coupé.
+    Dans le
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '462.1'
+  titre: Tout circuit doit pouvoir être sectionné sur chacun des conducteurs actifs,
+    à l'exception
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '462.2'
+  titre: Des moyens appropriés doivent être prévus pour empêcher toute mise sous tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '462.3'
+  titre: Lorsqu'un matériel ou une enveloppe contient des parties actives reliées
+    à plusieurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '462.4'
+  titre: Des moyens appropriés doivent être prévus, si nécessaire, pour assurer la
+    décharge de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '463.1'
+  titre: Des moyens de coupure d'urgence doivent être prévus pour toute partie d'installation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '463.2'
+  titre: Le dispositif de coupure d'urgence doit couper tous les conducteurs actifs.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '463.3'
+  titre: Les moyens de coupure d'urgence doivent agir aussi directement que possible
+    sur les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '463.4'
+  titre: Les dispositions du système de coupure d'urgence doivent être telles que
+    son
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '463.5'
+  titre: Le dispositif de coupure d'urgence doit se trouver au niveau des appareils
+    d'utilisation,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 465.1.1
+  titre: Un dispositif de commande fonctionnelle doit être prévu sur tout élément
+    de circuit
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 465.1.2
+  titre: Les dispositifs de commande fonctionnelle ne coupent pas nécessairement tous
+    les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 465.1.3
+  titre: En général, tout appareil d'utilisation nécessitant une commande doit être
+    commandé
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 465.1.4
+  titre: Les prises de courant peuvent assurer la commande fonctionnelle si leur courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 465.1.5
+  titre: Les dispositifs de commande fonctionnelle assurant la permutation de sources
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '465.2'
+  titre: Circuits de commande
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '465.3'
+  titre: Commande des moteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 465.3.1
+  titre: Les circuits de commande des moteurs doivent être conçus de manière à empêcher
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 465.3.2
+  titre: Lorsque le freinage par contre-courant d'un moteur est prévu, toutes précautions
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 465.3.3
+  titre: Lorsque la sécurité dépend du sens de rotation d'un moteur, des dispositions
+    doivent
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '510'
+  titre: Domaine d’applicatio n..................................................................................................152
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '511'
+  titre: Conformité aux normes................................................................................................152
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '512'
+  titre: Conditions de fonctionnement et classification des in fluences exte rnes
+    .......................153
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '513'
+  titre: Accessibilité des matériels électrique s.........................................................................184
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '514'
+  titre: Identification et repérage .............................................................................................184
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '515'
+  titre: Indépendance des matériels ........................................................................................187
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '511.1'
+  titre: Tout matériel électrique doit être conforme à la norme européenne (EN) ou
+    document
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '511.2'
+  titre: Lorsque pour un matériel électrique donné, il n'existe pas de norme qui puisse
+    lui être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '511.3'
+  titre: Un procédé d'installation non décrit dans la présente norme doit faire l'objet
+    d'une étude par
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.1.1
+  titre: Tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '250'
+  titre: V sont en général admissibles dans les installations 230/400 V quel que soit
+    le schéma, parce
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 512.1.2
+  titre: Courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.1.3
+  titre: Fréquence
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.1.4
+  titre: Puissance
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.1.5
+  titre: Compatibilité
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.1.6
+  titre: Tension assignée de tenue aux chocs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.1.7
+  titre: Autres caractéristiques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '512.2'
+  titre: Influences externes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.1
+  titre: Température ambiante (AA) Pour la mise en œuvre des câbles, se
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.2
+  titre: Conditions climatiques (influences combinées de la température et de l'humidité)
+    (AB)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.3
+  titre: Altitude (AC)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.4
+  titre: Présence d’eau (AD) Les différents degrés de protection correspondent à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.5
+  titre: Présence de corps solides étrangers (AE) Les différents degrés de protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.6
+  titre: Présence de substances corrosives ou polluantes(AF) Pour la mise en œuvre
+    des câbles, se reporter au
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.7
+  titre: Contraintes mécaniques Les différents degrés de protection correspondent
+    à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.7.1
+  titre: Chocs (AG) des essais dont les modalités sont définies par la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '5'
+  titre: J. 3M7/3M8
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '20'
+  titre: J.
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 512.2.7.2
+  titre: Vibrations (AH) Pour la mise en œuvre des câbles, se
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.7.3
+  titre: Autres conditions mécaniques (AJ) (à l’étude) Pour la mise en œuvre des câbles,
+    se
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.8
+  titre: Présence de flore ou moisissures (AK) reporter au tableau 52D.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.9
+  titre: Présence de faune (AL) Pour la mise en œuvre des câbles, se
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10
+  titre: Influences électromagnétiques, électrostatiques ou ionisantes (AM)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.1
+  titre: Phénomènes électromagnétiques de basse fréquence (conduits ou rayonnés)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.1.1
+  titre: Harmoniques, interharmoniques (AM-1) [voir 330.1.1 d]
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.1.2
+  titre: Transmission de signaux en vue de télécommande, par exemple modules de contrôle
+    de l'ondulation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.1.7
+  titre: Composante continue dans les réseaux alternatifs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.1.9
+  titre: Champs électriques BF
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.2
+  titre: Phénomènes électromagnétiques à haute fréquence conduits, induits ou rayonnés
+    (continus ou transitoires)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.2.1
+  titre: Tensions ou courants induits oscillatoires
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.2.2
+  titre: Transitoires unidirectionnels conduits à l'échelle de la nanoseconde
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.2.3
+  titre: Transitoires unidirectionnels conduits à l'échelle de la milliseconde ou
+    de la microseconde
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.2.5
+  titre: Phénomènes rayonnés à haute fréquence CEI 61000-4-3
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.3
+  titre: Décharges électrostatiques CEI 61000-4-2
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.10.4
+  titre: Ionisation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.11
+  titre: Rayonnements solaires (AN)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.12
+  titre: Effets sismiques (AP)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '10'
+  titre: Hz.
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 512.2.13
+  titre: Foudre, niveau kéraunique (Nk), densité de foudroiement (Ng) (AQ)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.14
+  titre: Mouvements de l'air (AR)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.15
+  titre: Vent (AS)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.16
+  titre: Compétence des personnes (BA)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.17
+  titre: Résistance électrique du corps humain (BB)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.18
+  titre: Contact des personnes avec le potentiel de la terre (BC) Les classes de matériel,
+    définies dans la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.19
+  titre: Conditions d'évacuation en cas d'urgence (BD)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.20
+  titre: Nature des matières traitées ou entreposées (BE)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.21
+  titre: Matériaux de construction (CA) Pour la mise en œuvre des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 512.2.22
+  titre: Structures des bâtiments (CB) Pour la mise en œuvre des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '513.1'
+  titre: Dispositions générales
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '513.2'
+  titre: Contrôle et remplacement des conducteurs et câbles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '514.1'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '60073'
+  titre: ': Principes de codage pour les dispositifs indicateurs et les organes de
+    commande et à la NF'
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '514.2'
+  titre: Identification et repérage des canalisations
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '514.3'
+  titre: Repérage des conducteurs isolés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 514.3.1
+  titre: Ces prescriptions concernent essentiellement le choix des moyens utilisés
+    pour repérer le
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 514.3.2
+  titre: L'exclusivité des moyens de repérage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 514.3.3
+  titre: Dans le cas particulier d'une installation desservie par un branchement monophasé
+    entre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '514.4'
+  titre: Dispositifs de protection contre les surintensités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 514.5.1
+  titre: Pour toute installation électrique, il y a lieu d'établir des schémas, diagrammes
+    ou tableaux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 514.5.2
+  titre: Les symboles utilisés doivent être choisis parmi ceux des normes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '515.1'
+  titre: Les matériels doivent être choisis et disposés de manière à empêcher toute
+    influence nuisible
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '515.2'
+  titre: Lorsque des matériels parcourus par des courants de natures ou de tensions
+    différentes sont
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '515.3'
+  titre: Compatibilité électromagnétique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '520'
+  titre: Généralités ..................................................................................................................192
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '521'
+  titre: Modes de pose.............................................................................................................195
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '522'
+  titre: Choix et mise en œuvre en fonction des influences externes........................................203
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '523'
+  titre: Courants admissibles...................................................................................................206
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '524'
+  titre: Sections des conducteurs ............................................................................................220
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '525'
+  titre: Chutes de tension ........................................................................................................221
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '526'
+  titre: Connexions..................................................................................................................222
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '527'
+  titre: Choix et mise en œuvre pour limiter la propagation du feu ...........................................223
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '528'
+  titre: Voisinage avec d'autres canalisations ..........................................................................224
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '529'
+  titre: Règles particulières aux différents modes de pose.......................................................225
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '520.1'
+  titre: Le choix et la mise en œuvre des canalisations doivent tenir compte des principes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '520.2'
+  titre: 'Pour l''application des règles énoncées en 511.1, les normes à considérer
+    sont :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 520.2.1
+  titre: Profilés, conduits et systèmes de conduits
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 520.2.2
+  titre: Conducteurs et câbles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 520.2.3
+  titre: Presse-étoupe
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '6'
+  titre: FR-N 1 X1X2Z4X2 32-323 600/1000 R RAR C1# – O O 1,5 - 300 90
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '7'
+  titre: FR-N 1 X1G1Z4G1 32-323 600/1000 R TAT C1# – – – 1,5 - 300 90
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '8'
+  titre: Torsades (6) 33-209 600/1000 R R C3 – – – 16 - 150 90
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '9'
+  titre: FRN1 XDV-AR,- AS, -AU 33-210 600/1000 R AT C2 – – – 16 - 240 90
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '51'
+  titre: H 05 BB-F 32-102-12 300/500 S R II C3 – – – 1,5 - 6 90
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '52'
+  titre: H 05 GG-F 32-102-11 300/500 S R II C3 – – – 1,5 - 6 110
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '53'
+  titre: H 05 RR-F 32-102-4 300/500 S R II C3 – – – 1,5 - 6 60 (1)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '54'
+  titre: A 05 RR-F 32-120 300/500 S R II C3 – – – 1,5 - 6 60 (1)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '101'
+  titre: H 07 VVD3H2-F 32-202 450/750 S T C2 – – – 1,5 - 16 70
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '102'
+  titre: H 07 VVH2-F 32-202 450/750 S T II C2 – – – 1,5 - 16 70
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '125'
+  titre: H 05 VV5-F 32-201-13 300/500 S T II* C2 – – – 1,5 - 2,5 70
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '126'
+  titre: H 05 VVC4V5-K 32-201-13 300/500 S TET C2 – – – 1,5 - 2,5 70
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '201'
+  titre: H 07 V-U 32-201-3 450/750 R – C2 – – – 1,5 - 10 70
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '202'
+  titre: H 07 V-R 32-201-3 450/750 R – C2 – – – 1,5 - 400 70
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '203'
+  titre: H 07 V-K 32-201-3 450/750 S – C2 – – – 1,5 - 240 70
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '204'
+  titre: H 07 V2-U 32-201-7 450/750 R – C2 – – – 1,5 - 2,5 90 (2)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '205'
+  titre: H 07 V2-R 32-201-7 450/750 R – C2 – – – 1,5 - 35 90 (2)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '206'
+  titre: H 07 V2-K 32-201-7 450/750 S – C2 – – – 1,5 - 35 90 (2)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '207'
+  titre: H 07 V3-U 32-201-9 450/750 R – C2 – – – 1,5 - 10 70
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '208'
+  titre: H 07 V3-R 32-201-9 450/750 R – C2 – – – 1,5 - 400 70
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '209'
+  titre: H 07 V3-K 32-201-9 450/750 S – C2 – – – 1,5 - 240 70
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '221'
+  titre: H 05 SJ-K 32-102-3 300/500 S TV C3 – – – 1,5 - 16 180
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '224'
+  titre: H 07 G-U 32-102-7 450/750 R - C3 – – – 1,5 - 10 110
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '225'
+  titre: H 07 G-R 32-102-7 450/750 R - C3 – – – 1,5 - 240 110
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '226'
+  titre: H 07 G-K 32-102-7 450/750 S - C3 – – – 1,5 - 240 110
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '227'
+  titre: H 07 Z-U 32-102-9 450/750 R - C2 – O O 1,5 -10 90
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '228'
+  titre: H 07 Z-R 32-102-9 450/750 R - C2 – O O 1,5 - 400 90
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '229'
+  titre: H 07 Z-K 32-102-9 450/750 S - C2 – O O 1,5 - 240 90
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '501'
+  titre: – 32-310 (5) R (3) II* C1 CR1 – – 1,5 - 300 70 ou 90 (4)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '502'
+  titre: – 32-310 (5) R (3) A (3) C1 CR1 – – 1,5 - 300 70 ou 90 (4)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '503'
+  titre: – 32-310 (5) R (3) II* C1 CR1 O O 1,5 - 300 70 ou 90 (4)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '504'
+  titre: – 32-310 (5) R (3) A (3) C1 CR1 O O 1,5 - 300 70 ou 90 (4)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '506'
+  titre: – 32-310 (5) R (3) II* C2 CR1 – – 1,5 - 300 70 ou 90 (4)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '507'
+  titre: – 32-310 (5) R (3) A (3) C2 CR1 – – 1,5 - 300 70 ou 90 (4)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '508'
+  titre: – 32-310 (5) R (3) II C2 CR1 O O 1,5 - 300 70 ou 90 (4)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '509'
+  titre: – 32-310 (5) R (3) A (3) C2 CR1 O O 1,5 - 300 70 ou 90 (4)
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '521.1'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '521.2'
+  titre: Choix des canalisations
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '521.4'
+  titre: Canalisations préfabriquées
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '521.5'
+  titre: Circuits en courant alternatif et enveloppes en matériau ferromagnétique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.1
+  titre: Des conducteurs appartenant à des circuits différents peuvent emprunter un
+    même câble
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.2
+  titre: Les câbles monoconducteurs et les conducteurs isolés, appartenant à un même
+    circuit,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.3
+  titre: Lorsque plusieurs câbles monoconducteurs sont réunis en parallèle, ils sont
+    répartis en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.4
+  titre: Les canalisations doivent être choisies et installées de manière à empêcher
+    pendant la mise
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.5
+  titre: Les dimensions intérieures des conduits, des conduits-profilés et des accessoires
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.6
+  titre: Le rayon de courbure d'une canalisation doit être tel que les conducteurs
+    et câbles ne soient
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.7
+  titre: Lorsque les conducteurs et câbles ne sont pas supportés sur toute leur longueur
+    par des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.8
+  titre: Lorsque les canalisations sont soumises à une traction permanente (par exemple
+    en raison
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.9
+  titre: Les canalisations dans lesquelles des conducteurs ou câbles doivent être
+    tirés doivent
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.10
+  titre: Les canalisations encastrées dans les planchers doivent être suffisamment
+    protégées
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.11
+  titre: Les parcours des canalisations apparentes qui sont rigidement fixées doivent
+    être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 521.6.12
+  titre: Les câbles souples doivent être installés de manière à éviter des efforts
+    de traction
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '521.7'
+  titre: Protection contre les influences externes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '521.8'
+  titre: Traversées
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 522.1.1
+  titre: Afin d'éviter les effets de la chaleur émise par des sources externes, les
+    méthodes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '522.3'
+  titre: Influences électromagnétiques, électrostatiques ou ionisantes (AM)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '523.0'
+  titre: Objet
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.1.1
+  titre: Le courant transporté par tout conducteur pendant des périodes prolongées
+    en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.1.2
+  titre: La règle du 523.1.1 est considérée comme satisfaite si le courant dans les
+    conducteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.1.3
+  titre: Les valeurs de courants admissibles et de facteurs de correction satisfaisant
+    aux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '73'
+  titre: B (*) multiconducteurs, appliquer un facteur de
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '81'
+  titre: A l'étude
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '523.2'
+  titre: Température ambiante
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '523.3'
+  titre: Résistivité thermique du sol
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.4.1
+  titre: Groupement de circuits ou de câbles dans l'air
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.4.2
+  titre: Groupements de conduits dans l'air ou noyés dans le béton
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.4.3
+  titre: Groupement de câbles et de conduits enterrés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.4.4
+  titre: Charges intermittentes et variables
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.4.5
+  titre: Conducteurs faiblement chargés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '523.5'
+  titre: Nombre de conducteurs chargés dans un circuit
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.5.1
+  titre: Le nombre de conducteurs à considérer dans un circuit est celui des conducteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.5.2
+  titre: Lorsque le conducteur neutre transporte un courant sans réduction correspondante
+    de la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 523.5.3
+  titre: Les conducteurs utilisés uniquement comme conducteurs de protection ne sont
+    pas pris en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '523.6'
+  titre: Câbles en parallèle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '523.7'
+  titre: Variations des conditions d'installation sur un parcours
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '524.1'
+  titre: Section des conducteurs de phase
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 524.2.1
+  titre: 'Le conducteur neutre éventuel doit avoir la même section que les conducteurs
+    de phase :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 524.2.2
+  titre: Lorsque le taux d'harmoniques de rang 3 et multiple de 3 est supérieur à
+    33 % en courant, le
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 524.2.3
+  titre: Dans les circuits polyphasés dont les conducteurs de phase ont une section
+    supérieure à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 524.2.4
+  titre: Un conducteur neutre ne peut être commun à plusieurs circuits.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '526.1'
+  titre: Les connexions entre conducteurs et entre conducteurs et autres matériels
+    doivent assurer
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '526.2'
+  titre: Le choix des moyens de connexion doit tenir compte,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '526.3'
+  titre: Les connexions doivent être accessibles pour vérification, essai et maintenance,
+    sauf dans les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '526.4'
+  titre: Si nécessaire, des précautions doivent être prises pour que la température
+    atteinte par les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '526.5'
+  titre: Les connexions doivent présenter un degré de protection IP2X ou IPXXB par
+    construction ou
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '526.6'
+  titre: Hormis le cas des lignes aériennes et celui de lignes de contact alimentant
+    des appareils
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '526.7'
+  titre: Les connexions doivent être en mesure de supporter les contraintes provoquées
+    par les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '526.8'
+  titre: Le repiquage des conducteurs - c'est-à-dire la connexion sur les bornes d'un
+    appareil des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '527.1'
+  titre: Précautions à l'intérieur d'un compartiment fermé
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 527.2.1
+  titre: Lorsqu'une canalisation traverse des éléments de construction tels que planchers,
+    murs,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 527.2.2
+  titre: Les canalisations telles que conduits, profilés, goulottes, canalisations
+    préfabriquées, qui
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '528.1'
+  titre: Voisinage avec d'autres canalisations électriques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '528.2'
+  titre: Voisinage avec des canalisations non électriques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 528.2.1
+  titre: Au voisinage des canalisations de chauffage ou d'air chaud et des conduits
+    de fumée, les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 528.2.2
+  titre: Les canalisations électriques ne doivent pas être placées parallèlement au-dessous
+    des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 528.2.3
+  titre: Lorsque des canalisations électriques sont installées au voisinage de canalisations
+    non
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 528.2.4
+  titre: Lorsqu'une canalisation électrique est placée à proximité immédiate de canalisations
+    non
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.1.1
+  titre: Pose en montage apparent
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.1.2.1
+  titre: Les conduits de degré de protection au moins égal à IK07 ne peuvent être
+    posés avant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.1.2.2
+  titre: Les conduits qui ne possèdent pas la qualité de non propagation de la flamme
+    et qui sont
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '529.2'
+  titre: Moulures, plinthes et chambranles en bois
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.2.1
+  titre: Les moulures en bois ne sont autorisées qu'en rénovation dans les monuments
+    historiques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.2.2
+  titre: Les rainures des moulures doivent avoir des dimensions telles que les conducteurs
+    s'y logent
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.2.3
+  titre: Lorsqu'il est fait usage de plinthes rainurées et qui servent de support
+    à des socles de prises
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '529.3'
+  titre: Goulottes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '529.4'
+  titre: Vides de construction
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.4.1
+  titre: Dans les vides de construction, les canalisations sont constituées de conducteurs
+    isolés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.4.2
+  titre: Conducteurs isolés posés sous conduit
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.4.3
+  titre: Câbles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.5.1
+  titre: 'Seuls sont admis en pose enterrée des câbles dans les conditions suivantes
+    :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '1000'
+  titre: RGPFV, U-1000 RVFV, FR-N1X-DV, FR-N 1-X1X2Z4X2, FR-N 1-X 1G lZ4G1.
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 529.5.2
+  titre: Les câbles doivent être protégés contre les détériorations causées par le
+    tassement des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.5.3
+  titre: Lorsqu'une canalisation enterrée croise une autre canalisation électrique
+    enterrée, elles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.5.4
+  titre: Toute canalisation enterrée doit être signalée par un dispositif avertisseur
+    non corrodable
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '529.6'
+  titre: Canalisations préfabriquées
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.7.1
+  titre: Les règles énoncées ci-après concernent les canalisations établies en conducteurs
+    nus ou
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.7.2
+  titre: Les conducteurs nus doivent se trouver hors d'atteinte. Dans les traversées
+    des cours, leur
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 529.7.3
+  titre: Les conducteurs isolés assemblés en faisceau doivent être fixés par des accessoires
+    dont
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '530'
+  titre: Généralités ..................................................................................................................230
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '531'
+  titre: Dispositifs de protection contre les courants de défaut.................................................231
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '532'
+  titre: (disponible)..................................................................................................................238
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '533'
+  titre: Dispositifs de protection co ntre les surintensités..........................................................238
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '534'
+  titre: Dispositifs de protection contre les perturbations de tension ........................................242
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '535'
+  titre: Coordination entre les différe nts dispositifs de protection.............................................250
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '536'
+  titre: Dispositifs de commande et de sectionnement.............................................................257
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '537'
+  titre: Dispositifs de surveillance............................................................................................262
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 530.3.1
+  titre: Les contacts mobiles de tous les pôles des appareils multipolaires doivent
+    être couplés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 530.3.2
+  titre: Dans les circuits polyphasés, des dispositifs unipolaires ne doivent pas
+    être installés dans
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 530.3.3
+  titre: Les dispositifs assurant plusieurs fonctions doivent satisfaire à toutes
+    les prescriptions de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 530.4.1
+  titre: Exception faite des appareillages qui sont spécialement établis pour être
+    connectés à des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 530.4.2
+  titre: Les conducteurs isolés (par exemple H07 V-U ou R) doivent être disposés de
+    telle manière
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 530.4.3
+  titre: Lorsque les appareillages sont encastrés dans une paroi, ils doivent être
+    logés dans une
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 530.4.4
+  titre: Lorsque les appareillages sont fixés sur ou dans des goulottes, des plinthes
+    ou des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 530.4.5
+  titre: L'appareillage ne doit pas, à l'usage, se séparer de son support et rendre
+    accessibles les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '531.1'
+  titre: Dispositifs de protection à maximum de courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.1.1
+  titre: Sc héma TN (411.4)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.1.2
+  titre: Schéma TT (411.5)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '531.2'
+  titre: Dispositifs de protection à courant différentiel-résiduel (en abrégé DDR)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.1.1
+  titre: Les dispositifs de protection à courant différentiel-résiduel doivent assurer
+    la coupure de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.1.2
+  titre: Le conducteur de protection associé aux conducteurs actifs d’un circuit ne
+    doit pas
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.1.3
+  titre: Les dispositifs de protection à courant différentiel-résiduel doivent être
+    choisis en tenant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.1.4
+  titre: Les dispositifs de protection à courant différentiel-résiduel doivent être
+    choisis de façon à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.1.5
+  titre: Influence des composantes continues
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.1.6
+  titre: Un même DDR, s’il est à haute sensibilité (I 30mA), assure à la fois la protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.2
+  titre: Choix des dispositifs suivant leur mode de fonctionnement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.2.2
+  titre: L’utilisation de dispositifs de protection à courant différentiel-résiduel
+    à fonctionnement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.3
+  titre: Choix des dispositifs selon la nature de la protection à assurer
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.3.1
+  titre: Protection contre les contacts indirects
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.3.2
+  titre: Protection complémentaire contre les risques de contact direct
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.3.3
+  titre: Protection contre les risques d’incendie
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.4
+  titre: Mise en œuvre selon le schéma de liaison à la terre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.4.2.1
+  titre: Emplacement des DDR
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.4.2.2
+  titre: Choix des caractéristiques des DDR
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.4.3.1
+  titre: Cas du premier défaut
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.4.3.2
+  titre: Cas du deuxième défaut affectant des masses interconnectées
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.4.3.3
+  titre: Cas du deuxième défaut affectant des masses non interconnectées
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.4.3.4
+  titre: Cas de la protection du conducteur neutre lors du deuxième défaut
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.5
+  titre: Emploi de DDR à haute sensibilité (/ au plus égal à 30 mA)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.5.1
+  titre: L'emploi de DDR de courant différentiel-résiduel assigné au plus égal à 30
+    mA est une
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.5.2
+  titre: En schéma TT, l'emploi de DDR à haute sensibilité est nécessaire pour assurer
+    la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 531.2.5.3
+  titre: L'emploi de DDR à haute sensibilité est imposé notamment lorsque les conditions
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '533.1'
+  titre: Dispositions générales
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 533.1.1
+  titre: Les fusibles dont les éléments de remplacement sont susceptibles d'être enlevés
+    ou
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 533.1.2
+  titre: Les disjoncteurs dont la manœuvre peut être assurée par des personnes autres
+    qu'averties
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '533.3'
+  titre: Choix des dispositifs de protection contre les courts-circuits
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 533.3.1
+  titre: Pouvoir de coupure
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 533.3.2
+  titre: Temps de coupure
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '534.1'
+  titre: Dispositifs de protection contre les surtensions d'origine atmosphérique
+    ou dues à des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.1
+  titre: Nature et rôle des dispositifs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.2
+  titre: Emplacement et niveau de protection assuré par les parafoudres
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.2.1
+  titre: Lorsque des parafoudres protègent l'ensemble d'une installation, selon les
+    règles de 443,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.2.2
+  titre: Un parafoudre destiné à protéger un matériel d'utilisation particulièrement
+    sensible est
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.3.1
+  titre: Les parafoudres à l'origine de l'installation doivent être connectés au moins
+    entre les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.3.2
+  titre: Si un parafoudre est installé à l'origine de l'installation, en aval d'un
+    dispositif différentiel-
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.3.3
+  titre: Les parafoudres ne doivent pas être installés dans des locaux où existent
+    des risques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.3.4
+  titre: Afin d'assurer une protection optimale contre les surtensions, les conducteurs
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.4.1
+  titre: Les parafoudres doivent être conformes à la norme (16).
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.4.2
+  titre: Les parafoudres connectés entre conducteurs actifs et terre doivent être
+    choisis en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '1200'
+  titre: V + U entre phase et terre.
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 534.1.4.3
+  titre: Le parafoudre installé à l'origine d'une installation 230/400 V doit avoir
+    un niveau maximal
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.5.1
+  titre: Des moyens doivent être mis en œuvre pour indiquer que le parafoudre n'assure
+    plus sa
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.5.2
+  titre: Les parafoudres doivent être disposés de manière, qu'en cas de défaillance,
+    aucun risque
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.5.3
+  titre: Des dispositifs de protection contre les courts-circuits, l’emballement thermique
+    et contre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.5.4
+  titre: Une fois installés, les parafoudres et leurs dispositifs éventuels de protection
+    ne doivent
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.5.5
+  titre: La protection contre les contacts indirects, conforme à la partie 4-41, doit
+    rester assurée
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.1.6
+  titre: Dispositifs de signalisation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '534.2'
+  titre: Dispositifs de protection contre les surtensions à fréquence industrielle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.2.1
+  titre: Nature et rôle des limiteurs de surtension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.2.2
+  titre: Choix des limiteurs de surtension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.2.3
+  titre: Niveau de protection effectif assuré par un limiteur de surtension suivant
+    son mode
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.2.4
+  titre: Installation des limiteurs de surtension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 534.2.5
+  titre: Liaisons à la terre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '534.3'
+  titre: Dispositifs de protection contre les effets des baisses de tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '535.1'
+  titre: Sélectivité entre dispositifs de protection contre les surintensités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '535.2'
+  titre: Protection d’accompagnement entre dispositifs de protection contre les surintensités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '535.3'
+  titre: Association entre les dispositifs de protection à courant différentiel-résiduel
+    et les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 535.3.2
+  titre: Lorsqu'un dispositif de protection à courant différentiel-résiduel n'est
+    ni incorporé ni
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '535.4'
+  titre: Sélectivité entre les dispositifs de protection à courant différentiel-résiduel
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 535.4.1
+  titre: Lorsque plusieurs DDR sont prévus dans une même installation et si la sélectivité
+    est
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 535.4.2
+  titre: Sélection des circuits
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 535.4.3
+  titre: Sélectivité entre dispositifs de protection à courant différentiel-résiduel
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 535.4.3.1
+  titre: Sélectivité totale
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 535.4.3.2
+  titre: Sélectivité partielle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '536.1'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.2.1
+  titre: Les dispositifs de sectionnement doivent couper effectivement tous les conducteurs
+    actifs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.2.1.1
+  titre: 'Les dispositifs de sectionnement doivent satisfaire aux deux conditions
+    suivantes :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.2.1.2
+  titre: La distance d'ouverture entre les contacts du dispositif doit être visible
+    ou être clairement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.2.1.3
+  titre: Les dispositifs à semiconducteurs ne doivent pas être utilisés comme dispositifs
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.2.2
+  titre: Les dispositifs de sectionnement doivent être conçus ou installés de façon
+    à empêcher
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.2.3
+  titre: Des dispositions doivent être prises pour protéger les dispositifs de sectionnement
+    contre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.2.4
+  titre: Les moyens de sectionnement doivent de préférence être assurés par un appareil
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.2.5
+  titre: Les dispositifs utilisés pour le sectionnement doivent être clairement identifiés,
+    par exemple
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.3.1
+  titre: Les dispositifs assurant la coupure d'urgence doivent pouvoir couper le courant
+    de pleine
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.3.3
+  titre: Les dispositifs de coupure d'urgence doivent assurer la coupure du circuit
+    principal. Ils
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.3.4
+  titre: Les moyens de commande (poignées, boutons-poussoirs, etc.) des dispositifs
+    de coupure
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.3.5
+  titre: Les moyens de commande d'un dispositif de coupure d'urgence doivent pouvoir
+    être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.3.6
+  titre: Lorsqu'il est nécessaire d'agir sur plusieurs appareils de coupure, l'action
+    sur un seul
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '536.4'
+  titre: Dispositifs de coupure pour entretien mécanique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.5.1
+  titre: Les dispositifs de commande fonctionnelle doivent être appropriés aux conditions
+    les plus
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.5.2
+  titre: Les dispositifs de commande fonctionnelle peuvent interrompre le courant
+    sans ouvrir
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 536.5.3
+  titre: Les sectionneurs, les fusibles et les barrettes ne doivent pas être utilisés
+    pour la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '537.1'
+  titre: Contrôleurs permanents d'isolement (CPI)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 537.1.1
+  titre: Conformément à la règle énoncée en 411.6.5, un contrôleur permanent d'isolement
+    doit
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 537.1.2
+  titre: Installation des contrôleurs permanents d'isolement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 537.1.3
+  titre: Réglage des contrôleurs permanents d'isolement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 537.1.4
+  titre: Choix des contrôleurs permanents d'isolement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '537.2'
+  titre: Contrôleurs permanents d’isolement pour la surveillance des matériels hors
+    tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '537.3'
+  titre: Dispositif de localisation des défauts
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '541'
+  titre: Généralités...................................................................................................................268
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '542'
+  titre: Installations de mise à la terre ......................................................................................268
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '543'
+  titre: Conducteurs de protection ............................................................................................271
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '544'
+  titre: Conducteurs d'équipotentialité ......................................................................................276
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '545'
+  titre: Dispositions de mise à la terre et liaisons équipotentielles fonctionnelles.......................277
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '541.2'
+  titre: Définitions
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.1.1
+  titre: Les dispositions de mise à la terre peuvent être utilisées à la fois ou séparément
+    pour
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.1.2
+  titre: Toutes les prises de terre d’un même bâtiment doivent être interconnectées
+    (mise à la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.1.3
+  titre: L’attention doit être portée sur les dispositions relatives aux prises de
+    terre utilisées en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.1.4
+  titre: Le choix et la mise en œuvre des matériels assurant la mise à la terre doivent
+    être tels
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '542.2'
+  titre: Prises de terre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.2.1
+  titre: Les matériaux et les dimensions des prises de terre doivent être choisis
+    de manière à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.2.2
+  titre: L'efficacité d'une prise de terre dépend des conditions locales du sol. Une
+    ou plusieurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.2.3.1
+  titre: Boucle à fond de fouille
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.2.3.2
+  titre: Autres méthodes de réalisation de prises de terre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.2.4
+  titre: Le type et la profondeur d'enfouissement des prises de terre doivent être
+    tels que
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.2.5
+  titre: L’attention doit se porter sur la corrosion électrolytique lors de l’utilisation
+    de matériaux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.2.6
+  titre: Des canalisations métalliques de distribution de liquides ou de gaz ne doivent
+    pas être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.3.1
+  titre: Les conducteurs de terre doivent satisfaire aux prescriptions de 543.1 et,
+    lorsqu’ils sont
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.3.2
+  titre: La liaison d'un conducteur de terre à une prise de terre doit être soigneusement
+    réalisée
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.4.1
+  titre: Dans toute installation, une borne ou une barre principale de terre doit
+    être prévue et les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 542.4.2
+  titre: Chaque conducteur connecté à la borne principale de terre doit pouvoir être
+    déconnecté
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.1.1
+  titre: La section des conducteurs de protection doit satisfaire aux conditions de
+    la coupure
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.1.2
+  titre: La section des conducteurs de protection doit être au moins égale à celle
+    déterminée
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.1.4
+  titre: Lorsqu’un conducteur de protection est commun à plusieurs circuits, la section
+    de ce
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.2.1
+  titre: 'Peuvent être utilisés comme conducteurs de protection :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.2.2
+  titre: Lorsque l'installation comporte des enveloppes ou des châssis d'ensembles
+    montés en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.2.3
+  titre: L’utilisation des éléments métalliques suivants comme conducteurs de protection
+    ou
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '543.3'
+  titre: Conservation de la continuité électrique des conducteurs de protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.3.1
+  titre: Les conducteurs de protection doivent être convenablement protégés contre
+    les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.3.2
+  titre: 'Les connexions doivent être accessibles pour vérification et essais, à l''exception:'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.3.3
+  titre: Aucun appareillage ne doit être inséré dans le conducteur de protection,
+    mais des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.3.4
+  titre: Lorsqu'un dispositif de contrôle de continuité de terre est utilisé, les
+    enroulements ne
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.3.5
+  titre: Les masses des matériels à relier aux conducteurs de protection ne doivent
+    pas être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.4.1
+  titre: Un conducteur PEN ne peut être utilisé que dans les installations fixes et,
+    pour des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.4.3
+  titre: Si, à partir de n'importe quel point de l'installation, le conducteur neutre
+    et le conducteur
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 543.4.4
+  titre: Les éléments conducteurs ne doivent pas être utilisés comme conducteurs PEN.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '543.5'
+  titre: Conducteur de protection utilisé à des fins de mise à la terre fonctionnelle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '543.6'
+  titre: Disposition des conducteurs de protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '543.7'
+  titre: Conducteurs de protection renforcée pour des courants de fuite supérieurs
+    à 10 mA
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '544.1'
+  titre: Conducteurs d'équipotentialité principale
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '544.2'
+  titre: Conducteurs d'équipotentialité supplémentaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 544.2.1
+  titre: Un conducteur d'équipotentialité supplémentaire reliant deux masses doit
+    avoir une
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 544.2.2
+  titre: Un conducteur d'équipotentialité supplémentaire reliant une masse à un élément
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 544.2.3
+  titre: Ces conducteurs doivent satisfaire aux conditions de 543.1.3.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '545.1'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '545.2'
+  titre: Ceinturage d'équipotentialité
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 545.2.1
+  titre: Section du ceinturage d’équipotentialité
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 545.2.2
+  titre: Connexions au ceinturage d'équipotentialité
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '545.3'
+  titre: Liaisons équipotentielles fonctionnelles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '545.4'
+  titre: Conducteurs de mise à la terre fonctionnelle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 545.4.1
+  titre: Section
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 545.4.2
+  titre: Types de conducteurs de mise à la terre combinée de protection et fonctionnelle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '545.5'
+  titre: Transmission des signaux et interconnexions entre des prises terre séparées
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '3.1'
+  titre: '- Eléments constitutifs'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '3.2'
+  titre: '- Établissement des prises de terre'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '551'
+  titre: Générateurs d’énergie électrique..................................................................................290
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '552'
+  titre: Transformateurs...........................................................................................................291
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '553'
+  titre: Matériel statique de puissance .....................................................................................292
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '554'
+  titre: Batteries d'accu mulateurs ............................................................................................293
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '555'
+  titre: Matériels d'installation..................................................................................................296
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '556'
+  titre: Appareils de mesure.....................................................................................................298
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '557'
+  titre: Condensateurs de puissance........................................................................................300
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '558'
+  titre: Ensembles d'appareillage.............................................................................................302
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '559'
+  titre: Matériels d'utilisation....................................................................................................307
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '551.1'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 551.1.1
+  titre: Prescriptions supplémentaires pour les générateurs d’énergie électrique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 551.1.2
+  titre: Prescriptions supplémentaires pour les générateurs d’énergie électrique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 551.2.1
+  titre: Groupes électrogènes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '553.1'
+  titre: Redresseurs et convertisseurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '553.2'
+  titre: Contacteurs ou démarreurs électroniques et variateurs de vitesse
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 553.2.1
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 553.2.2
+  titre: Démarreurs à semi-conducteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 553.2.3
+  titre: Variateurs de vitesse
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '553.3'
+  titre: Alimentations statiques sans interruption (ASI) de type statique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '553.4'
+  titre: Systèmes de transfert statique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '554.1'
+  titre: Batteries portatives ou mobiles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '554.2'
+  titre: Batteries fixes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 554.2.1
+  titre: Les batteries d'accumulateurs installés à poste fixe doivent se trouver dans
+    un local
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 554.2.2
+  titre: Lorsque la tension nominale des batteries est supérieure à 150 volts, il
+    doit être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 554.2.3
+  titre: Le local renfermant des batteries d'accumulateurs doit recevoir, par ventilation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '1.1'
+  titre: '- Lorsque le système de charge comporte à la fois des dispositifs de régulation
+    et de'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '1.2'
+  titre: '- Lorsque le système de charge ne comporte pas les dispositifs de régulation
+    et de'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '2.1'
+  titre: '- Les batteries dites étanches sont habituellement associées à un redresseur-chargeur'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '2.2'
+  titre: '- Si par contre, le redresseur-chargeur n''a pas les caractéristiques de
+    fonctionnement'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 554.2.4
+  titre: Les batteries de démarrage des groupes moteurs thermiques-générateurs, ainsi
+    que
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 554.2.5
+  titre: Les connexions de batteries peuvent être réalisées en conducteurs nus, mais
+    les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 555.1.1
+  titre: Un nombre approprié de socles de prises de courant doit être installé afin
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 555.1.2
+  titre: Les socles de prise de courant doivent comporter autant d'organes de contact
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 555.1.3
+  titre: Lorsque les canalisations comportent un conducteur de protection, il doit
+    être fait
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 555.1.4
+  titre: Lorsqu'il est fait usage de tensions ou de courants de natures différentes,
+    il est
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 555.1.5
+  titre: Lorsqu'il est nécessaire d'empêcher la permutation des pôles ou des phases,
+    des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 555.1.6
+  titre: Les socles de prise de courant doivent être disposés de façon que les parties
+    actives
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 555.1.7
+  titre: Les socles de prise de courant 16 A - 250 V doivent être d'un type à obturation.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 555.1.8
+  titre: Les socles de prise de courant fixés sur les parois des locaux doivent être
+    disposés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 555.1.9
+  titre: Les socles de prise de courant installés dans les sols doivent posséder les
+    degrés de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '555.2'
+  titre: Appareils à courants porteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '556.1'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '556.2'
+  titre: Transformateurs de tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '556.3'
+  titre: Transformateurs de courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '556.4'
+  titre: Transformateurs combinés (tension-courant)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '556.5'
+  titre: Surveillance de la tension et du courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '557.1'
+  titre: Les règles du présent article sont applicables aux condensateurs statiques
+    de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '557.2'
+  titre: Points à considérer pour le choix des condensateurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 557.2.1
+  titre: Distorsion harmonique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 557.2.2
+  titre: Tension assignée
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 557.2.3
+  titre: Altitude - Les condensateurs sont conçus pour fonctionner jusqu'à 2 000 mètres.
+    Au-
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 557.2.4
+  titre: Température de service - Les condensateurs sont très sensibles aux températures
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 557.2.5
+  titre: Surtensions - Le choix et l'installation des condensateurs doivent tenir
+    compte des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 557.2.6
+  titre: Surintensités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 557.2.7
+  titre: Appareillage de commande et de protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 557.2.8
+  titre: Règles de sécurité
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '558.1'
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '558.2'
+  titre: Matériaux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '558.3'
+  titre: Mesures de protection pour assurer la sécurité
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 558.3.1
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 558.3.2.1
+  titre: Disposition de protection contre les contacts directs (411.2)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 558.3.2.2
+  titre: Dispositions de protection contre les contacts indirects (411.3)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 558.3.2.2.1
+  titre: Mise à la terre des masses
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 558.3.2.2.2
+  titre: Mesure de protection par isolation double ou renforcée par installation.
+    (Voir
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 558.4.1
+  titre: Les appareillages doivent être mis en œuvre conformément aux instructions
+    fournies
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 558.4.2
+  titre: Les conducteurs et câbles installés dans les ensembles doivent satisfaire
+    aux règles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 558.4.3
+  titre: 'Les distances minimales suivantes doivent être respectées :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 558.5.1
+  titre: Tout ensemble doit être pourvu d'une plaque de firme indiquant son constructeur.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 558.5.2
+  titre: Dans les ensembles, l'appartenance des matériels (tels dispositifs de protection,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.1.1
+  titre: Connexion directe des appareils à une canalisation fixe
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.1.2
+  titre: Connexion des appareils par l'intermédiaire d'une canalisation mobile
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.1.2.1
+  titre: Les canalisations mobiles doivent comporter le nombre nécessaire de conducteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.1.2.2
+  titre: Les canalisations mobiles doivent satisfaire aux règles applicables de la
+    partie
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.1.2.3
+  titre: Lorsque la canalisation mobile comporte un conducteur de protection, celui-ci
+    doit
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.1.2.4
+  titre: Les connexions des canalisations mobiles doivent être effectuées à l’aide
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.1
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.2
+  titre: Prescriptions générales pour l’installation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.3.1
+  titre: La mise en œuvre des luminaires doit prendre en compte leurs effets thermiques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.3.2
+  titre: Les luminaires doivent être installés en respectant les indications fournies
+    par les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.4.1
+  titre: Les moyens de fixation des luminaires suspendus (accessoires, boîtes de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.4.2
+  titre: Le câblage traversant ne peut être réalisé que dans des luminaires prévus
+    à cet
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.4.3
+  titre: Les câbles de raccordement doivent être choisis conformément au marquage
+    relatif
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.5
+  titre: Appareillage auxiliaire indépendant du luminaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.6
+  titre: Condensateurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.7
+  titre: Protection contre les chocs électriques sur les stands de luminaires
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.8
+  titre: Effet stroboscopique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.9
+  titre: Luminaires encastrés dans les plafonds et faux plafonds (plafonds suspendus)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.9.1
+  titre: Mise en œuvre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.9.2
+  titre: Fixation des luminaires
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.9.3
+  titre: Effets thermiques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.9.4
+  titre: Luminaires Très Basse Tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.2.10
+  titre: Chemins lumineux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '559.3'
+  titre: Appareils électrodomestiques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '559.4'
+  titre: Appareils électroniques pour usages domestiques et analogues
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '559.5'
+  titre: Appareils de chauffage industriels
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.5.1
+  titre: Appareils de cuisson et fours
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.5.2.1
+  titre: Les appareils de chauffage ou de réchauffage de liquides combustibles ou
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.5.2.2
+  titre: Les appareils comportant des électrodes nues ou résistances non isolées,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.5.2.3
+  titre: Cordons chauffants
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '559.6'
+  titre: Moteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 559.6.1
+  titre: Limitation des troubles dus au démarrage des moteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '561'
+  titre: Généralités...................................................................................................................317
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '562'
+  titre: Sources de sé curité......................................................................................................318
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '563'
+  titre: Circuits.........................................................................................................................319
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '564'
+  titre: Matériels d'utilisation ....................................................................................................320
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '565'
+  titre: Prescriptions particulières aux sources de sécurité ne pouvant pas fonctionner
+    en
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '566'
+  titre: Prescriptions particulières aux sources de sécurité pouvant fonctionner en
+    parallèle
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '561.1'
+  titre: Une installation de sécurité devant fonctionner en cas d'incendie, les matériels
+    qui la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '561.2'
+  titre: Les dispositions de protection contre les contacts indirects n'impliquant
+    pas la coupure
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '562.1'
+  titre: Les groupes électrogènes doivent être conformes à la NF E 37-312.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '562.2'
+  titre: Les sources de sécurité doivent être installées à poste fixe et de telle
+    manière qu'elles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '562.4'
+  titre: L'emplacement des sources de sécurité doit être convenablement ventilé de
+    façon que
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '562.5'
+  titre: Des branchements séparés, indépendants et alimentés par un réseau de distribution
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '562.6'
+  titre: Les sources de sécurité doivent être choisies de façon à assurer l'autonomie
+    appropriée.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '562.7'
+  titre: Une source de sécurité peut être utilisée pour des installations autres que
+    les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '563.1'
+  titre: Les câbles des installations de sécurité doivent être différents des câbles
+    des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '563.2'
+  titre: Les circuits des installations de sécurité ne doivent pas traverser des emplacements
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '563.3'
+  titre: Dans certains cas, la protection contre les surcharges, prescrite par le
+    paragraphe
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '563.4'
+  titre: Chaque circuit doit être protégé de telle manière que tout incident électrique
+    l'affectant,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '563.5'
+  titre: Les dispositifs de protection, de commande et d'alarme, doivent être clairement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '564.1'
+  titre: Dans les installations d'éclairage, les types de lampes doivent être compatibles
+    avec la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '564.2'
+  titre: Dans les matériels alimentés par deux circuits différents, un défaut se produisant
+    dans
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '565.1'
+  titre: Toutes précautions doivent être prises pour éviter la mise en parallèle des
+    sources, par
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '600'
+  titre: Introduction ..................................................................................................................323
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '610.1'
+  titre: Généralités .........................................................................................................323
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '610.2'
+  titre: (disponible).........................................................................................................323
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '610.3'
+  titre: Définitions...........................................................................................................323
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '611'
+  titre: Inspection visuelle........................................................................................................324
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '612'
+  titre: Essais ..........................................................................................................................325
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '612.1'
+  titre: Généralités .........................................................................................................325
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '612.2'
+  titre: Continuité des conducteurs de protection et des liaisons équipotentielles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '612.3'
+  titre: Résistance d'isolement de l'installation électrique ...............................................326
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '612.4'
+  titre: Protection par TBTS ou TBTP ou par séparation des circuits ..............................327
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 612.4.1
+  titre: Protection par TBTS.........................................................................................327
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 612.4.2
+  titre: Protection par TBTP.........................................................................................327
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 612.4.3
+  titre: Protection par séparation électrique.................................................................327
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '612.5'
+  titre: Résistance des sols et des pa rois .......................................................................327
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '612.6'
+  titre: Vérification des conditions de protection par coupure automatique
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 612.6.1
+  titre: Généralités ......................................................................................................328
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 612.6.2
+  titre: Mesure de la ré sistance des prises de terre .....................................................329
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 612.6.3
+  titre: Mesure de l'impédance de la boucle de défaut .................................................330
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 612.6.4
+  titre: Mesure de la ré sistance des conducteurs de protection....................................330
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '612.7'
+  titre: Essais fonctionnels .............................................................................................331
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '620.1'
+  titre: Généralités .........................................................................................................331
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '620.2'
+  titre: Périodicité des vérifications périodiques..............................................................331
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '620.3'
+  titre: Domaine des vérifications pé riodiques ................................................................331
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '620.4'
+  titre: Rapport...............................................................................................................332
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 610.1.1
+  titre: Toute installation doit, pendant la mise en œuvre ou lorsqu'elle est terminée
+    et avant sa
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 610.1.2
+  titre: Les informations demandées en 514.5 doivent être mises à la disposition des
+    personnes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 610.1.3
+  titre: Des précautions doivent être prises pendant la vérification et les essais,
+    pour éviter des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 610.1.4
+  titre: Lors d'extensions ou de modifications d'installations existantes, il doit
+    être vérifié que les
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 610.1.5
+  titre: Les vérifications doivent être réalisées par une personne qualifiée, compétente
+    dans le
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 610.1.6
+  titre: Suite à la vérification conformément aux prescriptions de la présente partie,
+    un rapport
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '611.1'
+  titre: L’inspection visuelle doit précéder les essais et être normalement effectuée,
+    l'ensemble de
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '611.2'
+  titre: 'L’inspection visuelle est destinée à vérifier si le matériel électrique
+    relié en permanence :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '611.3'
+  titre: L’inspection visuelle doit comprendre au moins la vérification des conditions
+    suivantes,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 612.6.4.1
+  titre: La vérification consiste à mesurer la résistance entre toute masse et le
+    point le plus
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 612.6.4.2
+  titre: Lorsque les prescriptions en 612.6.3 ou 612.6.4.1 ne sont pas satisfaites
+    et qu'une
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '750'
+  titre: N
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: '701.1'
+  titre: Domaine d'application..........................................................................................339
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '701.3'
+  titre: Détermination des caractéristiques générales ......................................................339
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '701.4'
+  titre: Protection pour assurer la sécurité.......................................................................340
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '701.41'
+  titre: Protection contre les chocs électriques ..............................................................340
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '701.5'
+  titre: Choix et mise en œuvre des matériels électriques................................................341
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '701.51'
+  titre: Règles communes.............................................................................................341
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '701.52'
+  titre: Canalisations.....................................................................................................341
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '701.53'
+  titre: Appareillage ......................................................................................................341
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '701.55'
+  titre: Autres matériels ................................................................................................342
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '701.71'
+  titre: Règles complémentaires pour les salles de douches..........................................349
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.320.1
+  titre: Les présentes prescriptions considèrent quatre volumes,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.320.2
+  titre: Dans le cas où il n'y a pas de receveur de douche et où la pomme de douche
+    est
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.320.4
+  titre: Le volume situé au-dessus du volume 1 jusqu'à une hauteur de 3 m au-dessus
+    du sol
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.320.5
+  titre: L'espace situé au-dessous de la baignoire ou de la douche et sur leurs côtés
+    est
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.320.6
+  titre: Lorsqu'un faux-plafond fermé est disposé dans les volumes 1 et 2, l'espace
+    situé au-
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.414.1
+  titre: Lorsque la TBTS est utilisée, la protection contre les contacts directs doit
+    être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.414.2
+  titre: Dans le volume 0, seule la mesure de protection par TBTS de tension nominale
+    au
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.414.3
+  titre: Tous les matériels électriques situés hors volumes 0, 1, 2, 3 dans les locaux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.415.2
+  titre: Liaison équipotentielle supplémentaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.512.2
+  titre: Influences externes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.520.02
+  titre: Dans le volume 0, aucune canalisation n'est admise, sauf TBTS limitée à 12
+    V en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.520.03
+  titre: Les boîtes de connexion ne sont pas admises dans les volumes 0, 1 et 2.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.71.1
+  titre: Cabines de douches individuelles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 701.71.2
+  titre: Douches collectives
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.1'
+  titre: Domaine d'application, objet et principes fondamentaux..................................................
+    355
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.11'
+  titre: Domaine d'application...................................................................................................
+    355
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.2'
+  titre: Définitions ......................................................................................................................
+    355
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.3'
+  titre: Détermination des ca ractéristiques générales .................................................................
+    355
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.32'
+  titre: Classification des volumes............................................................................................
+    355
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.4'
+  titre: Protection pour assurer la sécurité..................................................................................
+    356
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.41'
+  titre: Protection contre les chocs électriques..........................................................................
+    356
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.414'
+  titre: Protection par très basse tension de sécurité (TBTS) ..................................................
+    356
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.46'
+  titre: Sectionnement et commande ........................................................................................
+    357
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.5'
+  titre: Choix et mise en œuvre des matériels électriques...........................................................
+    357
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.51'
+  titre: Règles communes ........................................................................................................
+    357
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.512'
+  titre: Conditions de service et influences externes ...............................................................
+    357
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.52'
+  titre: Canalisations ................................................................................................................
+    358
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.522'
+  titre: Choix et mise en œuvre en fonction des influences externes .......................................
+    358
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.53'
+  titre: Appareillage..................................................................................................................
+    358
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '702.55'
+  titre: Autres matériels............................................................................................................
+    359
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.2.21
+  titre: Bassins des fontaines
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.411.3
+  titre: Prescriptions particulières relatives aux divers volumes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.411.3.1
+  titre: Volumes 0 et 1 des piscines
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.411.3.2
+  titre: Volumes 0 et 1 des fontaines
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.411.3.3
+  titre: Volume 2 des piscines
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.414.1.1
+  titre: Lorsque la TBTS est utilisée, quelle que soit sa tension nominale, la protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.415.2
+  titre: Liaison équipotentielle supplémentaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.512.2
+  titre: Influences externes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.522.21
+  titre: Mise en œuvre selon les volumes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.522.22
+  titre: Limitation des canalisations selon les volumes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.522.23
+  titre: Prescriptions complémentaires pour les canalisations des fontaines
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.522.24
+  titre: Boîtes de connexion
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.55.1.1
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.55.1.2
+  titre: Prescriptions particulières pour des matériels électriques basse tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.55.2
+  titre: Appareils d'éclairage subaquatiques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 702.55.3
+  titre: Matériels électriques des fontaines
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '703.1'
+  titre: Domaine d'application ...............................................................................................369
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '703.2'
+  titre: Définitions .................................................................................................................369
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '703.414'
+  titre: Mesure de protection par très basse tension..........................................................369
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '703.5'
+  titre: Choix et mise en œuvre des matériels électriques.....................................................369
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '703.51'
+  titre: Règles communes ...................................................................................................369
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '703.52'
+  titre: Canalisations...........................................................................................................369
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '703.53'
+  titre: Appareillage ............................................................................................................369
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 703.2.09.01
+  titre: 'Sauna à air chaud : Local ou emplacement dans lequel l''air est chauffé
+    en service'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 703.414.4.7
+  titre: Lorsque la TBTS est utilisée, la protection contre les contacts directs doit
+    être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 703.512.2
+  titre: Les matériels électriques doivent posséder au moins les degrés de protection
+    IP24.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.1'
+  titre: Domaine d'application ...............................................................................................373
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.3'
+  titre: Détermination des caractéristiques générales ...........................................................374
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.313'
+  titre: Alimentation ..........................................................................................................374
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.35'
+  titre: Installations de sécurité...........................................................................................374
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.351'
+  titre: Éclairage de sécurité.............................................................................................374
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.352'
+  titre: Autres circuits de sécurité .....................................................................................375
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.41'
+  titre: Protection contre les chocs électriques....................................................................375
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.43'
+  titre: Protection contre les surintensités...........................................................................375
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.433'
+  titre: Protection contre les surcharges............................................................................376
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.434'
+  titre: Protection contre le s courts-circuits.......................................................................376
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.5'
+  titre: Choix et mise en œuvre des matériels.......................................................................376
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.51'
+  titre: Règles communes ...................................................................................................376
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.512'
+  titre: Conditions de fonctionnement et classification des influences externes .................376
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.52'
+  titre: Canalisations...........................................................................................................376
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.525'
+  titre: Chutes de tension dans les installations ................................................................377
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '704.536'
+  titre: Dispositifs de commande et de sectionnement.......................................................377
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 704.1.5
+  titre: Dans les chantiers, les installations fixes sont limitées à l'ensemble comprenant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 704.312.2
+  titre: Types de schémas de liaisons à la terre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 704.411.1
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 704.411.1.1
+  titre: Protection contre les contacts directs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 704.411.1.2
+  titre: Mesures de protection
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 704.511.1
+  titre: Les ensembles de chantier doivent être conformes aux prescriptions de la
+    norme
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 704.512.2
+  titre: Choix et mise en œuvre des matériels en fonction des influences externes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 704.522.8.1.8
+  titre: Afin d’éviter la détérioration des câbles, ceux-ci ne doivent pas être posés
+    dans
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 704.542.2
+  titre: Prise de terre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 704.555.1
+  titre: Prises de courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.1'
+  titre: Domaine d'application ...............................................................................................379
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.353'
+  titre: Source de sécurité ou de remplacement ................................................................379
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.4'
+  titre: Protection pour assurer la sécurité ............................................................................379
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.41'
+  titre: Protection contre le s chocs électriques....................................................................379
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.42'
+  titre: Protection contre l’incendie, les brûlures et l’explosion............................................379
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.422'
+  titre: Règles complémentaires de protection contre l'incendie ........................................379
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.443'
+  titre: Protection contre les surtensions d’origine atmosphérique ou dues
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.5'
+  titre: Choix et mise en œuvre des matériels.......................................................................380
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.51'
+  titre: Règles communes ...................................................................................................380
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.536'
+  titre: Dispositifs de sectionnement et de commande.......................................................380
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.55'
+  titre: Autres matériels ......................................................................................................380
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.414'
+  titre: Lorsque la TBTS ou la TBTP est utilisée, la protection contre les contacts
+    directs doit
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 705.415.1
+  titre: Les circuits alimentant des prises de courant, quel que soit leur courant
+    assigné,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 705.415.2
+  titre: Liaison équipotentielle supplémentaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '705.512'
+  titre: Les matériels électriques doivent posséder au moins les degrés de protection
+    tels
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '706.1'
+  titre: Domaine d'application ...............................................................................................383
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '706.4'
+  titre: Protection pour assurer la sécurité ............................................................................383
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 706.410.3
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 706.415.2
+  titre: Liaison équipotentielle supplémentaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.1'
+  titre: Domaine d'application ...............................................................................................387
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.2'
+  titre: Définitions .................................................................................................................387
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.3'
+  titre: Caractéristiques générales........................................................................................387
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.31'
+  titre: Tensions normalisées..............................................................................................387
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.41'
+  titre: Protection contre les chocs électriques....................................................................388
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.5'
+  titre: Choix et mise en œuvre des matériels.......................................................................388
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.51'
+  titre: Influences externes .................................................................................................388
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.52'
+  titre: Canalisations...........................................................................................................388
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.53'
+  titre: Appareillage ............................................................................................................388
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.530'
+  titre: Généralités et règles communes............................................................................388
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.2.1
+  titre: Véhicule de loisirs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.2.1.1
+  titre: Caravane
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.2.1.2
+  titre: Caravane à moteur (camping car)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.2.1.3
+  titre: Résidence mobile de loisirs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.2.2
+  titre: Emplacement de caravane
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.2.3
+  titre: Parc de caravanes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.2.4
+  titre: Point d'alimentation électrique de caravane
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.411.4
+  titre: Dans le cas d’un schéma TN, seul le schéma TN-S doit être utilisé.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.415.1
+  titre: Protection complémentaire par dispositifs à courant différentiel résiduel
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.529.5
+  titre: Canalisations enterrées
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.529.7
+  titre: Lignes aériennes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.530.1
+  titre: Le point d'alimentation électrique doit être placé au bord de l'emplacement
+    et à
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.530.2.1
+  titre: Chaque socle de prise de courant et son enveloppe constituant une partie
+    du
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.530.2.2
+  titre: Les socles de prise de courant doivent être placés à une hauteur comprise
+    entre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.530.2.3
+  titre: Le courant assigné des socles de prise de courant doit correspondre à la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.530.2.4
+  titre: Un socle de prise de courant au moins doit être prévu pour la connexion de
+    tout
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.530.3
+  titre: Un socle de prise de courant doit alimenter seulement une caravane.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.530.4
+  titre: Quatre socles de prises de courant, au plus, peuvent être groupés dans un
+    coffret
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.531.1
+  titre: Chaque socle de prise de courant doit être protégé individuellement par un
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '708.533'
+  titre: Protection contre les surintensités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.559.1
+  titre: Connexion de la caravane
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.559.1.1
+  titre: Eléments du dispositif de connexion
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.559.1.2
+  titre: Longueur du câble
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.559.1.3
+  titre: Section du câble
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.559.1.4
+  titre: Mise en œuvre des câbles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 708.559.1.5
+  titre: Information des utilisateurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.1'
+  titre: Domaine d'application ...............................................................................................393
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.2'
+  titre: Définitions .................................................................................................................393
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.3'
+  titre: Détermination des caractéristiques générales ...........................................................393
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.313'
+  titre: Tensions nominales d’alimentation ........................................................................393
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.41'
+  titre: Protection contre le s chocs électriques....................................................................393
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.5'
+  titre: Choix et mise en œuvre des matériels électrique s.....................................................393
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.51'
+  titre: Influences externes .................................................................................................393
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.52'
+  titre: Choix et mise en oeuvre des matériels électriques ..................................................394
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.53'
+  titre: Appareillage ............................................................................................................394
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.530'
+  titre: Généralités et règles communes............................................................................394
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.531'
+  titre: Dispositifs de protection contre les courants de défaut ..........................................395
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.533'
+  titre: Dispos itifs de protection contre les surintensités....................................................395
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '709.559'
+  titre: Matériels d’utilisation.............................................................................................395
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.2.1
+  titre: Bateau de plaisance
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.2.2
+  titre: Marina
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.2.3
+  titre: Point d'amarrage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.411.4
+  titre: Dans le cas d’un schéma TN, seul le schéma TN-S doit être utilisé.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.415.1
+  titre: Protection complémentaire par dispositifs à courant différentiel-résiduel
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.52.1
+  titre: Canalisations des marinas
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.52.1.1
+  titre: 'Les canalisations suivantes ne doivent pas être utilisées :'
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.52.1.2
+  titre: Les câbles doivent être choisis et installés de façon que les dommages
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.530.1
+  titre: Les coffrets avec des socles de prises de courant pour l'alimentation des
+    bateaux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.530.2
+  titre: Les tableaux de distribution et les coffrets de socles de prises de courant
+    installés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.530.3
+  titre: Un socle de prise de courant doit alimenter seulement un bateau de plaisance.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.530.4
+  titre: Quatre socles de prises de courant, au plus, peuvent être groupés dans un
+    coffret
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.531.2
+  titre: Dispositifs à courant différentiel-résiduel
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.559.1.1
+  titre: Eléments du dispositif de connexion
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.559.1.2
+  titre: Longueur du câble
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.559.1.3
+  titre: Section du câble
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.559.1.4
+  titre: Mise en œuvre des câbles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 709.559.1.5
+  titre: Information des utilisateurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.1'
+  titre: Domaine d'application................................................................................................399
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.3'
+  titre: Détermination des ca ractéristiques générales ............................................................399
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.4'
+  titre: Protection pour assurer la sécurité.............................................................................399
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.5'
+  titre: Choix et mise en œuvre des matériels électriques......................................................400
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.52'
+  titre: Canalisations ...........................................................................................................400
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.55'
+  titre: Autres matériels.......................................................................................................400
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.6'
+  titre: Vérification ................................................................................................................401
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.313'
+  titre: Alimentation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.411'
+  titre: Mesure de protection par coupure automatique de l'alimentation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.411.3
+  titre: Prescriptions pour la protection contre les contacts indirects
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.411.3.2
+  titre: Coupure automatique de l'alimentation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.411.4
+  titre: Schéma TN
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.411.6
+  titre: Schéma IT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.415.1
+  titre: Protection complémentaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.415.2
+  titre: Liaison équipotentielle supplémentaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.421'
+  titre: Règles générales de protection contre l'incendie
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.422.1.13
+  titre: Les moteurs commandés automatiquement ou à distance, ou non surveillés en
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.462'
+  titre: Sectionnement et coupure en charge
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.463'
+  titre: Coupure d'urgence
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.526'
+  titre: Connexions électriques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.53'
+  titre: Les dispositifs de protection contre les contacts indirects et contre les
+    surintensités, des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '711.551'
+  titre: Groupes générateurs à basse tension
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.559.2.1
+  titre: Luminaires
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.559.2.2
+  titre: Douilles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.559.2.3
+  titre: Lampes dans les stands de tir
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.559.2.4
+  titre: Projecteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.559.2.5
+  titre: Risque d'incendie par les luminaires et les projecteurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.559.2.6
+  titre: Enseignes et tubes lumineux à décharge fonctionnant à une tension de sortie
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.559.2.7
+  titre: Installations d'éclairage TBTS
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.1'
+  titre: Domaine d’application................................................................................................404
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.3'
+  titre: Détermination des caractéristiques générales ............................................................404
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.312'
+  titre: Types de schémas de distribution...........................................................................404
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.313'
+  titre: Alimentation...........................................................................................................404
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.411'
+  titre: Protection par coupure automatique de l'alimentation .............................................404
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.5'
+  titre: Choix et mise en œuvre des matériels électriques......................................................405
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.51'
+  titre: Règles communes ...................................................................................................405
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.512'
+  titre: Influences externes................................................................................................405
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.514'
+  titre: Identification ..........................................................................................................406
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.55'
+  titre: Autres matériels.......................................................................................................406
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '717.555'
+  titre: Matériels d’installation............................................................................................406
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.312.2
+  titre: Types de schémas des liaisons à la terre
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.312.2.1
+  titre: Schéma TN
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.411.3.1.1
+  titre: Liaison équipotentielle principale
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.411.3.1.2
+  titre: Equipotentialité des masses
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.411.3.1.3
+  titre: Si plusieurs unités sont électriquement interconnectées et alimentées par
+    la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 711.411.3.1.4
+  titre: Si un groupe générateur BT situé à l’extérieur est utilisé, sa masse doit
+    être
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.411.4
+  titre: Schéma TN
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.411.6
+  titre: Schéma IT
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.415.1
+  titre: Protection complémentaire par DDR
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.521.2
+  titre: Canalisations
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.555.2
+  titre: Les socles de prises de courant situés à l’extérieur de l’unité doivent être
+    équipés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 717.559.1.1
+  titre: Eléments des dispositifs de connexion à l’alimentation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '752.1'
+  titre: Domaine d’application ...............................................................................................415
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '752.46'
+  titre: Coupure d’urgence ..................................................................................................415
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '752.51'
+  titre: Emplacements dangereux........................................................................................415
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '752.52'
+  titre: Canalisations...........................................................................................................415
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '752.542'
+  titre: Install ation de mise à la terre.................................................................................415
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '752.55'
+  titre: Autres matériels ......................................................................................................416
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '752.53'
+  titre: Appareillage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '753.1'
+  titre: Domaine d’applica tion et règles communes...............................................................419
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '753.2'
+  titre: Définition...................................................................................................................419
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '753.3'
+  titre: Dossier technique......................................................................................................420
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '753.4'
+  titre: Eléments chauffants pour planchers rayonnants........................................................420
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '753.5'
+  titre: Equipements de chauffage électrique installés en plafond.........................................423
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '753.6'
+  titre: Chauffage avec émetteurs muraux (convecteur, panneau rayonnant et
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.2.1
+  titre: Eléments chauffants pour planchers rayonnants
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.2.2
+  titre: Equipements de chauffage électriques installés en ou au plafond
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.2.3
+  titre: Emetteur mural direct
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.2.4
+  titre: Emetteur à accumulation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.4.1
+  titre: Protection contre les courants de défaut
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.4.1.1
+  titre: Les équipements de chauffage électrique comportant des éléments chauffants
+    isolés,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.4.1.2
+  titre: Les équipements de chauffage comportant des conducteurs isolés, sans armure,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.4.1.3
+  titre: L'armure, la gaine ou le revêtement métallique de tout élément chauffant
+    lorsqu’il
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.4.1.4
+  titre: Des éléments électriques chauffants noyés dans le sol, destinés au chauffage
+    d’un
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.4.1.5
+  titre: Des conducteurs nus ou légèrement isolés incorporés dans un matériau ou dans
+    le
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.4.2
+  titre: Protection contre les surintensités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.4.3
+  titre: Mise en œuvre des éléments chauffants
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.5.1
+  titre: Protection contre les courants de défaut
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.5.2
+  titre: Mise en œuvre des équipements de plafond rayonnant plâtre ou modulaire
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.6.1
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 753.6.2
+  titre: Sectionnement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.11'
+  titre: Domaine d'application .............................................................................................427
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.14'
+  titre: Alimentation ............................................................................................................427
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.443'
+  titre: Protection contre les surtensions d'origine at mosphérique (parafoudre).................432
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.46'
+  titre: Sectionnement et commande...................................................................................433
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.462'
+  titre: Sectionnement.......................................................................................................43
+    3
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.463'
+  titre: Coupure d’urgence ................................................................................................433
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.465'
+  titre: Commande............................................................................................................433
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.514'
+  titre: Identification des circuits .......................................................................................434
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.524'
+  titre: Section des conducteurs........................................................................................434
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.533'
+  titre: Dispositifs de protection contre les surintensités....................................................437
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '771.558'
+  titre: Panneaux de contrôle, tableaux de répartition et de communication - Gaine
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.314.2
+  titre: Circuits terminaux
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.314.2.1
+  titre: Socles de prise de courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.314.2.2
+  titre: Circuits spécialisés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.314.2.3
+  titre: Eclairage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.314.2.4
+  titre: Points d’utilisation extérieurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.314.2.5
+  titre: Appareils de chauffage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.411.3
+  titre: Prescriptions pour la protection contre les contacts indirects
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.411.3.2
+  titre: Coupure automatique de l’alimentation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.411.3.3
+  titre: Tous les circuits doivent comporter un conducteur de protection. Ces
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.462.1
+  titre: Sectionnement à l’origine des circuits
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.462.2
+  titre: Sectionnement du fil pilote des installations individuelles de chauffage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.465.1
+  titre: Socles de prise de courant commandés
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.465.2
+  titre: Commande de la ventilation mécanique contrôlée (VMC) et de ventilation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.514.5
+  titre: Schémas
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.530.4
+  titre: Fixation des appareillages
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.531.2.3.2
+  titre: Protection complémentaire contre les contacts directs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.531.2.3.2.1
+  titre: Tous les circuits de l’installation, quel que soit le schéma des liaisons
+    à la
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.536.5
+  titre: Dispositifs de commande fonctionnelle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.555.1.6
+  titre: Prises de courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.558.1
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.558.2.1
+  titre: Généralités
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.558.2.2
+  titre: Emplacement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.558.2.3
+  titre: Destination
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.558.2.4
+  titre: Réalisation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.558.2.5
+  titre: Organisation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '100'
+  titre: 350 150
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 771.558.3
+  titre: Panneau de contrôle
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.558.4
+  titre: Tableaux de répartition
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.558.4.1
+  titre: Tableau de répartition principal
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.558.4.2
+  titre: Tableaux de répartition divisionnaires
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.558.5
+  titre: Tableau de communication
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.559.6.1.1
+  titre: Circuits de communication (téléphonie incluse)
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.559.6.1.2
+  titre: Radiodiffusion / Télévision
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.559.6.2
+  titre: Position et emplacement des prises de communication
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 771.559.6.3
+  titre: Passage des câbles.
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '772.1'
+  titre: Généralités................................................................................................................457
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '772.2'
+  titre: Choix et mise en œuvre des matériels électr iques....................................................
+    .458
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '772.3'
+  titre: Prescriptions spéciales aux locaux techniques des services généraux,
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '772.4'
+  titre: Installation d'alarme et de signalisation .....................................................................465
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.1.1
+  titre: Domaine d'application
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.1.2
+  titre: Structure des installations
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.1
+  titre: Circuits divisionnaires
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.2
+  titre: Canalisations
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.3.1
+  titre: Eclairement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.3.2
+  titre: Foyer lumineux et appareils d'éclairage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.3.3
+  titre: Dispositifs de commande des appareils d'éclairage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.3.4.1
+  titre: Vestibules d'entrée d'immeubles, escaliers, coursives, couloirs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.3.4.2
+  titre: Garages et parcs couverts collectifs, pour voitures automobiles
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.3.4.3
+  titre: Alimentation des caves, boxes ou garages, individuels
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.3.4.4
+  titre: Installations de sécurité
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.3.5
+  titre: Circuits issus des parties communes alimentant des installations privatives
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.2.3.6
+  titre: Circuits issus des installations privatives alimentant des appareils électriques
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.0
+  titre: Domaine d'application
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.1.1
+  titre: Alimentation principale
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.1.2
+  titre: Alimentation éclairage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.1.3
+  titre: Eclairage
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.1.4
+  titre: Socles de prises de courant
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.1.5
+  titre: Réseau d'alarmes techniques et de signalisation
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.2
+  titre: Ascenseurs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.2.1
+  titre: Caractéristiques des locaux et choix des matériels électriques en fonction
+    des
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.2.2
+  titre: Canalisations
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.2.3
+  titre: Local des machines
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.2.4
+  titre: Eclairage des paliers d'ascenseurs des bâtiments collectifs
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.2.5
+  titre: Local des poulies
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.2.6
+  titre: Eclairage de remplacement ou de sécurité
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.3.3
+  titre: Chaufferie
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.4.1
+  titre: Les installations d'alarme et/ou de signalisation sont demandées soit par
+    un texte
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 772.4.2
+  titre: Les alarmes et signalisations du domaine de la sécurité nécessitent, en général,
+    une
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 773.411.3
+  titre: Protection contre les contacts indirects
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '781.0'
+  titre: Domaine d'application................................................................................................471
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '781.1'
+  titre: Généralités................................................................................................................471
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '781.2'
+  titre: Protection au moyen d'obstacles ou par mise hors de portée par éloignement
+    ............471
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '781.3'
+  titre: Absence de protection contre les contacts directs ......................................................472
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '781.4'
+  titre: Distances minimales à respecter dans les passages de service..................................472
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '781.5'
+  titre: Dispositions concernant les locaux de service électrique............................................474
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 781.4.1
+  titre: Les distances indiquées ci-après doivent être observées lorsqu'une protection
+    au moyen
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 781.4.2
+  titre: Dans les locaux dans lesquels aucune mesure de protection n'est prévue, les
+    cotes
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: '700'
+  titre: 700 700 700
+  niveau: 1
+  type: article
+  contenu_resume: ''
+- numero: 781.5.1
+  titre: Emplacement
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 781.5.2
+  titre: Dimensions
+  niveau: 2
+  type: article
+  contenu_resume: ''
+- numero: 781.5.3
+  titre: Ventilation et conditionnement
+  niveau: 2
+  type: article
+  contenu_resume: ''

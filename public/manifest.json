@@ -1,0 +1,38 @@
+{
+    "name": "PROQUELEC CMS",
+    "short_name": "PROQUELEC",
+    "description": "Plateforme d'audit et d'expertise électrique PROQUELEC",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#09264b",
+    "categories": [
+        "business",
+        "professional",
+        "education"
+    ],
+    "icons": [
+        {
+            "src": "pwa-icon.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "pwa-icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/pwa-icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "PROQUELEC CMS Dashboard"
+        }
+    ],
+    "orientation": "portrait"
+}

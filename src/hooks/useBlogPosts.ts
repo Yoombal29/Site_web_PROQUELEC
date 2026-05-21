@@ -1,6 +1,5 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useSession } from "./useSession";
 
@@ -22,20 +21,29 @@ export type BlogPost = {
 // Type pour la création/mise à jour
 export type BlogPostFormData = Omit<BlogPost, 'id' | 'created_at' | 'author_id' | 'blog_categories'>;
 
+// Helper for authorized fetch
+const authFetch = async (url: string, options: RequestInit = {}) => {
+  const token = localStorage.getItem('token');
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+  };
+
+  const res = await fetch(url, { ...options, headers: { ...headers, ...options.headers } });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.error || 'Request failed');
+  }
+  return res.json();
+};
+
 // Hook pour récupérer tous les articles (pour l'admin)
 export const useGetBlogPosts = () => {
   return useQuery({
     queryKey: ['blog_posts'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*, blog_categories(name)')
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        throw new Error(error.message);
-      }
-      return data as BlogPost[];
+      const res = await authFetch("/api/admin/blog-posts");
+      return res as BlogPost[];
     }
   });
 };
@@ -45,17 +53,9 @@ export const useGetPublicBlogPosts = () => {
   return useQuery({
     queryKey: ['public_blog_posts'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('id, title, slug, excerpt, cover_image_url, published_at, blog_categories(name)')
-        .not('published_at', 'is', null)
-        .order('published_at', { ascending: false });
-
-      if (error) {
-        console.error("Erreur de chargement des articles (vérifier RLS):", error);
-        throw new Error(error.message);
-      }
-      return data;
+      const res = await fetch("/api/blog-posts");
+      if (!res.ok) throw new Error("Failed to fetch blog posts");
+      return await res.json();
     }
   });
 };
@@ -66,19 +66,12 @@ export const useGetBlogPostBySlug = (slug: string | undefined) => {
     queryKey: ['blog_post', slug],
     queryFn: async () => {
       if (!slug) return null;
-
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('title, content, excerpt, cover_image_url, published_at, created_at, blog_categories(name)')
-        .eq('slug', slug)
-        .not('published_at', 'is', null) // Ensure it's published
-        .maybeSingle();
-
-      if (error) {
-        console.error(`Error fetching post with slug ${slug}:`, error);
-        throw new Error(error.message);
+      const res = await fetch(`/api/blog-posts/${slug}`);
+      if (!res.ok) {
+        if (res.status === 404) return null;
+        throw new Error("Failed to fetch post");
       }
-      return data;
+      return await res.json();
     },
     enabled: !!slug,
   });
@@ -93,17 +86,10 @@ export const useCreateBlogPost = () => {
   return useMutation({
     mutationFn: async (postData: BlogPostFormData) => {
       if (!user) throw new Error("Vous devez être connecté.");
-
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .insert([{ ...postData, author_id: user.id }])
-        .select()
-        .single();
-
-      if (error) {
-        throw new Error(error.message);
-      }
-      return data;
+      return await authFetch("/api/blog-posts", {
+        method: 'POST',
+        body: JSON.stringify(postData)
+      });
     },
     onSuccess: () => {
       toast.success("Article créé avec succès !");
@@ -122,17 +108,10 @@ export const useUpdateBlogPost = () => {
 
   return useMutation({
     mutationFn: async ({ id, ...postData }: { id: string } & Partial<BlogPostFormData>) => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .update(postData)
-        .eq('id', id)
-        .select()
-        .single();
-
-      if (error) {
-        throw new Error(error.message);
-      }
-      return data;
+      return await authFetch(`/api/blog-posts/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(postData)
+      });
     },
     onSuccess: () => {
       toast.success("Article mis à jour avec succès !");
@@ -151,17 +130,18 @@ export const useDeleteBlogPost = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from('blog_posts').delete().eq('id', id);
-      if (error) {
-        throw new Error(error.message);
-      }
+      return await authFetch(`/api/blog-posts/${id}`, {
+        method: 'DELETE'
+      });
     },
     onSuccess: () => {
       toast.success("Article supprimé avec succès.");
-      queryClient.invalidateQueries({ queryKey: ['blog_posts'] });
+      queryClient.invalidateQueries({ queryKey: ['blog_posts'] }); // Admin view
+      queryClient.invalidateQueries({ queryKey: ['public_blog_posts'] }); // Public view
     },
     onError: (error) => {
       toast.error(`Erreur lors de la suppression: ${error.message}`);
     }
   });
 };
+

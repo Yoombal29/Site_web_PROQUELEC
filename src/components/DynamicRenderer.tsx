@@ -24,9 +24,9 @@ export function DynamicRenderer({ componentType, componentName, fallback }: Dyna
     return fallback || null;
   }
 
-  const component = componentName
-    ? components?.find(c => c.name === componentName)
-    : components?.[0];
+  const component = componentName ?
+  components?.find((c) => c.name === componentName) :
+  components?.[0];
 
   if (!component) {
     return fallback || null;
@@ -36,7 +36,7 @@ export function DynamicRenderer({ componentType, componentName, fallback }: Dyna
 }
 
 interface DynamicComponentRendererProps {
-  component: any;
+  component: unknown;
 }
 
 function DynamicComponentRenderer({ component }: DynamicComponentRendererProps) {
@@ -53,22 +53,22 @@ function DynamicComponentRenderer({ component }: DynamicComponentRendererProps) 
             label: content.ctaText,
             href: content.ctaLink,
             variant: "primary"
-          }] : []}
-        />
-      );
+          }] : []} />);
+
+
 
     case 'newsletter':
       return (
         <NewsletterSignup
           variant={settings.variant || 'card'}
-          className={settings.className}
-        />
-      );
+          className={settings.className} />);
+
+
 
     case 'gallery':
       return (
-        <MediaGallery />
-      );
+        <MediaGallery />);
+
 
     case 'cta':
       return (
@@ -78,12 +78,12 @@ function DynamicComponentRenderer({ component }: DynamicComponentRendererProps) 
           <Button
             size={settings.buttonSize || 'lg'}
             variant={settings.buttonVariant || 'default'}
-            asChild
-          >
+            asChild>
+            
             <a href={content.link || '#'}>{content.buttonText || 'En savoir plus'}</a>
           </Button>
-        </div>
-      );
+        </div>);
+
 
     case 'testimonial':
       return (
@@ -95,8 +95,8 @@ function DynamicComponentRenderer({ component }: DynamicComponentRendererProps) 
             <blockquote className="text-lg italic mb-4">"{content.quote}"</blockquote>
             <cite className="text-sm text-gray-600">- {content.author}</cite>
           </CardContent>
-        </Card>
-      );
+        </Card>);
+
 
     case 'feature':
       return (
@@ -104,8 +104,8 @@ function DynamicComponentRenderer({ component }: DynamicComponentRendererProps) 
           <div className="mb-4">{content.icon}</div>
           <h3 className="text-xl font-semibold mb-2">{title}</h3>
           {subtitle && <p className="text-gray-600">{subtitle}</p>}
-        </div>
-      );
+        </div>);
+
 
     default:
       return (
@@ -113,26 +113,26 @@ function DynamicComponentRenderer({ component }: DynamicComponentRendererProps) 
           <p className="text-yellow-800">
             Composant dynamique non reconnu: {component_type}
           </p>
-        </div>
-      );
+        </div>);
+
   }
 }
 
 // Hook pour rendre un composant spécifique
 export function useDynamicComponent(name: string) {
   const { data: components } = useDynamicComponents();
-  return components?.find(c => c.name === name);
+  return components?.find((c) => c.name === name);
 }
 
 // Composant pour rendre tous les composants d'un type
-export function DynamicComponentsList({ type, className = '' }: { type: string; className?: string }) {
+export function DynamicComponentsList({ type, className = '' }: {type: string;className?: string;}) {
   const { data: components, isLoading } = useDynamicComponents(type);
 
   if (isLoading) {
     return <div className="space-y-4">
-      {[...Array(3)].map((_, i) => (
-        <div key={i} className="animate-pulse h-32 bg-gray-200 rounded-lg"></div>
-      ))}
+      {[...Array(3)].map((_, i) =>
+      <div key={i} className="animate-pulse h-32 bg-gray-200 rounded-lg"></div>
+      )}
     </div>;
   }
 
@@ -142,9 +142,9 @@ export function DynamicComponentsList({ type, className = '' }: { type: string; 
 
   return (
     <div className={className}>
-      {components.map(component => (
-        <DynamicComponentRenderer key={component.id} component={component} />
-      ))}
-    </div>
-  );
+      {components.map((component) =>
+      <DynamicComponentRenderer key={component.id} component={component} />
+      )}
+    </div>);
+
 }

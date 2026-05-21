@@ -8,9 +8,9 @@
 import React from 'react';
 import { Zap, AlertTriangle, CheckCircle, BarChart3 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+
 import { Progress } from '@/components/ui/progress';
-import { PhaseBalance } from '@/engines/NetworkEngine';
+
 
 interface PhaseBalanceDisplayProps {
   phaseBalance: PhaseBalance;
@@ -23,7 +23,7 @@ export const PhaseBalanceDisplay: React.FC<PhaseBalanceDisplayProps> = ({
 
   // Calculer les pourcentages pour les barres de progression
   const totalPower = phaseR.puissanceTotale + phaseS.puissanceTotale + phaseT.puissanceTotale;
-  const getPercentage = (power: number) => totalPower > 0 ? (power / totalPower) * 100 : 0;
+  const getPercentage = (power: number) => totalPower > 0 ? power / totalPower * 100 : 0;
 
   const getBalanceColor = (percent: number) => {
     if (percent <= 10) return 'text-green-600';
@@ -149,23 +149,23 @@ export const PhaseBalanceDisplay: React.FC<PhaseBalanceDisplayProps> = ({
       </div>
 
       {/* Recommandations */}
-      {recommandations.length > 0 && (
-        <Card>
+      {recommandations.length > 0 &&
+      <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Recommandations d'équilibrage</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {recommandations.map((rec, index) => (
-                <div key={index} className="flex items-start gap-2">
+              {recommandations.map((rec, index) =>
+            <div key={index} className="flex items-start gap-2">
                   <Zap className="w-4 h-4 mt-0.5 text-blue-500 flex-shrink-0" />
                   <span className="text-sm">{rec}</span>
                 </div>
-              ))}
+            )}
             </div>
           </CardContent>
         </Card>
-      )}
+      }
 
       {/* Détails des charges par phase */}
       <Card>
@@ -181,17 +181,17 @@ export const PhaseBalanceDisplay: React.FC<PhaseBalanceDisplayProps> = ({
                 Phase R
               </h4>
               <div className="space-y-1">
-                {phaseR.charges.map((charge, index) => (
-                  <div key={index} className="text-xs bg-red-50 p-2 rounded">
+                {phaseR.charges.map((charge, index) =>
+                <div key={index} className="text-xs bg-red-50 p-2 rounded">
                     <div className="font-medium">{charge.nom}</div>
                     <div className="text-slate-600">
                       {formatPower(charge.puissance)} • {formatCurrent(charge.courantNominal)}
                     </div>
                   </div>
-                ))}
-                {phaseR.charges.length === 0 && (
-                  <div className="text-xs text-slate-500 italic">Aucune charge</div>
                 )}
+                {phaseR.charges.length === 0 &&
+                <div className="text-xs text-slate-500 italic">Aucune charge</div>
+                }
               </div>
             </div>
 
@@ -202,17 +202,17 @@ export const PhaseBalanceDisplay: React.FC<PhaseBalanceDisplayProps> = ({
                 Phase S
               </h4>
               <div className="space-y-1">
-                {phaseS.charges.map((charge, index) => (
-                  <div key={index} className="text-xs bg-yellow-50 p-2 rounded">
+                {phaseS.charges.map((charge, index) =>
+                <div key={index} className="text-xs bg-yellow-50 p-2 rounded">
                     <div className="font-medium">{charge.nom}</div>
                     <div className="text-slate-600">
                       {formatPower(charge.puissance)} • {formatCurrent(charge.courantNominal)}
                     </div>
                   </div>
-                ))}
-                {phaseS.charges.length === 0 && (
-                  <div className="text-xs text-slate-500 italic">Aucune charge</div>
                 )}
+                {phaseS.charges.length === 0 &&
+                <div className="text-xs text-slate-500 italic">Aucune charge</div>
+                }
               </div>
             </div>
 
@@ -223,22 +223,22 @@ export const PhaseBalanceDisplay: React.FC<PhaseBalanceDisplayProps> = ({
                 Phase T
               </h4>
               <div className="space-y-1">
-                {phaseT.charges.map((charge, index) => (
-                  <div key={index} className="text-xs bg-blue-50 p-2 rounded">
+                {phaseT.charges.map((charge, index) =>
+                <div key={index} className="text-xs bg-blue-50 p-2 rounded">
                     <div className="font-medium">{charge.nom}</div>
                     <div className="text-slate-600">
                       {formatPower(charge.puissance)} • {formatCurrent(charge.courantNominal)}
                     </div>
                   </div>
-                ))}
-                {phaseT.charges.length === 0 && (
-                  <div className="text-xs text-slate-500 italic">Aucune charge</div>
                 )}
+                {phaseT.charges.length === 0 &&
+                <div className="text-xs text-slate-500 italic">Aucune charge</div>
+                }
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
-    </div>
-  );
+    </div>);
+
 };

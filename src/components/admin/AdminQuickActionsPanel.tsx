@@ -2,9 +2,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { PlusCircle, FileText, Calendar, Upload, Eye, Settings } from "lucide-react";
+import { PlusCircle, FileText, Eye, Settings } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import BlogPostForm from "./BlogPostForm";
 import { useState } from "react";
 
@@ -13,28 +13,28 @@ export default function AdminQuickActionsPanel() {
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
   const quickActions = [
-    {
-      title: "Nouvel article",
-      description: "Créer un nouvel article de blog",
-      icon: FileText,
-      action: () => setIsCreatePostOpen(true),
-      variant: "default" as const
-    },
-    {
-      title: "Voir le site",
-      description: "Aperçu du site public",
-      icon: Eye,
-      action: () => navigate("/"),
-      variant: "outline" as const
-    },
-    {
-      title: "Blog public",
-      description: "Voir la page blog",
-      icon: Calendar,
-      action: () => navigate("/blog"),
-      variant: "outline" as const
-    }
-  ];
+  {
+    title: "Nouvel article",
+    description: "Créer un nouvel article de blog",
+    icon: FileText,
+    action: () => setIsCreatePostOpen(true),
+    variant: "default" as const
+  },
+  {
+    title: "BI Metabase",
+    description: "Analyses & Reporting",
+    icon: Eye,
+    action: () => window.open("http://localhost:3101", "_blank"),
+    variant: "outline" as const
+  },
+  {
+    title: "API Docs",
+    description: "Swagger (Port 3103)",
+    icon: Settings,
+    action: () => window.open("http://localhost:3103/api-docs", "_blank"),
+    variant: "outline" as const
+  }];
+
 
   return (
     <div className="space-y-4">
@@ -44,8 +44,8 @@ export default function AdminQuickActionsPanel() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {quickActions.map((action, index) => (
-          <Card key={index} className="cursor-pointer hover:shadow-md transition-shadow">
+        {quickActions.map((action, index) =>
+        <Card key={index} className="cursor-pointer hover:shadow-md transition-shadow">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm flex items-center gap-2">
                 <action.icon className="h-4 w-4" />
@@ -54,18 +54,18 @@ export default function AdminQuickActionsPanel() {
               <CardDescription className="text-xs">{action.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button 
-                variant={action.variant} 
-                size="sm" 
-                onClick={action.action}
-                className="w-full"
-              >
+              <Button
+              variant={action.variant}
+              size="sm"
+              onClick={action.action}
+              className="w-full">
+              
                 <PlusCircle className="h-4 w-4 mr-1" />
                 Accéder
               </Button>
             </CardContent>
           </Card>
-        ))}
+        )}
       </div>
 
       <Dialog open={isCreatePostOpen} onOpenChange={setIsCreatePostOpen}>
@@ -81,6 +81,6 @@ export default function AdminQuickActionsPanel() {
           </div>
         </DialogContent>
       </Dialog>
-    </div>
-  );
+    </div>);
+
 }

@@ -1,0 +1,902 @@
+[
+  {
+    "signature": "aac730c2fecd45db856c3073f61039b5",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\Documents.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.126Z"
+  },
+  {
+    "signature": "64dd23fd090a44f84941cf76f192aa5d",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\DynamicPage.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.133Z"
+  },
+  {
+    "signature": "6e602b8d3da9717dd7f9c2032251b257",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\Events.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.139Z"
+  },
+  {
+    "signature": "97985a16738efa33bc455c92e945c81b",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\FormationCertification.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.150Z"
+  },
+  {
+    "signature": "aa1705eb035192b2107261d07e7a2196",
+    "errorMessage": "Style inline détecté (div) - Conseil: Tailwind",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\HomePage.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.156Z"
+  },
+  {
+    "signature": "95e400d535923497a138487136df532c",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\Labels.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.165Z"
+  },
+  {
+    "signature": "8ca47359245f11e82c9dc0c03b313b05",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\Legal.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.178Z"
+  },
+  {
+    "signature": "77dba259ae4c74cbf4b4e7a288a2e8ae",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\NormesRessources.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.186Z"
+  },
+  {
+    "signature": "de26b5702d3c1fd7359d31c4af224f99",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\PartenairesPage.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.194Z"
+  },
+  {
+    "signature": "2f609e858f7cba66d139a87e1272a517",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\ProjetsRealisations.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.209Z"
+  },
+  {
+    "signature": "81cbe021fc8ff10f93413e06a72447cc",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\PublicUtility.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.216Z"
+  },
+  {
+    "signature": "fa8d35464c7cd78e8f531fa8c50fdccc",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\Showroom.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.273Z"
+  },
+  {
+    "signature": "2891a94912afff6318fde82f201389d1",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\ToolsPlatform.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.285Z"
+  },
+  {
+    "signature": "d34e4e7bc74d54ec01f976b5b922748b",
+    "errorMessage": "Bouton icon-only sans aria-label",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\Trainings.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.291Z"
+  },
+  {
+    "signature": "40b6995c6f91f4633e0f4bad2dde9fe5",
+    "errorMessage": "Risque XSS (dangerouslySetInnerHTML) dans div",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\UniversalSectionsPage.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:11:04.309Z"
+  },
+  {
+    "signature": "44c3e21a85fa3c4a2017dccc6d2eb3b2",
+    "errorMessage": "Utilisation interdite du type 'any'",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\AdminAutoRepair.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:20:06.654Z"
+  },
+  {
+    "signature": "9e01ff858b62aafa40a1806995bbc5d3",
+    "errorMessage": "Import inutilisé : GraphNode",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\app\\AppStore.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:57.466Z"
+  },
+  {
+    "signature": "d45ac37b64fd1e3615331fb962917efe",
+    "errorMessage": "Import inutilisé : AppComingSoon",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\App.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:57.601Z"
+  },
+  {
+    "signature": "a6d24f003873905a5e9282b985fe38ec",
+    "errorMessage": "Import inutilisé : Course",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\academy\\CoursePreview.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:57.984Z"
+  },
+  {
+    "signature": "c9a0ce85527c684724ac8ccdd807d9b5",
+    "errorMessage": "Import inutilisé : QCMQuestion",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\academy\\InteractiveQCM.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:58.132Z"
+  },
+  {
+    "signature": "f60996037b4a80ba7a284cc07252b5e1",
+    "errorMessage": "Import inutilisé : NormChunk",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\academy\\NormExplorer.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:58.284Z"
+  },
+  {
+    "signature": "06bbb11eb3cc252cb1e99540c5cf747a",
+    "errorMessage": "Import inutilisé : ToolType",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\academy\\presentation\\DrawingCanvas.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:58.356Z"
+  },
+  {
+    "signature": "776e44cf9fc93f34366058f648f10fa1",
+    "errorMessage": "Import inutilisé : TransitionType",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\academy\\presentation\\SlideTransitions.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:58.401Z"
+  },
+  {
+    "signature": "9a94caa3efdcbc97917ca797cba984fb",
+    "errorMessage": "Import inutilisé : Course",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\academy\\PresentationMode.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:58.437Z"
+  },
+  {
+    "signature": "bf9da9a8562b47fee5a871c0a9b6aa71",
+    "errorMessage": "Import inutilisé : CmsPlugin",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\AdminPagesPanel.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:58.918Z"
+  },
+  {
+    "signature": "ddfa1b35d5a6ef5b75a1f98ec7570887",
+    "errorMessage": "Import inutilisé : UserRole",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\AdminRolePanel.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:58.996Z"
+  },
+  {
+    "signature": "cb9b5f9ae9f3fa1c5395da324efd3d10",
+    "errorMessage": "Import inutilisé : ComponentConfig",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\AdminUniversalDashboard.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.154Z"
+  },
+  {
+    "signature": "0304c9e96681bbc36aa039c95b213083",
+    "errorMessage": "Import inutilisé : BlogPost",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\BlogPostForm.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.202Z"
+  },
+  {
+    "signature": "3500fef2442a2d8288a8aca2cde994f5",
+    "errorMessage": "Import inutilisé : PageDesignOptions",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\DesignEditor.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.220Z"
+  },
+  {
+    "signature": "94b9bcd2460b97b903f377c20ea663d2",
+    "errorMessage": "Import inutilisé : DropResult",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\MenuManagerAdvanced.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.266Z"
+  },
+  {
+    "signature": "73a51676f82b88424ea0dd9a48302181",
+    "errorMessage": "Import inutilisé : ContentBlock",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\PageBuilder.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.306Z"
+  },
+  {
+    "signature": "1330390c25b7b9e4470a6ec5a3ecc724",
+    "errorMessage": "Import inutilisé : UserRole",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\UserRoleRow.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.309Z"
+  },
+  {
+    "signature": "c88e75a8c8f65fea0da732ba2f29b5c8",
+    "errorMessage": "Import inutilisé : SyncBlock",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\admin\\__tests__\\AdvancedPageEditorSync.test.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.315Z"
+  },
+  {
+    "signature": "bd4ed0e3889f53c80745e4dfcbfbe11b",
+    "errorMessage": "Import inutilisé : AppRole",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\AdminSidebar.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.321Z"
+  },
+  {
+    "signature": "992f3e609e33606a87049b6930eef04d",
+    "errorMessage": "Import inutilisé : ReactNode",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\AnimationWrapper.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.333Z"
+  },
+  {
+    "signature": "972c10caf2e14935f77696f80fa4fa2b",
+    "errorMessage": "Import inutilisé : LucideIcon",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\AudienceOffers.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.339Z"
+  },
+  {
+    "signature": "5f5aeeca004d8ef0d706b02d0b29b387",
+    "errorMessage": "Import inutilisé : BlockContent",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\builder\\blocks\\CoreBlocks.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.369Z"
+  },
+  {
+    "signature": "c76920f12203facfa7165f4917cbd0fb",
+    "errorMessage": "Import inutilisé : Block",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\builder\\BuilderPageRenderer.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.380Z"
+  },
+  {
+    "signature": "15af33f64de8c4dfb17dbf712daab9d2",
+    "errorMessage": "Import inutilisé : GraphStore",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\canvas\\SchematicCanvas.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.462Z"
+  },
+  {
+    "signature": "fafa2cba1d29e1b458d5bb8e3f22ff5a",
+    "errorMessage": "Import inutilisé : SectionContent",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\cms\\SectionRenderer.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.475Z"
+  },
+  {
+    "signature": "135551daca23f17d77e15283b97791a2",
+    "errorMessage": "Import inutilisé : useSession",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\ConstructionPage.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.485Z"
+  },
+  {
+    "signature": "2e862f141bb5ed4e5bd9c6c8284d632b",
+    "errorMessage": "Import inutilisé : DownloadButtonConfig",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\DownloadButtonAdminForm.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.508Z"
+  },
+  {
+    "signature": "998f008f5ab79428fff6f82d3d784632",
+    "errorMessage": "Import inutilisé : GraphNode",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\editors\\NodeParameterEditor.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.536Z"
+  },
+  {
+    "signature": "acbb13e573e52c9428fa5a1e67c76f16",
+    "errorMessage": "Import inutilisé : ErrorInfo",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\ErrorBoundary.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.543Z"
+  },
+  {
+    "signature": "e962bd392808d2e2e9b1f1b072c3900d",
+    "errorMessage": "Import inutilisé : ReactNode",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\HeroSection.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.618Z"
+  },
+  {
+    "signature": "2c341673b0e632d41a464ad86e9666ec",
+    "errorMessage": "Import inutilisé : Cloud",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\office\\document\\DocumentEditor.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.739Z"
+  },
+  {
+    "signature": "e7523f152aa2ef53a17a188a3d286d63",
+    "errorMessage": "Import inutilisé : PageRecord",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\PageRenderer.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.783Z"
+  },
+  {
+    "signature": "b7fe5923e56d34e594439a70a7ac028a",
+    "errorMessage": "Import inutilisé : LucideIcon",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\QuickLinks.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.816Z"
+  },
+  {
+    "signature": "cc426e1bfaab5fc24c17c8c6e19315b9",
+    "errorMessage": "Import inutilisé : ReactNode",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\RoleProtectedRoute.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.821Z"
+  },
+  {
+    "signature": "1855635c1f7aab026d7adfb18b30ab57",
+    "errorMessage": "Import inutilisé : SearchResult",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\SearchAdvanced.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.833Z"
+  },
+  {
+    "signature": "1d5a4db8b8f07a1bdc04b42d8faf183d",
+    "errorMessage": "Import inutilisé : Charge",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\tools\\ChargeEditor.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.914Z"
+  },
+  {
+    "signature": "4e8afc13c31bca7986170901b54fb5bc",
+    "errorMessage": "Import inutilisé : PhaseBalance",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\tools\\PhaseBalanceDisplay.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:28:59.923Z"
+  },
+  {
+    "signature": "d6d30c3aae6f6d8d6299d67745504b48",
+    "errorMessage": "Import inutilisé : ControllerProps",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\ui\\form.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.046Z"
+  },
+  {
+    "signature": "7e91c9d21c4b8b50b3ee381bbb751f85",
+    "errorMessage": "Import inutilisé : DropResult",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\components\\VisualPageEditor.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.162Z"
+  },
+  {
+    "signature": "078a174ca550120dd0f3945a11c13375",
+    "errorMessage": "Import inutilisé : Course",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\data\\demoCourse.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.194Z"
+  },
+  {
+    "signature": "b524ae2a635f020c7ede74bed3f4c069",
+    "errorMessage": "Import inutilisé : PageDefinition",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\data\\enrichedPageContent.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.199Z"
+  },
+  {
+    "signature": "d2798aa81b53b24dfedfdbf075d64c56",
+    "errorMessage": "Import inutilisé : GraphStore",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\engines\\NetworkEngine.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.238Z"
+  },
+  {
+    "signature": "c30b701ec43cc9e4a3d3fdf39550c494",
+    "errorMessage": "Import inutilisé : GraphStore",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\engines\\SimulationEngine.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.251Z"
+  },
+  {
+    "signature": "679fdae191abbe2ec70db165a5192c2e",
+    "errorMessage": "Import inutilisé : GraphStore",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\engines\\ValidationEngine.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.264Z"
+  },
+  {
+    "signature": "c7fe9711b3de85aa29d85ecde419836a",
+    "errorMessage": "Import inutilisé : GraphStore",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\engines\\VoltageDropEngine.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.268Z"
+  },
+  {
+    "signature": "2a79d19896b84d263fc669c021270465",
+    "errorMessage": "Import inutilisé : LucideIcon",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\expert-lab\\components\\stats-card.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.292Z"
+  },
+  {
+    "signature": "6008ddd63090d28670281e99b7f18d3e",
+    "errorMessage": "Import inutilisé : ControllerProps",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\expert-lab\\components\\ui\\form.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.363Z"
+  },
+  {
+    "signature": "e69924e5c597f9350d681937b80afc51",
+    "errorMessage": "Import inutilisé : ToastActionElement",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\expert-lab\\hooks\\use-toast.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.459Z"
+  },
+  {
+    "signature": "1d8011eb18769078bf77502b220daa5e",
+    "errorMessage": "Import inutilisé : ClassValue",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\expert-lab\\lib\\utils.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.463Z"
+  },
+  {
+    "signature": "71f713674bf4d528aaf35553008c9876",
+    "errorMessage": "Import inutilisé : Save",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\expert-lab\\pages\\ChatPage.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.531Z"
+  },
+  {
+    "signature": "e69924e5c597f9350d681937b80afc51",
+    "errorMessage": "Import inutilisé : ToastActionElement",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\hooks\\use-toast.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.601Z"
+  },
+  {
+    "signature": "a01aa3008dc5d113d9ff9096b389051d",
+    "errorMessage": "Import inutilisé : UseMutationOptions",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\hooks\\useSafeMutation.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.717Z"
+  },
+  {
+    "signature": "b524af14f27a19afe3948d53244b4965",
+    "errorMessage": "Import inutilisé : VoltageDropModel",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\hooks\\useSchemaBuilder.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.721Z"
+  },
+  {
+    "signature": "f03783649ba738a8c30eaa8db1a4b0fe",
+    "errorMessage": "Import inutilisé : NS01001Rule",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\hooks\\useSenegalAI.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.726Z"
+  },
+  {
+    "signature": "1d8011eb18769078bf77502b220daa5e",
+    "errorMessage": "Import inutilisé : ClassValue",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\lib\\utils.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.795Z"
+  },
+  {
+    "signature": "c75261d605dd2bbe5d9c6d82f49e7759",
+    "errorMessage": "Import inutilisé : GraphStore",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\managers\\EditorManager.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.809Z"
+  },
+  {
+    "signature": "2c839dae49c7d70bc195229f4d0be1c5",
+    "errorMessage": "Import inutilisé : GraphStore",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\managers\\ExportManager.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.832Z"
+  },
+  {
+    "signature": "53facd01382ad258700b45f3a5eddbb5",
+    "errorMessage": "Import inutilisé : Block",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\admin\\BuilderPage.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.871Z"
+  },
+  {
+    "signature": "9140698c1a4296562094c8ac42b3d63a",
+    "errorMessage": "Import inutilisé : AdminSidebar",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\admin\\PartnerDashboard.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.890Z"
+  },
+  {
+    "signature": "c427e097720801a719bdd62458b04065",
+    "errorMessage": "Import inutilisé : DownloadButtonConfig",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\AdminDownloadButtonsPage.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.895Z"
+  },
+  {
+    "signature": "7e0549ca35a182f3f3981ca96e544a4f",
+    "errorMessage": "Import inutilisé : ProquelecApp",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\AppComingSoon.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.913Z"
+  },
+  {
+    "signature": "442596c1ca5ff93cb547056425874d2b",
+    "errorMessage": "Import inutilisé : AdminUserManagementPanel",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\Dashboard.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:00.958Z"
+  },
+  {
+    "signature": "71e651acb75154e75379469e94140e3b",
+    "errorMessage": "Import inutilisé : Variants",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\PressPage.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.041Z"
+  },
+  {
+    "signature": "23cddb74708802faa6e8fd749403ebb7",
+    "errorMessage": "Import inutilisé : TronçonEngine",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\SchemaBuilder.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.095Z"
+  },
+  {
+    "signature": "16f5c296820e8ed7f49f9601e0495c53",
+    "errorMessage": "Import inutilisé : Info",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\Sitemap.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.101Z"
+  },
+  {
+    "signature": "1959f8ffdf2d9b1281d59fd62ad78da6",
+    "errorMessage": "Import inutilisé : SovereignAIEngine",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\pages\\ToolsPlatform.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.117Z"
+  },
+  {
+    "signature": "d28061591c3be35079141649a6dd0923",
+    "errorMessage": "Import inutilisé : RubriqueSchema",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\rubriques\\VoltageDropRubrique.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.134Z"
+  },
+  {
+    "signature": "7e37fd4e5f7be61e0f1d1487389286ec",
+    "errorMessage": "Import inutilisé : Table",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\services\\academy\\bookletExportService.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.146Z"
+  },
+  {
+    "signature": "a5b0ffd83d6977f874fde153eeac1e8a",
+    "errorMessage": "Import inutilisé : Course",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\services\\academy\\deterministicCourseGenerator.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.171Z"
+  },
+  {
+    "signature": "3d0aa612bda575edd013c8489cc3b96a",
+    "errorMessage": "Import inutilisé : NormRule",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\services\\academy\\multiNormService.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.187Z"
+  },
+  {
+    "signature": "e9d2c0e7b74de9c13181112f2508ba55",
+    "errorMessage": "Import inutilisé : Course",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\services\\academy\\normativeCourseGenerator.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.203Z"
+  },
+  {
+    "signature": "b3aedbdbd10942d4785d2e609960e245",
+    "errorMessage": "Import inutilisé : NormRule",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\services\\academy\\normService.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.212Z"
+  },
+  {
+    "signature": "59bdf6bb2f715f8a3e612854fdad21b9",
+    "errorMessage": "Import inutilisé : Course",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\services\\academy\\pptxExportService.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.221Z"
+  },
+  {
+    "signature": "9f8eb73d5c05748ea767e5971df11a86",
+    "errorMessage": "Import inutilisé : Course",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\services\\academy\\scormExportService.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.226Z"
+  },
+  {
+    "signature": "3ee4aa479d1518e87a0b4cabe6b6ca86",
+    "errorMessage": "Import inutilisé : Course",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\services\\academy\\wordExportService.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.232Z"
+  },
+  {
+    "signature": "db9b4996c9770ac58273a89effaf04b5",
+    "errorMessage": "Import inutilisé : HomepageModuleSchema",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\services\\HomepageRegistry.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.240Z"
+  },
+  {
+    "signature": "1e48888d0916304e8fd44b25ffb5b0e3",
+    "errorMessage": "Import inutilisé : Block",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\stores\\useBuilderStore.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.256Z"
+  },
+  {
+    "signature": "d8d91fc4200fb096c167aa55054d7b1c",
+    "errorMessage": "Import inutilisé : configure",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\tests\\setup.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.284Z"
+  },
+  {
+    "signature": "e823d49fc1557a773a6efd58eb096220",
+    "errorMessage": "Import inutilisé : test",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\tests\\VoltageDropCalculator.test.tsx",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.293Z"
+  },
+  {
+    "signature": "017eee94631bac34e0fd7afacb88c763",
+    "errorMessage": "Import inutilisé : FunctionComponent",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\types\\Homepage.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.321Z"
+  },
+  {
+    "signature": "d9f09fb2253ebff926b768dfdcf30eb9",
+    "errorMessage": "Import inutilisé : GraphNode",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\types\\Rubrique.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.332Z"
+  },
+  {
+    "signature": "0b2230a2a06d1d2980d906dd22ac0747",
+    "errorMessage": "Import inutilisé : Course",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\utils\\academyExportUtils.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.336Z"
+  },
+  {
+    "signature": "ee2cbd59396a236135d273732a5716b8",
+    "errorMessage": "Import inutilisé : AppRole",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\utils\\navigation.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.342Z"
+  },
+  {
+    "signature": "0850f354403cd94d284df706ceb9a235",
+    "errorMessage": "Import inutilisé : LayoutTemplate",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\utils\\pageLayouts.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.353Z"
+  },
+  {
+    "signature": "e89b24362ca475616a8ce922db1e0e31",
+    "errorMessage": "Import inutilisé : Document",
+    "context": "AST Analysis",
+    "applied_fix": "Auto-patch V2.1",
+    "learned_from": "src\\workers\\courseGenerationWorker.ts",
+    "success_count": 1,
+    "last_applied": "2026-02-12T13:29:01.363Z"
+  }
+]

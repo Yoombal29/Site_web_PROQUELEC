@@ -8,7 +8,7 @@
  * - Cohérence des composants
  */
 
-import { GraphStore, GraphNode, GraphEdge } from '@/stores/GraphStore';
+import { GraphNode, GraphEdge } from '@/stores/GraphStore';
 
 export interface ValidationRule {
   id: string;
@@ -16,9 +16,9 @@ export interface ValidationRule {
   description: string;
   category: 'electrical' | 'safety' | 'normative' | 'compatibility';
   severity: 'error' | 'warning' | 'info';
-  condition: (graph: any, node?: any, edge?: any) => boolean;
-  message: (context?: any) => string;
-  fix?: (graph: any, target: any) => void;
+  condition: (graph: unknown, node?: unknown, edge?: unknown) => boolean;
+  message: (context?: unknown) => string;
+  fix?: (graph: unknown, target: unknown) => void;
   references?: string[]; // Articles NF C 15-100
 }
 
@@ -45,7 +45,7 @@ export class ValidationEngine {
   /**
    * Valider tout le graphe
    */
-  static validateGraph(graph: any): ValidationResult[] {
+  static validateGraph(graph: unknown): ValidationResult[] {
     const results: ValidationResult[] = [];
 
     // Validation globale
@@ -101,16 +101,16 @@ export class ValidationEngine {
   /**
    * Valider un composant spécifique
    */
-  static validateComponent(graph: any, componentId: string, type: 'node' | 'edge'): ValidationResult[] {
+  static validateComponent(graph: unknown, componentId: string, type: 'node' | 'edge'): ValidationResult[] {
     const results: ValidationResult[] = [];
     const component = type === 'node' ? graph.nodes.get(componentId) : graph.edges.get(componentId);
 
     if (!component) return results;
 
     for (const rule of this.rules) {
-      const isValid = type === 'node'
-        ? rule.condition(graph, component)
-        : rule.condition(graph, null, component);
+      const isValid = type === 'node' ?
+      rule.condition(graph, component) :
+      rule.condition(graph, null, component);
 
       if (!isValid) {
         results.push({
@@ -131,13 +131,13 @@ export class ValidationEngine {
   /**
    * Appliquer une correction automatique
    */
-  static applyFix(graph: any, result: ValidationResult): boolean {
-    const rule = this.rules.find(r => r.id === result.ruleId);
+  static applyFix(graph: unknown, result: ValidationResult): boolean {
+    const rule = this.rules.find((r) => r.id === result.ruleId);
     if (!rule?.fix || !result.targetId) return false;
 
-    const target = result.targetType === 'node'
-      ? graph.nodes.get(result.targetId)
-      : graph.edges.get(result.targetId);
+    const target = result.targetType === 'node' ?
+    graph.nodes.get(result.targetId) :
+    graph.edges.get(result.targetId);
 
     if (!target) return false;
 
@@ -155,10 +155,10 @@ export class ValidationEngine {
     fixable: number;
   } {
     return {
-      errors: results.filter(r => r.severity === 'error').length,
-      warnings: results.filter(r => r.severity === 'warning').length,
-      infos: results.filter(r => r.severity === 'info').length,
-      fixable: results.filter(r => r.fixable).length
+      errors: results.filter((r) => r.severity === 'error').length,
+      warnings: results.filter((r) => r.severity === 'warning').length,
+      infos: results.filter((r) => r.severity === 'info').length,
+      fixable: results.filter((r) => r.fixable).length
     };
   }
 }
@@ -174,8 +174,8 @@ ValidationEngine.registerRule({
   severity: 'error',
   condition: (graph) => {
     // Vérifier qu'il y a au moins un nœud de terre
-    const hasGround = Array.from(graph.nodes.values()).some(node =>
-      (node as GraphNode).type === 'GROUND' || (node as GraphNode).params?.objectId?.includes('terre')
+    const hasGround = Array.from(graph.nodes.values()).some((node) =>
+    (node as GraphNode).type === 'GROUND' || (node as GraphNode).params?.objectId?.includes('terre')
     );
     return !hasGround;
   },
@@ -198,11 +198,11 @@ ValidationEngine.registerRule({
 
     // Table de compatibilité simplifiée (valeurs approximatives)
     const maxCurrents: Record<number, number> = {
-      1.5: 16,   // 1.5mm² → 16A
-      2.5: 25,   // 2.5mm² → 25A
-      4: 32,     // 4mm² → 32A
-      6: 40,     // 6mm² → 40A
-      10: 63     // 10mm² → 63A
+      1.5: 16, // 1.5mm² → 16A
+      2.5: 25, // 2.5mm² → 25A
+      4: 32, // 4mm² → 32A
+      6: 40, // 6mm² → 40A
+      10: 63 // 10mm² → 63A
     };
 
     const maxCurrent = maxCurrents[section] || section * 10; // Approximation
@@ -218,11 +218,11 @@ ValidationEngine.registerRule({
     // Suggestion de section minimale
     const courant = edge.properties.courant || 10;
     let suggestedSection = 1.5;
-    if (courant <= 16) suggestedSection = 1.5;
-    else if (courant <= 25) suggestedSection = 2.5;
-    else if (courant <= 32) suggestedSection = 4;
-    else if (courant <= 40) suggestedSection = 6;
-    else suggestedSection = 10;
+    if (courant <= 16) suggestedSection = 1.5;else
+    if (courant <= 25) suggestedSection = 2.5;else
+    if (courant <= 32) suggestedSection = 4;else
+    if (courant <= 40) suggestedSection = 6;else
+    suggestedSection = 10;
 
     edge.properties.section = suggestedSection;
   },
@@ -246,9 +246,9 @@ ValidationEngine.registerRule({
     const materiau = edge.properties.materiau || 'Cu';
 
     const resistivite = materiau === 'Cu' ? 0.0175 : 0.0280;
-    const resistance = (2 * longueur * resistivite) / section;
+    const resistance = 2 * longueur * resistivite / section;
     const chuteTension = courant * resistance;
-    const chutePercent = (chuteTension / 230) * 100;
+    const chutePercent = chuteTension / 230 * 100;
 
     return chutePercent > 3;
   },
@@ -260,9 +260,9 @@ ValidationEngine.registerRule({
 
     const materiau = edge?.properties?.materiau || 'Cu';
     const resistivite = materiau === 'Cu' ? 0.0175 : 0.0280;
-    const resistance = (2 * longueur * resistivite) / section;
+    const resistance = 2 * longueur * resistivite / section;
     const chuteTension = courant * resistance;
-    const chutePercent = (chuteTension / 230) * 100;
+    const chutePercent = chuteTension / 230 * 100;
 
     return `Chute de tension ${chutePercent.toFixed(2)}% > 3% (limite NF C 15-100)`;
   },
@@ -280,8 +280,8 @@ ValidationEngine.registerRule({
     if (!node) return false;
 
     // Vérifier si le nœud a des connexions
-    const connectedEdges = Array.from(graph.edges.values()).filter(edge =>
-      (edge as GraphEdge).from === node.id || (edge as GraphEdge).to === node.id
+    const connectedEdges = Array.from(graph.edges.values()).filter((edge) =>
+    (edge as GraphEdge).from === node.id || (edge as GraphEdge).to === node.id
     );
 
     return connectedEdges.length === 0;
@@ -304,8 +304,8 @@ ValidationEngine.registerRule({
     if (!node || node.type !== 'SOURCE') return false;
 
     // Vérifier qu'il y a un disjoncteur en aval
-    const connectedEdges = Array.from(graph.edges.values()).filter(edge =>
-      (edge as GraphEdge).from === node.id
+    const connectedEdges = Array.from(graph.edges.values()).filter((edge) =>
+    (edge as GraphEdge).from === node.id
     );
 
     // Pour chaque connexion, vérifier qu'il y a un nœud de protection

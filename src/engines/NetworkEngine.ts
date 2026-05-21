@@ -10,20 +10,20 @@
  * Norme : NF C 15-100 Articles 523, 525
  */
 
-import { GraphStore, GraphNode, GraphEdge, Charge } from '@/stores/GraphStore';
-import { TronçonEngine, Tronçon } from './TronçonEngine';
+
+
 
 /**
  * Interface NetworkPath — Chemin électrique complet
  */
 export interface NetworkPath {
   id: string;
-  nodes: string[];          // IDs des nœuds du chemin
-  edges: string[];          // IDs des arêtes du chemin
-  longueurTotale: number;   // Longueur totale en mètres
-  chuteTotale: number;      // Chute totale en volts
+  nodes: string[]; // IDs des nœuds du chemin
+  edges: string[]; // IDs des arêtes du chemin
+  longueurTotale: number; // Longueur totale en mètres
+  chuteTotale: number; // Chute totale en volts
   chuteTotalePercent: number; // Chute totale en %
-  courant: number;          // Courant du chemin
+  courant: number; // Courant du chemin
   conformite: 'CONFORME' | 'NON_CONFORME' | 'AVERTISSEMENT';
 }
 
@@ -89,8 +89,8 @@ export class NetworkEngine {
     const phaseT: Charge[] = [];
 
     // Séparer les charges triphasées (connectées aux 3 phases) des monophasées
-    const chargesTriphase = charges.filter(c => c.type === 'TRIPHASE');
-    const chargesMonophase = charges.filter(c => c.type === 'MONOPHASE');
+    const chargesTriphase = charges.filter((c) => c.type === 'TRIPHASE');
+    const chargesMonophase = charges.filter((c) => c.type === 'MONOPHASE');
 
     // Les charges triphasées sont automatiquement équilibrées (même puissance sur chaque phase)
     for (const charge of chargesTriphase) {
@@ -138,12 +138,12 @@ export class NetworkEngine {
     // Calculer le déséquilibre (écart max par rapport à la moyenne)
     const puissanceMoyenne = (resultR.puissanceTotale + resultS.puissanceTotale + resultT.puissanceTotale) / 3;
     const ecarts = [
-      Math.abs(resultR.puissanceTotale - puissanceMoyenne),
-      Math.abs(resultS.puissanceTotale - puissanceMoyenne),
-      Math.abs(resultT.puissanceTotale - puissanceMoyenne)
-    ];
+    Math.abs(resultR.puissanceTotale - puissanceMoyenne),
+    Math.abs(resultS.puissanceTotale - puissanceMoyenne),
+    Math.abs(resultT.puissanceTotale - puissanceMoyenne)];
+
     const desequilibreMax = Math.max(...ecarts);
-    const desequilibrePercent = puissanceMoyenne > 0 ? (desequilibreMax / puissanceMoyenne) * 100 : 0;
+    const desequilibrePercent = puissanceMoyenne > 0 ? desequilibreMax / puissanceMoyenne * 100 : 0;
 
     // Générer des recommandations
     const recommandations: string[] = [];
@@ -158,10 +158,10 @@ export class NetworkEngine {
 
     // Recommandations spécifiques par phase
     const phases = [
-      { nom: 'R', data: resultR },
-      { nom: 'S', data: resultS },
-      { nom: 'T', data: resultT }
-    ];
+    { nom: 'R', data: resultR },
+    { nom: 'S', data: resultS },
+    { nom: 'T', data: resultT }];
+
 
     for (const phase of phases) {
       if (phase.data.courantTotal > 16) {
@@ -183,9 +183,9 @@ export class NetworkEngine {
    * Selon NF C 15-100 et normes de protection
    */
   public static generateCableRecommendations(
-    graph: GraphStore,
-    courantsCalcules: Map<string, number>
-  ): Array<{
+  graph: GraphStore,
+  courantsCalcules: Map<string, number>)
+  : Array<{
     tronçonId: string;
     courant: number;
     sectionRecommandee: number;
@@ -205,24 +205,24 @@ export class NetworkEngine {
     }> = [];
 
     // Table des sections selon NF C 15-100 (cuivre, installation C)
-    const sectionsCu: Array<{ section: number; ib: number; iz: number }> = [
-      { section: 1.5, ib: 13.5, iz: 16 },
-      { section: 2.5, ib: 18, iz: 20 },
-      { section: 4, ib: 25, iz: 28 },
-      { section: 6, ib: 32, iz: 36 },
-      { section: 10, ib: 46, iz: 52 },
-      { section: 16, ib: 63, iz: 76 },
-      { section: 25, ib: 88, iz: 101 },
-      { section: 35, ib: 108, iz: 125 },
-      { section: 50, ib: 134, iz: 151 },
-      { section: 70, ib: 168, iz: 192 },
-      { section: 95, ib: 207, iz: 232 },
-      { section: 120, ib: 240, iz: 269 },
-      { section: 150, ib: 275, iz: 304 },
-      { section: 185, ib: 318, iz: 350 },
-      { section: 240, ib: 380, iz: 421 },
-      { section: 300, ib: 442, iz: 490 }
-    ];
+    const sectionsCu: Array<{section: number;ib: number;iz: number;}> = [
+    { section: 1.5, ib: 13.5, iz: 16 },
+    { section: 2.5, ib: 18, iz: 20 },
+    { section: 4, ib: 25, iz: 28 },
+    { section: 6, ib: 32, iz: 36 },
+    { section: 10, ib: 46, iz: 52 },
+    { section: 16, ib: 63, iz: 76 },
+    { section: 25, ib: 88, iz: 101 },
+    { section: 35, ib: 108, iz: 125 },
+    { section: 50, ib: 134, iz: 151 },
+    { section: 70, ib: 168, iz: 192 },
+    { section: 95, ib: 207, iz: 232 },
+    { section: 120, ib: 240, iz: 269 },
+    { section: 150, ib: 275, iz: 304 },
+    { section: 185, ib: 318, iz: 350 },
+    { section: 240, ib: 380, iz: 421 },
+    { section: 300, ib: 442, iz: 490 }];
+
 
     // Analyser chaque arête (tronçon)
     for (const [edgeId, edge] of graph.edges) {
@@ -239,7 +239,7 @@ export class NetworkEngine {
 
       if (materiau === 'Cu') {
         // Pour le cuivre, utiliser Iz (courant admissible)
-        const sectionAdequate = sectionsCu.find(s => s.iz >= courant);
+        const sectionAdequate = sectionsCu.find((s) => s.iz >= courant);
         if (sectionAdequate) {
           sectionMinimale = sectionAdequate.section;
           // Section recommandée = section minimale + marge de sécurité (typiquement 1 cran supérieur)
@@ -254,7 +254,7 @@ export class NetworkEngine {
         }
       } else {
         // Pour l'aluminium, les courants admissibles sont environ 20% inférieurs
-        const sectionAdequate = sectionsCu.find(s => s.iz * 0.8 >= courant);
+        const sectionAdequate = sectionsCu.find((s) => s.iz * 0.8 >= courant);
         if (sectionAdequate) {
           sectionMinimale = sectionAdequate.section;
           const index = sectionsCu.indexOf(sectionAdequate);
@@ -298,29 +298,29 @@ export class NetworkEngine {
   }
 
   static calculateNetwork(graph: GraphStore): NetworkResult {
-    console.log('🔌 DÉBUT CALCUL RÉSEAU COMPLET');
+
 
     // 1. Identifier le point d'alimentation (source)
     const sourceNode = this.findSourceNode(graph);
     if (!sourceNode) {
       throw new Error('Aucun nœud source trouvé dans le graphe');
     }
-    console.log(`📍 Source identifiée: ${sourceNode.id} (${sourceNode.type})`);
+
 
     // 2. Calculer les courants aval → amont
     const courantsCalcules = this.calculateCurrents(graph, sourceNode.id);
-    console.log('⚡ Courants calculés:', courantsCalcules);
+
 
     // 3. Identifier tous les chemins vers les charges terminales
     const chemins = this.findAllPathsToLoads(graph, sourceNode.id);
-    console.log(`🛣️ ${chemins.length} chemins identifiés`);
+
 
     // 4. Calculer les chutes de tension cumulées
     const cheminsCalcules = this.calculatePathVoltageDrops(graph, chemins, courantsCalcules);
 
     // 5. Identifier le point le plus défavorisé
     const cheminPlusDefavorise = this.findMostDisadvantagedPath(cheminsCalcules);
-    console.log(`🎯 Point le plus défavorisé: ${cheminPlusDefavorise.id} (${cheminPlusDefavorise.chuteTotalePercent.toFixed(2)}%)`);
+
 
     // 6. Générer les recommandations
     const recommandations = this.generateRecommendations(cheminsCalcules, cheminPlusDefavorise);
@@ -330,7 +330,7 @@ export class NetworkEngine {
 
     // 8. Générer les recommandations de sections de câbles
     const recommandationsCables = this.generateCableRecommendations(graph, courantsCalcules);
-    console.log(`🔌 ${recommandationsCables.length} recommandations de câbles générées`);
+
 
     // Ajouter les recommandations de câbles aux recommandations générales
     for (const rec of recommandationsCables) {
@@ -344,17 +344,17 @@ export class NetworkEngine {
     // 9. Calculer l'équilibrage des phases si des charges triphasées existent
     let equilibragePhases: PhaseBalance | undefined;
     const toutesLesCharges = this.collectAllCharges(graph);
-    const hasTriphaseCharges = toutesLesCharges.some(c => c.type === 'TRIPHASE');
-    const hasMonophaseCharges = toutesLesCharges.some(c => c.type === 'MONOPHASE');
+    const hasTriphaseCharges = toutesLesCharges.some((c) => c.type === 'TRIPHASE');
+    const hasMonophaseCharges = toutesLesCharges.some((c) => c.type === 'MONOPHASE');
 
     if (hasTriphaseCharges || hasMonophaseCharges) {
       equilibragePhases = this.calculatePhaseBalance(toutesLesCharges);
-      console.log('⚖️ Équilibrage des phases calculé:', {
-        desequilibre: `${equilibragePhases.desequilibrePercent.toFixed(1)}%`,
-        phaseR: `${equilibragePhases.phaseR.puissanceTotale.toFixed(0)}W`,
-        phaseS: `${equilibragePhases.phaseS.puissanceTotale.toFixed(0)}W`,
-        phaseT: `${equilibragePhases.phaseT.puissanceTotale.toFixed(0)}W`
-      });
+
+
+
+
+
+
 
       // Ajouter les recommandations d'équilibrage aux recommandations générales
       recommandations.push(...equilibragePhases.recommandations);
@@ -404,7 +404,7 @@ export class NetworkEngine {
 
     // Si pas de SOURCE explicite, chercher un nœud sans arête entrante
     for (const node of graph.nodes.values()) {
-      const hasIncomingEdge = Array.from(graph.edges.values()).some(edge => edge.to === node.id);
+      const hasIncomingEdge = Array.from(graph.edges.values()).some((edge) => edge.to === node.id);
       if (!hasIncomingEdge) {
         return node;
       }
@@ -429,10 +429,10 @@ export class NetworkEngine {
    * Calcul récursif des courants aval → amont
    */
   private static calculateCurrentRecursive(
-    graph: GraphStore,
-    nodeId: string,
-    courants: Map<string, number>
-  ): number {
+  graph: GraphStore,
+  nodeId: string,
+  courants: Map<string, number>)
+  : number {
     const node = graph.nodes.get(nodeId);
     if (!node) return 0;
 
@@ -464,16 +464,16 @@ export class NetworkEngine {
 
         courantTotal += courantCharge;
 
-        console.log(`🔌 Charge ${charge.nom} (${charge.type}): ${charge.puissance}W à ${charge.tension}V (cosφ=${charge.cosPhi}) → ${courantCharge.toFixed(2)}A`);
+
       }
     } else if (node.type === 'RECEPTOR') {
       // Fallback si pas de charges définies (compatibilité)
       courantTotal += node.params.courant || 10;
-      console.log(`⚠️ Nœud ${node.id}: pas de charges définies, utilisation valeur par défaut ${courantTotal}A`);
+
     }
 
     // Ajouter les courants des arêtes sortantes
-    const outgoingEdges = Array.from(graph.edges.values()).filter(edge => edge.from === nodeId);
+    const outgoingEdges = Array.from(graph.edges.values()).filter((edge) => edge.from === nodeId);
     for (const edge of outgoingEdges) {
       const courantEdge = this.calculateCurrentRecursive(graph, edge.to, courants);
       courantTotal += courantEdge;
@@ -503,9 +503,9 @@ export class NetworkEngine {
           nodes: path.nodes,
           edges: path.edges,
           longueurTotale: 0, // Calculé plus tard
-          chuteTotale: 0,     // Calculé plus tard
+          chuteTotale: 0, // Calculé plus tard
           chuteTotalePercent: 0,
-          courant: 0,         // Calculé plus tard
+          courant: 0, // Calculé plus tard
           conformite: 'CONFORME'
         });
       }
@@ -532,10 +532,10 @@ export class NetworkEngine {
   /**
    * Trouver un chemin entre deux nœuds (BFS)
    */
-  private static findPath(graph: GraphStore, startId: string, endId: string): { nodes: string[], edges: string[] } {
-    const queue: { nodeId: string; path: string[]; edges: string[] }[] = [
-      { nodeId: startId, path: [startId], edges: [] }
-    ];
+  private static findPath(graph: GraphStore, startId: string, endId: string): {nodes: string[];edges: string[];} {
+    const queue: {nodeId: string;path: string[];edges: string[];}[] = [
+    { nodeId: startId, path: [startId], edges: [] }];
+
     const visited = new Set<string>();
 
     while (queue.length > 0) {
@@ -549,7 +549,7 @@ export class NetworkEngine {
       }
 
       // Explorer les arêtes sortantes
-      const outgoingEdges = Array.from(graph.edges.values()).filter(edge => edge.from === nodeId);
+      const outgoingEdges = Array.from(graph.edges.values()).filter((edge) => edge.from === nodeId);
       for (const edge of outgoingEdges) {
         if (!visited.has(edge.to)) {
           queue.push({
@@ -568,11 +568,11 @@ export class NetworkEngine {
    * Calculer les chutes de tension le long des chemins
    */
   private static calculatePathVoltageDrops(
-    graph: GraphStore,
-    chemins: NetworkPath[],
-    courants: Map<string, number>
-  ): NetworkPath[] {
-    return chemins.map(chemin => {
+  graph: GraphStore,
+  chemins: NetworkPath[],
+  courants: Map<string, number>)
+  : NetworkPath[] {
+    return chemins.map((chemin) => {
       let longueurTotale = 0;
       let chuteTotale = 0;
 
@@ -583,13 +583,13 @@ export class NetworkEngine {
           longueurTotale += edge.properties.length || 0;
           // Chute simplifiée (à améliorer avec vraie formule)
           const courant = courants.get(edgeId) || 0;
-          const resistance = (edge.properties.section && edge.properties.materiau) ?
-            this.calculateResistance(edge.properties.length, edge.properties.section, edge.properties.materiau) : 0;
+          const resistance = edge.properties.section && edge.properties.materiau ?
+          this.calculateResistance(edge.properties.length, edge.properties.section, edge.properties.materiau) : 0;
           chuteTotale += courant * resistance;
         }
       }
 
-      const chuteTotalePercent = 230 > 0 ? (chuteTotale / 230) * 100 : 0; // Tension de référence 230V
+      const chuteTotalePercent = 230 > 0 ? chuteTotale / 230 * 100 : 0; // Tension de référence 230V
       const courant = courants.get(chemin.nodes[chemin.nodes.length - 1]) || 0;
 
       return {
@@ -608,7 +608,7 @@ export class NetworkEngine {
   private static calculateResistance(longueur: number, section: number, materiau: string): number {
     // Résistivité en Ω·mm²/m
     const resistivite = materiau === 'Cu' ? 0.0175 : 0.028; // Cuivre ou Aluminium
-    return (resistivite * longueur) / section;
+    return resistivite * longueur / section;
   }
 
   /**
@@ -616,7 +616,7 @@ export class NetworkEngine {
    */
   private static findMostDisadvantagedPath(chemins: NetworkPath[]): NetworkPath {
     return chemins.reduce((max, chemin) =>
-      chemin.chuteTotalePercent > max.chuteTotalePercent ? chemin : max
+    chemin.chuteTotalePercent > max.chuteTotalePercent ? chemin : max
     );
   }
 
@@ -661,8 +661,8 @@ export class NetworkEngine {
    * Déterminer le verdict global du réseau
    */
   private static determineGlobalVerdict(chemins: NetworkPath[]): 'CONFORME' | 'NON_CONFORME' | 'AVERTISSEMENT' {
-    const nonConformes = chemins.filter(c => c.conformite === 'NON_CONFORME');
-    const avertissements = chemins.filter(c => c.conformite === 'AVERTISSEMENT');
+    const nonConformes = chemins.filter((c) => c.conformite === 'NON_CONFORME');
+    const avertissements = chemins.filter((c) => c.conformite === 'AVERTISSEMENT');
 
     if (nonConformes.length > 0) {
       return 'NON_CONFORME';

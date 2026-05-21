@@ -9,8 +9,8 @@
  */
 
 export interface HistoryState {
-  nodes: Map<string, any>;
-  edges: Map<string, any>;
+  nodes: Map<string, unknown>;
+  edges: Map<string, unknown>;
   timestamp: number;
   description: string;
 }
@@ -47,7 +47,7 @@ export class HistoryManager {
   undo(): HistoryState | null {
     if (this.past.length === 0) return null;
 
-    const currentState: any = { nodes: new Map(), edges: new Map() };
+    const currentState: unknown = { nodes: new Map(), edges: new Map() };
     this.future.unshift(currentState);
 
     return this.past.pop() || null;

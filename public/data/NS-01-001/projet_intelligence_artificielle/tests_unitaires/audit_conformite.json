@@ -1,0 +1,3629 @@
+﻿{
+    "total_articles": 983,
+    "anomalies": [
+        {
+            "article_id": "1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "131.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "131.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "131.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "131.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "131.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "131.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "131.6.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "131.6.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "131.6.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "132.10",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "132.11",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "132.12",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "132.2.1",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "132.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "132.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "132.2.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "132.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "132.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "132.6",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "132.7",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "132.8",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "132.9",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "133.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "133.2.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "133.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "133.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "134.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "134.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "134.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "311.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "311.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "311.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "312.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "312.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "312.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "312.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "312.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "312.2.4.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "312.2.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "312.2.4.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "312.2.4.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "313.1.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "313.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "313.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "314.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "314.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "314.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "314.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "314.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "330.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "330.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "330.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "330.1.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "330.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "340.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "340.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "361.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "361.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "361.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "361.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "361.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "364.1",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "364.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "364.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "364.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "410.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "410.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "410.3.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "410.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "410.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "410.3.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "410.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "410.3.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "410.3.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "410.3.7",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "410.3.7",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.3.1.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.3.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.3.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.3.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.3.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.3.2.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.3.2.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.4.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.4.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.4.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.4.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.5.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.5.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.5.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.6.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.6.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.6.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.6.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.6.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.6.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.6.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.6.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.6.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.6.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "411.7",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "411.7",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.7.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "411.7.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "412.1.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "412.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "412.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "412.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "412.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "412.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "412.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "412.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "412.2.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "412.2.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "413.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "413.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "413.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "413.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "413.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "413.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "413.3.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "413.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "413.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "413.3.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "413.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "413.3.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "413.3.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "413.3.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "413.3.6",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "413.3.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "414.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "414.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "414.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "414.3.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.3.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "414.3.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.3.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "414.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.4.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.4.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.4.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "414.4.6",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "414.4.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "415.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "415.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "415.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "415.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "415.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "415.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "415.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "415.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "421.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "421.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "421.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "421.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "421.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "421.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "421.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "421.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "421.6",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "421.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "422.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "422.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.10",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "422.1.11",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.13",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.14",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "422.1.14",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.16",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.17",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "422.1.17",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.18",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "422.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "422.1.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "422.1.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.7",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.8",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.1.9",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "422.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "422.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.2.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.2.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.2.2.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "422.2.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.2.2.5",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "422.2.2.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.2.2.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "422.4.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "422.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.10",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.12",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.13",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.14",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.15",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.16",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "424.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "424.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.7",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.8",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "424.8",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "424.9",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "430.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "430.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "431.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "431.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "431.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "431.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "431.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "431.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "432.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "432.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "432.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "433.0",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "433.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "433.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "433.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "433.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "433.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "433.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "433.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "433.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "433.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "434.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "434.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "434.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "434.2.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "434.2.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "434.2.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "434.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "434.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "434.5.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "434.5.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "434.5.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "434.5.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "435.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "442.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "442.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "442.2.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "442.2.4.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "442.2.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "442.2.4.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "442.2.5",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "442.2.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "442.2.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "442.2.5.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "442.2.6.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "442.2.6.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "442.2.6.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "442.2.6.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "442.2.6.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "442.7",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "442.7",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "443.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "443.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "443.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "443.3.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "443.3.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "443.3.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "443.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "443.3.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "443.3.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "443.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "443.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "443.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "444.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "444.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.11",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.12",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "444.3.13",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "444.3.13",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.14",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "444.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.6.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.6.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "444.3.6.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.7",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.3.8",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.4.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "444.4.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "444.4.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "445.1",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "445.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "445.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "445.1.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "445.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "445.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "445.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "445.1.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "461.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "461.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "461.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "461.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "461.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "462.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "462.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "462.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "462.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "462.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "462.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "463.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "463.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "463.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "463.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "463.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "463.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "463.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "465.1.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "465.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "465.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "465.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "465.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "465.1.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "465.1.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "465.1.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "465.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "465.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "465.3.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "465.3.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "465.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "511.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "511.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "511.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "511.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "512.1.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "512.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "512.2.10.1.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "512.2.10.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "512.2.10.1.9",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "512.2.10.2.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "513.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "514.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "514.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "514.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "514.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "514.3.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "514.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "514.5.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "514.5.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "514.5.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "514.5.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "515.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "515.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "515.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "520.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "520.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "520.2.3",
+            "issue": "Coupure syntaxique détectée (tiret)"
+        },
+        {
+            "article_id": "521.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "521.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "521.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "521.6.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.10",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.11",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "521.6.11",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.12",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.6",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "521.6.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.7",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.8",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.6.9",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "521.7",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "521.8",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "522.1",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "522.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "522.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "522.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.0",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.1",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "523.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "523.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "523.1.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "523.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.4.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.4.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.5.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "523.5.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "523.5.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.5.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "523.6",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "523.7",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "524.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "524.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "524.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "524.2.2",
+            "issue": "Coupure syntaxique détectée (tiret)"
+        },
+        {
+            "article_id": "524.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "524.2.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "526.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "526.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "526.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "526.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "526.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "526.5",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "526.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "526.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "526.7",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "526.8",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "526.8",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "527.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "527.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "527.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "527.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "527.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "527.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "528.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "528.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "528.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "528.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "528.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "528.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "528.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "528.2.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.1.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.1.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "529.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.5.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.5.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.5.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.5.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.7.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "529.7.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "530.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "530.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "530.3.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "530.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "530.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "530.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "530.4.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "530.4.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "530.4.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "530.4.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "530.4.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "531.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "531.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "531.2.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "531.2.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "531.2.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "531.2.1.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "531.2.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "531.2.1.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "531.2.1.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "531.2.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "531.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "531.2.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "531.2.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "531.2.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "531.2.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "531.2.4.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "531.2.4.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "531.2.4.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "531.2.4.3.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "531.2.5.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "531.2.5.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "531.2.5.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "531.2.5.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "533.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "533.1.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "533.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "533.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "533.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "534.1",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "534.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "534.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "534.1.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "534.1.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.3.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.3.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.4.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "534.1.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.4.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.5.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.5.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.5.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "534.1.5.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.5.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.5.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.1.6",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "534.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "534.2.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "534.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "535.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "535.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "535.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "535.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "535.3.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "535.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "535.3.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "535.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "535.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "535.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "535.4.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "536.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "536.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "536.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.2.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "536.2.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.2.1.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "536.2.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.2.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.2.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "536.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "536.3.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "536.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.3.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.3.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.3.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.5",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "536.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "536.5.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.5.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "536.5.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "536.5.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "536.5.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "537.1",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "537.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "537.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "537.1.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "541.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "542.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "542.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.1.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "542.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.1.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "542.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "542.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.2.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "542.2.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.2.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "542.2.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.2.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.3.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "542.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.3.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.4.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "542.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "542.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "542.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "543.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.1.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "543.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "543.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "543.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.3.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.3.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "543.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "543.4.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "543.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "543.4.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "543.4.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "543.4.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "543.4.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "543.7",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "544.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "544.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "544.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "544.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "545.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "545.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "545.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "551.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "551.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "551.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "551.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "553.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "553.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "553.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "554.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "554.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "554.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "554.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "554.2.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "554.2.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "554.2.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "555.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "555.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "555.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "555.1.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "555.1.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "555.1.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "555.1.8",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "555.1.9",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "555.1.9",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "555.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "556.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "557.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "557.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "557.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "557.2.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "557.2.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "557.2.7",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "557.2.8",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "558.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "558.3.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "558.3.2.2.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "558.3.2.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "558.3.2.2.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "558.3.2.2.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "558.3.2.2.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "558.3.2.2.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "558.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "558.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "558.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "558.4.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "558.5.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "558.5.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "559.1.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "559.1.2.2",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "559.1.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "559.1.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "559.1.2.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "559.1.2.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "559.2.3.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "559.2.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "559.2.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "559.2.4.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "559.2.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "559.2.9.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "559.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "559.5.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "559.5.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "561.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "561.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "561.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "561.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "561.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "562.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "562.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "562.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "562.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "562.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "562.5",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "562.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "562.7",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "562.7",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "563.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "563.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "563.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "563.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "563.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "563.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "563.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "564.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "564.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "564.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "564.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "565.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "565.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "565.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "565.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "610.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "610.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "610.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "610.1.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "610.1.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "610.1.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "610.1.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "610.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "611.1",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "611.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "611.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "611.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "612.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "612.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "612.6.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "612.6.4.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "612.6.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "612.6.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "612.6.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "612.7",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "620.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "620.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "701.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "701.320.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "701.320.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.320.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "701.320.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.320.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "701.320.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.320.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.320.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "701.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "701.414.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.414.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.414.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.415.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "701.415.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.5",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "701.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "701.52",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "701.52",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "701.520.01",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.520.02",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "701.55",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "701.71.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "702.411.3.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "702.411.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "702.411.3.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "702.414.1.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "702.414.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "702.46",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "702.512.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "702.53",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "702.55.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "702.55.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "702.55.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "703.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "703.2.09.01",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "703.414.4.7",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "703.52",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "703.53",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.1.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.1.5",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "704.312.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.351",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.352",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.411.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.411.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "704.43",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.433",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.511.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.511.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "704.52",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "704.52",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.522.8.1.8",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "704.522.8.1.8",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "704.555.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "705.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "705.414",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "705.415.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "705.415.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "705.443",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "705.443",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "705.512",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "705.512",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "705.55",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "706.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "706.415.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "708.31",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "708.411.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "708.411.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "708.530.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "708.530.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "708.530.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "708.530.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "708.530.2.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "708.530.2.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "708.530.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "708.530.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "708.530.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "708.531.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "708.533",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "708.559.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "708.559.1.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "708.559.1.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "708.559.1.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "709.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "709.2.3",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "709.411.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "709.411.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "709.51",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "709.52.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "709.530.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "709.530.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "709.530.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "709.530.4",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "709.530.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "709.559.1.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "711.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "711.411.3.1.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "711.411.3.1.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "711.411.6",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "711.422.1.13",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "711.53",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "711.551",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "711.559.2.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "711.559.2.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "711.6",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "717.411",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "717.411.3.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "717.512",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "717.555.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "717.559.1.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "752.542",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "752.55",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "753.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "753.4.1.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "753.4.1.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "753.4.1.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "753.4.1.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "753.4.1.4",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "753.4.1.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "753.5.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "753.6",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "753.6",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "753.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "753.6.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.314.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.314.2.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.411.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.411.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "771.443",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.462.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "771.465.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.465.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "771.514.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.524",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.531.2.3.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.531.2.3.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "771.558",
+            "issue": "Article trop court (< 40 car.)"
+        },
+        {
+            "article_id": "771.558",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.558",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "771.558.2.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.558.2.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.558.5",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.559.6.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "771.559.6.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "772.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "772.2.3.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "772.2.3.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "772.2.3.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "772.2.3.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "772.2.3.6",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "772.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "772.3.2.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "772.3.2.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "772.3.2.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "772.3.2.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "772.3.2.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "772.3.2.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "772.3.2.4",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "772.4.1",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "772.4.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "772.4.2",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "773.411.3",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "781.1",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "781.2",
+            "issue": "Ne finit pas par une ponctuation"
+        },
+        {
+            "article_id": "781.4.3",
+            "issue": "Commence par une minuscule suspecte"
+        },
+        {
+            "article_id": "781.5.3",
+            "issue": "Ne finit pas par une ponctuation"
+        }
+    ]
+}

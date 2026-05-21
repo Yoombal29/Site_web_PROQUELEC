@@ -1,13 +1,24 @@
 /**
  * Types Canoniques pour le Système CMS PROQUELEC (Gutenberg-style)
- * Utilisés pour le contrat de données entre Supabase ↔ UI ↔ Renderer
+ * Utilisés pour le contrat de données entre API locale ↔ UI ↔ Renderer
  */
 
 export type WorkflowStatus = 'draft' | 'review' | 'approved' | 'published';
 export type CommentStatus = 'open' | 'closed';
 
+// Registre des Sections Personnalisées
+export interface CustomSection {
+  id: string;
+  type: 'text' | 'image' | 'gallery' | 'testimonials' | 'cta' | 'stats' | 'features';
+  title: string;
+  content: string;
+  position: number;
+  enabled: boolean;
+  settings?: unknown;
+}
+
 // Contrat de Bloc Versionné
-export interface ContentBlock<T = any> {
+export interface ContentBlock<T = unknown> {
   id: string;
   type: string;
   version: number; // Important pour la compatibilité future
@@ -37,6 +48,7 @@ export interface PageDesignOptions {
   heading_font: string;
   body_font: string;
   custom_css?: string;
+  custom_sections: CustomSection[];
 }
 
 // Options SEO Avancées
@@ -61,8 +73,8 @@ export interface CmsPlugin {
   version: string;
   category: string;
   icon?: string;
-  settings_schema: any;
-  default_settings: any;
+  settings_schema: unknown;
+  default_settings: unknown;
   is_active_globally: boolean;
   created_at: string;
 }
@@ -76,8 +88,8 @@ export interface CmsTheme {
   preview_image?: string;
   category: string;
   design_config: Partial<PageDesignOptions>;
-  header_config: any;
-  footer_config: any;
+  header_config: unknown;
+  footer_config: unknown;
   is_premium: boolean;
   created_at: string;
 }

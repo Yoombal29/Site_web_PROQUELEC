@@ -10,33 +10,37 @@ import { usePages, useCreatePage, useUpdatePage, useDeletePage } from '@/hooks/u
 import { useContentVersioning, ContentVersion } from '@/hooks/useContentVersioning';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { useCmsPlugins, useCmsThemes, useTogglePlugin } from '@/hooks/useCmsRegistry';
-import { CmsPlugin, CmsTheme } from '@/types/PageSystem';
+
+
+import { pageSchema } from '@/lib/schemas';
+import { useAutoSave } from '@/hooks/useAutosave';
 import {
-  FileText, Search, Palette, Code, Image, Settings, Plus, Edit, Trash2, Save, X,
-  Bold, Italic, Underline, Link, List, ListOrdered, AlignLeft, AlignCenter, AlignRight,
-  Eye, Calendar, Tag, User, History, Globe, Smartphone, Monitor, Share2, GitBranch,
-  Clock, Users, Shield, Zap, Filter, Download, Upload, Copy, CheckCircle, AlertTriangle,
-  Info, Star, Heart, MessageSquare, ThumbsUp, BarChart3, TrendingUp, Activity, Target,
-  Award, BookOpen, Languages, Workflow, Lock, Unlock, EyeOff, RefreshCw, Archive,
-  FileCheck, UserCheck, Bell, Settings2, Layers, Grid3X3, Layout, Type, Hash, AtSign,
-  Mail, Phone, MapPin, DollarSign, Percent, ToggleLeft, ToggleRight, Sliders, Video,
-  File, Folder, FolderOpen, ChevronDown, ChevronRight, MoreHorizontal, ExternalLink,
-  Link2, Unlink, Anchor, Heading1, Heading2, Heading3, Quote, Code2, Strikethrough,
-  Superscript, Subscript, Indent, Outdent, Table, Columns, Rows, Square, Circle,
-  Triangle, Hexagon, Trophy, Medal, Crown, Gem, Diamond, Sparkles, Rainbow, Sun,
-  Moon, Cloud, Wind, Thermometer, Droplets, Flame, Snowflake, Leaf, Flower, TreePine,
-  Mountain, Waves, Compass, Mic, Building2, PawPrint, SeparatorHorizontal, ShowerHead,
-  Power, Brackets, Mouse, Keyboard, Printer, Speaker, Headphones, Camera, Webcam,
-  Tablet, Watch, Gamepad2, Joystick, Puzzle, Shuffle, Repeat, Play, Pause, Volume2,
-  VolumeX, Cast, Airplay, Music, Disc, Mic2, Equal, PlusCircle, MinusCircle, HelpCircle,
-  Wand2, Laptop, Library, LifeBuoy, Lightbulb, LineChart, Newspaper, Nfc, Package,
-  PaintBucket, Paperclip, Pencil, PiggyBank, QrCode, Receipt, Recycle, Save as SaveIcon,
-  Search as SearchIcon, Send, Share, Sheet, ShoppingBag, ShoppingCart, Skull, Smile,
-  SortAsc, SortDesc, StickyNote, Terminal, Ticket, Timer, Trash, Twitch, Twitter,
-  Umbrella, Undo, Youtube, ZoomIn, ZoomOut
-} from 'lucide-react';
+  FileText, Search, Palette, Code, Image, Settings, Plus, Trash2, Save, X,
+  Bold, Italic, Underline, Link, List, ListOrdered,
+  Eye, History, Smartphone, Monitor, GitBranch,
+  Zap, AlertTriangle,
+  BarChart3,
+  Workflow,
+  Layout,
+
+
+
+
+  Sparkles,
+
+
+
+  Tablet } from
+
+
+
+
+
+
+'lucide-react';
 import { AdminPageEditor } from './AdminPageEditor';
 import { MonacoTabContent } from './MonacoTabContent';
+import { MediaSelector } from '@/components/MediaLibrary';
 
 interface Page {
   id?: string;
@@ -44,14 +48,14 @@ interface Page {
   slug: string;
   content: string;
   excerpt?: string;
-  content_blocks?: any[];
+  content_blocks?: unknown[];
   meta_description: string;
   meta_keywords: string;
   meta_robots: string;
   featured_image: string;
   template: string;
-  design_options?: any;
-  seo_options?: any;
+  design_options?: unknown;
+  seo_options?: unknown;
   show_hero: boolean;
   show_footer: boolean;
   custom_css: string;
@@ -72,13 +76,15 @@ interface Page {
   tags: string[];
   author: string;
   reading_time: number;
+  language_code?: string;
   created_at?: string;
   updated_at?: string;
+  structure_json?: unknown;
 }
 
 const AdminPagesPanel: React.FC = () => {
   const { toast } = useToast();
-  const { data: pages, isLoading: loading } = usePages();
+  const { data: pages, isLoading: loading, refetch } = usePages();
   const createPageMutation = useCreatePage();
   const updatePageMutation = useUpdatePage();
   const deletePageMutation = useDeletePage();
@@ -103,6 +109,7 @@ const AdminPagesPanel: React.FC = () => {
     seo_options: {},
     show_hero: true,
     show_footer: true,
+    structure_json: [],
     custom_css: '',
     custom_js: '',
     header_html: '',
@@ -120,22 +127,23 @@ const AdminPagesPanel: React.FC = () => {
     categories: [],
     tags: [],
     author: '',
-    reading_time: 0
+    reading_time: 0,
+    language_code: 'fr'
   });
 
   // Auto-generate slug from title
   useEffect(() => {
     if (!editingPage && formData.title) {
-      const autoSlug = formData.title
-        .toLowerCase()
-        .normalize('NFD') // decompose accents
-        .replace(/[\u0300-\u036f]/g, '') // remove accents
-        .replace(/[^a-z0-9]+/g, '-') // non-alphanum to hyphens
-        .replace(/^-+|-+$/g, ''); // trim hyphens
+      const autoSlug = formData.title.
+      toLowerCase().
+      normalize('NFD') // decompose accents
+      .replace(/[\u0300-\u036f]/g, '') // remove accents
+      .replace(/[^a-z0-9]+/g, '-') // non-alphanum to hyphens
+      .replace(/^-+|-+$/g, ''); // trim hyphens
 
       // Only update if slug is empty or looks like a draft slug
       if (!formData.slug || formData.slug === autoSlug.slice(0, -1)) {
-        setFormData(prev => ({ ...prev, slug: autoSlug }));
+        setFormData((prev) => ({ ...prev, slug: autoSlug }));
       }
     }
   }, [formData.title, editingPage]);
@@ -144,7 +152,7 @@ const AdminPagesPanel: React.FC = () => {
     setFormData({
       title: '',
       slug: '',
-      // ... rest of resetForm
+      structure_json: [],
       content: '',
       excerpt: '',
       content_blocks: [],
@@ -174,10 +182,16 @@ const AdminPagesPanel: React.FC = () => {
       categories: [],
       tags: [],
       author: '',
-      reading_time: 0
+      reading_time: 0,
+      language_code: 'fr'
     });
     setEditingPage(null);
     setActiveTab('content');
+  };
+
+  const ErrorMessage = ({ field }: {field: string;}) => {
+    if (!formErrors[field]) return null;
+    return <span className="text-xs text-red-500 mt-1 animate-in fade-in slide-in-from-top-1">{formErrors[field]}</span>;
   };
 
   // Hooks pour les fonctionnalités avancées
@@ -187,7 +201,7 @@ const AdminPagesPanel: React.FC = () => {
   // États pour les fonctionnalités avancées
   const [versions, setVersions] = useState<ContentVersion[]>([]);
   const [showVersions, setShowVersions] = useState(false);
-  const [analyticsData, setAnalyticsData] = useState<any>(null);
+  const [analyticsData, setAnalyticsData] = useState<unknown>(null);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [previewMode, setPreviewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [showPreview, setShowPreview] = useState(false);
@@ -199,26 +213,32 @@ const AdminPagesPanel: React.FC = () => {
   const [bulkAction, setBulkAction] = useState<'publish' | 'unpublish' | 'delete' | null>(null);
   const [showWorkflow, setShowWorkflow] = useState(false);
   const [workflowStatus, setWorkflowStatus] = useState<'draft' | 'review' | 'approved' | 'published'>('draft');
-  const [assignedReviewers, setAssignedReviewers] = useState<string[]>([]);
-  const [customFields, setCustomFields] = useState<any[]>([]);
   const [seoScore, setSeoScore] = useState<number>(0);
   const [readabilityScore, setReadabilityScore] = useState<number>(0);
-  const [performanceMetrics, setPerformanceMetrics] = useState<any>(null);
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
+  const { restore: restoreDraft, clear: clearDraft } = useAutoSave(
+    editingPage ? `page_${editingPage.id}` : 'new_page',
+    formData,
+    isDialogOpen
+  );
+
+  const handleRestoreDraft = () => {
+    const draft = restoreDraft();
+    if (draft) {
+      setFormData(draft);
+      toast({ title: "Brouillon restauré" });
+    }
+  };
 
   // Hooks pour les nouvelles fonctionnalités Phase 3
   const { data: availablePlugins, isLoading: loadingPlugins } = useCmsPlugins();
   const { data: availableThemes, isLoading: loadingThemes } = useCmsThemes();
   const togglePluginMutation = useTogglePlugin();
 
-  const handleEdit = (page: any) => {
-    // ICE ENGINE CHECK
-    // If the page is configured for "code" engine (Monaco), we use the new specialized editor
-    // instead of the standard dialog form.
-    if (page.editor_engine === 'code') {
-      setEditingPage(page);
-      setIsIceEditorOpen(true);
-      return;
-    }
+  const handleEdit = (page: unknown) => {
+    // Removed auto-switch to ICE Editor to prioritize Settings Dialog
+    // if (page.editor_engine === 'code') { ... }
 
     setEditingPage(page);
     setWorkflowStatus(page.workflow_status || 'draft');
@@ -252,10 +272,11 @@ const AdminPagesPanel: React.FC = () => {
       publish_date: page.publish_date || '',
       unpublish_date: page.unpublish_date || '',
       menu_order: page.menu_order || 0,
-      categories: page.categories || [],
-      tags: page.tags || [],
+      categories: Array.isArray(page.categories) ? page.categories : [],
+      tags: Array.isArray(page.tags) ? page.tags : [],
       author: page.author || '',
-      reading_time: page.reading_time || 0
+      reading_time: page.reading_time || 0,
+      structure_json: page.structure_json || []
     });
     setIsDialogOpen(true);
   };
@@ -263,7 +284,7 @@ const AdminPagesPanel: React.FC = () => {
   const handleApplyTheme = async (theme: CmsTheme) => {
     if (!window.confirm(`Appliquer le thème "${theme.display_name}" ? Vos réglages de design actuels seront mis à jour.`)) return;
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       template: theme.name,
       design_options: {
@@ -274,7 +295,7 @@ const AdminPagesPanel: React.FC = () => {
 
     toast({
       title: 'Thème appliqué',
-      description: `Le thème ${theme.display_name} a été préchargé dans le formulaire. N'oubliez pas de sauvegarder la page.`,
+      description: `Le thème ${theme.display_name} a été préchargé dans le formulaire. N'oubliez pas de sauvegarder la page.`
     });
   };
 
@@ -286,7 +307,7 @@ const AdminPagesPanel: React.FC = () => {
       });
       toast({
         title: plugin.is_active_globally ? 'Plugin désactivé' : 'Plugin activé',
-        description: `Le plugin ${plugin.display_name} a été mis à jour globalement.`,
+        description: `Le plugin ${plugin.display_name} a été mis à jour globalement.`
       });
     } catch (err) {
       toast({
@@ -299,47 +320,59 @@ const AdminPagesPanel: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormErrors({});
 
     const submitData = {
       ...formData,
       workflow_status: workflowStatus,
-      is_published: workflowStatus === 'published',
-      // Sanitize dates: Postgres TIMESTAMPTZ rejects empty strings, expects NULL
+      is_published: workflowStatus === 'published' || formData.is_published,
       publish_date: formData.publish_date || null,
       unpublish_date: formData.unpublish_date || null,
-      // Sanitize numerics: Ensure they are strict Integers (no floats, no strings)
       reading_time: Math.floor(Number(formData.reading_time) || 0),
       menu_order: Math.floor(Number(formData.menu_order) || 0)
     };
 
-    console.log('Submitting data payload:', submitData);
+    // Validation avec Zod
+    const validation = pageSchema.safeParse(submitData);
+    if (!validation.success) {
+      const errors: Record<string, string> = {};
+      validation.error.errors.forEach((err) => {
+        if (err.path[0]) errors[err.path[0].toString()] = err.message;
+      });
+      setFormErrors(errors);
+      toast({
+        title: "Erreur de validation",
+        description: "Veuillez corriger les erreurs dans le formulaire.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const validatedData = validation.data;
+
 
     try {
       if (editingPage) {
-        await updatePageMutation.mutateAsync({ id: editingPage.id!, ...submitData });
+        await updatePageMutation.mutateAsync({ id: editingPage.id!, ...validatedData });
         toast({
           title: 'Page mise à jour',
-          description: 'La page a été mise à jour avec succès.',
+          description: 'La page a été mise à jour avec succès.'
         });
       } else {
-        await createPageMutation.mutateAsync(submitData);
+        await createPageMutation.mutateAsync(validatedData);
         toast({
           title: 'Page créée',
-          description: 'La page a été créée avec succès.',
+          description: 'La page a été créée avec succès.'
         });
       }
       setIsDialogOpen(false);
       resetForm();
-    } catch (error: any) {
-      console.error('Submit error full details:', error);
-      console.error('Error message:', error.message);
-      console.error('Error details:', error.details);
-      console.error('Error hint:', error.hint);
-
+    } catch (error: unknown) {
+      console.error('Submit error details:', error);
       toast({
-        title: 'Erreur',
-        description: `Erreur lors de la sauvegarde: ${error.message || 'Erreur inconnue'}`,
-        variant: 'destructive',
+        title: 'Erreur Serveur',
+        description: error.message || 'Une erreur est survenue lors de la sauvegarde.',
+        variant: 'destructive'
       });
     }
   };
@@ -350,13 +383,13 @@ const AdminPagesPanel: React.FC = () => {
         await deletePageMutation.mutateAsync(id);
         toast({
           title: 'Page supprimée',
-          description: 'La page a été supprimée avec succès.',
+          description: 'La page a été supprimée avec succès.'
         });
       } catch (error) {
         toast({
           title: 'Erreur',
           description: 'Une erreur est survenue lors de la suppression.',
-          variant: 'destructive',
+          variant: 'destructive'
         });
       }
     }
@@ -375,14 +408,14 @@ const AdminPagesPanel: React.FC = () => {
       );
       toast({
         title: 'Version créée',
-        description: 'Une nouvelle version de la page a été créée.',
+        description: 'Une nouvelle version de la page a été créée.'
       });
       loadVersions();
     } catch (error) {
       toast({
         title: 'Erreur',
         description: 'Erreur lors de la création de la version.',
-        variant: 'destructive',
+        variant: 'destructive'
       });
     }
   };
@@ -407,7 +440,7 @@ const AdminPagesPanel: React.FC = () => {
         setFormData(JSON.parse(restoredVersion.content));
         toast({
           title: 'Version restaurée',
-          description: `La version ${restoredVersion.version} a été restaurée avec succès.`,
+          description: `La version ${restoredVersion.version} a été restaurée avec succès.`
         });
         loadVersions();
       }
@@ -415,7 +448,7 @@ const AdminPagesPanel: React.FC = () => {
       toast({
         title: 'Erreur',
         description: 'Erreur lors de la restauration de la version.',
-        variant: 'destructive',
+        variant: 'destructive'
       });
     }
   };
@@ -436,12 +469,12 @@ const AdminPagesPanel: React.FC = () => {
     trackEvent('page_preview', { pageId: editingPage?.id || 'new' });
   };
 
-  const filteredPages = (pages || []).filter(page => {
-    const matchesSearch = page.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      page.content.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredPages = (pages || []).filter((page) => {
+    const matchesSearch = (page.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (page.content || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'all' ||
-      (filterStatus === 'published' && page.is_published) ||
-      (filterStatus === 'draft' && !page.is_published);
+    filterStatus === 'published' && page.is_published ||
+    filterStatus === 'draft' && !page.is_published;
     return matchesSearch && matchesStatus;
   }).sort((a, b) => {
     const aValue = a[sortBy] || '';
@@ -455,7 +488,7 @@ const AdminPagesPanel: React.FC = () => {
 
     try {
       for (const pageId of selectedPages) {
-        const page = (pages || []).find(p => p.id === pageId);
+        const page = (pages || []).find((p) => p.id === pageId);
         if (!page) continue;
 
         switch (bulkAction) {
@@ -473,7 +506,7 @@ const AdminPagesPanel: React.FC = () => {
 
       toast({
         title: 'Action groupée terminée',
-        description: `${selectedPages.length} pages ont été traitées.`,
+        description: `${selectedPages.length} pages ont été traitées.`
       });
       setSelectedPages([]);
       setBulkAction(null);
@@ -481,7 +514,7 @@ const AdminPagesPanel: React.FC = () => {
       toast({
         title: 'Erreur',
         description: 'Erreur lors de l\'action groupée.',
-        variant: 'destructive',
+        variant: 'destructive'
       });
     }
   };
@@ -499,8 +532,8 @@ const AdminPagesPanel: React.FC = () => {
 
   const calculateReadabilityScore = (content: string) => {
     // Score de lisibilité simple basé sur la longueur des phrases
-    const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
-    const words = content.split(/\s+/).filter(w => w.length > 0);
+    const sentences = content.split(/[.!?]+/).filter((s) => s.trim().length > 0);
+    const words = content.split(/\s+/).filter((w) => w.length > 0);
     const avgWordsPerSentence = words.length / sentences.length;
     const score = Math.max(0, 100 - (avgWordsPerSentence - 15) * 5);
     return Math.min(Math.max(score, 0), 100);
@@ -540,7 +573,7 @@ const AdminPagesPanel: React.FC = () => {
     }
 
     const newValue = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
-    setFormData(prev => ({ ...prev, content: newValue }));
+    setFormData((prev) => ({ ...prev, content: newValue }));
 
     // Focus back on textarea
     setTimeout(() => {
@@ -564,7 +597,7 @@ const AdminPagesPanel: React.FC = () => {
     const replacement = `<a href="${url}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
 
     const newValue = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
-    setFormData(prev => ({ ...prev, content: newValue }));
+    setFormData((prev) => ({ ...prev, content: newValue }));
   };
 
   const insertImage = () => {
@@ -581,86 +614,89 @@ const AdminPagesPanel: React.FC = () => {
     const replacement = `<img src="${url}" alt="${alt}" class="max-w-full h-auto" />`;
 
     const newValue = textarea.value.substring(0, start) + replacement + textarea.value.substring(textarea.selectionEnd);
-    setFormData(prev => ({ ...prev, content: newValue }));
+    setFormData((prev) => ({ ...prev, content: newValue }));
   };
 
   const addCategory = () => {
     const category = prompt('Nouvelle catégorie:');
-    if (category && !(formData.categories || []).includes(category)) {
-      setFormData(prev => ({
+    const currentCategories = Array.isArray(formData.categories) ? formData.categories : [];
+    if (category && !currentCategories.includes(category)) {
+      setFormData((prev) => ({
         ...prev,
-        categories: [...(prev.categories || []), category]
+        categories: [...(Array.isArray(prev.categories) ? prev.categories : []), category]
       }));
     }
   };
 
   const removeCategory = (category: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      categories: (prev.categories || []).filter(c => c !== category)
+      categories: (Array.isArray(prev.categories) ? prev.categories : []).filter((c) => c !== category)
     }));
   };
 
   const addTag = () => {
     const tag = prompt('Nouveau tag:');
-    if (tag && !(formData.tags || []).includes(tag)) {
-      setFormData(prev => ({
+    const currentTags = Array.isArray(formData.tags) ? formData.tags : [];
+    if (tag && !currentTags.includes(tag)) {
+      setFormData((prev) => ({
         ...prev,
-        tags: [...(prev.tags || []), tag]
+        tags: [...(Array.isArray(prev.tags) ? prev.tags : []), tag]
       }));
     }
   };
 
   const removeTag = (tag: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: (prev.tags || []).filter(t => t !== tag)
+      tags: (Array.isArray(prev.tags) ? prev.tags : []).filter((t) => t !== tag)
     }));
   };
 
   const tabs = [
-    { id: 'content', label: 'Contenu', icon: FileText },
-    { id: 'seo', label: 'SEO', icon: Search },
-    { id: 'design', label: 'Design', icon: Palette },
-    { id: 'code', label: 'Code', icon: Code },
-    { id: 'monaco', label: 'Code Pro (AI)', icon: Sparkles },
-    { id: 'hero', label: 'Hero', icon: Image },
-    { id: 'settings', label: 'Paramètres', icon: Settings }
-  ];
+  { id: 'content', label: 'Contenu', icon: FileText },
+  { id: 'seo', label: 'SEO', icon: Search },
+  { id: 'design', label: 'Design', icon: Palette },
+  { id: 'code', label: 'Code', icon: Code },
+  { id: 'monaco', label: 'Code Pro (AI)', icon: Sparkles },
+  { id: 'hero', label: 'Hero', icon: Image },
+  { id: 'settings', label: 'Paramètres', icon: Settings }];
+
 
   return (
     <div className="p-6">
       {/* ICE EDITOR VIEW */}
-      {isIceEditorOpen && editingPage ? (
-        <div className="flex flex-col gap-4">
+      {isIceEditorOpen && editingPage ?
+      <div className="flex flex-col gap-4">
           <Button
-            variant="outline"
-            onClick={() => {
-              setIsIceEditorOpen(false);
-              setEditingPage(null);
-            }}
-            className="w-fit"
-          >
+          variant="outline"
+          onClick={() => {
+            setIsIceEditorOpen(false);
+            setEditingPage(null);
+            refetch();
+          }}
+          className="w-fit">
+          
             ← Retour à la liste
           </Button>
           {/* @ts-ignore */}
-          <AdminPageEditor pageId={editingPage.id} />
-        </div>
-      ) : (
-        <>
+          <AdminPageEditor pageId={editingPage.id} onSave={() => refetch()} />
+        </div> :
+
+      <>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">Gestion des Pages</h2>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button onClick={() => { resetForm(); setIsDialogOpen(true); }}>
+                <Button onClick={() => {resetForm();setIsDialogOpen(true);}}>
                   <Plus className="w-4 h-4 mr-2" />
                   Nouvelle Page
                 </Button>
               </DialogTrigger>
               <DialogContent
-                className="max-w-4xl max-h-[90vh] overflow-y-auto"
-                aria-describedby="page-editor-description"
-              >
+              className="max-w-4xl max-h-[90vh] overflow-y-auto"
+              aria-describedby="page-editor-description">
+              
                 <DialogHeader>
                   <DialogTitle>
                     {editingPage ? 'Modifier la Page' : 'Créer une Nouvelle Page'}
@@ -671,103 +707,103 @@ const AdminPagesPanel: React.FC = () => {
                 </DialogHeader>
 
                 {/* Advanced Toolbar */}
-                {editingPage && (
-                  <div className="flex flex-wrap gap-2 p-3 bg-gray-50 rounded-md border mb-4">
+                {editingPage &&
+              <div className="flex flex-wrap gap-2 p-3 bg-gray-50 rounded-md border mb-4">
                     <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={handleCreateVersion}
-                      className="flex items-center gap-1"
-                    >
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCreateVersion}
+                  className="flex items-center gap-1">
+                  
                       <GitBranch className="w-4 h-4" />
                       Créer Version
                     </Button>
                     <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setShowVersions(!showVersions)}
-                      className="flex items-center gap-1"
-                    >
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowVersions(!showVersions)}
+                  className="flex items-center gap-1">
+                  
                       <History className="w-4 h-4" />
                       Versions ({versions.length})
                     </Button>
                     <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setShowAnalytics(!showAnalytics)}
-                      className="flex items-center gap-1"
-                    >
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowAnalytics(!showAnalytics)}
+                  className="flex items-center gap-1">
+                  
                       <BarChart3 className="w-4 h-4" />
                       Analytics
                     </Button>
                     <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={handlePreview}
-                      className="flex items-center gap-1"
-                    >
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handlePreview}
+                  className="flex items-center gap-1">
+                  
                       <Eye className="w-4 h-4" />
                       Aperçu
                     </Button>
                     <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setShowWorkflow(!showWorkflow)}
-                      className="flex items-center gap-1"
-                    >
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowWorkflow(!showWorkflow)}
+                  className="flex items-center gap-1">
+                  
                       <Workflow className="w-4 h-4" />
                       Workflow
                     </Button>
                   </div>
-                )}
+              }
 
                 {/* Versions Panel */}
-                {showVersions && editingPage && (
-                  <div className="mb-4 p-4 border rounded-md bg-blue-50">
+                {showVersions && editingPage &&
+              <div className="mb-4 p-4 border rounded-md bg-blue-50">
                     <h4 className="font-medium mb-2 flex items-center gap-2">
                       <History className="w-4 h-4" />
                       Historique des Versions
                     </h4>
                     <div className="space-y-2 max-h-40 overflow-y-auto">
-                      {versions.map((version) => (
-                        <div key={version.id} className="flex items-center justify-between p-2 bg-white rounded border">
+                      {versions.map((version) =>
+                  <div key={version.id} className="flex items-center justify-between p-2 bg-white rounded border">
                           <div>
                             <p className="text-sm font-medium">{version.author}</p>
                             <p className="text-xs text-gray-500">
                               {new Date(version.timestamp).toLocaleString('fr-FR')}
                             </p>
-                            {version.changeLog && (
-                              <p className="text-xs text-gray-600">{version.changeLog}</p>
-                            )}
+                            {version.changeLog &&
+                      <p className="text-xs text-gray-600">{version.changeLog}</p>
+                      }
                           </div>
                           <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleRestoreVersion(version.id)}
-                          >
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleRestoreVersion(version.id)}>
+                      
                             Restaurer
                           </Button>
                         </div>
-                      ))}
+                  )}
                     </div>
                   </div>
-                )}
+              }
 
                 {/* Analytics Panel */}
-                {showAnalytics && editingPage && (
-                  <div className="mb-4 p-4 border rounded-md bg-green-50">
+                {showAnalytics && editingPage &&
+              <div className="mb-4 p-4 border rounded-md bg-green-50">
                     <h4 className="font-medium mb-2 flex items-center gap-2">
                       <BarChart3 className="w-4 h-4" />
                       Analytics de la Page
                     </h4>
-                    {analyticsData ? (
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {analyticsData ?
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div className="text-center">
                           <div className="text-2xl font-bold text-blue-600">
                             {analyticsData.views || 0}
@@ -792,18 +828,18 @@ const AdminPagesPanel: React.FC = () => {
                           </div>
                           <div className="text-sm text-gray-600">Taux de rebond</div>
                         </div>
-                      </div>
-                    ) : (
-                      <div className="text-center py-4 text-gray-500">
+                      </div> :
+
+                <div className="text-center py-4 text-gray-500">
                         Chargement des analytics...
                       </div>
-                    )}
+                }
                   </div>
-                )}
+              }
 
                 {/* Workflow Panel */}
-                {showWorkflow && (
-                  <div className="mb-4 p-4 border rounded-md bg-yellow-50">
+                {showWorkflow &&
+              <div className="mb-4 p-4 border rounded-md bg-yellow-50">
                     <h4 className="font-medium mb-2 flex items-center gap-2">
                       <Workflow className="w-4 h-4" />
                       Workflow d'Approbation
@@ -812,27 +848,20 @@ const AdminPagesPanel: React.FC = () => {
                       <div>
                         <Label>Statut du workflow</Label>
                         <select
-                          value={workflowStatus}
-                          onChange={(e) => setWorkflowStatus(e.target.value as any)}
-                          className="w-full p-2 border rounded-md"
-                        >
+                      value={workflowStatus}
+                      onChange={(e) => setWorkflowStatus(e.target.value as unknown)}
+                      className="w-full p-2 border rounded-md"
+                      title="Sélectionner le statut du workflow">
+                      
                           <option value="draft">Brouillon</option>
                           <option value="review">En révision</option>
                           <option value="approved">Approuvé</option>
                           <option value="published">Publié</option>
                         </select>
                       </div>
-                      <div>
-                        <Label>Réviseurs assignés</Label>
-                        <Input
-                          placeholder="Emails séparés par des virgules"
-                          value={assignedReviewers.join(', ')}
-                          onChange={(e) => setAssignedReviewers(e.target.value.split(',').map(email => email.trim()))}
-                        />
-                      </div>
                     </div>
                   </div>
-                )}
+              }
 
                 {/* SEO Score */}
                 <div className="mb-4 p-3 bg-blue-50 rounded-md border">
@@ -854,45 +883,53 @@ const AdminPagesPanel: React.FC = () => {
                   {/* Custom Tab Navigation */}
                   <div className="flex flex-wrap gap-2 border-b pb-4">
                     {tabs.map((tab) => {
-                      const Icon = tab.icon;
-                      return (
-                        <button
-                          key={tab.id}
-                          type="button"
-                          onClick={() => setActiveTab(tab.id)}
-                          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === tab.id
-                            ? 'bg-blue-100 text-blue-700 border-blue-200'
-                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                            }`}
-                        >
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${activeTab === tab.id ?
+                        'bg-blue-100 text-blue-700 border-blue-200' :
+                        'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`
+                        } aria-label="Action">
+                        
                           <Icon className="w-4 h-4" />
                           {tab.label}
-                        </button>
-                      );
-                    })}
+                        </button>);
+
+                  })}
                   </div>
 
                   {/* Tab Content */}
-                  {activeTab === 'content' && (
-                    <div className="space-y-4">
+                  {activeTab === 'content' &&
+                <div className="space-y-4">
                       <div>
                         <Label htmlFor="title">Titre *</Label>
                         <Input
-                          id="title"
-                          value={formData.title}
-                          onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                          required
-                        />
+                      id="title"
+                      value={formData.title}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                      required
+                      className={formErrors.title ? "border-red-500 shadow-[0_0_0_1px_rgba(239,68,68,0.5)]" : ""} />
+                    
+                        <ErrorMessage field="title" />
                       </div>
 
                       <div>
                         <Label htmlFor="slug">Slug *</Label>
                         <Input
-                          id="slug"
-                          value={formData.slug}
-                          onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
-                          required
-                        />
+                      id="slug"
+                      value={formData.slug}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, slug: e.target.value }))}
+                      required
+                      className={formErrors.slug ? "border-red-500 shadow-[0_0_0_1px_rgba(239,68,68,0.5)]" : ""} />
+                    
+                        <ErrorMessage field="slug" />
+                        <p className="text-[10px] text-orange-600 mt-1 flex items-center gap-1">
+                          <AlertTriangle className="w-3 h-3" />
+                          Attention: Si vous modifiez ce slug, mettez à jour le Menu correspondant.
+                        </p>
                       </div>
 
                       <div>
@@ -900,132 +937,133 @@ const AdminPagesPanel: React.FC = () => {
                         {/* WYSIWYG Toolbar */}
                         <div className="flex flex-wrap gap-1 p-2 border border-gray-200 rounded-t-md bg-gray-50">
                           <button
-                            type="button"
-                            onClick={() => insertFormatting('strong')}
-                            className="p-1 hover:bg-gray-200 rounded"
-                            title="Gras"
-                          >
+                        type="button"
+                        onClick={() => insertFormatting('strong')}
+                        className="p-1 hover:bg-gray-200 rounded"
+                        title="Gras">
+                        
                             <Bold className="w-4 h-4" />
                           </button>
                           <button
-                            type="button"
-                            onClick={() => insertFormatting('em')}
-                            className="p-1 hover:bg-gray-200 rounded"
-                            title="Italique"
-                          >
+                        type="button"
+                        onClick={() => insertFormatting('em')}
+                        className="p-1 hover:bg-gray-200 rounded"
+                        title="Italique">
+                        
                             <Italic className="w-4 h-4" />
                           </button>
                           <button
-                            type="button"
-                            onClick={() => insertFormatting('u')}
-                            className="p-1 hover:bg-gray-200 rounded"
-                            title="Souligné"
-                          >
+                        type="button"
+                        onClick={() => insertFormatting('u')}
+                        className="p-1 hover:bg-gray-200 rounded"
+                        title="Souligné">
+                        
                             <Underline className="w-4 h-4" />
                           </button>
                           <div className="w-px h-6 bg-gray-300 mx-1" />
                           <button
-                            type="button"
-                            onClick={() => insertFormatting('h1', true)}
-                            className="p-1 hover:bg-gray-200 rounded text-xs"
-                            title="Titre 1"
-                          >
+                        type="button"
+                        onClick={() => insertFormatting('h1', true)}
+                        className="p-1 hover:bg-gray-200 rounded text-xs"
+                        title="Titre 1">
+                        
                             H1
                           </button>
                           <button
-                            type="button"
-                            onClick={() => insertFormatting('h2', true)}
-                            className="p-1 hover:bg-gray-200 rounded text-xs"
-                            title="Titre 2"
-                          >
+                        type="button"
+                        onClick={() => insertFormatting('h2', true)}
+                        className="p-1 hover:bg-gray-200 rounded text-xs"
+                        title="Titre 2">
+                        
                             H2
                           </button>
                           <button
-                            type="button"
-                            onClick={() => insertFormatting('h3', true)}
-                            className="p-1 hover:bg-gray-200 rounded text-xs"
-                            title="Titre 3"
-                          >
+                        type="button"
+                        onClick={() => insertFormatting('h3', true)}
+                        className="p-1 hover:bg-gray-200 rounded text-xs"
+                        title="Titre 3">
+                        
                             H3
                           </button>
                           <div className="w-px h-6 bg-gray-300 mx-1" />
                           <button
-                            type="button"
-                            onClick={insertLink}
-                            className="p-1 hover:bg-gray-200 rounded"
-                            title="Lien"
-                          >
+                        type="button"
+                        onClick={insertLink}
+                        className="p-1 hover:bg-gray-200 rounded"
+                        title="Lien">
+                        
                             <Link className="w-4 h-4" />
                           </button>
                           <button
-                            type="button"
-                            onClick={insertImage}
-                            className="p-1 hover:bg-gray-200 rounded"
-                            title="Image"
-                          >
+                        type="button"
+                        onClick={insertImage}
+                        className="p-1 hover:bg-gray-200 rounded"
+                        title="Image">
+                        
                             <Image className="w-4 h-4" />
                           </button>
                           <button
-                            type="button"
-                            onClick={() => insertFormatting('ul', true)}
-                            className="p-1 hover:bg-gray-200 rounded"
-                            title="Liste"
-                          >
+                        type="button"
+                        onClick={() => insertFormatting('ul', true)}
+                        className="p-1 hover:bg-gray-200 rounded"
+                        title="Liste">
+                        
                             <List className="w-4 h-4" />
                           </button>
                           <button
-                            type="button"
-                            onClick={() => insertFormatting('ol', true)}
-                            className="p-1 hover:bg-gray-200 rounded"
-                            title="Liste numérotée"
-                          >
+                        type="button"
+                        onClick={() => insertFormatting('ol', true)}
+                        className="p-1 hover:bg-gray-200 rounded"
+                        title="Liste numérotée">
+                        
                             <ListOrdered className="w-4 h-4" />
                           </button>
                         </div>
                         <Textarea
-                          id="content-editor"
-                          value={formData.content}
-                          onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                          className="min-h-[300px] rounded-t-none"
-                          placeholder="Contenu de la page..."
-                        />
+                      id="content-editor"
+                      value={formData.content}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, content: e.target.value }))}
+                      className="min-h-[300px] rounded-t-none"
+                      placeholder="Contenu de la page..." />
+                    
                       </div>
                     </div>
-                  )}
+                }
 
-                  {activeTab === 'seo' && (
-                    <div className="space-y-4">
+                  {activeTab === 'seo' &&
+                <div className="space-y-4">
                       <div>
                         <Label htmlFor="meta_description">
                           Meta Description ({(formData.meta_description || '').length}/160)
                         </Label>
                         <Textarea
-                          id="meta_description"
-                          value={formData.meta_description}
-                          onChange={(e) => setFormData(prev => ({ ...prev, meta_description: e.target.value }))}
-                          maxLength={160}
-                          placeholder="Description pour les moteurs de recherche..."
-                        />
+                      id="meta_description"
+                      value={formData.meta_description}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, meta_description: e.target.value }))}
+                      maxLength={160}
+                      placeholder="Description pour les moteurs de recherche..." />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="meta_keywords">Meta Keywords</Label>
                         <Input
-                          id="meta_keywords"
-                          value={formData.meta_keywords}
-                          onChange={(e) => setFormData(prev => ({ ...prev, meta_keywords: e.target.value }))}
-                          placeholder="mot-clé1, mot-clé2, mot-clé3"
-                        />
+                      id="meta_keywords"
+                      value={formData.meta_keywords}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, meta_keywords: e.target.value }))}
+                      placeholder="mot-clé1, mot-clé2, mot-clé3" />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="meta_robots">Meta Robots</Label>
                         <select
-                          id="meta_robots"
-                          value={formData.meta_robots}
-                          onChange={(e) => setFormData(prev => ({ ...prev, meta_robots: e.target.value }))}
-                          className="w-full p-2 border border-gray-300 rounded-md"
-                        >
+                      id="meta_robots"
+                      value={formData.meta_robots}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, meta_robots: e.target.value }))}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      title="Sélectionner les directives Meta Robots">
+                      
                           <option value="index,follow">index,follow</option>
                           <option value="noindex,follow">noindex,follow</option>
                           <option value="index,nofollow">index,nofollow</option>
@@ -1034,27 +1072,41 @@ const AdminPagesPanel: React.FC = () => {
                       </div>
 
                       <div>
-                        <Label htmlFor="featured_image">Image en Vedette (URL)</Label>
-                        <Input
-                          id="featured_image"
-                          value={formData.featured_image}
-                          onChange={(e) => setFormData(prev => ({ ...prev, featured_image: e.target.value }))}
-                          placeholder="https://example.com/image.jpg"
-                        />
+                        <Label htmlFor="language_code">Langue de la page</Label>
+                        <select
+                      id="language_code"
+                      value={formData.language_code || 'fr'}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, language_code: e.target.value }))}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      title="Sélectionner la langue de la page">
+                      
+                          <option value="fr">Français</option>
+                          <option value="en">English</option>
+                          <option value="wo">Wolof</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <Label className="mb-2 block">Image en Vedette</Label>
+                        <MediaSelector
+                      currentValue={formData.featured_image}
+                      onSelect={(url) => setFormData((prev) => ({ ...prev, featured_image: url }))} />
+                    
                       </div>
                     </div>
-                  )}
+                }
 
-                  {activeTab === 'design' && (
-                    <div className="space-y-4">
+                  {activeTab === 'design' &&
+                <div className="space-y-4">
                       <div>
                         <Label htmlFor="template">Template</Label>
                         <select
-                          id="template"
-                          value={formData.template}
-                          onChange={(e) => setFormData(prev => ({ ...prev, template: e.target.value }))}
-                          className="w-full p-2 border border-gray-300 rounded-md"
-                        >
+                      id="template"
+                      value={formData.template}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, template: e.target.value }))}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      title="Sélectionner le template de la page">
+                      
                           <option value="default">Par défaut</option>
                           <option value="full-width">Pleine largeur</option>
                           <option value="sidebar-left">Barre latérale gauche</option>
@@ -1065,219 +1117,218 @@ const AdminPagesPanel: React.FC = () => {
 
                       <div className="flex items-center space-x-2">
                         <Switch
-                          id="show_hero"
-                          checked={formData.show_hero}
-                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, show_hero: checked }))}
-                        />
+                      id="show_hero"
+                      checked={formData.show_hero}
+                      onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, show_hero: checked }))} />
+                    
                         <Label htmlFor="show_hero">Afficher la section Hero</Label>
                       </div>
 
                       <div className="flex items-center space-x-2">
                         <Switch
-                          id="show_footer"
-                          checked={formData.show_footer}
-                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, show_footer: checked }))}
-                        />
+                      id="show_footer"
+                      checked={formData.show_footer}
+                      onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, show_footer: checked }))} />
+                    
                         <Label htmlFor="show_footer">Afficher le pied de page</Label>
                       </div>
                     </div>
-                  )}
+                }
 
-                  {activeTab === 'code' && (
-                    <div className="space-y-4">
+                  {activeTab === 'code' &&
+                <div className="space-y-4">
                       <div>
                         <Label htmlFor="custom_css">CSS Personnalisé</Label>
                         <Textarea
-                          id="custom_css"
-                          value={formData.custom_css}
-                          onChange={(e) => setFormData(prev => ({ ...prev, custom_css: e.target.value }))}
-                          className="min-h-[200px] font-mono text-sm"
-                          placeholder="CSS personnalisé pour cette page..."
-                        />
+                      id="custom_css"
+                      value={formData.custom_css}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, custom_css: e.target.value }))}
+                      className="min-h-[200px] font-mono text-sm"
+                      placeholder="CSS personnalisé pour cette page..." />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="custom_js">JavaScript Personnalisé</Label>
                         <Textarea
-                          id="custom_js"
-                          value={formData.custom_js}
-                          onChange={(e) => setFormData(prev => ({ ...prev, custom_js: e.target.value }))}
-                          className="min-h-[200px] font-mono text-sm"
-                          placeholder="JavaScript personnalisé pour cette page..."
-                        />
+                      id="custom_js"
+                      value={formData.custom_js}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, custom_js: e.target.value }))}
+                      className="min-h-[200px] font-mono text-sm"
+                      placeholder="JavaScript personnalisé pour cette page..." />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="header_html">HTML Header Supplémentaire</Label>
                         <Textarea
-                          id="header_html"
-                          value={formData.header_html}
-                          onChange={(e) => setFormData(prev => ({ ...prev, header_html: e.target.value }))}
-                          className="min-h-[150px] font-mono text-sm"
-                          placeholder="HTML à ajouter dans le <head>..."
-                        />
+                      id="header_html"
+                      value={formData.header_html}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, header_html: e.target.value }))}
+                      className="min-h-[150px] font-mono text-sm"
+                      placeholder="HTML à ajouter dans le <head>..." />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="footer_html">HTML Footer Supplémentaire</Label>
                         <Textarea
-                          id="footer_html"
-                          value={formData.footer_html}
-                          onChange={(e) => setFormData(prev => ({ ...prev, footer_html: e.target.value }))}
-                          className="min-h-[150px] font-mono text-sm"
-                          placeholder="HTML à ajouter avant la fermeture du <body>..."
-                        />
+                      id="footer_html"
+                      value={formData.footer_html}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, footer_html: e.target.value }))}
+                      className="min-h-[150px] font-mono text-sm"
+                      placeholder="HTML à ajouter avant la fermeture du <body>..." />
+                    
                       </div>
                     </div>
-                  )}
+                }
 
-                  {activeTab === 'monaco' && editingPage && (
-                    <div className="h-[600px]">
+                  {activeTab === 'monaco' && editingPage &&
+                <div className="h-[600px]">
                       <MonacoTabContent
-                        content={formData.content}
-                        onChange={(value) => setFormData(prev => ({ ...prev, content: value }))}
-                        pageId={editingPage.id || ''}
-                        userId={editingPage.author || ''}
-                        immutable={false}
-                      />
+                    content={formData.content}
+                    onChange={(value) => setFormData((prev) => ({ ...prev, content: value }))}
+                    pageId={editingPage.id || ''}
+                    userId={editingPage.author || ''}
+                    immutable={false} />
+                  
                     </div>
-                  )}
+                }
 
-                  {activeTab === 'hero' && (
-                    <div className="space-y-4">
+                  {activeTab === 'hero' &&
+                <div className="space-y-4">
                       <div>
                         <Label htmlFor="hero_title">Titre du Hero</Label>
                         <Input
-                          id="hero_title"
-                          value={formData.hero_title}
-                          onChange={(e) => setFormData(prev => ({ ...prev, hero_title: e.target.value }))}
-                          placeholder="Titre principal de la section hero"
-                        />
+                      id="hero_title"
+                      value={formData.hero_title}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, hero_title: e.target.value }))}
+                      placeholder="Titre principal de la section hero" />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="hero_subtitle">Sous-titre du Hero</Label>
                         <Textarea
-                          id="hero_subtitle"
-                          value={formData.hero_subtitle}
-                          onChange={(e) => setFormData(prev => ({ ...prev, hero_subtitle: e.target.value }))}
-                          placeholder="Sous-titre ou description de la section hero"
-                        />
+                      id="hero_subtitle"
+                      value={formData.hero_subtitle}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, hero_subtitle: e.target.value }))}
+                      placeholder="Sous-titre ou description de la section hero" />
+                    
                       </div>
 
                       <div>
-                        <Label htmlFor="hero_background_image">Image de Fond du Hero (URL)</Label>
-                        <Input
-                          id="hero_background_image"
-                          value={formData.hero_background_image}
-                          onChange={(e) => setFormData(prev => ({ ...prev, hero_background_image: e.target.value }))}
-                          placeholder="https://example.com/hero-image.jpg"
-                        />
+                        <Label className="mb-2 block">Image de Fond du Hero</Label>
+                        <MediaSelector
+                      currentValue={formData.hero_background_image}
+                      onSelect={(url) => setFormData((prev) => ({ ...prev, hero_background_image: url }))} />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="hero_cta_text">Texte du Bouton CTA</Label>
                         <Input
-                          id="hero_cta_text"
-                          value={formData.hero_cta_text}
-                          onChange={(e) => setFormData(prev => ({ ...prev, hero_cta_text: e.target.value }))}
-                          placeholder="En savoir plus"
-                        />
+                      id="hero_cta_text"
+                      value={formData.hero_cta_text}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, hero_cta_text: e.target.value }))}
+                      placeholder="En savoir plus" />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="hero_cta_link">Lien du Bouton CTA</Label>
                         <Input
-                          id="hero_cta_link"
-                          value={formData.hero_cta_link}
-                          onChange={(e) => setFormData(prev => ({ ...prev, hero_cta_link: e.target.value }))}
-                          placeholder="/contact ou https://example.com"
-                        />
+                      id="hero_cta_link"
+                      value={formData.hero_cta_link}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, hero_cta_link: e.target.value }))}
+                      placeholder="/contact ou https://example.com" />
+                    
                       </div>
                     </div>
-                  )}
+                }
 
-                  {activeTab === 'settings' && (
-                    <div className="space-y-4">
+                  {activeTab === 'settings' &&
+                <div className="space-y-4">
                       <div className="flex items-center space-x-2">
                         <Switch
-                          id="is_published"
-                          checked={formData.is_published}
-                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_published: checked }))}
-                        />
+                      id="is_published"
+                      checked={formData.is_published}
+                      onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, is_published: checked }))} />
+                    
                         <Label htmlFor="is_published">Publier la page</Label>
                       </div>
 
                       <div>
                         <Label htmlFor="publish_date">Date de Publication</Label>
                         <Input
-                          id="publish_date"
-                          type="datetime-local"
-                          value={formData.publish_date}
-                          onChange={(e) => setFormData(prev => ({ ...prev, publish_date: e.target.value }))}
-                        />
+                      id="publish_date"
+                      type="datetime-local"
+                      value={formData.publish_date}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, publish_date: e.target.value }))} />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="unpublish_date">Date de Dépublication</Label>
                         <Input
-                          id="unpublish_date"
-                          type="datetime-local"
-                          value={formData.unpublish_date}
-                          onChange={(e) => setFormData(prev => ({ ...prev, unpublish_date: e.target.value }))}
-                        />
+                      id="unpublish_date"
+                      type="datetime-local"
+                      value={formData.unpublish_date}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, unpublish_date: e.target.value }))} />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="menu_order">Ordre dans le Menu</Label>
                         <Input
-                          id="menu_order"
-                          type="number"
-                          value={formData.menu_order}
-                          onChange={(e) => setFormData(prev => ({ ...prev, menu_order: parseInt(e.target.value) || 0 }))}
-                          min="0"
-                        />
+                      id="menu_order"
+                      type="number"
+                      value={formData.menu_order}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, menu_order: parseInt(e.target.value) || 0 }))}
+                      min="0" />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="author">Auteur</Label>
                         <Input
-                          id="author"
-                          value={formData.author}
-                          onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
-                          placeholder="Nom de l'auteur"
-                        />
+                      id="author"
+                      value={formData.author}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, author: e.target.value }))}
+                      placeholder="Nom de l'auteur" />
+                    
                       </div>
 
                       <div>
                         <Label htmlFor="reading_time">Temps de Lecture (minutes)</Label>
                         <Input
-                          id="reading_time"
-                          type="number"
-                          value={formData.reading_time}
-                          onChange={(e) => setFormData(prev => ({ ...prev, reading_time: parseInt(e.target.value) || 0 }))}
-                          min="0"
-                        />
+                      id="reading_time"
+                      type="number"
+                      value={formData.reading_time}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, reading_time: parseInt(e.target.value) || 0 }))}
+                      min="0" />
+                    
                       </div>
 
                       <div>
                         <Label>Catégories</Label>
                         <div className="flex flex-wrap gap-2 mb-2">
-                          {(formData.categories || []).map((category, index) => (
-                            <span
-                              key={index}
-                              className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
-                            >
+                          {(Array.isArray(formData.categories) ? formData.categories : []).map((category, index) =>
+                      <span
+                        key={index}
+                        className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                        
                               {category}
                               <button
-                                type="button"
-                                onClick={() => removeCategory(category)}
-                                className="ml-1 hover:text-red-600"
-                              >
+                          type="button"
+                          onClick={() => removeCategory(category)}
+                          className="ml-1 hover:text-red-600"
+                          title={`Supprimer la catégorie ${category}`}>
+                          
                                 <X className="w-3 h-3" />
                               </button>
                             </span>
-                          ))}
+                      )}
                         </div>
                         <Button type="button" variant="outline" size="sm" onClick={addCategory}>
                           <Plus className="w-4 h-4 mr-1" />
@@ -1288,102 +1339,40 @@ const AdminPagesPanel: React.FC = () => {
                       <div>
                         <Label>Tags</Label>
                         <div className="flex flex-wrap gap-2 mb-2">
-                          {(formData.tags || []).map((tag, index) => (
-                            <span
-                              key={index}
-                              className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm"
-                            >
+                          {(Array.isArray(formData.tags) ? formData.tags : []).map((tag, index) =>
+                      <span
+                        key={index}
+                        className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                        
                               {tag}
                               <button
-                                type="button"
-                                onClick={() => removeTag(tag)}
-                                className="ml-1 hover:text-red-600"
-                              >
+                          type="button"
+                          onClick={() => removeTag(tag)}
+                          className="ml-1 hover:text-red-600"
+                          title={`Supprimer le tag ${tag}`}>
+                          
                                 <X className="w-3 h-3" />
                               </button>
                             </span>
-                          ))}
+                      )}
                         </div>
                         <Button type="button" variant="outline" size="sm" onClick={addTag}>
                           <Plus className="w-4 h-4 mr-1" />
                           Ajouter un Tag
                         </Button>
                       </div>
-
-                      <div>
-                        <Label>Champs Personnalisés</Label>
-                        <div className="space-y-2 mb-2">
-                          {customFields.map((field, index) => (
-                            <div key={index} className="flex items-center gap-2 p-2 border rounded">
-                              <Input
-                                placeholder="Nom du champ"
-                                value={field.name || ''}
-                                onChange={(e) => {
-                                  const newFields = [...customFields];
-                                  newFields[index].name = e.target.value;
-                                  setCustomFields(newFields);
-                                }}
-                                className="flex-1"
-                              />
-                              <select
-                                value={field.type || 'text'}
-                                onChange={(e) => {
-                                  const newFields = [...customFields];
-                                  newFields[index].type = e.target.value;
-                                  setCustomFields(newFields);
-                                }}
-                                className="px-2 py-1 border rounded"
-                              >
-                                <option value="text">Texte</option>
-                                <option value="textarea">Zone de texte</option>
-                                <option value="number">Nombre</option>
-                                <option value="date">Date</option>
-                                <option value="boolean">Oui/Non</option>
-                                <option value="select">Sélection</option>
-                              </select>
-                              <Input
-                                placeholder="Valeur"
-                                value={field.value || ''}
-                                onChange={(e) => {
-                                  const newFields = [...customFields];
-                                  newFields[index].value = e.target.value;
-                                  setCustomFields(newFields);
-                                }}
-                                className="flex-1"
-                              />
-                              <Button
-                                type="button"
-                                variant="outline"
-                                size="sm"
-                                onClick={() => {
-                                  setCustomFields(prev => prev.filter((_, i) => i !== index));
-                                }}
-                                className="text-red-600"
-                              >
-                                <X className="w-4 h-4" />
-                              </Button>
-                            </div>
-                          ))}
-                        </div>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            setCustomFields(prev => [...prev, { name: '', type: 'text', value: '' }]);
-                          }}
-                        >
-                          <Plus className="w-4 h-4 mr-1" />
-                          Ajouter un Champ Personnalisé
-                        </Button>
-                      </div>
                     </div>
-                  )}
+                }
 
                   <div className="flex justify-end gap-2 pt-4 border-t">
                     <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                       Annuler
                     </Button>
+                    {isDialogOpen &&
+                  <Button type="button" variant="ghost" size="sm" onClick={handleRestoreDraft} className="text-xs">
+                        Restaurer brouillon local
+                      </Button>
+                  }
                     <Button type="submit">
                       <Save className="w-4 h-4 mr-2" />
                       {editingPage ? 'Mettre à Jour' : 'Créer'}
@@ -1397,54 +1386,54 @@ const AdminPagesPanel: React.FC = () => {
           {/* Navigation Principale Dashboard */}
           <div className="flex gap-4 mb-6 border-b pb-4 overflow-x-auto">
             <Button
-              variant={activeTab === 'pages' ? 'default' : 'ghost'}
-              onClick={() => setActiveTab('pages')}
-              className="flex items-center gap-2"
-            >
+            variant={activeTab === 'pages' ? 'default' : 'ghost'}
+            onClick={() => setActiveTab('pages')}
+            className="flex items-center gap-2">
+            
               <FileText className="w-4 h-4" />
               Pages
             </Button>
             <Button
-              variant={activeTab === 'themes' ? 'default' : 'ghost'}
-              onClick={() => setActiveTab('themes')}
-              className="flex items-center gap-2"
-            >
+            variant={activeTab === 'themes' ? 'default' : 'ghost'}
+            onClick={() => setActiveTab('themes')}
+            className="flex items-center gap-2">
+            
               <Palette className="w-4 h-4" />
               Thèmes
             </Button>
             <Button
-              variant={activeTab === 'plugins' ? 'default' : 'ghost'}
-              onClick={() => setActiveTab('plugins')}
-              className="flex items-center gap-2"
-            >
+            variant={activeTab === 'plugins' ? 'default' : 'ghost'}
+            onClick={() => setActiveTab('plugins')}
+            className="flex items-center gap-2">
+            
               <Zap className="w-4 h-4" />
               Plugins
             </Button>
           </div>
 
-          {activeTab === 'themes' && (
-            <div className="space-y-6">
-              {loadingThemes ? (
-                <div className="text-center py-12">Chargement de la bibliothèque de thèmes...</div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {availableThemes?.map(theme => (
-                    <div key={theme.id} className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+          {activeTab === 'themes' &&
+        <div className="space-y-6">
+              {loadingThemes ?
+          <div className="text-center py-12">Chargement de la bibliothèque de thèmes...</div> :
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {availableThemes?.map((theme) =>
+            <div key={theme.id} className="bg-white border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                       <div className="aspect-video bg-gray-100 flex items-center justify-center border-b">
-                        {theme.preview_image ? (
-                          <img src={theme.preview_image} alt={theme.display_name} className="w-full h-full object-cover" />
-                        ) : (
-                          <Palette className="w-12 h-12 text-gray-300" />
-                        )}
+                        {theme.preview_image ?
+                <img src={theme.preview_image} alt={theme.display_name} className="w-full h-full object-cover" loading="lazy" /> :
+
+                <Palette className="w-12 h-12 text-gray-300" />
+                }
                       </div>
                       <div className="p-4">
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="font-bold text-lg">{theme.display_name}</h4>
-                          {theme.is_premium && (
-                            <span className="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                          {theme.is_premium &&
+                  <span className="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
                               Premium
                             </span>
-                          )}
+                  }
                         </div>
                         <p className="text-sm text-gray-600 mb-4 line-clamp-2">{theme.description}</p>
                         <div className="flex items-center justify-between">
@@ -1455,29 +1444,29 @@ const AdminPagesPanel: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                  ))}
+            )}
                 </div>
-              )}
+          }
             </div>
-          )}
+        }
 
-          {activeTab === 'plugins' && (
-            <div className="space-y-6">
-              {loadingPlugins ? (
-                <div className="text-center py-12">Chargement du store de plugins...</div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {availablePlugins?.map(plugin => (
-                    <div key={plugin.id} className="bg-white border rounded-lg p-5 flex flex-col justify-between hover:border-blue-200 transition-colors">
+          {activeTab === 'plugins' &&
+        <div className="space-y-6">
+              {loadingPlugins ?
+          <div className="text-center py-12">Chargement du store de plugins...</div> :
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {availablePlugins?.map((plugin) =>
+            <div key={plugin.id} className="bg-white border rounded-lg p-5 flex flex-col justify-between hover:border-blue-200 transition-colors">
                       <div>
                         <div className="flex items-start justify-between mb-4">
                           <div className="p-2 bg-blue-50 rounded-lg">
                             <Zap className="w-6 h-6 text-blue-600" />
                           </div>
                           <Switch
-                            checked={plugin.is_active_globally}
-                            onCheckedChange={() => handleTogglePlugin(plugin)}
-                          />
+                    checked={plugin.is_active_globally}
+                    onCheckedChange={() => handleTogglePlugin(plugin)} />
+                  
                         </div>
                         <h4 className="font-bold text-lg mb-1">{plugin.display_name}</h4>
                         <p className="text-xs text-gray-500 mb-3">v{plugin.version} • par PROQUELEC</p>
@@ -1493,11 +1482,11 @@ const AdminPagesPanel: React.FC = () => {
                         </Button>
                       </div>
                     </div>
-                  ))}
+            )}
                 </div>
-              )}
+          }
             </div>
-          )}
+        }
 
           <div className={`${activeTab !== 'pages' ? 'hidden' : 'block'}`}>
             <div className="bg-white rounded-lg shadow">
@@ -1512,160 +1501,175 @@ const AdminPagesPanel: React.FC = () => {
                     <div className="relative">
                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                       <Input
-                        placeholder="Rechercher dans les pages..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10"
-                      />
+                      placeholder="Rechercher dans les pages..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10" />
+                    
                     </div>
                   </div>
 
                   <select
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e.target.value as any)}
-                    className="px-3 py-2 border rounded-md"
-                  >
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value as unknown)}
+                className="px-3 py-2 border rounded-md"
+                title="Filtrer par statut">
+                  
                     <option value="all">Tous les statuts</option>
                     <option value="published">Publiées</option>
                     <option value="draft">Brouillons</option>
                   </select>
 
                   <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as any)}
-                    className="px-3 py-2 border rounded-md"
-                  >
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as unknown)}
+                className="px-3 py-2 border rounded-md"
+                title="Trier par">
+                  
                     <option value="updated_at">Date de modification</option>
                     <option value="title">Titre</option>
                     <option value="created_at">Date de création</option>
                   </select>
 
                   <select
-                    value={sortOrder}
-                    onChange={(e) => setSortOrder(e.target.value as any)}
-                    className="px-3 py-2 border rounded-md"
-                  >
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value as unknown)}
+                className="px-3 py-2 border rounded-md"
+                title="Ordre de tri">
+                  
                     <option value="desc">Décroissant</option>
                     <option value="asc">Croissant</option>
                   </select>
                 </div>
 
                 {/* Bulk Actions */}
-                {selectedPages.length > 0 && (
-                  <div className="flex items-center gap-2 mt-3">
+                {selectedPages.length > 0 &&
+              <div className="flex items-center gap-2 mt-3">
                     <span className="text-sm text-gray-600">
                       {selectedPages.length} page(s) sélectionnée(s)
                     </span>
                     <select
-                      value={bulkAction || ''}
-                      onChange={(e) => setBulkAction(e.target.value as any)}
-                      className="px-3 py-1 border rounded text-sm"
-                    >
+                  value={bulkAction || ''}
+                  onChange={(e) => setBulkAction(e.target.value as unknown)}
+                  className="px-3 py-1 border rounded text-sm"
+                  title="Actions groupées">
+                  
                       <option value="">Action groupée</option>
                       <option value="publish">Publier</option>
                       <option value="unpublish">Dépublier</option>
                       <option value="delete">Supprimer</option>
                     </select>
                     <Button
-                      onClick={handleBulkAction}
-                      size="sm"
-                      disabled={!bulkAction}
-                    >
+                  onClick={handleBulkAction}
+                  size="sm"
+                  disabled={!bulkAction}>
+                  
                       Appliquer
                     </Button>
                     <Button
-                      onClick={() => setSelectedPages([])}
-                      variant="outline"
-                      size="sm"
-                    >
+                  onClick={() => setSelectedPages([])}
+                  variant="outline"
+                  size="sm">
+                  
                       Annuler
                     </Button>
                   </div>
-                )}
+              }
               </div>
 
               <div className="p-4">
-                {loading ? (
-                  <div className="text-center py-8">Chargement...</div>
-                ) : filteredPages.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
+                {loading ?
+              <div className="text-center py-8">Chargement...</div> :
+              filteredPages.length === 0 ?
+              <div className="text-center py-8 text-gray-500">
                     {searchTerm || filterStatus !== 'all' ?
-                      'Aucune page ne correspond aux critères de recherche.' :
-                      'Aucune page trouvée. Créez votre première page !'
-                    }
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {filteredPages.map((page: any) => (
-                      <div key={page?.id || Math.random()} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                'Aucune page ne correspond aux critères de recherche.' :
+                'Aucune page trouvée. Créez votre première page !'
+                }
+                  </div> :
+
+              <div className="space-y-4">
+                    {filteredPages.map((page: unknown) =>
+                <div key={page?.id || Math.random()} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
                         <div className="flex items-start gap-3 flex-1">
                           <input
-                            type="checkbox"
-                            checked={selectedPages.includes(page.id)}
-                            onChange={(e) => {
-                              if (e.target.checked) {
-                                setSelectedPages(prev => [...prev, page.id]);
-                              } else {
-                                setSelectedPages(prev => prev.filter(id => id !== page.id));
-                              }
-                            }}
-                            className="mt-1"
-                          />
+                      type="checkbox"
+                      checked={selectedPages.includes(page.id)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedPages((prev) => [...prev, page.id]);
+                        } else {
+                          setSelectedPages((prev) => prev.filter((id) => id !== page.id));
+                        }
+                      }}
+                      className="mt-1"
+                      title={`Sélectionner la page ${page?.title || ''}`}
+                      aria-label={`Sélectionner la page ${page?.title || ''}`} />
+                    
                           <div className="flex-1">
                             <h4 className="font-medium">{page?.title || 'Sans titre'}</h4>
                             <p className="text-sm text-gray-600">Slug: {page?.slug || 'sans-slug'}</p>
                             <div className="flex items-center gap-4 mt-1">
-                              <span className={`text-xs px-2 py-1 rounded ${page?.is_published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                                }`}>
+                              <span className={`text-xs px-2 py-1 rounded ${page?.is_published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`
+                        }>
                                 {page?.is_published ? 'Publié' : 'Brouillon'}
                               </span>
-                              {page?.template && (
-                                <span className="text-xs text-gray-500">
+                              {page?.template &&
+                        <span className="text-xs text-gray-500">
                                   Template: {page.template}
                                 </span>
-                              )}
-                              {page?.updated_at && (
-                                <span className="text-xs text-gray-500">
+                        }
+                              {page?.updated_at &&
+                        <span className="text-xs text-gray-500">
                                   Modifié: {new Date(page.updated_at).toLocaleDateString('fr-FR')}
                                 </span>
-                              )}
+                        }
                             </div>
                           </div>
                         </div>
                         <div className="flex gap-2">
                           <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleEdit(page)}
-                            title="Modifier"
-                          >
-                            <Edit className="w-4 h-4" />
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleEdit(page)}
+                      title="Paramètres & SEO (Titre, Slug, Meta)">
+                      
+                            <Settings className="w-4 h-4" />
                           </Button>
                           <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => {
-                              const url = `/${page.slug}`;
-                              window.open(url, '_blank');
-                            }}
-                            title="Voir la page"
-                          >
+                      variant="default"
+                      size="sm"
+                      onClick={() => window.open(`/admin/builder/${page.id}`, '_blank')}
+                      title="Éditeur Visuel (Builder PRO)"
+                      className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600">
+                      
+                            <Layout className="w-4 h-4" />
+                          </Button>
+                          <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const url = `/${page.slug}`;
+                        window.open(url, '_blank');
+                      }}
+                      title="Voir la page">
+                      
                             <Eye className="w-4 h-4" />
                           </Button>
                           <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleDelete(page?.id)}
-                            className="text-red-600 hover:text-red-700"
-                            title="Supprimer"
-                          >
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleDelete(page?.id)}
+                      className="text-red-600 hover:text-red-700"
+                      title="Supprimer">
+                      
                             <Trash2 className="w-4 h-4" />
                           </Button>
                         </div>
                       </div>
-                    ))}
-                  </div>
                 )}
+                  </div>
+              }
               </div>
             </div>
           </div>
@@ -1673,32 +1677,32 @@ const AdminPagesPanel: React.FC = () => {
           {/* Preview Modal */}
           <Dialog open={showPreview} onOpenChange={setShowPreview}>
             <DialogContent
-              className="max-w-6xl max-h-[90vh]"
-              aria-describedby="preview-description"
-            >
+            className="max-w-6xl max-h-[90vh]"
+            aria-describedby="preview-description">
+            
               <DialogHeader>
                 <DialogTitle className="flex items-center justify-between">
                   <span>Aperçu de la page</span>
                   <div className="flex gap-2">
                     <Button
-                      variant={previewMode === 'desktop' ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setPreviewMode('desktop')}
-                    >
+                    variant={previewMode === 'desktop' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setPreviewMode('desktop')}>
+                    
                       <Monitor className="w-4 h-4" />
                     </Button>
                     <Button
-                      variant={previewMode === 'tablet' ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setPreviewMode('tablet')}
-                    >
+                    variant={previewMode === 'tablet' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setPreviewMode('tablet')}>
+                    
                       <Tablet className="w-4 h-4" />
                     </Button>
                     <Button
-                      variant={previewMode === 'mobile' ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setPreviewMode('mobile')}
-                    >
+                    variant={previewMode === 'mobile' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setPreviewMode('mobile')}>
+                    
                       <Smartphone className="w-4 h-4" />
                     </Button>
                   </div>
@@ -1709,16 +1713,12 @@ const AdminPagesPanel: React.FC = () => {
               </DialogHeader>
               <div className="flex-1 overflow-hidden">
                 <div
-                  className={`mx-auto border rounded-lg overflow-hidden ${previewMode === 'desktop' ? 'w-full max-w-4xl' :
-                    previewMode === 'tablet' ? 'w-full max-w-md' : 'w-full max-w-sm'
-                    }`}
-                  style={{
-                    height: '70vh',
-                    backgroundColor: '#ffffff'
-                  }}
-                >
+                className={`mx-auto border rounded-lg overflow-hidden h-[70vh] bg-white ${previewMode === 'desktop' ? 'w-full max-w-4xl' :
+                previewMode === 'tablet' ? 'w-full max-w-md' : 'w-full max-w-sm'}`
+                }>
+                
                   <iframe
-                    srcDoc={`
+                  srcDoc={`
                   <!DOCTYPE html>
                   <html>
                     <head>
@@ -1754,17 +1754,18 @@ const AdminPagesPanel: React.FC = () => {
                     </body>
                   </html>
                 `}
-                    className="w-full h-full border-0"
-                    title="Aperçu de la page"
-                  />
+                  className="w-full h-full border-0"
+                  title="Aperçu de la page" />
+                
                 </div>
               </div>
             </DialogContent>
           </Dialog>
         </>
-      )}
-    </div>
-  );
+
+      }
+    </div>);
+
 };
 
 export default AdminPagesPanel;

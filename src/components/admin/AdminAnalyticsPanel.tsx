@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
-import { useAnalytics, AnalyticsData } from "@/hooks/useAnalytics";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { Eye, Users, FileText, TrendingUp } from "lucide-react";
 
 const COLORS = ['#2376df', '#054393', '#1a73e8', '#ff6b6b', '#4ecdc4'];
@@ -11,7 +11,7 @@ export default function AdminAnalyticsPanel() {
   if (isLoading) return <div>Chargement des analytics...</div>;
   if (!analytics) return <div>Erreur de chargement des données</div>;
 
-  const totalViews = analytics.pageViews.reduce((sum: number, page: { views: number }) => sum + page.views, 0);
+  const totalViews = analytics.pageViews.reduce((sum: number, page: {views: number;}) => sum + page.views, 0);
   const totalUsers = analytics.userActivity[analytics.userActivity.length - 1]?.activeUsers || 0;
   const totalContent = analytics.popularContent.length;
 
@@ -138,11 +138,11 @@ export default function AdminAnalyticsPanel() {
                   label={({ title, engagement }) => `${title} (${engagement}%)`}
                   outerRadius={80}
                   fill="#8884d8"
-                  dataKey="engagement"
-                >
-                  {analytics.popularContent.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
+                  dataKey="engagement">
+                  
+                  {analytics.popularContent.map((entry, index) =>
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  )}
                 </Pie>
                 <Tooltip />
               </PieChart>
@@ -150,6 +150,6 @@ export default function AdminAnalyticsPanel() {
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
+    </div>);
+
 }

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FileText, BookOpen, Award, MessageSquare, ArrowRight, Zap, LucideIcon } from "lucide-react";
+import { FileText, BookOpen, Award, MessageSquare, ArrowRight, Zap } from "lucide-react";
 import { useLiveSettings } from "@/hooks/useLiveSettings";
-import { supabase } from "@/integrations/supabase/client";
 
 // Mapping des noms d'icônes vers les composants React
 const iconMap: Record<string, LucideIcon> = {
@@ -10,43 +9,43 @@ const iconMap: Record<string, LucideIcon> = {
   Award,
   FileText,
   MessageSquare,
-  Zap,
+  Zap
 };
 
 const fallbackLinks = [
-  {
-    title: "Formations",
-    description: "Découvrez nos programmes de formation électrique certifiés et reconnus",
-    icon: BookOpen,
-    href: "/formations",
-    color: "#2376df",
-    delay: 0
-  },
-  {
-    title: "Certifications",
-    description: "Obtenez vos certifications professionnelles en installations électriques",
-    icon: Award,
-    href: "/certifications",
-    color: "#054393",
-    delay: 100
-  },
-  {
-    title: "Documents techniques",
-    description: "Accédez à notre bibliothèque de normes, guides et ressources électriques",
-    icon: FileText,
-    href: "/documents",
-    color: "#1a73e8",
-    delay: 200
-  },
-  {
-    title: "Contactez-nous",
-    description: "Parlons de vos projets électriques avec nos experts disponibles",
-    icon: MessageSquare,
-    href: "/contact",
-    color: "#16a34a",
-    delay: 300
-  }
-];
+{
+  title: "Formations",
+  description: "Découvrez nos programmes de formation électrique certifiés et reconnus",
+  icon: BookOpen,
+  href: "/formations",
+  color: "#2376df",
+  delay: 0
+},
+{
+  title: "Certifications",
+  description: "Obtenez vos certifications professionnelles en installations électriques",
+  icon: Award,
+  href: "/certifications",
+  color: "#054393",
+  delay: 100
+},
+{
+  title: "Documents techniques",
+  description: "Accédez à notre bibliothèque de normes, guides et ressources électriques",
+  icon: FileText,
+  href: "/documents",
+  color: "#1a73e8",
+  delay: 200
+},
+{
+  title: "Contactez-nous",
+  description: "Parlons de vos projets électriques avec nos experts disponibles",
+  icon: MessageSquare,
+  href: "/contact",
+  color: "#16a34a",
+  delay: 300
+}];
+
 
 export const QuickLinks = () => {
   const { settings } = useLiveSettings();
@@ -55,19 +54,17 @@ export const QuickLinks = () => {
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const { data, error } = await supabase
-          .from('quick_links')
-          .select('*')
-          .eq('is_active', true)
-          .order('display_order', { ascending: true });
+        const response = await fetch("/api/quick-links");
+        if (!response.ok) throw new Error("Failed to fetch");
+        const data = await response.json();
 
         if (data && data.length > 0) {
-          const mappedLinks = data.map((l: any, index: number) => ({
+          const mappedLinks = data.map((l: unknown, index: number) => ({
             title: l.title,
             description: l.description,
             icon: iconMap[l.icon_name] || Zap, // Fallback icon
-            href: l.href,
-            color: l.color,
+            href: l.url,
+            color: "#2376df", // Default color if not in DB, logic to derive color can be added
             delay: 100 * index
           }));
           setQuickLinks(mappedLinks);
@@ -80,11 +77,23 @@ export const QuickLinks = () => {
   }, []);
 
   const sectionStyle = {
-    backgroundColor: settings?.background_color || '#f8f9fa',
+    backgroundColor: settings?.background_color || '#f8f9fa'
   };
 
   return (
-    <section className="py-20 px-4 relative overflow-hidden" style={sectionStyle}>
+    <section
+      id="quick-links-section"
+      className="py-20 px-4 relative overflow-hidden quick-links-bg">
+      
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        #quick-links-section {
+          --bg-color: ${settings?.background_color || '#f8f9fa'};
+          --primary-color: ${settings?.primary_color || '#2376df'};
+          --font-family: ${settings?.font_family || 'inherit'};
+        }
+        .quick-links-bg { background-color: var(--bg-color); }
+      ` }} />
       {/* Decorative background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-proqblue/5 rounded-full blur-3xl"></div>
@@ -99,26 +108,27 @@ export const QuickLinks = () => {
               <Zap className="h-6 w-6 text-proqblue" />
               <span className="text-sm font-semibold text-proqblue uppercase tracking-wider">Accès Rapide</span>
             </div>
-            <h2
-              className="text-4xl md:text-5xl font-bold mb-4"
-              style={{
-                color: settings?.primary_color || '#2376df',
-                fontFamily: settings?.font_family || 'Roboto'
-              }}
-            >
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-[var(--primary-color)]">
               Trouvez ce qu'il vous faut
             </h2>
           </div>
-          <p
-            className="text-gray-600 max-w-2xl mx-auto text-lg"
-            style={{ fontFamily: settings?.font_family || 'Roboto' }}
-          >
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg font-[family-name:var(--font-family)]">
             Accédez rapidement à nos formations, certifications et ressources techniques
           </p>
         </div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <style dangerouslySetInnerHTML={{
+            __html: quickLinks.map((link, idx) => `
+            .quick-link-item-${idx} { animation-delay: ${link.delay}ms; }
+            .quick-link-accent-${idx} { background-color: ${link.color}; }
+            .quick-link-icon-bg-${idx} { background-color: ${link.color}20; color: ${link.color}; }
+            .quick-link-text-${idx} { color: ${link.color}; }
+            .quick-link-hover-${idx} { background-color: ${link.color}; }
+          `).join('\n')
+          }} />
+
           {quickLinks.map((linkItem, index) => {
             const Icon = linkItem.icon;
 
@@ -126,63 +136,44 @@ export const QuickLinks = () => {
               <Link
                 key={index}
                 to={linkItem.href}
-                className="group"
-                style={{ animationDelay: `${linkItem.delay}ms` }}
-              >
+                className={`group quick-link-item-${index}`}>
+                
                 <div className="h-full bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 hover:border-proqblue/20 overflow-hidden">
                   {/* Top accent bar */}
-                  <div
-                    className="h-1 w-full"
-                    style={{ backgroundColor: linkItem.color }}
-                  ></div>
+                  <div className={`h-1 w-full quick-link-accent-${index}`}></div>
 
                   {/* Content */}
                   <div className="p-6 flex flex-col h-full">
                     {/* Icon */}
-                    <div
-                      className="w-14 h-14 rounded-lg flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300"
-                      style={{ backgroundColor: `${linkItem.color}20`, color: linkItem.color }}
-                    >
+                    <div className={`w-14 h-14 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 quick-link-icon-bg-${index}`}>
                       <Icon className="h-7 w-7" />
                     </div>
 
                     {/* Title */}
-                    <h3
-                      className="text-lg font-semibold mb-2 group-hover:translate-x-1 transition-transform"
-                      style={{
-                        color: linkItem.color,
-                        fontFamily: settings?.font_family || 'Roboto'
-                      }}
-                    >
+                    <h3 className={`text-lg font-semibold mb-2 group-hover:translate-x-1 transition-transform font-[family-name:var(--font-family)] quick-link-text-${index}`}>
                       {linkItem.title}
                     </h3>
 
                     {/* Description */}
-                    <p
-                      className="text-sm text-gray-600 mb-4 flex-grow"
-                      style={{ fontFamily: settings?.font_family || 'Roboto' }}
-                    >
+                    <p className="text-sm text-gray-600 mb-4 flex-grow font-[family-name:var(--font-family)]">
                       {linkItem.description}
                     </p>
 
                     {/* CTA Arrow */}
-                    <div className="flex items-center text-sm font-medium" style={{ color: linkItem.color }}>
+                    <div className={`flex items-center text-sm font-medium quick-link-text-${index}`}>
                       <span>En savoir plus</span>
                       <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
 
                   {/* Hover effect */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none"
-                    style={{ backgroundColor: linkItem.color }}
-                  ></div>
+                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none quick-link-hover-${index}`}></div>
                 </div>
-              </Link>
-            );
+              </Link>);
+
           })}
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };

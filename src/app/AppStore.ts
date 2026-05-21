@@ -1,6 +1,6 @@
-import { graphStore, GraphNode } from '@/stores/GraphStore';
+import { graphStore } from '@/stores/GraphStore';
 import { VoltageDropEngine } from '@/engines/VoltageDropEngine';
-import { ValidationEngine, ValidationResult } from '@/engines/ValidationEngine';
+import { ValidationEngine } from '@/engines/ValidationEngine';
 
 /**
  * AppStore — Source de vérité unique pour PROQUELEC V2
@@ -19,7 +19,7 @@ export class AppStore {
   private validationEngine = new ValidationEngine();
 
   // État calculé
-  private calculations = new Map<string, any>();
+  private calculations = new Map<string, unknown>();
 
   private constructor() {
     // Chargement automatique depuis localStorage
@@ -49,7 +49,7 @@ export class AppStore {
   /**
    * Obtient les résultats de calcul
    */
-  getCalculations(): Map<string, any> {
+  getCalculations(): Map<string, unknown> {
     return new Map(this.calculations);
   }
 
@@ -63,7 +63,7 @@ export class AppStore {
   /**
    * Met à jour les propriétés d'un nœud
    */
-  updateNodeProperties(nodeId: string, properties: Record<string, any>): void {
+  updateNodeProperties(nodeId: string, properties: Record<string, unknown>): void {
     const node = this.graph.nodes.get(nodeId);
     if (!node) {
       console.warn(`Tentative de mise à jour d'un nœud inexistant: ${nodeId}`);
@@ -119,7 +119,7 @@ export class AppStore {
 
       if (data && timestamp) {
         this.graph.deserialize(data);
-        console.log(`📁 Graph chargé depuis localStorage (${new Date(parseInt(timestamp)).toLocaleString()})`);
+
         return true;
       }
     } catch (error) {
@@ -131,7 +131,7 @@ export class AppStore {
   /**
    * Obtient les propriétés d'un nœud
    */
-  getNodeProperties(nodeId: string): Record<string, any> {
+  getNodeProperties(nodeId: string): Record<string, unknown> {
     const node = this.graph.nodes.get(nodeId);
     return node?.properties || {};
   }
@@ -160,17 +160,17 @@ export class AppStore {
    */
   exportCableBook(): CableBookData {
     const edges = Array.from(this.graph.edges.values());
-    const cableData = edges
-      .filter(edge => edge.type.includes('CABLE'))
-      .map(edge => ({
-        id: edge.id,
-        section: edge.properties.section || 1.5,
-        length: edge.properties.length || 0,
-        material: edge.properties.materiau || 'Cu',
-        current: edge.properties.courant || 0,
-        from: edge.from,
-        to: edge.to
-      }));
+    const cableData = edges.
+    filter((edge) => edge.type.includes('CABLE')).
+    map((edge) => ({
+      id: edge.id,
+      section: edge.properties.section || 1.5,
+      length: edge.properties.length || 0,
+      material: edge.properties.materiau || 'Cu',
+      current: edge.properties.courant || 0,
+      from: edge.from,
+      to: edge.to
+    }));
 
     return {
       cables: cableData,

@@ -1,6 +1,6 @@
 
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+
 import { toast } from 'sonner';
 import { useEffect } from "react";
 
@@ -18,14 +18,15 @@ interface SiteSettings {
   twitter_url?: string;
 }
 
-// Fonction pour récupérer les paramètres du site depuis Supabase
+// Fonction pour récupérer les paramètres du site depuis l'API locale
 const fetchSiteSettings = async (): Promise<SiteSettings> => {
-  const { data, error } = await supabase
-    .from("site_settings")
-    .select("*")
-    .single();
-
-  if (error) {
+  try {
+    const res = await fetch("/api/site-settings");
+    if (!res.ok) throw new Error("Failed to fetch settings");
+    const data = await res.json();
+    // Assuming API returns array (getTable helper), we take first item or match single() logic
+    return Array.isArray(data) ? data[0] : data;
+  } catch (error) {
     console.error('Error fetching site settings:', error);
     toast.error('Erreur lors de la récupération des paramètres du site.');
     return {
@@ -39,8 +40,6 @@ const fetchSiteSettings = async (): Promise<SiteSettings> => {
       linkedin_url: "https://linkedin.com/company/proquelec",
     };
   }
-
-  return data;
 };
 
 export function useSiteSettings() {

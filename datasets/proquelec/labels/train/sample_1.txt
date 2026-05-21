@@ -1,0 +1,20 @@
+
+# Manual annotation guess for test_tableau.jpg
+# Format: <class> <x_center> <y_center> <width> <height> (normalized 0-1)
+
+# Technicien (Right side, large) - Class 1
+1 0.75 0.5 0.45 0.9
+
+# Tableau Electrique (Left side, background) - Class 2
+2 0.35 0.5 0.65 0.9
+
+# Disjoncteurs (Some visible breakers on the DIN rails) - Class 0
+# Row 1
+0 0.25 0.25 0.08 0.12
+0 0.35 0.25 0.08 0.12
+0 0.45 0.25 0.08 0.12
+
+# Row 2
+0 0.25 0.45 0.05 0.08
+0 0.35 0.45 0.05 0.08
+0 0.45 0.45 0.05 0.08

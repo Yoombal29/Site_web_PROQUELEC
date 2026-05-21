@@ -1,45 +1,61 @@
 
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from 'sonner';
-import type { Session, User } from "@supabase/supabase-js";
-import { startTransition } from "react";
 
-/**
- * Permet de récupérer l'utilisateur, la session et l'état de chargement.
- */
+export type User = {
+  id: string;
+  email: string;
+  username?: string;
+  role: string;
+  is_active: boolean;
+};
+
 export function useSession() {
-  const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
+
+  const { data: user, isLoading } = useQuery({
+    queryKey: ['session'],
+    queryFn: async () => {
+      const token = localStorage.getItem('token');
+      if (!token) return null;
+
+      try {
+        const res = await fetch('/api/auth/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error('Session invalid');
+        }
+
+        return await res.json();
+      } catch (err) {
+        localStorage.removeItem('token');
+        return null;
+      }
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    retry: false
+  });
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      toast.error('Erreur lors de la déconnexion.');
-    }
+    localStorage.removeItem('token');
+    queryClient.setQueryData(['session'], null);
+    toast.success('Déconnexion réussie');
   };
 
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      startTransition(() => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setIsLoading(false);
-      });
-    });
+  const login = (token: string, userData: User) => {
+    localStorage.setItem('token', token);
+    queryClient.setQueryData(['session'], userData);
+  };
 
-    // Initialiser la session au mount
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      startTransition(() => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setIsLoading(false);
-      });
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  return { session, user, isLoading, signOut };
+  return {
+    session: user ? { access_token: localStorage.getItem('token'), user } : null,
+    user: user as User | null,
+    isLoading,
+    signOut,
+    login
+  };
 }

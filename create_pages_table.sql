@@ -1,6 +1,6 @@
--- Script SQL complet et robuste pour créer la table pages dans Supabase
+-- Script SQL complet et robuste pour créer la table pages dans 
 -- Version améliorée avec validations et sécurité renforcée
--- À exécuter dans le SQL Editor de Supabase (https://supabase.com/dashboard/project/yyuhwuaqsbhwtiotyauu/sql)
+-- À exécuter dans le SQL Editor de  (https://.com/dashboard/project/yyuhwuaqsbhwtiotyauu/sql)
 
 -- ===========================================
 -- PRÉPARATION : Supprimer les dépendances existantes
@@ -450,7 +450,7 @@ CREATE OR REPLACE FUNCTION setup_archive_schedule()
 RETURNS void AS $$
 BEGIN
   -- Cette fonction peut être appelée par un cron job externe
-  -- ou un Edge Function de Supabase
+  -- ou un Edge Function de 
   NULL;
 END;
 $$ LANGUAGE plpgsql;

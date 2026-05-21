@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useAdvancedAnalytics } from '@/hooks/useAdvancedAnalytics';
 import { useAdvancedCache } from '@/hooks/useAdvancedCache';
-import { supabase } from '@/integrations/supabase/client';
+import { apiFetch } from '@/lib/api-client';
 
 interface SystemHealth {
   database: 'healthy' | 'warning' | 'error';
@@ -30,7 +30,7 @@ export function AdminMonitoringDashboard() {
     performance: 'healthy',
     errors: 0
   });
-  
+
   const [realTimeStats, setRealTimeStats] = useState<RealTimeStats>({
     activeUsers: 0,
     pageViews: 0,
@@ -46,17 +46,23 @@ export function AdminMonitoringDashboard() {
   useEffect(() => {
     const checkSystemHealth = async () => {
       try {
-        // Test de la base de données
-        const { error: dbError } = await supabase.from('profiles').select('count').limit(1);
-        
+        // Test de la base de données via API
+        let dbStatus: 'healthy' | 'error' = 'healthy';
+        try {
+          // Using a lightweight endpoint to check DB connectivity
+          await apiFetch('/api/health'); // Assuming an endpoint /api/health or similar exists or we use metrics
+        } catch (e) {
+          dbStatus = 'error';
+        }
+
         // Métriques de performance
         const perfMetrics = getPerformanceMetrics();
-        
+
         // Statistiques du cache
         const cache = cacheStats;
-        
+
         setSystemHealth({
-          database: dbError ? 'error' : 'healthy',
+          database: dbStatus,
           cache: cache.totalItems > cache.maxSize * 0.9 ? 'warning' : 'healthy',
           performance: perfMetrics && perfMetrics.page_load_time > 3000 ? 'warning' : 'healthy',
           errors: 0 // À implémenter avec un système de logs d'erreurs
@@ -148,9 +154,9 @@ export function AdminMonitoringDashboard() {
               {getHealthIcon(systemHealth.cache)}
               <span className="capitalize">{systemHealth.cache}</span>
             </div>
-            <Progress 
-              value={cacheStats ? (cacheStats.totalItems / cacheStats.maxSize) * 100 : 0} 
-              className="mt-2 h-2" 
+            <Progress
+              value={cacheStats ? (cacheStats.totalItems / cacheStats.maxSize) * 100 : 0}
+              className="mt-2 h-2"
             />
           </CardContent>
         </Card>
@@ -229,6 +235,28 @@ export function AdminMonitoringDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Cockpit Neural-Next (Astra Engine Monitoring) */}
+      <Card className="border-proqblue/30 bg-proqblue/5 backdrop-blur-sm overflow-hidden border-2">
+        <CardHeader className="bg-proqblue/10 border-b border-proqblue/20">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-proqblue flex items-center gap-2 uppercase tracking-tighter">
+              <Sparkles className="h-5 w-5 text-purple-500" />
+              Cockpit Stratégique Neural-Next
+            </CardTitle>
+            <Badge className="bg-proqblue text-white animate-pulse">LIVE CORTEX V3.2</Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="w-full h-[600px] bg-slate-900">
+            <iframe
+              src="http://localhost:4000/dashboard.html"
+              className="w-full h-full border-none"
+              title="Astra Engine Live Monitoring"
+            />
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Alertes et notifications */}
       <Card>

@@ -10,6 +10,12 @@ import { Label } from "@/components/ui/label";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from "@/components/ui/pagination";
 
 const categorySchema = z.object({
   name: z.string().min(2, { message: "Le nom doit faire au moins 2 caractères." }),
@@ -78,22 +84,22 @@ export default function AdminCategoryPanel() {
     setEditingCategory(undefined);
     setIsDialogOpen(true);
   };
-  
+
   const handleDialogClose = () => {
     setIsDialogOpen(false);
     setEditingCategory(undefined);
   };
 
-  if (isLoading) return <div className="flex justify-center"><Loader2 className="animate-spin h-6 w-6 text-proqblue" /></div>;
+  if (isLoading) return <div className="flex justify-center"><Loader2 className="animate-spin h-6 w-6 text-primary" /></div>;
   if (error) return <div className="text-red-600">Erreur: {error.message}</div>;
 
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-proqblue-dark">Gestion des catégories</h3>
+        <h3 className="text-lg font-semibold text-primary">Gestion des catégories</h3>
         <Button onClick={handleCreate} size="sm"><PlusCircle className="mr-2 h-4 w-4" />Créer une catégorie</Button>
       </div>
-      
+
       <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
         <DialogContent>
           <DialogHeader>
@@ -102,17 +108,17 @@ export default function AdminCategoryPanel() {
           <CategoryForm category={editingCategory} onSuccess={handleDialogClose} />
         </DialogContent>
       </Dialog>
-      
+
       <input
         type="text"
         placeholder="Rechercher une catégorie..."
         value={search}
         onChange={e => { setSearch(e.target.value); setPage(1); }}
-        className="mb-4 px-3 py-2 border rounded w-full max-w-xs text-sm"
+        className="mb-4 px-3 py-2 border border-border bg-background text-foreground rounded w-full max-w-xs text-sm"
       />
       <div className="space-y-2">
         {paginatedCategories.map(cat => (
-          <div key={cat.id} className="flex items-center justify-between p-2 border rounded-md bg-gray-50">
+          <div key={cat.id} className="flex items-center justify-between p-2 border border-border rounded-md bg-muted/30">
             <span>{cat.name}</span>
             <div className="flex gap-2">
               <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleEdit(cat)}><Edit className="h-4 w-4" /></Button>

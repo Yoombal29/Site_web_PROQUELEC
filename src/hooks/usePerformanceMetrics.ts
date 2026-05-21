@@ -1,6 +1,4 @@
-
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 
 interface PerformanceMetrics {
   pageLoadTime: number;
@@ -21,7 +19,7 @@ export function usePerformanceMetrics() {
 
     const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
     const paintEntries = performance.getEntriesByType('paint');
-    const fcp = paintEntries.find(entry => entry.name === 'first-contentful-paint')?.startTime || 0;
+    const fcp = paintEntries.find((entry) => entry.name === 'first-contentful-paint')?.startTime || 0;
 
     // Calculer les vraies métriques (hors simulation)
     const newMetrics: PerformanceMetrics = {
@@ -31,27 +29,30 @@ export function usePerformanceMetrics() {
       cumulativeLayoutShift: 0,
       firstInputDelay: 0,
       totalBlockingTime: 0,
-      timeToInteractive: 0,
+      timeToInteractive: 0
     };
 
     setMetrics(newMetrics);
     setIsLoading(false);
 
-    // Enregistrer dans Supabase
+    // Enregistrer dans l'API locale
     try {
-      await supabase.from('performance_metrics').insert({
-        page_url: window.location.pathname,
-        load_time: Math.round(newMetrics.pageLoadTime),
-        dom_content_loaded: Math.round(navigation.domContentLoadedEventEnd - navigation.fetchStart),
-        first_contentful_paint: Math.round(fcp),
-        time_to_interactive: Math.round(newMetrics.timeToInteractive),
-        connection_type: (navigator as any).connection?.effectiveType || null,
-        created_at: new Date().toISOString(),
+      await fetch("/api/performance-metrics", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          page_url: window.location.pathname,
+          load_time: Math.round(newMetrics.pageLoadTime),
+          dom_content_loaded: navigation ? Math.round(navigation.domContentLoadedEventEnd - navigation.fetchStart) : 0,
+          first_contentful_paint: Math.round(fcp),
+          time_to_interactive: Math.round(newMetrics.timeToInteractive),
+          connection_type: (navigator as unknown).connection?.effectiveType || null
+        })
       });
     } catch (e) {
+
       // ignore
-    }
-  }, []);
+    }}, []);
 
   useEffect(() => {
     // Attendre que la page soit complètement chargée
@@ -63,13 +64,13 @@ export function usePerformanceMetrics() {
     }
   }, [collectMetrics]);
 
-  const getScoreColor = (value: number, thresholds: { good: number; needsImprovement: number }) => {
+  const getScoreColor = (value: number, thresholds: {good: number;needsImprovement: number;}) => {
     if (value <= thresholds.good) return 'text-green-600';
     if (value <= thresholds.needsImprovement) return 'text-yellow-600';
     return 'text-red-600';
   };
 
-  const getScoreLabel = (value: number, thresholds: { good: number; needsImprovement: number }) => {
+  const getScoreLabel = (value: number, thresholds: {good: number;needsImprovement: number;}) => {
     if (value <= thresholds.good) return 'Bon';
     if (value <= thresholds.needsImprovement) return 'À améliorer';
     return 'Mauvais';
@@ -78,13 +79,19 @@ export function usePerformanceMetrics() {
   // Fonction pour récupérer les métriques stockées
   const fetchStoredMetrics = useCallback(async () => {
     setIsLoading(true);
-    const { data, error } = await supabase
-      .from('performance_metrics')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(20);
-    setIsLoading(false);
-    return { data, error };
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch("/api/performance-metrics", {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error("Failed to fetch metrics");
+      const data = await res.json();
+      setIsLoading(false);
+      return { data, error: null };
+    } catch (error) {
+      setIsLoading(false);
+      return { data: null, error };
+    }
   }, []);
 
   return {
@@ -93,6 +100,6 @@ export function usePerformanceMetrics() {
     refreshMetrics: collectMetrics,
     fetchStoredMetrics,
     getScoreColor,
-    getScoreLabel,
+    getScoreLabel
   };
 }
