@@ -1,4 +1,5 @@
 
+import { lazy, Suspense } from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,9 +21,6 @@ import ContactPremium from "./pages/ContactPremium";
 import Sitemap from "./pages/Sitemap";
 import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
-import ToolsPlatform from "./pages/ToolsPlatform";
-import Showroom from "./pages/Showroom";
-// import PressPage from "./pages/PressPage"; // Moved to CMS
 import PartnerDashboard from "./pages/admin/PartnerDashboard";
 import AdminSecondaryDashboard from "./pages/admin/AdminSecondaryDashboard";
 import PageSectionsAdmin from "./pages/admin/PageSectionsAdmin";
@@ -31,8 +29,6 @@ import RubriqueSelectorPage from "./pages/RubriqueSelectorPage";
 import ObservatoirePage from "./pages/observatoire/ObservatoirePage";
 import { RoleProtectedRoute } from "@/components/RoleProtectedRoute";
 import GEDPage from "./pages/GEDPage";
-import Documents from "./pages/Documents";
-import Events from "./pages/Events";
 
 // Expert Lab Imports
 import ExpertDashboard from "./expert-lab/pages/Dashboard";
@@ -40,7 +36,7 @@ import ExpertChatPage from "./expert-lab/pages/ChatPage";
 import InspecteurKEBE from "./pages/InspecteurKEBE";
 
 // Office Suite Imports
-import { DocumentEditorPage } from "./pages/DocumentEditorPage";
+const DocumentEditorPage = lazy(() => import("./pages/DocumentEditorPage").then((mod) => ({ default: mod.DocumentEditorPage })));
 import { SpreadsheetEditorPage } from "./pages/SpreadsheetEditorPage";
 import { PresentationEditorPage } from "./pages/PresentationEditorPage";
 import { AnalyticsPage } from "./pages/AnalyticsPage";
@@ -63,10 +59,12 @@ import ProjectList from "./pages/projects/ProjectList";
 import ProjectDetail from "./pages/projects/ProjectDetail";
 import InspectionDetail from "./pages/inspections/InspectionDetail";
 
-import BuilderPage from "./pages/admin/BuilderPage";
 import PermissionsAdmin from "./pages/admin/PermissionsAdmin";
 import RBACDemo from "./pages/examples/RBACDemo";
 
+// Lazy-load heavy pages
+const BuilderPageLazy = lazy(() => import("./pages/admin/BuilderPage"));
+const AnalyticsPageLazy = lazy(() => import("./pages/AnalyticsPage").then(mod => ({ default: mod.AnalyticsPage })));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -135,6 +133,8 @@ const AppContent = () => {
         { path: "/blog", element: <ConstructionPage /> },
         { path: "/blog/:slug", element: <ConstructionPage /> },
         { path: "/contact", element: <ConstructionPage /> },
+        { path: "/outils", element: <ConstructionPage /> },
+        { path: "/showroom", element: <ConstructionPage /> },
         { path: "/legal", element: <DynamicPage /> },
         // Routes dynamiques en mode construction
         ...(dynamicRoutes?.map((route) => ({ path: route.path, element: <ConstructionPage /> })) || []),
@@ -151,33 +151,34 @@ const AppContent = () => {
         { path: "/projets-realisations", element: <DynamicPage /> },
         { path: "/actualites-evenements", element: <DynamicPage /> },
         { path: "/partenaires", element: <DynamicPage /> },
-        { path: "/contact", element: <ContactPremium /> },
+        { path: "/contact", element: <DynamicPage /> },
+        { path: "/contact-premium", element: <DynamicPage /> },
         { path: "/activities", element: <DynamicPage /> },
         { path: "/labels", element: <DynamicPage /> },
+        { path: "/legal", element: <DynamicPage /> },
+        { path: "/certifications", element: <DynamicPage /> },
+        { path: "/formations", element: <DynamicPage /> },
+        { path: "/actualites", element: <DynamicPage /> },
+        { path: "/presse", element: <DynamicPage /> },
         { path: "/autorites", element: <DynamicPage /> },
         { path: "/menages", element: <DynamicPage /> },
         { path: "/professionnels", element: <DynamicPage /> },
-        { path: "/presse", element: <DynamicPage /> },
         { path: "/social", element: <DynamicPage /> },
         { path: "/espace-menages", element: <DynamicPage /> },
         { path: "/espace-professionnels", element: <DynamicPage /> },
         { path: "/espace-autorites", element: <DynamicPage /> },
 
-        // --- PAGES SPÉCIALISÉES (Utilisent Documents.tsx et Events.tsx) ---
-        { path: "/documents", element: <Documents /> },
-        { path: "/events", element: <Events /> },
+        // --- PAGES CMS DYNAMIQUES ---
+        { path: "/documents", element: <DynamicPage /> },
+        { path: "/events", element: <DynamicPage /> },
 
-        { path: "/certifications", element: <DynamicPage /> },
-        { path: "/formations", element: <DynamicPage /> },
         { path: "/expertises-techniques", element: <DynamicPage /> },
         { path: "/expert-lab", element: <DynamicPage /> },
         { path: "/formations-proquelec", element: <DynamicPage /> },
-        { path: "/actualites", element: <DynamicPage /> },
         { path: "/blog", element: <DynamicPage /> },
         { path: "/blog/:slug", element: <BlogPost /> },
-        { path: "/legal", element: <DynamicPage /> },
-        { path: "/outils", element: <ToolsPlatform /> },
-        { path: "/showroom", element: <Showroom /> },
+        { path: "/outils", element: <DynamicPage /> },
+        { path: "/showroom", element: <DynamicPage /> },
         { path: "/rubrique-selector", element: <RubriqueSelectorPage /> },
         { path: "/schema-builder", element: <SchemaBuilder /> },
         { path: "/apps/:appId", element: <DynamicPage /> },
@@ -272,9 +273,30 @@ const AppContent = () => {
         { path: "/diagnostics/:id", element: <InspectionDetail /> },
 
         // Office Suite Routes
-        { path: "/office/document/new", element: <DocumentEditorPage /> },
-        { path: "/office/document/:id", element: <DocumentEditorPage /> },
-        { path: "/office/document/template/:templateId", element: <DocumentEditorPage /> },
+        {
+          path: "/office/document/new",
+          element: (
+            <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement de l'éditeur…</div>}>
+              <DocumentEditorPage />
+            </Suspense>
+          )
+        },
+        {
+          path: "/office/document/:id",
+          element: (
+            <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement de l'éditeur…</div>}>
+              <DocumentEditorPage />
+            </Suspense>
+          )
+        },
+        {
+          path: "/office/document/template/:templateId",
+          element: (
+            <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement de l'éditeur…</div>}>
+              <DocumentEditorPage />
+            </Suspense>
+          )
+        },
         { path: "/office/spreadsheet/new", element: <SpreadsheetEditorPage /> },
         { path: "/office/spreadsheet/:id", element: <SpreadsheetEditorPage /> },
         { path: "/office/spreadsheet/template/:templateId", element: <SpreadsheetEditorPage /> },
@@ -282,11 +304,11 @@ const AppContent = () => {
         { path: "/office/presentation/:id", element: <PresentationEditorPage /> },
         { path: "/office/presentation/template/:templateId", element: <PresentationEditorPage /> },
 
-        { path: "/analytics", element: <AnalyticsPage /> },
+        { path: "/analytics", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement…</div>}><AnalyticsPageLazy /></Suspense> },
         { path: "/plan-du-site", element: <Sitemap /> },
         { path: "/sitemap", element: <Sitemap /> },
 
-        { path: "/admin/builder/:pageId", element: <BuilderPage /> },
+        { path: "/admin/builder/:pageId", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement du builder…</div>}><BuilderPageLazy /></Suspense> },
         {
           path: "/admin/permissions",
           element:

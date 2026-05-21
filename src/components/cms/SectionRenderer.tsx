@@ -37,10 +37,18 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
 
   // Styles de section dynamiques
   const sectionStyles = {
-    backgroundColor: styles?.backgroundColor,
+    backgroundColor: styles?.gradient ? undefined : styles?.backgroundColor,
+    backgroundImage: styles?.gradient,
     color: styles?.textColor,
     padding: styles?.padding || '80px 0',
-    borderRadius: styles?.borderRadius
+    margin: styles?.margin,
+    borderRadius: styles?.borderRadius,
+    border: styles?.borderColor ? `${styles.borderWidth || '1px'} solid ${styles.borderColor}` : undefined,
+    boxShadow: styles?.shadow,
+    textAlign: styles?.textAlign as React.CSSProperties['textAlign'],
+    maxWidth: styles?.maxWidth,
+    fontSize: styles?.fontSize,
+    fontWeight: styles?.fontWeight as React.CSSProperties['fontWeight']
   } as React.CSSProperties;
 
   // Animation de base

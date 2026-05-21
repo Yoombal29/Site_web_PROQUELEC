@@ -45,29 +45,73 @@ const COMPONENT_TYPES = [
 
 const PAGE_CONFIGS = {
   'home_page': { label: 'Portail (Accueil)', color: 'blue' },
+  'home': { label: 'Portail (Accueil)', color: 'blue' },
+  'about': { label: 'À Propos', color: 'purple' },
   'public_utility': { label: 'Utilité Publique', color: 'blue' },
+  'utilite-publique': { label: 'Utilité Publique', color: 'blue' },
   'autorites': { label: 'Espace Autorités', color: 'slate' },
   'menages': { label: 'Espace Ménages', color: 'rose' },
   'professionnels': { label: 'Espace Professionnels', color: 'blue' },
   'presse': { label: 'Espace Presse', color: 'indigo' },
   'social': { label: 'Réseaux & Social', color: 'sky' },
   'formation_certification': { label: 'Formation & Certification', color: 'orange' },
+  'formation-certification': { label: 'Formation & Certification', color: 'orange' },
   'normes_ressources': { label: 'Normes & Ressources', color: 'teal' },
+  'normes-ressources': { label: 'Normes & Ressources', color: 'teal' },
   'projets_realisations': { label: 'Projets & Réalisations', color: 'indigo' },
+  'projets-realisations': { label: 'Projets & Réalisations', color: 'indigo' },
   'actualites_evenements': { label: 'Actualités & Événements', color: 'rose' },
+  'actualites': { label: 'Actualités', color: 'rose' },
+  'actualites-evenements': { label: 'Actualités & Agenda', color: 'rose' },
   'partenaires': { label: 'Partenaires', color: 'yellow' },
-  'about': { label: 'À Propos', color: 'purple' },
   'activities': { label: 'Activités', color: 'blue' },
   'certifications': { label: 'Certifications', color: 'indigo' },
   'advantages': { label: 'Avantages', color: 'emerald' },
+  'avantages': { label: 'Avantages', color: 'emerald' },
   'labels': { label: 'Labels', color: 'amber' },
   'trainings': { label: 'Formations', color: 'blue' },
+  'formations': { label: 'Formations', color: 'blue' },
+  'formations_proquelec': { label: 'Formations Proquelec', color: 'emerald' },
+  'formations-proquelec': { label: 'Formations Proquelec', color: 'emerald' },
   'showroom': { label: 'Showroom', color: 'cyan' },
+  'documents': { label: 'Documents & Ressources', color: 'emerald' },
+  'events': { label: 'Événements & Agenda', color: 'rose' },
   'legal': { label: 'Mentions Légales', color: 'slate' },
   'contact': { label: 'Contact Principal', color: 'orange' },
   'contact_premium': { label: 'Contact Premium', color: 'green' },
-  'outils': { label: 'Outils Métiers', color: 'emerald' }
+  'contact-premium': { label: 'Contact Premium', color: 'green' },
+  'outils': { label: 'Outils Métiers', color: 'emerald' },
+  'expertises_techniques': { label: 'Expertises Techniques', color: 'cyan' },
+  'expertises-techniques': { label: 'Expertises Techniques', color: 'cyan' },
+  'expert_lab': { label: 'Expert Lab', color: 'slate' },
+  'expert-lab': { label: 'Expert Lab', color: 'slate' },
+  'espace-menages': { label: 'Espace Ménages', color: 'rose' },
+  'espace-professionnels': { label: 'Espace Professionnels', color: 'blue' },
+  'espace-autorites': { label: 'Espace Autorités', color: 'slate' },
+  'blog': { label: 'Blog', color: 'orange' }
 };
+
+const PAGE_ALIASES: Record<string, string> = {
+  home: 'home_page',
+  about: 'about',
+  'utilite-publique': 'public_utility',
+  'formation-certification': 'formation_certification',
+  'normes-ressources': 'normes_ressources',
+  'projets-realisations': 'projets_realisations',
+  actualites: 'actualites_evenements',
+  'actualites-evenements': 'actualites_evenements',
+  'contact-premium': 'contact_premium',
+  formations: 'trainings',
+  'formations-proquelec': 'formations_proquelec',
+  'expertises-techniques': 'expertises_techniques',
+  'espace-menages': 'menages',
+  'espace-professionnels': 'professionnels',
+  'espace-autorites': 'autorites',
+  avantages: 'advantages'
+};
+
+const resolvePageKey = (page: string) => PAGE_ALIASES[page] || page;
+const resolvePageConfig = (page: string) => PAGE_CONFIGS[page] || PAGE_CONFIGS[resolvePageKey(page)] || { label: page, color: 'blue' };
 
 interface PageSectionsAdminProps {
   standalone?: boolean;
@@ -100,24 +144,27 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
   useEffect(() => {
     if (settings?.page_sections) {
       setPageSections(settings.page_sections);
-      const pageData = settings.page_sections[selectedPage];
+      const pageData = settings.page_sections[selectedPage] || settings.page_sections[resolvePageKey(selectedPage)];
 
       const firstSection = pageData?.sections?.[0]?.id;
       if (firstSection) setActiveSection(firstSection);
     }
   }, [settings, selectedPage]);
 
-  const currentPageData = pageSections[selectedPage] || { sections: [], content: {}, renderMode: 'sections', customHTML: '' };
+  const resolvedPageKey = resolvePageKey(selectedPage);
+  const canonicalPageKey = resolvedPageKey;
+  const currentPageData = pageSections[canonicalPageKey] || pageSections[selectedPage] || { sections: [], content: {}, renderMode: 'sections', customHTML: '' };
   const currentSections = currentPageData.sections || [];
   const currentContent = currentPageData.content || {};
   const renderMode = currentPageData.renderMode || 'sections';
   const customHTML = currentPageData.customHTML || '';
+  const currentPageConfig = resolvePageConfig(selectedPage);
 
   // Helper to update the current page's data in the master object
   const updateCurrentPageData = (updates: unknown) => {
     setPageSections((prev) => ({
       ...prev,
-      [selectedPage]: {
+      [canonicalPageKey]: {
         ...currentPageData,
         ...updates
       }
@@ -176,7 +223,7 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
 
     setPageSections({
       ...pageSections,
-      [selectedPage]: {
+      [canonicalPageKey]: {
         sections: updatedSections,
         content: updatedContent
       }
@@ -237,15 +284,15 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
   };
 
   const initializePageFromDefaults = () => {
-    const defaultData = (DEFAULT_PAGE_SECTIONS as unknown)[selectedPage];
+    const defaultData = (DEFAULT_PAGE_SECTIONS as unknown)[canonicalPageKey] || (DEFAULT_PAGE_SECTIONS as unknown)[selectedPage];
     if (defaultData) {
       setPageSections({
         ...pageSections,
-        [selectedPage]: defaultData
+        [canonicalPageKey]: defaultData
       });
       toast({
         title: "✅ Données initialisées",
-        description: `Contenu par défaut chargé pour ${PAGE_CONFIGS[selectedPage as keyof typeof PAGE_CONFIGS]?.label} `
+        description: `Contenu par défaut chargé pour ${currentPageConfig.label}`
       });
       if (defaultData.sections?.[0]?.id) {
         setActiveSection(defaultData.sections[0].id);
@@ -266,7 +313,7 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
 
     setPageSections({
       ...pageSections,
-      [selectedPage]: {
+      [canonicalPageKey]: {
         sections: updatedSections,
         content: updatedContent
       }
@@ -283,7 +330,7 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
 
     setPageSections({
       ...pageSections,
-      [selectedPage]: {
+      [canonicalPageKey]: {
         ...currentPageData,
         sections: items
       }
@@ -297,7 +344,7 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
 
     setPageSections({
       ...pageSections,
-      [selectedPage]: {
+      [canonicalPageKey]: {
         ...currentPageData,
         sections: updatedSections
       }
@@ -315,7 +362,28 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
 
     setPageSections({
       ...pageSections,
-      [selectedPage]: {
+      [canonicalPageKey]: {
+        ...currentPageData,
+        content: updatedContent
+      }
+    });
+  };
+
+  const updateSectionStyle = (sectionId: string, field: string, value: unknown) => {
+    const updatedContent = {
+      ...currentContent,
+      [sectionId]: {
+        ...currentContent[sectionId],
+        styles: {
+          ...currentContent[sectionId]?.styles,
+          [field]: value
+        }
+      }
+    };
+
+    setPageSections({
+      ...pageSections,
+      [canonicalPageKey]: {
         ...currentPageData,
         content: updatedContent
       }
@@ -447,7 +515,7 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
               onSectionsChange={(newSections) => {
                 setPageSections({
                   ...pageSections,
-                  [selectedPage]: {
+                  [canonicalPageKey]: {
                     ...currentPageData,
                     sections: newSections
                   }
@@ -462,7 +530,7 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
               onContentUpdate={(newContent) => {
                 setPageSections({
                   ...pageSections,
-                  [selectedPage]: {
+                  [canonicalPageKey]: {
                     ...currentPageData,
                     ...newContent
                   }
@@ -555,12 +623,11 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
                 onChange={(e) => {
                   try {
                     const parsed = JSON.parse(e.target.value);
-                    setPageSections({ ...pageSections, [selectedPage]: parsed });
+                    setPageSections({ ...pageSections, [canonicalPageKey]: parsed });
                   } catch (err) {
-
-
                     // Invalid JSON, don't update
-                  }}} className="font-mono text-sm h-[500px]" />
+                  }
+                }} className="font-mono text-sm h-[500px]" />
               
                             </CardContent>
                         </Card> :
@@ -639,7 +706,7 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
                             <Card className="overflow-hidden border-2 border-slate-900/10 shadow-2xl">
                                 <CardHeader className="bg-slate-900 text-white">
                                     <CardTitle className="text-xl flex items-center gap-2">
-                                        <Eye className="w-5 h-5 text-blue-400" /> Prévisualisation Live : {PAGE_CONFIGS[selectedPage as keyof typeof PAGE_CONFIGS]?.label}
+                                        <Eye className="w-5 h-5 text-blue-400" /> Prévisualisation Live : {currentPageConfig.label}
                                     </CardTitle>
                                     <CardDescription className="text-slate-400 italic">
                                         {renderMode === 'html' ? 'Rendu HTML personnalisé' : 'Ceci est une simulation du rendu final sur le site public.'}
@@ -659,7 +726,7 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
                                                 {/* Preview Hero Area Simulation */}
                                                 <div className="text-center space-y-4 mb-12">
                                                     <div className="w-24 h-1 bg-blue-600 mx-auto rounded-full mb-4"></div>
-                                                    <h2 className="text-5xl font-black text-slate-900 tracking-tighter uppercase">{PAGE_CONFIGS[selectedPage as keyof typeof PAGE_CONFIGS]?.label}</h2>
+                                                    <h2 className="text-5xl font-black text-slate-900 tracking-tighter uppercase">{currentPageConfig.label}</h2>
                                                     <p className="text-lg text-slate-500 max-w-2xl mx-auto font-light">Contenu dynamique synchronisé au pixel près.</p>
                                                 </div>
 
@@ -673,7 +740,7 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
                         type: currentContent[section.id]?.type || (sIdx === 0 && selectedPage === 'home_page' ? 'hero' : 'text-image'),
                         layout: currentContent[section.id]?.layout || (sIdx % 2 === 1 ? 'right-left' : 'left-right')
                       }}
-                      themeColor={PAGE_CONFIGS[selectedPage as keyof typeof PAGE_CONFIGS]?.color || 'blue'}
+                      themeColor={currentPageConfig.color || 'blue'}
                       isAdmin={true}
                       isSelected={activeSection === section.id}
                       onEdit={(id) => {
@@ -697,7 +764,7 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
                                         <div className="flex items-center justify-between">
                                             <CardTitle className="text-lg">Sous-Sections</CardTitle>
                                             <div className="flex gap-2">
-                                                {currentSections.length === 0 && (DEFAULT_PAGE_SECTIONS as unknown)[selectedPage] &&
+                                                {currentSections.length === 0 && ((DEFAULT_PAGE_SECTIONS as unknown)[canonicalPageKey] || (DEFAULT_PAGE_SECTIONS as unknown)[selectedPage]) &&
                       <Button size="sm" onClick={initializePageFromDefaults} variant="default" className="bg-blue-600 hover:bg-blue-700">
                                                         <Layout className="w-4 h-4 mr-2" />
                                                         Modèle
@@ -830,6 +897,133 @@ export default function PageSectionsAdmin({ standalone = true, defaultPage }: Pa
                                                     </SelectContent>
                                                 </Select>
                                             </div>
+
+                                            <Card className="mt-6 border-slate-200">
+                                                <CardHeader>
+                                                    <CardTitle className="text-base">🎨 Styles de Section</CardTitle>
+                                                    <CardDescription>Contrôlez les couleurs, l'espacement et l'apparence précise de la section.</CardDescription>
+                                                </CardHeader>
+                                                <CardContent className="space-y-4">
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div>
+                                                            <Label>Couleur de fond</Label>
+                                                            <Input
+                                                              type="color"
+                                                              value={currentSectionData.styles?.backgroundColor || '#ffffff'}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'backgroundColor', e.target.value)} />
+                                                        </div>
+                                                        <div>
+                                                            <Label>Couleur du texte</Label>
+                                                            <Input
+                                                              type="color"
+                                                              value={currentSectionData.styles?.textColor || '#0f172a'}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'textColor', e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div>
+                                                            <Label>Couleur accent</Label>
+                                                            <Input
+                                                              type="color"
+                                                              value={currentSectionData.styles?.accentColor || '#0ea5e9'}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'accentColor', e.target.value)} />
+                                                        </div>
+                                                        <div>
+                                                            <Label>Dégradé / background</Label>
+                                                            <Input
+                                                              value={currentSectionData.styles?.gradient || ''}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'gradient', e.target.value)}
+                                                              placeholder="linear-gradient(135deg, #0ea5e9 0%, #9333ea 100%)" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-3 gap-4">
+                                                        <div>
+                                                            <Label>Padding</Label>
+                                                            <Input
+                                                              value={currentSectionData.styles?.padding || '80px 0'}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'padding', e.target.value)}
+                                                              placeholder="80px 0" />
+                                                        </div>
+                                                        <div>
+                                                            <Label>Margin</Label>
+                                                            <Input
+                                                              value={currentSectionData.styles?.margin || '0'}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'margin', e.target.value)}
+                                                              placeholder="0" />
+                                                        </div>
+                                                        <div>
+                                                            <Label>Largeur max</Label>
+                                                            <Input
+                                                              value={currentSectionData.styles?.maxWidth || ''}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'maxWidth', e.target.value)}
+                                                              placeholder="1200px" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-3 gap-4">
+                                                        <div>
+                                                            <Label>Arrondi</Label>
+                                                            <Input
+                                                              value={currentSectionData.styles?.borderRadius || '0px'}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'borderRadius', e.target.value)}
+                                                              placeholder="24px" />
+                                                        </div>
+                                                        <div>
+                                                            <Label>Largeur bordure</Label>
+                                                            <Input
+                                                              value={currentSectionData.styles?.borderWidth || '0px'}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'borderWidth', e.target.value)}
+                                                              placeholder="0px" />
+                                                        </div>
+                                                        <div>
+                                                            <Label>Couleur bordure</Label>
+                                                            <Input
+                                                              type="color"
+                                                              value={currentSectionData.styles?.borderColor || '#cbd5e1'}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'borderColor', e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div>
+                                                            <Label>Alignement texte</Label>
+                                                            <Select
+                                                              value={currentSectionData.styles?.textAlign || 'left'}
+                                                              onValueChange={(value: unknown) => updateSectionStyle(activeSection, 'textAlign', value)}>
+                                                                <SelectTrigger>
+                                                                    <SelectValue />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectItem value="left">Gauche</SelectItem>
+                                                                    <SelectItem value="center">Centre</SelectItem>
+                                                                    <SelectItem value="right">Droite</SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </div>
+                                                        <div>
+                                                            <Label>Ombre</Label>
+                                                            <Input
+                                                              value={currentSectionData.styles?.shadow || '0 25px 50px rgba(15, 23, 42, 0.08)'}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'shadow', e.target.value)}
+                                                              placeholder="0 25px 50px rgba(0,0,0,0.1)" />
+                                                        </div>
+                                                    </div>
+                                                    <div className="grid grid-cols-2 gap-4">
+                                                        <div>
+                                                            <Label>Taille police</Label>
+                                                            <Input
+                                                              value={currentSectionData.styles?.fontSize || ''}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'fontSize', e.target.value)}
+                                                              placeholder="18px" />
+                                                        </div>
+                                                        <div>
+                                                            <Label>Poids police</Label>
+                                                            <Input
+                                                              value={currentSectionData.styles?.fontWeight || ''}
+                                                              onChange={(e) => updateSectionStyle(activeSection, 'fontWeight', e.target.value)}
+                                                              placeholder="700" />
+                                                        </div>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
 
                                             {/* Content */}
                                             <div>

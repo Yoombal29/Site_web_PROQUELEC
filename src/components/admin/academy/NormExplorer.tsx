@@ -22,6 +22,7 @@ import { toast } from 'sonner';
 import { multiNormService } from '@/services/academy/multiNormService';
 import { NormRule, SommaireNode, NormSearchResult, NormFullJSON } from '@/types/academy';
 import { NormImporter } from './NormImporter';
+import { precacheCriticalNorms } from '@/sw-register';
 import { Brain, Sparkles, Info } from 'lucide-react';
 
 interface NormExplorerProps {
@@ -343,10 +344,8 @@ export const NormExplorer: React.FC<NormExplorerProps> = ({
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  import('@/sw-register').then((mod) => {
-                    mod.precacheCriticalNorms();
-                    toast.success('Téléchargement des données pour le mode hors-ligne...');
-                  });
+                  precacheCriticalNorms();
+                  toast.success('Téléchargement des données pour le mode hors-ligne...');
                 }}
                 className="hidden md:flex gap-2 text-slate-600">
                 

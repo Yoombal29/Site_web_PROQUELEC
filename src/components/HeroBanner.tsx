@@ -79,7 +79,8 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 .slide-bg-${index} { background-image: url(${slide.background_url}); }
               ` }} />
               <div
-              className={`absolute inset-0 bg-cover bg-center transition-transform ${parallax ? 'duration-[8000ms] ease-out' : 'duration-500'} ${selectedIndex === index ? parallax ? 'scale-100' : 'scale-100' : parallax ? 'scale-125' : 'scale-100'} slide-bg-${index}`}>
+              className={`absolute inset-0 bg-cover bg-center transition-transform ${parallax ? 'ease-out' : 'duration-500'} ${selectedIndex === index ? parallax ? 'scale-100' : 'scale-100' : parallax ? 'scale-125' : 'scale-100'} slide-bg-${index}`}
+              style={parallax ? { transitionDuration: '8000ms' } : undefined}>
             </div>
 
               <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/60 to-transparent"></div>

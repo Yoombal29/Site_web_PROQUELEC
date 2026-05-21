@@ -2,6 +2,7 @@
 import React from 'react';
 
 import { cn } from '@/lib/utils';
+import { sanitizeHTML, sanitizeCodeBlock, sanitizeURL } from '@/utils/sanitize';
 
 // --- Types ---
 interface BlockProps {
@@ -10,6 +11,26 @@ interface BlockProps {
   style?: BlockStyle;
   className?: string; // Passed from parent (for selection outline, etc.)
   children?: React.ReactNode;
+}
+
+interface BlockStyle {
+  [key: string]: unknown;
+  borderRadius?: string;
+  objectFit?: string;
+  className?: string;
+}
+
+interface BlockContent {
+  title?: string;
+  subtitle?: string;
+  text?: string;
+  html?: string;
+  code?: string;
+  src?: string;
+  alt?: string;
+  href?: string;
+  caption?: string;
+  [key: string]: unknown;
 }
 
 // --- 1. HERO BLOCK ---
@@ -39,7 +60,7 @@ export const HeroBlock: React.FC<BlockProps> = ({ content, style, id, className 
         }
                 {content.href &&
         <a
-          href={content.href}
+          href={sanitizeURL(content.href)}
           className="inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-full transition-transform hover:scale-105 shadow-lg hover:bg-blue-700">
           
                         {content.text || "En savoir plus"}
@@ -52,6 +73,8 @@ export const HeroBlock: React.FC<BlockProps> = ({ content, style, id, className 
 
 // --- 2. TEXT BLOCK ---
 export const TextBlock: React.FC<BlockProps> = ({ content, style, id, className }) => {
+  const sanitizedHTML = sanitizeHTML(content.html || content.text || '<p>Texte par défaut...</p>');
+  
   return (
     <div
       id={id}
@@ -59,7 +82,7 @@ export const TextBlock: React.FC<BlockProps> = ({ content, style, id, className 
       style={style as React.CSSProperties}>
       
             {content.title && <h2>{content.title}</h2>}
-            <div dangerouslySetInnerHTML={{ __html: content.html || content.text || '<p>Texte par défaut...</p>' }} />
+            <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
         </div>);
 
 };
@@ -69,11 +92,12 @@ export const ImageBlock: React.FC<BlockProps> = ({ content, style, id, className
   return (
     <div id={id} className={cn("w-full overflow-hidden", className)} style={style as React.CSSProperties}>
             <img
-        src={content.src || 'https://via.placeholder.com/800x400'}
+        src={sanitizeURL(content.src) || 'https://via.placeholder.com/800x400'}
         alt={content.alt || 'Image'}
         className={cn("w-full h-auto object-cover", style?.className)}
         style={{
-          borderRadius: style?.borderRadius
+          borderRadius: style?.borderRadius,
+          objectFit: style?.objectFit as React.CSSProperties['objectFit']
         }} loading="lazy" />
       
             {content.caption &&
@@ -85,6 +109,11 @@ export const ImageBlock: React.FC<BlockProps> = ({ content, style, id, className
 
 // --- 4. HTML / CODE BLOCK ---
 export const HtmlBlock: React.FC<BlockProps> = ({ content, style, id, className }) => {
+  const isCodeBlock = content.type === 'code' || !content.html;
+  const sanitized = isCodeBlock 
+    ? sanitizeCodeBlock(content.code || content.html) 
+    : sanitizeHTML(content.html || content.code || '');
+
   if (!content.html && !content.code) {
     return (
       <div className={cn("p-4 border border-dashed border-gray-300 text-gray-400 text-sm italic text-center", className)}>
@@ -97,7 +126,7 @@ export const HtmlBlock: React.FC<BlockProps> = ({ content, style, id, className 
       id={id}
       className={className}
       style={style as React.CSSProperties}
-      dangerouslySetInnerHTML={{ __html: content.html || content.code || '' }} />);
+      dangerouslySetInnerHTML={{ __html: sanitized }} />);
 
 
 };

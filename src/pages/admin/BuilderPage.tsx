@@ -1,7 +1,9 @@
 
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useBuilderStore } from '@/stores/useBuilderStore';
+import type { Block } from '@/types/builder';
+import type { DragEndEvent } from '@dnd-kit/core';
 
 import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Button } from '@/components/ui/button';
@@ -29,112 +31,145 @@ import {
 "@/components/ui/dialog";
 
 const BuilderPage: React.FC = () => {
-  const { pageId } = useParams<{pageId: string;}>();
+  const { pageId } = useParams<{ pageId: string }>();
   const {
-    blocks, setBlocks, addBlock, importBlock,
-    selectedBlockId, selectBlock,
-    templates, loadTemplates, deleteTemplate,
-    undo, redo, canUndo, canRedo
+    blocks,
+    setBlocks,
+    addBlock,
+    importBlock,
+    selectedBlockId,
+    selectBlock,
+    templates,
+    loadTemplates,
+    deleteTemplate,
+    undo,
+    redo,
+    canUndo,
+    canRedo
   } = useBuilderStore();
 
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
-  const [pageInfo, setPageInfo] = useState<{title: string;slug: string;} | null>(null);
+  const [pageInfo, setPageInfo] = useState<{ title: string; slug: string } | null>(null);
+  const [initialBlocks, setInitialBlocks] = useState<Block[]>([]);
+
+  const isDirty = useMemo(() => JSON.stringify(blocks) !== JSON.stringify(initialBlocks), [blocks, initialBlocks]);
 
   // 1. Initial Load
   useEffect(() => {
     const loadPage = async () => {
       loadTemplates();
+      setLoadError(null);
 
-      if (!pageId) return;
+      if (!pageId) {
+        setLoadError('Aucun identifiant de page fourni.');
+        setBlocks([]);
+        setIsLoading(false);
+        return;
+      }
+
       setIsLoading(true);
       try {
-        try {
-          const adminPage = await apiFetch<unknown>(`/api/admin/pages/${pageId}`);
-          if (adminPage) {
-            setPageInfo({ title: adminPage.title, slug: adminPage.slug });
-            let availableBlocks = typeof adminPage.structure_json === 'string' ?
-            JSON.parse(adminPage.structure_json) :
-            adminPage.structure_json;
+        const adminPage = await apiFetch<{ title?: string; slug?: string; structure_json?: unknown; content_blocks?: unknown[]; content?: string }>(`/api/admin/pages/${pageId}`);
 
-            // FALLBACK: Import Legacy Content if new structure is empty
-            if (!availableBlocks || availableBlocks.length === 0) {
-              if (adminPage.content_blocks && Array.isArray(adminPage.content_blocks) && adminPage.content_blocks.length > 0) {
-                // 1. Try importing from Old Builder Blocks
-                availableBlocks = adminPage.content_blocks.map((b: unknown) => ({
-                  id: b.id || Math.random().toString(36).substr(2, 9),
-                  type: b.type === 'text' ? 'text-block' : b.type,
-                  content: {
-                    title: b.data?.title,
-                    subtitle: b.data?.subtitle,
-                    text: b.data?.text || b.data?.cta_text,
-                    html: b.data?.content, // For text blocks
-                    src: b.data?.url, // For images
-                    href: b.data?.cta_link || b.data?.href,
-                    caption: b.data?.caption
-                  },
-                  style: b.data?.background_image ? {
-                    backgroundImage: `url(${b.data.background_image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    color: '#ffffff' // Assume dark bg for hero with image
-                  } : {}
-                }));
-                toast.info("Anciens blocs importés automatiquement.");
-              } else if (adminPage.content && typeof adminPage.content === 'string' && adminPage.content.trim().length > 0) {
-                // 2. Try importing from Raw HTML
-                availableBlocks = [{
-                  id: `legacy-html-${Date.now()}`,
-                  type: 'html',
-                  content: { html: adminPage.content },
-                  style: { padding: '20px' }
-                }];
-                toast.info("Contenu HTML existant importé.");
-              }
-            }
+        if (!adminPage) {
+          setLoadError('Page introuvable.');
+          setBlocks([]);
+          return;
+        }
 
-            setBlocks(availableBlocks || []);
-            setIsLoading(false);
-            return;
+        setPageInfo({ title: adminPage.title || `Page ${pageId}`, slug: adminPage.slug || pageId });
+
+        let availableBlocks: Block[] = [];
+
+        if (Array.isArray(adminPage.structure_json)) {
+          availableBlocks = adminPage.structure_json as Block[];
+        } else if (typeof adminPage.structure_json === 'string' && adminPage.structure_json.trim().length > 0) {
+          try {
+            availableBlocks = JSON.parse(adminPage.structure_json) as Block[];
+          } catch (parseError) {
+            console.warn('Impossible de parser structure_json:', parseError);
           }
-        } catch (e) {/* ignore */}
+        }
 
-        if (pageId === 'test-builder') {
+        if (!availableBlocks || availableBlocks.length === 0) {
+          if (Array.isArray(adminPage.content_blocks) && adminPage.content_blocks.length > 0) {
+            availableBlocks = adminPage.content_blocks.map((b: any) => ({
+              id: b?.id || `legacy-${Math.random().toString(36).slice(2, 9)}`,
+              type: b?.type === 'text' ? 'text-block' : b?.type || 'section',
+              content: {
+                title: b?.data?.title,
+                subtitle: b?.data?.subtitle,
+                text: b?.data?.text || b?.data?.cta_text,
+                html: b?.data?.content,
+                src: b?.data?.url,
+                href: b?.data?.cta_link || b?.data?.href,
+                caption: b?.data?.caption
+              },
+              style: b?.data?.background_image ? {
+                backgroundImage: `url(${b.data.background_image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                color: '#ffffff'
+              } : {}
+            }));
+            toast.info('Anciens blocs importés automatiquement.');
+          } else if (adminPage.content && typeof adminPage.content === 'string' && adminPage.content.trim().length > 0) {
+            availableBlocks = [{
+              id: `legacy-html-${Date.now()}`,
+              type: 'html',
+              content: { html: adminPage.content },
+              style: { padding: '20px' }
+            }];
+            toast.info('Contenu HTML existant importé.');
+          }
+        }
 
-
-          // Test Logic
-        }} catch (error) {console.error("Erreur chargement:", error);
-        toast.error("Impossible de charger la page.");
+        setBlocks(availableBlocks || []);
+        setInitialBlocks(availableBlocks || []);
+      } catch (error: unknown) {
+        console.error('Erreur chargement du builder:', error);
+        if ((error as any)?.status === 401) {
+          setLoadError('Accès refusé. Veuillez vous connecter pour utiliser le builder.');
+        } else {
+          setLoadError((error as Error)?.message || 'Impossible de charger la page. Vérifiez la connexion ou l’identifiant.');
+        }
+        setBlocks([]);
       } finally {
         setIsLoading(false);
       }
     };
+
     loadPage();
   }, [pageId, setBlocks, loadTemplates]);
 
   // 2. Save Page
-  const handleSave = async () => {
-    if (!pageId) return;
+  const handleSave = useCallback(async () => {
+    if (!pageId) {
+      toast.error('Impossible de sauvegarder : identifiant de page manquant.');
+      return;
+    }
+
     setIsSaving(true);
     try {
       await apiFetch(`/api/admin/pages/${pageId}`, {
         method: 'PUT',
-        body: JSON.stringify({
-          structure_json: blocks
-        })
+        body: JSON.stringify({ structure_json: blocks })
       });
-      toast.success("Page sauvegardée avec succès !");
+      setInitialBlocks(blocks);
+      toast.success('Page sauvegardée avec succès !');
     } catch (error) {
-      console.error("Erreur sauvegarde:", error);
-      toast.error("Erreur lors de la sauvegarde.");
+      console.error('Erreur sauvegarde du builder:', error);
+      toast.error('Erreur lors de la sauvegarde. Réessayez plus tard.');
     } finally {
       setIsSaving(false);
     }
-  };
+  }, [blocks, pageId]);
 
   // 3. Drag End Handler
-  const handleDragEnd = (event: unknown) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (!over) return;
@@ -247,10 +282,10 @@ const BuilderPage: React.FC = () => {
                             </Button>
 
                             <div className="flex bg-slate-100 rounded p-1">
-                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={undo} disabled={false} title="Annuler (Ctrl+Z)">
+                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={undo} disabled={!canUndo()} title="Annuler (Ctrl+Z)">
                                     <Undo className="w-4 h-4 text-slate-600" />
                                 </Button>
-                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={redo} disabled={false} title="Rétablir (Ctrl+Y)">
+                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={redo} disabled={!canRedo()} title="Rétablir (Ctrl+Y)">
                                     <Redo className="w-4 h-4 text-slate-600" />
                                 </Button>
                             </div>
@@ -279,6 +314,15 @@ const BuilderPage: React.FC = () => {
                                         <span className="px-1.5 py-0.5 bg-blue-50 text-blue-600 rounded text-[10px] uppercase font-bold tracking-tighter">Edition</span>
                                     </h1>
                                     <p className="text-[10px] text-slate-400 font-mono italic">/{pageInfo.slug}</p>
+                                    <div className="mt-1 flex gap-2">
+                                        {loadError ? (
+                                            <span className="text-[10px] uppercase text-rose-500 tracking-[0.18em] font-semibold">Erreur de chargement</span>
+                                        ) : isDirty ? (
+                                            <span className="text-[10px] uppercase text-amber-500 tracking-[0.18em] font-semibold">Modifications non sauvegardées</span>
+                                        ) : (
+                                            <span className="text-[10px] uppercase text-emerald-600 tracking-[0.18em] font-semibold">Synchronisé</span>
+                                        )}
+                                    </div>
                                 </> :
 
               <div className="h-8 w-32 bg-slate-100 animate-pulse rounded"></div>
@@ -308,6 +352,11 @@ const BuilderPage: React.FC = () => {
                             </Dialog>
 
                             <Button size="sm" variant="outline" asChild>
+                                <Link to="/admin?tab=pages">
+                                    Retour au menu
+                                </Link>
+                            </Button>
+                            <Button size="sm" variant="outline" asChild>
                                 <a href={`/${pageInfo?.slug || ''}`} target="_blank" rel="noreferrer">
                                     Voir
                                 </a>
@@ -330,6 +379,23 @@ const BuilderPage: React.FC = () => {
                     {/* Zone de Drop (Canvas) */}
                     <div className="flex-1 overflow-auto p-8 relative bg-slate-100/50 custom-scrollbar flex justify-center">
                         <DroppableCanvas blocks={blocks} widthClass={getCanvasWidth()} />
+                        {(isLoading || loadError) && (
+                          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center rounded-xl bg-white/90 text-center p-6">
+                              {isLoading ? (
+                                <>
+                                  <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
+                                  <p className="mt-4 text-slate-700 text-sm font-semibold">Chargement du builder...</p>
+                                  <p className="text-[11px] text-slate-500 max-w-xs mt-2">Patientez pendant que la page et ses blocs sont prêts à l’édition.</p>
+                                </>
+                              ) : (
+                                <>
+                                  <p className="text-rose-600 text-sm font-semibold">Erreur de chargement</p>
+                                  <p className="mt-2 text-slate-600 text-[12px] max-w-sm">{loadError}</p>
+                                  <Button size="sm" className="mt-4" onClick={() => window.location.reload()}>Recharger</Button>
+                                </>
+                              )}
+                          </div>
+                        )}
                     </div>
                 </main>
 
@@ -398,10 +464,8 @@ const DraggableTemplate = ({ template }: {template: unknown;}) => {
 };
 
 // Composant Droppable (Zone Canvas)
-const DroppableCanvas = ({ blocks, widthClass }: {blocks: Block[];widthClass: string;}) => {
-  const { isOver, setNodeRef } = useDroppable({
-    id: 'canvas-droppable'
-  });
+const DroppableCanvas = ({ blocks, widthClass }: { blocks: Block[]; widthClass: string }) => {
+  const { isOver, setNodeRef } = useDroppable({ id: 'canvas-droppable' });
   const { selectedBlockId, selectBlock } = useBuilderStore();
 
   const style = {
@@ -413,14 +477,12 @@ const DroppableCanvas = ({ blocks, widthClass }: {blocks: Block[];widthClass: st
     <div
       ref={setNodeRef}
       style={style}
-      // Application de la largeur dynamique ici
       className={`${widthClass} w-full min-h-[800px] bg-white shadow-xl rounded-sm border-2 transition-all p-8 shrink-0 click-outside-handler pb-32`}
       onClick={(e) => {
-        if (e.target === e.currentTarget) {
-
-
-          // selectBlock(null); // Optionnel
-        }}}>
+        if (e.target === e.currentTarget && selectedBlockId) {
+          selectBlock(null);
+        }
+      }}>
       
             <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
                 {blocks.length > 0 ? <BuilderPageRenderer

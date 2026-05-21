@@ -254,8 +254,8 @@ export const HeroBlock = ({ title, subtitle, background_url, cta_text, cta_link 
   return (
     <div className="relative w-full min-h-[500px] flex items-center justify-center overflow-hidden">
             <div
-        className="absolute inset-0 bg-cover bg-center transition-transform hover:scale-105 duration-[10s] bg-[image:var(--hero-bg)]"
-        style={{ '--hero-bg': `url(${background_url || defaultBg})` } as React.CSSProperties} />
+        className="absolute inset-0 bg-cover bg-center transition-transform hover:scale-105 bg-[image:var(--hero-bg)]"
+        style={{ '--hero-bg': `url(${background_url || defaultBg})`, transitionDuration: '10s' } as React.CSSProperties} />
       
             <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px]" />
             <div className="relative z-10 text-center text-white px-4 max-w-4xl">

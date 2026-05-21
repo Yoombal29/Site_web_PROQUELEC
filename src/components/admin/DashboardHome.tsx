@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Terminal, Zap, ShieldCheck } from 'lucide-react';
 import { Button } from '../ui/button';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAnalytics } from '../../hooks/useAnalytics';
 import { useNotifications } from '../../hooks/useNotifications';
 import { useActivityLogs } from '../../hooks/useActivityLogs';
@@ -129,11 +129,8 @@ const DashboardHome: React.FC = () => {
               Gérez les pages du site, modifiez les contenus existants ou créez de nouvelles sections avec l'éditeur visuel avancé.
             </p>
           </div>
-          <Button
-            onClick={() => navigate('/admin?tab=pages')}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 h-12 rounded-xl shadow-md transition-all active:scale-95"
-          >
-            Ouvrir le BE Builder
+          <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 h-12 rounded-xl shadow-md transition-all active:scale-95">
+            <Link to="/admin?tab=pages">Ouvrir le BE Builder</Link>
           </Button>
         </div>
       </section>

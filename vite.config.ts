@@ -39,5 +39,35 @@ export default defineConfig(async ({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
+    build: {
+      // Keep reasonable warning threshold while we split heavy deps into chunks
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks(id: string) {
+            if (id.includes('node_modules')) {
+              if (id.includes('elm') || id.includes('elk') || id.includes('flowchart')) return 'flowchart-elk';
+              if (id.includes('@tiptap') || id.includes('tiptap')) return 'tiptap';
+              if (id.includes('katex')) return 'katex';
+              if (id.includes('html2canvas')) return 'html2canvas';
+              if (id.includes('docx')) return 'docx';
+              if (id.includes('dompurify')) return 'dompurify';
+              if (id.includes('node_modules/lucide-react')) return 'lucide-react';
+              if (id.includes('node_modules/framer-motion')) return 'framer-motion';
+              if (id.includes('node_modules/sonner')) return 'sonner';
+              if (id.includes('node_modules/yjs')) return 'yjs';
+              if (id.includes('node_modules/react-router-dom')) return 'router';
+              if (id.includes('node_modules/@radix-ui') || id.includes('node_modules/@radix')) return 'radix-ui';
+              if (id.includes('node_modules/@tanstack')) return 'tanstack';
+              return 'vendor';
+            }
+
+            // local heavy libs / lib entrypoints
+            if (id.includes('/src/lib/ai-master')) return 'ai-master';
+            if (id.includes('/src/lib/elk') || id.includes('flowchart-elk')) return 'flowchart-elk';
+          },
+        },
+      },
+    },
   };
 });

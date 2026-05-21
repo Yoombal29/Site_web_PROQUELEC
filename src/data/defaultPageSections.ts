@@ -179,6 +179,177 @@ export const DEFAULT_PAGE_SECTIONS = {
             }
         }
     },
+    outils: {
+        badge: "OUTILS",
+        hero_title: "Outils|Métier",
+        hero_subtitle: "Des calculateurs, guides et ressources pour vos installations électriques.",
+        label: "Outils Métiers",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Zap", type: "hero" },
+            { id: "catalogue", label: "Catalogue d'Outils", icon: "Briefcase", type: "features-list" },
+            { id: "benefits", label: "Pourquoi choisir", icon: "ShieldCheck", type: "text-image" }
+        ],
+        content: {
+            hero: {
+                title: "Outils Métier PROQUELEC",
+                subtitle: "Des assistants techniques pour dimensionner, vérifier et piloter vos installations.",
+                badge: "CATALOGUE",
+                layout: "centered"
+            },
+            catalogue: {
+                title: "Applications & Calculs",
+                subtitle: "Des outils pour vous aider sur chaque étape du chantier.",
+                features: [
+                    "Calcul de chute de tension",
+                    "Dimensionnement de sections de câble",
+                    "Bibliothèque de normes et schémas",
+                    "Gestion de devis et rapports"
+                ],
+                image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80"
+            },
+            benefits: {
+                title: "Pourquoi utiliser nos outils ?",
+                subtitle: "Précision, conformité et gain de temps pour vos projets.",
+                features: [
+                    "Mises à jour normatives automatiques",
+                    "Exports PDF prêts à l'emploi",
+                    "Interface simple et accessible",
+                    "Support technique dédié"],
+                image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80"
+            }
+        }
+    },
+    documents: {
+        badge: "DOCUMENTS",
+        hero_title: "Documents|& Ressources",
+        hero_subtitle: "Accédez aux guides techniques, normes et supports essentiels.",
+        label: "Documents & Ressources",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "BookOpen", type: "hero" },
+            { id: "library", label: "Bibliothèque", icon: "FileText", type: "features-list" },
+            { id: "download", label: "Téléchargement", icon: "Download", type: "text-image" }
+        ],
+        content: {
+            hero: {
+                title: "Documents Techniques PROQUELEC",
+                subtitle: "Tout ce dont vous avez besoin pour la conformité et la sécurité électrique.",
+                badge: "RÉFÉRENTIEL"
+            },
+            library: {
+                title: "Bibliothèque de Documents",
+                subtitle: "Guides, normes et modèles opérationnels disponibles en un clic.",
+                features: [
+                    "Fiches techniques",
+                    "Normes corrigées",
+                    "Modèles de rapports",
+                    "Guides de sécurité"
+                ],
+                image: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=800&q=80"
+            },
+            download: {
+                title: "Téléchargement Facile",
+                subtitle: "Accédez immédiatement aux fichiers nécessaires pour vos audits et projets.",
+                features: [
+                    "Formats PDF et DOCX",
+                    "Accès sécurisé",
+                    "Mises à jour régulières",
+                    "Support technique inclus"
+                ],
+                image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80"
+            }
+        }
+    },
+    events: {
+        badge: "ÉVÉNEMENTS",
+        hero_title: "Événements|PROQUELEC",
+        hero_subtitle: "Participez aux conférences, ateliers et webinars dédiés au secteur électrique.",
+        label: "Événements & Agenda",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Calendar", type: "hero" },
+            { id: "agenda", label: "Agenda", icon: "Clock", type: "features-list" },
+            { id: "partners", label: "Partenaires", icon: "Handshake", type: "testimonials" }
+        ],
+        content: {
+            hero: {
+                title: "Agenda & Événements Techniques",
+                subtitle: "Restez informé des rendez-vous incontournables du secteur électrique.",
+                badge: "AGENDA"
+            },
+            agenda: {
+                title: "Prochains Rendez-vous",
+                subtitle: "Conférences, ateliers et webinaires pour les professionnels et le grand public.",
+                features: [
+                    "Conférences techniques",
+                    "Formations pratiques",
+                    "Webinaires normatifs",
+                    "Rencontres réseaux"
+                ],
+                image: "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=800&q=80"
+            },
+            partners: {
+                title: "Nos Partenaires Événementiels",
+                subtitle: "Organisations et experts qui animent notre programme.",
+                testimonials: [
+                    {
+                        name: "EnergiTech Sénégal",
+                        role: "Organisateur",
+                        company: "Salon de l'énergie",
+                        content: "Un événement de référence pour découvrir les innovations du secteur.",
+                        rating: 5
+                    },
+                    {
+                        name: "SmartHome Africa",
+                        role: "Webinaire",
+                        company: "Domotique & sécurité",
+                        content: "Des sessions pratiques pour maîtriser les installations connectées.",
+                        rating: 5
+                    }
+                ]
+            }
+        }
+    },
+    showroom: {
+        badge: "SHOWROOM",
+        hero_title: "Showroom|Technique",
+        hero_subtitle: "Explorez nos réalisations et solutions techniques en contexte réel.",
+        label: "Showroom",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Camera", type: "hero" },
+            { id: "gallery", label: "Galerie", icon: "Images", type: "gallery" },
+            { id: "cta", label: "Appel à l'action", icon: "ArrowRight", type: "text-image" }
+        ],
+        content: {
+            hero: {
+                title: "Showroom de Conformité",
+                subtitle: "Nos installations, démonstrations et projets certifiés en action.",
+                badge: "INSPIRATION"
+            },
+            gallery: {
+                title: "Nos réalisations",
+                subtitle: "Un aperçu des travaux les plus marquants de PROQUELEC.",
+                layout: "masonry",
+                media: {
+                    type: "gallery",
+                    urls: [
+                        "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?w=800&q=80",
+                        "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+                        "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80"
+                    ]
+                }
+            },
+            cta: {
+                title: "Découvrez notre showroom",
+                subtitle: "Contactez-nous pour une visite personnalisée et une démonstration technique.",
+                features: [
+                    "Visite dédiée aux professionnels",
+                    "Démonstrations d'installations réelles",
+                    "Conseils sur mesure",
+                    "Réponses aux questions normatives"
+                ],
+                image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80"
+            }
+        }
+    },
     presse: {
         badge: "PRESSE",
         hero_title: "Espace|Presse",
@@ -371,5 +542,262 @@ export const DEFAULT_PAGE_SECTIONS = {
                 ]
             }
         }
+    },
+    about: {
+        badge: "À PROPOS",
+        hero_title: "À Propos|de PROQUELEC",
+        hero_subtitle: "Découvrez notre histoire, nos valeurs et notre engagement.",
+        label: "À Propos",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Landmark" },
+            { id: "mission", label: "Mission & Valeurs", icon: "Target" },
+            { id: "history", label: "Notre Historique", icon: "History" }
+        ],
+        content: {
+            hero: { title: "À Propos de PROQUELEC", subtitle: "Garants de la qualité électrique depuis le Sénégal", badge: "NOTRE HISTOIRE" },
+            mission: { title: "Mission & Valeurs", subtitle: "Nous œuvrons pour la sécurité et la qualité", features: ["Transparence", "Excellence", "Innovation", "Responsabilité"] },
+            history: { title: "Historique", subtitle: "Une odyssée électrique vers l'excellence" }
+        }
+    },
+    public_utility: {
+        badge: "UTILITÉ",
+        hero_title: "Utilité|Publique",
+        hero_subtitle: "Services et ressources pour les institutions publiques.",
+        label: "Utilité Publique",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Building" },
+            { id: "services", label: "Services", icon: "Briefcase" }
+        ],
+        content: {
+            hero: { title: "Au Service du Public", subtitle: "PROQUELEC pour les autorités publiques", badge: "INSTITUTIONS" },
+            services: { title: "Nos Services Publics", subtitle: "Solutions complètes pour les collectivités" }
+        }
+    },
+    formation_certification: {
+        badge: "FORMATION",
+        hero_title: "Formation &|Certification",
+        hero_subtitle: "Programmes complets de certification professionnelle.",
+        label: "Formation & Certification",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "GraduationCap" },
+            { id: "programs", label: "Programmes", icon: "BookOpen" }
+        ],
+        content: {
+            hero: { title: "Formation Professionnelle", subtitle: "Obtenez vos certifications reconnues", badge: "QUALIFICATION" },
+            programs: { title: "Nos Programmes", subtitle: "Formations certifiantes et reconnues" }
+        }
+    },
+    normes_ressources: {
+        badge: "NORMES",
+        hero_title: "Normes &|Ressources",
+        hero_subtitle: "Accès complet aux normes électriques sénégalaises.",
+        label: "Normes & Ressources",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "BookOpen" },
+            { id: "standards", label: "Normes", icon: "FileText" }
+        ],
+        content: {
+            hero: { title: "Normes Électriques", subtitle: "Références complètes et mises à jour", badge: "CONFORMITÉ" },
+            standards: { title: "Consultez les Normes", subtitle: "Normes NS 01-001 et dérivées" }
+        }
+    },
+    actualites_evenements: {
+        badge: "ACTUALITÉS",
+        hero_title: "Actualités &|Événements",
+        hero_subtitle: "Restez informé de nos dernières actualités et événements.",
+        label: "Actualités & Événements",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Newspaper" },
+            { id: "news", label: "Actualités", icon: "Rss" },
+            { id: "events", label: "Événements", icon: "Calendar" }
+        ],
+        content: {
+            hero: { title: "Actualités & Agenda", subtitle: "Nos dernières nouvelles et événements", badge: "À JOUR" },
+            news: { title: "Actualités Récentes", subtitle: "Suivez nos dernières publications" },
+            events: { title: "Événements à Venir", subtitle: "Participez à nos formations et ateliers" }
+        }
+    },
+    partenaires: {
+        badge: "PARTENAIRES",
+        hero_title: "Nos|Partenaires",
+        hero_subtitle: "Découvrez les organisations qui nous font confiance.",
+        label: "Partenaires",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Handshake" },
+            { id: "partners", label: "Partenaires", icon: "Globe" }
+        ],
+        content: {
+            hero: { title: "Nos Partenaires", subtitle: "Ensemble pour la sécurité électrique", badge: "RÉSEAU" },
+            partners: { title: "Nos Collaborateurs", subtitle: "Les acteurs de notre succès" }
+        }
+    },
+    contact: {
+        badge: "CONTACT",
+        hero_title: "Nous|Contacter",
+        hero_subtitle: "Prenez contact avec nos équipes.",
+        label: "Contact Principal",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Phone" },
+            { id: "form", label: "Formulaire", icon: "Mail" }
+        ],
+        content: {
+            hero: { title: "Parlons de Vous!", subtitle: "Laissez-nous un message et nous vous recontacterons.", badge: "RÉPONSE 24H" },
+            form: { title: "Formulaire de Contact", subtitle: "Décrivez votre demande" }
+        }
+    },
+    contact_premium: {
+        badge: "PREMIUM",
+        hero_title: "Contact|Premium",
+        hero_subtitle: "Support prioritaire et accompagnement personnalisé.",
+        label: "Contact Premium",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Star" },
+            { id: "premium", label: "Services Premium", icon: "Award" }
+        ],
+        content: {
+            hero: { title: "Support Premium", subtitle: "Accès prioritaire à nos experts", badge: "VIP" },
+            premium: { title: "Avantages Premium", subtitle: "Services exclusifs pour nos clients privilégiés" }
+        }
+    },
+    activities: {
+        badge: "ACTIVITÉS",
+        hero_title: "Nos|Activités",
+        hero_subtitle: "Explorez tous les domaines d'expertise de PROQUELEC.",
+        label: "Activités",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Zap" },
+            { id: "activities", label: "Domaines", icon: "LayoutGrid" }
+        ],
+        content: {
+            hero: { title: "Nos Activités", subtitle: "Services complètes en sécurité électrique", badge: "EXPERTISE" },
+            activities: { title: "Domaines de Compétence", subtitle: "Tout ce que nous maîtrisons" }
+        }
+    },
+    labels: {
+        badge: "LABELS",
+        hero_title: "Labels &|Certifications",
+        hero_subtitle: "Les certifications et labels qui nous distinguent.",
+        label: "Labels",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Award" },
+            { id: "labels", label: "Labels", icon: "Trophy" }
+        ],
+        content: {
+            hero: { title: "Nos Labels", subtitle: "Certifications de qualité et de conformité", badge: "ACCRÉDITÉ" },
+            labels: { title: "Labels & Accréditations", subtitle: "Nos reconnaissances officielles" }
+        }
+    },
+    certifications: {
+        badge: "CERTIFICATIONS",
+        hero_title: "Certifications|PROQUELEC",
+        hero_subtitle: "Obtenez vos certifications professionnelles reconnues.",
+        label: "Certifications",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Award" },
+            { id: "quali", label: "QUALI-ELEC", icon: "ShieldCheck" }
+        ],
+        content: {
+            hero: { title: "Certifications Reconnues", subtitle: "Validez vos compétences", badge: "QUALI-ELEC" },
+            quali: { title: "Certification QUALI-ELEC", subtitle: "Le standard de qualité professionnel" }
+        }
+    },
+    formations: {
+        badge: "FORMATIONS",
+        hero_title: "Formations|Continues",
+        hero_subtitle: "Programmes de formation pour tous les niveaux.",
+        label: "Formations",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "GraduationCap" },
+            { id: "catalog", label: "Catalogue", icon: "BookOpen" }
+        ],
+        content: {
+            hero: { title: "Notre Catalogue Formations", subtitle: "Mises à jour continues et certifications", badge: "APPRENTISSAGE" },
+            catalog: { title: "Formations Disponibles", subtitle: "Parcours professionnels complets" }
+        }
+    },
+    actualites: {
+        badge: "NEWS",
+        hero_title: "Actualités|PROQUELEC",
+        hero_subtitle: "Restez informé des dernières nouvelles.",
+        label: "Actualités",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Newspaper" },
+            { id: "news", label: "Articles", icon: "Rss" }
+        ],
+        content: {
+            hero: { title: "Nos Actualités", subtitle: "Dernier articles et annonces", badge: "INFOS" },
+            news: { title: "Articles Récents", subtitle: "Publications et mises à jour" }
+        }
+    },
+    expertises_techniques: {
+        badge: "EXPERTISE",
+        hero_title: "Expertises|Techniques",
+        hero_subtitle: "Nos domaines de spécialisation technique.",
+        label: "Expertises Techniques",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Zap" },
+            { id: "domains", label: "Domaines", icon: "LayoutGrid" }
+        ],
+        content: {
+            hero: { title: "Nos Expertises", subtitle: "Savoir-faire techniques reconnus", badge: "SPÉCIALISTE" },
+            domains: { title: "Domaines d'Expertise", subtitle: "Nos compétences fondamentales" }
+        }
+    },
+    expert_lab: {
+        badge: "EXPERT LAB",
+        hero_title: "Expert Lab|PROQUELEC",
+        hero_subtitle: "Notre laboratoire d'innovation et d'expertise.",
+        label: "Expert Lab",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Beaker" },
+            { id: "lab", label: "Services Lab", icon: "Microscope" }
+        ],
+        content: {
+            hero: { title: "Expert Lab", subtitle: "Innovation au service de la qualité", badge: "R&D" },
+            lab: { title: "Services Laboratoire", subtitle: "Tests et expertise technique" }
+        }
+    },
+    formations_proquelec: {
+        badge: "PROQUELEC",
+        hero_title: "Formations|PROQUELEC",
+        hero_subtitle: "Parcours de formation exclusifs PROQUELEC.",
+        label: "Formations PROQUELEC",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "GraduationCap" },
+            { id: "courses", label: "Cours", icon: "BookOpen" }
+        ],
+        content: {
+            hero: { title: "Formations Spécialisées", subtitle: "Programmes exclusifs PROQUELEC", badge: "PARCOURS" },
+            courses: { title: "Catalogue Complet", subtitle: "Formations sur mesure et reconnues" }
+        }
+    },
+    blog: {
+        badge: "BLOG",
+        hero_title: "Actualités &|Conseils",
+        hero_subtitle: "Lisez nos articles et conseils techniques.",
+        label: "Blog",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Newspaper" },
+            { id: "articles", label: "Articles", icon: "BookOpen" }
+        ],
+        content: {
+            hero: { title: "Notre Blog", subtitle: "Articles techniques et conseils pratiques", badge: "INSIGHTS" },
+            articles: { title: "Articles Récents", subtitle: "Actualités du secteur électrique" }
+        }
+    },
+    avantages: {
+        badge: "AVANTAGES",
+        hero_title: "Avantages|PROQUELEC",
+        hero_subtitle: "Les bénéfices de nous faire confiance.",
+        label: "Avantages",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "CheckCircle" },
+            { id: "benefits", label: "Bénéfices", icon: "Gift" }
+        ],
+        content: {
+            hero: { title: "Nos Avantages", subtitle: "Pourquoi choisir PROQUELEC", badge: "EXCELLENCE" },
+            benefits: { title: "Bénéfices Exclusifs", subtitle: "Services et privilèges PROQUELEC" }
+        }
     }
 };
+

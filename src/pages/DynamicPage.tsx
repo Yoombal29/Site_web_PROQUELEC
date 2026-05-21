@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ComponentType } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { PageRenderer } from '@/components/PageRenderer';
 import { SEO } from '@/components/SEO';
@@ -7,11 +7,43 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { DEFAULT_PAGE_SECTIONS } from '@/data/defaultPageSections';
+import UniversalSectionsPage from '@/pages/UniversalSectionsPage';
 // @ts-ignore
 import BuilderPageRenderer from '@/components/builder/BuilderPageRenderer';
 import { Block } from "@/types/builder";
+import ToolsPlatform from './ToolsPlatform';
+import Showroom from './Showroom';
+import Documents from './Documents';
+import Events from './Events';
 
 import { useLiveSettings } from '@/hooks/useLiveSettings';
+
+const PAGE_ALIASES: Record<string, string> = {
+  home: 'home_page',
+  about: 'about',
+  'utilite-publique': 'public_utility',
+  'formation-certification': 'formation_certification',
+  'normes-ressources': 'normes_ressources',
+  'projets-realisations': 'projets_realisations',
+  actualites: 'actualites_evenements',
+  'actualites-evenements': 'actualites_evenements',
+  'contact-premium': 'contact_premium',
+  formations: 'trainings',
+  'formations-proquelec': 'formations_proquelec',
+  'expertises-techniques': 'expertises_techniques',
+  'expert-lab': 'expert_lab',
+  'espace-menages': 'menages',
+  'espace-professionnels': 'professionnels',
+  'espace-autorites': 'autorites',
+  avantages: 'advantages'
+};
+
+const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
+  outils: ToolsPlatform,
+  showroom: Showroom,
+  documents: Documents,
+  events: Events
+};
 
 /**
  * Page générique pour afficher toute page gérée par le système CMS
@@ -22,15 +54,19 @@ import { useLiveSettings } from '@/hooks/useLiveSettings';
 const DynamicPageComponent: React.FC = () => {
   const { slug: paramSlug } = useParams<{slug: string;}>();
   const location = useLocation();
+  const rawSlug = paramSlug || location.pathname.replace(/^\//, '').replace(/\/$/, '');
+  const effectiveSlug = rawSlug === '' ? 'home' : rawSlug;
+  const resolvedPageKey = PAGE_ALIASES[effectiveSlug] || effectiveSlug;
   const [page, setPage] = useState<PageRecord | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [fallbackPageKey, setFallbackPageKey] = useState<string | null>(null);
   const { settings } = useLiveSettings();
 
   useEffect(() => {
     const fetchPage = async () => {
       // Déterminer le slug : soit via paramètre (:slug), soit via le chemin URL (/about -> about)
-      let effectiveSlug = paramSlug;
+      let effectiveSlug = paramSlug; 
 
       if (!effectiveSlug) {
         effectiveSlug = location.pathname.replace(/^\/|\/$/g, '');
@@ -40,7 +76,8 @@ const DynamicPageComponent: React.FC = () => {
         effectiveSlug = 'home';
       }
 
-      const settingsKey = effectiveSlug === 'home' ? 'home_page' : effectiveSlug;
+      const resolvedPageKey = PAGE_ALIASES[effectiveSlug] || effectiveSlug;
+      const settingsKey = resolvedPageKey;
 
 
 
@@ -54,41 +91,22 @@ const DynamicPageComponent: React.FC = () => {
         if (!data) {
           // FALLBACK 1: site_settings.page_sections (Database settings)
           // FALLBACK 2: DEFAULT_PAGE_SECTIONS (Hardcoded defaults)
-          const liveSection = settings?.page_sections?.[effectiveSlug] || settings?.page_sections?.[settingsKey];
-          const defaultData = (DEFAULT_PAGE_SECTIONS as unknown)[effectiveSlug] || (DEFAULT_PAGE_SECTIONS as unknown)[settingsKey];
+          const liveSection = settings?.page_sections?.[effectiveSlug] || settings?.page_sections?.[resolvedPageKey];
+          const defaultData = (DEFAULT_PAGE_SECTIONS as unknown)[effectiveSlug] || (DEFAULT_PAGE_SECTIONS as unknown)[resolvedPageKey];
 
           const sourceData = liveSection || defaultData;
 
           if (sourceData) {
+            setPage(null);
+            setFallbackPageKey(settingsKey);
+            setLoading(false);
+            return;
+          }
 
-
-            // Map the old "Sections" format to the new "Blocks" format for PageRenderer
-            const blocks = (sourceData.sections || []).map((s: unknown) => ({
-              id: s.id,
-              type: 'section',
-              data: {
-                title: s.label,
-                content: sourceData.content?.[s.id]?.title ?
-                `<h3>${sourceData.content[s.id].title}</h3><p>${sourceData.content[s.id].subtitle || ''}</p><ul>${(sourceData.content[s.id].features || []).map((f: string) => `<li>${f}</li>`).join('')}</ul>` :
-                sourceData.content?.[s.id] || 'Contenu en attente...'
-              }
-            }));
-
-            const fallbackPage = {
-              id: `fallback-${effectiveSlug}`,
-              title: sourceData.hero_title?.replace('|', ' ') || sourceData.label || effectiveSlug,
-              slug: effectiveSlug,
-              content: sourceData.customHTML || '',
-              content_blocks: blocks,
-              is_published: true,
-              meta_description: sourceData.hero_subtitle || '',
-              design_options: {
-                hero_enabled: true,
-                renderMode: sourceData.renderMode || 'sections'
-              }
-            } as unknown as PageRecord;
-
-            setPage(fallbackPage);
+          const fallbackPageComponent = SPECIAL_FALLBACK_PAGES[effectiveSlug];
+          if (fallbackPageComponent) {
+            setFallbackPageKey(effectiveSlug);
+            setPage(null);
             setLoading(false);
             return;
           }
@@ -129,6 +147,15 @@ const DynamicPageComponent: React.FC = () => {
         </div>
       </div>);
 
+  }
+
+  const specialFallbackPage = SPECIAL_FALLBACK_PAGES[fallbackPageKey || effectiveSlug];
+  if (specialFallbackPage && !page) {
+    return React.createElement(specialFallbackPage);
+  }
+
+  if (fallbackPageKey) {
+    return <UniversalSectionsPage pageKey={fallbackPageKey} />;
   }
 
   if (error || !page) {

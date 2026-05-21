@@ -35,14 +35,33 @@ export async function apiFetch<T>(url: string, options: RequestInit = {}, retrie
       localStorage.removeItem('token');
     }
 
-    const data = await response.json();
+    const contentType = response.headers.get('content-type') || '';
+    const isJson = contentType.includes('application/json');
+    let data: unknown = null;
+
+    if (response.status !== 204) {
+      if (isJson) {
+        data = await response.json();
+      } else {
+        data = await response.text();
+      }
+    }
 
     if (!response.ok) {
-      const errorData = data as AppErrorResponse;
-      const error = new Error(errorData.message || DEFAULT_ERRORS[errorData.code] || DEFAULT_ERRORS['UNKNOWN']);
-      (error as unknown).code = errorData.code;
+      if (isJson) {
+        const errorData = data as AppErrorResponse;
+        const error = new Error(errorData?.message || DEFAULT_ERRORS[errorData?.code] || DEFAULT_ERRORS['UNKNOWN']);
+        (error as unknown).code = errorData?.code;
+        (error as unknown).status = response.status;
+        (error as unknown).icon = errorData?.icon;
+        throw error;
+      }
+
+      const message = typeof data === 'string' && data.trim().length > 0
+        ? data
+        : DEFAULT_ERRORS['UNKNOWN'];
+      const error = new Error(message);
       (error as unknown).status = response.status;
-      (error as unknown).icon = errorData.icon;
       throw error;
     }
 

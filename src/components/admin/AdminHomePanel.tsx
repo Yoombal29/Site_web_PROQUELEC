@@ -561,7 +561,7 @@ const AdminHomePanel = () => {
                                 {partners?.map((p) =>
                 <div key={p.id} className="group relative bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-proqblue/30 aspect-square flex flex-col">
                                         {/* Image Area */}
-                                        <div className="flex-1 p-4 flex items-center justify-center bg-[url('/transparent-grid.png')] bg-repeat">
+                                        <div className="flex-1 p-4 flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 relative" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(0,0,0,.03) 10px, rgba(0,0,0,.03) 11px), repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(0,0,0,.03) 10px, rgba(0,0,0,.03) 11px)'}}>
                                             <img
                       src={p.logo_url}
                       alt={p.name}

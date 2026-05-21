@@ -376,7 +376,6 @@ export default function VisualPageEditor({ sections, onSectionsChange }: VisualE
                     onChange={(e) => updateSection(selectedSectionData.id, {
                       styles: { ...selectedSectionData.styles, backgroundColor: e.target.value }
                     })} />
-                  
                                         </div>
                                         <div>
                                             <Label htmlFor="textColor">Couleur du texte</Label>
@@ -387,30 +386,142 @@ export default function VisualPageEditor({ sections, onSectionsChange }: VisualE
                     onChange={(e) => updateSection(selectedSectionData.id, {
                       styles: { ...selectedSectionData.styles, textColor: e.target.value }
                     })} />
-                  
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <Label htmlFor="accentColor">Couleur accent</Label>
+                                            <Input
+                      id="accentColor"
+                      type="color"
+                      value={selectedSectionData.styles?.accentColor || '#0ea5e9'}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, accentColor: e.target.value }
+                      })} />
+                                        </div>
+                                        <div>
+                                            <Label htmlFor="borderColor">Couleur bordure</Label>
+                                            <Input
+                      id="borderColor"
+                      type="color"
+                      value={selectedSectionData.styles?.borderColor || '#d1d5db'}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, borderColor: e.target.value }
+                      })} />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-4">
+                                        <div>
+                                            <Label htmlFor="padding">Padding</Label>
+                                            <Input
+                      id="padding"
+                      value={selectedSectionData.styles?.padding || '80px 0'}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, padding: e.target.value }
+                      })}
+                      placeholder="80px 0" />
+                                        </div>
+                                        <div>
+                                            <Label htmlFor="margin">Margin</Label>
+                                            <Input
+                      id="margin"
+                      value={selectedSectionData.styles?.margin || '0'}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, margin: e.target.value }
+                      })}
+                      placeholder="0" />
+                                        </div>
+                                        <div>
+                                            <Label htmlFor="borderRadius">Border radius</Label>
+                                            <Input
+                      id="borderRadius"
+                      value={selectedSectionData.styles?.borderRadius || '0px'}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, borderRadius: e.target.value }
+                      })}
+                      placeholder="24px" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-4">
+                                        <div>
+                                            <Label htmlFor="borderWidth">Border width</Label>
+                                            <Input
+                      id="borderWidth"
+                      value={selectedSectionData.styles?.borderWidth || '0px'}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, borderWidth: e.target.value }
+                      })}
+                      placeholder="0px" />
+                                        </div>
+                                        <div>
+                                            <Label htmlFor="textAlign">Alignement texte</Label>
+                                            <Select
+                      value={selectedSectionData.styles?.textAlign || 'left'}
+                      onValueChange={(value: unknown) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, textAlign: value }
+                      })}>
+                                                <SelectTrigger>
+                                                    <SelectValue />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="left">Gauche</SelectItem>
+                                                    <SelectItem value="center">Centre</SelectItem>
+                                                    <SelectItem value="right">Droite</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                        <div>
+                                            <Label htmlFor="shadow">Ombre</Label>
+                                            <Input
+                      id="shadow"
+                      value={selectedSectionData.styles?.shadow || '0 25px 50px rgba(15, 23, 42, 0.08)'}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, shadow: e.target.value }
+                      })}
+                      placeholder="0 25px 50px rgba(0,0,0,0.1)" />
                                         </div>
                                     </div>
                                     <div>
-                                        <Label htmlFor="padding">Espacement (padding)</Label>
+                                        <Label htmlFor="gradient">Dégradé / background</Label>
                                         <Input
-                  id="padding"
-                  value={selectedSectionData.styles?.padding || '80px 0'}
-                  onChange={(e) => updateSection(selectedSectionData.id, {
-                    styles: { ...selectedSectionData.styles, padding: e.target.value }
-                  })}
-                  placeholder="80px 0" />
-                
+                      id="gradient"
+                      value={selectedSectionData.styles?.gradient || ''}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, gradient: e.target.value }
+                      })}
+                      placeholder="linear-gradient(135deg, #0ea5e9 0%, #9333ea 100%)" />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <Label htmlFor="fontSize">Taille police</Label>
+                                            <Input
+                      id="fontSize"
+                      value={selectedSectionData.styles?.fontSize || ''}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, fontSize: e.target.value }
+                      })}
+                      placeholder="18px" />
+                                        </div>
+                                        <div>
+                                            <Label htmlFor="fontWeight">Poids police</Label>
+                                            <Input
+                      id="fontWeight"
+                      value={selectedSectionData.styles?.fontWeight || ''}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, fontWeight: e.target.value }
+                      })}
+                      placeholder="700" />
+                                        </div>
                                     </div>
                                     <div>
-                                        <Label htmlFor="borderRadius">Arrondi (border-radius)</Label>
+                                        <Label htmlFor="maxWidth">Largeur max</Label>
                                         <Input
-                  id="borderRadius"
-                  value={selectedSectionData.styles?.borderRadius || '0'}
-                  onChange={(e) => updateSection(selectedSectionData.id, {
-                    styles: { ...selectedSectionData.styles, borderRadius: e.target.value }
-                  })}
-                  placeholder="0px" />
-                
+                      id="maxWidth"
+                      value={selectedSectionData.styles?.maxWidth || ''}
+                      onChange={(e) => updateSection(selectedSectionData.id, {
+                        styles: { ...selectedSectionData.styles, maxWidth: e.target.value }
+                      })}
+                      placeholder="1200px" />
                                     </div>
                                 </CardContent>
                             </Card>

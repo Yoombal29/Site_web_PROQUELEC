@@ -21,11 +21,13 @@ export interface StyleSettings {
     textColor?: string;
     accentColor?: string;
     borderColor?: string;
+    borderWidth?: string;
     borderRadius?: string;
     padding?: string;
     margin?: string;
     fontSize?: string;
     fontWeight?: string;
+    maxWidth?: string;
     textAlign?: 'left' | 'center' | 'right';
     shadow?: string;
     gradient?: string;

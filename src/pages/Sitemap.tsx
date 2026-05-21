@@ -73,10 +73,35 @@ const Sitemap = () => {
     { label: "Accueil", href: "/" },
     { label: "À propos", href: "/about" },
     { label: "Activités", href: "/activities" },
-    { label: "Actualités & Blog", href: "/blog" },
+    { label: "Actualités", href: "/actualites" },
+    { label: "Actualités & Événements", href: "/actualites-evenements" },
+    { label: "Blog & Actualités", href: "/blog" },
     { label: "Labels & Qualité", href: "/labels" },
+    { label: "Partenaires", href: "/partenaires" },
     { label: "Contact", href: "/contact" },
+    { label: "Contact Premium", href: "/contact-premium" },
     { label: "Mentions Légales", href: "/legal" }]
+
+  },
+  {
+    title: "Formation & Apprentissage",
+    icon: Home,
+    description: "Programmes de formation et certification professionnelle.",
+    items: [
+    { label: "Formation & Certification", href: "/formation-certification" },
+    { label: "Certifications", href: "/certifications" },
+    { label: "Formations", href: "/formations" },
+    { label: "Formations PROQUELEC", href: "/formations-proquelec" }]
+
+  },
+  {
+    title: "Normes & Ressources",
+    icon: FileCode,
+    description: "Normes techniques, expertises et cas d'études.",
+    items: [
+    { label: "Normes & Ressources", href: "/normes-ressources" },
+    { label: "Expertises Techniques", href: "/expertises-techniques" },
+    { label: "Projets & Réalisations", href: "/projets-realisations" }]
 
   },
   {
@@ -102,7 +127,19 @@ const Sitemap = () => {
     { label: "Espace Ménages", href: "/menages" },
     { label: "Espace Professionnels", href: "/professionnels" },
     { label: "Espace Presse", href: "/presse" },
-    { label: "Réseaux & Social", href: "/social" }]
+    { label: "Réseaux & Social", href: "/social" },
+    { label: "Espace Ménages (Avancé)", href: "/espace-menages" },
+    { label: "Espace Professionnels (Avancé)", href: "/espace-professionnels" },
+    { label: "Espace Autorités (Avancé)", href: "/espace-autorites" }]
+
+  },
+  {
+    title: "Ressources & Documentation",
+    icon: FileCode,
+    description: "Documents techniques et événements.",
+    items: [
+    { label: "Documents & GED", href: "/documents" },
+    { label: "Événements", href: "/events" }]
 
   },
   {
@@ -111,6 +148,7 @@ const Sitemap = () => {
     description: "L'intelligence artificielle au service de la conformité normative.",
     items: [
     { label: "Console Expert", href: "/expert" },
+    { label: "Expert Lab", href: "/expert-lab" },
     { label: "Assistant Chat IA", href: "/expert/chat" },
     { label: "Calculatrices Normatives", href: "/expert/calculators" },
     { label: "Scanner de Conformité", href: "/expert/scanner" },

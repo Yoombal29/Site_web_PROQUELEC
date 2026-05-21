@@ -20,6 +20,28 @@ interface UniversalSectionsPageProps {
   themeGradient?: string;
 }
 
+const PAGE_ALIASES: Record<string, string> = {
+  home: 'home_page',
+  about: 'about',
+  'utilite-publique': 'public_utility',
+  'formation-certification': 'formation_certification',
+  'normes-ressources': 'normes_ressources',
+  'projets-realisations': 'projets_realisations',
+  actualites: 'actualites_evenements',
+  'actualites-evenements': 'actualites_evenements',
+  'contact-premium': 'contact_premium',
+  formations: 'trainings',
+  'formations-proquelec': 'formations_proquelec',
+  'expertises-techniques': 'expertises_techniques',
+  'expert-lab': 'expert_lab',
+  'espace-menages': 'menages',
+  'espace-professionnels': 'professionnels',
+  'espace-autorites': 'autorites',
+  avantages: 'advantages'
+};
+
+const resolvePageKey = (pageKey: string) => PAGE_ALIASES[pageKey] || pageKey;
+
 export default function UniversalSectionsPage({
   pageKey,
   defaultIcon = "Layout",
@@ -30,7 +52,8 @@ export default function UniversalSectionsPage({
   const [searchParams] = useSearchParams();
 
   // Use CMS data if available, otherwise fallback to defaults
-  const pageData = settings?.page_sections?.[pageKey] || (DEFAULT_PAGE_SECTIONS as unknown)[pageKey];
+  const resolvedPageKey = resolvePageKey(pageKey);
+  const pageData = settings?.page_sections?.[pageKey] || settings?.page_sections?.[resolvedPageKey] || (DEFAULT_PAGE_SECTIONS as unknown)[pageKey] || (DEFAULT_PAGE_SECTIONS as unknown)[resolvedPageKey];
   const [activeSection, setActiveSection] = useState<string>('');
 
   const sections = pageData?.sections || [];
