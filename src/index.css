@@ -116,13 +116,17 @@
     right: 0;
     bottom: -4px;
     height: 3px;
-    background: linear-gradient(90deg, #2376df 60%, #054393 100%);
+    background: linear-gradient(90deg, hsl(var(--primary)) 60%, hsl(var(--primary-foreground)) 100%);
     border-radius: 10px;
     width: 100%;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.28s cubic-bezier(.44, .08, .44, .91);
     opacity: 0.7;
+  }
+
+  .dark .story-link-anim::after {
+    background: linear-gradient(90deg, hsl(var(--secondary)) 60%, hsl(var(--secondary-foreground)) 100%);
   }
 
   .group:hover .story-link-anim::after {
@@ -210,8 +214,12 @@
   }
 
   .matrix-grid-bg {
-    background-image: linear-gradient(rgba(13, 148, 136, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(13, 148, 136, 0.1) 1px, transparent 1px);
+    background-image: linear-gradient(hsl(var(--secondary) / 0.08) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--secondary) / 0.08) 1px, transparent 1px);
     background-size: 20px 20px;
+  }
+
+  .dark .matrix-grid-bg {
+    background-image: linear-gradient(hsl(var(--secondary) / 0.12) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--secondary) / 0.12) 1px, transparent 1px);
   }
 
   .dynamic-bg {
@@ -283,17 +291,15 @@
 
 .technical-table {
   @apply w-full border-collapse my-4 text-sm;
-  background: rgba(15, 23, 42, 0.02);
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-}
+    background: hsl(var(--muted) / 0.08);
+    border: 1px solid hsl(var(--border) / 0.26);
+    border-radius: 8px;
+    overflow: hidden;
+  }
 
-.dark .technical-table {
-  background: rgba(255, 255, 255, 0.02);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
+  .dark .technical-table {
+    background: hsl(var(--muted) / 0.12);
+    border-color: hsl(var(--border) / 0.18);
 .technical-table th {
   @apply bg-slate-900 text-white p-3 text-left font-semibold;
 }
@@ -308,15 +314,21 @@
 
 .audit-alert {
   @apply p-4 rounded-lg border-l-4 my-4 flex items-start gap-3;
-  background: linear-gradient(to right, rgba(239, 68, 68, 0.1), transparent);
-  border-color: #ef4444;
-}
+    background: linear-gradient(to right, hsl(var(--destructive) / 0.12), transparent);
+    border-color: hsl(var(--destructive));
+  }
 
-.audit-alert-warning {
-  @apply border-orange-500;
-  background: linear-gradient(to right, rgba(249, 115, 22, 0.1), transparent);
-}
+  .dark .audit-alert {
+    background: linear-gradient(to right, hsl(var(--destructive) / 0.18), transparent);
+  }
 
+  .audit-alert-warning {
+    @apply border-orange-500;
+    background: linear-gradient(to right, hsl(var(--accent) / 0.12), transparent);
+  }
+
+  .dark .audit-alert-warning {
+    background: linear-gradient(to right, hsl(var(--accent) / 0.18), transparent);
 @keyframes float {
   0% {
     transform: translateY(0px);
