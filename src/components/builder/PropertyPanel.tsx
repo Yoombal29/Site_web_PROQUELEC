@@ -7,8 +7,7 @@ import {
   useUpdateBlockStyle,
   useUpdateBlockContent,
   useRemoveBlock,
-  useSaveTemplate,
-  useSelectedBlockId
+  useSaveTemplate
 } from '@/stores/useBuilderStoreSelectors';
 import type { Block, BlockStyle, BlockContent } from '@/types/builder';
 import { Label } from '@/components/ui/label';
@@ -16,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
+import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
 import {
   Trash2, AlignLeft, AlignCenter, AlignRight, AlignJustify,
@@ -146,7 +146,24 @@ const toggleClassName = (current: string | undefined, className: string, enabled
   return normalizeClasses(Array.from(classes).join(' '));
 };
 
-const PropertyPanel: React.FC = () => {
+interface PageSettings {
+  title: string;
+  slug: string;
+  metaDescription: string;
+  metaKeywords: string;
+  metaRobots: string;
+  customCss: string;
+  customJs: string;
+  isPublished: boolean;
+  workflowStatus: 'draft' | 'review' | 'approved' | 'published';
+}
+
+interface PropertyPanelProps {
+  pageSettings?: PageSettings;
+  onPageSettingsChange?: (changes: Partial<PageSettings>) => void;
+}
+
+const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSettingsChange }) => {
   const selectedBlock = useSelectedBlock();
   const updateBlockContent = useUpdateBlockContent();
   const updateBlockStyle = useUpdateBlockStyle();
@@ -220,8 +237,8 @@ const PropertyPanel: React.FC = () => {
   };
 
   const handleResetContent = () => {
-    if (!selectedBlockId) return;
-    updateBlockContent(selectedBlockId, {
+    if (!selectedBlock?.id) return;
+    updateBlockContent(selectedBlock.id, {
       title: undefined,
       subtitle: undefined,
       text: undefined,
@@ -236,9 +253,120 @@ const PropertyPanel: React.FC = () => {
     toast.success('Contenu réinitialisé.');
   };
 
+  const handlePageSettingChange = (key: keyof PageSettings, value: string | boolean) => {
+    if (!onPageSettingsChange) return;
+    onPageSettingsChange({ [key]: value } as Partial<PageSettings>);
+  };
+
     // Controls moved to separate files under ./PropertyPanel/controls
 
   if (!selectedBlock) {
+    if (pageSettings) {
+      return (
+        <div className="flex flex-col h-full overflow-y-auto p-4 space-y-6 bg-slate-50">
+          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-slate-800">Paramètres de la page</h3>
+                <p className="text-sm text-slate-500">Modifiez les métadonnées et options globales.</p>
+              </div>
+              <span className={`text-[10px] uppercase font-semibold px-2 py-1 rounded ${pageSettings.workflowStatus === 'published' ? 'bg-emerald-100 text-emerald-700' : pageSettings.workflowStatus === 'review' ? 'bg-amber-100 text-amber-700' : pageSettings.workflowStatus === 'approved' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'}`}>
+                {pageSettings.workflowStatus === 'published' ? 'Publié' : pageSettings.workflowStatus === 'review' ? 'En relecture' : pageSettings.workflowStatus === 'approved' ? 'Approuvée' : 'Brouillon'}
+              </span>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <Label className="text-[10px] uppercase text-slate-400">Titre de la page</Label>
+                <Input
+                  value={pageSettings.title}
+                  onChange={(e) => handlePageSettingChange('title', e.target.value)}
+                  className="h-10 text-sm" />
+              </div>
+
+              <div>
+                <Label className="text-[10px] uppercase text-slate-400">Slug</Label>
+                <Input
+                  value={pageSettings.slug}
+                  onChange={(e) => handlePageSettingChange('slug', e.target.value)}
+                  className="h-10 text-sm" />
+              </div>
+
+              <div>
+                <Label className="text-[10px] uppercase text-slate-400">Meta Description</Label>
+                <Textarea
+                  value={pageSettings.metaDescription}
+                  onChange={(e) => handlePageSettingChange('metaDescription', e.target.value)}
+                  className="min-h-[120px] text-sm" />
+              </div>
+
+              <div className="grid grid-cols-1 gap-4">
+                <div>
+                  <Label className="text-[10px] uppercase text-slate-400">Meta Keywords</Label>
+                  <Input
+                    value={pageSettings.metaKeywords}
+                    onChange={(e) => handlePageSettingChange('metaKeywords', e.target.value)}
+                    className="h-10 text-sm" />
+                </div>
+                <div>
+                  <Label className="text-[10px] uppercase text-slate-400">Meta Robots</Label>
+                  <Input
+                    value={pageSettings.metaRobots}
+                    onChange={(e) => handlePageSettingChange('metaRobots', e.target.value)}
+                    className="h-10 text-sm" />
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <Label className="text-[10px] uppercase text-slate-400">CSS personnalisé</Label>
+                  <Textarea
+                    value={pageSettings.customCss}
+                    onChange={(e) => handlePageSettingChange('customCss', e.target.value)}
+                    className="min-h-[120px] text-sm font-mono" />
+                </div>
+                <div>
+                  <Label className="text-[10px] uppercase text-slate-400">JS personnalisé</Label>
+                  <Textarea
+                    value={pageSettings.customJs}
+                    onChange={(e) => handlePageSettingChange('customJs', e.target.value)}
+                    className="min-h-[120px] text-sm font-mono" />
+                </div>
+              </div>
+
+              <div className="grid gap-4">
+                <div className="flex items-center justify-between gap-3 p-3 bg-slate-50 rounded-md border border-slate-200">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-700">Publication</p>
+                    <p className="text-xs text-slate-500">Activez pour publier immédiatement la page.</p>
+                  </div>
+                  <Switch
+                    id="page-published"
+                    checked={pageSettings.isPublished}
+                    onCheckedChange={(checked) => handlePageSettingChange('isPublished', checked)} />
+                </div>
+                <div className="space-y-2 p-3 bg-slate-50 rounded-md border border-slate-200">
+                  <Label className="text-[10px] uppercase text-slate-400">Statut workflow</Label>
+                  <Select value={pageSettings.workflowStatus} onValueChange={(value) => handlePageSettingChange('workflowStatus', value as PageSettings['workflowStatus'])}>
+                    <SelectTrigger className="w-full h-10 text-sm">
+                      <SelectValue placeholder="Sélectionnez un statut" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="draft">Brouillon</SelectItem>
+                      <SelectItem value="review">En relecture</SelectItem>
+                      <SelectItem value="approved">Approuvée</SelectItem>
+                      <SelectItem value="published">Publié</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-[10px] text-slate-400">Utilisez ce statut pour indiquer l’étape de validation de la page.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="flex flex-col items-center justify-center h-full text-slate-400 bg-slate-50/50 p-10 text-center">
                 <Box className="w-16 h-16 mb-6 opacity-20" />
@@ -281,7 +409,7 @@ const PropertyPanel: React.FC = () => {
           </div>
           <div className="space-y-2">
             <Label className="text-[10px] uppercase text-slate-400">Object Fit</Label>
-            <select className="h-8 w-full text-xs border rounded bg-white px-2" value={(selectedBlock.style?.objectFit as string) || 'cover'} onChange={(e) => handleStyleChange('objectFit', e.target.value)}>
+            <select title="Object Fit" className="h-8 w-full text-xs border rounded bg-white px-2" value={(selectedBlock.style?.objectFit as string) || 'cover'} onChange={(e) => handleStyleChange('objectFit', e.target.value)}>
               <option value="cover">cover</option>
               <option value="contain">contain</option>
               <option value="fill">fill</option>

@@ -146,7 +146,7 @@ const AdminPagesPanel: React.FC = () => {
         setFormData((prev) => ({ ...prev, slug: autoSlug }));
       }
     }
-  }, [formData.title, editingPage]);
+  }, [formData.title, formData.slug, editingPage]);
 
   const resetForm = () => {
     setFormData({
@@ -420,7 +420,7 @@ const AdminPagesPanel: React.FC = () => {
     }
   };
 
-  const loadVersions = async () => {
+  const loadVersions = useCallback(async () => {
     if (!editingPage) return;
 
     try {
@@ -429,7 +429,7 @@ const AdminPagesPanel: React.FC = () => {
     } catch (error) {
       console.error('Erreur lors du chargement des versions:', error);
     }
-  };
+  }, [editingPage, getVersions]);
 
   const handleRestoreVersion = async (versionId: string) => {
     if (!editingPage) return;
@@ -453,7 +453,7 @@ const AdminPagesPanel: React.FC = () => {
     }
   };
 
-  const loadAnalytics = async () => {
+  const loadAnalytics = useCallback(async () => {
     if (!editingPage) return;
 
     try {
@@ -462,7 +462,7 @@ const AdminPagesPanel: React.FC = () => {
     } catch (error) {
       console.error('Erreur lors du chargement des analytics:', error);
     }
-  };
+  }, [editingPage, getPageAnalytics]);
 
   const handlePreview = () => {
     setShowPreview(true);
@@ -544,13 +544,13 @@ const AdminPagesPanel: React.FC = () => {
     if (editingPage && showVersions) {
       loadVersions();
     }
-  }, [editingPage, showVersions]);
+  }, [editingPage, showVersions, loadVersions]);
 
   useEffect(() => {
     if (editingPage && showAnalytics) {
       loadAnalytics();
     }
-  }, [editingPage, showAnalytics]);
+  }, [editingPage, showAnalytics, loadAnalytics]);
 
   useEffect(() => {
     setSeoScore(calculateSeoScore(formData.content, formData.title, formData.meta_description));
@@ -679,7 +679,7 @@ const AdminPagesPanel: React.FC = () => {
           
             ← Retour à la liste
           </Button>
-          {/* @ts-ignore */}
+          {/* @ts-expect-error: pageId type is validated at runtime and AdminPageEditor expects a string */}
           <AdminPageEditor pageId={editingPage.id} onSave={() => refetch()} />
         </div> :
 

@@ -9,7 +9,7 @@ import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Button } from '@/components/ui/button';
 import {
   Plus, LayoutTemplate, Box, Trash2, Save, Loader2, MousePointer2,
-  Monitor, Tablet, Smartphone, Undo, Redo, Code, ChevronLeft } from
+  Monitor, Tablet, Smartphone, Undo, Redo, Code, ChevronLeft, Eye } from
 'lucide-react';
 import {
   SortableContext,
@@ -29,6 +29,50 @@ import {
   DialogTitle,
   DialogTrigger } from
 "@/components/ui/dialog";
+import { useContentVersioning } from '@/hooks/useContentVersioning';
+import { useAnalytics } from '@/hooks/useAnalytics';
+
+type WorkflowStatus = 'draft' | 'review' | 'approved' | 'published';
+
+type AdminPageResponse = {
+  title?: string;
+  slug?: string;
+  structure_json?: unknown;
+  content_blocks?: unknown[];
+  content?: string;
+  meta_description?: string;
+  meta_keywords?: string;
+  meta_robots?: string;
+  custom_css?: string;
+  custom_js?: string;
+  is_published?: boolean;
+  workflow_status?: WorkflowStatus;
+};
+
+type LegacyContentBlock = {
+  id?: string;
+  type?: string;
+  data?: Record<string, unknown>;
+};
+
+type LegacyTemplate = {
+  id: string;
+  name: string;
+  createdAt: number;
+  block: Block;
+};
+
+type PageDataState = {
+  title: string;
+  slug: string;
+  metaDescription: string;
+  metaKeywords: string;
+  metaRobots: string;
+  customCss: string;
+  customJs: string;
+  isPublished: boolean;
+  workflowStatus: 'draft' | 'review' | 'approved' | 'published';
+};
 
 const BuilderPage: React.FC = () => {
   const { pageId } = useParams<{ pageId: string }>();
@@ -48,14 +92,52 @@ const BuilderPage: React.FC = () => {
     canRedo
   } = useBuilderStore();
 
+  const { createVersion, getVersions, restoreVersion } = useContentVersioning();
+  const { getPageAnalytics } = useAnalytics();
+
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
-  const [pageInfo, setPageInfo] = useState<{ title: string; slug: string } | null>(null);
-  const [initialBlocks, setInitialBlocks] = useState<Block[]>([]);
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewMode, setPreviewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
+  const [versionDialogOpen, setVersionDialogOpen] = useState(false);
+  const [showAnalytics, setShowAnalytics] = useState(false);
+  const [versionChangeLog, setVersionChangeLog] = useState('Sauvegarde manuelle du builder');
+  const [analyticsData, setAnalyticsData] = useState<{ views: number; uniqueVisitors: number; avgTime: string; bounceRate: string } | null>(null);
+  const [pageData, setPageData] = useState<PageDataState | null>(null);
+  const [initialPageState, setInitialPageState] = useState<{
+    blocks: Block[];
+    title: string;
+    slug: string;
+    metaDescription: string;
+    metaKeywords: string;
+    metaRobots: string;
+    customCss: string;
+    customJs: string;
+    isPublished: boolean;
+    workflowStatus: 'draft' | 'review' | 'published' | 'archived';
+  } | null>(null);
 
-  const isDirty = useMemo(() => JSON.stringify(blocks) !== JSON.stringify(initialBlocks), [blocks, initialBlocks]);
+  const isDirty = useMemo(() => {
+    if (!initialPageState) return false;
+    return JSON.stringify({
+      blocks,
+      title: pageData?.title || '',
+      slug: pageData?.slug || '',
+      metaDescription: pageData?.metaDescription || '',
+      metaKeywords: pageData?.metaKeywords || '',
+      metaRobots: pageData?.metaRobots || '',
+      customCss: pageData?.customCss || '',
+      customJs: pageData?.customJs || '',
+      isPublished: pageData?.isPublished || false,
+      workflowStatus: pageData?.workflowStatus || 'draft'
+    }) !== JSON.stringify(initialPageState);
+  }, [blocks, initialPageState, pageData]);
+
+  const handlePageDataChange = useCallback((changes: Partial<PageDataState>) => {
+    setPageData((current) => current ? { ...current, ...changes } : current);
+  }, []);
 
   // 1. Initial Load
   useEffect(() => {
@@ -72,7 +154,7 @@ const BuilderPage: React.FC = () => {
 
       setIsLoading(true);
       try {
-        const adminPage = await apiFetch<{ title?: string; slug?: string; structure_json?: unknown; content_blocks?: unknown[]; content?: string }>(`/api/admin/pages/${pageId}`);
+        const adminPage = await apiFetch<AdminPageResponse>(`/api/admin/pages/${pageId}`);
 
         if (!adminPage) {
           setLoadError('Page introuvable.');
@@ -80,7 +162,17 @@ const BuilderPage: React.FC = () => {
           return;
         }
 
-        setPageInfo({ title: adminPage.title || `Page ${pageId}`, slug: adminPage.slug || pageId });
+        setPageData({
+          title: adminPage.title || `Page ${pageId}`,
+          slug: adminPage.slug || pageId,
+          metaDescription: adminPage.meta_description || '',
+          metaKeywords: adminPage.meta_keywords || '',
+          metaRobots: adminPage.meta_robots || 'index,follow',
+          customCss: adminPage.custom_css || '',
+          customJs: adminPage.custom_js || '',
+          isPublished: adminPage.is_published || false,
+          workflowStatus: adminPage.workflow_status || (adminPage.is_published ? 'published' : 'draft')
+        });
 
         let availableBlocks: Block[] = [];
 
@@ -96,7 +188,7 @@ const BuilderPage: React.FC = () => {
 
         if (!availableBlocks || availableBlocks.length === 0) {
           if (Array.isArray(adminPage.content_blocks) && adminPage.content_blocks.length > 0) {
-            availableBlocks = adminPage.content_blocks.map((b: any) => ({
+            availableBlocks = adminPage.content_blocks.map((b: LegacyContentBlock) => ({
               id: b?.id || `legacy-${Math.random().toString(36).slice(2, 9)}`,
               type: b?.type === 'text' ? 'text-block' : b?.type || 'section',
               content: {
@@ -109,7 +201,7 @@ const BuilderPage: React.FC = () => {
                 caption: b?.data?.caption
               },
               style: b?.data?.background_image ? {
-                backgroundImage: `url(${b.data.background_image})`,
+                backgroundImage: `url(${b.data?.background_image})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 color: '#ffffff'
@@ -127,11 +219,23 @@ const BuilderPage: React.FC = () => {
           }
         }
 
-        setBlocks(availableBlocks || []);
-        setInitialBlocks(availableBlocks || []);
+          setBlocks(availableBlocks || []);
+        setInitialPageState({
+          blocks: availableBlocks || [],
+          title: adminPage.title || `Page ${pageId}`,
+          slug: adminPage.slug || pageId,
+          metaDescription: adminPage.meta_description || '',
+          metaKeywords: adminPage.meta_keywords || '',
+          metaRobots: adminPage.meta_robots || 'index,follow',
+          customCss: adminPage.custom_css || '',
+          customJs: adminPage.custom_js || '',
+          isPublished: adminPage.is_published || false,
+          workflowStatus: adminPage.workflow_status || (adminPage.is_published ? 'published' : 'draft')
+        });
       } catch (error: unknown) {
         console.error('Erreur chargement du builder:', error);
-        if ((error as any)?.status === 401) {
+        const errorStatus = (error as unknown as { status?: number }).status;
+        if (errorStatus === 401) {
           setLoadError('Accès refusé. Veuillez vous connecter pour utiliser le builder.');
         } else {
           setLoadError((error as Error)?.message || 'Impossible de charger la page. Vérifiez la connexion ou l’identifiant.');
@@ -156,9 +260,33 @@ const BuilderPage: React.FC = () => {
     try {
       await apiFetch(`/api/admin/pages/${pageId}`, {
         method: 'PUT',
-        body: JSON.stringify({ structure_json: blocks })
+        body: JSON.stringify({
+          structure_json: blocks,
+          title: pageData?.title,
+          slug: pageData?.slug,
+          meta_description: pageData?.metaDescription,
+          meta_keywords: pageData?.metaKeywords,
+          meta_robots: pageData?.metaRobots,
+          custom_css: pageData?.customCss,
+          custom_js: pageData?.customJs,
+          is_published: pageData?.isPublished,
+          workflow_status: pageData?.workflowStatus
+        })
       });
-      setInitialBlocks(blocks);
+      if (pageData) {
+        setInitialPageState({
+          blocks,
+          title: pageData.title,
+          slug: pageData.slug,
+          metaDescription: pageData.metaDescription,
+          metaKeywords: pageData.metaKeywords,
+          metaRobots: pageData.metaRobots,
+          customCss: pageData.customCss,
+          customJs: pageData.customJs,
+          isPublished: pageData.isPublished,
+          workflowStatus: pageData.workflowStatus
+        });
+      }
       toast.success('Page sauvegardée avec succès !');
     } catch (error) {
       console.error('Erreur sauvegarde du builder:', error);
@@ -166,7 +294,55 @@ const BuilderPage: React.FC = () => {
     } finally {
       setIsSaving(false);
     }
-  }, [blocks, pageId]);
+  }, [blocks, pageId, pageData]);
+
+  const pageVersions = useMemo(() => {
+    return pageId ? getVersions(pageId) : [];
+  }, [getVersions, pageId]);
+
+  useEffect(() => {
+    if (!pageId) return;
+
+    const loadAnalytics = async () => {
+      const analytics = await getPageAnalytics(pageId);
+      setAnalyticsData(analytics);
+    };
+
+    loadAnalytics();
+  }, [pageId, getPageAnalytics]);
+
+  const handleCreateVersion = useCallback(async () => {
+    if (!pageId || !pageData) {
+      toast.error('Impossible de créer une version sans données de page.');
+      return;
+    }
+
+    await createVersion(pageId, pageData.title, JSON.stringify({ blocks, pageData }), versionChangeLog || 'Sauvegarde manuelle du builder');
+    setVersionDialogOpen(false);
+    toast.success('Version créée pour cette page.');
+  }, [pageId, pageData, blocks, createVersion, versionChangeLog]);
+
+  const handleRestoreVersion = useCallback(async (versionId: string) => {
+    const version = await restoreVersion(versionId);
+    if (!version) {
+      toast.error('Version introuvable.');
+      return;
+    }
+
+    try {
+      const payload = JSON.parse(version.content);
+      if (payload.blocks) {
+        setBlocks(payload.blocks);
+      }
+      if (payload.pageData) {
+        setPageData(payload.pageData);
+      }
+      toast.success(`Version ${version.version} restaurée.`);
+    } catch (restoreError) {
+      console.error('Erreur restauration version:', restoreError);
+      toast.error('Impossible de restaurer cette version.');
+    }
+  }, [restoreVersion, setBlocks]);
 
   // 3. Drag End Handler
   const handleDragEnd = (event: DragEndEvent) => {
@@ -307,13 +483,15 @@ const BuilderPage: React.FC = () => {
 
                         {/* Center Info: Page Title */}
                         <div className="flex flex-col items-center">
-                            {pageInfo ?
+                            {pageData ?
               <>
                                     <h1 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                                        {pageInfo.title}
-                                        <span className="px-1.5 py-0.5 bg-blue-50 text-blue-600 rounded text-[10px] uppercase font-bold tracking-tighter">Edition</span>
+                                        {pageData.title}
+                                        <span className={`px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-tighter ${pageData.workflowStatus === 'published' ? 'bg-emerald-50 text-emerald-700' : pageData.workflowStatus === 'review' ? 'bg-amber-50 text-amber-700' : pageData.workflowStatus === 'archived' ? 'bg-rose-50 text-rose-700' : 'bg-slate-100 text-slate-500'}`}>
+                                          {pageData.workflowStatus === 'published' ? 'Publié' : pageData.workflowStatus === 'review' ? 'En relecture' : pageData.workflowStatus === 'archived' ? 'Archivée' : 'Brouillon'}
+                                        </span>
                                     </h1>
-                                    <p className="text-[10px] text-slate-400 font-mono italic">/{pageInfo.slug}</p>
+                                    <p className="text-[10px] text-slate-400 font-mono italic">/{pageData.slug}</p>
                                     <div className="mt-1 flex gap-2">
                                         {loadError ? (
                                             <span className="text-[10px] uppercase text-rose-500 tracking-[0.18em] font-semibold">Erreur de chargement</span>
@@ -351,13 +529,25 @@ const BuilderPage: React.FC = () => {
                                 </DialogContent>
                             </Dialog>
 
+                            <Button size="sm" variant="outline" onClick={() => setShowPreview(true)} className="hidden xl:inline-flex text-slate-500">
+                                <Eye className="w-4 h-4 mr-2" /> Aperçu
+                            </Button>
+
+                            <Button size="sm" variant="outline" onClick={() => setVersionDialogOpen(true)} className="hidden xl:inline-flex text-slate-500">
+                                <Code className="w-4 h-4 mr-2" /> Versions
+                            </Button>
+
+                            <Button size="sm" variant="outline" onClick={() => setShowAnalytics(true)} className="hidden xl:inline-flex text-slate-500">
+                                <Monitor className="w-4 h-4 mr-2" /> Analytics
+                            </Button>
+
                             <Button size="sm" variant="outline" asChild>
                                 <Link to="/admin?tab=pages">
                                     Retour au menu
                                 </Link>
                             </Button>
                             <Button size="sm" variant="outline" asChild>
-                                <a href={`/${pageInfo?.slug || ''}`} target="_blank" rel="noreferrer">
+                                <a href={`/${pageData?.slug || ''}`} target="_blank" rel="noreferrer">
                                     Voir
                                 </a>
                             </Button>
@@ -375,6 +565,118 @@ const BuilderPage: React.FC = () => {
                             </Button>
                         </div>
                     </header>
+
+                    <Dialog open={showPreview} onOpenChange={setShowPreview}>
+                      <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden p-0">
+                        <DialogHeader>
+                          <DialogTitle>Aperçu de la page</DialogTitle>
+                          <DialogDescription>Visualisez le rendu final de la page sans les contrôles du builder.</DialogDescription>
+                        </DialogHeader>
+                        <div className="p-4 border-b bg-slate-50 flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-semibold">Mode aperçu</span>
+                            <span className="text-xs text-slate-500">{pageData?.title || 'Page'}</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <Button size="sm" variant={previewMode === 'desktop' ? 'default' : 'outline'} onClick={() => setPreviewMode('desktop')}>
+                              <Monitor className="w-4 h-4" />
+                            </Button>
+                            <Button size="sm" variant={previewMode === 'tablet' ? 'default' : 'outline'} onClick={() => setPreviewMode('tablet')}>
+                              <Tablet className="w-4 h-4" />
+                            </Button>
+                            <Button size="sm" variant={previewMode === 'mobile' ? 'default' : 'outline'} onClick={() => setPreviewMode('mobile')}>
+                              <Smartphone className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="bg-slate-200 p-4 overflow-auto h-[calc(90vh-120px)]">
+                          <div className={`mx-auto bg-white shadow rounded overflow-hidden ${previewMode === 'desktop' ? 'max-w-4xl' : previewMode === 'tablet' ? 'max-w-md' : 'max-w-sm'}`}>
+                            <BuilderPageRenderer blocks={blocks} isEditor={false} className="min-h-[75vh]" />
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+
+                    <Dialog open={versionDialogOpen} onOpenChange={setVersionDialogOpen}>
+                      <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle>Historique des versions</DialogTitle>
+                          <DialogDescription>Gérez les sauvegardes manuelles de cette page.</DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <div className="p-4 bg-slate-50 rounded border border-slate-200">
+                            <label htmlFor="version-change-log" className="block text-xs uppercase text-slate-400 mb-2">Description de la version</label>
+                            <input
+                              id="version-change-log"
+                              className="w-full rounded border border-slate-300 px-3 py-2 text-sm"
+                              value={versionChangeLog}
+                              onChange={(e) => setVersionChangeLog(e.target.value)}
+                            />
+                            <div className="mt-3 text-right">
+                              <Button size="sm" onClick={handleCreateVersion} className="min-w-[140px]">
+                                Créer une version
+                              </Button>
+                            </div>
+                          </div>
+
+                          {pageVersions.length === 0 ? (
+                            <div className="text-sm text-slate-500">Aucune version enregistrée pour cette page.</div>
+                          ) : (
+                            <div className="space-y-3">
+                              {pageVersions.map((version) => (
+                                <div key={version.id} className="p-4 rounded border border-slate-200 bg-white flex flex-col gap-3">
+                                  <div className="flex items-start justify-between gap-3">
+                                    <div>
+                                      <div className="text-sm font-semibold">Version {version.version}</div>
+                                      <div className="text-[11px] text-slate-500">{version.title}</div>
+                                    </div>
+                                    <div className="text-[11px] text-slate-400">{new Date(version.timestamp).toLocaleString()}</div>
+                                  </div>
+                                  <div className="text-[12px] text-slate-600">{version.changeLog}</div>
+                                  <div className="flex flex-wrap gap-2">
+                                    <Button size="sm" variant="outline" onClick={() => handleRestoreVersion(version.id)}>
+                                      Restaurer
+                                    </Button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+
+                    <Dialog open={showAnalytics} onOpenChange={setShowAnalytics}>
+                      <DialogContent className="max-w-xl max-h-[80vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle>Analytics de page</DialogTitle>
+                          <DialogDescription>Vue sur les performances et l’engagement de cette page.</DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="p-4 rounded border border-slate-200 bg-slate-50">
+                              <div className="text-xs uppercase text-slate-400">Vues</div>
+                              <div className="text-3xl font-semibold text-slate-900">{analyticsData?.views ?? '—'}</div>
+                            </div>
+                            <div className="p-4 rounded border border-slate-200 bg-slate-50">
+                              <div className="text-xs uppercase text-slate-400">Visiteurs uniques</div>
+                              <div className="text-3xl font-semibold text-slate-900">{analyticsData?.uniqueVisitors ?? '—'}</div>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="p-4 rounded border border-slate-200 bg-slate-50">
+                              <div className="text-xs uppercase text-slate-400">Temps moyen</div>
+                              <div className="text-2xl font-semibold text-slate-900">{analyticsData?.avgTime ?? '—'}</div>
+                            </div>
+                            <div className="p-4 rounded border border-slate-200 bg-slate-50">
+                              <div className="text-xs uppercase text-slate-400">Taux de rebond</div>
+                              <div className="text-2xl font-semibold text-slate-900">{analyticsData?.bounceRate ?? '—'}</div>
+                            </div>
+                          </div>
+                          <div className="text-sm text-slate-500">Les données affichées sont basées sur des analytics agrégés et la correspondance de page.</div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
 
                     {/* Zone de Drop (Canvas) */}
                     <div className="flex-1 overflow-auto p-8 relative bg-slate-100/50 custom-scrollbar flex justify-center">
@@ -401,7 +703,10 @@ const BuilderPage: React.FC = () => {
 
                 {/* DROITE: Propriétés */}
                 <aside className="border-l border-slate-200 flex flex-col shadow-sm z-10 w-[400px] min-w-[400px] bg-white transition-all duration-300 shrink-0">
-                    <PropertyPanel />
+                    <PropertyPanel
+                      pageSettings={pageData}
+                      onPageSettingsChange={handlePageDataChange}
+                    />
                 </aside>
             </div>
         </DndContext>);
@@ -415,14 +720,21 @@ const DraggableItem = ({ type, label, icon }: {type: string;label: string;icon?:
     data: { type }
   });
 
-  const style = transform ? {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`
-  } : undefined;
+  const nodeRef = React.useRef<HTMLDivElement | null>(null);
+  const setRefs = React.useCallback((node: HTMLDivElement | null) => {
+    nodeRef.current = node;
+    setNodeRef(node);
+  }, [setNodeRef]);
+
+  React.useEffect(() => {
+    if (nodeRef.current) {
+      nodeRef.current.style.transform = transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '';
+    }
+  }, [transform]);
 
   return (
     <div
-      ref={setNodeRef}
-      style={style}
+      ref={setRefs}
       {...listeners}
       {...attributes}
       className="p-3 bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded cursor-grab active:cursor-grabbing flex items-center gap-3 transition-colors shadow-sm select-none">
@@ -436,20 +748,27 @@ const DraggableItem = ({ type, label, icon }: {type: string;label: string;icon?:
 };
 
 // Composant Draggable Template (Modèle Sauvegardé)
-const DraggableTemplate = ({ template }: {template: unknown;}) => {
+const DraggableTemplate = ({ template }: {template: LegacyTemplate;}) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: `sidebar-template-${template.id}`,
     data: { block: template.block }
   });
 
-  const style = transform ? {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`
-  } : undefined;
+  const nodeRef = React.useRef<HTMLDivElement | null>(null);
+  const setRefs = React.useCallback((node: HTMLDivElement | null) => {
+    nodeRef.current = node;
+    setNodeRef(node);
+  }, [setNodeRef]);
+
+  React.useEffect(() => {
+    if (nodeRef.current) {
+      nodeRef.current.style.transform = transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '';
+    }
+  }, [transform]);
 
   return (
     <div
-      ref={setNodeRef}
-      style={style}
+      ref={setRefs}
       {...listeners}
       {...attributes}
       className="p-3 bg-white hover:bg-purple-50 border border-slate-200 hover:border-purple-200 rounded cursor-grab active:cursor-grabbing flex flex-col gap-1 transition-colors shadow-sm select-none relative overflow-hidden">
@@ -468,16 +787,12 @@ const DroppableCanvas = ({ blocks, widthClass }: { blocks: Block[]; widthClass: 
   const { isOver, setNodeRef } = useDroppable({ id: 'canvas-droppable' });
   const { selectedBlockId, selectBlock } = useBuilderStore();
 
-  const style = {
-    borderColor: isOver ? '#3b82f6' : '#e2e8f0',
-    transition: 'all 0.3s ease-in-out'
-  };
+  const overClasses = isOver ? 'border-blue-400 shadow-lg' : 'border-slate-200';
 
   return (
     <div
       ref={setNodeRef}
-      style={style}
-      className={`${widthClass} w-full min-h-[800px] bg-white shadow-xl rounded-sm border-2 transition-all p-8 shrink-0 click-outside-handler pb-32`}
+      className={`${widthClass} w-full min-h-[800px] bg-white shadow-xl rounded-sm border-2 ${overClasses} transition-all p-8 shrink-0 click-outside-handler pb-32`}
       onClick={(e) => {
         if (e.target === e.currentTarget && selectedBlockId) {
           selectBlock(null);
