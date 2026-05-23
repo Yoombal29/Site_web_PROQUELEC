@@ -4,9 +4,7 @@ Ce dossier contient toute la configuration pour faire tourner la plateforme PROQ
 
 ## Structure isolation
 - **Port 5433** : Base de données locale (PostgreSQL)
-- **Port 8180** : GED Alfresco
 - **Port 3101** : BI Metabase
-- **Port 8183** : SSO Keycloak
 
 ## Maintenance et Sauvegarde
 
@@ -29,6 +27,4 @@ L'infrastructure est totalement autonome et hébergée localement.
 
 ## Accès
 - **Site Web** : [http://localhost:3100](http://localhost:3100) (Après configuration du frontend)
-- **GED Alfresco** : [http://localhost:8180/share](http://localhost:8180/share)
 - **BI Metabase** : [http://localhost:3101](http://localhost:3101)
-- **SSO Keycloak** : [http://localhost:8183](http://localhost:8183)
