@@ -5,6 +5,7 @@ import { useBuilderStore } from '@/stores/useBuilderStore';
 import type { Block } from '@/types/builder';
 import type { DragEndEvent } from '@dnd-kit/core';
 import cloneDeep from 'lodash.clonedeep';
+import { useBuilderKeyboardShortcuts } from '@/hooks/useBuilderKeyboardShortcuts';
 
 import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Button } from '@/components/ui/button';
@@ -100,7 +101,8 @@ const BuilderPage: React.FC = () => {
     canRedo,
     snapshotHistory,
     pageMetadata,
-    setPageMetadata
+    setPageMetadata,
+    removeBlock
   } = useBuilderStore();
 
   const { createVersion, getVersions, restoreVersion } = useContentVersioning();
@@ -379,8 +381,8 @@ const BuilderPage: React.FC = () => {
     }
   }, [restoreVersion, setBlocks]);
 
-  // 3. Drag End Handler
-  const handleDragEnd = (event: DragEndEvent) => {
+  // 3. Drag End Handler (optimized with useCallback)
+  const handleDragEnd = useCallback((event: DragEndEvent) => {
     const { active, over } = event;
 
     if (!over) return;
@@ -494,16 +496,24 @@ const BuilderPage: React.FC = () => {
         }
       }
     }
-  };
+  }, [blocks, setBlocks]);
 
-  // Helper for View Mode Width
-  const getCanvasWidth = () => {
+  // Helper for View Mode Width (optimized with useCallback)
+  const getCanvasWidth = useCallback(() => {
     switch (viewMode) {
       case 'mobile':return 'max-w-[375px]';
       case 'tablet':return 'max-w-[768px]';
       default:return 'max-w-6xl';
     }
-  };
+  }, [viewMode]);
+
+  // Keyboard shortcuts
+  useBuilderKeyboardShortcuts({
+    onSave: handleSave,
+    onUndo: undo,
+    onRedo: redo,
+    onDelete: () => selectedBlockId && removeBlock(selectedBlockId)
+  });
 
   return (
     <DndContext onDragEnd={handleDragEnd}>

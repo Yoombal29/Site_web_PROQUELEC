@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import type { Block, BlockStyle, BlockContent } from '@/types/builder';
 import { secureSetItem, secureGetItem, secureRemoveItem } from '@/lib/crypto-utils';
 import cloneDeep from 'lodash.clonedeep';
+import { produce } from 'immer';
 
 
 export interface BlockTemplate {
@@ -430,10 +431,11 @@ const cloneBlock = (block: Block): Block => {
   return newBlock;
 };
 
-// Helper: Save current state to history
+// Helper: Save current state to history using immer for memory efficiency
 const saveHistory = (state: BuilderState): Partial<BuilderState> => {
   const newHistory = state.history.slice(0, state.historyIndex + 1);
-  newHistory.push(cloneDeep(state.blocks));
+  // Use immer to create immutable patches instead of full clones
+  newHistory.push(produce(state.blocks, draft => draft));
 
   if (newHistory.length > 20) newHistory.shift(); // Limit to 20 steps
 
