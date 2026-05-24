@@ -396,7 +396,7 @@ const BuilderPage: React.FC = () => {
     }
   }, [restoreVersion, setBlocks]);
 
-  // 3. Drag End Handler (optimized with useCallback)
+  // 3. Drag End Handler (simplified for performance)
   const handleDragEnd = useCallback((event: DragEndEvent) => {
     try {
       const { active, over } = event;
@@ -406,45 +406,34 @@ const BuilderPage: React.FC = () => {
       const activeId = active.id.toString();
       const overId = over.id.toString();
 
-      // Pre-compute block map for O(1) lookups instead of O(n) recursive searches
-      const buildBlockMap = (nodes: Block[], parentId: string | null = null): Map<string, { node: Block, parentList: Block[], index: number, parentId: string | null }> => {
-        const map = new Map();
-        
-        const processNode = (nodeList: Block[], currentParentId: string | null) => {
-          nodeList.forEach((node, index) => {
-            map.set(node.id, {
-              node,
-              parentList: nodeList,
-              index,
-              parentId: currentParentId
-            });
-            
-            if (node.children && node.children.length > 0) {
-              processNode(node.children, node.id);
-            }
-          });
-        };
-        
-        processNode(nodes, parentId);
-        return map;
-      };
-
-      const blockMap = buildBlockMap(blocks);
-      
-      const getNode = (id: string) => blockMap.get(id);
-
       // Use Immer for efficient immutable updates
       const newBlocks = produce(blocks, (draft) => {
-        // Rebuild map for draft state
-        const draftMap = buildBlockMap(draft);
-        const getDraftNode = (id: string) => draftMap.get(id);
-        
-        const removeNodeFromMap = (id: string): Block | null => {
-          const info = getDraftNode(id);
-          if (!info) return null;
-          
-          info.parentList.splice(info.index, 1);
-          return info.node;
+        // Helper functions using recursive search (simpler, less overhead)
+        const findNode = (nodes: Block[], id: string): { node: Block, parentList: Block[], index: number } | null => {
+          for (let i = 0; i < nodes.length; i++) {
+            if (nodes[i].id === id) {
+              return { node: nodes[i], parentList: nodes, index: i };
+            }
+            if (nodes[i].children) {
+              const found = findNode(nodes[i].children!, id);
+              if (found) return found;
+            }
+          }
+          return null;
+        };
+
+        const removeNode = (nodes: Block[], id: string): Block | null => {
+          for (let i = 0; i < nodes.length; i++) {
+            if (nodes[i].id === id) {
+              const removed = nodes.splice(i, 1)[0];
+              return removed;
+            }
+            if (nodes[i].children) {
+              const removed = removeNode(nodes[i].children!, id);
+              if (removed) return removed;
+            }
+          }
+          return null;
         };
 
         // CASE 1: Dropping from Sidebar (New Block/Template)
@@ -453,7 +442,7 @@ const BuilderPage: React.FC = () => {
           let targetIndex = draft.length;
 
           if (overId !== 'canvas-droppable') {
-            const overNodeInfo = getDraftNode(overId);
+            const overNodeInfo = findNode(draft, overId);
             if (overNodeInfo) {
               // If hovering over an empty section, drop inside it
               if (overNodeInfo.node.type === 'section' && (!overNodeInfo.node.children || overNodeInfo.node.children.length === 0)) {
@@ -491,16 +480,16 @@ const BuilderPage: React.FC = () => {
         }
         // CASE 2: Reordering Existing Blocks
         else if (activeId !== overId) {
-          const activeNodeInfo = getDraftNode(activeId);
-          const overNodeInfo = getDraftNode(overId);
+          const activeNodeInfo = findNode(draft, activeId);
+          const overNodeInfo = findNode(draft, overId);
 
           if (activeNodeInfo && overNodeInfo) {
             // Remove from old location
-            const draggedNode = removeNodeFromMap(activeId);
+            const draggedNode = removeNode(draft, activeId);
             if (!draggedNode) return;
 
             // Find over location again because mutation might have shifted indexes
-            const updatedOverNodeInfo = getDraftNode(overId);
+            const updatedOverNodeInfo = findNode(draft, overId);
             if (updatedOverNodeInfo) {
               // If dropping into an empty section
               if (updatedOverNodeInfo.node.type === 'section' && (!updatedOverNodeInfo.node.children || updatedOverNodeInfo.node.children.length === 0)) {
