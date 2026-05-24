@@ -15,8 +15,7 @@ async function auditGEDSystem() {
     const results = {
         database: { passed: 0, failed: 0, warnings: [] },
         api: { passed: 0, failed: 0, warnings: [] },
-        ui: { passed: 0, failed: 0, warnings: [] },
-        alfresco: { references: [] }
+        ui: { passed: 0, failed: 0, warnings: [] }
     };
 
     try {
@@ -211,65 +210,6 @@ async function auditGEDSystem() {
         }
 
         // ============================================
-        // 4. ALFRESCO REFERENCES AUDIT
-        // ============================================
-        console.log('\n\n🔍 4. AUDIT RÉFÉRENCES ALFRESCO\n');
-
-        const searchDirs = ['src', 'server', 'public'];
-        const alfrescoPatterns = [
-            /alfresco/i,
-            /ALFRESCO_/,
-            /alfrescoService/i
-        ];
-
-        function searchDirectory(dir, results) {
-            if (!fs.existsSync(dir)) return;
-
-            const files = fs.readdirSync(dir);
-            for (const file of files) {
-                const fullPath = path.join(dir, file);
-                const stat = fs.statSync(fullPath);
-
-                if (stat.isDirectory() && !file.includes('node_modules') && !file.includes('.git')) {
-                    searchDirectory(fullPath, results);
-                } else if (stat.isFile() && (file.endsWith('.ts') || file.endsWith('.tsx') || file.endsWith('.js') || file.endsWith('.jsx'))) {
-                    const content = fs.readFileSync(fullPath, 'utf8');
-                    for (const pattern of alfrescoPatterns) {
-                        if (pattern.test(content)) {
-                            results.alfresco.references.push(fullPath.replace(process.cwd(), '.'));
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        for (const dir of searchDirs) {
-            searchDirectory(dir, results);
-        }
-
-        if (results.alfresco.references.length === 0) {
-            console.log('   ✅ Aucune référence Alfresco trouvée dans le code');
-        } else {
-            console.log(`   ⚠️  ${results.alfresco.references.length} fichier(s) avec références Alfresco:`);
-            results.alfresco.references.forEach(ref => {
-                console.log(`      - ${ref}`);
-            });
-        }
-
-        // Check .env
-        const envPath = path.join(process.cwd(), '.env');
-        if (fs.existsSync(envPath)) {
-            const envContent = fs.readFileSync(envPath, 'utf8');
-            if (/ALFRESCO/i.test(envContent)) {
-                console.log('   ⚠️  Variables ALFRESCO trouvées dans .env');
-                results.alfresco.references.push('.env');
-            } else {
-                console.log('   ✅ Aucune variable ALFRESCO dans .env');
-            }
-        }
-
-        // ============================================
         // 5. SUMMARY
         // ============================================
         console.log('\n\n' + '='.repeat(60));
@@ -281,7 +221,6 @@ async function auditGEDSystem() {
 
         console.log(`✅ Tests réussis: ${totalPassed}/${totalTests}`);
         console.log(`❌ Tests échoués: ${totalFailed}/${totalTests}`);
-        console.log(`⚠️  Références Alfresco: ${results.alfresco.references.length}`);
 
         console.log('\nDétails par catégorie:');
         console.log(`  - Base de données: ${results.database.passed}/${results.database.passed + results.database.failed} ✅`);
@@ -290,9 +229,9 @@ async function auditGEDSystem() {
 
         if (totalFailed === 0) {
             console.log('\n🎉 SYSTÈME GED COMPLET ET OPÉRATIONNEL !');
-            console.log('✅ Prêt pour suppression d\'Alfresco');
+            console.log('✅ Prêt pour déploiement / mise en production');
         } else {
-            console.log('\n⚠️  CORRECTIONS NÉCESSAIRES AVANT SUPPRESSION ALFRESCO');
+            console.log('\n⚠️  CORRECTIONS NÉCESSAIRES AVANT CONTINuer');
         }
 
         console.log('\n' + '='.repeat(60));

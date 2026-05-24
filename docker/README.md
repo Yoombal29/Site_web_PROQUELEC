@@ -3,8 +3,9 @@
 Ce dossier contient toute la configuration pour faire tourner la plateforme PROQUELEC en **100% Open Source** sur Docker.
 
 ## Structure isolation
-- **Port 5433** : Base de données locale (PostgreSQL)
+- **Port 5437** : Base de données locale (PostgreSQL)
 - **Port 3101** : BI Metabase
+- **Port 3102** : Gateway Nginx
 
 ## Maintenance et Sauvegarde
 
@@ -26,5 +27,5 @@ docker-compose up -d
 L'infrastructure est totalement autonome et hébergée localement.
 
 ## Accès
-- **Site Web** : [http://localhost:3100](http://localhost:3100) (Après configuration du frontend)
+- **Site Web** : [http://localhost:3102](http://localhost:3102) via la gateway ou [http://localhost:5175](http://localhost:5175) en mode développement
 - **BI Metabase** : [http://localhost:3101](http://localhost:3101)

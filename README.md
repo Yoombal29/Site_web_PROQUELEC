@@ -5,7 +5,7 @@ Infrastructure web souveraine pour la Promotion de la Qualité des Installations
 ## 🏗️ Architecture
 
 - **Frontend**: React + TypeScript + Vite
-- **Backend API**: PostgREST (API REST auto-générée depuis PostgreSQL)
+- **Backend API**: Node / Express + PostgreSQL
 - **Base de données**: PostgreSQL 15
 - **Gateway**: Nginx (reverse proxy avec CORS)
 - **Containerisation**: Docker Compose
@@ -54,7 +54,7 @@ npm install
 npm run dev
 ```
 
-Le site sera accessible sur `http://localhost:8080`
+Le site sera accessible sur `http://localhost:5175`
 
 ### ✅ Valider la Configuration IA
 
@@ -101,10 +101,10 @@ Pour une vue détaillée de **tous les endpoints IA** avec modèles utilisés, p
 
 ## 📦 Services Docker
 
-- **PostgreSQL**: Port 5433
-- **PostgREST API**: Port 3000 (interne)
+- **PostgreSQL**: Port 5437
+- **Backend API**: Port 3010
 - **Nginx Gateway**: Port 3102
-- **Frontend Dev**: Port 8080
+- **Frontend Dev**: Port 5175
 
 ## 🤖 Endpoints IA Disponibles
 

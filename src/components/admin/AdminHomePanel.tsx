@@ -390,7 +390,7 @@ const AdminHomePanel = () => {
                                             <Label>Image de fond (URL)</Label>
                                             <Input value={slide.background_url} onChange={(e) => handleSlideChange(slide.id, 'background_url', e.target.value)} />
                                             <p className="text-[10px] text-slate-400 italic">
-                                                Pour une image locale : <strong>http://localhost:3000/uploads/nom-fichier.ext</strong>
+                                                Pour une image locale : <strong>/uploads/nom-fichier.ext</strong>
                                             </p>
                                         </div>
                                     </div>
@@ -475,8 +475,8 @@ const AdminHomePanel = () => {
                                         </div>
                                     </div>
                                     <div className="col-span-1 text-right">
-                                        <Button variant="ghost" size="icon" onClick={() => deleteStat(stat.id)} className="h-9 w-9 text-red-400 hover:text-red-600 hover:bg-red-50">
-                                            <Trash2 className="w-4 h-4" />
+                                        <Button title="Supprimer" aria-label="Supprimer la statistique" variant="ghost" size="icon" onClick={() => deleteStat(stat.id)} className="h-9 w-9 text-red-400 hover:text-red-600 hover:bg-red-50">
+                                          <Trash2 className="w-4 h-4" />
                                         </Button>
                                     </div>
                                 </div>
@@ -504,8 +504,8 @@ const AdminHomePanel = () => {
                       className="font-bold" />
                     
                                         </div>
-                                        <Button variant="ghost" size="icon" onClick={() => deleteService(service.id)} className="self-start text-red-300 hover:text-red-600">
-                                            <Trash2 className="w-4 h-4" />
+                                        <Button title="Supprimer" aria-label="Supprimer le service" variant="ghost" size="icon" onClick={() => deleteService(service.id)} className="self-start text-red-300 hover:text-red-600">
+                                          <Trash2 className="w-4 h-4" />
                                         </Button>
                                     </div>
                                     <div className="space-y-1">
@@ -582,13 +582,13 @@ const AdminHomePanel = () => {
                                         {/* Actions Overlay */}
                                         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-20 flex gap-1">
                                             <Button
-                      variant="destructive"
-                      size="icon"
-                      className="h-7 w-7 shadow-sm rounded-full"
-                      onClick={() => deletePartner(p.id)}
-                      title="Supprimer">
-                      
-                                                <Trash2 className="w-3 h-3" />
+                                  title="Supprimer"
+                                  aria-label={`Supprimer ${p.name}`}
+                                  variant="destructive"
+                                  size="icon"
+                                  className="h-7 w-7 shadow-sm rounded-full"
+                                  onClick={() => deletePartner(p.id)}>
+                                              <Trash2 className="w-3 h-3" />
                                             </Button>
                                         </div>
                                     </div>
@@ -603,7 +603,7 @@ const AdminHomePanel = () => {
               <div key={t.id} className="p-4 border rounded-lg bg-white">
                                     <div className="flex justify-between">
                                         <div className="font-bold text-proqblue">{t.name} <span className="text-xs font-normal text-gray-500">- {t.role}</span></div>
-                                        <Button variant="ghost" size="sm" onClick={() => deleteTestimonial(t.id)}><Trash2 className="w-4 h-4 text-red-500" /></Button>
+                                        <Button title="Supprimer" aria-label={`Supprimer témoignage de ${t.name}`} variant="ghost" size="sm" onClick={() => deleteTestimonial(t.id)}><Trash2 className="w-4 h-4 text-red-500" /></Button>
                                     </div>
                                     <div className="text-sm italic text-gray-600 mt-2">"{t.content}"</div>
                                 </div>

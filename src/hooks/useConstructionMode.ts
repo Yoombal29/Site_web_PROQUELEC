@@ -24,7 +24,7 @@ const authFetch = async (url: string, options: RequestInit = {}) => {
 };
 
 export const useConstructionMode = () => {
-  const [isConstructionMode, setIsConstructionMode] = useState(true);
+  const [isConstructionMode, setIsConstructionMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useSession();
 
@@ -37,13 +37,20 @@ export const useConstructionMode = () => {
       const res = await fetch("/api/construction-mode");
       if (res.ok) {
         const data = await res.json();
-        const isEnabled = data?.is_enabled ?? true;
+        const isEnabled = data?.is_enabled === true;
         startTransition(() => {
           setIsConstructionMode(isEnabled);
+        });
+      } else {
+        startTransition(() => {
+          setIsConstructionMode(false);
         });
       }
     } catch (error) {
       console.error('Error fetching construction mode:', error);
+      startTransition(() => {
+        setIsConstructionMode(false);
+      });
     } finally {
       startTransition(() => {
         setIsLoading(false);

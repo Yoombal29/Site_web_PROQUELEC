@@ -121,10 +121,10 @@ export default function AdminCategoryPanel() {
           <div key={cat.id} className="flex items-center justify-between p-2 border border-border rounded-md bg-muted/30">
             <span>{cat.name}</span>
             <div className="flex gap-2">
-              <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleEdit(cat)}><Edit className="h-4 w-4" /></Button>
+              <Button title="Modifier" aria-label="Modifier la catégorie" variant="outline" size="icon" className="h-8 w-8" onClick={() => handleEdit(cat)}><Edit className="h-4 w-4" /></Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="icon" className="h-8 w-8" disabled={deleteMutation.isPending}><Trash2 className="h-4 w-4" /></Button>
+                  <Button title="Supprimer" aria-label="Supprimer la catégorie" variant="destructive" size="icon" className="h-8 w-8" disabled={deleteMutation.isPending}><Trash2 className="h-4 w-4" /></Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>

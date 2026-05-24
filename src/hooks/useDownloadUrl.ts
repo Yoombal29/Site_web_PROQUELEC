@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { normalizeUploadUrl } from '@/lib/normalizeUploadUrl';
 
 /**
  * Hook to get download URL for files stored locally.
@@ -16,24 +17,15 @@ export function useDownloadUrl(bucket: string, path: string, expiry: number = 60
     try {
       // For local storage, files are served directly from /uploads/
       // If the stored path is an absolute localhost URL, normalize it to a relative path.
-      const normalizeUploadUrl = (value: string) => {
-        try {
-          const parsed = new URL(value);
-          if (parsed.pathname.startsWith('/uploads/')) {
-            return `${parsed.pathname}${parsed.search}${parsed.hash}`;
-          }
-          return value;
-        } catch {
-          return value;
-        }
-      };
-
-      const localUrl = path.startsWith('http') ? normalizeUploadUrl(path) : `/uploads/${path}`;
+      const localUrl = path.startsWith('http')
+        ? normalizeUploadUrl(path)
+        : normalizeUploadUrl(path.startsWith('/uploads/') ? path : `/uploads/${path}`);
       setUrl(localUrl);
       setLoading(false);
       return localUrl;
     } catch (err: unknown) {
-      setError(err.message || 'Failed to get URL');
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message || 'Failed to get URL');
       setUrl(null);
       setLoading(false);
       return null;

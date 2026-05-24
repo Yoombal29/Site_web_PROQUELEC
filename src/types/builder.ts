@@ -39,7 +39,11 @@ export interface BlockStyle {
   letterSpacing?: string;
   className?: string; // Tailwind overrides
   customCss?: string; // Raw CSS for power users
-  [key: string]: unknown;
+  darkStyle?: Partial<BlockStyle>; // Styles specific to dark mode
+  tablet?: Partial<BlockStyle>; // Tablet-specific styles
+  mobile?: Partial<BlockStyle>; // Mobile-specific styles
+  id?: string; // HTML ID attribute
+  objectFit?: 'cover' | 'contain' | 'fill' | 'none';
 }
 
 export interface BlockContent {
@@ -52,8 +56,19 @@ export interface BlockContent {
   alt?: string;
   href?: string; // Button link
   caption?: string;
-  items?: unknown[];
-  [key: string]: unknown;
+  items?: BlockContentItem[];
+  type?: string; // For code blocks
+}
+
+export interface BlockContentItem {
+  title?: string;
+  content?: string;
+  label?: string;
+  value?: string;
+  name?: string;
+  role?: string;
+  url?: string;
+  [key: string]: string | number | boolean | undefined;
 }
 
 export interface Block {
@@ -63,6 +78,8 @@ export interface Block {
   style?: BlockStyle;
   children?: Block[]; // Nested blocks (e.g. columns)
   isGlobal?: boolean; // If linked to a global component
+  enabled?: boolean; // For new schema
+  props?: BlockContent; // New schema alternative to content
 }
 
 export type HTMLString = string;

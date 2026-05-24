@@ -142,10 +142,10 @@ export default function AdminLogsPanel() {
             </div>
             
             <div className="flex items-end gap-2">
-              <Button variant="outline" size="icon">
+              <Button title="Télécharger" aria-label="Télécharger les journaux" variant="outline" size="icon">
                 <Download className="h-4 w-4" />
               </Button>
-              <Button variant="outline" size="icon">
+              <Button title="Effacer" aria-label="Effacer les journaux" variant="outline" size="icon">
                 <Trash2 className="h-4 w-4" />
               </Button>
             </div>

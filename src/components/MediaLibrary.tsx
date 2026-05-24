@@ -16,6 +16,7 @@ import {
 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { normalizeUploadUrl } from '@/lib/normalizeUploadUrl';
 
 
 
@@ -160,7 +161,8 @@ export function MediaLibrary({ onSelect, allowedTypes = ['image/'], selectionMod
   });
 
   const getFileUrl = (filePath: string) => {
-    return `/uploads/${filePath}`;
+    if (!filePath) return filePath;
+    return normalizeUploadUrl(filePath.startsWith('http') ? filePath : (filePath.startsWith('/uploads/') ? filePath : `/uploads/${filePath}`));
   };
 
   const handleSelect = (file: MediaFile) => {
@@ -331,7 +333,7 @@ export function MediaSelector({
 
                 <MediaLibrary
           onSelect={(file) => {
-            const url = `/uploads/${file.file_path}`;
+            const url = normalizeUploadUrl(file.file_path.startsWith('/uploads/') ? file.file_path : `/uploads/${file.file_path}`);
             onSelect(url);
             setIsOpen(false);
           }} />

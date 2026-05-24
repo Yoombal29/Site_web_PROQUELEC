@@ -1,5 +1,4 @@
 name: site-proquelec
-version: '3.8'
 
 services:
   # 1. Base de données - Cœur du Corpus Normatif

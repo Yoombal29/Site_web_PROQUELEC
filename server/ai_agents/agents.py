@@ -66,7 +66,7 @@ agent_formation = Agent(
 # 6. Agent Admin Proquelec (Document Controller)
 agent_admin = Agent(
     role='Document Controller & Assistant Administratif',
-    goal='Gérer l\'intelligence documentaire de l\'entreprise via Alfresco et assurer le versioning.',
+    goal='Gérer l\'intelligence documentaire de l\'entreprise et assurer le versioning.',
     backstory='Vous êtes le pivot entre le bureau et le chantier. Vous gérez l\'arborescence complexe des projets électriques et garantissez que les électriciens travaillent toujours sur la dernière version des plans.',
     verbose=True,
     allow_delegation=True,

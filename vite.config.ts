@@ -17,6 +17,8 @@ export default defineConfig(async ({ mode }) => {
       port: Number(process.env.VITE_PORT) || 5173,
       host: true,
       strictPort: true,
+      // Redirige toutes les routes inconnues vers index.html (React Router SPA)
+      historyApiFallback: true,
       hmr: {
         clientPort: Number(process.env.VITE_PORT) || 5173,
         port: Number(process.env.VITE_PORT) || 5173,

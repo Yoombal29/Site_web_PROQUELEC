@@ -55,6 +55,7 @@ self.addEventListener('fetch', (event) => {
     // 3. Les extensions Chrome
     if (
         url.pathname.startsWith('/api/') ||
+        url.pathname.startsWith('/uploads/') ||
         url.pathname.startsWith('/@') ||
         url.pathname.startsWith('/src/') ||
         url.pathname.includes('node_modules') ||

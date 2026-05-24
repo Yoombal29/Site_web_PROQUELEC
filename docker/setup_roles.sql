@@ -25,7 +25,7 @@ BEGIN
   GRANT SELECT ON public.user_roles TO authenticated;
   
   -- Très important : accorder ces rôles à l'utilisateur de connexion de l'API (postgres)
-  -- pour que PostgREST puisse "switcher" vers ces rôles
+  -- pour que l'API puisse utiliser ces rôles
   GRANT anon, authenticated, service_role TO postgres;
   
 END $$;

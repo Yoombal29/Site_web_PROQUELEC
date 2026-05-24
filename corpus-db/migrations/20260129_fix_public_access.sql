@@ -25,5 +25,5 @@ ALTER TABLE blog_categories ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Lecture publique blog_categories" ON blog_categories;
 CREATE POLICY "Lecture publique blog_categories" ON blog_categories FOR SELECT USING (true);
 
--- 4. Recharger le cache PostgREST
+-- 4. Recharger le cache de l'API
 NOTIFY pgrst, 'reload schema';

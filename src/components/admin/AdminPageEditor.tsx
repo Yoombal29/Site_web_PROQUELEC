@@ -187,10 +187,10 @@ export const AdminPageEditor: React.FC<AdminPageEditorProps> = ({ pageId, onSave
 
                 <div className="flex gap-2">
                     <Button
-            variant="outline"
-            onClick={() => window.open(`/admin/builder/${page.id}`, '_blank')}
-            className="gap-2 text-blue-600 border-blue-200 hover:bg-blue-50">
-            
+                      variant="outline"
+                      onClick={() => window.open(`/admin/builder/${page.slug || page.id}`, '_blank')}
+                      className="gap-2 text-blue-600 border-blue-200 hover:bg-blue-50"
+                    >
                         <Layout className="w-4 h-4" />
                         Ouvrir Builder PRO
                     </Button>

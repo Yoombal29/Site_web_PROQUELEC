@@ -369,7 +369,7 @@ export const NormImporter: React.FC<NormImporterProps> = ({ onImportSuccess }) =
 
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button variant="ghost" size="icon">
+                          <Button title="Supprimer" aria-label={`Supprimer la norme ${norm.name}`} variant="ghost" size="icon">
                             <Trash2 className="w-4 h-4 text-destructive" />
                           </Button>
                         </AlertDialogTrigger>

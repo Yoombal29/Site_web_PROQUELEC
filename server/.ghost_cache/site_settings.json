@@ -1,183 +1,20 @@
 [
   {
     "id": 1,
-    "site_name": "PROQUELEC",
-    "slogan": "Information - Sensibilisation - Conseil",
+    "site_name": "PROQUELEC SÉNÉGAL",
+    "slogan": "Sécurité · Qualité · Formation",
     "logo_url": null,
     "favicon_url": null,
-    "updated_at": "2026-02-11T08:29:55.296Z",
-    "site_description": null,
-    "contact_email": "proquelec@proquelec.sn",
-    "contact_phone": null,
-    "address": "Dakar, Sénégal",
-    "social_links": {},
-    "primary_color": "#2376df",
-    "secondary_color": "#ffffff",
-    "text_color": "#333333",
-    "background_color": "#ffffff",
-    "font_family": "Inter, sans-serif",
-    "meta_description": "PROQUELEC - Organisme national de référence pour la qualité et la sécurité des installations électriques au Sénégal",
-    "meta_keywords": "PROQUELEC, qualité électrique, sécurité installations, Sénégal, normes électriques",
-    "social_facebook": null,
-    "social_linkedin": null,
-    "social_twitter": null,
-    "payment_settings": {
-      "currency": "XOF",
-      "sandbox_mode": true,
-      "wave_enabled": false,
-      "paydunya_enabled": false,
-      "orange_money_enabled": false
-    },
-    "phone_number": "+221 XX XXX XX XX",
+    "updated_at": "2026-05-23T00:57:59.106Z",
+    "phone_number": null,
     "facebook_url": null,
     "linkedin_url": null,
     "twitter_url": null,
-    "copyright_text": "© 2026 PROQUELEC. Tous droits réservés.",
+    "copyright_text": null,
     "require_email_confirmation": false,
-    "cta_primary_text": "Contactez-nous/",
-    "cta_primary_url": "/contact",
-    "cta_secondary_text": "Plan du site",
-    "cta_secondary_url": "/sitemap",
-    "logo_height": null,
-    "logo_scale": null,
-    "logo_brightness": null,
-    "logo_contrast": null,
-    "audience_section_title": "Services Sur-Mesure",
-    "audience_section_subtitle": "Que vous soyez indépendant, une entreprise ou un expert membre, PROQUELEC vous accompagne avec des outils dédiés.",
-    "audience_title_electrician": "Électriciens",
-    "audience_subtitle_electrician": "Indépendants & Artisans",
-    "audience_desc_electrician": "Updated Description Electrician ",
-    "audience_title_company": "Professionnels",
-    "audience_subtitle_company": "Entreprises & Installateurs",
-    "audience_desc_company": "Updated Description Company TEST",
-    "audience_title_member": "Membres",
-    "audience_subtitle_member": "Association & Experts",
-    "audience_desc_member": "Updated Description Member TEST",
-    "page_sections": {
-      "presse": {
-        "badge": "PRESSE",
-        "label": "Presse",
-        "content": {
-          "contacts": {
-            "icon": "Phone",
-            "image": "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=800&q=80",
-            "title": "Contacts Presse",
-            "features": [
-              "Responsable communication",
-              "Ligne directe presse",
-              "Email dédié",
-              "Disponibilité 24/7 pour urgences"
-            ],
-            "subtitle": "Votre interlocuteur dédié"
-          },
-          "dossiers": {
-            "icon": "FileText",
-            "image": "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80",
-            "title": "Dossiers de Presse",
-            "features": [
-              "Kit média téléchargeable",
-              "Logos et visuels HD",
-              "Chiffres clés",
-              "Historique et missions"
-            ],
-            "subtitle": "Documentation complète pour les médias"
-          },
-          "communiques": {
-            "icon": "Newspaper",
-            "image": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80",
-            "title": "Communiqués de Presse",
-            "features": [
-              "Communiqués récents",
-              "Archives consultables",
-              "Téléchargement PDF",
-              "Alerte email personnalisée"
-            ],
-            "subtitle": "Dernières actualités et annonces officielles"
-          }
-        },
-        "sections": [
-          {
-            "id": "communiques",
-            "icon": "Newspaper",
-            "label": "Communiqués"
-          },
-          {
-            "id": "dossiers",
-            "icon": "FileText",
-            "label": "Dossiers de Presse"
-          },
-          {
-            "id": "contacts",
-            "icon": "Phone",
-            "label": "Contacts Presse"
-          }
-        ],
-        "hero_title": "Espace|Presse",
-        "hero_subtitle": "Ressources médias et communiqués de presse PROQUELEC"
-      },
-      "menages": {
-        "badge": "MÉNAGES",
-        "label": "Ménages",
-        "content": {
-          "conseils": {
-            "icon": "HelpCircle",
-            "image": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80",
-            "title": "Conseils Pratiques",
-            "features": [
-              "Choix des équipements",
-              "Entretien préventif",
-              "Gestes de sécurité",
-              "FAQ et tutoriels vidéo"
-            ],
-            "subtitle": "Tout ce qu'il faut savoir pour une installation sûre"
-          },
-          "securite": {
-            "icon": "Home",
-            "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
-            "title": "Sécurité Électrique à la Maison",
-            "features": [
-              "Guide de vérification des installations",
-              "Détection des risques électriques",
-              "Conseils de prévention",
-              "Numéros d'urgence et contacts"
-            ],
-            "subtitle": "Protégez votre famille avec des installations conformes"
-          },
-          "economies": {
-            "icon": "Zap",
-            "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80",
-            "title": "Économies d'Énergie",
-            "features": [
-              "Audit énergétique gratuit",
-              "Conseils d'optimisation",
-              "Équipements économes recommandés",
-              "Aides et subventions disponibles"
-            ],
-            "subtitle": "Réduisez votre facture tout en préservant l'environnement"
-          }
-        },
-        "sections": [
-          {
-            "id": "securite",
-            "icon": "Home",
-            "label": "Sécurité Domestique"
-          },
-          {
-            "id": "economies",
-            "icon": "Zap",
-            "label": "Économies d'Énergie"
-          },
-          {
-            "id": "conseils",
-            "icon": "HelpCircle",
-            "label": "Conseils Pratiques"
-          }
-        ],
-        "customHTML": "",
-        "hero_title": "Espace|Ménages",
-        "renderMode": "html",
-        "hero_subtitle": "Conseils et informations pour la sécurité électrique de votre foyer"
-      }
-    }
+    "logo_height": 50,
+    "logo_scale": "1.2",
+    "logo_brightness": 100,
+    "logo_contrast": 100
   }
 ]

@@ -443,18 +443,200 @@ router.post('/documents/:id/export', authenticateToken, async (req, res) => {
         const { id } = req.params;
         const { format } = req.body; // 'pdf', 'docx', 'xlsx', 'pptx'
 
-        // TODO: Implémenter l'export réel
-        // Pour l'instant, retourner un message de succès
+        if (!['pdf', 'docx', 'xlsx', 'pptx'].includes(format)) {
+            return res.status(400).json({ error: 'Invalid format. Use: pdf, docx, xlsx, pptx' });
+        }
 
-        res.json({
-            message: 'Export en cours...',
-            format,
-            documentId: id
-        });
+        // Récupérer le document
+        const docResult = await pool.query('SELECT * FROM office_documents WHERE id = $1', [id]);
+        if (docResult.rows.length === 0) {
+            return res.status(404).json({ error: 'Document not found' });
+        }
+
+        const doc = docResult.rows[0];
+        const content = typeof doc.content === 'string' ? JSON.parse(doc.content) : doc.content;
+
+        let buffer;
+        let filename = `${doc.title || 'document'}.${format}`;
+        let contentType;
+
+        // Format conversion logic
+        if (format === 'pdf') {
+            const { jsPDF } = require('jspdf');
+            const pdfDoc = new jsPDF();
+            
+            // Add title
+            pdfDoc.setFontSize(16);
+            pdfDoc.text(doc.title || 'Document', 10, 10);
+            
+            // Add content
+            pdfDoc.setFontSize(11);
+            let yPosition = 30;
+            const pageHeight = pdfDoc.internal.pageSize.height;
+            const maxWidth = 180;
+            
+            const contentText = extractTextFromContent(content);
+            const lines = pdfDoc.splitTextToSize(contentText, maxWidth);
+            
+            lines.forEach((line) => {
+                if (yPosition > pageHeight - 10) {
+                    pdfDoc.addPage();
+                    yPosition = 10;
+                }
+                pdfDoc.text(line, 10, yPosition);
+                yPosition += 7;
+            });
+            
+            // Metadata
+            pdfDoc.setProperties({
+                title: doc.title,
+                author: 'PROQUELEC',
+                subject: 'Document Export',
+                creator: 'PROQUELEC Office Suite'
+            });
+            
+            buffer = Buffer.from(pdfDoc.output('arraybuffer'));
+            contentType = 'application/pdf';
+            filename = `${doc.title || 'document'}.pdf`;
+        }
+        else if (format === 'docx') {
+            const { Document, Packer, Paragraph, HeadingLevel, TextRun } = require('docx');
+            
+            const sections = [];
+            
+            // Title
+            sections.push(new Paragraph({
+                text: doc.title || 'Document',
+                heading: HeadingLevel.HEADING_1,
+                thematicBreak: false
+            }));
+            
+            // Content paragraphs
+            const contentText = extractTextFromContent(content);
+            contentText.split('\n').forEach(line => {
+                if (line.trim()) {
+                    sections.push(new Paragraph({
+                        text: line,
+                        spacing: { line: 240, after: 100 }
+                    }));
+                }
+            });
+            
+            const docxDoc = new Document({
+                sections: [{
+                    children: sections
+                }],
+                creator: 'PROQUELEC',
+                title: doc.title
+            });
+            
+            const docBuffer = await Packer.toBuffer(docxDoc);
+            buffer = docBuffer;
+            contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+            filename = `${doc.title || 'document'}.docx`;
+        }
+        else if (format === 'xlsx') {
+            const XLSX = require('xlsx');
+            
+            let data = [];
+            if (doc.type === 'spreadsheet' && content && content.sheets) {
+                // Spreadsheet document
+                data = content.sheets[0]?.data || [[doc.title], ['No data']];
+            } else {
+                // Default: text document as single row
+                data = [
+                    ['Title', doc.title],
+                    ['Content', extractTextFromContent(content).substring(0, 500)]
+                ];
+            }
+            
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+            
+            const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
+            buffer = excelBuffer;
+            contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            filename = `${doc.title || 'document'}.xlsx`;
+        }
+        else if (format === 'pptx') {
+            const PptxGenJS = require('pptxgenjs');
+            const prs = new PptxGenJS();
+            
+            // Slide 1: Title
+            const slide1 = prs.addSlide();
+            slide1.addText(doc.title || 'Document', {
+                x: 0.5, y: 2, w: 9, h: 1.5,
+                fontSize: 44, bold: true, color: '003366'
+            });
+            
+            slide1.addText('PROQUELEC', {
+                x: 0.5, y: 3.8, w: 9, h: 0.5,
+                fontSize: 18, color: '666666'
+            });
+            
+            // Slide 2: Content
+            const slide2 = prs.addSlide();
+            slide2.addText(doc.title || 'Document', {
+                x: 0.5, y: 0.5, w: 9, h: 0.75,
+                fontSize: 32, bold: true, color: '003366'
+            });
+            
+            const contentText = extractTextFromContent(content).substring(0, 1000);
+            slide2.addText(contentText, {
+                x: 0.5, y: 1.5, w: 9, h: 4.5,
+                fontSize: 14, color: '333333'
+            });
+            
+            const pptxBuffer = await prs.writeFile({ fileName: filename });
+            buffer = await require('fs').promises.readFile(pptxBuffer);
+            contentType = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+            filename = `${doc.title || 'document'}.pptx`;
+        }
+
+        // Send file
+        res.set('Content-Disposition', `attachment; filename="${encodeURIComponent(filename)}"`);
+        res.set('Content-Type', contentType);
+        res.send(buffer);
+
+        // Log export
+        console.log(`[OFFICE] Exported document ${id} as ${format}`);
+
     } catch (error) {
         console.error('Error exporting document:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: 'Export failed: ' + error.message });
     }
 });
+
+// Helper function to extract text from various content formats
+function extractTextFromContent(content) {
+    if (typeof content === 'string') {
+        return content;
+    }
+    if (!content) return '';
+    
+    // HTML to text
+    if (content.html) {
+        return content.html.replace(/<[^>]*>/g, '').trim();
+    }
+    
+    // JSON to text
+    if (content.blocks && Array.isArray(content.blocks)) {
+        return content.blocks.map(b => b.data?.text || '').join('\n');
+    }
+    
+    // Tiptap/ProseMirror format
+    if (content.type === 'doc' && content.content) {
+        return content.content.map(node => {
+            if (node.content) {
+                return node.content.map(n => n.text || '').join('');
+            }
+            return node.text || '';
+        }).join('\n');
+    }
+    
+    // Fallback
+    return JSON.stringify(content, null, 2).substring(0, 500);
+}
 
 module.exports = router;

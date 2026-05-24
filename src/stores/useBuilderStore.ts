@@ -1,5 +1,8 @@
 import { create } from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
+import type { Block, BlockStyle, BlockContent } from '@/types/builder';
+import { secureSetItem, secureGetItem, secureRemoveItem } from '@/lib/crypto-utils';
+import cloneDeep from 'lodash.clonedeep';
 
 
 export interface BlockTemplate {
@@ -323,9 +326,49 @@ const DEFAULT_BUILDER_TEMPLATES: BlockTemplate[] = [
   }
 ];
 
+export interface PageMetadata {
+  id?: string;
+  slug?: string;
+  title?: string;
+  excerpt?: string;
+  meta_description?: string;
+  meta_keywords?: string;
+  meta_robots?: 'index,follow' | 'noindex,follow' | 'index,nofollow' | 'noindex,nofollow';
+  featured_image?: string;
+  language_code?: string;
+
+  is_published?: boolean;
+  publish_date?: string;
+  unpublish_date?: string;
+  workflow_status?: 'draft' | 'review' | 'approved' | 'published';
+
+  author?: string;
+  reading_time?: number;
+  categories?: string[];
+  tags?: string[];
+
+  // Hero Section Metadata
+  hero_title?: string;
+  hero_subtitle?: string;
+  hero_background_image?: string;
+  hero_cta_text?: string;
+  hero_cta_link?: string;
+
+  template?: string;
+  show_hero?: boolean;
+  show_footer?: boolean;
+
+  custom_css?: string;
+  custom_js?: string;
+  header_html?: string;
+  footer_html?: string;
+  menu_order?: number;
+}
+
 interface BuilderState {
   blocks: Block[];
   selectedBlockId: string | null;
+  pageMetadata: PageMetadata;
 
   // Undo/Redo
   history: Block[][];
@@ -341,11 +384,19 @@ interface BuilderState {
   moveBlock: (activeId: string, overId: string) => void;
   selectBlock: (id: string | null) => void;
 
+  setPageMetadata: (metadata: Partial<PageMetadata>) => void;
+
+  // Block Update Actions
+  updateBlockStyle: (id: string, style: Partial<BlockStyle>) => void;
+  updateBlockContent: (id: string, content: Partial<BlockContent>) => void;
+  removeBlock: (id: string) => void;
+
   // History Actions
   undo: () => void;
   redo: () => void;
   canUndo: () => boolean;
   canRedo: () => boolean;
+  snapshotHistory: () => void;
 
   // Template Actions
   saveTemplate: (block: Block, name: string) => void;
@@ -382,7 +433,7 @@ const cloneBlock = (block: Block): Block => {
 // Helper: Save current state to history
 const saveHistory = (state: BuilderState): Partial<BuilderState> => {
   const newHistory = state.history.slice(0, state.historyIndex + 1);
-  newHistory.push(JSON.parse(JSON.stringify(state.blocks)));
+  newHistory.push(cloneDeep(state.blocks));
 
   if (newHistory.length > 20) newHistory.shift(); // Limit to 20 steps
 
@@ -395,9 +446,14 @@ const saveHistory = (state: BuilderState): Partial<BuilderState> => {
 export const useBuilderStore = create<BuilderState>((set, get) => ({
   blocks: [],
   selectedBlockId: null,
+  pageMetadata: {},
   history: [],
   historyIndex: -1,
   templates: DEFAULT_BUILDER_TEMPLATES,
+
+  setPageMetadata: (metadata) => set((state) => ({
+    pageMetadata: { ...state.pageMetadata, ...metadata }
+  })),
 
   setBlocks: (blocks) => set({ blocks, history: [blocks], historyIndex: 0 }),
 
@@ -468,29 +524,23 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
     };
   }),
 
-  updateBlockContent: (id, content) => set((state) => {
-    const historyUpdate = saveHistory(state);
-    return {
-      ...historyUpdate,
-      blocks: updateBlockRecursive(state.blocks, id, (b) => ({
-        ...b,
-        content: { ...b.content, ...content }
-      }))
-    };
-  }),
+  updateBlockContent: (id, content) => set((state) => ({
+    // Live update without history snapshot — call snapshotHistory() on blur/commit
+    blocks: updateBlockRecursive(state.blocks, id, (b) => ({
+      ...b,
+      content: { ...b.content, ...content }
+    }))
+  })),
 
-  updateBlockStyle: (id, style) => set((state) => {
-    // Optimisation: ne pas sauvegarder l'historique pour chaque pixel de drag/slider si possible
-    // Mais pour l'instant on garde simple.
-    const historyUpdate = saveHistory(state);
-    return {
-      ...historyUpdate,
-      blocks: updateBlockRecursive(state.blocks, id, (b) => ({
-        ...b,
-        style: { ...b.style, ...style }
-      }))
-    };
-  }),
+  updateBlockStyle: (id, style) => set((state) => ({
+    // Live update without history snapshot — call snapshotHistory() on blur/commit
+    blocks: updateBlockRecursive(state.blocks, id, (b) => ({
+      ...b,
+      style: { ...b.style, ...style }
+    }))
+  })),
+
+  snapshotHistory: () => set((state) => saveHistory(state)),
 
   selectBlock: (id) => set({ selectedBlockId: id }),
 
@@ -499,7 +549,7 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
     if (state.historyIndex > 0) {
       const newIndex = state.historyIndex - 1;
       return {
-        blocks: JSON.parse(JSON.stringify(state.history[newIndex])),
+        blocks: cloneDeep(state.history[newIndex]),
         historyIndex: newIndex
       };
     }
@@ -510,7 +560,7 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
     if (state.historyIndex < state.history.length - 1) {
       const newIndex = state.historyIndex + 1;
       return {
-        blocks: JSON.parse(JSON.stringify(state.history[newIndex])),
+        blocks: cloneDeep(state.history[newIndex]),
         historyIndex: newIndex
       };
     }
@@ -525,13 +575,13 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
     const newTemplate: BlockTemplate = {
       id: uuidv4(),
       name,
-      block: JSON.parse(JSON.stringify(block)),
+      block: cloneDeep(block),
       createdAt: Date.now()
     };
 
     set((state) => {
       const updatedTemplates = [...state.templates, newTemplate];
-      localStorage.setItem('builder_templates', JSON.stringify(updatedTemplates));
+      secureSetItem('builder_templates', updatedTemplates);
       return { templates: updatedTemplates };
     });
   },
@@ -539,18 +589,17 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
   deleteTemplate: (templateId) => {
     set((state) => {
       const updatedTemplates = state.templates.filter((t) => t.id !== templateId);
-      localStorage.setItem('builder_templates', JSON.stringify(updatedTemplates));
+      secureSetItem('builder_templates', updatedTemplates);
       return { templates: updatedTemplates };
     });
   },
 
   loadTemplates: () => {
-    const stored = localStorage.getItem('builder_templates');
+    const stored = secureGetItem<BlockTemplate[]>('builder_templates', null);
     if (stored) {
       try {
-        const parsed = JSON.parse(stored) as BlockTemplate[];
-        if (Array.isArray(parsed)) {
-          set({ templates: [...DEFAULT_BUILDER_TEMPLATES, ...parsed] });
+        if (Array.isArray(stored)) {
+          set({ templates: [...DEFAULT_BUILDER_TEMPLATES, ...stored] });
           return;
         }
       } catch (e) {
@@ -559,6 +608,6 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
     }
 
     set({ templates: DEFAULT_BUILDER_TEMPLATES });
-    localStorage.setItem('builder_templates', JSON.stringify(DEFAULT_BUILDER_TEMPLATES));
+    secureSetItem('builder_templates', DEFAULT_BUILDER_TEMPLATES);
   }
 }));

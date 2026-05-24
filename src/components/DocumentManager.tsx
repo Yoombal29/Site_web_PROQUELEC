@@ -14,6 +14,7 @@ import { AIDocumentChat } from '@/components/AIDocumentChat';
 import { PermissionEditor } from '@/components/PermissionEditor';
 import { VersionHistory } from '@/components/VersionHistory';
 import { AuditViewer } from '@/components/AuditViewer';
+import { GedWorkflowWidget } from '@/components/GedWorkflowWidget';
 import { OfficeCreationMenu } from '@/components/office/shared/OfficeCreationMenu';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -54,6 +55,7 @@ export function DocumentManager() {
   const [activePermissionEditor, setActivePermissionEditor] = useState<{ id: string, name: string } | null>(null);
   const [activeVersionHistory, setActiveVersionHistory] = useState<{ id: string, name: string } | null>(null);
   const [activeAuditViewer, setActiveAuditViewer] = useState<{ id: string, name: string } | null>(null);
+  const [activeGedWorkflow, setActiveGedWorkflow] = useState<{ id: string, name: string } | null>(null);
 
   // Project Assistant State
   const [projectMessages, setProjectMessages] = useState<AIMessage[]>([
@@ -169,9 +171,10 @@ export function DocumentManager() {
       await uploadFile.mutateAsync({
         file: selectedFile,
         bucket: 'documents',
-        // Pass the new Alfresco metadata
+        // Pass the metadata for the document upload
         // @ts-ignore - Extending the request body in the hook logic implicitly
         project_id: uploadForm.tags.split(',')[0] || 'general',
+
         status: 'pending_review',
         category: uploadForm.category,
         tags: uploadForm.tags,
@@ -424,6 +427,15 @@ export function DocumentManager() {
                             <Button
                               variant="outline"
                               size="sm"
+                              onClick={() => setActiveGedWorkflow({ id: doc.id, name: doc.name })}
+                              title="Gestion du workflow GED"
+                              className="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border-emerald-300"
+                            >
+                              <Activity className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
                               onClick={() => setActiveVersionHistory({ id: doc.id, name: doc.name })}
                               title="Historique des versions"
                             >
@@ -565,6 +577,24 @@ export function DocumentManager() {
             documentName={activeAuditViewer.name}
             onClose={() => setActiveAuditViewer(null)}
           />
+        )
+      }
+
+      {
+        activeGedWorkflow && (
+          <Dialog open={!!activeGedWorkflow} onOpenChange={() => setActiveGedWorkflow(null)}>
+            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Gestion du Workflow GED - {activeGedWorkflow.name}</DialogTitle>
+              </DialogHeader>
+              <GedWorkflowWidget
+                entityId={activeGedWorkflow.id}
+                entityType="media_file"
+                showHistory={true}
+                showFullPage={false}
+              />
+            </DialogContent>
+          </Dialog>
         )
       }
     </div >

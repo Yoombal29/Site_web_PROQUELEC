@@ -92,7 +92,7 @@ export default function Auth() {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email: email.trim().toLowerCase(), password })
       });
       const data = await res.json();
 
@@ -121,7 +121,7 @@ export default function Auth() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email,
+          email: email.trim().toLowerCase(),
           password,
           full_name: fullName,
           phone,
@@ -223,7 +223,7 @@ export default function Auth() {
                   placeholder="votre@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900
                                focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
                                disabled:opacity-50 transition-all placeholder:text-slate-400 outline-none" />
 
@@ -244,10 +244,11 @@ export default function Auth() {
                     type={showPassword ? "text" : "password"}
                     required
                     disabled={loading}
+                    autoComplete="current-password"
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 pr-12 bg-slate-50 border border-slate-200 rounded-xl text-sm
+                    className="w-full px-4 py-3 pr-12 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900
                                  focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
                                  disabled:opacity-50 transition-all placeholder:text-slate-400 outline-none" />
 
@@ -259,9 +260,10 @@ export default function Auth() {
                   
                     <button
                     type="button"
+                    onMouseDown={(e) => e.preventDefault()}
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
-                    tabIndex={-1} aria-label="Action">
+                    className="absolute right-3 top-1/2 z-10 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
+                    aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}>
                     
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -273,6 +275,22 @@ export default function Auth() {
                     <span>⚠️</span> {error}
                   </div>
               }
+
+                {import.meta.env.DEV && (
+                  <div className="rounded-2xl border border-yellow-200 bg-yellow-50 p-3 text-sm text-yellow-900 space-y-2">
+                    <div className="font-semibold">Mode développement</div>
+                    <div>Utilisez <strong>admin@proquelec.sn</strong> / <strong>passepartout</strong> pour tester la connexion.</div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEmail('admin@proquelec.sn');
+                        setPassword('passepartout');
+                      }}
+                      className="inline-flex items-center gap-2 rounded-xl border border-yellow-300 bg-yellow-100 px-3 py-2 text-xs font-semibold text-yellow-900 hover:bg-yellow-200 transition">
+                      Pré-remplir les identifiants de dev
+                    </button>
+                  </div>
+                )}
 
                 <button
                 type="submit"
@@ -357,7 +375,7 @@ export default function Auth() {
                   placeholder="Votre nom complet"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900
                                focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
                                disabled:opacity-50 transition-all placeholder:text-slate-400 outline-none" />
 
@@ -381,7 +399,7 @@ export default function Auth() {
                   placeholder="votre@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900
                                focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
                                disabled:opacity-50 transition-all placeholder:text-slate-400 outline-none" />
 
@@ -407,7 +425,7 @@ export default function Auth() {
                     placeholder="6 caractères minimum"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-3 pr-12 bg-slate-50 border border-slate-200 rounded-xl text-sm
+                    className="w-full px-4 py-3 pr-12 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900
                                  focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
                                  disabled:opacity-50 transition-all placeholder:text-slate-400 outline-none" />
 
@@ -419,9 +437,10 @@ export default function Auth() {
                   
                     <button
                     type="button"
+                    onMouseDown={(e) => e.preventDefault()}
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
-                    tabIndex={-1} aria-label="Action">
+                    className="absolute right-3 top-1/2 z-10 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
+                    aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}>
                     
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -439,7 +458,7 @@ export default function Auth() {
                   placeholder="+221 77 000 00 00"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900
                                focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
                                disabled:opacity-50 transition-all placeholder:text-slate-400 outline-none" />
 
@@ -463,7 +482,7 @@ export default function Auth() {
                   placeholder="Nom de votre société"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900
                                  focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
                                  disabled:opacity-50 transition-all placeholder:text-slate-400 outline-none" />
 
@@ -518,7 +537,7 @@ export default function Auth() {
                   placeholder="votre@email.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900
                                focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100
                                disabled:opacity-50 transition-all placeholder:text-slate-400 outline-none" />
 

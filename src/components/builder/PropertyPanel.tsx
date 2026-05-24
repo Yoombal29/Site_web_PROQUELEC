@@ -20,7 +20,7 @@ import { toast } from 'sonner';
 import {
   Trash2, AlignLeft, AlignCenter, AlignRight, AlignJustify,
   Maximize, Box, Layers, Image as ImageIcon, Move, Save,
-  PlusCircle, MinusCircle, Settings2, Sparkles, RefreshCcw, Monitor, Smartphone } from
+  PlusCircle, MinusCircle, Settings2, Sparkles, RefreshCcw, Monitor, Smartphone, Moon } from
 'lucide-react';
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from
@@ -37,6 +37,7 @@ import TypographySection from './PropertyPanel/sections/TypographySection';
 import SpacingSection from './PropertyPanel/sections/SpacingSection';
 import EffectsSection from './PropertyPanel/sections/EffectsSection';
 import LayoutSection from './PropertyPanel/sections/LayoutSection';
+import { StyleEditorContext, Device } from './PropertyPanel/hooks/useStyleEditor';
 
 type GradientType = 'linear-gradient' | 'radial-gradient';
 
@@ -155,7 +156,7 @@ interface PageSettings {
   customCss: string;
   customJs: string;
   isPublished: boolean;
-  workflowStatus: 'draft' | 'review' | 'approved' | 'published';
+  workflowStatus: 'draft' | 'review' | 'approved' | 'published' | 'archived';
 }
 
 interface PropertyPanelProps {
@@ -169,6 +170,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
   const updateBlockStyle = useUpdateBlockStyle();
   const removeBlock = useRemoveBlock();
   const saveTemplate = useSaveTemplate();
+  const [activeDevice, setActiveDevice] = React.useState<Device>('base');
 
   // -- Handlers --
   const handleContentChange = useCallback((key: keyof BlockContent, value: string) => {
@@ -177,15 +179,29 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
     updateBlockContent(id, { [key]: value } as Partial<BlockContent>);
   }, [selectedBlock?.id, updateBlockContent]);
 
+  const activeStyle = useMemo(() => {
+    if (activeDevice === 'base') return selectedBlock?.style || {};
+    const baseStyle = selectedBlock?.style || {};
+    const deviceStyle = (selectedBlock?.style as any)?.[activeDevice] || {};
+    return { ...baseStyle, ...deviceStyle }; // device overrides base for preview
+  }, [selectedBlock?.style, activeDevice]);
+
   const handleStyleChange = useCallback((key: keyof BlockStyle, value: string | number | undefined) => {
     const id = selectedBlock?.id;
     if (!id) return;
-    updateBlockStyle(id, { [key]: value } as Partial<BlockStyle>);
-  }, [selectedBlock?.id, updateBlockStyle]);
+    if (activeDevice === 'base') {
+      updateBlockStyle(id, { [key]: value } as Partial<BlockStyle>);
+    } else {
+      const currentRaw = selectedBlock?.style as any;
+      const currentDeviceStyle = currentRaw?.[activeDevice] || {};
+      // Also preserve base so we don't accidentally overwrite it
+      updateBlockStyle(id, { [activeDevice]: { ...currentDeviceStyle, [key]: value } } as any);
+    }
+  }, [selectedBlock?.id, updateBlockStyle, activeDevice, selectedBlock?.style]);
 
   const handleSaveTemplate = useCallback(() => {
     if (!selectedBlock) return;
-    const name = window.prompt('Nom du modèle :', selectedBlock.content.title || 'Mon Bloc');
+    const name = window.prompt('Nom du modèle :', (selectedBlock.content || {}).title || 'Mon Bloc');
     if (!name) return;
     saveTemplate(selectedBlock, name);
     toast.success('Modèle enregistré avec succès.');
@@ -400,16 +416,16 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">Largeur</Label>
-              <Input className="h-8 text-xs" placeholder="ex: 100%" value={selectedBlock.style?.width || ''} onChange={(e) => handleStyleChange('width', e.target.value)} />
+              <Input className="h-8 text-xs" placeholder="ex: 100%" value={activeStyle.width || ''} onChange={(e) => handleStyleChange('width', e.target.value)} />
             </div>
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">Hauteur</Label>
-              <Input className="h-8 text-xs" placeholder="ex: auto" value={selectedBlock.style?.height || ''} onChange={(e) => handleStyleChange('height', e.target.value)} />
+              <Input className="h-8 text-xs" placeholder="ex: auto" value={activeStyle.height || ''} onChange={(e) => handleStyleChange('height', e.target.value)} />
             </div>
           </div>
           <div className="space-y-2">
             <Label className="text-[10px] uppercase text-slate-400">Object Fit</Label>
-            <select title="Object Fit" className="h-8 w-full text-xs border rounded bg-white px-2" value={(selectedBlock.style?.objectFit as string) || 'cover'} onChange={(e) => handleStyleChange('objectFit', e.target.value)}>
+            <select title="Object Fit" className="h-8 w-full text-xs border rounded bg-white px-2" value={(activeStyle.objectFit as string) || 'cover'} onChange={(e) => handleStyleChange('objectFit', e.target.value)}>
               <option value="cover">cover</option>
               <option value="contain">contain</option>
               <option value="fill">fill</option>
@@ -419,8 +435,8 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-2">
             <Label className="text-[10px] uppercase text-slate-400">Cadre / Bordure</Label>
             <div className="grid grid-cols-2 gap-2">
-              <Input className="h-8 text-xs" placeholder="ex: 1px" value={selectedBlock.style?.borderWidth || ''} onChange={(e) => handleStyleChange('borderWidth', `${e.target.value}px`)} />
-              <Input className="h-8 text-xs" placeholder="#000000" value={selectedBlock.style?.borderColor || ''} onChange={(e) => handleStyleChange('borderColor', e.target.value)} />
+              <Input className="h-8 text-xs" placeholder="ex: 1px" value={activeStyle.borderWidth || ''} onChange={(e) => handleStyleChange('borderWidth', `${e.target.value}px`)} />
+              <Input className="h-8 text-xs" placeholder="#000000" value={activeStyle.borderColor || ''} onChange={(e) => handleStyleChange('borderColor', e.target.value)} />
             </div>
           </div>
         </AccordionContent>
@@ -439,20 +455,20 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Titre</Label>
-              <Input value={selectedBlock.content.title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre principal..." />
+              <Input value={(selectedBlock.content || {}).title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre principal..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Sous-titre</Label>
-              <Textarea value={selectedBlock.content.subtitle || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Phrase d’accroche..." className="min-h-[120px]" />
+              <Textarea value={(selectedBlock.content || {}).subtitle || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Phrase d’accroche..." className="min-h-[120px]" />
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-xs font-semibold uppercase text-slate-500">Libellé du bouton</Label>
-                <Input value={selectedBlock.content.text || ''} onChange={(e) => handleContentChange('text', e.target.value)} placeholder="Texte du bouton..." />
+                <Input value={(selectedBlock.content || {}).text || ''} onChange={(e) => handleContentChange('text', e.target.value)} placeholder="Texte du bouton..." />
               </div>
               <div className="space-y-2">
                 <Label className="text-xs font-semibold uppercase text-slate-500">Lien du bouton</Label>
-                <Input value={selectedBlock.content.href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
+                <Input value={(selectedBlock.content || {}).href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
               </div>
             </div>
           </div>
@@ -462,20 +478,20 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Titre</Label>
-              <Input value={selectedBlock.content.title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre de section..." />
+              <Input value={(selectedBlock.content || {}).title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre de section..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Contenu</Label>
-              <Textarea value={selectedBlock.content.subtitle || selectedBlock.content.text || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Texte de présentation..." className="min-h-[120px]" />
+              <Textarea value={(selectedBlock.content || {}).subtitle || (selectedBlock.content || {}).text || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Texte de présentation..." className="min-h-[120px]" />
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-xs font-semibold uppercase text-slate-500">Lien</Label>
-                <Input value={selectedBlock.content.href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
+                <Input value={(selectedBlock.content || {}).href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
               </div>
               <div className="space-y-2">
                 <Label className="text-xs font-semibold uppercase text-slate-500">Image / Illustration</Label>
-                <Input value={selectedBlock.content.src || ''} onChange={(e) => handleContentChange('src', e.target.value)} placeholder="https://..." />
+                <Input value={(selectedBlock.content || {}).src || ''} onChange={(e) => handleContentChange('src', e.target.value)} placeholder="https://..." />
               </div>
             </div>
           </div>
@@ -486,11 +502,11 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Titre</Label>
-              <Input value={selectedBlock.content.title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre du texte..." />
+              <Input value={(selectedBlock.content || {}).title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre du texte..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Texte HTML</Label>
-              <Textarea value={selectedBlock.content.html || selectedBlock.content.text || ''} onChange={(e) => handleContentChange('html', e.target.value)} placeholder="Votre contenu ici..." className="min-h-[180px] font-mono text-xs" />
+              <Textarea value={(selectedBlock.content || {}).html || (selectedBlock.content || {}).text || ''} onChange={(e) => handleContentChange('html', e.target.value)} placeholder="Votre contenu ici..." className="min-h-[180px] font-mono text-xs" />
             </div>
           </div>
         );
@@ -499,19 +515,19 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Source Image</Label>
-              <Input value={selectedBlock.content.src || ''} onChange={(e) => handleContentChange('src', e.target.value)} placeholder="https://..." />
+              <Input value={(selectedBlock.content || {}).src || ''} onChange={(e) => handleContentChange('src', e.target.value)} placeholder="https://..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Texte alternatif (alt)</Label>
-              <Input value={selectedBlock.content.alt || ''} onChange={(e) => handleContentChange('alt', e.target.value)} placeholder="Description de l’image..." />
+              <Input value={(selectedBlock.content || {}).alt || ''} onChange={(e) => handleContentChange('alt', e.target.value)} placeholder="Description de l’image..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Légende</Label>
-              <Textarea value={selectedBlock.content.caption || ''} onChange={(e) => handleContentChange('caption', e.target.value)} placeholder="Texte sous l’image..." className="min-h-[100px]" />
+              <Textarea value={(selectedBlock.content || {}).caption || ''} onChange={(e) => handleContentChange('caption', e.target.value)} placeholder="Texte sous l’image..." className="min-h-[100px]" />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Lien</Label>
-              <Input value={selectedBlock.content.href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="Lien cliquable facultatif..." />
+              <Input value={(selectedBlock.content || {}).href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="Lien cliquable facultatif..." />
             </div>
           </div>
         );
@@ -521,7 +537,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Code source</Label>
-              <Textarea value={selectedBlock.content.html || selectedBlock.content.code || ''} onChange={(e) => handleContentChange(selectedBlock.type === 'code' ? 'code' : 'html', e.target.value)} placeholder="<div>...</div>" className="min-h-[280px] font-mono text-xs" />
+              <Textarea value={(selectedBlock.content || {}).html || (selectedBlock.content || {}).code || ''} onChange={(e) => handleContentChange(selectedBlock.type === 'code' ? 'code' : 'html', e.target.value)} placeholder="<div>...</div>" className="min-h-[280px] font-mono text-xs" />
             </div>
           </div>
         );
@@ -530,11 +546,11 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Texte du bouton</Label>
-              <Input value={selectedBlock.content.text || selectedBlock.content.title || ''} onChange={(e) => handleContentChange('text', e.target.value)} placeholder="Acheter / En savoir plus..." />
+              <Input value={(selectedBlock.content || {}).text || (selectedBlock.content || {}).title || ''} onChange={(e) => handleContentChange('text', e.target.value)} placeholder="Acheter / En savoir plus..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">URL du bouton</Label>
-              <Input value={selectedBlock.content.href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
+              <Input value={(selectedBlock.content || {}).href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
             </div>
           </div>
         );
@@ -543,11 +559,11 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Titre</Label>
-              <Input value={selectedBlock.content.title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre..." />
+              <Input value={(selectedBlock.content || {}).title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Contenu</Label>
-              <Textarea value={selectedBlock.content.subtitle || selectedBlock.content.text || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Votre contenu ici..." className="min-h-[120px]" />
+              <Textarea value={(selectedBlock.content || {}).subtitle || (selectedBlock.content || {}).text || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Votre contenu ici..." className="min-h-[120px]" />
             </div>
           </div>
         );
@@ -558,29 +574,29 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
     <div className="space-y-6">
       <div className="space-y-2">
         <Label className="text-xs font-semibold uppercase text-slate-500">ID HTML</Label>
-        <Input value={selectedBlock.style?.id || ''} onChange={(e) => handleStyleChange('id', e.target.value)} placeholder="mon-ancre" className="font-mono text-xs" />
+        <Input value={activeStyle.id || ''} onChange={(e) => handleStyleChange('id', e.target.value)} placeholder="mon-ancre" className="font-mono text-xs" />
       </div>
       <div className="space-y-2">
         <Label className="text-xs font-semibold uppercase text-slate-500">Classes CSS</Label>
-        <Input value={selectedBlock.style?.className || ''} onChange={(e) => handleStyleChange('className', e.target.value)} placeholder="p-4 bg-white shadow..." className="font-mono text-xs" />
+        <Input value={activeStyle.className || ''} onChange={(e) => handleStyleChange('className', e.target.value)} placeholder="p-4 bg-white shadow..." className="font-mono text-xs" />
         <p className="text-[10px] text-slate-400">Ajouter des classes Tailwind additionnelles.</p>
       </div>
       {selectedBlock.type === 'image' && (
         <div className="space-y-4 pt-4 border-t border-dashed">
           <div className="space-y-2">
             <Label className="text-xs font-semibold uppercase text-slate-500">Texte ALT</Label>
-            <Input value={selectedBlock.content.alt || ''} onChange={(e) => handleContentChange('alt', e.target.value)} placeholder="Description de l’image..." />
+            <Input value={(selectedBlock.content || {}).alt || ''} onChange={(e) => handleContentChange('alt', e.target.value)} placeholder="Description de l’image..." />
           </div>
           <div className="space-y-2">
             <Label className="text-xs font-semibold uppercase text-slate-500">Légende</Label>
-            <Textarea value={selectedBlock.content.caption || ''} onChange={(e) => handleContentChange('caption', e.target.value)} placeholder="Texte sous l’image..." className="min-h-[100px]" />
+            <Textarea value={(selectedBlock.content || {}).caption || ''} onChange={(e) => handleContentChange('caption', e.target.value)} placeholder="Texte sous l’image..." className="min-h-[100px]" />
           </div>
         </div>
       )}
       {selectedBlock.type === 'html' && (
         <div className="space-y-4 pt-4 border-t border-dashed">
           <Label className="text-xs font-semibold uppercase text-slate-500">HTML brut</Label>
-          <Textarea value={selectedBlock.content.html || ''} onChange={(e) => handleContentChange('html', e.target.value)} placeholder="<div>...</div>" className="min-h-[120px] font-mono text-xs" />
+          <Textarea value={(selectedBlock.content || {}).html || ''} onChange={(e) => handleContentChange('html', e.target.value)} placeholder="<div>...</div>" className="min-h-[120px] font-mono text-xs" />
         </div>
       )}
       <div className="space-y-4 pt-4 border-t border-dashed">
@@ -595,9 +611,9 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
               type="checkbox"
               id="vis-desktop"
               title="Toggle visibilité desktop"
-              checked={!selectedBlock.style?.className?.includes('hidden')}
+              checked={!activeStyle.className?.includes('hidden')}
               onChange={(e) => {
-                let cls = selectedBlock.style?.className || '';
+                let cls = activeStyle.className || '';
                 if (e.target.checked) cls = cls.replace('hidden', '').trim(); else cls = `${cls} hidden`.trim();
                 handleStyleChange('className', cls);
               }} />
@@ -611,9 +627,9 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
               type="checkbox"
               id="vis-mobile"
               title="Toggle visibilité mobile"
-              checked={selectedBlock.style?.className?.includes('max-md:hidden')}
+              checked={activeStyle.className?.includes('max-md:hidden')}
               onChange={(e) => {
-                let cls = selectedBlock.style?.className || '';
+                let cls = activeStyle.className || '';
                 if (e.target.checked) cls = `${cls} max-md:hidden`.trim(); else cls = cls.replace('max-md:hidden', '').trim();
                 handleStyleChange('className', cls);
               }} />
@@ -669,7 +685,40 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
 
                     {/* --- STYLE TAB --- */}
                     <TabsContent value="style" className="mt-0 p-0">
-                        <Accordion type="multiple" defaultValue={defaultAccordionValues} className="w-full">
+                        {/* Device & Mode Selector */}
+                        <div className="flex items-center justify-between px-4 py-2 border-b border-slate-100 bg-slate-50/50">
+                            <div className="flex bg-slate-100 rounded p-0.5 shadow-inner">
+                                <button
+                                    onClick={() => setActiveDevice('base')}
+                                    className={`p-1.5 rounded-sm ${activeDevice === 'base' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
+                                    title="Desktop"
+                                ><Monitor className="w-3.5 h-3.5" /></button>
+                                <button
+                                    onClick={() => setActiveDevice('mobile')}
+                                    className={`p-1.5 rounded-sm ${activeDevice === 'mobile' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
+                                    title="Mobile"
+                                ><Smartphone className="w-3.5 h-3.5" /></button>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Label htmlFor="dark-mode-edit" className="text-[10px] uppercase font-bold text-slate-500 flex items-center gap-1">
+                                    <Moon className="w-3 h-3 text-indigo-500" /> Mode Sombre
+                                </Label>
+                                <Switch
+                                    id="dark-mode-edit"
+                                    checked={activeDevice === 'dark'}
+                                    onCheckedChange={(checked) => setActiveDevice(checked ? 'dark' : 'base')}
+                                />
+                            </div>
+                        </div>
+
+                        {activeDevice === 'dark' && (
+                            <div className="px-4 py-2 bg-indigo-50 border-b border-indigo-100 text-[10px] text-indigo-700 font-medium text-center">
+                                Édition des styles pour le Mode Sombre uniquement.
+                            </div>
+                        )}
+
+                        <StyleEditorContext.Provider value={{ activeDevice }}>
+                            <Accordion type="multiple" defaultValue={defaultAccordionValues} className="w-full">
 
                             {/* 1. Layout & Size (PRO Flexbox Editor) */}
                             <AccordionItem value="layout" className="border-b px-4">
@@ -683,7 +732,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                       <button
                         key={d}
                         title={d}
-                        className={`h-7 rounded text-[10px] uppercase font-medium transition-all ${selectedBlock.style?.display === d ? 'bg-white shadow-sm text-blue-600 ring-1 ring-blue-100' : 'text-slate-500 hover:text-slate-700'}`}
+                        className={`h-7 rounded text-[10px] uppercase font-medium transition-all ${activeStyle.display === d ? 'bg-white shadow-sm text-blue-600 ring-1 ring-blue-100' : 'text-slate-500 hover:text-slate-700'}`}
                         onClick={() => handleStyleChange('display', d)}>
                         
                                                     {d === 'inline-block' ? 'Inline' : d}
@@ -693,7 +742,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                                     </div>
 
                                     {/* FLEXBOX CONTROLS (Only visible if Flex) */}
-                                    {selectedBlock.style?.display === 'flex' &&
+                                    {activeStyle.display === 'flex' &&
                   <div className="p-3 bg-blue-50/50 rounded-md border border-blue-100 space-y-3 animation-fade-in">
                                             <div className="flex items-center justify-between">
                                                 <Label className="text-[9px] uppercase text-blue-500 font-bold">Flexbox Settings</Label>
@@ -704,8 +753,8 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                                             <div className="space-y-1">
                                                 <Label className="text-[9px] text-slate-400">Direction</Label>
                                                 <div className="flex bg-white rounded border overflow-hidden">
-                                                    <button onClick={() => handleStyleChange('flexDirection', 'row')} className={`flex-1 h-6 flex items-center justify-center ${selectedBlock.style?.flexDirection === 'row' ? 'bg-blue-100 text-blue-600' : 'hover:bg-slate-50'}`} title="Ligne (Row)"><Move className="w-3 h-3 transform rotate-0" /></button>
-                                                    <button onClick={() => handleStyleChange('flexDirection', 'column')} className={`flex-1 h-6 flex items-center justify-center ${selectedBlock.style?.flexDirection === 'column' ? 'bg-blue-100 text-blue-600' : 'hover:bg-slate-50'}`} title="Colonne (Column)"><Move className="w-3 h-3 transform rotate-90" /></button>
+                                                    <button onClick={() => handleStyleChange('flexDirection', 'row')} className={`flex-1 h-6 flex items-center justify-center ${activeStyle.flexDirection === 'row' ? 'bg-blue-100 text-blue-600' : 'hover:bg-slate-50'}`} title="Ligne (Row)"><Move className="w-3 h-3 transform rotate-0" /></button>
+                                                    <button onClick={() => handleStyleChange('flexDirection', 'column')} className={`flex-1 h-6 flex items-center justify-center ${activeStyle.flexDirection === 'column' ? 'bg-blue-100 text-blue-600' : 'hover:bg-slate-50'}`} title="Colonne (Column)"><Move className="w-3 h-3 transform rotate-90" /></button>
                                                 </div>
                                             </div>
 
@@ -723,7 +772,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                         <button
                           key={opt.val}
                           onClick={() => handleStyleChange('justifyContent', opt.val)}
-                          className={`h-6 flex items-center justify-center ${selectedBlock.style?.justifyContent === opt.val ? 'bg-blue-100 text-blue-600' : 'hover:bg-slate-50'}`}
+                          className={`h-6 flex items-center justify-center ${activeStyle.justifyContent === opt.val ? 'bg-blue-100 text-blue-600' : 'hover:bg-slate-50'}`}
                           title={opt.label}>
                           
                                                             <opt.icon className="w-3 h-3" />
@@ -745,7 +794,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                         <button
                           key={opt.val}
                           onClick={() => handleStyleChange('alignItems', opt.val)}
-                          className={`h-6 flex items-center justify-center ${selectedBlock.style?.alignItems === opt.val ? 'bg-blue-100 text-blue-600' : 'hover:bg-slate-50'}`}
+                          className={`h-6 flex items-center justify-center ${activeStyle.alignItems === opt.val ? 'bg-blue-100 text-blue-600' : 'hover:bg-slate-50'}`}
                           title={opt.label}>
                           
                                                             <opt.icon className={`w-3 h-3 ${opt.val === 'stretch' ? '' : 'transform rotate-90'}`} />
@@ -757,7 +806,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                                             {/* Gap */}
                                             <div className="flex items-center gap-2">
                                                 <Label className="text-[9px] text-slate-400 w-8">Gap</Label>
-                                                <Input className="h-6 text-xs bg-white" placeholder="ex: 16px" value={selectedBlock.style?.gap || ''} onChange={(e) => handleStyleChange('gap', e.target.value)} />
+                                                <Input className="h-6 text-xs bg-white" placeholder="ex: 16px" value={activeStyle.gap || ''} onChange={(e) => handleStyleChange('gap', e.target.value)} />
                                             </div>
                                         </div>
                   }
@@ -768,14 +817,14 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                                             <Label className="text-[10px] uppercase text-slate-400">Largeur</Label>
                                             <div className="flex items-center border rounded bg-white group hover:border-blue-400 focus-within:border-blue-500 transition-colors">
                                                 <span className="pl-2 text-[10px] text-slate-400">W</span>
-                                                <Input className="border-0 h-7 text-xs px-2 focus-visible:ring-0" placeholder="auto" value={selectedBlock.style?.width || ''} onChange={(e) => handleStyleChange('width', e.target.value)} />
+                                                <Input className="border-0 h-7 text-xs px-2 focus-visible:ring-0" placeholder="auto" value={activeStyle.width || ''} onChange={(e) => handleStyleChange('width', e.target.value)} />
                                             </div>
                                         </div>
                                         <div className="space-y-1">
                                             <Label className="text-[10px] uppercase text-slate-400">Hauteur</Label>
                                             <div className="flex items-center border rounded bg-white group hover:border-blue-400 focus-within:border-blue-500 transition-colors">
                                                 <span className="pl-2 text-[10px] text-slate-400">H</span>
-                                                <Input className="border-0 h-7 text-xs px-2 focus-visible:ring-0" placeholder="auto" value={selectedBlock.style?.height || ''} onChange={(e) => handleStyleChange('height', e.target.value)} />
+                                                <Input className="border-0 h-7 text-xs px-2 focus-visible:ring-0" placeholder="auto" value={activeStyle.height || ''} onChange={(e) => handleStyleChange('height', e.target.value)} />
                                             </div>
                                         </div>
                                     </div>
@@ -783,7 +832,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                                     <div className="space-y-1">
                                         <Label className="text-[10px] uppercase text-slate-400">Max-Width (Centrage)</Label>
                                         <div className="flex gap-2">
-                                            <Input className="h-8 text-xs flex-1" placeholder="ex: 1200px" value={selectedBlock.style?.maxWidth || ''} onChange={(e) => handleStyleChange('maxWidth', e.target.value)} />
+                                            <Input className="h-8 text-xs flex-1" placeholder="ex: 1200px" value={activeStyle.maxWidth || ''} onChange={(e) => handleStyleChange('maxWidth', e.target.value)} />
                                             <Button
                         variant="outline" size="sm" className="h-8 text-[10px]"
                         onClick={() => {
@@ -791,7 +840,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                           handleStyleChange('marginLeft', 'auto');
                           handleStyleChange('marginRight', 'auto');
                           handleStyleChange('width', '100%');
-                          if (!selectedBlock.style?.maxWidth) handleStyleChange('maxWidth', '1280px');
+                          if (!activeStyle.maxWidth) handleStyleChange('maxWidth', '1280px');
                         }}
                         title="Centrer le bloc horizontalement">
                         
@@ -863,7 +912,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                                     <Textarea
                     className="font-mono text-[10px] min-h-[100px] bg-slate-900 text-blue-300"
                     placeholder=".ma-classe { ... }"
-                    value={selectedBlock.style?.customCss || ''}
+                    value={activeStyle.customCss || ''}
                     onChange={(e) => handleStyleChange('customCss', e.target.value)} />
                   
                                     <p className="text-[9px] text-slate-400 mt-2 italic">Note: Le CSS sera injecté directement sur l'élément.</p>
@@ -871,6 +920,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
                             </AccordionItem>
 
                         </Accordion>
+                        </StyleEditorContext.Provider>
                     </TabsContent>
 
                     {/* --- CONTENT TAB --- */}
@@ -889,4 +939,4 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
 
 };
 
-export default PropertyPanel;
+export default React.memo(PropertyPanel);

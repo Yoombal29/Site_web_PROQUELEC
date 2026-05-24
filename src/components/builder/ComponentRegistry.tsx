@@ -8,15 +8,33 @@ import {
   SectionBlock } from
 './blocks/CoreBlocks';
 
+import {
+  HeroBannerBlock,
+  AudienceOffersBlock,
+  VisionMissionBlock,
+  LandingStatsBlock,
+  LatestNewsBlock,
+  PartnerLogosBlock
+} from './HomepageBlocks';
+
 // Mapping Type JSON -> React Component
 export const ComponentRegistry: Record<string, React.FC<unknown>> = {
+  // ── Core generic blocks ───────────────────────────────────────────────────
   'hero': HeroBlock,
-  'section': SectionBlock, // Using proper empty Section now
+  'section': SectionBlock,
   'html': HtmlBlock,
   'text-block': TextBlock,
   'image': ImageBlock,
-
-  // Backwards compatibility or aliases
+  // backwards compat
   'text': TextBlock,
-  'code': HtmlBlock
-};
+  'code': HtmlBlock,
+
+  // ── Homepage "Design Locked" blocks ────────────────────────────────────────
+  // These map to the original React components → pixel-perfect rendering
+  'HeroBanner': HeroBannerBlock,
+  'AudienceOffers': AudienceOffersBlock,
+  'VisionMission': VisionMissionBlock,
+  'LandingStats': LandingStatsBlock,
+  'LatestNews': LatestNewsBlock,
+  'PartnerLogos': PartnerLogosBlock,
+};

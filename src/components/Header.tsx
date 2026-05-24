@@ -126,41 +126,6 @@ export const Header = ({ solid = false }: HeaderProps) => {
     document.documentElement.style.setProperty('--effective-header-height', `${total}px`);
   }, [scrolled, solid, headerConfig, dbSecondaryMenuItems, isCompact]);
 
-  const headerVars = {
-    '--header-height':
-    headerConfig.height ?? (isCompact ? '80px' : '110px'),
-
-    '--alert-height': headerConfig.alertEnabled ? '40px' : '0px',
-
-    '--header-bg': isCompact ?
-    headerConfig.backgroundColor || settings?.primary_color || '#09264bff' :
-    headerConfig.transparentBackground || 'rgba(0, 0, 0, 0.25)',
-
-    '--header-blur': headerConfig.glassmorphism === false ?
-    'none' :
-    isCompact ? 'blur(12px)' : 'blur(8px)',
-
-    '--header-color': headerConfig.textColor || '#ffffff',
-
-    '--header-shadow': isCompact ?
-    headerConfig.shadow || '0 10px 30px rgba(0,0,0,0.15)' :
-    'none',
-
-    '--header-border': `1px solid ${isCompact ? headerConfig.borderColor || 'rgba(255,255,255,0.1)' : headerConfig.borderColorTop || 'rgba(255,255,255,0.05)'}`,
-
-    '--logo-scale': (settings as unknown)?.logo_scale || headerConfig.logoScale || 1.2,
-
-    '--logo-height': `${(settings as unknown)?.logo_height || (
-    headerConfig.logoHeight ? parseInt(headerConfig.logoHeight) : 50)}px`,
-
-    '--logo-brightness': `${(settings as unknown)?.logo_brightness || 100}%`,
-    '--logo-contrast': `${(settings as unknown)?.logo_contrast || 100}%`,
-
-    '--text-shadow': !isCompact ?
-    '0 1px 2px rgba(0,0,0,0.5)' :
-    'none'
-  } as React.CSSProperties;
-
   // Filtrer les éléments de menu actifs
   const dbMainMenuItems = menuItems?.
   filter((item) => item.is_active && item.menu_type === 'main').
@@ -277,20 +242,22 @@ export const Header = ({ solid = false }: HeaderProps) => {
   map((item) => ({ id: item.id, title: item.title, url: item.url, menu_order: item.menu_order })).
   sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0)) || [];
 
-  const NavLink = ({ to, children, icon: Icon, isHighlight = false, isActive = false }) =>
+  const NavLink = ({ to, children, icon: Icon, isHighlight = false, isActive = false, isMobile = false }) =>
   <Link
     to={to}
     className={cn(
       "group relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300",
-      scrolled || solid ? "text-white" : "text-white/90 hover:text-white",
-      isActive && "bg-white/10 shadow-[0_0_20px_rgba(255,255,255,0.05)] text-white"
+      isMobile
+        ? "text-slate-900 hover:text-slate-900 bg-slate-50 hover:bg-slate-100"
+        : scrolled || solid ? "text-white" : "text-white/90 hover:text-white",
+      isActive && (isMobile ? "bg-slate-200 text-slate-900" : "bg-white/10 shadow-[0_0_20px_rgba(255,255,255,0.05)] text-white")
     )}
     onClick={() => setIsMenuOpen(false)}>
     
       {isActive &&
     <motion.div
       layoutId="nav-bg"
-      className="absolute inset-0 bg-white/10 rounded-xl -z-10 border border-white/20"
+      className={cn("absolute inset-0 rounded-xl -z-10 border border-white/20", isMobile ? "bg-slate-200/80" : "bg-white/10")}
       transition={{ type: "spring", bounce: 0.25, duration: 0.5 }} />
 
     }
@@ -385,11 +352,27 @@ export const Header = ({ solid = false }: HeaderProps) => {
             scrolled || solid ? "text-white" : "text-white/90 hover:text-white",
             activeDropdown === item.label && "bg-white/10 text-white"
           )}
-          onClick={() => handleDropdownClick(item.label)} aria-label="Action">
+          onClick={() => {
+            // Si l'item a un vrai path, naviguer directement vers la page
+            if (item.path && item.path !== '#') {
+              navigate(item.path);
+              setActiveDropdown(null);
+              setIsMenuOpen(false);
+            } else {
+              handleDropdownClick(item.label);
+            }
+          }} aria-label="Action">
           
           {item.icon && <item.icon className="h-4 w-4 transition-transform group-hover:scale-110" />}
           {item.label}
-          <ChevronDown className={cn("h-3 w-3 transition-transform duration-300 opacity-50", activeDropdown === item.label && "rotate-180")} />
+          <ChevronDown
+            className={cn("h-3 w-3 transition-transform duration-300 opacity-50", activeDropdown === item.label && "rotate-180")}
+            onClick={(e) => {
+              // Permettre de toggler le dropdown via la flèche sans naviguer
+              e.stopPropagation();
+              handleDropdownClick(item.label);
+            }}
+          />
         </button>
 
         <AnimatePresence>
@@ -435,10 +418,10 @@ export const Header = ({ solid = false }: HeaderProps) => {
   return (
     <header
       id="site-header"
-      className="sticky top-0 left-0 right-0 z-[100] w-full transition-all duration-500 ease-in-out"
-      style={headerVars}>
-      
-      {/* Top Bar (Secondary Menu) */}
+      className={cn(
+        "sticky top-0 left-0 right-0 z-[100] w-full transition-all duration-500 ease-in-out",
+        isCompact ? 'header-compact' : 'header-expanded'
+      )}>
       {!scrolled && dbSecondaryMenuItems.length > 0 &&
       <div className="w-full bg-slate-900/40 backdrop-blur-md border-b border-white/5 py-2 px-6 hidden sm:block">
           <div className="container mx-auto flex justify-end gap-6">
@@ -468,7 +451,10 @@ export const Header = ({ solid = false }: HeaderProps) => {
 
       {/* Main Header Container */}
       <div
-        className="w-full h-[var(--header-height)] relative transition-all duration-500 flex items-center header-container-vars">
+        className={cn(
+          "w-full relative transition-all duration-500 flex items-center header-container-vars",
+          isCompact ? 'h-[80px]' : 'h-[110px]'
+        )}>
         
         <div className="container mx-auto px-4 md:px-6 h-full flex items-center">
           <div className="flex items-center justify-between w-full mx-auto">
@@ -544,7 +530,11 @@ export const Header = ({ solid = false }: HeaderProps) => {
                       icon: MoreHorizontal,
                       submenu: [
                       ...mainNavLinks.slice(visibleItemsCount).map((l) => ({ id: l.id, label: l.label, path: l.path })),
-                      ...megaMenuSections.slice(Math.max(0, visibleItemsCount - mainNavLinks.length)).map((s) => ({ id: s.label, label: s.label, path: '#' })), // Mega menu placeholders
+                      ...megaMenuSections.slice(Math.max(0, visibleItemsCount - mainNavLinks.length)).flatMap((section) => section.columns.flatMap((column) => column.items.map((item) => ({
+                        id: `${section.label}-${item.label}`,
+                        label: `${section.label} • ${item.label}`,
+                        path: item.path
+                      })))).filter((item) => item.path),
                       ...activeMenuItems.slice(Math.max(0, visibleItemsCount - mainNavLinks.length - megaMenuSections.length)).map((m) => ({ id: m.id, label: m.title, path: m.url }))].
                       filter(Boolean)
                     }} />
@@ -691,29 +681,51 @@ export const Header = ({ solid = false }: HeaderProps) => {
 
       {/* Menu mobile/tablet */}
       {isMenuOpen &&
-      <div className="lg:hidden mt-0 pb-4 space-y-3 border-t border-border pt-4 animate-in fade-in slide-in-from-top-2 duration-200 max-h-[80vh] overflow-y-auto bg-card shadow-2xl">
+      <div className="lg:hidden mt-0 pb-4 space-y-3 border-t border-slate-200 pt-4 animate-in fade-in slide-in-from-top-2 duration-200 max-h-[80vh] overflow-y-auto bg-white shadow-2xl">
           <div className="px-4 space-y-4">
             <div className="space-y-1">
-              <p className="px-3 py-1 text-[10px] font-bold opacity-60 uppercase tracking-widest text-muted-foreground">Navigation</p>
+              <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">Navigation</p>
               {mainNavLinks.map((link) =>
-            <NavLink key={link.id || link.path} to={link.path} icon={link.icon}>
+            <NavLink key={link.id || link.path} to={link.path} icon={link.icon} isMobile>
                   {link.label}
                 </NavLink>
             )}
             </div>
 
             <div className="space-y-1">
-              <p className="px-3 py-1 text-[10px] font-bold opacity-60 uppercase tracking-widest text-muted-foreground">Espace Information</p>
-              <NavLink to="/blog" icon={ChevronRight}>Actualités</NavLink>
-              <NavLink to="/documents" icon={ChevronRight}>Documents</NavLink>
-              <NavLink to="/showroom" icon={ChevronRight}>Showroom</NavLink>
+              <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">Espace Information</p>
+              <NavLink to="/blog" icon={ChevronRight} isMobile>Actualités</NavLink>
+              <NavLink to="/documents" icon={ChevronRight} isMobile>Documents</NavLink>
+              <NavLink to="/showroom" icon={ChevronRight} isMobile>Showroom</NavLink>
             </div>
+
+            {megaMenuSections.map((section) => (
+            <div key={section.label} className="space-y-1">
+                <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">{section.label}</p>
+                {section.columns.flatMap((column) => column.items).map((item) => (
+              <NavLink key={`${section.label}-${item.path}`} to={item.path} icon={ChevronRight} isMobile>
+                    {item.label}
+                  </NavLink>
+                ))}
+              </div>
+            ))}
+
+            {activeMenuItems.length > 0 &&
+            <div className="space-y-1">
+                <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">Autres pages</p>
+                {activeMenuItems.map((item) => (
+              <NavLink key={item.id} to={item.url} icon={ChevronRight} isMobile>
+                    {item.title}
+                  </NavLink>
+                ))}
+              </div>
+            }
 
             <div className="pt-3 flex flex-col gap-2">
               {!isLoading && user ?
             <>
                   <Link to={getDashboardPath(user.role)} onClick={() => setIsMenuOpen(false)}>
-                    <Button className="w-full bg-proqblue text-white justify-center gap-2 rounded-lg py-6 shadow-lg shadow-proqblue/20">
+                    <Button className="w-full bg-proqblue text-white justify-center gap-2 rounded-2xl py-5 shadow-lg shadow-proqblue/20 border border-proqblue">
                       <LayoutDashboard className="h-5 w-5" />
                       Tableau de bord
                     </Button>
@@ -721,7 +733,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                   <Button
                 variant="destructive"
                 onClick={() => {handleLogout();setIsMenuOpen(false);}}
-                className="w-full justify-center gap-2 rounded-lg py-4">
+                className="w-full justify-center gap-2 rounded-2xl py-4 bg-red-500 text-white hover:bg-red-600 shadow-sm">
                 
                     <LogOut className="h-4 w-4" />
                     Déconnexion
@@ -729,13 +741,13 @@ export const Header = ({ solid = false }: HeaderProps) => {
                 </> :
 
             <Link to="/connexion" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full bg-proqblue text-white justify-center rounded-lg py-6 shadow-lg shadow-proqblue/20">
+                  <Button className="w-full bg-proqblue text-white justify-center gap-2 rounded-2xl py-5 shadow-lg shadow-proqblue/20 border border-proqblue">
                     Accès Membre / Admin
                   </Button>
                 </Link>
             }
               <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="outline" className="w-full justify-center gap-2 rounded-lg py-4 border-proqblue text-proqblue">
+                <Button variant="outline" className="w-full justify-center gap-2 rounded-2xl py-4 border border-proqblue bg-white text-proqblue hover:bg-slate-50">
                   <Phone className="h-4 w-4" />
                   Nous Contacter
                 </Button>

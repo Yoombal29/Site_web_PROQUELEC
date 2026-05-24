@@ -1,6 +1,7 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { normalizeUploadUrl } from '@/lib/normalizeUploadUrl';
 
 /**
  * Hook for uploading files to local storage.
@@ -31,10 +32,11 @@ export const useUploadFile = (bucketName: string) => {
       }
 
       const result = await response.json();
-      return result.url || `/uploads/${result.file_name}`;
+      return normalizeUploadUrl(result.url || `/uploads/${result.file_name}`);
     },
     onError: (error: unknown) => {
-      toast.error(`Erreur lors du téléversement : ${error.message}`);
+      const message = error instanceof Error ? error.message : String(error);
+      toast.error(`Erreur lors du téléversement : ${message}`);
     }
   });
 };

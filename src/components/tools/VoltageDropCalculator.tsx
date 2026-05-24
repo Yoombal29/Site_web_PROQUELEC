@@ -303,17 +303,37 @@ const generateDOEData = (result: unknown): unknown => {
 // ════════════════════════════════════════════════════════════════════════════════════════════════════════════
 // Interface utilisateur et logique métier du calculateur
 
-export default function VoltageDropCalculator() {
+export interface VoltageDropCalculatorProps {
+  initialLength?: number;
+  initialCurrent?: number;
+  initialCrossSection?: number;
+  initialMaterial?: string;
+}
+
+export default function VoltageDropCalculator({
+  initialLength,
+  initialCurrent,
+  initialCrossSection,
+  initialMaterial
+}: VoltageDropCalculatorProps = {}) {
   // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
   // 📝 ÉTATS — PARAMÈTRES D'ENTRÉE
   // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
   // Chaque paramètre de l'utilisateur est stocké dans un état React
   // Voir formulaire de saisie en bas du composant
-  const [current, setCurrent] = useState<string>('');
-  const [length, setLength] = useState<string>('');
-  const [crossSection, setCrossSection] = useState<string>('2.5');
+  const [current, setCurrent] = useState<string>(initialCurrent ? String(initialCurrent) : '');
+  const [length, setLength] = useState<string>(initialLength ? String(initialLength) : '');
+  const [crossSection, setCrossSection] = useState<string>(initialCrossSection ? String(initialCrossSection) : '2.5');
   const [voltage, setVoltage] = useState<string>('230'); // Default to 230V
-  const [conductorType, setConductorType] = useState<string>('copper');
+  const [conductorType, setConductorType] = useState<string>(initialMaterial === 'Al' ? 'aluminum' : 'copper');
+  
+  React.useEffect(() => {
+    if (initialCurrent !== undefined) setCurrent(String(initialCurrent));
+    if (initialLength !== undefined) setLength(String(initialLength));
+    if (initialCrossSection !== undefined) setCrossSection(String(initialCrossSection));
+    if (initialMaterial !== undefined) setConductorType(initialMaterial === 'Al' ? 'aluminum' : 'copper');
+  }, [initialLength, initialCurrent, initialCrossSection, initialMaterial]);
+
   const [installationType, setInstallationType] = useState<string>('lighting');
   const [powerFactor, setPowerFactor] = useState<string>('1.0');
   const [phaseSystem, setPhaseSystem] = useState<string>('single'); // single or three

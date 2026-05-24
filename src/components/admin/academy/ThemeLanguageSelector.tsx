@@ -25,7 +25,7 @@ export const ThemeLanguageSelector: React.FC = () => {
       {/* Theme selector */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="h-8 w-8">
+          <Button title="Changer le thème" aria-label="Changer le thème" variant="ghost" size="icon" className="h-8 w-8">
             {resolvedTheme === 'dark' ? (
               <Moon className="h-4 w-4" />
             ) : (
@@ -64,7 +64,7 @@ export const ThemeLanguageSelector: React.FC = () => {
       {/* Language selector */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="h-8 w-8">
+          <Button title="Changer la langue" aria-label="Changer la langue" variant="ghost" size="icon" className="h-8 w-8">
             <Globe className="h-4 w-4" />
             <span className="sr-only">Select language</span>
           </Button>

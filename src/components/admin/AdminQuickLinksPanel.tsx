@@ -204,11 +204,11 @@ export default function AdminQuickLinksPanel() {
                                 </div>
                             </div>
                             <div className="flex gap-1">
-                                <Button size="icon" variant="ghost" className="h-8 w-8 text-blue-600 hover:text-blue-800" onClick={() => handleEdit(l)}>
-                                    <Save className="w-4 h-4" />
+                                <Button title="Modifier" aria-label={`Modifier ${l.title}`} size="icon" variant="ghost" className="h-8 w-8 text-blue-600 hover:text-blue-800" onClick={() => handleEdit(l)}>
+                                  <Save className="w-4 h-4" />
                                 </Button>
-                                <Button size="icon" variant="ghost" className="h-8 w-8 text-red-600 hover:text-red-800" onClick={() => handleDelete(l.id)}>
-                                    <Trash2 className="w-4 h-4" />
+                                <Button title="Supprimer" aria-label={`Supprimer ${l.title}`} size="icon" variant="ghost" className="h-8 w-8 text-red-600 hover:text-red-800" onClick={() => handleDelete(l.id)}>
+                                  <Trash2 className="w-4 h-4" />
                                 </Button>
                             </div>
                         </div>

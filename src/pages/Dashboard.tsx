@@ -1,7 +1,7 @@
 
 import { useSession } from "@/hooks/useSession";
 import { useUserRole } from "@/hooks/useUserRole";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -70,13 +70,15 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const location = useLocation();
+
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(location.search);
     const tab = params.get("tab");
     if (tab) {
       setActiveTab(tab);
     }
-  }, []);
+  }, [location.search]);
 
   useEffect(() => {
     // 1. Loading checks

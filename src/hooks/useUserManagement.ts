@@ -4,24 +4,15 @@ import { useToast } from '@/hooks/use-toast';
 export interface UserProfile {
   id: string;
   email: string;
-  firstName?: string;
-  lastName?: string;
   role: 'admin' | 'editor' | 'moderator' | 'user' | 'partner' | 'secondary_admin';
-  status: 'active' | 'inactive' | 'pending' | boolean;
-  lastLogin: Date | null;
+  status: 'active' | 'inactive' | boolean;
   createdAt: Date;
-  avatar?: string;
-  department?: string;
-  permissions: string[];
+  permissions?: string[];
 }
 
 export interface CreateUserData {
   email: string;
-  firstName: string;
-  lastName: string;
   role: string;
-  department?: string;
-  permissions: string[];
 }
 
 export function useUserManagement() {
@@ -33,7 +24,7 @@ export function useUserManagement() {
     setIsLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch("/api/users", {
+      const res = await fetch("/api/admin/users", {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -41,18 +32,13 @@ export function useUserManagement() {
       if (!res.ok) throw new Error("Failed to fetch users");
       const data = await res.json();
 
-      setUsers((data || []).map((user: unknown) => ({
+      setUsers((data || []).map((user: any) => ({
         id: user.id,
         email: user.email,
-        firstName: user.first_name || '',
-        lastName: user.last_name || '',
         role: user.role || 'user',
-        status: user.status === true || user.status === 'active' ? 'active' : 'inactive',
-        lastLogin: user.last_login ? new Date(user.last_login) : null,
+        status: user.is_active === true ? 'active' : 'inactive',
         createdAt: user.created_at ? new Date(user.created_at) : new Date(),
-        avatar: user.avatar_url,
-        department: user.department,
-        permissions: user.permissions || []
+        permissions: []
       })));
     } catch (error) {
       toast({
@@ -65,30 +51,34 @@ export function useUserManagement() {
     }
   }, [toast]);
 
-  const createUser = useCallback(async (userData: CreateUserData) => {
+  const createUser = useCallback(async (userData: CreateUserData & { password?: string }) => {
     setIsLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch("/api/auth/register", { // Reusing register endpoint if possible or common endpoint
+      const body = {
+        email: userData.email,
+        password: userData.password || 'Password123!',
+        role: userData.role
+      };
+      const res = await fetch('/api/admin/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          email: userData.email,
-          password: 'Password123!', // Temporary default password for created users
-          role: userData.role
-        })
+        body: JSON.stringify(body)
       });
 
-      if (!res.ok) throw new Error("Failed to create user");
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Failed to create user');
+      }
 
       toast({
         title: "Utilisateur créé",
-        description: `${userData.email} a été ajouté avec succès (Pass provisoire: Password123!)`
+        description: `${userData.email} a été ajouté avec succès (Pass provisoire: ${body.password})`
       });
-      fetchUsers();
+      await fetchUsers();
     } catch (error) {
       toast({
         title: "Erreur",
@@ -102,17 +92,68 @@ export function useUserManagement() {
   }, [toast, fetchUsers]);
 
   // Updated stubs for the rest to avoid errors, real implementation can be added to backend later
-  const updateUser = useCallback(async (id: string, updates: Partial<UserProfile>) => {
-    toast({ title: "Info", description: "Mise à jour non implémentée sur l'API" });
-  }, [toast]);
+  const updateUser = useCallback(async (id: string, updates: Partial<UserProfile & { password?: string }>) => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`/api/admin/users/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(updates)
+      });
+      if (!res.ok) throw new Error('Failed to update user');
+      toast({ title: 'Utilisateur mis à jour', description: 'Les modifications ont été enregistrées.' });
+      await fetchUsers();
+    } catch (err) {
+      toast({ title: 'Erreur', description: 'Impossible de mettre à jour l\'utilisateur', variant: 'destructive' });
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  }, [toast, fetchUsers]);
 
   const deleteUser = useCallback(async (id: string) => {
-    toast({ title: "Info", description: "Suppression non implémentée sur l'API" });
-  }, [toast]);
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`/api/admin/users/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok && res.status !== 204) throw new Error('Failed to delete user');
+      toast({ title: 'Utilisateur supprimé', description: 'L\'utilisateur a été supprimé.' });
+      await fetchUsers();
+    } catch (err) {
+      toast({ title: 'Erreur', description: 'Impossible de supprimer l\'utilisateur', variant: 'destructive' });
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  }, [toast, fetchUsers]);
 
   const changeUserStatus = useCallback(async (id: string, status: UserProfile['status']) => {
-    toast({ title: "Info", description: "Changement de statut non implémenté sur l'API" });
-  }, [toast]);
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const isActive = status === 'active' || status === true;
+      const res = await fetch(`/api/admin/users/${id}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ is_active: isActive })
+      });
+      if (!res.ok) throw new Error('Failed to change status');
+      toast({ title: 'Statut mis à jour', description: 'Le statut de l\'utilisateur a été modifié.' });
+      await fetchUsers();
+    } catch (err) {
+      toast({ title: 'Erreur', description: 'Impossible de changer le statut', variant: 'destructive' });
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  }, [toast, fetchUsers]);
 
   return {
     users,

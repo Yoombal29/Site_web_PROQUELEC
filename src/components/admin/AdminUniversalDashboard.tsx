@@ -481,7 +481,7 @@ export const AdminUniversalDashboard = () => {
                                             </div>
                                             <span className="text-sm font-medium">{comp.type}</span>
                                             <div className="ml-auto flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <Button variant="ghost" size="icon" className="h-6 w-6 text-red-400 hover:text-red-500" onClick={(e) => {e.stopPropagation();handleDeleteComp(comp.id);}}>
+                                                <Button title="Supprimer" aria-label="Supprimer le composant" variant="ghost" size="icon" className="h-6 w-6 text-red-400 hover:text-red-500" onClick={(e) => {e.stopPropagation();handleDeleteComp(comp.id);}}>
                                                     <Trash2 className="w-3 h-3" />
                                                 </Button>
                                             </div>

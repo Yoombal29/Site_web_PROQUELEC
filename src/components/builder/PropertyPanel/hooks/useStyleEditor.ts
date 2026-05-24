@@ -1,16 +1,19 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, createContext, useContext } from 'react';
 import type { BlockStyle } from '@/types/builder';
 import {
   useSelectedBlock,
   useUpdateBlockStyle
 } from '@/stores/useBuilderStoreSelectors';
 
-type Device = 'base' | 'tablet' | 'mobile';
+export type Device = 'base' | 'tablet' | 'mobile' | 'dark';
+
+export const StyleEditorContext = createContext<{ activeDevice: Device }>({ activeDevice: 'base' });
 
 export interface RuntimeStyle {
   base: BlockStyle;
   tablet: BlockStyle;
   mobile: BlockStyle;
+  dark: BlockStyle;
 }
 
 const COMMON_STYLE_KEYS: (keyof BlockStyle)[] = [
@@ -44,22 +47,24 @@ const toggleClassName = (current: string | undefined, className: string, enabled
 };
 
 const normalizeToRuntimeStyle = (raw?: BlockStyle): RuntimeStyle => {
-  if (!raw) return { base: {}, tablet: {}, mobile: {} };
+  if (!raw) return { base: {}, tablet: {}, mobile: {}, dark: {} };
   const anyRaw = raw as any;
   // Already using runtime shape?
-  if (anyRaw && (anyRaw.base || anyRaw.tablet || anyRaw.mobile)) {
+  if (anyRaw && (anyRaw.base || anyRaw.tablet || anyRaw.mobile || anyRaw.dark)) {
     return {
       base: anyRaw.base ?? {},
       tablet: anyRaw.tablet ?? {},
-      mobile: anyRaw.mobile ?? {}
+      mobile: anyRaw.mobile ?? {},
+      dark: anyRaw.dark ?? {}
     };
   }
   // Legacy flat shape -> place everything into base
   const copy: BlockStyle = { ...raw };
-  return { base: copy, tablet: {}, mobile: {} };
+  return { base: copy, tablet: {}, mobile: {}, dark: {} };
 };
 
 export const useStyleEditor = () => {
+  const { activeDevice } = useContext(StyleEditorContext);
   const selected = useSelectedBlock();
   const updateBlockStyle = useUpdateBlockStyle();
 
@@ -67,70 +72,74 @@ export const useStyleEditor = () => {
 
   const runtimeStyle = useMemo(() => normalizeToRuntimeStyle(selected?.style), [selected?.style]);
 
-  const updateStyle = useCallback((patch: Partial<BlockStyle>, device: Device = 'base') => {
+  const updateStyle = useCallback((patch: Partial<BlockStyle>, device?: Device) => {
+    const targetDevice = device || activeDevice;
     if (!id) return;
     const raw = selected?.style as any;
-    const hasNested = raw && (raw.base || raw.tablet || raw.mobile);
+    const hasNested = raw && (raw.base || raw.tablet || raw.mobile || raw.dark);
 
-    const current = runtimeStyle[device] ?? {};
+    const current = runtimeStyle[targetDevice] ?? {};
     const merged = { ...current, ...patch } as BlockStyle;
 
     // Sanitize className if present
     if (merged.className) merged.className = sanitizeClassName(String(merged.className));
 
-    const payload: any = { [device]: merged };
+    const payload: any = { [targetDevice]: merged };
 
     // If legacy flat shape, migrate top-level keys into `base` and remove originals
-    if (!hasNested && device === 'base' && selected?.style) {
+    if (!hasNested && targetDevice === 'base' && selected?.style) {
       Object.keys(selected.style).forEach((k) => {
-        if (k !== 'base' && k !== 'tablet' && k !== 'mobile') payload[k] = undefined;
+        if (k !== 'base' && k !== 'tablet' && k !== 'mobile' && k !== 'dark') payload[k] = undefined;
       });
     }
 
     updateBlockStyle(id, payload as any);
-  }, [id, updateBlockStyle, runtimeStyle, selected?.style]);
+  }, [id, updateBlockStyle, runtimeStyle, selected?.style, activeDevice]);
 
-  const removeStyle = useCallback((key: keyof BlockStyle, device: Device = 'base') => {
+  const removeStyle = useCallback((key: keyof BlockStyle, device?: Device) => {
+    const targetDevice = device || activeDevice;
     if (!id) return;
     const raw = selected?.style as any;
-    const hasNested = raw && (raw.base || raw.tablet || raw.mobile);
+    const hasNested = raw && (raw.base || raw.tablet || raw.mobile || raw.dark);
 
-    if (!hasNested && device === 'base') {
+    if (!hasNested && targetDevice === 'base') {
       // legacy: remove top-level key
       updateBlockStyle(id, { [key]: undefined } as any);
       return;
     }
 
-    const newDevice = { ...runtimeStyle[device] } as any;
+    const newDevice = { ...runtimeStyle[targetDevice] } as any;
     // Setting to undefined ensures merge will clear the value
     newDevice[key] = undefined;
-    const payload: any = { [device]: newDevice };
+    const payload: any = { [targetDevice]: newDevice };
     updateBlockStyle(id, payload);
-  }, [id, updateBlockStyle, runtimeStyle, selected?.style]);
+  }, [id, updateBlockStyle, runtimeStyle, selected?.style, activeDevice]);
 
   const resetStyle = useCallback(() => {
     if (!id) return;
     const raw = selected?.style as any;
-    const hasNested = raw && (raw.base || raw.tablet || raw.mobile);
+    const hasNested = raw && (raw.base || raw.tablet || raw.mobile || raw.dark);
 
-    const payload: any = { base: {}, tablet: {}, mobile: {} };
+    const payload: any = { base: {}, tablet: {}, mobile: {}, dark: {} };
     if (!hasNested && selected?.style) {
       Object.keys(selected.style).forEach((k) => {
-        if (k !== 'base' && k !== 'tablet' && k !== 'mobile') payload[k] = undefined;
+        if (k !== 'base' && k !== 'tablet' && k !== 'mobile' && k !== 'dark') payload[k] = undefined;
       });
     }
     updateBlockStyle(id, payload);
   }, [id, updateBlockStyle, selected?.style]);
 
-  const toggleClass = useCallback((className: string, enabled?: boolean, device: Device = 'base') => {
+  const toggleClass = useCallback((className: string, enabled?: boolean, device?: Device) => {
+    const targetDevice = device || activeDevice;
     if (!id) return;
-    const current = runtimeStyle[device]?.className || '';
+    const current = runtimeStyle[targetDevice]?.className || '';
     const next = toggleClassName(current as string, className, enabled);
-    updateStyle({ className: next }, device);
-  }, [id, runtimeStyle, updateStyle]);
+    updateStyle({ className: next }, targetDevice);
+  }, [id, runtimeStyle, updateStyle, activeDevice]);
 
   return {
     style: runtimeStyle,
+    activeStyle: runtimeStyle[activeDevice] ?? {},
     updateStyle,
     removeStyle,
     resetStyle,

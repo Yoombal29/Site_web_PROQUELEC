@@ -34,7 +34,7 @@ interface BlockContent {
 }
 
 // --- 1. HERO BLOCK ---
-export const HeroBlock: React.FC<BlockProps> = ({ content, style, id, className }) => {
+export const HeroBlock: React.FC<BlockProps> = React.memo(({ content, style, id, className }) => {
   return (
     <section
       id={id}
@@ -69,10 +69,10 @@ export const HeroBlock: React.FC<BlockProps> = ({ content, style, id, className 
             </div>
         </section>);
 
-};
+});
 
 // --- 2. TEXT BLOCK ---
-export const TextBlock: React.FC<BlockProps> = ({ content, style, id, className }) => {
+export const TextBlock: React.FC<BlockProps> = React.memo(({ content, style, id, className }) => {
   const sanitizedHTML = sanitizeHTML(content.html || content.text || '<p>Texte par défaut...</p>');
   
   return (
@@ -85,10 +85,10 @@ export const TextBlock: React.FC<BlockProps> = ({ content, style, id, className 
             <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
         </div>);
 
-};
+});
 
 // --- 3. IMAGE BLOCK ---
-export const ImageBlock: React.FC<BlockProps> = ({ content, style, id, className }) => {
+export const ImageBlock: React.FC<BlockProps> = React.memo(({ content, style, id, className }) => {
   return (
     <div id={id} className={cn("w-full overflow-hidden", className)} style={style as React.CSSProperties}>
             <img
@@ -96,7 +96,7 @@ export const ImageBlock: React.FC<BlockProps> = ({ content, style, id, className
         alt={content.alt || 'Image'}
         className={cn("w-full h-auto object-cover", style?.className)}
         style={{
-          borderRadius: style?.borderRadius,
+          borderRadius: style?.borderRadius as string,
           objectFit: style?.objectFit as React.CSSProperties['objectFit']
         }} loading="lazy" />
       
@@ -105,10 +105,10 @@ export const ImageBlock: React.FC<BlockProps> = ({ content, style, id, className
       }
         </div>);
 
-};
+});
 
 // --- 4. HTML / CODE BLOCK ---
-export const HtmlBlock: React.FC<BlockProps> = ({ content, style, id, className }) => {
+export const HtmlBlock: React.FC<BlockProps> = React.memo(({ content, style, id, className }) => {
   const isCodeBlock = content.type === 'code' || !content.html;
   const sanitized = isCodeBlock 
     ? sanitizeCodeBlock(content.code || content.html) 
@@ -129,17 +129,32 @@ export const HtmlBlock: React.FC<BlockProps> = ({ content, style, id, className 
       dangerouslySetInnerHTML={{ __html: sanitized }} />);
 
 
-};
+});
 
 // --- 5. SECTION / CONTAINER BLOCK ---
-export const SectionBlock: React.FC<BlockProps> = ({ content, style, id, className, children }) => {
+export const SectionBlock: React.FC<BlockProps> = React.memo(({ content, style, id, className, children }) => {
+  // Sanitize content to prevent XSS
+  const sanitizedContent = {
+    title: content.title ? sanitizeHTML(String(content.title)) : undefined,
+    subtitle: content.subtitle ? sanitizeHTML(String(content.subtitle)) : undefined,
+    text: content.text ? sanitizeHTML(String(content.text)) : undefined,
+    html: content.html ? sanitizeHTML(String(content.html)) : undefined,
+    src: content.src ? sanitizeURL(String(content.src)) : undefined,
+    href: content.href ? sanitizeURL(String(content.href)) : undefined,
+    caption: content.caption ? sanitizeHTML(String(content.caption)) : undefined,
+  };
+
   return (
     <section
       id={id}
       className={cn("min-h-[100px] p-4", className, style?.className)}
       style={style as React.CSSProperties}>
-      
+
+            {sanitizedContent.title && <h2>{sanitizedContent.title}</h2>}
+            {sanitizedContent.subtitle && <p>{sanitizedContent.subtitle}</p>}
+            {sanitizedContent.text && <p>{sanitizedContent.text}</p>}
+            {sanitizedContent.html && <div dangerouslySetInnerHTML={{ __html: sanitizedContent.html }} />}
             {children}
         </section>);
 
-};
+});

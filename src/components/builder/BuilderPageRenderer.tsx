@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { ComponentRegistry } from './ComponentRegistry';
-
-
+import { BlockErrorBoundary } from './BlockErrorBoundary';
+import { sanitizeCSS, sanitizeCSSSelector, sanitizeCSSValue } from '@/utils/sanitize';
+import type { Block, BlockStyle } from '@/types/builder';
 export interface PageRendererProps {
   blocks: Block[];
   className?: string; // Classe CSS additionnelle
@@ -14,13 +15,13 @@ export interface PageRendererProps {
 }
 
 // Composant Interne pour rendre un bloc individuel avec Sortable
-const SortableBlockWrapper: React.FC<{
+const SortableBlockWrapper = React.memo<{
   block: Block;
   isEditor: boolean;
   isSelected: boolean;
   onSelect?: (id: string) => void;
   children: React.ReactNode;
-}> = ({ block, isEditor, isSelected, onSelect, children }) => {
+}>(({ block, isEditor, isSelected, onSelect, children }) => {
   const {
     attributes,
     listeners,
@@ -75,16 +76,16 @@ const SortableBlockWrapper: React.FC<{
             {children}
         </div>);
 
-};
+});
 
-// Helper pour extraire toutes les polices utilisées
 const getUsedFonts = (blocks: Block[]): Set<string> => {
   let fonts = new Set<string>();
   if (!blocks) return fonts;
 
   blocks.forEach((block) => {
-    if (block.style?.fontFamily && !['sans', 'serif', 'mono', 'inherit'].includes(block.style.fontFamily)) {
-      fonts.add(block.style.fontFamily);
+    const baseStyle = (block.style as any)?.base || block.style || {};
+    if (baseStyle.fontFamily && !['sans', 'serif', 'mono', 'inherit'].includes(baseStyle.fontFamily)) {
+      fonts.add(baseStyle.fontFamily);
     }
     if (block.children) {
       const childFonts = getUsedFonts(block.children);
@@ -92,6 +93,49 @@ const getUsedFonts = (blocks: Block[]): Set<string> => {
     }
   });
   return fonts;
+};
+
+// Helper to generate CSS for responsive and dark mode styles
+const generateResponsiveCss = (blocks: Block[]): string => {
+  let css = '';
+  if (!blocks) return css;
+
+  blocks.forEach((block) => {
+    const rawStyle = block.style as any;
+    if (rawStyle && (rawStyle.tablet || rawStyle.mobile || rawStyle.dark)) {
+      const id = sanitizeCSSSelector(block.id);
+      
+      const toCssString = (styleObj: any) => {
+        if (!styleObj) return '';
+        return Object.entries(styleObj)
+          .filter(([k]) => k !== 'className' && k !== 'customCss')
+          .map(([k, v]) => {
+            const kebabKey = k.replace(/([A-Z])/g, '-$1').toLowerCase();
+            const sanitizedValue = sanitizeCSSValue(String(v));
+            return `${kebabKey}: ${sanitizedValue} !important;`;
+          })
+          .join(' ');
+      };
+
+      if (rawStyle.tablet && Object.keys(rawStyle.tablet).length > 0) {
+        const tabletCss = toCssString(rawStyle.tablet);
+        css += `@media (max-width: 1024px) { [id="${id}"] { ${tabletCss} } }\n`;
+      }
+      if (rawStyle.mobile && Object.keys(rawStyle.mobile).length > 0) {
+        const mobileCss = toCssString(rawStyle.mobile);
+        css += `@media (max-width: 768px) { [id="${id}"] { ${mobileCss} } }\n`;
+      }
+      if (rawStyle.dark && Object.keys(rawStyle.dark).length > 0) {
+        const darkCss = toCssString(rawStyle.dark);
+        css += `.dark [id="${id}"] { ${darkCss} }\n`;
+      }
+    }
+    
+    if (block.children) {
+      css += generateResponsiveCss(block.children);
+    }
+  });
+  return sanitizeCSS(css);
 };
 
 const BuilderPageRenderer: React.FC<PageRendererProps> = ({
@@ -136,8 +180,12 @@ const BuilderPageRenderer: React.FC<PageRendererProps> = ({
 
   return (
     <div className={`page-builder-content ${className || ''}`}>
+            <style dangerouslySetInnerHTML={{ __html: generateResponsiveCss(blocks) }} />
             {blocks.map((block) => {
-        const Component = ComponentRegistry[block.type] || ComponentRegistry['section'];
+        // Skip disabled blocks (new schema)
+        if ((block as any).enabled === false) return null;
+
+        const Component = ComponentRegistry[block.type];
 
         if (!Component) {
           return isEditor ?
@@ -147,22 +195,32 @@ const BuilderPageRenderer: React.FC<PageRendererProps> = ({
           null;
         }
 
-        const componentRender =
-        <Component
-          id={block.id}
-          content={block.content}
-          style={block.style}
-          className={block.style?.className}
-          children={
-          block.children && block.children.length > 0 ?
-          <BuilderPageRenderer
-            blocks={block.children}
-            isEditor={isEditor}
-            selectedId={selectedId}
-            onSelect={onSelect} /> :
+        const rawStyle = block.style as any;
+        const hasNested = rawStyle && (rawStyle.base || rawStyle.tablet || rawStyle.mobile || rawStyle.dark);
+        const baseStyle = hasNested ? rawStyle.base : rawStyle;
 
-          undefined
-          } />;
+        // Support new schema { props: {...} } and legacy schema { content: {...} }
+        const blockProps = (block as any).props || block.content || {};
+
+        const componentRender =
+        <BlockErrorBoundary blockId={block.id}>
+          <Component
+            id={block.id}
+            {...blockProps}
+            content={block.content ?? {}}
+            style={(baseStyle ?? {}) as BlockStyle}
+            className={baseStyle?.className}
+            children={
+            block.children && block.children.length > 0 ?
+            <BuilderPageRenderer
+              blocks={block.children}
+              isEditor={isEditor}
+              selectedId={selectedId}
+              onSelect={onSelect} /> :
+
+            undefined
+            } />
+        </BlockErrorBoundary>;
 
 
 
@@ -183,4 +241,4 @@ const BuilderPageRenderer: React.FC<PageRendererProps> = ({
 };
 
 
-export default BuilderPageRenderer;
+export default React.memo(BuilderPageRenderer);

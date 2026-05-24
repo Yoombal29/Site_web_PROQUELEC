@@ -4,12 +4,13 @@ import { Link, useParams } from 'react-router-dom';
 import { useBuilderStore } from '@/stores/useBuilderStore';
 import type { Block } from '@/types/builder';
 import type { DragEndEvent } from '@dnd-kit/core';
+import cloneDeep from 'lodash.clonedeep';
 
 import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
 import { Button } from '@/components/ui/button';
 import {
   Plus, LayoutTemplate, Box, Trash2, Save, Loader2, MousePointer2,
-  Monitor, Tablet, Smartphone, Undo, Redo, Code, ChevronLeft, Eye } from
+  Monitor, Tablet, Smartphone, Undo, Redo, Code, ChevronLeft, Eye, Globe } from
 'lucide-react';
 import {
   SortableContext,
@@ -18,6 +19,7 @@ import {
 '@dnd-kit/sortable';
 import BuilderPageRenderer from '@/components/builder/BuilderPageRenderer';
 import PropertyPanel from '@/components/builder/PropertyPanel';
+import PageSettingsPanel from '@/components/builder/PageSettingsPanel';
 import { apiFetch } from '@/lib/api-client';
 import { toast } from 'sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -31,8 +33,8 @@ import {
 "@/components/ui/dialog";
 import { useContentVersioning } from '@/hooks/useContentVersioning';
 import { useAnalytics } from '@/hooks/useAnalytics';
-
-type WorkflowStatus = 'draft' | 'review' | 'approved' | 'published';
+import type { PageDesignOptions, WorkflowStatus } from '@/types/PageSystem';
+import { DEFAULT_DESIGN_OPTIONS } from '@/utils/pageLayouts';
 
 type AdminPageResponse = {
   title?: string;
@@ -45,6 +47,7 @@ type AdminPageResponse = {
   meta_robots?: string;
   custom_css?: string;
   custom_js?: string;
+  design_options?: PageDesignOptions | string;
   is_published?: boolean;
   workflow_status?: WorkflowStatus;
 };
@@ -62,6 +65,10 @@ type LegacyTemplate = {
   block: Block;
 };
 
+const normalizeLegacyText = (value: unknown): string => typeof value === 'string' ? value : '';
+
+const normalizeLegacyLink = (value: unknown): string => typeof value === 'string' ? value : '';
+
 type PageDataState = {
   title: string;
   slug: string;
@@ -70,8 +77,9 @@ type PageDataState = {
   metaRobots: string;
   customCss: string;
   customJs: string;
+  designOptions: PageDesignOptions;
   isPublished: boolean;
-  workflowStatus: 'draft' | 'review' | 'approved' | 'published';
+  workflowStatus: 'draft' | 'review' | 'approved' | 'published' | 'archived';
 };
 
 const BuilderPage: React.FC = () => {
@@ -89,7 +97,10 @@ const BuilderPage: React.FC = () => {
     undo,
     redo,
     canUndo,
-    canRedo
+    canRedo,
+    snapshotHistory,
+    pageMetadata,
+    setPageMetadata
   } = useBuilderStore();
 
   const { createVersion, getVersions, restoreVersion } = useContentVersioning();
@@ -106,37 +117,35 @@ const BuilderPage: React.FC = () => {
   const [versionChangeLog, setVersionChangeLog] = useState('Sauvegarde manuelle du builder');
   const [analyticsData, setAnalyticsData] = useState<{ views: number; uniqueVisitors: number; avgTime: string; bounceRate: string } | null>(null);
   const [pageData, setPageData] = useState<PageDataState | null>(null);
-  const [initialPageState, setInitialPageState] = useState<{
-    blocks: Block[];
-    title: string;
-    slug: string;
-    metaDescription: string;
-    metaKeywords: string;
-    metaRobots: string;
-    customCss: string;
-    customJs: string;
-    isPublished: boolean;
-    workflowStatus: 'draft' | 'review' | 'published' | 'archived';
-  } | null>(null);
 
-  const isDirty = useMemo(() => {
-    if (!initialPageState) return false;
-    return JSON.stringify({
-      blocks,
-      title: pageData?.title || '',
-      slug: pageData?.slug || '',
-      metaDescription: pageData?.metaDescription || '',
-      metaKeywords: pageData?.metaKeywords || '',
-      metaRobots: pageData?.metaRobots || '',
-      customCss: pageData?.customCss || '',
-      customJs: pageData?.customJs || '',
-      isPublished: pageData?.isPublished || false,
-      workflowStatus: pageData?.workflowStatus || 'draft'
-    }) !== JSON.stringify(initialPageState);
-  }, [blocks, initialPageState, pageData]);
+  // Track if there are unsaved changes (lightweight version counter instead of deep JSON.stringify)
+  const [savedBlocksVersion, setSavedBlocksVersion] = useState(0);
+  const [blocksVersion, setBlocksVersion] = useState(0);
+  const [savedPageDataVersion, setSavedPageDataVersion] = useState(0);
+  const [pageDataVersion, setPageDataVersion] = useState(0);
+
+  // isDirty is true when block version or page data version differs from saved
+  const isDirty = blocksVersion !== savedBlocksVersion || pageDataVersion !== savedPageDataVersion;
+
+  // Increment blocksVersion each time blocks change (skip during initial load)
+  const isLoadingRef = React.useRef(true);
+  useEffect(() => {
+    if (isLoadingRef.current) return; // ignore changes during initial load
+    setBlocksVersion((v) => v + 1);
+  }, [blocks]);
+
+  // Mark loading complete after first render with blocks
+  useEffect(() => {
+    if (!isLoading) {
+      // Use a small delay to avoid counting the initial setBlocks as a dirty change
+      const t = setTimeout(() => { isLoadingRef.current = false; }, 100);
+      return () => clearTimeout(t);
+    }
+  }, [isLoading]);
 
   const handlePageDataChange = useCallback((changes: Partial<PageDataState>) => {
     setPageData((current) => current ? { ...current, ...changes } : current);
+    setPageDataVersion((v) => v + 1);
   }, []);
 
   // 1. Initial Load
@@ -154,7 +163,23 @@ const BuilderPage: React.FC = () => {
 
       setIsLoading(true);
       try {
-        const adminPage = await apiFetch<AdminPageResponse>(`/api/admin/pages/${pageId}`);
+        let adminPage: AdminPageResponse | null = null;
+        try {
+          adminPage = await apiFetch<AdminPageResponse>(`/api/admin/pages/${pageId}`);
+        } catch (error: unknown) {
+          try {
+            const siteConfig = await apiFetch<{ pages: { id: string; slug: string }[] }>('/api/site-config');
+            const matchedPage = siteConfig.pages.find((page) => page.id === pageId || page.slug === pageId);
+            if (matchedPage?.slug) {
+              adminPage = await apiFetch<AdminPageResponse>(`/api/pages/slug/${matchedPage.slug}`);
+            }
+          } catch {
+            // Best-effort fallback; continue to final error handling below.
+          }
+          if (!adminPage) {
+            throw error;
+          }
+        }
 
         if (!adminPage) {
           setLoadError('Page introuvable.');
@@ -170,6 +195,9 @@ const BuilderPage: React.FC = () => {
           metaRobots: adminPage.meta_robots || 'index,follow',
           customCss: adminPage.custom_css || '',
           customJs: adminPage.custom_js || '',
+          designOptions: typeof adminPage.design_options === 'string'
+            ? JSON.parse(adminPage.design_options)
+            : adminPage.design_options || DEFAULT_DESIGN_OPTIONS,
           isPublished: adminPage.is_published || false,
           workflowStatus: adminPage.workflow_status || (adminPage.is_published ? 'published' : 'draft')
         });
@@ -192,16 +220,16 @@ const BuilderPage: React.FC = () => {
               id: b?.id || `legacy-${Math.random().toString(36).slice(2, 9)}`,
               type: b?.type === 'text' ? 'text-block' : b?.type || 'section',
               content: {
-                title: b?.data?.title,
-                subtitle: b?.data?.subtitle,
-                text: b?.data?.text || b?.data?.cta_text,
-                html: b?.data?.content,
-                src: b?.data?.url,
-                href: b?.data?.cta_link || b?.data?.href,
-                caption: b?.data?.caption
+                title: normalizeLegacyText(b?.data?.title),
+                subtitle: normalizeLegacyText(b?.data?.subtitle),
+                text: normalizeLegacyText(b?.data?.text || b?.data?.cta_text),
+                html: normalizeLegacyText(b?.data?.content),
+                src: normalizeLegacyLink(b?.data?.url),
+                href: normalizeLegacyLink(b?.data?.cta_link || b?.data?.href),
+                caption: normalizeLegacyText(b?.data?.caption)
               },
-              style: b?.data?.background_image ? {
-                backgroundImage: `url(${b.data?.background_image})`,
+              style: typeof b?.data?.background_image === 'string' ? {
+                backgroundImage: `url(${b.data.background_image})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 color: '#ffffff'
@@ -220,18 +248,11 @@ const BuilderPage: React.FC = () => {
         }
 
           setBlocks(availableBlocks || []);
-        setInitialPageState({
-          blocks: availableBlocks || [],
-          title: adminPage.title || `Page ${pageId}`,
-          slug: adminPage.slug || pageId,
-          metaDescription: adminPage.meta_description || '',
-          metaKeywords: adminPage.meta_keywords || '',
-          metaRobots: adminPage.meta_robots || 'index,follow',
-          customCss: adminPage.custom_css || '',
-          customJs: adminPage.custom_js || '',
-          isPublished: adminPage.is_published || false,
-          workflowStatus: adminPage.workflow_status || (adminPage.is_published ? 'published' : 'draft')
-        });
+        // Reset version counters on load (no unsaved changes)
+        setSavedBlocksVersion(0);
+        setBlocksVersion(0);
+        setSavedPageDataVersion(0);
+        setPageDataVersion(0);
       } catch (error: unknown) {
         console.error('Erreur chargement du builder:', error);
         const errorStatus = (error as unknown as { status?: number }).status;
@@ -264,28 +285,42 @@ const BuilderPage: React.FC = () => {
           structure_json: blocks,
           title: pageData?.title,
           slug: pageData?.slug,
-          meta_description: pageData?.metaDescription,
           meta_keywords: pageData?.metaKeywords,
           meta_robots: pageData?.metaRobots,
           custom_css: pageData?.customCss,
           custom_js: pageData?.customJs,
+          design_options: pageData?.designOptions,
           is_published: pageData?.isPublished,
-          workflow_status: pageData?.workflowStatus
+          workflow_status: pageData?.workflowStatus,
+          // Extended CMS metadata
+          excerpt: pageMetadata.excerpt,
+          meta_description: pageMetadata.meta_description || pageData?.metaDescription,
+          featured_image: pageMetadata.featured_image,
+          language_code: pageMetadata.language_code,
+          publish_date: pageMetadata.publish_date,
+          unpublish_date: pageMetadata.unpublish_date,
+          author: pageMetadata.author,
+          reading_time: pageMetadata.reading_time,
+          categories: pageMetadata.categories,
+          tags: pageMetadata.tags,
+          template: pageMetadata.template,
+          show_hero: pageMetadata.show_hero,
+          show_footer: pageMetadata.show_footer,
+          header_html: pageMetadata.header_html,
+          footer_html: pageMetadata.footer_html,
+          // Hero
+          hero_title: pageMetadata.hero_title,
+          hero_subtitle: pageMetadata.hero_subtitle,
+          hero_background_image: pageMetadata.hero_background_image,
+          hero_cta_text: pageMetadata.hero_cta_text,
+          hero_cta_link: pageMetadata.hero_cta_link
         })
       });
       if (pageData) {
-        setInitialPageState({
-          blocks,
-          title: pageData.title,
-          slug: pageData.slug,
-          metaDescription: pageData.metaDescription,
-          metaKeywords: pageData.metaKeywords,
-          metaRobots: pageData.metaRobots,
-          customCss: pageData.customCss,
-          customJs: pageData.customJs,
-          isPublished: pageData.isPublished,
-          workflowStatus: pageData.workflowStatus
-        });
+        // After save, snapshot history and sync version counters so isDirty becomes false
+        snapshotHistory();
+        setSavedBlocksVersion(blocksVersion);
+        setSavedPageDataVersion(pageDataVersion);
       }
       toast.success('Page sauvegardée avec succès !');
     } catch (error) {
@@ -294,7 +329,7 @@ const BuilderPage: React.FC = () => {
     } finally {
       setIsSaving(false);
     }
-  }, [blocks, pageId, pageData]);
+  }, [blocks, pageId, pageData, snapshotHistory, blocksVersion, pageDataVersion]);
 
   const pageVersions = useMemo(() => {
     return pageId ? getVersions(pageId) : [];
@@ -353,32 +388,110 @@ const BuilderPage: React.FC = () => {
     const activeId = active.id.toString();
     const overId = over.id.toString();
 
+    // Recursive helpers
+    const findNode = (nodes: Block[], id: string): { node: Block, parentList: Block[], index: number } | null => {
+      const index = nodes.findIndex(n => n.id === id);
+      if (index !== -1) return { node: nodes[index], parentList: nodes, index };
+      for (const node of nodes) {
+        if (node.children) {
+          const found = findNode(node.children, id);
+          if (found) return found;
+        }
+      }
+      return null;
+    };
+
+    const removeNode = (nodes: Block[], id: string): Block | null => {
+      const index = nodes.findIndex(n => n.id === id);
+      if (index !== -1) return nodes.splice(index, 1)[0];
+      for (const node of nodes) {
+        if (node.children) {
+          const removed = removeNode(node.children, id);
+          if (removed) return removed;
+        }
+      }
+      return null;
+    };
+
+    // Deep copy state to mutate
+    const newBlocks = cloneDeep(blocks);
+
     // CASE 1: Dropping from Sidebar (New Block/Template)
     if (activeId.startsWith('sidebar-')) {
-      let index = blocks.length; // Default: end
+      let targetList = newBlocks;
+      let targetIndex = newBlocks.length;
 
       if (overId !== 'canvas-droppable') {
-        // If dropped over a specific block, insert before it
-        const overIndex = blocks.findIndex((b) => b.id === overId);
-        if (overIndex !== -1) index = overIndex;
+        const overNodeInfo = findNode(newBlocks, overId);
+        if (overNodeInfo) {
+          // If hovering over an empty section, drop inside it
+          if (overNodeInfo.node.type === 'section' && (!overNodeInfo.node.children || overNodeInfo.node.children.length === 0)) {
+             if (!overNodeInfo.node.children) overNodeInfo.node.children = [];
+             targetList = overNodeInfo.node.children;
+             targetIndex = 0;
+          } else {
+             // Otherwise drop as sibling
+             targetList = overNodeInfo.parentList;
+             targetIndex = overNodeInfo.index;
+          }
+        }
       }
 
       if (activeId.startsWith('sidebar-item-')) {
         const type = active.data.current?.type;
-        if (type) addBlock(type, undefined, index);
+        if (type) {
+          const newBlock: Block = {
+            id: `block-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+            type,
+            content: { title: `Nouveau ${type}` },
+            style: { padding: '20px' },
+            children: []
+          };
+          targetList.splice(targetIndex, 0, newBlock);
+          setBlocks(newBlocks);
+        }
       } else if (activeId.startsWith('sidebar-template-')) {
         const templateBlock = active.data.current?.block;
-        if (templateBlock) importBlock(templateBlock, undefined, index);
+        if (templateBlock) {
+           const clone = cloneDeep(templateBlock);
+           clone.id = `block-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
+           targetList.splice(targetIndex, 0, clone);
+           setBlocks(newBlocks);
+        }
       }
     }
     // CASE 2: Reordering Existing Blocks
     else if (activeId !== overId) {
-      const oldIndex = blocks.findIndex((b) => b.id === activeId);
-      const newIndex = blocks.findIndex((b) => b.id === overId);
+      const activeNodeInfo = findNode(newBlocks, activeId);
+      const overNodeInfo = findNode(newBlocks, overId);
 
-      if (oldIndex !== -1 && newIndex !== -1) {
-        const newBlocks = arrayMove(blocks, oldIndex, newIndex);
-        setBlocks(newBlocks);
+      if (activeNodeInfo && overNodeInfo) {
+        // Remove from old location
+        const draggedNode = removeNode(newBlocks, activeId);
+        if (!draggedNode) return;
+
+        // Find over location again because mutation might have shifted indexes
+        const updatedOverNodeInfo = findNode(newBlocks, overId);
+        if (updatedOverNodeInfo) {
+          // If dropping into an empty section
+          if (updatedOverNodeInfo.node.type === 'section' && (!updatedOverNodeInfo.node.children || updatedOverNodeInfo.node.children.length === 0)) {
+            if (!updatedOverNodeInfo.node.children) updatedOverNodeInfo.node.children = [];
+            updatedOverNodeInfo.node.children.push(draggedNode);
+          } else {
+            // Drop as sibling
+            let targetIndex = updatedOverNodeInfo.index;
+            // If dragging down in the same list, adjust index
+            if (activeNodeInfo.parentList === updatedOverNodeInfo.parentList && activeNodeInfo.index < updatedOverNodeInfo.index) {
+              targetIndex = updatedOverNodeInfo.index; // already shifted by removeNode
+            }
+            updatedOverNodeInfo.parentList.splice(targetIndex, 0, draggedNode);
+          }
+          setBlocks(newBlocks);
+        } else {
+           // fallback to root
+           newBlocks.push(draggedNode);
+           setBlocks(newBlocks);
+        }
       }
     }
   };
@@ -398,7 +511,7 @@ const BuilderPage: React.FC = () => {
 
                 {/* GAUCHE: Bibliothèques */}
                 <aside className="w-72 bg-white border-r border-slate-200 flex flex-col shadow-sm z-10 shrink-0">
-                    <div className="h-14 border-b flex items-center px-4 font-bold text-slate-700 bg-white">
+                    <div className="h-14 border-b flex items-center px-4 font-semibold text-slate-700 bg-slate-50">
                         <Plus className="w-5 h-5 mr-2 text-blue-600" /> Bibliothèque
                     </div>
 
@@ -417,7 +530,18 @@ const BuilderPage: React.FC = () => {
                             <DraggableItem type="text-block" label="Bloc Texte" icon={<Box size={16} />} />
                             <DraggableItem type="image" label="Image Seule" icon={<Box size={16} />} />
                             <DraggableItem type="html" label="Code HTML" icon={<Box size={16} />} />
+
+                            <div className="uppercase text-[10px] font-bold text-emerald-600 mb-2 mt-5 tracking-wider border-t border-slate-100 pt-4">
+                              🏠 Sections Page d'accueil
+                            </div>
+                            <DraggableItem type="HeroBanner" label="🎞 Carrousel Hero" icon={<LayoutTemplate size={16} />} />
+                            <DraggableItem type="AudienceOffers" label="🎯 Offres Audience" icon={<Box size={16} />} />
+                            <DraggableItem type="VisionMission" label="🎖 Vision & Mission" icon={<Box size={16} />} />
+                            <DraggableItem type="LandingStats" label="📊 Statistiques" icon={<Box size={16} />} />
+                            <DraggableItem type="LatestNews" label="📰 Actualités" icon={<Box size={16} />} />
+                            <DraggableItem type="PartnerLogos" label="🤝 Partenaires" icon={<Box size={16} />} />
                         </TabsContent>
+
 
                         <TabsContent value="templates" className="flex-1 overflow-y-auto p-4 space-y-3">
                             <div className="uppercase text-[10px] font-bold text-slate-400 mb-2 tracking-wider">Mes Modèles</div>
@@ -447,10 +571,10 @@ const BuilderPage: React.FC = () => {
                 <main className="flex-1 flex flex-col relative w-0 bg-slate-100">
 
                     {/* Toolbar */}
-                    <header className="h-14 bg-white border-b flex items-center justify-between px-4 z-10 w-full shadow-sm shrink-0">
+                    <header className="h-14 bg-white border-b grid grid-cols-[auto_1fr_auto] items-center px-4 z-10 w-full shadow-sm shrink-0 gap-4">
 
                         {/* Left Controls (Undo/Redo) */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 min-w-fit">
                             <Button variant="ghost" size="icon" className="mr-2 text-slate-400 hover:text-slate-600" title="Retour à la liste" asChild>
                                 <a href="/dashboard?tab=pages" title="Retour à la liste des pages">
                                     <ChevronLeft className="w-5 h-5" />
@@ -482,17 +606,17 @@ const BuilderPage: React.FC = () => {
                         </div>
 
                         {/* Center Info: Page Title */}
-                        <div className="flex flex-col items-center">
+                        <div className="min-w-0 flex flex-col items-center text-center overflow-hidden">
                             {pageData ?
               <>
-                                    <h1 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                                        {pageData.title}
+                                    <h1 className="text-sm font-bold text-slate-800 flex flex-wrap items-center justify-center gap-2 truncate">
+                                        <span className="truncate">{pageData.title}</span>
                                         <span className={`px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-tighter ${pageData.workflowStatus === 'published' ? 'bg-emerald-50 text-emerald-700' : pageData.workflowStatus === 'review' ? 'bg-amber-50 text-amber-700' : pageData.workflowStatus === 'archived' ? 'bg-rose-50 text-rose-700' : 'bg-slate-100 text-slate-500'}`}>
                                           {pageData.workflowStatus === 'published' ? 'Publié' : pageData.workflowStatus === 'review' ? 'En relecture' : pageData.workflowStatus === 'archived' ? 'Archivée' : 'Brouillon'}
                                         </span>
                                     </h1>
-                                    <p className="text-[10px] text-slate-400 font-mono italic">/{pageData.slug}</p>
-                                    <div className="mt-1 flex gap-2">
+                                    <p className="text-[10px] text-slate-400 font-mono italic truncate">/{pageData.slug}</p>
+                                    <div className="mt-1 flex gap-2 flex-wrap justify-center">
                                         {loadError ? (
                                             <span className="text-[10px] uppercase text-rose-500 tracking-[0.18em] font-semibold">Erreur de chargement</span>
                                         ) : isDirty ? (
@@ -508,11 +632,11 @@ const BuilderPage: React.FC = () => {
                         </div>
 
                         {/* Right Actions */}
-                        <div className="flex gap-2">
+                        <div className="flex items-center gap-2 justify-end min-w-0 overflow-x-auto">
                             {/* Code View Dialog */}
                             <Dialog>
                                 <DialogTrigger asChild>
-                                    <Button variant="ghost" size="sm" className="hidden xl:flex text-slate-500">
+                                    <Button variant="outline" size="sm" className="inline-flex text-slate-600">
                                         <Code className="w-4 h-4 mr-2" /> Code
                                     </Button>
                                 </DialogTrigger>
@@ -529,15 +653,15 @@ const BuilderPage: React.FC = () => {
                                 </DialogContent>
                             </Dialog>
 
-                            <Button size="sm" variant="outline" onClick={() => setShowPreview(true)} className="hidden xl:inline-flex text-slate-500">
+                            <Button size="sm" variant="outline" onClick={() => setShowPreview(true)} className="inline-flex text-slate-600">
                                 <Eye className="w-4 h-4 mr-2" /> Aperçu
                             </Button>
 
-                            <Button size="sm" variant="outline" onClick={() => setVersionDialogOpen(true)} className="hidden xl:inline-flex text-slate-500">
+                            <Button size="sm" variant="outline" onClick={() => setVersionDialogOpen(true)} className="inline-flex text-slate-600">
                                 <Code className="w-4 h-4 mr-2" /> Versions
                             </Button>
 
-                            <Button size="sm" variant="outline" onClick={() => setShowAnalytics(true)} className="hidden xl:inline-flex text-slate-500">
+                            <Button size="sm" variant="outline" onClick={() => setShowAnalytics(true)} className="inline-flex text-slate-600">
                                 <Monitor className="w-4 h-4 mr-2" /> Analytics
                             </Button>
 
@@ -552,16 +676,14 @@ const BuilderPage: React.FC = () => {
                                 </a>
                             </Button>
                             <Button
-                size="sm"
-                className="bg-blue-600 hover:bg-blue-700 min-w-[120px]"
-                onClick={handleSave}
-                disabled={isSaving || isLoading}>
-                
+                                size="sm"
+                                className="bg-blue-600 hover:bg-blue-700 min-w-[120px] text-white"
+                                onClick={handleSave}
+                                disabled={isSaving || isLoading}>
                                 {isSaving ?
-                <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Sauvegarde...</> :
-
-                <><Save className="w-4 h-4 mr-2" /> Sauvegarder</>
-                }
+                                    <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Sauvegarde...</> :
+                                    <><Save className="w-4 h-4 mr-2" /> Sauvegarder</>
+                                }
                             </Button>
                         </div>
                     </header>
@@ -703,10 +825,65 @@ const BuilderPage: React.FC = () => {
 
                 {/* DROITE: Propriétés */}
                 <aside className="border-l border-slate-200 flex flex-col shadow-sm z-10 w-[400px] min-w-[400px] bg-white transition-all duration-300 shrink-0">
-                    <PropertyPanel
-                      pageSettings={pageData}
-                      onPageSettingsChange={handlePageDataChange}
-                    />
+                    <Tabs value={selectedBlockId ? 'block' : 'page'} className="flex flex-col h-full">
+                      <div className="border-b bg-slate-50 px-2 pt-1.5 shrink-0">
+                        <TabsList className="w-full grid grid-cols-2 h-9 bg-slate-100/80">
+                          <TabsTrigger
+                            value="block"
+                            onClick={() => { if (!selectedBlockId) selectBlock(null); }}
+                            className="text-xs gap-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                          >
+                            <Box className="w-3 h-3" />
+                            Bloc
+                            {selectedBlockId && <span className="w-1.5 h-1.5 rounded-full bg-blue-600 ml-1"></span>}
+                          </TabsTrigger>
+                          <TabsTrigger
+                            value="page"
+                            onClick={() => selectBlock(null)}
+                            className="text-xs gap-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                          >
+                            <Globe className="w-3 h-3" />
+                            Page
+                          </TabsTrigger>
+                        </TabsList>
+                      </div>
+                      <TabsContent value="block" className="flex-1 overflow-hidden mt-0">
+                        <PropertyPanel
+                          pageSettings={pageData ? {
+                            title: pageData.title,
+                            slug: pageData.slug,
+                            metaDescription: pageData.metaDescription,
+                            metaKeywords: pageData.metaKeywords,
+                            metaRobots: pageData.metaRobots,
+                            customCss: pageData.customCss,
+                            customJs: pageData.customJs,
+                            isPublished: pageData.isPublished,
+                            workflowStatus: pageData.workflowStatus
+                          } : undefined}
+                          onPageSettingsChange={(changes) => handlePageDataChange(changes as unknown as Partial<PageDataState>)}
+                        />
+                      </TabsContent>
+                      <TabsContent value="page" className="flex-1 overflow-hidden mt-0">
+                        <PageSettingsPanel
+                          pageSettings={pageData ? {
+                            title: pageData.title,
+                            slug: pageData.slug,
+                            metaDescription: pageData.metaDescription,
+                            metaKeywords: pageData.metaKeywords,
+                            metaRobots: pageData.metaRobots,
+                            customCss: pageData.customCss,
+                            customJs: pageData.customJs,
+                            designOptions: pageData.designOptions as unknown as Record<string, unknown>,
+                            isPublished: pageData.isPublished,
+                            workflowStatus: pageData.workflowStatus
+                          } : undefined}
+                          onPageSettingsChange={(changes) => handlePageDataChange(changes as unknown as Partial<PageDataState>)}
+                          pageMetadata={pageMetadata}
+                          onPageMetadataChange={setPageMetadata}
+                          contentHtml={JSON.stringify(blocks)}
+                        />
+                      </TabsContent>
+                    </Tabs>
                 </aside>
             </div>
         </DndContext>);
@@ -799,7 +976,12 @@ const DroppableCanvas = ({ blocks, widthClass }: { blocks: Block[]; widthClass: 
         }
       }}>
       
-            <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
+            <SortableContext items={(() => {
+              const getAllBlockIds = (nodes: Block[]): string[] => {
+                return nodes.reduce((acc, b) => [...acc, b.id, ...getAllBlockIds(b.children || [])], [] as string[]);
+              };
+              return getAllBlockIds(blocks);
+            })()} strategy={verticalListSortingStrategy}>
                 {blocks.length > 0 ? <BuilderPageRenderer
           blocks={blocks}
           isEditor={true}

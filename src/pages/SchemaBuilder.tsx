@@ -11,7 +11,9 @@ import { AlertCircle, CheckCircle2, Zap, RotateCcw, RotateCw } from 'lucide-reac
 import { ChargeEditor } from '@/components/tools/ChargeEditor';
 import { PhaseBalanceDisplay } from '@/components/tools/PhaseBalanceDisplay';
 import { CableRecommendationsDisplay } from '@/components/tools/CableRecommendationsDisplay';
-
+import { GraphParamsExtractor } from '@/engine/GraphParamsExtractor';
+import VoltageDropCalculator, { VoltageDropCalculatorProps } from '@/components/tools/VoltageDropCalculator';
+import { X } from 'lucide-react';
 /**
  * SchemaBuilder Page - Phase 1 Graphical Schema Editor
  * 
@@ -40,6 +42,25 @@ export default function SchemaBuilder() {
 
   // Nœud sélectionné pour l'édition des charges
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+
+  const [showCalculator, setShowCalculator] = useState(false);
+  const [calculatorProps, setCalculatorProps] = useState<VoltageDropCalculatorProps>({});
+
+  const handleAnalyzeEdge = (edgeId: string) => {
+    const edge = graphStore.edges.get(edgeId);
+    if (!edge) return;
+    
+    // Extraction des paramètres via le nouvel utilitaire
+    const params = GraphParamsExtractor.extractPathToSource(graphStore, edge.to);
+    
+    setCalculatorProps({
+      initialLength: params.totalLength,
+      initialCurrent: params.maxCurrent || 10,
+      initialCrossSection: edge.properties.section || 2.5,
+      initialMaterial: edge.properties.materiau || 'Cu'
+    });
+    setShowCalculator(true);
+  };
 
   // Load rubrique from URL parameter
   useEffect(() => {
@@ -98,6 +119,7 @@ export default function SchemaBuilder() {
   const isReceptorSelected = selectedNode?.type === 'RECEPTOR';
 
   return (
+    <>
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
       {/* Glassmorphism Header */}
       <header className="sticky top-0 z-40 backdrop-blur-xl bg-slate-950/40 border-b border-slate-700/30 shadow-2xl">
@@ -608,6 +630,23 @@ window.__graphStore.serialize()      // Export JSON`}
             </code>
           </div>
         </main>
-      </div>);
+      </div>
 
+      {/* Calculator Modal */}
+      {showCalculator &&
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
+          <div className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl w-full max-w-7xl max-h-[90vh] overflow-hidden flex flex-col">
+            <div className="flex justify-between items-center p-4 border-b border-slate-700/50">
+              <h2 className="text-lg font-semibold text-slate-200">Analyse de la Branche (NS 01-001)</h2>
+              <button onClick={() => setShowCalculator(false)} className="p-2 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-4">
+              <VoltageDropCalculator {...calculatorProps} />
+            </div>
+          </div>
+        </div>
+      }
+    </>);
 }

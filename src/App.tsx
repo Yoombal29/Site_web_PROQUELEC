@@ -322,6 +322,10 @@ const AppContent = () => {
 
         // Routes dynamiques (pages CMS)
         ...(dynamicRoutes?.map((route) => ({ path: route.path, element: <DynamicPage /> })) || []),
+        // Routes legacy avec préfixe de langue → DynamicPage les redirige proprement
+        { path: "/fr/*", element: <DynamicPage /> },
+        { path: "/en/*", element: <DynamicPage /> },
+
         { path: "*", element: <NotFound /> }
       );
     }
@@ -332,14 +336,10 @@ const AppContent = () => {
   const finalRoutes = [
     {
       path: "/",
-      element:
-        <MainLayout>
-          <Outlet />
-        </MainLayout>,
-
+      element: <MainLayout><Outlet /></MainLayout>,
       children: createRoutes()
-    }];
-
+    }
+  ];
 
   const router = createBrowserRouter(finalRoutes);
 

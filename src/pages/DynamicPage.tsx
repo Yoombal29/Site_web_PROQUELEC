@@ -1,5 +1,5 @@
 import React, { useEffect, useState, ComponentType } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { PageRenderer } from '@/components/PageRenderer';
 import { SEO } from '@/components/SEO';
 import type { PageRecord } from '@/types/PageSystem';
@@ -15,6 +15,7 @@ import ToolsPlatform from './ToolsPlatform';
 import Showroom from './Showroom';
 import Documents from './Documents';
 import Events from './Events';
+import Labels from './Labels';
 
 import { useLiveSettings } from '@/hooks/useLiveSettings';
 
@@ -42,7 +43,8 @@ const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
   outils: ToolsPlatform,
   showroom: Showroom,
   documents: Documents,
-  events: Events
+  events: Events,
+  labels: Labels
 };
 
 /**
@@ -54,8 +56,9 @@ const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
 const DynamicPageComponent: React.FC = () => {
   const { slug: paramSlug } = useParams<{slug: string;}>();
   const location = useLocation();
-  const rawSlug = paramSlug || location.pathname.replace(/^\//, '').replace(/\/$/, '');
-  const effectiveSlug = rawSlug === '' ? 'home' : rawSlug;
+  const navigate = useNavigate();
+  const rawSlug = paramSlug || location.pathname.replace(/^\//, '').replace(/\/$/, '').replace(/^(fr|en)\//, '');
+  const effectiveSlug = rawSlug === '' || rawSlug === 'fr' || rawSlug === 'en' ? 'home' : rawSlug;
   const resolvedPageKey = PAGE_ALIASES[effectiveSlug] || effectiveSlug;
   const [page, setPage] = useState<PageRecord | null>(null);
   const [loading, setLoading] = useState(true);
@@ -63,13 +66,22 @@ const DynamicPageComponent: React.FC = () => {
   const [fallbackPageKey, setFallbackPageKey] = useState<string | null>(null);
   const { settings } = useLiveSettings();
 
+  // Rediriger /fr/xxx → /xxx et /en/xxx → /xxx (URLs propres sans préfixe de langue)
+  useEffect(() => {
+    const match = location.pathname.match(/^\/(fr|en)(\/.*)?$/);
+    if (match) {
+      const cleanPath = match[2] || '/';
+      navigate(cleanPath, { replace: true });
+    }
+  }, [location.pathname, navigate]);
+
   useEffect(() => {
     const fetchPage = async () => {
       // Déterminer le slug : soit via paramètre (:slug), soit via le chemin URL (/about -> about)
       let effectiveSlug = paramSlug; 
 
       if (!effectiveSlug) {
-        effectiveSlug = location.pathname.replace(/^\/|\/$/g, '');
+        effectiveSlug = location.pathname.replace(/^\/|\/$/g, '').replace(/^(fr|en)\//, '');
       }
 
       if (!effectiveSlug || effectiveSlug === '') {

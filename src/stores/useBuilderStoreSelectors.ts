@@ -14,14 +14,14 @@ const findBlockRecursive = (id: string | null, blocks: Block[] = []): Block | nu
   return null;
 };
 
-export const useSelectedBlock = () =>
-  useBuilderStore((s) => findBlockRecursive(s.selectedBlockId, s.blocks) ?? null, shallow);
+export const useSelectedBlock = (): Block | null =>
+  useBuilderStore((s) => findBlockRecursive(s.selectedBlockId, s.blocks) ?? null);
 
 export const useBlockStyle = () =>
-  useBuilderStore((s) => findBlockRecursive(s.selectedBlockId, s.blocks)?.style, shallow) as BlockStyle | undefined;
+  useBuilderStore((s) => findBlockRecursive(s.selectedBlockId, s.blocks)?.style) as BlockStyle | undefined;
 
 export const useBlockContent = () =>
-  useBuilderStore((s) => findBlockRecursive(s.selectedBlockId, s.blocks)?.content, shallow) as BlockContent | undefined;
+  useBuilderStore((s) => findBlockRecursive(s.selectedBlockId, s.blocks)?.content) as BlockContent | undefined;
 
 // Actions
 export const useUpdateBlockStyle = () => useBuilderStore((s) => s.updateBlockStyle);

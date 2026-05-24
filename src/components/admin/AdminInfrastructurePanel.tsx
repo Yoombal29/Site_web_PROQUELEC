@@ -25,16 +25,6 @@ const AdminInfrastructurePanel = () => {
     bg: "bg-green-50",
     status: "External",
     port: "3103"
-  },
-  {
-    name: "Keycloak Auth",
-    description: "Serveur d'authentification centralisé (Legacy SSO).",
-    url: "http://localhost:8183",
-    icon: Shield,
-    color: "text-purple-500",
-    bg: "bg-purple-50",
-    status: "Active",
-    port: "8183"
   }];
 
 
@@ -46,10 +36,10 @@ const AdminInfrastructurePanel = () => {
                     Infrastructure & Services Externes
                 </h2>
                 <p className="text-slate-500">
-                    Accès direct aux services d'infrastructure hérités (Legacy) tournant sur le serveur Docker.
+                    Accès direct aux services et interfaces externes utilisés par la plateforme.
                     <br />
                     <span className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded border border-amber-200 inline-block mt-2">
-                        ⚠️ Ces services doivent être démarrés via Docker Compose pour être accessibles.
+                        ⚠️ Ces outils doivent être démarrés ou accessibles pour fonctionner correctement.
                     </span>
                 </p>
             </div>

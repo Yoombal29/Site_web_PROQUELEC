@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -686,6 +686,29 @@ const AdminPagesPanel: React.FC = () => {
       <>
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">Gestion des Pages</h2>
+          <div className="flex gap-2 items-center">
+            <Button
+              variant="outline"
+              className="border-emerald-300 text-emerald-700 hover:bg-emerald-50 gap-2"
+              onClick={async () => {
+                if (!window.confirm('Initialiser la page d\'accueil dans le BE Builder avec les 6 sections originales (Carrousel, Audience, Vision, Stats, News, Partenaires) ?')) return;
+                try {
+                  const res = await fetch('/api/admin/seed-homepage', { method: 'POST', headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+                  const data = await res.json();
+                  if (data.success) {
+                    toast({ title: '✅ Page d\'accueil initialisée !', description: `${data.blocksCount} sections injectées. Ouvrez la page "home" dans le BE Builder.` });
+                    refetch();
+                  } else {
+                    throw new Error(data.error || 'Échec');
+                  }
+                } catch (err) {
+                  toast({ title: 'Erreur', description: String(err), variant: 'destructive' });
+                }
+              }}
+            >
+              🏠 Initialiser Homepage
+            </Button>
+            </div>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button onClick={() => {resetForm();setIsDialogOpen(true);}}>
@@ -693,6 +716,7 @@ const AdminPagesPanel: React.FC = () => {
                   Nouvelle Page
                 </Button>
               </DialogTrigger>
+
               <DialogContent
               className="max-w-4xl max-h-[90vh] overflow-y-auto"
               aria-describedby="page-editor-description">
@@ -1639,7 +1663,7 @@ const AdminPagesPanel: React.FC = () => {
                           <Button
                       variant="default"
                       size="sm"
-                      onClick={() => window.open(`/admin/builder/${page.id}`, '_blank')}
+                      onClick={() => window.open(`/admin/builder/${page.slug || page.id}`, '_blank')}
                       title="Éditeur Visuel (Builder PRO)"
                       className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600">
                       

@@ -3,7 +3,7 @@
  * Utilisés pour le contrat de données entre API locale ↔ UI ↔ Renderer
  */
 
-export type WorkflowStatus = 'draft' | 'review' | 'approved' | 'published';
+export type WorkflowStatus = 'draft' | 'review' | 'approved' | 'published' | 'archived';
 export type CommentStatus = 'open' | 'closed';
 
 // Registre des Sections Personnalisées

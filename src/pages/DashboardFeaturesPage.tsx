@@ -560,13 +560,6 @@ export default function DashboardFeaturesPage({ onTabChange }: {onTabChange: (id
                 </div>
                 <code className="text-[11px] bg-white px-2 py-1 rounded shadow-sm text-blue-700">Port 3101</code>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-xl bg-purple-50 border border-purple-100">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
-                  <span className="text-xs font-bold text-purple-800">Keycloak Auth</span>
-                </div>
-                <code className="text-[11px] bg-white px-2 py-1 rounded shadow-sm text-purple-700">Port 8183</code>
-              </div>
               <div className="flex items-center justify-between p-3 rounded-xl bg-green-50 border border-green-100">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>

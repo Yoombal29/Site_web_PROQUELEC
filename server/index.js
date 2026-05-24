@@ -11,7 +11,21 @@ const FormData = require('form-data');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
-require('dotenv').config();
+const dotenvResult = require('dotenv').config({ override: true, path: path.resolve(__dirname, '../.env') });
+if (dotenvResult.error) {
+    console.error('[ENV] Failed to load .env:', dotenvResult.error);
+}
+try {
+    const dbUrl = process.env.DATABASE_URL || '';
+    if (dbUrl) {
+        const parsedUrl = new URL(dbUrl);
+        console.log(`[ENV] Loaded DATABASE_URL host=${parsedUrl.hostname} port=${parsedUrl.port || '5432'} database=${parsedUrl.pathname.slice(1)}`);
+    } else {
+        console.log('[ENV] DATABASE_URL is not set');
+    }
+} catch (err) {
+    console.warn('[ENV] Invalid DATABASE_URL format:', err.message);
+}
 const { orchestrate } = require('./orchestrator');
 const { spawn } = require('child_process');
 const { startSyncEngine } = require('./sync-engine'); // Observatoire Sync
@@ -1906,9 +1920,14 @@ app.get('/', (req, res) => {
  */
 app.post('/api/auth/login', async (req, res) => {
     const { email, password } = req.body;
+    const normalizedEmail = typeof email === 'string' ? email.trim().toLowerCase() : '';
+
+    if (!normalizedEmail || !password) {
+        return res.status(400).json({ error: 'Email et mot de passe requis' });
+    }
 
     try {
-        const result = await pool.query('SELECT * FROM public.users WHERE email = $1', [email]);
+        const result = await pool.query('SELECT * FROM public.users WHERE email = $1', [normalizedEmail]);
 
         if (result.rows.length === 0) {
             return res.status(401).json({ error: 'Invalid credentials' });
@@ -1936,7 +1955,8 @@ app.post('/api/auth/login', async (req, res) => {
             user: {
                 id: user.id,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                is_active: user.is_active
             }
         });
     } catch (err) {
@@ -1950,9 +1970,10 @@ const ALLOWED_ROLES = ['electricien', 'entreprise', 'membre', 'partner'];
 
 app.post('/api/auth/register', async (req, res) => {
     const { email, password, full_name, phone, company, role } = req.body;
+    const normalizedEmail = typeof email === 'string' ? email.trim().toLowerCase() : '';
 
     // Validation
-    if (!email || !password) {
+    if (!normalizedEmail || !password) {
         return res.status(400).json({ error: 'Email et mot de passe requis' });
     }
     if (password.length < 6) {
@@ -1964,7 +1985,7 @@ app.post('/api/auth/register', async (req, res) => {
 
     try {
         // Check if user already exists
-        const exists = await pool.query('SELECT id FROM public.users WHERE email = $1', [email]);
+        const exists = await pool.query('SELECT id FROM public.users WHERE email = $1', [normalizedEmail]);
         if (exists.rows.length > 0) {
             return res.status(409).json({ error: 'Un compte avec cet email existe déjà' });
         }
@@ -1976,14 +1997,14 @@ app.post('/api/auth/register', async (req, res) => {
         try {
             result = await pool.query(
                 `INSERT INTO public.users (email, password_hash, role, is_active, full_name, phone, company, created_at)
-                 VALUES ($1, $2, $3, true, $4, $5, $6, NOW()) RETURNING id, email, role`,
-                [email, hashedPassword, userRole, full_name || null, phone || null, company || null]
+                 VALUES ($1, $2, $3, true, $4, $5, $6, NOW()) RETURNING id, email, role, is_active`,
+                [normalizedEmail, hashedPassword, userRole, full_name || null, phone || null, company || null]
             );
         } catch (e) {
             result = await pool.query(
                 `INSERT INTO public.users (email, password_hash, role, created_at)
-                 VALUES ($1, $2, $3, NOW()) RETURNING id, email, role`,
-                [email, hashedPassword, userRole]
+                 VALUES ($1, $2, $3, NOW()) RETURNING id, email, role, is_active`,
+                [normalizedEmail, hashedPassword, userRole]
             );
         }
 
@@ -1996,7 +2017,7 @@ app.post('/api/auth/register', async (req, res) => {
 
         res.status(201).json({
             access_token: token,
-            user: { id: user.id, email: user.email, role: user.role }
+            user: { id: user.id, email: user.email, role: user.role, is_active: user.is_active }
         });
     } catch (err) {
         console.error('Registration error:', err);
@@ -2047,6 +2068,86 @@ app.get('/api/users', authenticateToken, async (req, res) => {
         res.json(result.rows);
     } catch (err) {
         console.error('[API-USERS] Error fetching users:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ----------------------
+// Admin users management
+// ----------------------
+app.get('/api/admin/users', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const result = await pool.query(`SELECT id, email, role, is_active, created_at FROM public.users ORDER BY created_at DESC`);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('[API-ADMIN-USERS] Error fetching admin users:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/admin/users', authenticateToken, requireAdmin, async (req,res) => {
+    try {
+        const { email, password, role, is_active } = req.body;
+        if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+        const normalizedEmail = String(email).trim().toLowerCase();
+        const exists = await pool.query('SELECT id FROM public.users WHERE email = $1', [normalizedEmail]);
+        if (exists.rows.length > 0) return res.status(409).json({ error: 'User already exists' });
+        const passwordHash = await bcrypt.hash(password, 10);
+        const result = await pool.query(
+            `INSERT INTO public.users (email, password_hash, role, is_active, created_at)
+             VALUES ($1, $2, $3, $4, NOW())
+             RETURNING id, email, role, is_active, created_at`,
+            [normalizedEmail, passwordHash, role || 'user', is_active === true]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch(err) {
+        console.error('[API-ADMIN-USERS] Create error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.put('/api/admin/users/:id', authenticateToken, requireAdmin, async (req,res) => {
+    try {
+        const id = req.params.id;
+        const { email, role, password, is_active } = req.body;
+        const updates = [];
+        const params = [];
+        let idx = 1;
+        if (email) { updates.push(`email = $${idx++}`); params.push(String(email).trim().toLowerCase()); }
+        if (role) { updates.push(`role = $${idx++}`); params.push(role); }
+        if (typeof is_active !== 'undefined') { updates.push(`is_active = $${idx++}`); params.push(!!is_active); }
+        if (password) { const hash = await bcrypt.hash(password, 10); updates.push(`password_hash = $${idx++}`); params.push(hash); }
+        if (updates.length === 0) return res.status(400).json({ error: 'No updates provided' });
+        params.push(id);
+        const q = `UPDATE public.users SET ${updates.join(', ')} WHERE id = $${idx} RETURNING id, email, role, is_active, created_at`;
+        const result = await pool.query(q, params);
+        res.json(result.rows[0]);
+    } catch(err) {
+        console.error('[API-ADMIN-USERS] Update error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete('/api/admin/users/:id', authenticateToken, requireAdmin, async (req,res) => {
+    try {
+        const id = req.params.id;
+        await pool.query('DELETE FROM public.users WHERE id = $1', [id]);
+        res.sendStatus(204);
+    } catch(err) {
+        console.error('[API-ADMIN-USERS] Delete error:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.patch('/api/admin/users/:id/status', authenticateToken, requireAdmin, async (req,res) => {
+    try {
+        const id = req.params.id;
+        const { is_active } = req.body;
+        if (typeof is_active === 'undefined') return res.status(400).json({ error: 'is_active required' });
+        const result = await pool.query('UPDATE public.users SET is_active = $1 WHERE id = $2 RETURNING id, email, role, is_active, created_at', [!!is_active, id]);
+        res.json(result.rows[0]);
+    } catch(err) {
+        console.error('[API-ADMIN-USERS] Status error:', err);
         res.status(500).json({ error: err.message });
     }
 });
@@ -2616,13 +2717,146 @@ app.get('/api/documents', async (req, res) => {
 app.post('/api/documents', authenticateToken, async (req, res) => {
     const { title, description, file_url } = req.body;
     await executeQuery(res,
-        'INSERT INTO public.documents (title, description, file_url, uploaded_at, uploader_id) VALUES ($1, $2, $3, NOW(), $4) RETURNING *',
-        [title, description, file_url, req.user.id]
+        'INSERT INTO public.documents (title, description, file_url, uploaded_at, uploader_id, workflow_state) VALUES ($1, $2, $3, NOW(), $4, $5) RETURNING *',
+        [title, description, file_url, req.user.id, 'draft']
     );
 });
 
 app.delete('/api/documents/:id', authenticateToken, async (req, res) => {
     await executeQuery(res, 'DELETE FROM public.documents WHERE id=$1', [req.params.id]);
+});
+
+const GED_WORKFLOW_STATES = ['draft', 'review', 'published', 'archived'];
+const GED_WORKFLOW_TRANSITIONS = {
+    draft: ['review'],
+    review: ['draft', 'published'],
+    published: ['archived', 'review'],
+    archived: ['draft']
+};
+
+const GED_WORKFLOW_ENTITIES = {
+    documents: { table: 'public.documents', type: 'document' },
+    'media-files': { table: 'public.media_files', type: 'media_file' }
+};
+
+const recordGedWorkflowTransition = async ({ entityId, entityType, fromState, toState, changedBy, comment }) => {
+    try {
+        await pool.query(
+            `INSERT INTO public.document_workflow_transitions
+                (entity_id, entity_type, from_state, to_state, changed_by, comment, created_at)
+             VALUES ($1, $2, $3, $4, $5, $6, NOW())`,
+            [entityId, entityType, fromState, toState, changedBy, comment || null]
+        );
+        await pool.query(
+            `INSERT INTO public.audit_log (user_id, action, entity_type, entity_id, details, timestamp)
+             VALUES ($1, $2, $3, $4, $5, NOW())`,
+            [changedBy, `${entityType}.workflow.transition`, entityType, entityId, JSON.stringify({ fromState, toState, comment })]
+        );
+    } catch (err) {
+        console.error('[GED] Failed to record workflow transition:', err);
+    }
+};
+
+app.post('/api/ged/:entity/:id/transition', authenticateToken, requirePermission('ged:transition'), async (req, res) => {
+    try {
+        const { entity, id } = req.params;
+        const { to_state: toState, comment } = req.body;
+        const normalizedTarget = String(toState || '').toLowerCase();
+
+        const entityConfig = GED_WORKFLOW_ENTITIES[entity];
+        if (!entityConfig) {
+            return res.status(400).json({ error: 'Type d\'entité GED invalide', valid_entities: Object.keys(GED_WORKFLOW_ENTITIES) });
+        }
+
+        if (!GED_WORKFLOW_STATES.includes(normalizedTarget)) {
+            return res.status(400).json({ error: 'Etat de workflow invalide', valid_states: GED_WORKFLOW_STATES });
+        }
+
+        const entityResult = await pool.query(`SELECT id, workflow_state FROM ${entityConfig.table} WHERE id = $1`, [id]);
+        if (entityResult.rows.length === 0) {
+            return res.status(404).json({ error: 'Entité GED introuvable' });
+        }
+
+        const fromState = entityResult.rows[0].workflow_state || 'draft';
+        if (fromState === normalizedTarget) {
+            return res.status(400).json({ error: 'L\'entité est déjà dans cet état' });
+        }
+
+        const allowed = GED_WORKFLOW_TRANSITIONS[fromState] || [];
+        if (!allowed.includes(normalizedTarget)) {
+            return res.status(400).json({ error: 'Transition de workflow non autorisée', from: fromState, to: normalizedTarget, allowed });
+        }
+
+        const updateResult = await pool.query(
+            `UPDATE ${entityConfig.table} SET workflow_state = $1, updated_at = NOW() WHERE id = $2 RETURNING *`,
+            [normalizedTarget, id]
+        );
+
+        await recordGedWorkflowTransition({
+            entityId: id,
+            entityType: entityConfig.type,
+            fromState,
+            toState: normalizedTarget,
+            changedBy: req.user.id,
+            comment
+        });
+
+        try {
+            sendSseEvent('ged:transition', {
+                id,
+                entity_type: entityConfig.type,
+                from_state: fromState,
+                to_state: normalizedTarget,
+                changed_by: req.user.id,
+                comment,
+                timestamp: new Date().toISOString()
+            });
+        } catch (err) {
+            console.warn('[GED] SSE broadcast failed:', err.message);
+        }
+
+        res.json({
+            success: true,
+            entity: entityConfig.type,
+            entity_id: id,
+            from_state: fromState,
+            to_state: normalizedTarget,
+            record: updateResult.rows[0]
+        });
+    } catch (err) {
+        console.error('[GED] Transition failed:', err);
+        res.status(500).json({ error: 'Erreur de transition de workflow', details: err.message });
+    }
+});
+
+app.get('/api/ged/:entity/:id/history', authenticateToken, requirePermission('ged:transition'), async (req, res) => {
+    try {
+        const { entity, id } = req.params;
+        const entityConfig = GED_WORKFLOW_ENTITIES[entity];
+        if (!entityConfig) {
+            return res.status(400).json({ error: 'Type d\'entité GED invalide', valid_entities: Object.keys(GED_WORKFLOW_ENTITIES) });
+        }
+
+        const historyResult = await pool.query(
+            `SELECT id, entity_id, entity_type, from_state, to_state, changed_by, comment, created_at
+             FROM public.document_workflow_transitions
+             WHERE entity_id = $1 AND entity_type = $2
+             ORDER BY created_at DESC`,
+            [id, entityConfig.type]
+        );
+        res.json({ entity: entityConfig.type, entity_id: id, history: historyResult.rows });
+    } catch (err) {
+        console.error('[GED] Fetch history failed:', err);
+        res.status(500).json({ error: 'Impossible de récupérer l\'historique de workflow', details: err.message });
+    }
+});
+
+app.get('/api/ged/workflow/config', authenticateToken, async (req, res) => {
+    res.json({
+        states: GED_WORKFLOW_STATES,
+        transitions: GED_WORKFLOW_TRANSITIONS,
+        entities: Object.keys(GED_WORKFLOW_ENTITIES)
+    });
 });
 
 // -- Site Assets (Resources Page) --
@@ -2873,7 +3107,7 @@ app.post('/api/upload', authenticateToken, upload.single('file'), async (req, re
         const filePath = req.file.filename; // Just the filename as it's served via /uploads/
         const publicUrl = `/uploads/${filePath}`;
 
-        // Insert into media_files table with Alfresco metadata support
+        // Insert into media_files table with document metadata support
         const { project_id, folder_path, status } = req.body || {};
         const result = await pool.query(
             `INSERT INTO public.media_files (file_name, file_path, file_type, file_size, mime_type, uploaded_at, uploaded_by, project_id, folder_path, status, is_active) 
@@ -3220,6 +3454,17 @@ const initDB = async () => {
     try {
         await pool.query('CREATE EXTENSION IF NOT EXISTS "pgcrypto"');
         await pool.query(`
+            CREATE TABLE IF NOT EXISTS public.users(
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                name TEXT,
+                email TEXT NOT NULL UNIQUE,
+                password_hash TEXT NOT NULL,
+                role TEXT DEFAULT 'user',
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+                updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+            );
+        `);
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS public.ai_requests_log(
                 id SERIAL PRIMARY KEY,
                 user_id UUID, 
@@ -3284,6 +3529,21 @@ const initDB = async () => {
         await pool.query('ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS version INTEGER DEFAULT 1');
         await pool.query('ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS content_blocks JSONB DEFAULT \'[]\'');
         await pool.query('ALTER TABLE public.users ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT true');
+        await pool.query('ALTER TABLE public.documents ADD COLUMN IF NOT EXISTS workflow_state TEXT DEFAULT \'draft\'');
+        await pool.query('ALTER TABLE public.media_files ADD COLUMN IF NOT EXISTS workflow_state TEXT DEFAULT \'draft\'');
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS public.document_workflow_transitions(
+                id SERIAL PRIMARY KEY,
+                entity_id UUID NOT NULL,
+                entity_type TEXT NOT NULL,
+                from_state TEXT,
+                to_state TEXT NOT NULL,
+                changed_by UUID,
+                comment TEXT,
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+            );
+            CREATE INDEX IF NOT EXISTS idx_document_workflow_transitions_entity_id ON public.document_workflow_transitions(entity_id);
+        `);
 
         await pool.query(`
         CREATE TABLE IF NOT EXISTS public.construction_mode(
@@ -4451,6 +4711,141 @@ app.get('/api/search', async (req, res) => {
     }
 });
 
+// --- FULL-TEXT SEARCH ENDPOINT (Advanced) ---
+app.get('/api/search/full-text', async (req, res) => {
+    try {
+        const { q, type, limit = 20, offset = 0 } = req.query;
+        
+        if (!q || q.length < 2) {
+            return res.json({ results: [], total: 0, query: q });
+        }
+
+        let results = [];
+        let total = 0;
+
+        // Configuration des tables à rechercher
+        const searchConfigs = {
+            pages: {
+                table: 'public.pages',
+                columns: ['title', 'content', 'meta_description'],
+                where: 'is_published = true',
+                urlField: 'slug',
+                urlPrefix: '/',
+                typeLabel: 'Page'
+            },
+            blog: {
+                table: 'public.blog_posts',
+                columns: ['title', 'content', 'excerpt'],
+                where: 'published_at IS NOT NULL',
+                urlField: 'slug',
+                urlPrefix: '/blog/',
+                typeLabel: 'Article'
+            },
+            standards: {
+                table: 'public.electrical_standards',
+                columns: ['title', 'description', 'summary'],
+                where: '1=1',
+                urlField: 'code',
+                urlPrefix: '/standards/',
+                typeLabel: 'Norme'
+            }
+        };
+
+        // Déterminer les tables à interroger
+        const tablesToSearch = type ? [type] : Object.keys(searchConfigs);
+
+        for (const tableType of tablesToSearch) {
+            if (!searchConfigs[tableType]) continue;
+
+            const config = searchConfigs[tableType];
+            const searchQuery = q.replace(/'/g, "''"); // Échapper les guillemets
+            
+            // Créer la requête full-text search avec tsvector
+            const columns = config.columns.map(col => `${col}::text`).join(" || ' ' || ");
+            
+            try {
+                const countResult = await pool.query(`
+                    SELECT COUNT(*) as total FROM ${config.table}
+                    WHERE ${config.where}
+                    AND to_tsvector('french', COALESCE(${columns}, '')) @@ 
+                        plainto_tsquery('french', $1)
+                `, [searchQuery]);
+
+                const searchResult = await pool.query(`
+                    SELECT 
+                        id, 
+                        title, 
+                        COALESCE(${columns}, '') as content,
+                        ${config.urlField} as url_slug,
+                        ts_rank(to_tsvector('french', COALESCE(${columns}, '')), 
+                            plainto_tsquery('french', $1)) as relevance,
+                        updated_at
+                    FROM ${config.table}
+                    WHERE ${config.where}
+                    AND to_tsvector('french', COALESCE(${columns}, '')) @@ 
+                        plainto_tsquery('french', $1)
+                    ORDER BY relevance DESC, updated_at DESC
+                    LIMIT $2 OFFSET $3
+                `, [searchQuery, limit, offset]);
+
+                total += parseInt(countResult.rows[0]?.total || 0);
+                
+                results = [...results, ...searchResult.rows.map(row => ({
+                    id: row.id,
+                    title: row.title,
+                    excerpt: row.content.substring(0, 200) + (row.content.length > 200 ? '...' : ''),
+                    url: config.urlPrefix + row.url_slug,
+                    type: config.typeLabel,
+                    relevance: parseFloat(row.relevance.toFixed(3)),
+                    date: row.updated_at
+                }))];
+            } catch (e) {
+                console.warn(`[SEARCH] Table ${tableType} search failed:`, e.message);
+                // Continue with next table if one fails
+            }
+        }
+
+        // Trier par pertinence globale
+        results.sort((a, b) => b.relevance - a.relevance);
+
+        res.json({
+            results: results.slice(0, limit),
+            total: total,
+            query: q,
+            type: type || 'all',
+            limit,
+            offset
+        });
+    } catch (error) {
+        console.error('[SEARCH-FT] Error:', error);
+        res.status(500).json({ error: 'Search failed', details: error.message });
+    }
+});
+
+// Index creation helper (for admin)
+app.post('/api/admin/search/reindex', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        // Create GIN indexes for full-text search on key tables
+        const indexQueries = [
+            `CREATE INDEX IF NOT EXISTS idx_pages_search ON public.pages 
+             USING GIN(to_tsvector('french', COALESCE(title || ' ' || content || ' ' || meta_description, '')))`,
+            `CREATE INDEX IF NOT EXISTS idx_blog_search ON public.blog_posts 
+             USING GIN(to_tsvector('french', COALESCE(title || ' ' || content || ' ' || excerpt, '')))`,
+            `CREATE INDEX IF NOT EXISTS idx_standards_search ON public.electrical_standards 
+             USING GIN(to_tsvector('french', COALESCE(title || ' ' || description || ' ' || summary, '')))`
+        ];
+
+        for (const query of indexQueries) {
+            await pool.query(query);
+        }
+
+        res.json({ success: true, message: 'Search indexes created/updated' });
+    } catch (error) {
+        console.error('[SEARCH] Reindex failed:', error);
+        res.status(500).json({ error: 'Reindex failed', details: error.message });
+    }
+});
+
 // --- PAGE MANAGEMENT ENDPOINTS ---
 
 app.get('/api/pages', async (req, res) => {
@@ -4486,7 +4881,6 @@ app.put('/api/pages/:id', authenticateToken, async (req, res) => {
     const { id } = req.params;
     const { title, slug, content, structure_json, is_published, meta_description, meta_keywords } = req.body;
     try {
-        // More robust update using COALESCE to allow partial updates (fixed 500 on missing slug)
         const result = await pool.query(
             `UPDATE public.pages 
              SET title = COALESCE($1, title),
@@ -4496,17 +4890,12 @@ app.put('/api/pages/:id', authenticateToken, async (req, res) => {
                  is_published = COALESCE($5, is_published),
                  meta_description = COALESCE($6, meta_description),
                  meta_keywords = COALESCE($7, meta_keywords),
-                 updated_at = NOW() 
-             WHERE id = $8 RETURNING *`,
-            [
-                title, slug, content,
-                structure_json ? (typeof structure_json === 'string' ? structure_json : JSON.stringify(structure_json)) : null,
-                is_published, meta_description, meta_keywords, id
-            ]
+                 updated_at = NOW()
+             WHERE id::text = $8 OR slug = $8 RETURNING *`,
+            [title, slug, content, structure_json ? JSON.stringify(structure_json) : null, is_published, meta_description, meta_keywords, id]
         );
         if (result.rows.length === 0) return res.status(404).json({ error: 'Page not found' });
         res.json(result.rows[0]);
-        try { sendSseEvent('page:updated', result.rows[0]); } catch (e) { console.warn('SSE broadcast failed (page:updated)', e); }
     } catch (error) {
         handleAppError(error, res);
     }
@@ -4523,10 +4912,65 @@ app.delete('/api/pages/:id', authenticateToken, async (req, res) => {
 });
 
 // Admin Specialized Page Editor (ICE Engine Support)
+// ─────────────────────────────────────────────────────────────────────────────
+// Seed Homepage → injects the pixel-perfect structure JSON for BE Builder
+// ─────────────────────────────────────────────────────────────────────────────
+app.post('/api/admin/seed-homepage', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const HOMEPAGE_STRUCTURE = [
+            { id: "home-hero-banner", type: "HeroBanner", version: 1, enabled: true, props: { parallax: true, autoplayInterval: 8000 }, metadata: { label: "Carrousel Hero (Accueil)", description: "Slides chargés depuis la base de données." } },
+            { id: "home-audience-offers", type: "AudienceOffers", version: 1, enabled: true, props: {}, metadata: { label: "Offres Audience", description: "3 cartes — Électriciens, Professionnels, Membres." } },
+            { id: "home-vision-mission", type: "VisionMission", version: 1, enabled: true, props: { title: "Garantir la sécurité pour tous les sénégalais.", subtitle: "Depuis 1995, PROQUELEC s'engage pour la promotion de la qualité des installations électriques.", missionTitle: "Notre Mission", missionDesc: "Promouvoir la sécurité et la conformité normative à travers la sensibilisation, le diagnostic et la formation.", visionTitle: "Notre Vision", visionDesc: "Devenir la référence nationale absolue en matière de sécurité électrique et d'innovation normative.", image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80", badge: "L'Institution" }, metadata: { label: "Vision & Mission" } },
+            { id: "home-landing-stats", type: "LandingStats", version: 1, enabled: true, props: {}, metadata: { label: "Statistiques Clés" } },
+            { id: "home-latest-news", type: "LatestNews", version: 1, enabled: true, props: {}, metadata: { label: "Actualités & Blog" } },
+            { id: "home-partner-logos", type: "PartnerLogos", version: 1, enabled: true, props: {}, metadata: { label: "Logos Partenaires" } }
+        ];
+
+        const structureJson = JSON.stringify(HOMEPAGE_STRUCTURE);
+
+        // Try to find existing home page
+        const findResult = await pool.query(
+            `SELECT id, slug FROM pages WHERE slug IN ('home', 'home_page', '/') ORDER BY id LIMIT 1`
+        );
+
+        let pageId, action, slug;
+
+        if (findResult.rows.length > 0) {
+            const existing = findResult.rows[0];
+            await pool.query(
+                `UPDATE pages SET structure_json = $1, updated_at = NOW() WHERE id = $2`,
+                [structureJson, existing.id]
+            );
+            pageId = existing.id;
+            slug = existing.slug;
+            action = 'updated';
+        } else {
+            const insertResult = await pool.query(
+                `INSERT INTO pages (title, slug, structure_json, is_published, status, created_at, updated_at)
+                 VALUES ($1, $2, $3, true, 'published', NOW(), NOW())
+                 RETURNING id, slug`,
+                ['Accueil', 'home', structureJson]
+            );
+            pageId = insertResult.rows[0].id;
+            slug = insertResult.rows[0].slug;
+            action = 'created';
+        }
+
+        console.log(`[Seed] ✅ Homepage seeded (${action}) → id=${pageId}, slug="${slug}"`);
+        res.json({ success: true, action, pageId, slug, blocksCount: HOMEPAGE_STRUCTURE.length });
+    } catch (error) {
+        console.error('[Seed] ❌ Error:', error);
+        handleAppError(error, res);
+    }
+});
+
 app.get('/api/admin/pages/:id', authenticateToken, requireAdmin, async (req, res) => {
     try {
         const { id } = req.params;
-        const { rows } = await pool.query('SELECT * FROM public.pages WHERE id = $1', [id]);
+        const { rows } = await pool.query(
+            'SELECT * FROM public.pages WHERE slug = $1 OR id::text = $1',
+            [id]
+        );
         if (rows.length === 0) return res.status(404).json({ error: 'Page not found' });
         res.json(rows[0]);
     } catch (error) {
@@ -4538,8 +4982,15 @@ app.put('/api/admin/pages/:id', authenticateToken, requireAdmin, async (req, res
     const { id } = req.params;
     const {
         content_raw, content, content_blocks, structure_json, design_options, security_level, immutable,
-        title, slug, meta_description, meta_keywords, is_published, categories, tags, author
+        title, slug, meta_description, meta_keywords, is_published, categories, tags, author,
+        excerpt, meta_robots, featured_image, template, show_hero, show_footer,
+        custom_css, custom_js, header_html, footer_html,
+        hero_title, hero_subtitle, hero_background_image, hero_cta_text, hero_cta_link,
+        workflow_status, publish_date, unpublish_date, reading_time
     } = req.body;
+
+    const blocksToSave = content_blocks ?? structure_json;
+    const statusVal = workflow_status;
 
     try {
         // Use COALESCE to only update provided fields, or keep existing ones
@@ -4548,30 +4999,51 @@ app.put('/api/admin/pages/:id', authenticateToken, requireAdmin, async (req, res
              SET content_raw = COALESCE($1, content_raw),
                  content = COALESCE($2, content),
                  content_blocks = COALESCE($3, content_blocks),
-                 structure_json = COALESCE($4, structure_json),
-                 design_options = COALESCE($5, design_options),
-                 security_level = COALESCE($6, security_level),
-                 immutable = COALESCE($7, immutable),
-                 title = COALESCE($8, title),
-                 slug = COALESCE($9, slug),
-                 meta_description = COALESCE($10, meta_description),
-                 meta_keywords = COALESCE($11, meta_keywords),
-                 is_published = COALESCE($12, is_published),
-                 categories = COALESCE($13, categories),
-                 tags = COALESCE($14, tags),
-                 author = COALESCE($15, author),
+                 design_options = COALESCE($4, design_options),
+                 security_level = COALESCE($5, security_level),
+                 immutable = COALESCE($6, immutable),
+                 title = COALESCE($7, title),
+                 slug = COALESCE($8, slug),
+                 meta_description = COALESCE($9, meta_description),
+                 meta_keywords = COALESCE($10, meta_keywords),
+                 is_published = COALESCE($11, is_published),
+                 categories = COALESCE($12, categories),
+                 tags = COALESCE($13, tags),
+                 author = COALESCE($14, author),
+                 excerpt = COALESCE($16, excerpt),
+                 meta_robots = COALESCE($17, meta_robots),
+                 featured_image = COALESCE($18, featured_image),
+                 template = COALESCE($19, template),
+                 show_hero = COALESCE($20, show_hero),
+                 show_footer = COALESCE($21, show_footer),
+                 custom_css = COALESCE($22, custom_css),
+                 custom_js = COALESCE($23, custom_js),
+                 header_html = COALESCE($24, header_html),
+                 footer_html = COALESCE($25, footer_html),
+                 hero_title = COALESCE($26, hero_title),
+                 hero_subtitle = COALESCE($27, hero_subtitle),
+                 hero_background_image = COALESCE($28, hero_background_image),
+                 hero_cta_text = COALESCE($29, hero_cta_text),
+                 hero_cta_link = COALESCE($30, hero_cta_link),
+                 status = COALESCE($31, status),
+                 publish_date = COALESCE($32, publish_date),
+                 unpublish_date = COALESCE($33, unpublish_date),
+                 reading_time = COALESCE($34, reading_time),
                  version = version + 1,
                  updated_at = NOW()
-             WHERE id = $16 RETURNING *`,
+             WHERE slug = $15 OR id::text = $15 RETURNING *`,
             [
                 content_raw, content,
-                content_blocks ? (typeof content_blocks === 'string' ? content_blocks : JSON.stringify(content_blocks)) : null,
-                structure_json ? (typeof structure_json === 'string' ? structure_json : JSON.stringify(structure_json)) : null,
+                blocksToSave ? (typeof blocksToSave === 'string' ? blocksToSave : JSON.stringify(blocksToSave)) : null,
                 design_options ? (typeof design_options === 'string' ? design_options : JSON.stringify(design_options)) : null,
                 security_level, immutable,
                 title, slug, meta_description, meta_keywords, is_published,
                 categories, tags, author,
-                id
+                id, // $15
+                excerpt, meta_robots, featured_image, template, show_hero, show_footer, // $16 - $21
+                custom_css, custom_js, header_html, footer_html, // $22 - $25
+                hero_title, hero_subtitle, hero_background_image, hero_cta_text, hero_cta_link, // $26 - $30
+                statusVal, publish_date, unpublish_date, reading_time // $31 - $34
             ]
         );
 
@@ -4580,7 +5052,7 @@ app.put('/api/admin/pages/:id', authenticateToken, requireAdmin, async (req, res
         // Save version (Keep manual insert for now to ensure consistency across environments)
         await pool.query(
             'INSERT INTO public.page_versions (page_id, content_raw, version, created_at, created_by) VALUES ($1, $2, $3, NOW(), $4)',
-            [id, result.rows[0].content_raw, result.rows[0].version, req.user?.id]
+            [result.rows[0].id, result.rows[0].content_raw, result.rows[0].version, req.user?.id]
         );
 
         res.json(result.rows[0]);
