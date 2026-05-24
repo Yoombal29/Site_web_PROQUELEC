@@ -6,6 +6,7 @@ import type { Block } from '@/types/builder';
 import type { DragEndEvent } from '@dnd-kit/core';
 import { produce } from 'immer';
 import { useBuilderKeyboardShortcuts } from '@/hooks/useBuilderKeyboardShortcuts';
+import { useDebounce } from '@/hooks/useDebounce';
 
 import { DndContext, useDraggable, useDroppable, useSensors, useSensor, PointerSensor } from '@dnd-kit/core';
 import { Button } from '@/components/ui/button';
@@ -333,6 +334,15 @@ const BuilderPage: React.FC = () => {
     }
   }, [blocks, pageId, pageData, snapshotHistory, blocksVersion, pageDataVersion]);
 
+  // Auto-save with debounce (3 seconds)
+  const debouncedIsDirty = useDebounce(isDirty, 3000);
+  
+  useEffect(() => {
+    if (debouncedIsDirty && pageId && !isLoading) {
+      handleSave();
+    }
+  }, [debouncedIsDirty, pageId, isLoading, handleSave]);
+
   const pageVersions = useMemo(() => {
     return pageId ? getVersions(pageId) : [];
   }, [getVersions, pageId]);
@@ -391,40 +401,53 @@ const BuilderPage: React.FC = () => {
       const activeId = active.id.toString();
       const overId = over.id.toString();
 
-      // Recursive helpers (work with draft state)
-      const findNode = (nodes: Block[], id: string): { node: Block, parentList: Block[], index: number } | null => {
-        const index = nodes.findIndex(n => n.id === id);
-        if (index !== -1) return { node: nodes[index], parentList: nodes, index };
-        for (const node of nodes) {
-          if (node.children) {
-            const found = findNode(node.children, id);
-            if (found) return found;
-          }
-        }
-        return null;
+      // Pre-compute block map for O(1) lookups instead of O(n) recursive searches
+      const buildBlockMap = (nodes: Block[], parentId: string | null = null): Map<string, { node: Block, parentList: Block[], index: number, parentId: string | null }> => {
+        const map = new Map();
+        
+        const processNode = (nodeList: Block[], currentParentId: string | null) => {
+          nodeList.forEach((node, index) => {
+            map.set(node.id, {
+              node,
+              parentList: nodeList,
+              index,
+              parentId: currentParentId
+            });
+            
+            if (node.children && node.children.length > 0) {
+              processNode(node.children, node.id);
+            }
+          });
+        };
+        
+        processNode(nodes, parentId);
+        return map;
       };
 
-      const removeNode = (nodes: Block[], id: string): Block | null => {
-        const index = nodes.findIndex(n => n.id === id);
-        if (index !== -1) return nodes.splice(index, 1)[0];
-        for (const node of nodes) {
-          if (node.children) {
-            const removed = removeNode(node.children, id);
-            if (removed) return removed;
-          }
-        }
-        return null;
+      const blockMap = buildBlockMap(blocks);
+      
+      const getNode = (id: string) => blockMap.get(id);
+      const removeNodeFromMap = (id: string): Block | null => {
+        const info = getNode(id);
+        if (!info) return null;
+        
+        info.parentList.splice(info.index, 1);
+        return info.node;
       };
 
       // Use Immer for efficient immutable updates
       const newBlocks = produce(blocks, (draft) => {
+        // Rebuild map for draft state
+        const draftMap = buildBlockMap(draft);
+        const getDraftNode = (id: string) => draftMap.get(id);
+
         // CASE 1: Dropping from Sidebar (New Block/Template)
         if (activeId.startsWith('sidebar-')) {
           let targetList = draft;
           let targetIndex = draft.length;
 
           if (overId !== 'canvas-droppable') {
-            const overNodeInfo = findNode(draft, overId);
+            const overNodeInfo = getDraftNode(overId);
             if (overNodeInfo) {
               // If hovering over an empty section, drop inside it
               if (overNodeInfo.node.type === 'section' && (!overNodeInfo.node.children || overNodeInfo.node.children.length === 0)) {
@@ -462,16 +485,16 @@ const BuilderPage: React.FC = () => {
         }
         // CASE 2: Reordering Existing Blocks
         else if (activeId !== overId) {
-          const activeNodeInfo = findNode(draft, activeId);
-          const overNodeInfo = findNode(draft, overId);
+          const activeNodeInfo = getDraftNode(activeId);
+          const overNodeInfo = getDraftNode(overId);
 
           if (activeNodeInfo && overNodeInfo) {
             // Remove from old location
-            const draggedNode = removeNode(draft, activeId);
+            const draggedNode = removeNodeFromMap(activeId);
             if (!draggedNode) return;
 
             // Find over location again because mutation might have shifted indexes
-            const updatedOverNodeInfo = findNode(draft, overId);
+            const updatedOverNodeInfo = getDraftNode(overId);
             if (updatedOverNodeInfo) {
               // If dropping into an empty section
               if (updatedOverNodeInfo.node.type === 'section' && (!updatedOverNodeInfo.node.children || updatedOverNodeInfo.node.children.length === 0)) {
