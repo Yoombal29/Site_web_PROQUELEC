@@ -7,7 +7,7 @@ import type { DragEndEvent } from '@dnd-kit/core';
 import { produce } from 'immer';
 import { useBuilderKeyboardShortcuts } from '@/hooks/useBuilderKeyboardShortcuts';
 
-import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
+import { DndContext, useDraggable, useDroppable, useSensors, useSensor, PointerSensor } from '@dnd-kit/core';
 import { Button } from '@/components/ui/button';
 import {
   Plus, LayoutTemplate, Box, Trash2, Save, Loader2, MousePointer2,
@@ -18,6 +18,7 @@ import {
   verticalListSortingStrategy,
   arrayMove } from
 '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import BuilderPageRenderer from '@/components/builder/BuilderPageRenderer';
 import PropertyPanel from '@/components/builder/PropertyPanel';
 import PageSettingsPanel from '@/components/builder/PageSettingsPanel';
@@ -518,8 +519,17 @@ const BuilderPage: React.FC = () => {
     onDelete: () => selectedBlockId && removeBlock(selectedBlockId)
   });
 
+  // Add sensors for smoother drag experience
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    })
+  );
+
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
             <div className="flex h-screen w-full bg-slate-100 overflow-hidden">
 
                 {/* GAUCHE: Bibliothèques */}
@@ -910,21 +920,14 @@ const DraggableItem = ({ type, label, icon }: {type: string;label: string;icon?:
     data: { type }
   });
 
-  const nodeRef = React.useRef<HTMLDivElement | null>(null);
-  const setRefs = React.useCallback((node: HTMLDivElement | null) => {
-    nodeRef.current = node;
-    setNodeRef(node);
-  }, [setNodeRef]);
-
-  React.useEffect(() => {
-    if (nodeRef.current) {
-      nodeRef.current.style.transform = transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '';
-    }
-  }, [transform]);
+  const style = {
+    transform: CSS.Translate.toString(transform),
+  };
 
   return (
     <div
-      ref={setRefs}
+      ref={setNodeRef}
+      style={style}
       {...listeners}
       {...attributes}
       className="p-3 bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded cursor-grab active:cursor-grabbing flex items-center gap-3 transition-colors shadow-sm select-none">
@@ -944,21 +947,14 @@ const DraggableTemplate = ({ template }: {template: LegacyTemplate;}) => {
     data: { block: template.block }
   });
 
-  const nodeRef = React.useRef<HTMLDivElement | null>(null);
-  const setRefs = React.useCallback((node: HTMLDivElement | null) => {
-    nodeRef.current = node;
-    setNodeRef(node);
-  }, [setNodeRef]);
-
-  React.useEffect(() => {
-    if (nodeRef.current) {
-      nodeRef.current.style.transform = transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '';
-    }
-  }, [transform]);
+  const style = {
+    transform: CSS.Translate.toString(transform),
+  };
 
   return (
     <div
-      ref={setRefs}
+      ref={setNodeRef}
+      style={style}
       {...listeners}
       {...attributes}
       className="p-3 bg-white hover:bg-purple-50 border border-slate-200 hover:border-purple-200 rounded cursor-grab active:cursor-grabbing flex flex-col gap-1 transition-colors shadow-sm select-none relative overflow-hidden">
@@ -980,9 +976,16 @@ const DroppableCanvas = React.memo(({ blocks, widthClass }: { blocks: Block[]; w
   const overClasses = isOver ? 'border-blue-400 shadow-lg' : 'border-slate-200';
 
   // Memoize block IDs to prevent recalculation on every render
+  // Optimized to use array mutation instead of spread for better performance
   const sortableItems = useMemo(() => {
-    const getAllBlockIds = (nodes: Block[]): string[] => {
-      return nodes.reduce((acc, b) => [...acc, b.id, ...getAllBlockIds(b.children || [])], [] as string[]);
+    const getAllBlockIds = (nodes: Block[], result: string[] = []): string[] => {
+      for (const node of nodes) {
+        result.push(node.id);
+        if (node.children?.length) {
+          getAllBlockIds(node.children, result);
+        }
+      }
+      return result;
     };
     return getAllBlockIds(blocks);
   }, [blocks]);
