@@ -432,19 +432,20 @@ const BuilderPage: React.FC = () => {
       const blockMap = buildBlockMap(blocks);
       
       const getNode = (id: string) => blockMap.get(id);
-      const removeNodeFromMap = (id: string): Block | null => {
-        const info = getNode(id);
-        if (!info) return null;
-        
-        info.parentList.splice(info.index, 1);
-        return info.node;
-      };
 
       // Use Immer for efficient immutable updates
       const newBlocks = produce(blocks, (draft) => {
         // Rebuild map for draft state
         const draftMap = buildBlockMap(draft);
         const getDraftNode = (id: string) => draftMap.get(id);
+        
+        const removeNodeFromMap = (id: string): Block | null => {
+          const info = getDraftNode(id);
+          if (!info) return null;
+          
+          info.parentList.splice(info.index, 1);
+          return info.node;
+        };
 
         // CASE 1: Dropping from Sidebar (New Block/Template)
         if (activeId.startsWith('sidebar-')) {
