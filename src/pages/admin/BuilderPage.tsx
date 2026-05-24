@@ -383,12 +383,13 @@ const BuilderPage: React.FC = () => {
 
   // 3. Drag End Handler (optimized with useCallback)
   const handleDragEnd = useCallback((event: DragEndEvent) => {
-    const { active, over } = event;
+    try {
+      const { active, over } = event;
 
-    if (!over) return;
+      if (!over) return;
 
-    const activeId = active.id.toString();
-    const overId = over.id.toString();
+      const activeId = active.id.toString();
+      const overId = over.id.toString();
 
     // Recursive helpers
     const findNode = (nodes: Block[], id: string): { node: Block, parentList: Block[], index: number } | null => {
@@ -495,6 +496,10 @@ const BuilderPage: React.FC = () => {
            setBlocks(newBlocks);
         }
       }
+    }
+    } catch (error) {
+      console.error('Erreur lors du drag & drop:', error);
+      toast.error('Erreur lors du déplacement du bloc');
     }
   }, [blocks, setBlocks]);
 
