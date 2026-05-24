@@ -64,8 +64,8 @@ import PermissionsAdmin from "./pages/admin/PermissionsAdmin";
 import RBACDemo from "./pages/examples/RBACDemo";
 
 // Lazy-load heavy pages
-const BuilderPageLazy = lazy(() => import("./pages/admin/BuilderPage"));
 const AnalyticsPageLazy = lazy(() => import("./pages/AnalyticsPage").then(mod => ({ default: mod.AnalyticsPage })));
+import BuilderPage from "./pages/admin/BuilderPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -309,7 +309,7 @@ const AppContent = () => {
         { path: "/plan-du-site", element: <Sitemap /> },
         { path: "/sitemap", element: <Sitemap /> },
 
-        { path: "/admin/builder/:pageId", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement du builder…</div>}><BuilderPageLazy /></Suspense> },
+        { path: "/admin/builder/:pageId", element: <BuilderPage /> },
         {
           path: "/admin/permissions",
           element:
