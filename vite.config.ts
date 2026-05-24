@@ -41,6 +41,17 @@ export default defineConfig(async ({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
+    optimizeDeps: {
+      include: [
+        'lodash.clonedeep',
+        'immer',
+        'dompurify',
+        '@dnd-kit/core',
+        '@dnd-kit/sortable',
+        '@dnd-kit/utilities'
+      ],
+      force: true
+    },
     build: {
       // Keep reasonable warning threshold while we split heavy deps into chunks
       chunkSizeWarningLimit: 1000,
