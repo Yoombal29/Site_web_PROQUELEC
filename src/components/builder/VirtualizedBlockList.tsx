@@ -1,10 +1,10 @@
 /**
  * Virtualized Block List Component
- * Uses react-window for efficient rendering of large block lists
+ * Simple virtualization implementation for large block lists
+ * Falls back to regular rendering if virtualization is not needed
  */
 
-import React, { useMemo, useCallback } from 'react';
-import { FixedSizeList as List } from 'react-window';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import type { Block } from '@/types/builder';
 import { BlockErrorBoundary } from './BlockErrorBoundary';
 import { ComponentRegistry } from './ComponentRegistry';
@@ -19,41 +19,8 @@ interface VirtualizedBlockListProps {
 }
 
 /**
- * Row component for virtualized list
- */
-const BlockRow = ({ index, style, data }: { index: number; style: React.CSSProperties; data: any }) => {
-  const { blocks, isEditor, selectedId, onSelect } = data;
-  const block = blocks[index];
-
-  if (!block) return null;
-
-  const BlockComponent = ComponentRegistry[block.type];
-
-  if (!BlockComponent) {
-    return (
-      <div style={style} className="p-4 border border-red-200 bg-red-50">
-        <p className="text-red-600">Unknown block type: {block.type}</p>
-      </div>
-    );
-  }
-
-  return (
-    <div style={style}>
-      <BlockErrorBoundary blockId={block.id}>
-        <BlockComponent
-          {...block}
-          isEditor={isEditor}
-          selectedId={selectedId}
-          onSelect={onSelect}
-        />
-      </BlockErrorBoundary>
-    </div>
-  );
-};
-
-/**
- * Virtualized Block List Component
- * Optimizes rendering for large block lists by only rendering visible items
+ * Simple virtualized list implementation
+ * Only renders visible blocks based on scroll position
  */
 export const VirtualizedBlockList: React.FC<VirtualizedBlockListProps> = ({
   blocks,
@@ -63,7 +30,25 @@ export const VirtualizedBlockList: React.FC<VirtualizedBlockListProps> = ({
   selectedId,
   onSelect
 }) => {
-  const itemData = useMemo(() => ({ blocks, isEditor, selectedId, onSelect }), [blocks, isEditor, selectedId, onSelect]);
+  const [scrollTop, setScrollTop] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Calculate visible range
+  const visibleRange = useMemo(() => {
+    const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - 2);
+    const endIndex = Math.min(blocks.length - 1, Math.floor((scrollTop + height) / itemHeight) + 2);
+    return { startIndex, endIndex };
+  }, [scrollTop, height, itemHeight, blocks.length]);
+
+  // Handle scroll
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    setScrollTop(e.currentTarget.scrollTop);
+  };
+
+  // Only render visible blocks
+  const visibleBlocks = useMemo(() => {
+    return blocks.slice(visibleRange.startIndex, visibleRange.endIndex + 1);
+  }, [blocks, visibleRange]);
 
   if (blocks.length === 0) {
     return (
@@ -74,15 +59,68 @@ export const VirtualizedBlockList: React.FC<VirtualizedBlockListProps> = ({
     );
   }
 
+  // For small lists, render all blocks without virtualization
+  if (blocks.length < 20) {
+    return (
+      <div className="space-y-4">
+        {blocks.map((block) => {
+          const BlockComponent = ComponentRegistry[block.type];
+          if (!BlockComponent) return null;
+
+          return (
+            <BlockErrorBoundary key={block.id} blockId={block.id}>
+              <BlockComponent
+                {...block}
+                isEditor={isEditor}
+                selectedId={selectedId}
+                onSelect={onSelect}
+              />
+            </BlockErrorBoundary>
+          );
+        })}
+      </div>
+    );
+  }
+
+  // For large lists, use simple virtualization
   return (
-    <List
-      height={height}
-      itemCount={blocks.length}
-      itemSize={itemHeight}
-      itemData={itemData}
-      width="100%"
+    <div
+      ref={containerRef}
+      onScroll={handleScroll}
+      style={{ height, overflowY: 'auto' }}
+      className="relative"
     >
-      {BlockRow}
-    </List>
+      {/* Spacer for total height */}
+      <div style={{ height: blocks.length * itemHeight }} />
+      
+      {/* Visible items */}
+      {visibleBlocks.map((block, index) => {
+        const actualIndex = visibleRange.startIndex + index;
+        const BlockComponent = ComponentRegistry[block.type];
+        
+        if (!BlockComponent) return null;
+
+        return (
+          <div
+            key={block.id}
+            style={{
+              position: 'absolute',
+              top: actualIndex * itemHeight,
+              height: itemHeight,
+              width: '100%'
+            }}
+          >
+            <BlockErrorBoundary blockId={block.id}>
+              <BlockComponent
+                {...block}
+                isEditor={isEditor}
+                selectedId={selectedId}
+                onSelect={onSelect}
+              />
+            </BlockErrorBoundary>
+          </div>
+        );
+      })}
+    </div>
   );
 };
