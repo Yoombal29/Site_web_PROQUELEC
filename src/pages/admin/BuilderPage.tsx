@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useBuilderStore } from '@/stores/useBuilderStore';
 import type { Block } from '@/types/builder';
 import type { DragEndEvent } from '@dnd-kit/core';
-import cloneDeep from 'lodash.clonedeep';
+import { produce } from 'immer';
 import { useBuilderKeyboardShortcuts } from '@/hooks/useBuilderKeyboardShortcuts';
 
 import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
@@ -131,31 +131,9 @@ const BuilderPage: React.FC = () => {
 
   // Increment blocksVersion each time blocks change (skip during initial load)
   const isLoadingRef = React.useRef(true);
-  const blocksRef = React.useRef(blocks);
-  const updateTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
   
-  useEffect(() => {
-    if (isLoadingRef.current) return; // ignore changes during initial load
-    
-    // Debounce version updates to prevent excessive re-renders
-    if (updateTimeoutRef.current) {
-      clearTimeout(updateTimeoutRef.current);
-    }
-    
-    updateTimeoutRef.current = setTimeout(() => {
-      // Only update version if blocks actually changed (not just re-render)
-      if (JSON.stringify(blocksRef.current) !== JSON.stringify(blocks)) {
-        setBlocksVersion((v) => v + 1);
-        blocksRef.current = blocks;
-      }
-    }, 100);
-    
-    return () => {
-      if (updateTimeoutRef.current) {
-        clearTimeout(updateTimeoutRef.current);
-      }
-    };
-  }, [blocks]);
+  // Version tracking is now handled directly in mutations (setBlocks, addBlock, etc.)
+  // This expensive deep comparison has been removed per performance audit
 
   // Mark loading complete after first render with blocks
   useEffect(() => {
@@ -412,112 +390,111 @@ const BuilderPage: React.FC = () => {
       const activeId = active.id.toString();
       const overId = over.id.toString();
 
-    // Recursive helpers
-    const findNode = (nodes: Block[], id: string): { node: Block, parentList: Block[], index: number } | null => {
-      const index = nodes.findIndex(n => n.id === id);
-      if (index !== -1) return { node: nodes[index], parentList: nodes, index };
-      for (const node of nodes) {
-        if (node.children) {
-          const found = findNode(node.children, id);
-          if (found) return found;
-        }
-      }
-      return null;
-    };
-
-    const removeNode = (nodes: Block[], id: string): Block | null => {
-      const index = nodes.findIndex(n => n.id === id);
-      if (index !== -1) return nodes.splice(index, 1)[0];
-      for (const node of nodes) {
-        if (node.children) {
-          const removed = removeNode(node.children, id);
-          if (removed) return removed;
-        }
-      }
-      return null;
-    };
-
-    // Deep copy state to mutate
-    const newBlocks = cloneDeep(blocks);
-
-    // CASE 1: Dropping from Sidebar (New Block/Template)
-    if (activeId.startsWith('sidebar-')) {
-      let targetList = newBlocks;
-      let targetIndex = newBlocks.length;
-
-      if (overId !== 'canvas-droppable') {
-        const overNodeInfo = findNode(newBlocks, overId);
-        if (overNodeInfo) {
-          // If hovering over an empty section, drop inside it
-          if (overNodeInfo.node.type === 'section' && (!overNodeInfo.node.children || overNodeInfo.node.children.length === 0)) {
-             if (!overNodeInfo.node.children) overNodeInfo.node.children = [];
-             targetList = overNodeInfo.node.children;
-             targetIndex = 0;
-          } else {
-             // Otherwise drop as sibling
-             targetList = overNodeInfo.parentList;
-             targetIndex = overNodeInfo.index;
+      // Recursive helpers (work with draft state)
+      const findNode = (nodes: Block[], id: string): { node: Block, parentList: Block[], index: number } | null => {
+        const index = nodes.findIndex(n => n.id === id);
+        if (index !== -1) return { node: nodes[index], parentList: nodes, index };
+        for (const node of nodes) {
+          if (node.children) {
+            const found = findNode(node.children, id);
+            if (found) return found;
           }
         }
-      }
+        return null;
+      };
 
-      if (activeId.startsWith('sidebar-item-')) {
-        const type = active.data.current?.type;
-        if (type) {
-          const newBlock: Block = {
-            id: `block-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
-            type,
-            content: { title: `Nouveau ${type}` },
-            style: { padding: '20px' },
-            children: []
-          };
-          targetList.splice(targetIndex, 0, newBlock);
-          setBlocks(newBlocks);
+      const removeNode = (nodes: Block[], id: string): Block | null => {
+        const index = nodes.findIndex(n => n.id === id);
+        if (index !== -1) return nodes.splice(index, 1)[0];
+        for (const node of nodes) {
+          if (node.children) {
+            const removed = removeNode(node.children, id);
+            if (removed) return removed;
+          }
         }
-      } else if (activeId.startsWith('sidebar-template-')) {
-        const templateBlock = active.data.current?.block;
-        if (templateBlock) {
-           const clone = cloneDeep(templateBlock);
-           clone.id = `block-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
-           targetList.splice(targetIndex, 0, clone);
-           setBlocks(newBlocks);
-        }
-      }
-    }
-    // CASE 2: Reordering Existing Blocks
-    else if (activeId !== overId) {
-      const activeNodeInfo = findNode(newBlocks, activeId);
-      const overNodeInfo = findNode(newBlocks, overId);
+        return null;
+      };
 
-      if (activeNodeInfo && overNodeInfo) {
-        // Remove from old location
-        const draggedNode = removeNode(newBlocks, activeId);
-        if (!draggedNode) return;
+      // Use Immer for efficient immutable updates
+      const newBlocks = produce(blocks, (draft) => {
+        // CASE 1: Dropping from Sidebar (New Block/Template)
+        if (activeId.startsWith('sidebar-')) {
+          let targetList = draft;
+          let targetIndex = draft.length;
 
-        // Find over location again because mutation might have shifted indexes
-        const updatedOverNodeInfo = findNode(newBlocks, overId);
-        if (updatedOverNodeInfo) {
-          // If dropping into an empty section
-          if (updatedOverNodeInfo.node.type === 'section' && (!updatedOverNodeInfo.node.children || updatedOverNodeInfo.node.children.length === 0)) {
-            if (!updatedOverNodeInfo.node.children) updatedOverNodeInfo.node.children = [];
-            updatedOverNodeInfo.node.children.push(draggedNode);
-          } else {
-            // Drop as sibling
-            let targetIndex = updatedOverNodeInfo.index;
-            // If dragging down in the same list, adjust index
-            if (activeNodeInfo.parentList === updatedOverNodeInfo.parentList && activeNodeInfo.index < updatedOverNodeInfo.index) {
-              targetIndex = updatedOverNodeInfo.index; // already shifted by removeNode
+          if (overId !== 'canvas-droppable') {
+            const overNodeInfo = findNode(draft, overId);
+            if (overNodeInfo) {
+              // If hovering over an empty section, drop inside it
+              if (overNodeInfo.node.type === 'section' && (!overNodeInfo.node.children || overNodeInfo.node.children.length === 0)) {
+                 if (!overNodeInfo.node.children) overNodeInfo.node.children = [];
+                 targetList = overNodeInfo.node.children;
+                 targetIndex = 0;
+              } else {
+                 // Otherwise drop as sibling
+                 targetList = overNodeInfo.parentList;
+                 targetIndex = overNodeInfo.index;
+              }
             }
-            updatedOverNodeInfo.parentList.splice(targetIndex, 0, draggedNode);
           }
-          setBlocks(newBlocks);
-        } else {
-           // fallback to root
-           newBlocks.push(draggedNode);
-           setBlocks(newBlocks);
+
+          if (activeId.startsWith('sidebar-item-')) {
+            const type = active.data.current?.type;
+            if (type) {
+              const newBlock: Block = {
+                id: crypto.randomUUID(),
+                type,
+                content: { title: `Nouveau ${type}` },
+                style: { padding: '20px' },
+                children: []
+              };
+              targetList.splice(targetIndex, 0, newBlock);
+            }
+          } else if (activeId.startsWith('sidebar-template-')) {
+            const templateBlock = active.data.current?.block;
+            if (templateBlock) {
+               const clone = JSON.parse(JSON.stringify(templateBlock));
+               clone.id = crypto.randomUUID();
+               targetList.splice(targetIndex, 0, clone);
+            }
+          }
         }
-      }
-    }
+        // CASE 2: Reordering Existing Blocks
+        else if (activeId !== overId) {
+          const activeNodeInfo = findNode(draft, activeId);
+          const overNodeInfo = findNode(draft, overId);
+
+          if (activeNodeInfo && overNodeInfo) {
+            // Remove from old location
+            const draggedNode = removeNode(draft, activeId);
+            if (!draggedNode) return;
+
+            // Find over location again because mutation might have shifted indexes
+            const updatedOverNodeInfo = findNode(draft, overId);
+            if (updatedOverNodeInfo) {
+              // If dropping into an empty section
+              if (updatedOverNodeInfo.node.type === 'section' && (!updatedOverNodeInfo.node.children || updatedOverNodeInfo.node.children.length === 0)) {
+                if (!updatedOverNodeInfo.node.children) updatedOverNodeInfo.node.children = [];
+                updatedOverNodeInfo.node.children.push(draggedNode);
+              } else {
+                // Drop as sibling
+                let targetIndex = updatedOverNodeInfo.index;
+                // If dragging down in the same list, adjust index
+                if (activeNodeInfo.parentList === updatedOverNodeInfo.parentList && activeNodeInfo.index < updatedOverNodeInfo.index) {
+                  targetIndex = updatedOverNodeInfo.index; // already shifted by removeNode
+                }
+                updatedOverNodeInfo.parentList.splice(targetIndex, 0, draggedNode);
+              }
+            } else {
+               // fallback to root
+               draft.push(draggedNode);
+            }
+          }
+        }
+      });
+
+      setBlocks(newBlocks);
+      setBlocksVersion(v => v + 1);
     } catch (error) {
       console.error('Erreur lors du drag & drop:', error);
       toast.error('Erreur lors du déplacement du bloc');
@@ -996,11 +973,19 @@ const DraggableTemplate = ({ template }: {template: LegacyTemplate;}) => {
 };
 
 // Composant Droppable (Zone Canvas)
-const DroppableCanvas = ({ blocks, widthClass }: { blocks: Block[]; widthClass: string }) => {
+const DroppableCanvas = React.memo(({ blocks, widthClass }: { blocks: Block[]; widthClass: string }) => {
   const { isOver, setNodeRef } = useDroppable({ id: 'canvas-droppable' });
   const { selectedBlockId, selectBlock } = useBuilderStore();
 
   const overClasses = isOver ? 'border-blue-400 shadow-lg' : 'border-slate-200';
+
+  // Memoize block IDs to prevent recalculation on every render
+  const sortableItems = useMemo(() => {
+    const getAllBlockIds = (nodes: Block[]): string[] => {
+      return nodes.reduce((acc, b) => [...acc, b.id, ...getAllBlockIds(b.children || [])], [] as string[]);
+    };
+    return getAllBlockIds(blocks);
+  }, [blocks]);
 
   return (
     <div
@@ -1012,12 +997,7 @@ const DroppableCanvas = ({ blocks, widthClass }: { blocks: Block[]; widthClass: 
         }
       }}>
       
-            <SortableContext items={(() => {
-              const getAllBlockIds = (nodes: Block[]): string[] => {
-                return nodes.reduce((acc, b) => [...acc, b.id, ...getAllBlockIds(b.children || [])], [] as string[]);
-              };
-              return getAllBlockIds(blocks);
-            })()} strategy={verticalListSortingStrategy}>
+            <SortableContext items={sortableItems} strategy={verticalListSortingStrategy}>
                 {blocks.length > 0 ? <BuilderPageRenderer
           blocks={blocks}
           isEditor={true}
@@ -1034,6 +1014,6 @@ const DroppableCanvas = ({ blocks, widthClass }: { blocks: Block[]; widthClass: 
             </SortableContext>
         </div>);
 
-};
+});
 
 export default BuilderPage;
