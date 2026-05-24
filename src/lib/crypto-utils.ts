@@ -10,6 +10,32 @@
 const ENCRYPTION_KEY = 'PROQUELEC_BUILDER_ENCRYPTION_KEY_V1';
 
 /**
+ * UTF-8 safe base64 encoding
+ * Handles Unicode characters properly
+ */
+const utf8ToBase64 = (str: string): string => {
+  try {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
+  } catch (error) {
+    console.error('[Crypto] UTF-8 to base64 failed:', error);
+    return '';
+  }
+};
+
+/**
+ * UTF-8 safe base64 decoding
+ * Handles Unicode characters properly
+ */
+const base64ToUtf8 = (str: string): string => {
+  try {
+    return decodeURIComponent(atob(str).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+  } catch (error) {
+    console.error('[Crypto] Base64 to UTF-8 failed:', error);
+    return '';
+  }
+};
+
+/**
  * Encrypts a string using XOR cipher
  * @param text - Plain text to encrypt
  * @returns Encrypted string (base64 encoded)
@@ -24,7 +50,7 @@ export const encrypt = (text: string): string => {
     );
   }
   
-  return btoa(result); // Base64 encode
+  return utf8ToBase64(result); // UTF-8 safe base64 encode
 };
 
 /**
@@ -36,7 +62,7 @@ export const decrypt = (encrypted: string): string => {
   if (!encrypted) return '';
   
   try {
-    const decoded = atob(encrypted); // Base64 decode
+    const decoded = base64ToUtf8(encrypted); // UTF-8 safe base64 decode
     let result = '';
     
     for (let i = 0; i < decoded.length; i++) {
@@ -97,5 +123,18 @@ export const secureRemoveItem = (key: string): void => {
     localStorage.removeItem(key);
   } catch (error) {
     console.error(`[SecureStorage] Error removing ${key}:`, error);
+  }
+};
+
+/**
+ * Clears corrupted builder templates from localStorage
+ * Call this if you see decryption errors
+ */
+export const clearCorruptedTemplates = (): void => {
+  try {
+    localStorage.removeItem('builder_templates');
+    console.log('[SecureStorage] Cleared corrupted builder_templates');
+  } catch (error) {
+    console.error('[SecureStorage] Error clearing templates:', error);
   }
 };

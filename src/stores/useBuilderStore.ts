@@ -597,19 +597,27 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
   },
 
   loadTemplates: () => {
-    const stored = secureGetItem<BlockTemplate[]>('builder_templates', null);
-    if (stored) {
-      try {
-        if (Array.isArray(stored)) {
-          set({ templates: [...DEFAULT_BUILDER_TEMPLATES, ...stored] });
-          return;
+    try {
+      const stored = secureGetItem<BlockTemplate[]>('builder_templates', null);
+      if (stored) {
+        try {
+          if (Array.isArray(stored)) {
+            set({ templates: [...DEFAULT_BUILDER_TEMPLATES, ...stored] });
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to load templates', e);
+          // Clear corrupted data
+          localStorage.removeItem('builder_templates');
         }
-      } catch (e) {
-        console.error('Failed to load templates', e);
       }
-    }
 
-    set({ templates: DEFAULT_BUILDER_TEMPLATES });
-    secureSetItem('builder_templates', DEFAULT_BUILDER_TEMPLATES);
+      set({ templates: DEFAULT_BUILDER_TEMPLATES });
+      secureSetItem('builder_templates', DEFAULT_BUILDER_TEMPLATES);
+    } catch (error) {
+      console.error('[BuilderStore] Error in loadTemplates:', error);
+      // Fallback to default templates
+      set({ templates: DEFAULT_BUILDER_TEMPLATES });
+    }
   }
 }));
