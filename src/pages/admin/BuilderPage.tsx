@@ -131,9 +131,30 @@ const BuilderPage: React.FC = () => {
 
   // Increment blocksVersion each time blocks change (skip during initial load)
   const isLoadingRef = React.useRef(true);
+  const blocksRef = React.useRef(blocks);
+  const updateTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  
   useEffect(() => {
     if (isLoadingRef.current) return; // ignore changes during initial load
-    setBlocksVersion((v) => v + 1);
+    
+    // Debounce version updates to prevent excessive re-renders
+    if (updateTimeoutRef.current) {
+      clearTimeout(updateTimeoutRef.current);
+    }
+    
+    updateTimeoutRef.current = setTimeout(() => {
+      // Only update version if blocks actually changed (not just re-render)
+      if (JSON.stringify(blocksRef.current) !== JSON.stringify(blocks)) {
+        setBlocksVersion((v) => v + 1);
+        blocksRef.current = blocks;
+      }
+    }, 100);
+    
+    return () => {
+      if (updateTimeoutRef.current) {
+        clearTimeout(updateTimeoutRef.current);
+      }
+    };
   }, [blocks]);
 
   // Mark loading complete after first render with blocks
