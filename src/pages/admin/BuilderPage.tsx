@@ -23,6 +23,10 @@ import { CSS } from '@dnd-kit/utilities';
 import BuilderPageRenderer from '@/components/builder/BuilderPageRenderer';
 import PropertyPanel from '@/components/builder/PropertyPanel';
 import PageSettingsPanel from '@/components/builder/PageSettingsPanel';
+import { BuilderToolbar } from '@/components/builder/BuilderToolbar';
+import { BuilderSidebar } from '@/components/builder/BuilderSidebar';
+import { BuilderCanvas } from '@/components/builder/BuilderCanvas';
+import { BuilderRightPanel } from '@/components/builder/BuilderRightPanel';
 import { apiFetch } from '@/lib/api-client';
 import { toast } from 'sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -556,183 +560,34 @@ const BuilderPage: React.FC = () => {
             <div className="flex h-screen w-full bg-slate-100 overflow-hidden">
 
                 {/* GAUCHE: Bibliothèques */}
-                <aside className="w-72 bg-white border-r border-slate-200 flex flex-col shadow-sm z-10 shrink-0">
-                    <div className="h-14 border-b flex items-center px-4 font-semibold text-slate-700 bg-slate-50">
-                        <Plus className="w-5 h-5 mr-2 text-blue-600" /> Bibliothèque
-                    </div>
-
-                    <Tabs defaultValue="elements" className="flex-1 flex flex-col overflow-hidden">
-                        <div className="px-2 pt-2 border-b bg-slate-50">
-                            <TabsList className="w-full grid grid-cols-2">
-                                <TabsTrigger value="elements" className="text-xs">Éléments</TabsTrigger>
-                                <TabsTrigger value="templates" className="text-xs">Modèles</TabsTrigger>
-                            </TabsList>
-                        </div>
-
-                        <TabsContent value="elements" className="flex-1 overflow-y-auto p-4 space-y-2">
-                            <div className="uppercase text-[10px] font-bold text-slate-400 mb-2 tracking-wider">Base</div>
-                            <DraggableItem type="hero" label="Hero Section" icon={<LayoutTemplate size={16} />} />
-                            <DraggableItem type="section" label="Section Vide" icon={<Box size={16} />} />
-                            <DraggableItem type="text-block" label="Bloc Texte" icon={<Box size={16} />} />
-                            <DraggableItem type="image" label="Image Seule" icon={<Box size={16} />} />
-                            <DraggableItem type="html" label="Code HTML" icon={<Box size={16} />} />
-
-                            <div className="uppercase text-[10px] font-bold text-emerald-600 mb-2 mt-5 tracking-wider border-t border-slate-100 pt-4">
-                              🏠 Sections Page d'accueil
-                            </div>
-                            <DraggableItem type="HeroBanner" label="🎞 Carrousel Hero" icon={<LayoutTemplate size={16} />} />
-                            <DraggableItem type="AudienceOffers" label="🎯 Offres Audience" icon={<Box size={16} />} />
-                            <DraggableItem type="VisionMission" label="🎖 Vision & Mission" icon={<Box size={16} />} />
-                            <DraggableItem type="LandingStats" label="📊 Statistiques" icon={<Box size={16} />} />
-                            <DraggableItem type="LatestNews" label="📰 Actualités" icon={<Box size={16} />} />
-                            <DraggableItem type="PartnerLogos" label="🤝 Partenaires" icon={<Box size={16} />} />
-                        </TabsContent>
-
-
-                        <TabsContent value="templates" className="flex-1 overflow-y-auto p-4 space-y-3">
-                            <div className="uppercase text-[10px] font-bold text-slate-400 mb-2 tracking-wider">Mes Modèles</div>
-                            {templates.length === 0 &&
-              <div className="text-center py-8 text-slate-400 text-xs italic border border-dashed rounded bg-slate-50">
-                                    Aucun modèle sauvegardé.<br />
-                                    Utilisez le panneau de droite.
-                                </div>
-              }
-                            {templates.map((tpl) =>
-              <div key={tpl.id} className="group relative">
-                                    <DraggableTemplate template={tpl} />
-                                    <button
-                  className="absolute top-2 right-2 p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                  onClick={(e) => {e.stopPropagation();deleteTemplate(tpl.id);}}
-                  title="Supprimer le modèle">
-                  
-                                        <Trash2 size={12} />
-                                    </button>
-                                </div>
-              )}
-                        </TabsContent>
-                    </Tabs>
-                </aside>
+                <BuilderSidebar
+                  templates={templates}
+                  deleteTemplate={deleteTemplate}
+                />
 
                 {/* CENTRE: Canvas */}
                 <main className="flex-1 flex flex-col relative w-0 bg-slate-100">
 
                     {/* Toolbar */}
-                    <header className="h-14 bg-white border-b grid grid-cols-[auto_1fr_auto] items-center px-4 z-10 w-full shadow-sm shrink-0 gap-4">
-
-                        {/* Left Controls (Undo/Redo) */}
-                        <div className="flex items-center gap-2 min-w-fit">
-                            <Button variant="ghost" size="icon" className="mr-2 text-slate-400 hover:text-slate-600" title="Retour à la liste" asChild>
-                                <a href="/dashboard?tab=pages" title="Retour à la liste des pages">
-                                    <ChevronLeft className="w-5 h-5" />
-                                </a>
-                            </Button>
-
-                            <div className="flex bg-slate-100 rounded p-1">
-                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={undo} disabled={!canUndo()} title="Annuler (Ctrl+Z)">
-                                    <Undo className="w-4 h-4 text-slate-600" />
-                                </Button>
-                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={redo} disabled={!canRedo()} title="Rétablir (Ctrl+Y)">
-                                    <Redo className="w-4 h-4 text-slate-600" />
-                                </Button>
-                            </div>
-                            <span className="h-6 w-px bg-slate-200 mx-2"></span>
-
-                            {/* Device Selector */}
-                            <div className="flex bg-slate-100 rounded p-1">
-                                <Button variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'desktop' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('desktop')}>
-                                    <Monitor className="w-4 h-4" />
-                                </Button>
-                                <Button variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'tablet' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('tablet')}>
-                                    <Tablet className="w-4 h-4" />
-                                </Button>
-                                <Button variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'mobile' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('mobile')}>
-                                    <Smartphone className="w-4 h-4" />
-                                </Button>
-                            </div>
-                        </div>
-
-                        {/* Center Info: Page Title */}
-                        <div className="min-w-0 flex flex-col items-center text-center overflow-hidden">
-                            {pageData ?
-              <>
-                                    <h1 className="text-sm font-bold text-slate-800 flex flex-wrap items-center justify-center gap-2 truncate">
-                                        <span className="truncate">{pageData.title}</span>
-                                        <span className={`px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-tighter ${pageData.workflowStatus === 'published' ? 'bg-emerald-50 text-emerald-700' : pageData.workflowStatus === 'review' ? 'bg-amber-50 text-amber-700' : pageData.workflowStatus === 'archived' ? 'bg-rose-50 text-rose-700' : 'bg-slate-100 text-slate-500'}`}>
-                                          {pageData.workflowStatus === 'published' ? 'Publié' : pageData.workflowStatus === 'review' ? 'En relecture' : pageData.workflowStatus === 'archived' ? 'Archivée' : 'Brouillon'}
-                                        </span>
-                                    </h1>
-                                    <p className="text-[10px] text-slate-400 font-mono italic truncate">/{pageData.slug}</p>
-                                    <div className="mt-1 flex gap-2 flex-wrap justify-center">
-                                        {loadError ? (
-                                            <span className="text-[10px] uppercase text-rose-500 tracking-[0.18em] font-semibold">Erreur de chargement</span>
-                                        ) : isDirty ? (
-                                            <span className="text-[10px] uppercase text-amber-500 tracking-[0.18em] font-semibold">Modifications non sauvegardées</span>
-                                        ) : (
-                                            <span className="text-[10px] uppercase text-emerald-600 tracking-[0.18em] font-semibold">Synchronisé</span>
-                                        )}
-                                    </div>
-                                </> :
-
-              <div className="h-8 w-32 bg-slate-100 animate-pulse rounded"></div>
-              }
-                        </div>
-
-                        {/* Right Actions */}
-                        <div className="flex items-center gap-2 justify-end min-w-0 overflow-x-auto">
-                            {/* Code View Dialog */}
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button variant="outline" size="sm" className="inline-flex text-slate-600">
-                                        <Code className="w-4 h-4 mr-2" /> Code
-                                    </Button>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-                                    <DialogHeader>
-                                        <DialogTitle>Code Structure (JSON)</DialogTitle>
-                                        <DialogDescription>
-                                            Structure brute de la page.
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <pre className="bg-slate-950 text-slate-50 p-4 rounded text-xs font-mono overflow-auto max-h-[500px]">
-                                        {JSON.stringify(blocks, null, 2)}
-                                    </pre>
-                                </DialogContent>
-                            </Dialog>
-
-                            <Button size="sm" variant="outline" onClick={() => setShowPreview(true)} className="inline-flex text-slate-600">
-                                <Eye className="w-4 h-4 mr-2" /> Aperçu
-                            </Button>
-
-                            <Button size="sm" variant="outline" onClick={() => setVersionDialogOpen(true)} className="inline-flex text-slate-600">
-                                <Code className="w-4 h-4 mr-2" /> Versions
-                            </Button>
-
-                            <Button size="sm" variant="outline" onClick={() => setShowAnalytics(true)} className="inline-flex text-slate-600">
-                                <Monitor className="w-4 h-4 mr-2" /> Analytics
-                            </Button>
-
-                            <Button size="sm" variant="outline" asChild>
-                                <Link to="/admin?tab=pages">
-                                    Retour au menu
-                                </Link>
-                            </Button>
-                            <Button size="sm" variant="outline" asChild>
-                                <a href={`/${pageData?.slug || ''}`} target="_blank" rel="noreferrer">
-                                    Voir
-                                </a>
-                            </Button>
-                            <Button
-                                size="sm"
-                                className="bg-blue-600 hover:bg-blue-700 min-w-[120px] text-white"
-                                onClick={handleSave}
-                                disabled={isSaving || isLoading}>
-                                {isSaving ?
-                                    <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Sauvegarde...</> :
-                                    <><Save className="w-4 h-4 mr-2" /> Sauvegarder</>
-                                }
-                            </Button>
-                        </div>
-                    </header>
+                    <BuilderToolbar
+                      pageData={pageData}
+                      pageMetadata={pageMetadata}
+                      blocks={blocks}
+                      viewMode={viewMode}
+                      isDirty={isDirty}
+                      isSaving={isSaving}
+                      isLoading={isLoading}
+                      loadError={loadError}
+                      canUndo={canUndo}
+                      canRedo={canRedo}
+                      undo={undo}
+                      redo={redo}
+                      setViewMode={setViewMode}
+                      handleSave={handleSave}
+                      setShowPreview={setShowPreview}
+                      setVersionDialogOpen={setVersionDialogOpen}
+                      setShowAnalytics={setShowAnalytics}
+                    />
 
                     <Dialog open={showPreview} onOpenChange={setShowPreview}>
                       <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden p-0">
@@ -848,7 +703,7 @@ const BuilderPage: React.FC = () => {
 
                     {/* Zone de Drop (Canvas) */}
                     <div className="flex-1 overflow-auto p-8 relative bg-slate-100/50 custom-scrollbar flex justify-center">
-                        <DroppableCanvas blocks={blocks} widthClass={getCanvasWidth()} />
+                        <BuilderCanvas blocks={blocks} widthClass={getCanvasWidth()} />
                         {(isLoading || loadError) && (
                           <div className="absolute inset-0 z-20 flex flex-col items-center justify-center rounded-xl bg-white/90 text-center p-6">
                               {isLoading ? (
@@ -870,176 +725,18 @@ const BuilderPage: React.FC = () => {
                 </main>
 
                 {/* DROITE: Propriétés */}
-                <aside className="border-l border-slate-200 flex flex-col shadow-sm z-10 w-[400px] min-w-[400px] bg-white transition-all duration-300 shrink-0">
-                    <Tabs value={selectedBlockId ? 'block' : 'page'} className="flex flex-col h-full">
-                      <div className="border-b bg-slate-50 px-2 pt-1.5 shrink-0">
-                        <TabsList className="w-full grid grid-cols-2 h-9 bg-slate-100/80">
-                          <TabsTrigger
-                            value="block"
-                            onClick={() => { if (!selectedBlockId) selectBlock(null); }}
-                            className="text-xs gap-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm"
-                          >
-                            <Box className="w-3 h-3" />
-                            Bloc
-                            {selectedBlockId && <span className="w-1.5 h-1.5 rounded-full bg-blue-600 ml-1"></span>}
-                          </TabsTrigger>
-                          <TabsTrigger
-                            value="page"
-                            onClick={() => selectBlock(null)}
-                            className="text-xs gap-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm"
-                          >
-                            <Globe className="w-3 h-3" />
-                            Page
-                          </TabsTrigger>
-                        </TabsList>
-                      </div>
-                      <TabsContent value="block" className="flex-1 overflow-hidden mt-0">
-                        <PropertyPanel
-                          pageSettings={pageData ? {
-                            title: pageData.title,
-                            slug: pageData.slug,
-                            metaDescription: pageData.metaDescription,
-                            metaKeywords: pageData.metaKeywords,
-                            metaRobots: pageData.metaRobots,
-                            customCss: pageData.customCss,
-                            customJs: pageData.customJs,
-                            isPublished: pageData.isPublished,
-                            workflowStatus: pageData.workflowStatus
-                          } : undefined}
-                          onPageSettingsChange={(changes) => handlePageDataChange(changes as unknown as Partial<PageDataState>)}
-                        />
-                      </TabsContent>
-                      <TabsContent value="page" className="flex-1 overflow-hidden mt-0">
-                        <PageSettingsPanel
-                          pageSettings={pageData ? {
-                            title: pageData.title,
-                            slug: pageData.slug,
-                            metaDescription: pageData.metaDescription,
-                            metaKeywords: pageData.metaKeywords,
-                            metaRobots: pageData.metaRobots,
-                            customCss: pageData.customCss,
-                            customJs: pageData.customJs,
-                            designOptions: pageData.designOptions as unknown as Record<string, unknown>,
-                            isPublished: pageData.isPublished,
-                            workflowStatus: pageData.workflowStatus
-                          } : undefined}
-                          onPageSettingsChange={(changes) => handlePageDataChange(changes as unknown as Partial<PageDataState>)}
-                          pageMetadata={pageMetadata}
-                          onPageMetadataChange={setPageMetadata}
-                          contentHtml={JSON.stringify(blocks)}
-                        />
-                      </TabsContent>
-                    </Tabs>
-                </aside>
+                <BuilderRightPanel
+                  selectedBlockId={selectedBlockId}
+                  pageData={pageData}
+                  pageMetadata={pageMetadata}
+                  blocks={blocks}
+                  selectBlock={selectBlock}
+                  handlePageDataChange={handlePageDataChange}
+                  setPageMetadata={setPageMetadata}
+                />
             </div>
         </DndContext>);
 
 };
-
-// Composant Draggable Item (Élément de base)
-const DraggableItem = ({ type, label, icon }: {type: string;label: string;icon?: React.ReactNode;}) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: `sidebar-item-${type}`,
-    data: { type }
-  });
-
-  const style = {
-    transform: CSS.Translate.toString(transform),
-  };
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-      className="p-3 bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded cursor-grab active:cursor-grabbing flex items-center gap-3 transition-colors shadow-sm select-none">
-      
-            <div className="w-8 h-8 bg-slate-100 rounded flex items-center justify-center text-slate-500">
-                {icon}
-            </div>
-            <span className="text-sm font-medium text-slate-700">{label}</span>
-        </div>);
-
-};
-
-// Composant Draggable Template (Modèle Sauvegardé)
-const DraggableTemplate = ({ template }: {template: LegacyTemplate;}) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: `sidebar-template-${template.id}`,
-    data: { block: template.block }
-  });
-
-  const style = {
-    transform: CSS.Translate.toString(transform),
-  };
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-      className="p-3 bg-white hover:bg-purple-50 border border-slate-200 hover:border-purple-200 rounded cursor-grab active:cursor-grabbing flex flex-col gap-1 transition-colors shadow-sm select-none relative overflow-hidden">
-      
-            <div className="flex items-center gap-2 mb-1">
-                <Box size={14} className="text-purple-500" />
-                <span className="text-sm font-bold text-slate-800 truncate pr-4">{template.name}</span>
-            </div>
-            <span className="text-[10px] text-slate-400 capitalize">{template.block.type} • {new Date(template.createdAt).toLocaleDateString()}</span>
-        </div>);
-
-};
-
-// Composant Droppable (Zone Canvas)
-const DroppableCanvas = React.memo(({ blocks, widthClass }: { blocks: Block[]; widthClass: string }) => {
-  const { isOver, setNodeRef } = useDroppable({ id: 'canvas-droppable' });
-  const { selectedBlockId, selectBlock } = useBuilderStore();
-
-  const overClasses = isOver ? 'border-blue-400 shadow-lg' : 'border-slate-200';
-
-  // Memoize block IDs to prevent recalculation on every render
-  // Optimized to use array mutation instead of spread for better performance
-  const sortableItems = useMemo(() => {
-    const getAllBlockIds = (nodes: Block[], result: string[] = []): string[] => {
-      for (const node of nodes) {
-        result.push(node.id);
-        if (node.children?.length) {
-          getAllBlockIds(node.children, result);
-        }
-      }
-      return result;
-    };
-    return getAllBlockIds(blocks);
-  }, [blocks]);
-
-  return (
-    <div
-      ref={setNodeRef}
-      className={`${widthClass} w-full min-h-[800px] bg-white shadow-xl rounded-sm border-2 ${overClasses} transition-all p-8 shrink-0 click-outside-handler pb-32`}
-      onClick={(e) => {
-        if (e.target === e.currentTarget && selectedBlockId) {
-          selectBlock(null);
-        }
-      }}>
-      
-            <SortableContext items={sortableItems} strategy={verticalListSortingStrategy}>
-                {blocks.length > 0 ? <BuilderPageRenderer
-          blocks={blocks}
-          isEditor={true}
-          selectedId={selectedBlockId}
-          onSelect={selectBlock} /> :
-
-
-        <div className="flex flex-col items-center justify-center h-[400px] text-slate-300 border-2 border-dashed border-slate-100 rounded-lg">
-                        <MousePointer2 className="w-16 h-16 mb-4 opacity-20" />
-                        <p className="text-lg font-medium text-slate-400">La page est vide</p>
-                        <p className="text-sm">Glissez un élément ou un modèle depuis la barre latérale.</p>
-                    </div>
-        }
-            </SortableContext>
-        </div>);
-
-});
 
 export default BuilderPage;
