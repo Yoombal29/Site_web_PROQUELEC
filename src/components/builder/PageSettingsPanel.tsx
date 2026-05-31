@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -177,27 +177,79 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
   contentHtml = ''
 }) => {
 
-  const update = useCallback(<K extends keyof PageMetadata>(key: K, value: PageMetadata[K]) => {
-    onPageMetadataChange?.({ [key]: value } as Partial<PageMetadata>);
+  // ── LOCAL STATE ──────────────────────────────────────────────────────────────
+  // We maintain local copies of all fields so keystrokes update the UI instantly
+  // without triggering a BuilderPage re-render on every character typed.
+  const [localSettings, setLocalSettings] = useState(() => pageSettings);
+  const [localMetadata, setLocalMetadata] = useState(() => pageMetadata);
+
+  // Sync when parent resets (e.g. page load)
+  const prevPageSettingsRef = useRef(pageSettings);
+  const prevPageMetadataRef = useRef(pageMetadata);
+  useEffect(() => {
+    if (pageSettings !== prevPageSettingsRef.current) {
+      prevPageSettingsRef.current = pageSettings;
+      setLocalSettings(pageSettings);
+    }
+  }, [pageSettings]);
+  useEffect(() => {
+    if (pageMetadata !== prevPageMetadataRef.current) {
+      prevPageMetadataRef.current = pageMetadata;
+      setLocalMetadata(pageMetadata);
+    }
+  }, [pageMetadata]);
+
+  // ── DEBOUNCED PROPAGATION ────────────────────────────────────────────────────
+  // Notify BuilderPage only after 500ms of inactivity (avoids re-render storm)
+  const settingsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const metadataTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const propagateSettings = useCallback((changes: Record<string, unknown>) => {
+    if (settingsTimerRef.current) clearTimeout(settingsTimerRef.current);
+    settingsTimerRef.current = setTimeout(() => {
+      onPageSettingsChange?.(changes as any);
+    }, 500);
+  }, [onPageSettingsChange]);
+
+  const propagateMetadata = useCallback((changes: Partial<PageMetadata>) => {
+    if (metadataTimerRef.current) clearTimeout(metadataTimerRef.current);
+    metadataTimerRef.current = setTimeout(() => {
+      onPageMetadataChange?.(changes);
+    }, 500);
   }, [onPageMetadataChange]);
 
+  useEffect(() => {
+    return () => {
+      if (settingsTimerRef.current) clearTimeout(settingsTimerRef.current);
+      if (metadataTimerRef.current) clearTimeout(metadataTimerRef.current);
+    };
+  }, []);
+
+  // ── UPDATERS ─────────────────────────────────────────────────────────────────
+  const update = useCallback(<K extends keyof PageMetadata>(key: K, value: PageMetadata[K]) => {
+    setLocalMetadata(prev => ({ ...prev, [key]: value }));
+    propagateMetadata({ [key]: value } as Partial<PageMetadata>);
+  }, [propagateMetadata]);
+
   const updateLegacy = useCallback((key: string, value: unknown) => {
-    onPageSettingsChange?.({ [key]: value });
-  }, [onPageSettingsChange]);
+    setLocalSettings(prev => prev ? ({ ...prev, [key]: value } as typeof prev) : prev);
+    propagateSettings({ [key]: value });
+  }, [propagateSettings]);
 
   // Auto-compute reading time from content
   useEffect(() => {
     if (contentHtml) {
       const rt = estimateReadingTime(contentHtml);
-      if (rt !== pageMetadata.reading_time) {
+      if (rt !== localMetadata.reading_time) {
         update('reading_time', rt);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentHtml]);
 
   const handleAutoSlug = () => {
-    if (pageSettings?.title) {
-      const slug = generateSlug(pageSettings.title);
+    if (localSettings?.title) {
+      const slug = generateSlug(localSettings.title);
       updateLegacy('slug', slug);
       toast.success(`Slug généré : /${slug}`);
     }
@@ -242,23 +294,23 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
           {/* ── SEO TAB ── */}
           <TabsContent value="seo" className="m-0 p-4 space-y-5">
             <SeoScoreWidget
-              title={pageSettings?.title || ''}
-              metaDescription={pageSettings?.metaDescription || ''}
-              metaKeywords={pageSettings?.metaKeywords || ''}
-              featuredImage={pageMetadata.featured_image || ''}
-              slug={pageSettings?.slug || ''}
+              title={localSettings?.title || ''}
+              metaDescription={localSettings?.metaDescription || ''}
+              metaKeywords={localSettings?.metaKeywords || ''}
+              featuredImage={localMetadata.featured_image || ''}
+              slug={localSettings?.slug || ''}
               contentHtml={contentHtml}
             />
 
             <MetaDescriptionField
-              value={pageSettings?.metaDescription || ''}
+              value={localSettings?.metaDescription || ''}
               onChange={v => updateLegacy('metaDescription', v)}
             />
 
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">Meta Keywords</Label>
               <Input
-                value={pageSettings?.metaKeywords || ''}
+                value={localSettings?.metaKeywords || ''}
                 onChange={e => updateLegacy('metaKeywords', e.target.value)}
                 placeholder="electricite, audit, norme, senegal..."
                 className="h-9 text-sm"
@@ -269,7 +321,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">Meta Robots</Label>
               <Select
-                value={pageSettings?.metaRobots || 'index,follow'}
+                value={localSettings?.metaRobots || 'index,follow'}
                 onValueChange={v => updateLegacy('metaRobots', v)}
               >
                 <SelectTrigger className="h-9 text-sm">
@@ -287,7 +339,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">Langue de la page</Label>
               <Select
-                value={pageMetadata.language_code || 'fr'}
+                value={localMetadata.language_code || 'fr'}
                 onValueChange={v => update('language_code', v)}
               >
                 <SelectTrigger className="h-9 text-sm">
@@ -305,12 +357,12 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <div className="flex items-center justify-between">
                 <Label className="text-[10px] uppercase text-slate-400">Image mise en avant</Label>
-                {pageMetadata.featured_image && (
-                  <img src={pageMetadata.featured_image} alt="" className="w-8 h-8 rounded object-cover border border-slate-200" />
+                {localMetadata.featured_image && (
+                  <img src={localMetadata.featured_image} alt="" className="w-8 h-8 rounded object-cover border border-slate-200" />
                 )}
               </div>
               <Input
-                value={pageMetadata.featured_image || ''}
+                value={localMetadata.featured_image || ''}
                 onChange={e => update('featured_image', e.target.value)}
                 placeholder="https://... (image Open Graph)"
                 className="h-9 text-sm"
@@ -327,7 +379,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
                   <p className="text-[10px] text-slate-400">Section bannière en haut de page.</p>
                 </div>
                 <Switch
-                  checked={pageMetadata.show_hero ?? true}
+                  checked={localMetadata.show_hero ?? true}
                   onCheckedChange={v => update('show_hero', v)}
                 />
               </div>
@@ -336,7 +388,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">Titre Principal (H1)</Label>
               <Input
-                value={pageMetadata.hero_title || ''}
+                value={localMetadata.hero_title || ''}
                 onChange={e => update('hero_title', e.target.value)}
                 placeholder="Titre accrocheur..."
                 className="h-9 text-sm"
@@ -346,7 +398,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">Sous-titre / Description</Label>
               <Textarea
-                value={pageMetadata.hero_subtitle || ''}
+                value={localMetadata.hero_subtitle || ''}
                 onChange={e => update('hero_subtitle', e.target.value)}
                 placeholder="Texte d'accompagnement..."
                 className="min-h-[80px] text-sm resize-none"
@@ -356,12 +408,12 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <div className="flex items-center justify-between">
                 <Label className="text-[10px] uppercase text-slate-400">Image de fond (URL)</Label>
-                {pageMetadata.hero_background_image && (
-                  <img src={pageMetadata.hero_background_image} alt="" className="w-8 h-8 rounded object-cover border border-slate-200" />
+                {localMetadata.hero_background_image && (
+                  <img src={localMetadata.hero_background_image} alt="" className="w-8 h-8 rounded object-cover border border-slate-200" />
                 )}
               </div>
               <Input
-                value={pageMetadata.hero_background_image || ''}
+                value={localMetadata.hero_background_image || ''}
                 onChange={e => update('hero_background_image', e.target.value)}
                 placeholder="https://..."
                 className="h-9 text-sm"
@@ -372,7 +424,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
               <div className="space-y-1">
                 <Label className="text-[10px] uppercase text-slate-400">Texte du bouton</Label>
                 <Input
-                  value={pageMetadata.hero_cta_text || ''}
+                  value={localMetadata.hero_cta_text || ''}
                   onChange={e => update('hero_cta_text', e.target.value)}
                   placeholder="En savoir plus"
                   className="h-9 text-sm"
@@ -381,7 +433,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
               <div className="space-y-1">
                 <Label className="text-[10px] uppercase text-slate-400">Lien du bouton</Label>
                 <Input
-                  value={pageMetadata.hero_cta_link || ''}
+                  value={localMetadata.hero_cta_link || ''}
                   onChange={e => update('hero_cta_link', e.target.value)}
                   placeholder="/contact"
                   className="h-9 text-sm"
@@ -394,21 +446,21 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
           <TabsContent value="publish" className="m-0 p-4 space-y-5">
             {/* Status banner */}
             <div className={`rounded-lg p-3 flex items-center justify-between border ${
-              pageSettings?.isPublished
+              localSettings?.isPublished
                 ? 'bg-emerald-50 border-emerald-200'
                 : 'bg-amber-50 border-amber-200'
             }`}>
               <div>
-                <p className={`text-sm font-bold ${pageSettings?.isPublished ? 'text-emerald-700' : 'text-amber-700'}`}>
-                  {pageSettings?.isPublished ? '✅ Page publiée' : '📝 Brouillon'}
+                <p className={`text-sm font-bold ${localSettings?.isPublished ? 'text-emerald-700' : 'text-amber-700'}`}>
+                  {localSettings?.isPublished ? '✅ Page publiée' : '📝 Brouillon'}
                 </p>
                 <p className="text-[10px] text-slate-500">
-                  {pageSettings?.isPublished ? 'Visible par tous les visiteurs.' : 'Visible uniquement par les administrateurs.'}
+                  {localSettings?.isPublished ? 'Visible par tous les visiteurs.' : 'Visible uniquement par les administrateurs.'}
                 </p>
               </div>
               <Switch
                 id="page-published"
-                checked={pageSettings?.isPublished || false}
+                checked={localSettings?.isPublished || false}
                 onCheckedChange={v => updateLegacy('isPublished', v)}
               />
             </div>
@@ -416,7 +468,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">Flux de travail</Label>
               <Select
-                value={pageSettings?.workflowStatus || 'draft'}
+                value={localSettings?.workflowStatus || 'draft'}
                 onValueChange={v => updateLegacy('workflowStatus', v)}
               >
                 <SelectTrigger className="h-9 text-sm">
@@ -435,7 +487,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
               <Label className="text-[10px] uppercase text-slate-400">Date de publication</Label>
               <Input
                 type="datetime-local"
-                value={pageMetadata.publish_date || ''}
+                value={localMetadata.publish_date || ''}
                 onChange={e => update('publish_date', e.target.value)}
                 className="h-9 text-sm"
               />
@@ -445,7 +497,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
               <Label className="text-[10px] uppercase text-slate-400">Date de dépublication</Label>
               <Input
                 type="datetime-local"
-                value={pageMetadata.unpublish_date || ''}
+                value={localMetadata.unpublish_date || ''}
                 onChange={e => update('unpublish_date', e.target.value)}
                 className="h-9 text-sm"
               />
@@ -457,7 +509,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">Template de page</Label>
               <Select
-                value={pageMetadata.template || 'default'}
+                value={localMetadata.template || 'default'}
                 onValueChange={v => update('template', v)}
               >
                 <SelectTrigger className="h-9 text-sm">
@@ -480,7 +532,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
                   <p className="text-[10px] text-slate-400">Footer global du site.</p>
                 </div>
                 <Switch
-                  checked={pageMetadata.show_footer ?? true}
+                  checked={localMetadata.show_footer ?? true}
                   onCheckedChange={v => update('show_footer', v)}
                 />
               </div>
@@ -495,7 +547,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
                 <div className="flex items-center flex-1 h-9 border border-slate-200 rounded-md px-3 bg-slate-50 overflow-hidden">
                   <span className="text-slate-400 text-sm shrink-0">/</span>
                   <Input
-                    value={pageSettings?.slug || ''}
+                    value={localSettings?.slug || ''}
                     onChange={e => updateLegacy('slug', e.target.value)}
                     className="h-full border-0 bg-transparent px-1 text-sm focus-visible:ring-0 shadow-none"
                     placeholder="mon-url-de-page"
@@ -510,7 +562,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">Extrait / Description courte</Label>
               <Textarea
-                value={pageMetadata.excerpt || ''}
+                value={localMetadata.excerpt || ''}
                 onChange={e => update('excerpt', e.target.value)}
                 placeholder="Résumé de la page affiché dans les listes d'articles..."
                 className="min-h-[80px] text-sm resize-none"
@@ -521,7 +573,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
               <div className="space-y-1">
                 <Label className="text-[10px] uppercase text-slate-400">Auteur</Label>
                 <Input
-                  value={pageMetadata.author || ''}
+                  value={localMetadata.author || ''}
                   onChange={e => update('author', e.target.value)}
                   placeholder="Nom de l'auteur..."
                   className="h-9 text-sm"
@@ -531,7 +583,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
                 <Label className="text-[10px] uppercase text-slate-400">Temps de lecture (min)</Label>
                 <div className="flex items-center h-9 border border-slate-200 rounded-md px-3 bg-slate-50 gap-2">
                   <BarChart2 className="w-3 h-3 text-slate-400 shrink-0" />
-                  <span className="text-sm text-slate-700 font-mono">{pageMetadata.reading_time || 1} min</span>
+                  <span className="text-sm text-slate-700 font-mono">{localMetadata.reading_time || 1} min</span>
                   <span className="text-[10px] text-slate-400">(auto)</span>
                 </div>
               </div>
@@ -539,14 +591,14 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
 
             <TagInput
               label="Catégories"
-              values={pageMetadata.categories || []}
+              values={localMetadata.categories || []}
               onChange={v => update('categories', v)}
               placeholder="Actualités, Normes..."
             />
 
             <TagInput
               label="Tags"
-              values={pageMetadata.tags || []}
+              values={localMetadata.tags || []}
               onChange={v => update('tags', v)}
               placeholder="NFC-15-100, audit..."
             />
@@ -555,7 +607,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
               <Label className="text-[10px] uppercase text-slate-400">Ordre dans le menu</Label>
               <Input
                 type="number"
-                value={pageMetadata.menu_order !== undefined ? String(pageMetadata.menu_order) : '0'}
+                value={localMetadata.menu_order !== undefined ? String(localMetadata.menu_order) : '0'}
                 onChange={e => update('menu_order' as keyof PageMetadata, parseInt(e.target.value) as never)}
                 className="h-9 text-sm w-24"
                 min={0}
@@ -573,7 +625,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">CSS personnalisé</Label>
               <Textarea
-                value={pageSettings?.customCss || ''}
+                value={localSettings?.customCss || ''}
                 onChange={e => updateLegacy('customCss', e.target.value)}
                 placeholder={`/* Styles spécifiques à cette page */\n.hero { background: #0f172a; }`}
                 className="min-h-[120px] text-xs font-mono resize-y"
@@ -583,7 +635,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">JavaScript personnalisé</Label>
               <Textarea
-                value={pageSettings?.customJs || ''}
+                value={localSettings?.customJs || ''}
                 onChange={e => updateLegacy('customJs', e.target.value)}
                 placeholder={`// Script exécuté après chargement\ndocument.addEventListener('DOMContentLoaded', () => { });`}
                 className="min-h-[120px] text-xs font-mono resize-y"
@@ -593,7 +645,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">HTML personnalisé (en-tête)</Label>
               <Textarea
-                value={pageMetadata.header_html || ''}
+                value={localMetadata.header_html || ''}
                 onChange={e => update('header_html', e.target.value)}
                 placeholder={`<!-- Balises meta, scripts, liens CSS additionnels -->`}
                 className="min-h-[90px] text-xs font-mono resize-y"
@@ -603,7 +655,7 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
             <div className="space-y-1">
               <Label className="text-[10px] uppercase text-slate-400">HTML personnalisé (pied de page)</Label>
               <Textarea
-                value={pageMetadata.footer_html || ''}
+                value={localMetadata.footer_html || ''}
                 onChange={e => update('footer_html', e.target.value)}
                 placeholder={`<!-- Scripts de tracking, widgets tiers -->`}
                 className="min-h-[90px] text-xs font-mono resize-y"
@@ -618,3 +670,4 @@ const PageSettingsPanel: React.FC<PageSettingsPanelProps> = ({
 };
 
 export default PageSettingsPanel;
+

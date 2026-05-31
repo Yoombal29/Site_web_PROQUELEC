@@ -102,4 +102,4 @@ async function logSync(client, startTime, status, processed, errors, details) {
     `, [startTime, status, processed, errors, details]);
 }
 
-module.exports = { startSyncEngine };
+module.exports = { startSyncEngine, runSyncCycle };

@@ -78,11 +78,11 @@ const AdminDashboard: React.FC = () => {
   { id: 'site_logo', name: 'Logo du site (URL)', value: (settings as unknown)?.site_logo || '', type: 'text', category: 'general', description: "Lien vers l'image de votre logo. Utilisez le gestionnaire de fichiers pour en uploader un nouveau." },
 
   // Contacts
-  { id: 'contact_email', name: 'Email de contact', value: settings?.contact_email || 'contact@proquelec.sn', type: 'email', category: 'contact', required: true, description: "L'adresse où les visiteurs enverront leurs messages depuis le formulaire de contact." },
+  { id: 'contact_email', name: 'Email de contact', value: settings?.contact_email || 'proquelec@proquelec.sn', type: 'email', category: 'contact', required: true, description: "L'adresse où les visiteurs enverront leurs messages depuis le formulaire de contact." },
   { id: 'support_email', name: 'Email de support', value: (settings as unknown)?.support_email || 'support@proquelec.sn', type: 'email', category: 'contact', description: "Email technique affiché en cas de problème (optionnel)." },
-  { id: 'phone', name: 'Téléphone principal', value: (settings as unknown)?.phone || '+221 33 xxx xxxx', type: 'text', category: 'contact', description: "Numéro affiché en haut du site et dans le pied de page." },
-  { id: 'phone_whatsapp', name: 'WhatsApp', value: (settings as unknown)?.phone_whatsapp || '+221 76 644 76 06', type: 'text', category: 'contact', description: "Numéro pour le bouton de chat WhatsApp flottant." },
-  { id: 'address', name: 'Adresse', value: settings?.address || 'Dakar, Sénégal', type: 'textarea', category: 'contact', description: "Adresse physique de vos bureaux affichée dans le pied de page." },
+  { id: 'phone', name: 'Téléphone principal', value: (settings as unknown)?.phone || '+221 33 848 68 55', type: 'text', category: 'contact', description: "Numéro affiché en haut du site et dans le pied de page." },
+  { id: 'phone_whatsapp', name: 'WhatsApp', value: (settings as unknown)?.phone_whatsapp || '+221 33 848 68 55', type: 'text', category: 'contact', description: "Numéro pour le bouton de chat WhatsApp flottant." },
+  { id: 'address', name: 'Adresse', value: settings?.address || 'Immeuble Coumba Castel, 12 rue Saint-Michel, 4e étage, Dakar', type: 'textarea', category: 'contact', description: "Adresse physique de vos bureaux affichée dans le pied de page." },
 
   // Réseaux sociaux
   { id: 'social_facebook', name: 'Facebook', value: (settings as unknown)?.social_facebook || '', type: 'text', category: 'social', description: "Lien complet vers votre page Facebook (ex: https://facebook.com/votrepage)." },

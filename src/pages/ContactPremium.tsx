@@ -101,9 +101,9 @@ const SectionContent = ({ id, settings }: {id: ContactSection;settings: unknown;
     return (
       <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                 {[
-        { icon: Phone, title: "Téléphone", content: "+221 33 824 10 10", sub: "Du Lundi au Vendredi, 8h-17h", color: "blue" },
-        { icon: Mail, title: "Email", content: "contact@proquelec.sn", sub: "Réponse sous 24h ouvrées", color: "green" },
-        { icon: MapPin, title: "Siège Social", content: "Sicap Amitié 2, Villa 4124", sub: "Dakar, Sénégal", color: "orange" }].
+        { icon: Phone, title: "Téléphone", content: "+221 33 848 68 55", sub: "Du Lundi au Vendredi, 8h-17h", color: "blue" },
+        { icon: Mail, title: "Email", content: "proquelec@proquelec.sn", sub: "Réponse sous 24h ouvrées", color: "green" },
+        { icon: MapPin, title: "Siège Social", content: "Immeuble Coumba Castel, 12 rue Saint-Michel, 4e étage", sub: "Dakar, Sénégal", color: "orange" }].
         map((item, idx) =>
         <motion.div
           key={idx}

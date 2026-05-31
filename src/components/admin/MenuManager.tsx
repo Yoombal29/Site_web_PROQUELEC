@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useMenuItems, useCreateMenuItem, useUpdateMenuItem, useDeleteMenuItem } from '@/hooks/useMenuItems';
+import { usePages } from '@/hooks/usePages';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Plus, Trash2, Edit2, Save, X } from 'lucide-react';
@@ -14,10 +15,12 @@ interface MenuItem {
   menu_type?: 'main' | 'footer' | 'social';
   icon?: string;
   label?: string;
+  linked_page_id?: string | null;
 }
 
 export function MenuManager() {
   const { data: menuItems = [], isLoading } = useMenuItems();
+  const { data: pages = [] } = usePages();
   const createMutation = useCreateMenuItem();
   const updateMutation = useUpdateMenuItem();
   const deleteMutation = useDeleteMenuItem();
@@ -29,7 +32,8 @@ export function MenuManager() {
     menu_type: 'main',
     menu_order: 0,
     is_active: true,
-    target: '_self'
+    target: '_self',
+    linked_page_id: null
   });
 
   const [editItem, setEditItem] = useState<MenuItem | null>(null);
@@ -49,7 +53,8 @@ export function MenuManager() {
         is_active: true,
         menu_type: newItem.menu_type as 'main' | 'footer' | 'social',
         icon: newItem.icon,
-        label: newItem.label
+        label: newItem.label,
+        linked_page_id: newItem.linked_page_id || null
       });
 
       setNewItem({
@@ -58,7 +63,8 @@ export function MenuManager() {
         menu_type: 'main',
         menu_order: 0,
         is_active: true,
-        target: '_self'
+        target: '_self',
+        linked_page_id: null
       });
     } catch (error) {
       console.error('Erreur lors de l\'ajout:', error);
@@ -120,6 +126,23 @@ export function MenuManager() {
             onChange={(e) => setNewItem({ ...newItem, url: e.target.value })}
             className="p-2 border rounded" />
           
+          <select title="Lier à une page"
+          value={newItem.linked_page_id || ''}
+          onChange={(e) => {
+            const pageId = e.target.value;
+            const page = pages.find((p: unknown) => p.id === pageId);
+            setNewItem({
+              ...newItem,
+              linked_page_id: pageId || null,
+              url: page ? '/' + page.slug : newItem.url
+            });
+          }}
+          className="p-2 border rounded">
+            <option value="">-- Lier à une page --</option>
+            {pages.map((page: unknown) =>
+          <option key={page.id} value={page.id}>/{page.slug} — {page.title}</option>
+          )}
+          </select>
           <select title="Sélectionner une option"
           value={newItem.menu_type}
           onChange={(e) => setNewItem({ ...newItem, menu_type: e.target.value as unknown })}
@@ -227,17 +250,8 @@ function MenuSection({
   onCancel,
   onDelete,
   onEditChange
-
-
-
-
-
-
-
-
-
-
 }: {title: string;items: unknown[];editingId: string | null;editItem: unknown;onEdit: (item: unknown) => void;onSave: () => void;onCancel: () => void;onDelete: (id: string) => void;onEditChange: (item: unknown) => void;}) {
+  const { data: pages = [] } = usePages();
   return (
     <div className="bg-white rounded-lg shadow-md p-6 mb-6">
       <h2 className="text-xl font-semibold mb-4">{title}</h2>
@@ -251,7 +265,8 @@ function MenuSection({
           className="flex items-center justify-between p-4 border rounded bg-gray-50 hover:bg-gray-100">
           
               {editingId === item.id && editItem ?
-          <div className="flex-1 flex gap-2">
+          <div className="flex-1 space-y-2">
+                <div className="flex gap-2">
                   <Input
               type="text"
               value={editItem.title}
@@ -263,7 +278,25 @@ function MenuSection({
               value={editItem.url}
               onChange={(e) => onEditChange({ ...editItem, url: e.target.value })}
               className="flex-1 p-2 border rounded" />
-            
+                </div>
+                <select title="Lier à une page"
+                value={editItem.linked_page_id || ''}
+                onChange={(e) => {
+                  const pageId = e.target.value;
+                  const page = pages.find((p: unknown) => p.id === pageId);
+                  onEditChange({
+                    ...editItem,
+                    linked_page_id: pageId || null,
+                    url: page ? '/' + page.slug : editItem.url
+                  });
+                }}
+                className="w-full p-2 border rounded">
+                  <option value="">-- Lier à une page --</option>
+                  {pages.map((page: unknown) =>
+                <option key={page.id} value={page.id}>/{page.slug} — {page.title}</option>
+                )}
+                </select>
+                <div className="flex gap-2">
                   <Button
               onClick={onSave}
               className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
@@ -276,7 +309,8 @@ function MenuSection({
               
                     <X className="w-4 h-4" />
                   </Button>
-                </div> :
+                </div>
+              </div> :
 
           <>
                   <div className="flex-1">

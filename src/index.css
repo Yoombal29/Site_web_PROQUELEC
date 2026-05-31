@@ -231,6 +231,31 @@
   }
 }
 
+/* ===== Animations pour contenu HTML (pages Craft.js) ===== */
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.stat-card {
+  animation: fadeSlideUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Card hover effect */
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== Fin animations ===== */
+
 /* Animations Premium */
 /* --- EXPERT AUDIT STYLES (PROQUELEC-NS01) --- */
 .ProseMirror table {
@@ -454,4 +479,120 @@
 .header-logo-dynamic {
   height: var(--logo-height, 50px);
   transform: scale(var(--logo-scale, 1.2));
+}
+
+/* ==========================================================================
+   Responsive Visibility (hide on specific breakpoints)
+   ========================================================================== */
+@media (min-width: 1025px) { .hide-desktop { display: none !important; } }
+@media (min-width: 641px) and (max-width: 1024px) { .hide-tablet { display: none !important; } }
+@media (max-width: 640px) { .hide-mobile { display: none !important; } }
+@media (max-width: 768px) { .reverse-mobile { flex-direction: column-reverse !important; } }
+
+/* ==========================================================================
+   Page Builder Responsive Style Engine (.proquelec-builder-node)
+   ========================================================================== */
+.proquelec-builder-node {
+  margin-top: var(--desktop-margin-top, 0px);
+  margin-right: var(--desktop-margin-right, 0px);
+  margin-bottom: var(--desktop-margin-bottom, 0px);
+  margin-left: var(--desktop-margin-left, 0px);
+
+  padding-top: var(--desktop-padding-top, 0px);
+  padding-right: var(--desktop-padding-right, 0px);
+  padding-bottom: var(--desktop-padding-bottom, 0px);
+  padding-left: var(--desktop-padding-left, 0px);
+
+  font-size: var(--desktop-font-size, inherit);
+  text-align: var(--desktop-text-align, inherit);
+
+  /* Layout: Flex & Grid */
+  display: var(--desktop-display, block);
+  flex-direction: var(--desktop-flex-direction, row);
+  flex-wrap: var(--desktop-flex-wrap, nowrap);
+  justify-content: var(--desktop-justify-content, flex-start);
+  align-items: var(--desktop-align-items, stretch);
+  gap: var(--desktop-gap, 0px);
+  flex-grow: var(--desktop-flex-grow, 0);
+  flex-shrink: var(--desktop-flex-shrink, 1);
+  flex-basis: var(--desktop-flex-basis, auto);
+  order: var(--desktop-order, 0);
+  align-self: var(--desktop-align-self, auto);
+  grid-template-columns: var(--desktop-grid-template-columns, none);
+  grid-template-rows: var(--desktop-grid-template-rows, none);
+  place-items: var(--desktop-place-items, stretch);
+
+  border-width: var(--border-width, 0px);
+  border-color: var(--border-color, transparent);
+  border-style: var(--border-style, none);
+  border-radius: var(--border-radius, 0px);
+  opacity: var(--opacity, 1);
+  box-shadow: var(--box-shadow, none);
+  z-index: var(--z-index, auto);
+}
+
+@media (max-width: 1024px) {
+  .proquelec-builder-node {
+    margin-top: var(--tablet-margin-top, var(--desktop-margin-top, 0px));
+    margin-right: var(--tablet-margin-right, var(--desktop-margin-right, 0px));
+    margin-bottom: var(--tablet-margin-bottom, var(--desktop-margin-bottom, 0px));
+    margin-left: var(--tablet-margin-left, var(--desktop-margin-left, 0px));
+
+    padding-top: var(--tablet-padding-top, var(--desktop-padding-top, 0px));
+    padding-right: var(--tablet-padding-right, var(--desktop-padding-right, 0px));
+    padding-bottom: var(--tablet-padding-bottom, var(--desktop-padding-bottom, 0px));
+    padding-left: var(--tablet-padding-left, var(--desktop-padding-left, 0px));
+
+    font-size: var(--tablet-font-size, var(--desktop-font-size, inherit));
+    text-align: var(--tablet-text-align, var(--desktop-text-align, inherit));
+
+    /* Layout Tablet Fallbacks */
+    display: var(--tablet-display, var(--desktop-display, block));
+    flex-direction: var(--tablet-flex-direction, var(--desktop-flex-direction, row));
+    flex-wrap: var(--tablet-flex-wrap, var(--desktop-flex-wrap, nowrap));
+    justify-content: var(--tablet-justify-content, var(--desktop-justify-content, flex-start));
+    align-items: var(--tablet-align-items, var(--desktop-align-items, stretch));
+    gap: var(--tablet-gap, var(--desktop-gap, 0px));
+    flex-grow: var(--tablet-flex-grow, var(--desktop-flex-grow, 0));
+    flex-shrink: var(--tablet-flex-shrink, var(--desktop-flex-shrink, 1));
+    flex-basis: var(--tablet-flex-basis, var(--desktop-flex-basis, auto));
+    order: var(--tablet-order, var(--desktop-order, 0));
+    align-self: var(--tablet-align-self, var(--desktop-align-self, auto));
+    grid-template-columns: var(--tablet-grid-template-columns, var(--desktop-grid-template-columns, none));
+    grid-template-rows: var(--tablet-grid-template-rows, var(--desktop-grid-template-rows, none));
+    place-items: var(--tablet-place-items, var(--desktop-place-items, stretch));
+  }
+}
+
+@media (max-width: 640px) {
+  .proquelec-builder-node {
+    margin-top: var(--mobile-margin-top, var(--tablet-margin-top, var(--desktop-margin-top, 0px)));
+    margin-right: var(--mobile-margin-right, var(--tablet-margin-right, var(--desktop-margin-right, 0px)));
+    margin-bottom: var(--mobile-margin-bottom, var(--tablet-margin-bottom, var(--desktop-margin-bottom, 0px)));
+    margin-left: var(--mobile-margin-left, var(--tablet-margin-left, var(--desktop-margin-left, 0px)));
+
+    padding-top: var(--mobile-padding-top, var(--tablet-padding-top, var(--desktop-padding-top, 0px)));
+    padding-right: var(--mobile-padding-right, var(--tablet-padding-right, var(--desktop-padding-right, 0px)));
+    padding-bottom: var(--mobile-padding-bottom, var(--tablet-padding-bottom, var(--desktop-padding-bottom, 0px)));
+    padding-left: var(--mobile-padding-left, var(--tablet-padding-left, var(--desktop-padding-left, 0px)));
+
+    font-size: var(--mobile-font-size, var(--tablet-font-size, var(--desktop-font-size, inherit)));
+    text-align: var(--mobile-text-align, var(--tablet-text-align, var(--desktop-text-align, inherit)));
+
+    /* Layout Mobile Fallbacks */
+    display: var(--mobile-display, var(--tablet-display, var(--desktop-display, block)));
+    flex-direction: var(--mobile-flex-direction, var(--tablet-flex-direction, var(--desktop-flex-direction, row)));
+    flex-wrap: var(--mobile-flex-wrap, var(--tablet-flex-wrap, var(--desktop-flex-wrap, nowrap)));
+    justify-content: var(--mobile-justify-content, var(--tablet-justify-content, var(--desktop-justify-content, flex-start)));
+    align-items: var(--mobile-align-items, var(--tablet-align-items, var(--desktop-align-items, stretch)));
+    gap: var(--mobile-gap, var(--tablet-gap, var(--desktop-gap, 0px)));
+    flex-grow: var(--mobile-flex-grow, var(--tablet-flex-grow, var(--desktop-flex-grow, 0)));
+    flex-shrink: var(--mobile-flex-shrink, var(--tablet-flex-shrink, var(--desktop-flex-shrink, 1)));
+    flex-basis: var(--mobile-flex-basis, var(--tablet-flex-basis, var(--desktop-flex-basis, auto)));
+    order: var(--mobile-order, var(--tablet-order, var(--desktop-order, 0)));
+    align-self: var(--mobile-align-self, var(--tablet-align-self, var(--desktop-align-self, auto)));
+    grid-template-columns: var(--mobile-grid-template-columns, var(--tablet-grid-template-columns, var(--desktop-grid-template-columns, none)));
+    grid-template-rows: var(--mobile-grid-template-rows, var(--tablet-grid-template-rows, var(--desktop-grid-template-rows, none)));
+    place-items: var(--mobile-place-items, var(--tablet-place-items, var(--desktop-place-items, stretch)));
+  }
 }

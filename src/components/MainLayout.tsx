@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { CommandPalette } from "./CommandPalette";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { RuntimeBanner } from "@/engine/runtime";
 
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -67,7 +68,7 @@ export const MainLayout = ({ children }: {children: React.ReactNode;}) => {
 
   return (
     <>
-
+            <RuntimeBanner />
             <CommandPalette />
             <div className="fixed top-4 right-4 z-40">
               <LanguageSwitcher />

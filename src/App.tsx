@@ -66,6 +66,8 @@ import RBACDemo from "./pages/examples/RBACDemo";
 // Lazy-load heavy pages
 const AnalyticsPageLazy = lazy(() => import("./pages/AnalyticsPage").then(mod => ({ default: mod.AnalyticsPage })));
 import BuilderPage from "./pages/admin/BuilderPage";
+const SchematicEditorPage = lazy(() => import("./pages/admin/SchematicEditorPage"));
+const CraftBuilderPage = lazy(() => import("./pages/admin/CraftBuilderPage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -81,8 +83,6 @@ const AppContent = () => {
   const { user, isLoading: isLoadingSession } = useSession();
   const { isAdmin, isLoading: isLoadingAdmin } = useIsAdmin();
   const { data: dynamicRoutes, isLoading: isLoadingRoutes } = useDynamicRoutes();
-
-  // console.log('État du mode construction:', { isConstructionMode, isLoading, isAdmin, isLoadingAdmin });
 
   // Attendre que le mode construction soit chargé
   if (isLoading || isLoadingRoutes) {
@@ -122,9 +122,9 @@ const AppContent = () => {
       // Mode construction : toutes les routes publiques mènent à la page de construction
       routes.push(
         { path: "/", element: <ConstructionPage /> },
-        { path: "/about", element: <DynamicPage /> },
-        { path: "/utilite-publique", element: <DynamicPage /> },
-        { path: "/formation-certification", element: <DynamicPage /> },
+        { path: "/about", element: <ConstructionPage /> },
+        { path: "/utilite-publique", element: <ConstructionPage /> },
+        { path: "/formation-certification", element: <ConstructionPage /> },
         { path: "/activities", element: <ConstructionPage /> },
         { path: "/labels", element: <ConstructionPage /> },
         { path: "/documents", element: <ConstructionPage /> },
@@ -136,8 +136,7 @@ const AppContent = () => {
         { path: "/contact", element: <ConstructionPage /> },
         { path: "/outils", element: <ConstructionPage /> },
         { path: "/showroom", element: <ConstructionPage /> },
-        { path: "/legal", element: <DynamicPage /> },
-        // Routes dynamiques en mode construction
+        { path: "/legal", element: <ConstructionPage /> },
         ...(dynamicRoutes?.map((route) => ({ path: route.path, element: <ConstructionPage /> })) || []),
         { path: "*", element: <ConstructionPage /> }
       );
@@ -309,7 +308,47 @@ const AppContent = () => {
         { path: "/plan-du-site", element: <Sitemap /> },
         { path: "/sitemap", element: <Sitemap /> },
 
-        { path: "/admin/builder/:pageId", element: <BuilderPage /> },
+        // --- ROUTES MENU BD (slugs référencés dans menu_items) ---
+        { path: "/nos-actions", element: <DynamicPage /> },
+        { path: "/actions/:slug", element: <DynamicPage /> },
+        { path: "/projets", element: <DynamicPage /> },
+        { path: "/galerie", element: <DynamicPage /> },
+        { path: "/marches", element: <DynamicPage /> },
+        { path: "/collectivites", element: <DynamicPage /> },
+        { path: "/evenements/:slug", element: <DynamicPage /> },
+        { path: "/evenements", element: <DynamicPage /> },
+        { path: "/presse/:slug", element: <DynamicPage /> },
+        { path: "/formations/:slug", element: <DynamicPage /> },
+        { path: "/publications", element: <DynamicPage /> },
+        { path: "/faq", element: <DynamicPage /> },
+        { path: "/normative-corpus", element: <DynamicPage /> },
+        { path: "/conseils-menages", element: <DynamicPage /> },
+        { path: "/ressources-pedagogiques", element: <DynamicPage /> },
+        { path: "/partenaires-liste", element: <DynamicPage /> },
+        { path: "/partenaires", element: <DynamicPage /> },
+        { path: "/partenariat-senelec", element: <DynamicPage /> },
+        { path: "/temoignages", element: <DynamicPage /> },
+        { path: "/espace-partenaires", element: <DynamicPage /> },
+        { path: "/portal/:slug", element: <DynamicPage /> },
+        { path: "/portal", element: <DynamicPage /> },
+
+        { 
+          path: "/admin/builder", 
+          element: (
+            <RoleProtectedRoute allowedRoles={["admin"]}>
+              <BuilderPage />
+            </RoleProtectedRoute>
+          )
+        },
+        { 
+          path: "/admin/builder/:pageId", 
+          element: (
+            <RoleProtectedRoute allowedRoles={["admin"]}>
+              <BuilderPage />
+            </RoleProtectedRoute>
+          )
+        },
+
         {
           path: "/admin/permissions",
           element:

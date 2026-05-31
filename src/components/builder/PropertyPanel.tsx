@@ -1,5 +1,4 @@
-
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useTransition, useState, useEffect, useRef } from 'react';
 import {
   useSelectedBlock,
   useBlockStyle,
@@ -171,13 +170,57 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
   const removeBlock = useRemoveBlock();
   const saveTemplate = useSaveTemplate();
   const [activeDevice, setActiveDevice] = React.useState<Device>('base');
+  // useTransition : marque les mises à jour du store comme non-urgentes
+  // L'input clavier reste réactif, le canvas se met à jour en arrière-plan
+  const [, startTransition] = useTransition();
+
+  // ── LOCAL CONTENT STATE ──────────────────────────────────────────────────────
+  // We maintain a local copy of block content so keystrokes update the UI instantly
+  // without triggering Zustand store updates (and full canvas re-renders) on every character.
+  const [localContent, setLocalContent] = useState<Record<string, string>>({});
+  const contentTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prevBlockIdRef = useRef<string | null>(null);
+
+  // Sync local content when selected block changes
+  useEffect(() => {
+    if (selectedBlock?.id !== prevBlockIdRef.current) {
+      prevBlockIdRef.current = selectedBlock?.id || null;
+      setLocalContent((selectedBlock?.content as Record<string, string>) || {});
+    }
+  }, [selectedBlock?.id, selectedBlock?.content]);
+
+  // Also sync when content changes from external sources (undo/redo, etc.)
+  useEffect(() => {
+    if (selectedBlock?.content && selectedBlock.id === prevBlockIdRef.current) {
+      // Only sync if no pending local timer (i.e. we're not currently typing)
+      if (!contentTimerRef.current) {
+        setLocalContent((selectedBlock.content as Record<string, string>) || {});
+      }
+    }
+  }, [selectedBlock?.content, selectedBlock?.id]);
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (contentTimerRef.current) clearTimeout(contentTimerRef.current);
+    };
+  }, []);
 
   // -- Handlers --
   const handleContentChange = useCallback((key: keyof BlockContent, value: string) => {
     const id = selectedBlock?.id;
     if (!id) return;
-    updateBlockContent(id, { [key]: value } as Partial<BlockContent>);
-  }, [selectedBlock?.id, updateBlockContent]);
+    // 1. Update local state instantly (no lag)
+    setLocalContent(prev => ({ ...prev, [key]: value }));
+    // 2. Debounce propagation to Zustand store (300ms)
+    if (contentTimerRef.current) clearTimeout(contentTimerRef.current);
+    contentTimerRef.current = setTimeout(() => {
+      contentTimerRef.current = null;
+      startTransition(() => {
+        updateBlockContent(id, { [key]: value } as Partial<BlockContent>);
+      });
+    }, 300);
+  }, [selectedBlock?.id, updateBlockContent, startTransition]);
 
   const activeStyle = useMemo(() => {
     if (activeDevice === 'base') return selectedBlock?.style || {};
@@ -189,15 +232,16 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
   const handleStyleChange = useCallback((key: keyof BlockStyle, value: string | number | undefined) => {
     const id = selectedBlock?.id;
     if (!id) return;
-    if (activeDevice === 'base') {
-      updateBlockStyle(id, { [key]: value } as Partial<BlockStyle>);
-    } else {
-      const currentRaw = selectedBlock?.style as any;
-      const currentDeviceStyle = currentRaw?.[activeDevice] || {};
-      // Also preserve base so we don't accidentally overwrite it
-      updateBlockStyle(id, { [activeDevice]: { ...currentDeviceStyle, [key]: value } } as any);
-    }
-  }, [selectedBlock?.id, updateBlockStyle, activeDevice, selectedBlock?.style]);
+    startTransition(() => {
+      if (activeDevice === 'base') {
+        updateBlockStyle(id, { [key]: value } as Partial<BlockStyle>);
+      } else {
+        const currentRaw = selectedBlock?.style as any;
+        const currentDeviceStyle = currentRaw?.[activeDevice] || {};
+        updateBlockStyle(id, { [activeDevice]: { ...currentDeviceStyle, [key]: value } } as any);
+      }
+    });
+  }, [selectedBlock?.id, updateBlockStyle, activeDevice, selectedBlock?.style, startTransition]);
 
   const handleSaveTemplate = useCallback(() => {
     if (!selectedBlock) return;
@@ -455,20 +499,20 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Titre</Label>
-              <Input value={(selectedBlock.content || {}).title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre principal..." />
+              <Input value={localContent.title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre principal..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Sous-titre</Label>
-              <Textarea value={(selectedBlock.content || {}).subtitle || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Phrase d’accroche..." className="min-h-[120px]" />
+              <Textarea value={localContent.subtitle || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Phrase d’accroche..." className="min-h-[120px]" />
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-xs font-semibold uppercase text-slate-500">Libellé du bouton</Label>
-                <Input value={(selectedBlock.content || {}).text || ''} onChange={(e) => handleContentChange('text', e.target.value)} placeholder="Texte du bouton..." />
+                <Input value={localContent.text || ''} onChange={(e) => handleContentChange('text', e.target.value)} placeholder="Texte du bouton..." />
               </div>
               <div className="space-y-2">
                 <Label className="text-xs font-semibold uppercase text-slate-500">Lien du bouton</Label>
-                <Input value={(selectedBlock.content || {}).href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
+                <Input value={localContent.href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
               </div>
             </div>
           </div>
@@ -478,20 +522,20 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Titre</Label>
-              <Input value={(selectedBlock.content || {}).title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre de section..." />
+              <Input value={localContent.title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre de section..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Contenu</Label>
-              <Textarea value={(selectedBlock.content || {}).subtitle || (selectedBlock.content || {}).text || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Texte de présentation..." className="min-h-[120px]" />
+              <Textarea value={localContent.subtitle || localContent.text || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Texte de présentation..." className="min-h-[120px]" />
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label className="text-xs font-semibold uppercase text-slate-500">Lien</Label>
-                <Input value={(selectedBlock.content || {}).href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
+                <Input value={localContent.href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
               </div>
               <div className="space-y-2">
                 <Label className="text-xs font-semibold uppercase text-slate-500">Image / Illustration</Label>
-                <Input value={(selectedBlock.content || {}).src || ''} onChange={(e) => handleContentChange('src', e.target.value)} placeholder="https://..." />
+                <Input value={localContent.src || ''} onChange={(e) => handleContentChange('src', e.target.value)} placeholder="https://..." />
               </div>
             </div>
           </div>
@@ -502,11 +546,11 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Titre</Label>
-              <Input value={(selectedBlock.content || {}).title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre du texte..." />
+              <Input value={localContent.title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre du texte..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Texte HTML</Label>
-              <Textarea value={(selectedBlock.content || {}).html || (selectedBlock.content || {}).text || ''} onChange={(e) => handleContentChange('html', e.target.value)} placeholder="Votre contenu ici..." className="min-h-[180px] font-mono text-xs" />
+              <Textarea value={localContent.html || localContent.text || ''} onChange={(e) => handleContentChange('html', e.target.value)} placeholder="Votre contenu ici..." className="min-h-[180px] font-mono text-xs" />
             </div>
           </div>
         );
@@ -515,19 +559,19 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Source Image</Label>
-              <Input value={(selectedBlock.content || {}).src || ''} onChange={(e) => handleContentChange('src', e.target.value)} placeholder="https://..." />
+              <Input value={localContent.src || ''} onChange={(e) => handleContentChange('src', e.target.value)} placeholder="https://..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Texte alternatif (alt)</Label>
-              <Input value={(selectedBlock.content || {}).alt || ''} onChange={(e) => handleContentChange('alt', e.target.value)} placeholder="Description de l’image..." />
+              <Input value={localContent.alt || ''} onChange={(e) => handleContentChange('alt', e.target.value)} placeholder="Description de l’image..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Légende</Label>
-              <Textarea value={(selectedBlock.content || {}).caption || ''} onChange={(e) => handleContentChange('caption', e.target.value)} placeholder="Texte sous l’image..." className="min-h-[100px]" />
+              <Textarea value={localContent.caption || ''} onChange={(e) => handleContentChange('caption', e.target.value)} placeholder="Texte sous l’image..." className="min-h-[100px]" />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Lien</Label>
-              <Input value={(selectedBlock.content || {}).href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="Lien cliquable facultatif..." />
+              <Input value={localContent.href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="Lien cliquable facultatif..." />
             </div>
           </div>
         );
@@ -537,7 +581,7 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Code source</Label>
-              <Textarea value={(selectedBlock.content || {}).html || (selectedBlock.content || {}).code || ''} onChange={(e) => handleContentChange(selectedBlock.type === 'code' ? 'code' : 'html', e.target.value)} placeholder="<div>...</div>" className="min-h-[280px] font-mono text-xs" />
+              <Textarea value={localContent.html || localContent.code || ''} onChange={(e) => handleContentChange(selectedBlock.type === 'code' ? 'code' : 'html', e.target.value)} placeholder="<div>...</div>" className="min-h-[280px] font-mono text-xs" />
             </div>
           </div>
         );
@@ -546,11 +590,11 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Texte du bouton</Label>
-              <Input value={(selectedBlock.content || {}).text || (selectedBlock.content || {}).title || ''} onChange={(e) => handleContentChange('text', e.target.value)} placeholder="Acheter / En savoir plus..." />
+              <Input value={localContent.text || localContent.title || ''} onChange={(e) => handleContentChange('text', e.target.value)} placeholder="Acheter / En savoir plus..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">URL du bouton</Label>
-              <Input value={(selectedBlock.content || {}).href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
+              <Input value={localContent.href || ''} onChange={(e) => handleContentChange('href', e.target.value)} placeholder="/contact ou https://..." />
             </div>
           </div>
         );
@@ -559,11 +603,11 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
           <div className="space-y-6">
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Titre</Label>
-              <Input value={(selectedBlock.content || {}).title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre..." />
+              <Input value={localContent.title || ''} onChange={(e) => handleContentChange('title', e.target.value)} placeholder="Titre..." />
             </div>
             <div className="space-y-2">
               <Label className="text-xs font-semibold uppercase text-slate-500">Contenu</Label>
-              <Textarea value={(selectedBlock.content || {}).subtitle || (selectedBlock.content || {}).text || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Votre contenu ici..." className="min-h-[120px]" />
+              <Textarea value={localContent.subtitle || localContent.text || ''} onChange={(e) => handleContentChange('subtitle', e.target.value)} placeholder="Votre contenu ici..." className="min-h-[120px]" />
             </div>
           </div>
         );
@@ -585,18 +629,18 @@ const PropertyPanel: React.FC<PropertyPanelProps> = ({ pageSettings, onPageSetti
         <div className="space-y-4 pt-4 border-t border-dashed">
           <div className="space-y-2">
             <Label className="text-xs font-semibold uppercase text-slate-500">Texte ALT</Label>
-            <Input value={(selectedBlock.content || {}).alt || ''} onChange={(e) => handleContentChange('alt', e.target.value)} placeholder="Description de l’image..." />
+            <Input value={localContent.alt || ''} onChange={(e) => handleContentChange('alt', e.target.value)} placeholder="Description de l’image..." />
           </div>
           <div className="space-y-2">
             <Label className="text-xs font-semibold uppercase text-slate-500">Légende</Label>
-            <Textarea value={(selectedBlock.content || {}).caption || ''} onChange={(e) => handleContentChange('caption', e.target.value)} placeholder="Texte sous l’image..." className="min-h-[100px]" />
+            <Textarea value={localContent.caption || ''} onChange={(e) => handleContentChange('caption', e.target.value)} placeholder="Texte sous l’image..." className="min-h-[100px]" />
           </div>
         </div>
       )}
       {selectedBlock.type === 'html' && (
         <div className="space-y-4 pt-4 border-t border-dashed">
           <Label className="text-xs font-semibold uppercase text-slate-500">HTML brut</Label>
-          <Textarea value={(selectedBlock.content || {}).html || ''} onChange={(e) => handleContentChange('html', e.target.value)} placeholder="<div>...</div>" className="min-h-[120px] font-mono text-xs" />
+          <Textarea value={localContent.html || ''} onChange={(e) => handleContentChange('html', e.target.value)} placeholder="<div>...</div>" className="min-h-[120px] font-mono text-xs" />
         </div>
       )}
       <div className="space-y-4 pt-4 border-t border-dashed">

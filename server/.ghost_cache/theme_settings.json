@@ -7,7 +7,18 @@
     "background_color": "#ffffff",
     "text_color": "#1f2937",
     "font_family": "Inter",
-    "updated_at": "2026-05-23T00:57:59.146Z",
+    "updated_at": "2026-05-25T21:59:54.917Z",
+    "footer_background_url": null
+  },
+  {
+    "id": 3,
+    "primary_color": "#1e3a8a",
+    "secondary_color": "#f59e0b",
+    "accent_color": "#06b6d4",
+    "background_color": "#f8fafc",
+    "text_color": "#1e293b",
+    "font_family": "Inter, sans-serif",
+    "updated_at": "2026-05-25T18:42:54.881Z",
     "footer_background_url": null
   }
 ]

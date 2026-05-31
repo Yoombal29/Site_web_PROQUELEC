@@ -14,6 +14,11 @@ import { AdminElectricalCertificationsPanel } from "@/components/admin/AdminElec
 import { AdminProfessionalTrainingPanel } from "@/components/admin/AdminProfessionalTrainingPanel";
 import { DocumentManager } from "@/components/DocumentManager";
 import ProjectList from "@/pages/projects/ProjectList"; // Import ProjectList
+import { AdminFormSubmissionsPanel } from "@/components/admin/AdminFormSubmissionsPanel";
+import { TemplateMarketplace } from "@/components/admin/TemplateMarketplace";
+import { EcommerceAdminPanel } from "@/components/admin/EcommerceAdminPanel";
+import { CustomFontsPanel } from "@/components/admin/CustomFontsPanel";
+import { AdminBrandingPanel } from "@/components/admin/AdminBrandingPanel";
 import { Loader2 } from "lucide-react";
 
 export default function AdminSecondaryDashboard() {
@@ -52,6 +57,16 @@ export default function AdminSecondaryDashboard() {
                         <DocumentManager />
                     </div>
                 );
+            case "templates":
+                return <TemplateMarketplace />;
+            case "ecommerce":
+                return <EcommerceAdminPanel />;
+            case "form_submissions":
+                return <AdminFormSubmissionsPanel />;
+            case "fonts":
+                return <CustomFontsPanel />;
+            case "branding":
+                return <AdminBrandingPanel />;
             case "infrastructure":
                 return <InfraDocs />;
             default:

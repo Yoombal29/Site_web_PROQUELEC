@@ -1,7 +1,7 @@
 
-import { useState, useEffect } from 'react';
 import { useSession } from './useSession';
 import { startTransition } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface ConstructionModeData {
   is_enabled: boolean;
@@ -23,53 +23,43 @@ const authFetch = async (url: string, options: RequestInit = {}) => {
   return res.json();
 };
 
-export const useConstructionMode = () => {
-  const [isConstructionMode, setIsConstructionMode] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const { user } = useSession();
-
-  useEffect(() => {
-    fetchConstructionMode();
-  }, []);
-
-  const fetchConstructionMode = async () => {
-    try {
-      const res = await fetch("/api/construction-mode");
-      if (res.ok) {
-        const data = await res.json();
-        const isEnabled = data?.is_enabled === true;
-        startTransition(() => {
-          setIsConstructionMode(isEnabled);
-        });
-      } else {
-        startTransition(() => {
-          setIsConstructionMode(false);
-        });
-      }
-    } catch (error) {
-      console.error('Error fetching construction mode:', error);
-      startTransition(() => {
-        setIsConstructionMode(false);
-      });
-    } finally {
-      startTransition(() => {
-        setIsLoading(false);
-      });
+const fetchConstructionMode = async (): Promise<boolean> => {
+  const res = await fetch('/api/construction-mode');
+  if (!res.ok) {
+    if (res.status === 429) {
+      throw new Error('Too many requests');
     }
-  };
+    return false;
+  }
+  const data = await res.json();
+  return data?.is_enabled === true;
+};
+
+export const useConstructionMode = () => {
+  const { user } = useSession();
+  const queryClient = useQueryClient();
+
+  const query = useQuery({
+    queryKey: ['construction-mode'],
+    queryFn: fetchConstructionMode,
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+    retry: false,
+    onError: (error) => {
+      if ((error as Error).message !== 'Too many requests') {
+        console.error('Error fetching construction mode:', error);
+      }
+    }
+  });
 
   const grantAccess = async () => {
     try {
-
-      await authFetch("/api/construction-mode", {
+      await authFetch('/api/construction-mode', {
         method: 'POST',
         body: JSON.stringify({ is_enabled: false })
       });
-
-
-      startTransition(() => {
-        setIsConstructionMode(false);
-      });
+      queryClient.setQueryData(['construction-mode'], false);
     } catch (error) {
       console.error('Erreur:', error);
     }
@@ -79,24 +69,19 @@ export const useConstructionMode = () => {
     if (!user) return;
 
     try {
-
-      await authFetch("/api/construction-mode", {
+      await authFetch('/api/construction-mode', {
         method: 'POST',
         body: JSON.stringify({ is_enabled: true })
       });
-
-
-      startTransition(() => {
-        setIsConstructionMode(true);
-      });
+      queryClient.setQueryData(['construction-mode'], true);
     } catch (error) {
       console.error('Erreur:', error);
     }
   };
 
   return {
-    isConstructionMode,
-    isLoading,
+    isConstructionMode: query.data ?? false,
+    isLoading: query.isLoading,
     grantAccess,
     revokeAccess
   };

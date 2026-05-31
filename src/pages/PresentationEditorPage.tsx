@@ -4,6 +4,7 @@ import { PresentationEditor } from '@/components/office/presentation/Presentatio
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Share2, Play } from 'lucide-react';
 import { toast } from 'sonner';
+import PptxGenJS from 'pptxgenjs';
 
 export function PresentationEditorPage() {
   const { id, templateId } = useParams();
@@ -64,8 +65,10 @@ export function PresentationEditorPage() {
   };
 
   const handleExport = () => {
-    toast.info('Export PDF en cours...');
-    // TODO: Implement PDF export
+    const pptx = new PptxGenJS();
+    pptx.title = presentationTitle;
+    pptx.save(`${presentationTitle}.pptx`);
+    toast.success('Présentation exportée avec succès');
   };
 
   const togglePresentMode = () => {

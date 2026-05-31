@@ -5,9 +5,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
 import { initializeRubriques } from '@/bootstrap/initializeRubriques';
 import { registerServiceWorker } from '@/sw-register';
+import { initializeBuilderEngine } from '@/engine/events/init';
 
 // Initialize rubriques system at startup
 initializeRubriques();
+
+// Initialize Builder Engine (CommandBus + handlers)
+initializeBuilderEngine();
 
 // Register PWA Service Worker
 registerServiceWorker();

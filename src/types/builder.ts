@@ -1,4 +1,4 @@
-export type BlockType = 'hero' | 'section' | 'text' | 'text-block' | 'image' | 'columns' | 'button' | 'html' | 'code';
+export type BlockType = 'hero' | 'section' | 'text' | 'text-block' | 'image' | 'columns' | 'button' | 'divider' | 'spacer' | 'grid' | 'card' | 'video' | 'list' | 'stats' | 'form' | 'html' | 'code';
 
 export interface BlockStyle {
   width?: string;
@@ -37,13 +37,27 @@ export interface BlockStyle {
   fontFamily?: string;
   lineHeight?: string;
   letterSpacing?: string;
-  className?: string; // Tailwind overrides
-  customCss?: string; // Raw CSS for power users
-  darkStyle?: Partial<BlockStyle>; // Styles specific to dark mode
-  tablet?: Partial<BlockStyle>; // Tablet-specific styles
-  mobile?: Partial<BlockStyle>; // Mobile-specific styles
-  id?: string; // HTML ID attribute
+  className?: string;
+  customCss?: string;
+  darkStyle?: Partial<BlockStyle>;
+  mobile?: Partial<BlockStyle>;
+  tablet?: Partial<BlockStyle>;
+  id?: string;
   objectFit?: 'cover' | 'contain' | 'fill' | 'none';
+
+  // ── Layout Engine fields ──────────────────────────────────────
+  position?: 'relative' | 'absolute' | 'fixed' | 'sticky';
+  flexWrap?: 'wrap' | 'nowrap';
+  overflow?: 'visible' | 'hidden' | 'auto' | 'scroll';
+  zIndex?: number;
+  aspectRatio?: string;
+  transform?: string;
+  transition?: string;
+  animation?: string;
+  cursor?: string;
+  pointerEvents?: 'auto' | 'none';
+  userSelect?: 'auto' | 'none' | 'text';
+  isolation?: 'auto' | 'isolate';
 }
 
 export interface BlockContent {
@@ -80,6 +94,12 @@ export interface Block {
   isGlobal?: boolean; // If linked to a global component
   enabled?: boolean; // For new schema
   props?: BlockContent; // New schema alternative to content
+
+  // ── Data Binding fields ──────────────────────────────────────────
+  dataSource?: import('@/engine/data/types').DataSource;
+  bindings?: import('@/engine/data/types').DataBinding;
+  /** ID of the registered data source in the data store */
+  dataSourceId?: string;
 }
 
 export type HTMLString = string;

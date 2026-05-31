@@ -68,9 +68,9 @@ const fetchLiveSettings = async (): Promise<LiveSettings> => {
     slogan: siteData?.slogan || "Sécurité · Qualité · Formation",
     logo_url: siteData?.logo_url,
     favicon_url: siteData?.favicon_url,
-    contact_email: siteData?.contact_email || "contact@proquelec.sn",
-    phone_number: siteData?.phone_number || "+221 XX XXX XX XX",
-    address: siteData?.address || "Dakar, Sénégal",
+    contact_email: siteData?.contact_email || "proquelec@proquelec.sn",
+    phone_number: siteData?.phone_number || "+221 33 848 68 55",
+    address: siteData?.address || "Immeuble Coumba Castel, 12 rue Saint-Michel, 4e étage, Dakar",
     copyright_text: siteData?.copyright_text,
     facebook_url: siteData?.facebook_url,
     linkedin_url: siteData?.linkedin_url,
@@ -110,8 +110,11 @@ export function useLiveSettings() {
   const { data: settings, isLoading, error, refetch } = useQuery({
     queryKey: ["liveSettings"],
     queryFn: fetchLiveSettings,
-    refetchInterval: 30000, // Rafraîchir toutes les 30 secondes au lieu de 2
-    staleTime: 10000 // Considérer comme périmé après 10 secondes
+    refetchInterval: 1000 * 60 * 5, // Rafraîchir toutes les 5 minutes
+    staleTime: 1000 * 60 * 5, // Considérer comme périmé après 5 minutes
+    cacheTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+    retry: false
   });
 
   // Appliquer les styles CSS dynamiquement

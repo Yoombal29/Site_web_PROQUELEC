@@ -7,6 +7,16 @@ const TextBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default:
 const ImageBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.ImageBlock })));
 const HtmlBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.HtmlBlock })));
 const SectionBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.SectionBlock })));
+const ButtonBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.ButtonBlock })));
+const DividerBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.DividerBlock })));
+const SpacerBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.SpacerBlock })));
+const ColumnsBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.ColumnsBlock })));
+const CardBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.CardBlock })));
+const StatsBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.StatsBlock })));
+const GridBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.GridBlock })));
+const ListBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.ListBlock })));
+const FormBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.FormBlock })));
+const VideoBlock = lazy(() => import('./blocks/CoreBlocks').then(m => ({ default: m.VideoBlock })));
 
 // Lazy load homepage blocks
 const HeroBannerBlock = lazy(() => import('./HomepageBlocks').then(m => ({ default: m.HeroBannerBlock })));
@@ -61,6 +71,56 @@ export const ComponentRegistry: Record<string, React.FC<any>> = {
   'code': (props) => (
     <Suspense fallback={<BlockLoadingFallback />}>
       <HtmlBlock {...props} />
+    </Suspense>
+  ),
+  'button': (props) => (
+    <Suspense fallback={<BlockLoadingFallback />}>
+      <ButtonBlock {...props} />
+    </Suspense>
+  ),
+  'divider': (props) => (
+    <Suspense fallback={<BlockLoadingFallback />}>
+      <DividerBlock {...props} />
+    </Suspense>
+  ),
+  'spacer': (props) => (
+    <Suspense fallback={<BlockLoadingFallback />}>
+      <SpacerBlock {...props} />
+    </Suspense>
+  ),
+  'columns': (props) => (
+    <Suspense fallback={<BlockLoadingFallback />}>
+      <ColumnsBlock {...props} />
+    </Suspense>
+  ),
+  'card': (props) => (
+    <Suspense fallback={<BlockLoadingFallback />}>
+      <CardBlock {...props} />
+    </Suspense>
+  ),
+  'stats': (props) => (
+    <Suspense fallback={<BlockLoadingFallback />}>
+      <StatsBlock {...props} />
+    </Suspense>
+  ),
+  'grid': (props) => (
+    <Suspense fallback={<BlockLoadingFallback />}>
+      <GridBlock {...props} />
+    </Suspense>
+  ),
+  'list': (props) => (
+    <Suspense fallback={<BlockLoadingFallback />}>
+      <ListBlock {...props} />
+    </Suspense>
+  ),
+  'form': (props) => (
+    <Suspense fallback={<BlockLoadingFallback />}>
+      <FormBlock {...props} />
+    </Suspense>
+  ),
+  'video': (props) => (
+    <Suspense fallback={<BlockLoadingFallback />}>
+      <VideoBlock {...props} />
     </Suspense>
   ),
 

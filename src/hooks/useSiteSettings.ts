@@ -32,9 +32,9 @@ const fetchSiteSettings = async (): Promise<SiteSettings> => {
     return {
       site_name: "PROQUELEC SENEGAL",
       slogan: "Sécurité · Qualité · Formation",
-      contact_email: "contact@proquelec.sn",
-      phone_number: "+221 XX XXX XX XX",
-      address: "Dakar, Sénégal",
+      contact_email: "proquelec@proquelec.sn",
+      phone_number: "+221 33 848 68 55",
+      address: "Immeuble Coumba Castel, 12 rue Saint-Michel, 4e étage, Dakar",
       facebook_url: "https://facebook.com/proquelec",
       twitter_url: "https://twitter.com/proquelec",
       linkedin_url: "https://linkedin.com/company/proquelec",

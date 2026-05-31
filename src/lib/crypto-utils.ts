@@ -107,9 +107,21 @@ export const secureGetItem = <T,>(key: string, defaultValue: T): T => {
     if (!encrypted) return defaultValue;
     
     const decrypted = decrypt(encrypted);
-    return JSON.parse(decrypted) as T;
+    if (!decrypted) {
+      localStorage.removeItem(key);
+      return defaultValue;
+    }
+
+    try {
+      return JSON.parse(decrypted) as T;
+    } catch (parseError) {
+      console.error(`[SecureStorage] Error parsing decrypted ${key}:`, parseError);
+      localStorage.removeItem(key);
+      return defaultValue;
+    }
   } catch (error) {
     console.error(`[SecureStorage] Error decrypting ${key}:`, error);
+    localStorage.removeItem(key);
     return defaultValue;
   }
 };

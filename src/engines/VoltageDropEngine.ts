@@ -12,6 +12,7 @@
  * @since Migration vers PostgreSQL local Docker - l'ancien système Supabase a été supprimé
  */
 export class VoltageDropEngine {
+  private graph!: GraphStore;
 
   /**
    * Calcule la chute de tension pour tout le réseau
@@ -24,6 +25,7 @@ export class VoltageDropEngine {
    * pour chacun, puis agrège les résultats pour produire une valeur totale.
    */
   calculate(graph: GraphStore): CalculationResult {
+    this.graph = graph;
     const edges = Array.from(graph.edges.values());
     const cableEdges = edges.filter((edge) => edge.type.includes('CABLE'));
 
@@ -106,14 +108,22 @@ export class VoltageDropEngine {
    * Détermine le coefficient selon le type de réseau (monophasé/triphasé)
    * 
    * @param edge - Objet représentant un câble
-   * @returns number - Coefficient de réseau (actuellement 2 pour monophasé)
+   * @returns number - Coefficient de réseau (2 pour monophasé, √3 pour triphasé)
    * 
-   * @todo Détecter automatiquement le type de réseau depuis les nœuds connectés
+   * @description
+   * Détecte automatiquement le type de réseau en inspectant les charges
+   * des nœuds connectés à l'arête.
    */
   private getNetworkCoef(edge: unknown): number {
-    // Pour l'instant, on suppose monophasé par défaut
-    // TODO: Détecter automatiquement depuis les nœuds connectés
-    return 2; // Monophasé
+    const { from, to } = edge as { from: string; to: string };
+    const fromNode = this.graph.nodes.get(from);
+    const toNode = this.graph.nodes.get(to);
+
+    const hasTriphase = [fromNode, toNode].some(
+      (node) => node?.charges?.some((c: { type: string }) => c.type === 'TRIPHASE')
+    );
+
+    return hasTriphase ? Math.sqrt(3) : 2;
   }
 
   /**

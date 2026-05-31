@@ -1,6 +1,7 @@
 
 
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
@@ -14,12 +15,14 @@ import {
   Mail,
   Palette,
   Zap,
+  Tag,
   Shield,
   Users,
   Database,
 
   Activity,
   FolderOpen,
+  LayoutTemplate,
 
   HardHat,
 
@@ -37,7 +40,9 @@ import {
   Newspaper,
   Share2,
 
-  Brain
+  Brain,
+  ShoppingCart,
+  Type
 } from
 
   "lucide-react";
@@ -176,6 +181,14 @@ export const menuItems = [
     roles: ["admin", "secondary_admin"]
   },
   {
+    id: "god_builder",
+    label: "Studio de Création",
+    icon: Layout,
+    category: "cms",
+    roles: ["admin"],
+    href: "/admin/builder"
+  },
+  {
     id: "blog",
     label: "Blog & Actualités",
     icon: PenTool,
@@ -195,6 +208,27 @@ export const menuItems = [
     icon: Menu,
     category: "cms",
     roles: ["admin"]
+  },
+  {
+    id: "form_submissions",
+    label: "Soumissions Formulaires",
+    icon: Mail,
+    category: "cms",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "templates",
+    label: "Marketplace Templates",
+    icon: LayoutTemplate,
+    category: "cms",
+    roles: ["admin", "secondary_admin"]
+  },
+  {
+    id: "ecommerce",
+    label: "Boutique E-commerce",
+    icon: ShoppingCart,
+    category: "cms",
+    roles: ["admin", "secondary_admin"]
   },
   {
     id: "events",
@@ -253,6 +287,20 @@ export const menuItems = [
     id: "design",
     label: "Apparence & Thème",
     icon: Palette,
+    category: "systeme",
+    roles: ["admin"]
+  },
+  {
+    id: "fonts",
+    label: "Polices personnalisées",
+    icon: Type,
+    category: "systeme",
+    roles: ["admin"]
+  },
+  {
+    id: "branding",
+    label: "Marque & White-Label",
+    icon: Tag,
     category: "systeme",
     roles: ["admin"]
   },
@@ -338,10 +386,17 @@ export function AdminSidebar({ activeTab, onTabChange, role = 'admin' }: AdminSi
                           "w-full justify-start gap-3 h-10",
                           activeTab === item.id && "bg-proqblue text-white hover:bg-proqblue/90"
                         )}
-                        onClick={() => onTabChange(item.id)}>
+                        onClick={() => {
+                          if ('href' in item && item.href) {
+                            window.open(item.href as string, '_blank');
+                          } else {
+                            onTabChange(item.id);
+                          }
+                        }}>
 
                         <Icon className="h-4 w-4" />
                         {item.label}
+                        {'href' in item && <span className="ml-auto text-[10px] opacity-50">↗</span>}
                       </Button>);
 
                   })}

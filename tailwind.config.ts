@@ -9,6 +9,40 @@ export default {
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
 	],
+	// Classes utilisées dans le contenu HTML stocké en DB (Craft.js HtmlBlock)
+	safelist: [
+		// Dégradés hero
+		'from-[#1e3a5f]', 'via-[#1a3366]', 'to-[#2563eb]',
+		// Gradient text
+		'from-yellow-300', 'to-amber-400', 'text-transparent', 'bg-clip-text',
+		// Boutons et hover
+		'hover:bg-blue-50', 'hover:bg-white/10', 'hover:border-white/60',
+		'hover:scale-[1.02]', 'hover:bg-gray-100',
+		// Ombres
+		'shadow-2xl', 'shadow-xl', 'shadow-md', 'shadow-sm', 'shadow-white/20',
+		// Statistiques - cartes avec dégradés pastel
+		'from-blue-50', 'to-white', 'border-blue-100',
+		'from-green-50', 'border-green-100',
+		'from-purple-50', 'border-purple-100',
+		'from-amber-50', 'border-amber-100',
+		'text-blue-700', 'text-green-700', 'text-purple-700', 'text-amber-700',
+		'text-blue-800',
+		// Cartes services
+		'bg-blue-100', 'bg-green-100', 'bg-amber-100',
+		'rounded-2xl', 'rounded-xl', 'rounded-3xl',
+		// Boutons blancs
+		'bg-white', 'text-[#1e3a5f]', 'border-white/40', 'border-white/20',
+		// Footer
+		'border-gray-200', 'hover:text-blue-700',
+		// Divers
+		'pointer-events-none', 'backdrop-blur-sm',
+		// Textes
+		'text-white/80', 'text-white/85', 'text-white/90',
+		'bg-white/15', 'bg-white/20', 'bg-white/10',
+		'text-yellow-200',
+		// Animations personnalisées
+		'fadeSlideUp',
+	],
 	prefix: "",
 	theme: {
 		container: {

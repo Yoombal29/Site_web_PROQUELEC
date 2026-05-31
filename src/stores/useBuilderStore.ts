@@ -4,6 +4,7 @@ import type { Block, BlockStyle, BlockContent } from '@/types/builder';
 import { secureSetItem, secureGetItem, secureRemoveItem } from '@/lib/crypto-utils';
 import cloneDeep from 'lodash.clonedeep';
 import { produce } from 'immer';
+import { eventBus } from '@/engine/events/bus';
 
 
 export interface BlockTemplate {
@@ -248,7 +249,7 @@ const DEFAULT_BUILDER_TEMPLATES: BlockTemplate[] = [
           id: uuidv4(),
           type: 'text-block',
           content: {
-            html: '<div class="max-w-3xl mx-auto p-8 rounded-3xl bg-slate-900/90 shadow-xl"><p class="text-slate-200 mb-4">Contactez-nous par téléphone, email ou formulaire. Nous adaptons notre solution à vos marchés, commerces et sites industriels.</p><div class="grid gap-4 md:grid-cols-3"><div class="rounded-2xl bg-slate-800 p-4"><p class="text-slate-400 text-xs uppercase mb-2">Téléphone</p><p class="font-semibold text-white">+221 33 123 45 67</p></div><div class="rounded-2xl bg-slate-800 p-4"><p class="text-slate-400 text-xs uppercase mb-2">Email</p><p class="font-semibold text-white">contact@proquelec.sn</p></div><div class="rounded-2xl bg-slate-800 p-4"><p class="text-slate-400 text-xs uppercase mb-2">Réponse</p><p class="font-semibold text-white">48h ouvrées</p></div></div></div>'
+            html: '<div class="max-w-3xl mx-auto p-8 rounded-3xl bg-slate-900/90 shadow-xl"><p class="text-slate-200 mb-4">Contactez-nous par téléphone, email ou formulaire. Nous adaptons notre solution à vos marchés, commerces et sites industriels.</p><div class="grid gap-4 md:grid-cols-3"><div class="rounded-2xl bg-slate-800 p-4"><p class="text-slate-400 text-xs uppercase mb-2">Téléphone</p><p class="font-semibold text-white">+221 33 848 68 55</p></div><div class="rounded-2xl bg-slate-800 p-4"><p class="text-slate-400 text-xs uppercase mb-2">Email</p><p class="font-semibold text-white">proquelec@proquelec.sn</p></div><div class="rounded-2xl bg-slate-800 p-4"><p class="text-slate-400 text-xs uppercase mb-2">Réponse</p><p class="font-semibold text-white">48h ouvrées</p></div></div></div>'
           },
           style: {
             padding: '0',
@@ -431,6 +432,65 @@ const cloneBlock = (block: Block): Block => {
   return newBlock;
 };
 
+const countBlocks = (block: Block): number => {
+  let count = 1;
+  if (block.children) {
+    for (const child of block.children) {
+      count += countBlocks(child);
+    }
+  }
+  return count;
+};
+
+const findBlockRecursive = (blocks: Block[], id: string): Block | undefined => {
+  for (const b of blocks) {
+    if (b.id === id) return b;
+    if (b.children) {
+      const found = findBlockRecursive(b.children, id);
+      if (found) return found;
+    }
+  }
+  return undefined;
+};
+
+const insertBlockRecursive = (blocks: Block[], newBlock: Block, parentId?: string, index?: number): Block[] => {
+  if (!parentId) {
+    const newBlocks = [...blocks];
+    if (typeof index === 'number') newBlocks.splice(index, 0, newBlock);
+    else newBlocks.push(newBlock);
+    return newBlocks;
+  }
+  return blocks.map(b => {
+    if (b.id === parentId) {
+      const children = b.children ? [...b.children] : [];
+      if (typeof index === 'number') children.splice(index, 0, newBlock);
+      else children.push(newBlock);
+      return { ...b, children };
+    }
+    if (b.children) {
+      return { ...b, children: insertBlockRecursive(b.children, newBlock, parentId, index) };
+    }
+    return b;
+  });
+};
+
+const findBlockParent = (
+  blocks: Block[],
+  id: string,
+  parent?: Block
+): { block: Block; parent: Block | undefined; index: number } | null => {
+  for (let i = 0; i < blocks.length; i++) {
+    if (blocks[i].id === id) {
+      return { block: blocks[i], parent, index: i };
+    }
+    if (blocks[i].children) {
+      const found = findBlockParent(blocks[i].children!, id, blocks[i]);
+      if (found) return found;
+    }
+  }
+  return null;
+};
+
 // Helper: Save current state to history using immer for memory efficiency
 const saveHistory = (state: BuilderState): Partial<BuilderState> => {
   const newHistory = state.history.slice(0, state.historyIndex + 1);
@@ -453,121 +513,240 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
   historyIndex: -1,
   templates: DEFAULT_BUILDER_TEMPLATES,
 
-  setPageMetadata: (metadata) => set((state) => ({
-    pageMetadata: { ...state.pageMetadata, ...metadata }
-  })),
+  setPageMetadata: (metadata) => {
+    const previous = { ...useBuilderStore.getState().pageMetadata };
+    set((state) => ({
+      pageMetadata: { ...state.pageMetadata, ...metadata }
+    }));
+    eventBus.emit('page:metadata:updated', { previous, next: metadata });
+  },
 
-  setBlocks: (blocks) => set({ blocks, history: [blocks], historyIndex: 0 }),
+  setBlocks: (blocks) => {
+    set({ blocks, history: [blocks], historyIndex: 0 });
+    eventBus.emit('state:changed', { action: 'setBlocks', timestamp: Date.now() });
+  },
 
-  addBlock: (type, parentId, index) => set((state) => {
-    const historyUpdate = saveHistory(state);
+  addBlock: (type, parentId, index) => {
+    let createdBlock: Block | null = null;
+    set((state) => {
+      const historyUpdate = saveHistory(state);
 
-    const newBlock: Block = {
-      id: uuidv4(),
-      type,
-      content: { title: 'Nouveau Bloc' },
-      style: { padding: '20px' },
-      children: []
-    };
+      const newBlock: Block = {
+        id: uuidv4(),
+        type,
+        content: { title: 'Nouveau Bloc' },
+        style: { padding: '20px' },
+        children: []
+      };
+      createdBlock = newBlock;
 
-    const newBlocks = [...state.blocks];
-    if (typeof index === 'number') {
-      newBlocks.splice(index, 0, newBlock);
-    } else {
-      newBlocks.push(newBlock);
-    }
+      let resolvedParentId: string | undefined = undefined;
+      let targetIndex: number | undefined = index;
 
-    return {
-      ...historyUpdate,
-      blocks: newBlocks
-    };
-  }),
+      if (parentId) {
+        const info = findBlockParent(state.blocks, parentId);
+        if (info) {
+          resolvedParentId = info.parent?.id;
+          targetIndex = info.index;
+        } else {
+          resolvedParentId = parentId;
+        }
+      }
 
-  importBlock: (blockTemplate, parentId, index) => set((state) => {
-    const historyUpdate = saveHistory(state);
-    const newBlock = cloneBlock(blockTemplate);
+      const newBlocks = insertBlockRecursive(state.blocks, newBlock, resolvedParentId, targetIndex);
 
-    const newBlocks = [...state.blocks];
-    if (typeof index === 'number') {
-      newBlocks.splice(index, 0, newBlock);
-    } else {
-      newBlocks.push(newBlock);
-    }
-
-    return {
-      ...historyUpdate,
-      blocks: newBlocks
-    };
-  }),
-
-  moveBlock: (activeId, overId) => set((state) => {
-    const historyUpdate = saveHistory(state);
-    const oldIndex = state.blocks.findIndex((b) => b.id === activeId);
-    const newIndex = state.blocks.findIndex((b) => b.id === overId);
-
-    if (oldIndex !== -1 && newIndex !== -1) {
-      const newBlocks = [...state.blocks];
-      const [movedBlock] = newBlocks.splice(oldIndex, 1);
-      newBlocks.splice(newIndex, 0, movedBlock);
       return {
         ...historyUpdate,
         blocks: newBlocks
       };
+    });
+    if (createdBlock) {
+      eventBus.emit('block:created', { block: createdBlock, parentId, index });
     }
-    return state;
-  }),
+  },
 
-  removeBlock: (id) => set((state) => {
-    const historyUpdate = saveHistory(state);
-    return {
-      ...historyUpdate,
-      blocks: removeBlockRecursive(state.blocks, id),
-      selectedBlockId: state.selectedBlockId === id ? null : state.selectedBlockId
-    };
-  }),
+  importBlock: (blockTemplate, parentId, index) => {
+    let importedBlock: Block | null = null;
+    set((state) => {
+      const historyUpdate = saveHistory(state);
+      const newBlock = cloneBlock(blockTemplate);
+      importedBlock = newBlock;
 
-  updateBlockContent: (id, content) => set((state) => ({
-    // Live update without history snapshot — call snapshotHistory() on blur/commit
-    blocks: updateBlockRecursive(state.blocks, id, (b) => ({
-      ...b,
-      content: { ...b.content, ...content }
-    }))
-  })),
+      let resolvedParentId: string | undefined = undefined;
+      let targetIndex: number | undefined = index;
 
-  updateBlockStyle: (id, style) => set((state) => ({
-    // Live update without history snapshot — call snapshotHistory() on blur/commit
-    blocks: updateBlockRecursive(state.blocks, id, (b) => ({
-      ...b,
-      style: { ...b.style, ...style }
-    }))
-  })),
+      if (parentId) {
+        const info = findBlockParent(state.blocks, parentId);
+        if (info) {
+          resolvedParentId = info.parent?.id;
+          targetIndex = info.index;
+        } else {
+          resolvedParentId = parentId;
+        }
+      }
 
-  snapshotHistory: () => set((state) => saveHistory(state)),
+      const newBlocks = insertBlockRecursive(state.blocks, newBlock, resolvedParentId, targetIndex);
 
-  selectBlock: (id) => set({ selectedBlockId: id }),
+      return {
+        ...historyUpdate,
+        blocks: newBlocks
+      };
+    });
+    if (importedBlock) {
+      eventBus.emit('block:imported', { block: importedBlock, parentId, index });
+    }
+  },
+
+  moveBlock: (activeId, overId) => {
+    let moved = false;
+    let prevIdx = -1;
+    let newIdx = -1;
+    set((state) => {
+      const historyUpdate = saveHistory(state);
+      const activeInfo = findBlockParent(state.blocks, activeId);
+      const overInfo = findBlockParent(state.blocks, overId);
+
+      if (activeInfo && overInfo) {
+        prevIdx = activeInfo.index;
+        newIdx = overInfo.index;
+
+        const movedBlock = activeInfo.block;
+        // 1. Enlever de l'ancienne position
+        let newBlocks = removeBlockRecursive(state.blocks, activeId);
+        // 2. Insérer à la nouvelle position
+        newBlocks = insertBlockRecursive(newBlocks, movedBlock, overInfo.parent?.id, newIdx);
+        
+        moved = true;
+        return {
+          ...historyUpdate,
+          blocks: newBlocks
+        };
+      }
+      return state;
+    });
+    if (moved) {
+      eventBus.emit('block:moved', {
+        activeId,
+        overId,
+        previousIndex: prevIdx,
+        newIndex: newIdx,
+      });
+    }
+  },
+
+  removeBlock: (id) => {
+    let deletedBlock: Block | null = null;
+    let parentId: string | undefined;
+    let blockIndex: number | undefined;
+    set((state) => {
+      const historyUpdate = saveHistory(state);
+      // Find block info before removal
+      for (let i = 0; i < state.blocks.length; i++) {
+        if (state.blocks[i].id === id) {
+          deletedBlock = state.blocks[i];
+          blockIndex = i;
+          break;
+        }
+        if (state.blocks[i].children) {
+          const ci = state.blocks[i].children!.findIndex((c) => c.id === id);
+          if (ci !== -1) {
+            deletedBlock = state.blocks[i].children![ci];
+            parentId = state.blocks[i].id;
+            blockIndex = ci;
+            break;
+          }
+        }
+      }
+      return {
+        ...historyUpdate,
+        blocks: removeBlockRecursive(state.blocks, id),
+        selectedBlockId: state.selectedBlockId === id ? null : state.selectedBlockId
+      };
+    });
+    if (deletedBlock) {
+      eventBus.emit('block:deleted', {
+        id,
+        block: deletedBlock,
+        parentId,
+        index: blockIndex,
+      });
+    }
+  },
+
+  updateBlockContent: (id, content) => {
+    set((state) => ({
+      blocks: updateBlockRecursive(state.blocks, id, (b) => ({
+        ...b,
+        content: { ...b.content, ...content }
+      }))
+    }));
+  },
+
+  updateBlockStyle: (id, style) => {
+    set((state) => ({
+      blocks: updateBlockRecursive(state.blocks, id, (b) => ({
+        ...b,
+        style: { ...b.style, ...style }
+      }))
+    }));
+  },
+
+  snapshotHistory: () => {
+    set((state) => saveHistory(state));
+    const { blocks, history } = useBuilderStore.getState();
+    eventBus.emit('history:snapshot:created', {
+      snapshot: {
+        id: uuidv4(),
+        label: `Snapshot #${history.length}`,
+        timestamp: Date.now(),
+        type: 'auto',
+      },
+      blocksCount: blocks.length,
+    });
+  },
+
+  selectBlock: (id) => {
+    const previousId = useBuilderStore.getState().selectedBlockId;
+    set({ selectedBlockId: id });
+    eventBus.emit('block:selected', { id, previousId });
+  },
 
   // --- Undo / Redo ---
-  undo: () => set((state) => {
-    if (state.historyIndex > 0) {
-      const newIndex = state.historyIndex - 1;
-      return {
-        blocks: cloneDeep(state.history[newIndex]),
-        historyIndex: newIndex
-      };
+  undo: () => {
+    const prevIndex = useBuilderStore.getState().historyIndex;
+    set((state) => {
+      if (state.historyIndex > 0) {
+        const newIndex = state.historyIndex - 1;
+        return {
+          blocks: cloneDeep(state.history[newIndex]),
+          historyIndex: newIndex
+        };
+      }
+      return {};
+    });
+    const newIndex = useBuilderStore.getState().historyIndex;
+    if (newIndex !== prevIndex) {
+      eventBus.emit('history:undo', { fromIndex: prevIndex, toIndex: newIndex });
     }
-    return {};
-  }),
+  },
 
-  redo: () => set((state) => {
-    if (state.historyIndex < state.history.length - 1) {
-      const newIndex = state.historyIndex + 1;
-      return {
-        blocks: cloneDeep(state.history[newIndex]),
-        historyIndex: newIndex
-      };
+  redo: () => {
+    const prevIndex = useBuilderStore.getState().historyIndex;
+    set((state) => {
+      if (state.historyIndex < state.history.length - 1) {
+        const newIndex = state.historyIndex + 1;
+        return {
+          blocks: cloneDeep(state.history[newIndex]),
+          historyIndex: newIndex
+        };
+      }
+      return {};
+    });
+    const newIndex = useBuilderStore.getState().historyIndex;
+    if (newIndex !== prevIndex) {
+      eventBus.emit('history:redo', { fromIndex: prevIndex, toIndex: newIndex });
     }
-    return {};
-  }),
+  },
 
   canUndo: () => get().historyIndex > 0,
   canRedo: () => get().historyIndex < get().history.length - 1,
@@ -586,19 +765,26 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
       secureSetItem('builder_templates', updatedTemplates);
       return { templates: updatedTemplates };
     });
+    eventBus.emit('template:saved', { name, blocksCount: countBlocks(block) });
   },
 
   deleteTemplate: (templateId) => {
+    let templateName = '';
     set((state) => {
+      const target = state.templates.find((t) => t.id === templateId);
+      if (target) templateName = target.name;
       const updatedTemplates = state.templates.filter((t) => t.id !== templateId);
       secureSetItem('builder_templates', updatedTemplates);
       return { templates: updatedTemplates };
     });
+    if (templateName) {
+      eventBus.emit('template:deleted', { id: templateId, name: templateName });
+    }
   },
 
   loadTemplates: () => {
     try {
-      const stored = secureGetItem<BlockTemplate[]>('builder_templates', null);
+      const stored = secureGetItem<BlockTemplate[]>('builder_templates', []);
       if (stored) {
         try {
           if (Array.isArray(stored)) {

@@ -20,11 +20,14 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Structure de la page d'accueil — PIXEL PERFECT
+// Structure de la page d'accueil — Design Premium PROQUELEC
 // Chaque bloc correspond à un composant React original.
 // L'ordre ici = l'ordre affiché à l'écran.
 // ─────────────────────────────────────────────────────────────────────────────
 const HOMEPAGE_STRUCTURE = [
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 1. HERO BANNER — Carrousel principal avec slides dynamiques
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "home-hero-banner",
     type: "HeroBanner",
@@ -39,17 +42,28 @@ const HOMEPAGE_STRUCTURE = [
       description: "Slides chargés depuis la base de données. Gérez les slides via l'onglet Accueil du dashboard."
     }
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 2. OFFRES PAR AUDIENCE — Cartes Électriciens, Professionnels, Membres
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "home-audience-offers",
     type: "AudienceOffers",
     version: 1,
     enabled: true,
-    props: {},
+    props: {
+      entranceAnimation: "fade-in-up",
+      animationDelay: "0.2s"
+    },
     metadata: {
       label: "Offres Audience",
       description: "3 cartes — Électriciens, Professionnels, Membres. Textes configurables dans Réglages du site."
     }
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 3. VISION & MISSION — Section institutionnelle avec image
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "home-vision-mission",
     type: "VisionMission",
@@ -63,41 +77,64 @@ const HOMEPAGE_STRUCTURE = [
       visionTitle: "Notre Vision",
       visionDesc: "Devenir la référence nationale absolue en matière de sécurité électrique et d'innovation normative.",
       image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80",
-      badge: "L'Institution"
+      badge: "L'Institution",
+      entranceAnimation: "fade-in-up",
+      animationDelay: "0.3s"
     },
     metadata: {
       label: "Vision & Mission",
       description: "Section bicolonne image + texte. Props modifiables directement dans le Builder."
     }
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 4. STATISTIQUES CLÉS — Chiffres institutionnels animés
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "home-landing-stats",
     type: "LandingStats",
     version: 1,
     enabled: true,
-    props: {},
+    props: {
+      entranceAnimation: "fade-in-up",
+      animationDelay: "0.3s"
+    },
     metadata: {
       label: "Statistiques Clés",
       description: "Statistiques chargées depuis la base de données. Gérez les chiffres via le dashboard."
     }
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 5. ACTUALITÉS & BLOG — Derniers articles
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "home-latest-news",
     type: "LatestNews",
     version: 1,
     enabled: true,
-    props: {},
+    props: {
+      entranceAnimation: "fade-in-up",
+      animationDelay: "0.2s"
+    },
     metadata: {
       label: "Actualités & Blog",
       description: "Derniers articles de blog publiés. Gérez les articles via l'onglet Blog du dashboard."
     }
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // 6. LOGOS PARTENAIRES — Marquee infini
+  // ═══════════════════════════════════════════════════════════════════════════
   {
     id: "home-partner-logos",
     type: "PartnerLogos",
     version: 1,
     enabled: true,
-    props: {},
+    props: {
+      entranceAnimation: "fade-in",
+      animationDelay: "0.15s"
+    },
     metadata: {
       label: "Logos Partenaires",
       description: "Carousel des partenaires. Gérez les logos via l'onglet Partenaires du dashboard."

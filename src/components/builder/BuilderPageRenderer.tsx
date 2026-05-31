@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
+import { useSortable, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { ComponentRegistry } from './ComponentRegistry';
 import { BlockErrorBoundary } from './BlockErrorBoundary';
@@ -138,6 +138,74 @@ const generateResponsiveCss = (blocks: Block[]): string => {
   return sanitizeCSS(css);
 };
 
+const BlockRenderer = React.memo<{
+  block: Block;
+  isEditor: boolean;
+  isSelected: boolean;
+  onSelect?: (id: string) => void;
+  selectedId?: string | null;
+}>(({ block, isEditor, isSelected, onSelect, selectedId }) => {
+  const Component = ComponentRegistry[block.type];
+
+  if (!Component) {
+    return isEditor ? (
+      <div className="text-red-500 p-4 border border-red-300 bg-red-50 mb-2 rounded">
+        [Erreur Build: Type "{block.type}" inconnu]
+      </div>
+    ) : null;
+  }
+
+  const rawStyle = block.style as any;
+  const hasNested = rawStyle && (rawStyle.base || rawStyle.tablet || rawStyle.mobile || rawStyle.dark);
+  const baseStyle = hasNested ? rawStyle.base : rawStyle;
+
+  // Support new schema { props: {...} } and legacy schema { content: {...} }
+  const blockProps = (block as any).props || block.content || {};
+
+  const componentRender = (
+    <BlockErrorBoundary blockId={block.id}>
+      <Component
+        id={block.id}
+        {...blockProps}
+        content={block.content ?? {}}
+        style={(baseStyle ?? {}) as BlockStyle}
+        className={baseStyle?.className}
+        children={
+          block.children && block.children.length > 0 ? (
+            <SortableContext items={block.children.map(c => c.id)} strategy={verticalListSortingStrategy}>
+              <BuilderPageRenderer
+                blocks={block.children}
+                isEditor={isEditor}
+                selectedId={selectedId}
+                onSelect={onSelect}
+              />
+            </SortableContext>
+          ) : undefined
+        }
+      />
+    </BlockErrorBoundary>
+  );
+
+  return (
+    <SortableBlockWrapper
+      block={block}
+      isEditor={isEditor}
+      isSelected={isSelected}
+      onSelect={onSelect}
+    >
+      {componentRender}
+    </SortableBlockWrapper>
+  );
+}, (prevProps, nextProps) => {
+  return (
+    prevProps.block === nextProps.block &&
+    prevProps.isEditor === nextProps.isEditor &&
+    prevProps.isSelected === nextProps.isSelected &&
+    prevProps.onSelect === nextProps.onSelect &&
+    prevProps.selectedId === nextProps.selectedId
+  );
+});
+
 const BuilderPageRenderer: React.FC<PageRendererProps> = ({
   blocks,
   className,
@@ -171,73 +239,33 @@ const BuilderPageRenderer: React.FC<PageRendererProps> = ({
     if (isEditor) {
       return (
         <div className="text-gray-400 py-10 text-center italic border-2 border-dashed border-gray-200 rounded m-4">
-                    Page vide. Glissez un bloc ici.
-                </div>);
-
+          Page vide. Glissez un bloc ici.
+        </div>
+      );
     }
     return null;
   }
 
   return (
     <div className={`page-builder-content ${className || ''}`}>
-            <style dangerouslySetInnerHTML={{ __html: generateResponsiveCss(blocks) }} />
-            {blocks.map((block) => {
+      <style dangerouslySetInnerHTML={{ __html: generateResponsiveCss(blocks) }} />
+      {blocks.map((block) => {
         // Skip disabled blocks (new schema)
         if ((block as any).enabled === false) return null;
 
-        const Component = ComponentRegistry[block.type];
-
-        if (!Component) {
-          return isEditor ?
-          <div key={block.id} className="text-red-500 p-4 border border-red-300 bg-red-50 mb-2 rounded">
-                            [Erreur Build: Type "{block.type}" inconnu]
-                        </div> :
-          null;
-        }
-
-        const rawStyle = block.style as any;
-        const hasNested = rawStyle && (rawStyle.base || rawStyle.tablet || rawStyle.mobile || rawStyle.dark);
-        const baseStyle = hasNested ? rawStyle.base : rawStyle;
-
-        // Support new schema { props: {...} } and legacy schema { content: {...} }
-        const blockProps = (block as any).props || block.content || {};
-
-        const componentRender =
-        <BlockErrorBoundary blockId={block.id}>
-          <Component
-            id={block.id}
-            {...blockProps}
-            content={block.content ?? {}}
-            style={(baseStyle ?? {}) as BlockStyle}
-            className={baseStyle?.className}
-            children={
-            block.children && block.children.length > 0 ?
-            <BuilderPageRenderer
-              blocks={block.children}
-              isEditor={isEditor}
-              selectedId={selectedId}
-              onSelect={onSelect} /> :
-
-            undefined
-            } />
-        </BlockErrorBoundary>;
-
-
-
         return (
-          <SortableBlockWrapper
+          <BlockRenderer
             key={block.id}
             block={block}
             isEditor={isEditor}
             isSelected={selectedId === block.id}
-            onSelect={onSelect}>
-            
-                        {componentRender}
-                    </SortableBlockWrapper>);
-
+            onSelect={onSelect}
+            selectedId={selectedId}
+          />
+        );
       })}
-        </div>);
-
+    </div>
+  );
 };
 
 

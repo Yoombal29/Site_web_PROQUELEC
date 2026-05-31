@@ -111,7 +111,7 @@ export interface NormDatabase {
   ruleCount: number;
   fullData?: NormFullJSON;
   chunks?: NormChunk[];
-  qcm?: unknown[];
+  qcm?: NormQCMQuestion[];
 }
 
 export interface NormMetadata {

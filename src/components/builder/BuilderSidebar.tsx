@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable */
+import React, { useMemo, useRef, useCallback, useEffect } from 'react';
 import { Plus, LayoutTemplate, Box, Trash2 } from 'lucide-react';
 import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
@@ -6,58 +7,91 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { BlockTemplate } from '@/stores/useBuilderStore';
 
 // Draggable components (moved from BuilderPage)
-const DraggableItem = ({ type, label, icon }: {type: string;label: string;icon?: React.ReactNode;}) => {
+const DraggableItem = React.memo(({ type, label, icon }: {type: string;label: string;icon?: React.ReactNode;}) => {
+  const data = useMemo(() => ({ type }), [type]);
+
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: `sidebar-item-${type}`,
-    data: { type }
+    data
   });
 
-  const style = {
-    transform: CSS.Translate.toString(transform),
-  };
+  const nodeRef = useRef<HTMLElement | null>(null);
+  const setCombinedRef = useCallback((el: HTMLElement | null) => {
+    nodeRef.current = el;
+    setNodeRef(el as any);
+  }, [setNodeRef]);
+
+  useEffect(() => {
+    const el = nodeRef.current;
+    if (!el) return;
+    if (transform) {
+      el.style.transform = `translate3d(${(transform as any).x}px, ${(transform as any).y}px, 0)`;
+    } else {
+      el.style.transform = '';
+    }
+  }, [transform?.x, transform?.y]);
+
+  if (process.env.NODE_ENV === 'development') console.count(`DraggableItem ${type}`);
 
   return (
     <div
-      ref={setNodeRef}
-      style={style}
+      ref={setCombinedRef}
+      data-testid={`draggable-${type}`}
       {...listeners}
       {...attributes}
       className="p-3 bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded cursor-grab active:cursor-grabbing flex items-center gap-3 transition-colors shadow-sm select-none">
-      
-            <div className="w-8 h-8 bg-slate-100 rounded flex items-center justify-center text-slate-500">
-                {icon}
-            </div>
-            <span className="text-sm font-medium text-slate-700">{label}</span>
-        </div>);
+      <div className="w-8 h-8 bg-slate-100 rounded flex items-center justify-center text-slate-500">
+        {icon}
+      </div>
+      <span className="text-sm font-medium text-slate-700">{label}</span>
+    </div>
+  );
 
-};
+});
+DraggableItem.displayName = 'DraggableItem';
 
-const DraggableTemplate = ({ template }: {template: BlockTemplate;}) => {
+const DraggableTemplate = React.memo(({ template }: {template: BlockTemplate;}) => {
+  const data = useMemo(() => ({ block: template.block }), [template.block]);
+
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: `sidebar-template-${template.id}`,
-    data: { block: template.block }
+    data
   });
 
-  const style = {
-    transform: CSS.Translate.toString(transform),
-  };
+  const nodeRef = useRef<HTMLElement | null>(null);
+  const setCombinedRef = useCallback((el: HTMLElement | null) => {
+    nodeRef.current = el;
+    setNodeRef(el as any);
+  }, [setNodeRef]);
+
+  useEffect(() => {
+    const el = nodeRef.current;
+    if (!el) return;
+    if (transform) {
+      el.style.transform = `translate3d(${(transform as any).x}px, ${(transform as any).y}px, 0)`;
+    } else {
+      el.style.transform = '';
+    }
+  }, [transform?.x, transform?.y]);
+
+  if (process.env.NODE_ENV === 'development') console.count(`DraggableTemplate ${template.id}`);
 
   return (
     <div
-      ref={setNodeRef}
-      style={style}
+      ref={setCombinedRef}
       {...listeners}
       {...attributes}
       className="p-3 bg-white hover:bg-purple-50 border border-slate-200 hover:border-purple-200 rounded cursor-grab active:cursor-grabbing flex flex-col gap-1 transition-colors shadow-sm select-none relative overflow-hidden">
-      
-            <div className="flex items-center gap-2 mb-1">
-                <Box size={14} className="text-purple-500" />
-                <span className="text-sm font-bold text-slate-800 truncate pr-4">{template.name}</span>
-            </div>
-            <span className="text-[10px] text-slate-400 capitalize">{template.block.type} • {new Date(template.createdAt).toLocaleDateString()}</span>
-        </div>);
+      <div className="flex items-center gap-2 mb-1">
+        <Box size={14} className="text-purple-500" />
+        <span className="text-sm font-bold text-slate-800 truncate pr-4">{template.name}</span>
+      </div>
+      <span className="text-[10px] text-slate-400 capitalize">{template.block.type} • {new Date(template.createdAt).toLocaleDateString()}</span>
+    </div>
+  );
 
-};
+});
+DraggableTemplate.displayName = 'DraggableTemplate';
 
 interface BuilderSidebarProps {
   templates: BlockTemplate[];
@@ -69,7 +103,7 @@ export const BuilderSidebar: React.FC<BuilderSidebarProps> = ({
   deleteTemplate
 }) => {
   return (
-    <aside className="w-72 bg-white border-r border-slate-200 flex flex-col shadow-sm z-10 shrink-0">
+    <aside aria-label="Bibliothèque de blocs" className="w-72 bg-white border-r border-slate-200 flex flex-col shadow-sm z-10 shrink-0">
       <div className="h-14 border-b flex items-center px-4 font-semibold text-slate-700 bg-slate-50">
         <Plus className="w-5 h-5 mr-2 text-blue-600" /> Bibliothèque
       </div>
@@ -89,6 +123,16 @@ export const BuilderSidebar: React.FC<BuilderSidebarProps> = ({
           <DraggableItem type="text-block" label="Bloc Texte" icon={<Box size={16} />} />
           <DraggableItem type="image" label="Image Seule" icon={<Box size={16} />} />
           <DraggableItem type="html" label="Code HTML" icon={<Box size={16} />} />
+          <DraggableItem type="button" label="Bouton" icon={<Box size={16} />} />
+          <DraggableItem type="divider" label="Séparateur" icon={<Box size={16} />} />
+          <DraggableItem type="spacer" label="Espace" icon={<Box size={16} />} />
+          <DraggableItem type="columns" label="Colonnes" icon={<Box size={16} />} />
+          <DraggableItem type="card" label="Carte" icon={<Box size={16} />} />
+          <DraggableItem type="grid" label="Grille" icon={<Box size={16} />} />
+          <DraggableItem type="stats" label="Statistiques" icon={<Box size={16} />} />
+          <DraggableItem type="list" label="Liste" icon={<Box size={16} />} />
+          <DraggableItem type="form" label="Formulaire" icon={<Box size={16} />} />
+          <DraggableItem type="video" label="Vidéo" icon={<Box size={16} />} />
 
           <div className="uppercase text-[10px] font-bold text-emerald-600 mb-2 mt-5 tracking-wider border-t border-slate-100 pt-4">
             🏠 Sections Page d'accueil

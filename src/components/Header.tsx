@@ -253,7 +253,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
       isActive && (isMobile ? "bg-slate-200 text-slate-900" : "bg-white/10 shadow-[0_0_20px_rgba(255,255,255,0.05)] text-white")
     )}
     onClick={() => setIsMenuOpen(false)}>
-    
+
       {isActive &&
     <motion.div
       layoutId="nav-bg"
@@ -274,7 +274,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
         className="relative"
         onMouseEnter={() => handleDropdownEnter(section.label)}
         onMouseLeave={handleDropdownLeave}>
-        
+
         <button
           className={cn(
             "group relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300",
@@ -282,7 +282,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
             isActive && "bg-white/20 text-white"
           )}
           onClick={() => handleDropdownClick(section.label)} aria-label="Action">
-          
+
           {section.icon && <section.icon className="h-4 w-4 transition-transform group-hover:scale-110" />}
           {section.label}
           <ChevronDown className={cn("h-3 w-3 transition-transform duration-300 opacity-50", isActive && "rotate-180")} />
@@ -294,26 +294,26 @@ export const Header = ({ solid = false }: HeaderProps) => {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="absolute top-full left-0 mt-4 bg-white/95 backdrop-blur-2xl rounded-[2.5rem] shadow-[0_30px_90px_rgba(0,0,0,0.3)] border border-white/40 overflow-hidden z-[110] grid grid-cols-4 gap-0 min-w-[950px] origin-top-left">
-            
+            className="absolute top-full left-0 mt-2 bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/10 overflow-hidden z-[110] grid grid-cols-4 gap-0 min-w-[950px] origin-top-left">
+
               {section.columns.map((column, colIdx) =>
-            <div key={colIdx} className="px-8 py-12 border-r border-slate-100 last:border-r-0">
-                  <h3 className="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mb-8 flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+            <div key={colIdx} className="px-6 py-8 border-r border-white/5 last:border-r-0">
+                  <h3 className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.15em] mb-5 flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     {column.title}
                   </h3>
-                  <ul className="space-y-5">
+                  <ul className="space-y-3.5">
                     {column.items.map((item, idx) =>
                 <li key={idx}>
                         <Link
                     to={item.path}
-                    className="text-sm font-bold text-slate-700 hover:text-blue-600 hover:translate-x-2 transition-all duration-300 block group/item flex items-center gap-2"
+                    className="text-xs font-medium text-slate-300 hover:text-white hover:translate-x-1.5 transition-all duration-200 block group/item flex items-center gap-2 py-0.5"
                     onClick={() => {
                       setActiveDropdown(null);
                       setIsMenuOpen(false);
                     }}>
-                    
-                          <span className="w-0 group-hover/item:w-4 h-[2px] bg-blue-600 transition-all" />
+
+                          <span className="w-0 group-hover/item:w-3.5 h-[1.5px] bg-blue-400 transition-all" />
                           {item.label}
                         </Link>
                       </li>
@@ -340,12 +340,28 @@ export const Header = ({ solid = false }: HeaderProps) => {
 
     }
 
+    // Calcul dynamique du nombre de colonnes optimal
+    const count = item.submenu.length;
+    const colCount = count <= 4 ? 1 : count <= 8 ? 2 : count <= 15 ? 3 : 4;
+    const colWidthMap: Record<number, string> = {
+      1: "w-56",
+      2: "w-[420px]",
+      3: "w-[620px]",
+      4: "w-[800px]",
+    };
+    const colGridMap: Record<number, string> = {
+      1: "flex flex-col",
+      2: "grid grid-cols-2 gap-x-1",
+      3: "grid grid-cols-3 gap-x-1",
+      4: "grid grid-cols-4 gap-x-1",
+    };
+
     return (
       <div
         className="relative"
         onMouseEnter={() => handleDropdownEnter(item.label)}
         onMouseLeave={handleDropdownLeave}>
-        
+
         <button
           className={cn(
             "group relative flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300",
@@ -362,7 +378,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
               handleDropdownClick(item.label);
             }
           }} aria-label="Action">
-          
+
           {item.icon && <item.icon className="h-4 w-4 transition-transform group-hover:scale-110" />}
           {item.label}
           <ChevronDown
@@ -381,19 +397,23 @@ export const Header = ({ solid = false }: HeaderProps) => {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-72 bg-white/95 backdrop-blur-2xl rounded-[2rem] shadow-[0_30px_90px_rgba(0,0,0,0.25)] border border-white/40 p-3 overflow-hidden z-[110] origin-top">
-            
+            className={cn(
+              "absolute top-full right-0 mt-2 bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/10 p-2 overflow-hidden z-[110] origin-top-right",
+              colWidthMap[colCount],
+              colGridMap[colCount]
+            )}>
+
               {item.submenu.map((subItem, index) =>
             <Link
               key={subItem.id || `sub-${index}`}
               to={subItem.path}
-              className="group flex items-center gap-3 px-5 py-4 text-sm font-bold text-slate-700 hover:text-blue-600 hover:bg-blue-50/50 rounded-2xl transition-all"
+              className="group flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-all whitespace-nowrap"
               onClick={() => {
                 setActiveDropdown(null);
                 setIsMenuOpen(false);
               }}>
-              
-                  <div className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-blue-600 group-hover:scale-125 transition-all" />
+
+                  <div className="w-1 h-1 rounded-full bg-slate-600 group-hover:bg-blue-400 group-hover:scale-125 transition-all flex-shrink-0" />
                   {subItem.label}
                 </Link>
             )}
@@ -430,7 +450,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
             key={item.id}
             to={item.url}
             className="text-[10px] font-bold text-white/60 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-2 group">
-            
+
                 <div className="w-1 h-1 rounded-full bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 {item.title}
               </Link>
@@ -455,7 +475,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
           "w-full relative transition-all duration-500 flex items-center header-container-vars",
           isCompact ? 'h-[80px]' : 'h-[110px]'
         )}>
-        
+
         <div className="container mx-auto px-4 md:px-6 h-full flex items-center">
           <div className="flex items-center justify-between w-full mx-auto">
             {/* Logo et nom */}
@@ -472,13 +492,13 @@ export const Header = ({ solid = false }: HeaderProps) => {
                       target.src = "/logo.png";
                     }
                   }} loading="lazy" />
-                
+
               </div>
 
               <div className="flex flex-col justify-center border-l border-white/20 pl-4 py-1">
                 <h1
                   className="text-lg sm:text-xl md:text-2xl font-black leading-none text-white uppercase tracking-tighter text-shadow-md">
-                  
+
                   {settings?.site_name?.replace('S?N?GAL', 'SÉNÉGAL')?.replace('S?n?gal', 'Sénégal')?.replace(' SÉNÉGAL', '') || "PROQUELEC"}
                 </h1>
                 <p className="text-[10px] sm:text-[11px] font-bold text-white/70 uppercase tracking-[0.1em] mt-1 text-shadow-sm">
@@ -499,7 +519,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
               <div
                 ref={navContainerRef}
                 className="flex items-center gap-1 xl:gap-2 flex-1 justify-end overflow-visible max-h-[50px] transition-all duration-500">
-                
+
                 {/* Combinaison dynamique de tous les liens pour le calcul d'overflow */}
                 {[
                 ...mainNavLinks.map((l) => ({ ...l, type: 'nav' })),
@@ -522,24 +542,90 @@ export const Header = ({ solid = false }: HeaderProps) => {
                 ...activeMenuItems.map((m) => ({ label: m.title, path: m.url, type: 'extra' }))].
                 length > visibleItemsCount &&
                 <div className="overflow-trigger">
-                      <DropdownNavLink
-                    item={{
-                      label: "Plus",
-                      path: "#",
-                      id: "smart-plus-menu",
-                      icon: MoreHorizontal,
-                      submenu: [
-                      ...mainNavLinks.slice(visibleItemsCount).map((l) => ({ id: l.id, label: l.label, path: l.path })),
-                      ...megaMenuSections.slice(Math.max(0, visibleItemsCount - mainNavLinks.length)).flatMap((section) => section.columns.flatMap((column) => column.items.map((item) => ({
-                        id: `${section.label}-${item.label}`,
-                        label: `${section.label} • ${item.label}`,
-                        path: item.path
-                      })))).filter((item) => item.path),
-                      ...activeMenuItems.slice(Math.max(0, visibleItemsCount - mainNavLinks.length - megaMenuSections.length)).map((m) => ({ id: m.id, label: m.title, path: m.url }))].
-                      filter(Boolean)
-                    }} />
-                  
-                    </div>
+                  {(() => {
+                    // Construire un sous-menu organisé par thématique
+                    const navCount = mainNavLinks.length;
+                    const megaCount = megaMenuSections.length;
+                    let idx = visibleItemsCount;
+
+                    const groups = [];
+
+                    // Items de navigation cachés
+                    const hiddenNavs = mainNavLinks.slice(visibleItemsCount);
+                    if (hiddenNavs.length > 0) {
+                      groups.push({ label: 'Navigation', items: hiddenNavs.map(l => ({ id: l.id, label: l.label, path: l.path })) });
+                      idx += hiddenNavs.length;
+                    }
+
+                    // Méga-menu cachés organisés par section
+                    const hiddenMegaCount = Math.max(0, idx - navCount);
+                    const hiddenMegas = megaMenuSections.slice(hiddenMegaCount);
+                    for (const section of hiddenMegas) {
+                      const sectionItems = section.columns.flatMap(col =>
+                        col.items.map(item => ({ id: section.label+'-'+item.label, label: item.label, path: item.path }))
+                      ).filter(item => item.path);
+                      if (sectionItems.length > 0) {
+                        groups.push({ label: section.label, items: sectionItems });
+                        idx += 1; // approximatif
+                      }
+                    }
+
+                    // Items actifs supplémentaires
+                    const extraStart = Math.max(0, idx - navCount - megaCount);
+                    const hiddenExtras = activeMenuItems.slice(extraStart);
+                    if (hiddenExtras.length > 0) {
+                      groups.push({ label: 'Autres', items: hiddenExtras.map(m => ({ id: m.id, label: m.title, path: m.url })) });
+                    }
+
+                    // Filtrer les groupes vides
+                    const validGroups = groups.filter(g => g.items.length > 0);
+
+                    const totalItems = validGroups.reduce((sum, g) => sum + g.items.length + 1, 0);
+                    const colCount = totalItems <= 8 ? 1 : totalItems <= 16 ? 2 : 3;
+
+                    return (
+                      <div className="relative"
+                        onMouseEnter={() => handleDropdownEnter('__overflow__')}
+                        onMouseLeave={handleDropdownLeave}>
+                        <button
+                          className={cn("group relative flex items-center gap-1 px-3 py-2 rounded-xl font-bold text-sm transition-all duration-300", scrolled||solid ? "text-white" : "text-white/90 hover:text-white", activeDropdown === '__overflow__' && "bg-white/10 text-white")}
+                          onClick={() => handleDropdownClick('__overflow__')}
+                          aria-label="Plus de pages">
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="hidden sm:inline">Plus</span>
+                          <ChevronDown className={cn("h-3 w-3 transition-transform duration-300 opacity-50", activeDropdown === '__overflow__' && "rotate-180")} />
+                        </button>
+                        <AnimatePresence>
+                          {activeDropdown === '__overflow__' &&
+                            <motion.div
+                              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                              className={cn("absolute top-full right-0 mt-2 bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/10 p-4 overflow-hidden z-[110] origin-top-right", colCount === 1 ? 'w-64' : colCount === 2 ? 'w-[500px]' : 'w-[700px]')}>
+                              <div className={cn('grid gap-x-3', colCount === 1 ? 'grid-cols-1' : colCount === 2 ? 'grid-cols-2' : 'grid-cols-3')}>
+                                {validGroups.map((group, gi) => (
+                                  <div key={gi} className="mb-2">
+                                    <p className="text-[10px] font-bold uppercase tracking-widest text-blue-400 px-3 py-1.5">{group.label}</p>
+                                    {group.items.map((item, ii) => (
+                                      <Link
+                                        key={item.id || ii}
+                                        to={item.path}
+                                        className="group flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-all whitespace-nowrap"
+                                        onClick={() => { setActiveDropdown(null); setIsMenuOpen(false); }}>
+                                        <div className="w-1 h-1 rounded-full bg-slate-600 group-hover:bg-blue-400 group-hover:scale-125 transition-all flex-shrink-0" />
+                                        {item.label}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                ))}
+                              </div>
+                            </motion.div>
+                          }
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })()}
+                </div>
                 }
               </div>
 
@@ -556,7 +642,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                 <Link to={settings.cta_primary_url || "/contact"}>
                     <Button
                     className="text-xs md:text-sm px-4 py-2 font-semibold rounded-lg transition-all duration-200 flex items-center gap-2 shadow-sm bg-white/20 hover:bg-white/30 text-white border border-white/20">
-                    
+
                       <Zap className="h-4 w-4" />
                       <span className="hidden xl:inline">{settings.cta_primary_text}</span>
                     </Button>
@@ -569,7 +655,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                     <Button
                     variant="outline"
                     className="hidden sm:flex text-xs md:text-sm px-4 py-2 font-semibold rounded-lg transition-all duration-200 items-center gap-2 bg-transparent border-white/30 text-white hover:bg-white/10">
-                    
+
                       <Star className="h-4 w-4" />
                       <span className="hidden xl:inline">{settings.cta_secondary_text}</span>
                     </Button>
@@ -581,7 +667,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                 <Link to="/contact">
                     <Button
                     className="text-xs md:text-sm px-4 py-2 font-semibold rounded-lg transition-all duration-200 flex items-center gap-2 shadow-sm bg-white/20 hover:bg-white/30 text-white border border-white/20">
-                    
+
                       <Phone className="h-4 w-4" />
                       <span className="hidden xl:inline">Contact</span>
                     </Button>
@@ -601,7 +687,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                       <button
                       onClick={toggleUserMenu}
                       className="text-xs md:text-sm px-3 py-2 font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2 bg-white text-blue-600" aria-label="Action">
-                      
+
                         <User className="h-4 w-4" />
                         <span className="hidden md:inline">{user.email?.split('@')[0]}</span>
                       </button>
@@ -617,7 +703,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                           to={user ? getDashboardPath(user.role) : "/dashboard"}
                           onClick={() => setIsUserMenuOpen(false)}
                           className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors">
-                          
+
                               <LayoutDashboard className="h-4 w-4 text-proqblue" />
                               Tableau de bord
                             </Link>
@@ -626,7 +712,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                           to="/admin?tab=pages"
                           onClick={() => setIsUserMenuOpen(false)}
                           className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors border-t border-border mt-1 font-bold text-emerald-600">
-                          
+
                                 <PenTool className="h-4 w-4" />
                                 BE Builder (Pages)
                               </Link>
@@ -634,7 +720,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                             <button
                           onClick={handleLogout}
                           className="w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition-colors border-t border-border mt-1">
-                          
+
                               <LogOut className="h-4 w-4" />
                               Déconnexion
                             </button>
@@ -647,7 +733,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                       <button
                       className="p-2 rounded-full hover:bg-white/10 transition-colors relative group"
                       aria-label="Notifications">
-                      
+
                         <Bell className="h-5 w-5 text-white" />
                         <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
                       </button>
@@ -657,7 +743,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                 <Link to="/connexion">
                     <Button
                     className="text-xs md:text-sm px-4 py-2 font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg bg-white text-blue-600 hover:bg-blue-50">
-                    
+
                       Connexion
                     </Button>
                   </Link>
@@ -671,7 +757,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                 onClick={toggleMenu}
                 className="p-2 rounded-lg transition-all duration-200 text-white hover:bg-white/10"
                 aria-label="Menu">
-                
+
                 {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
@@ -734,7 +820,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                 variant="destructive"
                 onClick={() => {handleLogout();setIsMenuOpen(false);}}
                 className="w-full justify-center gap-2 rounded-2xl py-4 bg-red-500 text-white hover:bg-red-600 shadow-sm">
-                
+
                     <LogOut className="h-4 w-4" />
                     Déconnexion
                   </Button>

@@ -19,6 +19,10 @@ import Labels from './Labels';
 
 import { useLiveSettings } from '@/hooks/useLiveSettings';
 
+// Craft.js read-only rendering
+import { Editor, Frame } from '@craftjs/core';
+import { CRAFT_RESOLVER } from '@/components/blocks/craftResolver';
+
 const PAGE_ALIASES: Record<string, string> = {
   home: 'home_page',
   about: 'about',
@@ -36,7 +40,23 @@ const PAGE_ALIASES: Record<string, string> = {
   'espace-menages': 'menages',
   'espace-professionnels': 'professionnels',
   'espace-autorites': 'autorites',
-  avantages: 'advantages'
+  avantages: 'advantages',
+  // Nouveaux slugs du menu BD
+  'nos-actions': 'nos_actions',
+  projets: 'projets',
+  galerie: 'galerie',
+  marches: 'marches',
+  collectivites: 'collectivites',
+  publications: 'publications',
+  faq: 'faq',
+  'normative-corpus': 'normative_corpus',
+  'conseils-menages': 'conseils_menages',
+  'ressources-pedagogiques': 'ressources_pedagogiques',
+  'partenaires-liste': 'partenaires_liste',
+  partenaires: 'partenaires',
+  'partenariat-senelec': 'partenariat_senelec',
+  temoignages: 'temoignages',
+  'espace-partenaires': 'espace_partenaires',
 };
 
 const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
@@ -46,6 +66,19 @@ const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
   events: Events,
   labels: Labels
 };
+
+/**
+ * Détecte si une structure JSON est un arbre de nœuds Craft.js
+ * (objet avec une clé "ROOT" contenant un type et des nœuds)
+ */
+function isCraftJsStructure(data: unknown): data is Record<string, unknown> {
+  return (
+    data !== null &&
+    typeof data === 'object' &&
+    !Array.isArray(data) &&
+    'ROOT' in (data as Record<string, unknown>)
+  );
+}
 
 /**
  * Page générique pour afficher toute page gérée par le système CMS
@@ -66,7 +99,6 @@ const DynamicPageComponent: React.FC = () => {
   const [fallbackPageKey, setFallbackPageKey] = useState<string | null>(null);
   const { settings } = useLiveSettings();
 
-  // Rediriger /fr/xxx → /xxx et /en/xxx → /xxx (URLs propres sans préfixe de langue)
   useEffect(() => {
     const match = location.pathname.match(/^\/(fr|en)(\/.*)?$/);
     if (match) {
@@ -75,18 +107,40 @@ const DynamicPageComponent: React.FC = () => {
     }
   }, [location.pathname, navigate]);
 
+  // Réinitialiser les états lors d'un changement de page
+  useEffect(() => {
+    setLoading(true);
+    setPage(null);
+    setError(null);
+    setFallbackPageKey(null);
+  }, [location.pathname]);
+
+  // Gestion du défilement vers l'ancre (ex: /partenaires#institutionnels)
+  useEffect(() => {
+    if (!loading && location.hash) {
+      const id = decodeURIComponent(location.hash.replace('#', ''));
+      const timer = setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, location.hash, page, fallbackPageKey]);
+
   useEffect(() => {
     const fetchPage = async () => {
-      // Déterminer le slug : soit via paramètre (:slug), soit via le chemin URL (/about -> about)
-      let effectiveSlug = paramSlug; 
-
-      if (!effectiveSlug) {
-        effectiveSlug = location.pathname.replace(/^\/|\/$/g, '').replace(/^(fr|en)\//, '');
-      }
+      // Toujours utiliser le pathname complet comme slug (sans le leading slash)
+      // Cela gère correctement /actions/conformite, /evenements/ateliers, etc.
+      let effectiveSlug = location.pathname.replace(/^\/|\/$/g, '').replace(/^(fr|en)\//, '');
 
       if (!effectiveSlug || effectiveSlug === '') {
         effectiveSlug = 'home';
       }
+
+      // Supprimer les query strings et hash du slug
+      effectiveSlug = effectiveSlug.split('?')[0].split('#')[0];
 
       const resolvedPageKey = PAGE_ALIASES[effectiveSlug] || effectiveSlug;
       const settingsKey = resolvedPageKey;
@@ -98,7 +152,13 @@ const DynamicPageComponent: React.FC = () => {
         if (!response.ok) throw new Error("Failed to fetch pages");
         const allPages = await response.json();
 
-        const data = allPages.find((p: unknown) => p.slug === effectiveSlug && (p.is_published === true || p.status === 'published'));
+        const data = allPages.find((p: any) => {
+  const pageSlug = (p.slug || '').replace(/^\//, '');
+  const matchSlugs = effectiveSlug === 'home'
+    ? ['home', 'home_page', '']
+    : [effectiveSlug, ...(PAGE_ALIASES[effectiveSlug] ? [PAGE_ALIASES[effectiveSlug]] : [])];
+  return matchSlugs.includes(pageSlug) && (p.is_published === true || p.status === 'published');
+});
 
         if (!data) {
           // FALLBACK 1: site_settings.page_sections (Database settings)
@@ -135,8 +195,20 @@ const DynamicPageComponent: React.FC = () => {
           content: rawData.content_raw || data.content,
           content_blocks: typeof data.content_blocks === 'string' ? JSON.parse(data.content_blocks) : data.content_blocks || [],
           design_options: typeof data.design_options === 'string' ? JSON.parse(data.design_options) : data.design_options || {},
-          seo_options: typeof data.seo_options === 'string' ? JSON.parse(data.seo_options) : data.seo_options || {}
+          seo_options: typeof data.seo_options === 'string' ? JSON.parse(data.seo_options) : data.seo_options || {},
+          structure_json: typeof data.structure_json === 'string' ? JSON.parse(data.structure_json) : data.structure_json || null,
+          theme_config: typeof data.theme_config === 'string' ? JSON.parse(data.theme_config) : data.theme_config || null,
         } as PageRecord;
+
+        // Si la page est une page spéciale (outils, showroom, etc.)
+        // avec render_engine='react' en DB, utiliser le composant React
+        // au lieu du rendu Craft.js (HtmlBlock)
+        if (SPECIAL_FALLBACK_PAGES[effectiveSlug] && (data as any).render_engine === 'react') {
+          setFallbackPageKey(effectiveSlug);
+          setPage(null);
+          setLoading(false);
+          return;
+        }
 
         setPage(pageData);
       } catch (err) {
@@ -148,7 +220,7 @@ const DynamicPageComponent: React.FC = () => {
     };
 
     fetchPage();
-  }, [paramSlug, location.pathname, settings]);
+  }, [paramSlug, location.pathname]);
 
   if (loading) {
     return (
@@ -184,7 +256,36 @@ const DynamicPageComponent: React.FC = () => {
 
   }
 
+  // Determine the rendering strategy based on structure_json format
+  const structureJson = (page as any).structure_json;
+  const themeConfig = (page as any).theme_config;
 
+  const themeVars = themeConfig ? {
+    '--theme-primary-color': themeConfig.primaryColor || '#2563eb',
+    '--theme-secondary-color': themeConfig.secondaryColor || '#4f46e5',
+    '--theme-font-family': themeConfig.fontFamily || 'Inter, sans-serif',
+    '--theme-border-radius': themeConfig.borderRadius || '8px',
+    '--theme-spacing-scale': themeConfig.spacingScale || '1',
+  } : {};
+
+  const renderPageContent = () => {
+    // Strategy 1: Craft.js structure (object with ROOT key) — read-only rendering
+    if (structureJson && isCraftJsStructure(structureJson)) {
+      return (
+        <Editor resolver={CRAFT_RESOLVER} enabled={false}>
+          <Frame data={JSON.stringify(structureJson)} />
+        </Editor>
+      );
+    }
+
+    // Strategy 2: Legacy builder array of blocks
+    if (structureJson && Array.isArray(structureJson) && structureJson.length > 0) {
+      return <BuilderPageRenderer blocks={structureJson as Block[]} />;
+    }
+
+    // Strategy 3: HTML content fallback (PageRenderer)
+    return <PageRenderer page={page} />;
+  };
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -194,16 +295,24 @@ const DynamicPageComponent: React.FC = () => {
         image={page.featured_image || (page as unknown).hero_background_image}
         keywords={page.meta_keywords || (page.seo_options as unknown)?.keywords}
         path={`/${page.slug}`} />
-      
+
+      {/* Global theme CSS variables pour HtmlBlock et autres contenus */}
+      {themeConfig && (
+        <style>{`
+          :root {
+            --theme-primary: ${themeConfig.primaryColor || '#2563eb'};
+            --theme-secondary: ${themeConfig.secondaryColor || '#4f46e5'};
+            --theme-font: ${themeConfig.fontFamily || 'Inter, sans-serif'};
+            --theme-radius: ${themeConfig.borderRadius || '8px'};
+            --theme-spacing: ${themeConfig.spacingScale || '1'};
+          }
+        `}</style>
+      )}
 
       <Header />
 
-      <main className="flex-grow">
-        {(page as unknown).structure_json && (page as unknown).structure_json.length > 0 ?
-        <BuilderPageRenderer blocks={(page as unknown).structure_json as Block[]} /> :
-
-        <PageRenderer page={page} />
-        }
+      <main className="flex-grow" style={themeVars as any}>
+        {renderPageContent()}
       </main>
 
       <Footer />

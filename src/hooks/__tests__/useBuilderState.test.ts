@@ -1,17 +1,20 @@
 /**
- * Unit Tests for useBuilderState Hook
+ * Unit Tests for useBuilderState Hook (Vitest version)
  */
 
+import { describe, expect, it, beforeEach, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useBuilderState } from '../useBuilderState';
 import { useBuilderStore } from '@/stores/useBuilderStore';
 
-// Mock the store
-jest.mock('@/stores/useBuilderStore');
+// Mock the store using Vitest mock API
+vi.mock('@/stores/useBuilderStore', () => ({
+  useBuilderStore: vi.fn(),
+}));
 
 describe('useBuilderState', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return builder state', () => {
@@ -22,26 +25,26 @@ describe('useBuilderState', () => {
       templates: [],
       history: [],
       historyIndex: -1,
-      setBlocks: jest.fn(),
-      addBlock: jest.fn(),
-      importBlock: jest.fn(),
-      moveBlock: jest.fn(),
-      selectBlock: jest.fn(),
-      setPageMetadata: jest.fn(),
-      updateBlockStyle: jest.fn(),
-      updateBlockContent: jest.fn(),
-      removeBlock: jest.fn(),
-      undo: jest.fn(),
-      redo: jest.fn(),
-      canUndo: jest.fn(() => false),
-      canRedo: jest.fn(() => false),
-      snapshotHistory: jest.fn(),
-      saveTemplate: jest.fn(),
-      deleteTemplate: jest.fn(),
-      loadTemplates: jest.fn()
+      setBlocks: vi.fn(),
+      addBlock: vi.fn(),
+      importBlock: vi.fn(),
+      moveBlock: vi.fn(),
+      selectBlock: vi.fn(),
+      setPageMetadata: vi.fn(),
+      updateBlockStyle: vi.fn(),
+      updateBlockContent: vi.fn(),
+      removeBlock: vi.fn(),
+      undo: vi.fn(),
+      redo: vi.fn(),
+      canUndo: vi.fn(() => false),
+      canRedo: vi.fn(() => false),
+      snapshotHistory: vi.fn(),
+      saveTemplate: vi.fn(),
+      deleteTemplate: vi.fn(),
+      loadTemplates: vi.fn()
     };
 
-    (useBuilderStore as unknown as jest.Mock).mockReturnValue(mockStore);
+    (useBuilderStore as any).mockReturnValue(mockStore);
 
     const { result } = renderHook(() => useBuilderState());
 
@@ -52,7 +55,7 @@ describe('useBuilderState', () => {
   });
 
   it('should call setBlocks when setBlocks is called', () => {
-    const mockSetBlocks = jest.fn();
+    const mockSetBlocks = vi.fn();
     const mockStore = {
       blocks: [],
       selectedBlockId: null,
@@ -61,25 +64,25 @@ describe('useBuilderState', () => {
       history: [],
       historyIndex: -1,
       setBlocks: mockSetBlocks,
-      addBlock: jest.fn(),
-      importBlock: jest.fn(),
-      moveBlock: jest.fn(),
-      selectBlock: jest.fn(),
-      setPageMetadata: jest.fn(),
-      updateBlockStyle: jest.fn(),
-      updateBlockContent: jest.fn(),
-      removeBlock: jest.fn(),
-      undo: jest.fn(),
-      redo: jest.fn(),
-      canUndo: jest.fn(() => false),
-      canRedo: jest.fn(() => false),
-      snapshotHistory: jest.fn(),
-      saveTemplate: jest.fn(),
-      deleteTemplate: jest.fn(),
-      loadTemplates: jest.fn()
+      addBlock: vi.fn(),
+      importBlock: vi.fn(),
+      moveBlock: vi.fn(),
+      selectBlock: vi.fn(),
+      setPageMetadata: vi.fn(),
+      updateBlockStyle: vi.fn(),
+      updateBlockContent: vi.fn(),
+      removeBlock: vi.fn(),
+      undo: vi.fn(),
+      redo: vi.fn(),
+      canUndo: vi.fn(() => false),
+      canRedo: vi.fn(() => false),
+      snapshotHistory: vi.fn(),
+      saveTemplate: vi.fn(),
+      deleteTemplate: vi.fn(),
+      loadTemplates: vi.fn()
     };
 
-    (useBuilderStore as unknown as jest.Mock).mockReturnValue(mockStore);
+    (useBuilderStore as any).mockReturnValue(mockStore);
 
     const { result } = renderHook(() => useBuilderState());
 
@@ -91,7 +94,7 @@ describe('useBuilderState', () => {
   });
 
   it('should call addBlock when addBlock is called', () => {
-    const mockAddBlock = jest.fn();
+    const mockAddBlock = vi.fn();
     const mockStore = {
       blocks: [],
       selectedBlockId: null,
@@ -99,26 +102,26 @@ describe('useBuilderState', () => {
       templates: [],
       history: [],
       historyIndex: -1,
-      setBlocks: jest.fn(),
+      setBlocks: vi.fn(),
       addBlock: mockAddBlock,
-      importBlock: jest.fn(),
-      moveBlock: jest.fn(),
-      selectBlock: jest.fn(),
-      setPageMetadata: jest.fn(),
-      updateBlockStyle: jest.fn(),
-      updateBlockContent: jest.fn(),
-      removeBlock: jest.fn(),
-      undo: jest.fn(),
-      redo: jest.fn(),
-      canUndo: jest.fn(() => false),
-      canRedo: jest.fn(() => false),
-      snapshotHistory: jest.fn(),
-      saveTemplate: jest.fn(),
-      deleteTemplate: jest.fn(),
-      loadTemplates: jest.fn()
+      importBlock: vi.fn(),
+      moveBlock: vi.fn(),
+      selectBlock: vi.fn(),
+      setPageMetadata: vi.fn(),
+      updateBlockStyle: vi.fn(),
+      updateBlockContent: vi.fn(),
+      removeBlock: vi.fn(),
+      undo: vi.fn(),
+      redo: vi.fn(),
+      canUndo: vi.fn(() => false),
+      canRedo: vi.fn(() => false),
+      snapshotHistory: vi.fn(),
+      saveTemplate: vi.fn(),
+      deleteTemplate: vi.fn(),
+      loadTemplates: vi.fn()
     };
 
-    (useBuilderStore as unknown as jest.Mock).mockReturnValue(mockStore);
+    (useBuilderStore as any).mockReturnValue(mockStore);
 
     const { result } = renderHook(() => useBuilderState());
 

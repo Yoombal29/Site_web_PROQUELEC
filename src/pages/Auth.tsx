@@ -276,21 +276,7 @@ export default function Auth() {
                   </div>
               }
 
-                {import.meta.env.DEV && (
-                  <div className="rounded-2xl border border-yellow-200 bg-yellow-50 p-3 text-sm text-yellow-900 space-y-2">
-                    <div className="font-semibold">Mode développement</div>
-                    <div>Utilisez <strong>admin@proquelec.sn</strong> / <strong>passepartout</strong> pour tester la connexion.</div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEmail('admin@proquelec.sn');
-                        setPassword('passepartout');
-                      }}
-                      className="inline-flex items-center gap-2 rounded-xl border border-yellow-300 bg-yellow-100 px-3 py-2 text-xs font-semibold text-yellow-900 hover:bg-yellow-200 transition">
-                      Pré-remplir les identifiants de dev
-                    </button>
-                  </div>
-                )}
+
 
                 <button
                 type="submit"

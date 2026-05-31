@@ -12,6 +12,8 @@
 
 
 import { TronçonEngine } from '@/engines/TronçonEngine';
+import { GraphStore } from '@/stores/GraphStore';
+import ValidationEngine from '@/engines/ValidationEngine';
 
 export interface ExportOptions {
   includeCalculations?: boolean;
@@ -243,8 +245,6 @@ export class JSONExporter {
   }
 
   private static generateValidations(graph: GraphStore): unknown {
-    // Importer ValidationEngine dynamiquement pour éviter dépendance circulaire
-    const ValidationEngine = require('@/engines/ValidationEngine').default;
     return ValidationEngine.validateGraph(graph);
   }
 }

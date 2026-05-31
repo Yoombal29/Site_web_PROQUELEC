@@ -950,9 +950,8 @@ const AdminPagesPanel: React.FC = () => {
                       className={formErrors.slug ? "border-red-500 shadow-[0_0_0_1px_rgba(239,68,68,0.5)]" : ""} />
                     
                         <ErrorMessage field="slug" />
-                        <p className="text-[10px] text-orange-600 mt-1 flex items-center gap-1">
-                          <AlertTriangle className="w-3 h-3" />
-                          Attention: Si vous modifiez ce slug, mettez à jour le Menu correspondant.
+                        <p className="text-[10px] text-green-600 mt-1 flex items-center gap-1">
+                          Le menu sera automatiquement mis à jour lors de l'enregistrement.
                         </p>
                       </div>
 
@@ -1673,8 +1672,8 @@ const AdminPagesPanel: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => {
-                        const url = `/${page.slug}`;
-                        window.open(url, '_blank');
+                        const slug = (page.slug || '').replace(/^\//, '');
+                        window.open(slug ? `/${slug}` : '/', '_blank');
                       }}
                       title="Voir la page">
                       

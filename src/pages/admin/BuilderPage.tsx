@@ -1,1117 +1,254 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, {
-  useEffect,
-  useMemo,
-  useState,
-  useCallback,
-  useRef
-} from 'react';
-
-import { useParams } from 'react-router-dom';
-import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import type { DragEndEvent } from '@dnd-kit/core';
-
-import { toast } from 'sonner';
-
-import { Button } from '@/components/ui/button';
-
-import { Loader2 } from 'lucide-react';
-
-import { useBuilderStore } from '@/stores/useBuilderStore';
-
-import { BuilderSidebar } from '@/components/builder/BuilderSidebar';
-import { BuilderToolbar } from '@/components/builder/BuilderToolbar';
-import { BuilderCanvas } from '@/components/builder/BuilderCanvas';
-import { BuilderDialogs } from '@/components/builder/BuilderDialogs';
-import { BuilderRightPanel } from '@/components/builder/BuilderRightPanel';
-
+/**
+ * BuilderPage.tsx — GOD MODE
+ * Éditeur de page centralisé et unifié basé sur Craft.js.
+ *
+ * Si pageId est absent → affiche un écran de sélection de page.
+ * Si pageId est présent → ouvre l'éditeur directement.
+ */
+import React, { useEffect, useState } from 'react';
+import { Editor } from '@craftjs/core';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Zap, FileText, Plus, Search, ExternalLink, Loader2, ChevronRight } from 'lucide-react';
 import { apiFetch } from '@/lib/api-client';
 
-import { useDebounce } from '@/hooks/useDebounce';
-import { useBuilderKeyboardShortcuts } from '@/hooks/useBuilderKeyboardShortcuts';
-import { useContentVersioning } from '@/hooks/useContentVersioning';
-import { useAnalytics } from '@/hooks/useAnalytics';
-
-import type { Block } from '@/types/builder';
-import type { PageDesignOptions, WorkflowStatus } from '@/types/PageSystem';
-
-import { DEFAULT_DESIGN_OPTIONS } from '@/utils/pageLayouts';
-
-
-
-
-
-/* =========================================================
-   TYPES
-========================================================= */
-
-type AdminPageResponse = {
-  title?: string;
-  slug?: string;
-  structure_json?: unknown;
-  content_blocks?: unknown[];
-  content?: string;
-
-  meta_description?: string;
-  meta_keywords?: string;
-  meta_robots?: string;
-
-  custom_css?: string;
-  custom_js?: string;
-
-  design_options?: PageDesignOptions | string;
-
-  is_published?: boolean;
-  workflow_status?: WorkflowStatus;
-};
-
-type PageDataState = {
-  title: string;
-  slug: string;
-
-  metaDescription: string;
-  metaKeywords: string;
-  metaRobots: string;
-
-  customCss: string;
-  customJs: string;
-
-  designOptions: PageDesignOptions;
-
-  isPublished: boolean;
-
-  workflowStatus:
-    | 'draft'
-    | 'review'
-    | 'approved'
-    | 'published'
-    | 'archived';
-};
-
-
-
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-const createNewBlock = (type: string): Block => ({
-  id: crypto.randomUUID(),
-
-  type,
-
-  content: {
-    title: `Nouveau ${type}` 
-  },
-
-  style: {
-    padding: '20px'
-  },
-
-  children: []
-});
-
-const cloneTemplateBlock = (block: Block): Block => {
-  const clone = structuredClone(block);
-
-  clone.id = crypto.randomUUID();
-
-  return clone;
-};
-
-const normalizeBlocks = (blocks: Block[]): Block[] => {
-  return blocks.map((block) => ({
-    ...block,
-    id: block.id || crypto.randomUUID(),
-    children: normalizeBlocks(block.children || [])
-  }));
-};
-
-
-
-
-
-/* =========================================================
-   RECURSIVE HELPERS
-========================================================= */
-
-type NodeLocation = {
-  node: Block;
-  parentList: Block[];
-  index: number;
-};
-
-const findNode = (
-  nodes: Block[],
-  id: string
-): NodeLocation | null => {
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
-
-    if (node.id === id) {
-      return {
-        node,
-        parentList: nodes,
-        index: i
-      };
-    }
-
-    if (node.children?.length) {
-      const found = findNode(node.children, id);
-
-      if (found) return found;
-    }
-  }
-
-  return null;
-};
-
-const removeNode = (
-  nodes: Block[],
-  id: string
-): Block | null => {
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
-
-    if (node.id === id) {
-      return nodes.splice(i, 1)[0];
-    }
-
-    if (node.children?.length) {
-      const removed = removeNode(node.children, id);
-
-      if (removed) return removed;
-    }
-  }
-
-  return null;
-};
-
-
-
-
-
-/* =========================================================
-   MAIN COMPONENT
-========================================================= */
-
-const BuilderPage: React.FC = () => {
-  const { pageId } = useParams<{ pageId: string }>();
-
-
-
-
-
-  /* =========================================================
-     STORE SELECTORS
-  ========================================================= */
-
-  const blocks = useBuilderStore((s) => s.blocks);
-
-  const setBlocks = useBuilderStore((s) => s.setBlocks);
-
-  const selectedBlockId = useBuilderStore((s) => s.selectedBlockId);
-
-  const selectBlock = useBuilderStore((s) => s.selectBlock);
-
-  const templates = useBuilderStore((s) => s.templates);
-
-  const loadTemplates = useBuilderStore((s) => s.loadTemplates);
-
-  const deleteTemplate = useBuilderStore((s) => s.deleteTemplate);
-
-  const undo = useBuilderStore((s) => s.undo);
-
-  const redo = useBuilderStore((s) => s.redo);
-
-  const canUndo = useBuilderStore((s) => s.canUndo);
-
-  const canRedo = useBuilderStore((s) => s.canRedo);
-
-  const snapshotHistory = useBuilderStore((s) => s.snapshotHistory);
-
-  const removeBlock = useBuilderStore((s) => s.removeBlock);
-
-  const pageMetadata = useBuilderStore((s) => s.pageMetadata);
-
-  const setPageMetadata = useBuilderStore((s) => s.setPageMetadata);
-
-
-
-
-
-  /* =========================================================
-     HOOKS
-  ========================================================= */
-
-  const { createVersion, getVersions, restoreVersion } =
-    useContentVersioning();
-
-  const { getPageAnalytics } = useAnalytics();
-
-
-
-
-
-  /* =========================================================
-     STATES
-  ========================================================= */
-
-  const [pageData, setPageData] =
-    useState<PageDataState | null>(null);
-
-  const [isLoading, setIsLoading] =
-    useState(true);
-
-  const [isSaving, setIsSaving] =
-    useState(false);
-
-  const [loadError, setLoadError] =
-    useState<string | null>(null);
-
-  const [viewMode, setViewMode] =
-    useState<'desktop' | 'tablet' | 'mobile'>('desktop');
-
-  const [showPreview, setShowPreview] =
-    useState(false);
-
-  const [previewMode, setPreviewMode] =
-    useState<'desktop' | 'tablet' | 'mobile'>('desktop');
-
-  const [versionDialogOpen, setVersionDialogOpen] =
-    useState(false);
-
-  const [showAnalytics, setShowAnalytics] =
-    useState(false);
-
-  const [versionChangeLog, setVersionChangeLog] =
-    useState('Sauvegarde manuelle');
-
-  const [analyticsData, setAnalyticsData] =
-    useState<any>(null);
-
-
-
-
-
-  /* =========================================================
-     VERSION TRACKING
-  ========================================================= */
-
-  const [revision, setRevision] =
-    useState(0);
-
-  const [savedRevision, setSavedRevision] =
-    useState(0);
-
-  const isDirty =
-    revision !== savedRevision;
-
-  const debouncedDirty =
-    useDebounce(isDirty, 2500);
-
-
-
-
-
-  /* =========================================================
-     SAVE LOCK
-  ========================================================= */
-
-  const saveInProgressRef =
-    useRef(false);
-
-
-
-
-
-  /* =========================================================
-     LOAD PAGE
-  ========================================================= */
+import { GodToolbar } from '@/components/god-builder/GodToolbar';
+import { GodToolbox } from '@/components/god-builder/GodToolbox';
+import { GodCanvas } from '@/components/god-builder/GodCanvas';
+import { GodSettings } from '@/components/god-builder/GodSettings';
+import { GodLayers } from '@/components/god-builder/GodLayers';
+import { GodTimeline } from '@/components/god-builder/GodTimeline';
+import { BuilderErrorBoundary } from '@/components/god-builder/BuilderErrorBoundary';
+import { useBrandingStore } from '@/stores/branding.store';
+
+import { CRAFT_RESOLVER as RESOLVER } from '@/components/blocks/craftResolver';
+
+import { GodEditorProvider } from '@/components/god-builder/GodEditorContext';
+import { DynamicContextProvider } from '@/components/blocks/DynamicDataBlocks';
+
+// ─────────────────────────────────────────────────────────
+// PAGE SELECTOR SCREEN (shown when no pageId in URL)
+// ─────────────────────────────────────────────────────────
+const PageSelectorScreen = () => {
+  const navigate = useNavigate();
+  const { config: brand } = useBrandingStore();
+  const [pages, setPages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadPage = async () => {
-      if (!pageId) return;
-
-      setIsLoading(true);
-
+    const load = async () => {
       try {
-        loadTemplates();
-
-        const page =
-          await apiFetch<AdminPageResponse>(
-            `/api/admin/pages/${pageId}` 
-          );
-
-        setPageData({
-          title: page.title || 'Nouvelle page',
-
-          slug: page.slug || '',
-
-          metaDescription:
-            page.meta_description || '',
-
-          metaKeywords:
-            page.meta_keywords || '',
-
-          metaRobots:
-            page.meta_robots || 'index,follow',
-
-          customCss:
-            page.custom_css || '',
-
-          customJs:
-            page.custom_js || '',
-
-          designOptions:
-            typeof page.design_options === 'string'
-              ? JSON.parse(page.design_options)
-              : page.design_options ||
-                DEFAULT_DESIGN_OPTIONS,
-
-          isPublished:
-            page.is_published || false,
-
-          workflowStatus:
-            page.workflow_status ||
-            'draft'
-        });
-
-        let parsedBlocks: Block[] = [];
-
-        if (Array.isArray(page.structure_json)) {
-          parsedBlocks =
-            page.structure_json as Block[];
-        }
-
-        parsedBlocks =
-          normalizeBlocks(parsedBlocks);
-
-        setBlocks(parsedBlocks);
-
-        setRevision(0);
-        setSavedRevision(0);
-      } catch (error: any) {
-        console.error(error);
-
-        setLoadError(
-          error?.message ||
-            'Erreur chargement page'
-        );
-
-        toast.error(
-          'Impossible de charger la page'
-        );
+        const data = await apiFetch<any[]>('/api/admin/pages');
+        setPages(Array.isArray(data) ? data : []);
+      } catch (e: any) {
+        setError(e.message || 'Impossible de charger les pages');
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
-
-    loadPage();
-  }, [pageId, setBlocks, loadTemplates]);
-
-
-
-
-
-  /* =========================================================
-     SAVE
-  ========================================================= */
-
-  const handleSave = useCallback(async () => {
-    if (!pageId) return;
-
-    if (saveInProgressRef.current) return;
-
-    saveInProgressRef.current = true;
-
-    setIsSaving(true);
-
-    try {
-      await apiFetch(
-        `/api/admin/pages/${pageId}`,
-        {
-          method: 'PUT',
-
-          body: JSON.stringify({
-            structure_json: blocks,
-
-            title: pageData?.title,
-
-            slug: pageData?.slug,
-
-            meta_description:
-              pageData?.metaDescription,
-
-            meta_keywords:
-              pageData?.metaKeywords,
-
-            meta_robots:
-              pageData?.metaRobots,
-
-            custom_css:
-              pageData?.customCss,
-
-            custom_js:
-              pageData?.customJs,
-
-            design_options:
-              pageData?.designOptions,
-
-            is_published:
-              pageData?.isPublished,
-
-            workflow_status:
-              pageData?.workflowStatus
-          })
-        }
-      );
-
-      snapshotHistory();
-
-      setSavedRevision(revision);
-
-      toast.success(
-        'Page sauvegardée'
-      );
-    } catch (error) {
-      console.error(error);
-
-      toast.error(
-        'Erreur sauvegarde'
-      );
-    } finally {
-      setIsSaving(false);
-
-      saveInProgressRef.current = false;
-    }
-  }, [
-    pageId,
-    blocks,
-    pageData,
-    revision,
-    snapshotHistory
-  ]);
-
-
-
-
-
-  /* =========================================================
-     AUTOSAVE
-  ========================================================= */
-
-  useEffect(() => {
-    if (
-      debouncedDirty &&
-      !isLoading
-    ) {
-      handleSave();
-    }
-  }, [
-    debouncedDirty,
-    handleSave,
-    isLoading
-  ]);
-
-
-
-
-
-  /* =========================================================
-     ANALYTICS
-  ========================================================= */
-
-  useEffect(() => {
-    if (!pageId) return;
-
-    const loadAnalytics = async () => {
-      const analytics =
-        await getPageAnalytics(pageId);
-
-      setAnalyticsData(analytics);
-    };
-
-    loadAnalytics();
-  }, [pageId, getPageAnalytics]);
-
-
-
-
-
-  /* =========================================================
-     PAGE DATA CHANGE
-  ========================================================= */
-
-  const handlePageDataChange =
-    useCallback(
-      (
-        changes: Partial<PageDataState>
-      ) => {
-        setPageData((prev) =>
-          prev
-            ? {
-                ...prev,
-                ...changes
-              }
-            : prev
-        );
-
-        setRevision((r) => r + 1);
-      },
-      []
-    );
-
-
-
-
-
-  /* =========================================================
-     DRAG & DROP
-  ========================================================= */
-
-  const handleDragEnd = useCallback(
-    (event: DragEndEvent) => {
-      try {
-        const { active, over } = event;
-
-        if (!over) return;
-
-        const activeId =
-          String(active.id);
-
-        const overId =
-          String(over.id);
-
-        const cloned =
-          structuredClone(blocks);
-
-
-
-
-
-        /* =========================================
-           NEW BLOCK
-        ========================================= */
-
-        if (
-          activeId.startsWith(
-            'sidebar-item-'
-          )
-        ) {
-          const type =
-            active.data.current?.type;
-
-          if (!type) return;
-
-          const newBlock =
-            createNewBlock(type);
-
-          if (
-            overId ===
-            'canvas-droppable'
-          ) {
-            cloned.push(newBlock);
-          } else {
-            const target =
-              findNode(
-                cloned,
-                overId
-              );
-
-            if (!target) return;
-
-            if (
-              target.node.type ===
-              'section'
-            ) {
-              target.node.children =
-                target.node.children ||
-                [];
-
-              target.node.children.push(
-                newBlock
-              );
-            } else {
-              target.parentList.splice(
-                target.index,
-                0,
-                newBlock
-              );
-            }
-          }
-
-          setBlocks(cloned);
-
-          setRevision((r) => r + 1);
-
-          return;
-        }
-
-
-
-
-
-        /* =========================================
-           TEMPLATE
-        ========================================= */
-
-        if (
-          activeId.startsWith(
-            'sidebar-template-'
-          )
-        ) {
-          const template =
-            active.data.current?.block;
-
-          if (!template) return;
-
-          const block =
-            cloneTemplateBlock(
-              template
-            );
-
-          cloned.push(block);
-
-          setBlocks(cloned);
-
-          setRevision((r) => r + 1);
-
-          return;
-        }
-
-
-
-
-
-        /* =========================================
-           MOVE EXISTING
-        ========================================= */
-
-        if (activeId === overId) {
-          return;
-        }
-
-        const dragged =
-          removeNode(
-            cloned,
-            activeId
-          );
-
-        if (!dragged) return;
-
-        const target =
-          findNode(
-            cloned,
-            overId
-          );
-
-        if (!target) {
-          cloned.push(dragged);
-
-          setBlocks(cloned);
-
-          return;
-        }
-
-        if (
-          target.node.type ===
-          'section'
-        ) {
-          target.node.children =
-            target.node.children ||
-            [];
-
-          target.node.children.push(
-            dragged
-          );
-        } else {
-          target.parentList.splice(
-            target.index,
-            0,
-            dragged
-          );
-        }
-
-        setBlocks(cloned);
-
-        setRevision((r) => r + 1);
-      } catch (error) {
-        console.error(error);
-
-        toast.error(
-          'Erreur drag & drop'
-        );
-      }
-    },
-    [blocks, setBlocks]
+    load();
+  }, []);
+
+  const filtered = pages.filter(p =>
+    (p.title || '').toLowerCase().includes(search.toLowerCase()) ||
+    (p.slug || '').toLowerCase().includes(search.toLowerCase())
   );
 
+  const statusColors: Record<string, string> = {
+    published: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20',
+    draft: 'bg-slate-500/15 text-slate-400 border-slate-500/20',
+    review: 'bg-amber-500/15 text-amber-400 border-amber-500/20',
+    approved: 'bg-blue-500/15 text-blue-400 border-blue-500/20',
+    archived: 'bg-red-500/15 text-red-400 border-red-500/20',
+  };
 
-
-
-
-  /* =========================================================
-     KEYBOARD SHORTCUTS
-  ========================================================= */
-
-  useBuilderKeyboardShortcuts({
-    onSave: handleSave,
-
-    onUndo: undo,
-
-    onRedo: redo,
-
-    onDelete: () => {
-      if (!selectedBlockId) return;
-
-      removeBlock(selectedBlockId);
-
-      setRevision((r) => r + 1);
-    }
-  });
-
-
-
-
-
-  /* =========================================================
-     VERSIONS
-  ========================================================= */
-
-  const pageVersions = useMemo(() => {
-    if (!pageId) return [];
-
-    return getVersions(pageId);
-  }, [pageId, getVersions]);
-
-  const handleCreateVersion =
-    useCallback(async () => {
-      if (!pageId) return;
-
-      await createVersion(
-        pageId,
-        pageData?.title || 'Page',
-        JSON.stringify({
-          blocks,
-          pageData
-        }),
-        versionChangeLog
-      );
-
-      toast.success(
-        'Version créée'
-      );
-
-      setVersionDialogOpen(false);
-    }, [
-      pageId,
-      pageData,
-      blocks,
-      versionChangeLog,
-      createVersion
-    ]);
-
-  const handleRestoreVersion =
-    useCallback(
-      async (versionId: string) => {
-        const version =
-          await restoreVersion(
-            versionId
-          );
-
-        if (!version) return;
-
-        try {
-          const parsed =
-            JSON.parse(
-              version.content
-            );
-
-          setBlocks(parsed.blocks);
-
-          setPageData(
-            parsed.pageData
-          );
-
-          setRevision(
-            (r) => r + 1
-          );
-
-          toast.success(
-            'Version restaurée'
-          );
-        } catch (error) {
-          console.error(error);
-
-          toast.error(
-            'Erreur restauration'
-          );
-        }
-      },
-      [restoreVersion, setBlocks]
-    );
-
-
-
-
-
-  /* =========================================================
-     VIEW WIDTH
-  ========================================================= */
-
-  const widthClass =
-    useMemo(() => {
-      switch (viewMode) {
-        case 'mobile':
-          return 'max-w-[375px]';
-
-        case 'tablet':
-          return 'max-w-[768px]';
-
-        default:
-          return 'max-w-6xl';
-      }
-    }, [viewMode]);
-
-
-
-
-
-  /* =========================================================
-     DND SENSORS
-  ========================================================= */
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 5
-      }
-    })
-  );
-
-
-
-
-
-  /* =========================================================
-     RENDER
-  ========================================================= */
+  const statusLabels: Record<string, string> = {
+    published: 'Publié', draft: 'Brouillon', review: 'En revue',
+    approved: 'Approuvé', archived: 'Archivé',
+  };
 
   return (
-    <DndContext
-      sensors={sensors}
-      onDragEnd={handleDragEnd}
-    >
-      <div className="flex h-screen w-full overflow-hidden bg-slate-100">
-
-        {/* ========================================
-            SIDEBAR
-        ======================================== */}
-
-        <BuilderSidebar
-          templates={templates}
-          deleteTemplate={deleteTemplate}
-        />
-
-
-
-
-
-        {/* ========================================
-            MAIN
-        ======================================== */}
-
-        <main className="flex flex-1 flex-col bg-slate-100">
-
-          <BuilderToolbar
-            pageData={pageData}
-            pageMetadata={pageMetadata}
-            blocks={blocks}
-
-            viewMode={viewMode}
-
-            isDirty={isDirty}
-            isSaving={isSaving}
-            isLoading={isLoading}
-
-            loadError={loadError}
-
-            canUndo={canUndo}
-            canRedo={canRedo}
-
-            undo={undo}
-            redo={redo}
-
-            setViewMode={setViewMode}
-
-            handleSave={handleSave}
-
-            setShowPreview={setShowPreview}
-
-            setVersionDialogOpen={
-              setVersionDialogOpen
-            }
-
-            setShowAnalytics={
-              setShowAnalytics
-            }
-          />
-
-
-
-
-
-          {/* ========================================
-              DIALOGS
-          ======================================== */}
-
-          <BuilderDialogs
-            showPreview={showPreview}
-            setShowPreview={setShowPreview}
-
-            previewMode={previewMode}
-            setPreviewMode={setPreviewMode}
-
-            blocks={blocks}
-
-            pageData={pageData}
-
-            versionDialogOpen={
-              versionDialogOpen
-            }
-
-            setVersionDialogOpen={
-              setVersionDialogOpen
-            }
-
-            versionChangeLog={
-              versionChangeLog
-            }
-
-            setVersionChangeLog={
-              setVersionChangeLog
-            }
-
-            handleCreateVersion={
-              handleCreateVersion
-            }
-
-            pageVersions={
-              pageVersions
-            }
-
-            handleRestoreVersion={
-              handleRestoreVersion
-            }
-
-            showAnalytics={
-              showAnalytics
-            }
-
-            setShowAnalytics={
-              setShowAnalytics
-            }
-
-            analyticsData={
-              analyticsData
-            }
-          />
-
-
-
-
-
-          {/* ========================================
-              CANVAS
-          ======================================== */}
-
-          <div className="relative flex flex-1 justify-center overflow-auto p-8">
-
-            <BuilderCanvas
-              blocks={blocks}
-              widthClass={widthClass}
-            />
-
-            {(isLoading ||
-              loadError) && (
-              <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/90">
-
-                {isLoading ? (
-                  <>
-                    <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
-
-                    <p className="mt-4 text-sm font-semibold text-slate-700">
-                      Chargement...
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-sm font-semibold text-red-600">
-                      Erreur
-                    </p>
-
-                    <p className="mt-2 text-xs text-slate-600">
-                      {loadError}
-                    </p>
-
-                    <Button
-                      size="sm"
-                      className="mt-4"
-                      onClick={() =>
-                        window.location.reload()
-                      }
-                    >
-                      Recharger
-                    </Button>
-                  </>
-                )}
-
-              </div>
-            )}
-
-          </div>
-
-        </main>
-
-
-
-
-
-        {/* ========================================
-            RIGHT PANEL
-        ======================================== */}
-
-        <BuilderRightPanel
-          selectedBlockId={
-            selectedBlockId
-          }
-
-          pageData={pageData}
-
-          pageMetadata={
-            pageMetadata
-          }
-
-          blocks={blocks}
-
-          selectBlock={
-            selectBlock
-          }
-
-          handlePageDataChange={
-            handlePageDataChange
-          }
-
-          setPageMetadata={
-            setPageMetadata
-          }
-        />
-
+    <div className="min-h-screen bg-[#0a0a15] flex flex-col items-center justify-center p-8 font-sans">
+      {/* Header */}
+      <div className="text-center mb-10">
+        <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 px-4 py-1.5 rounded-full text-sm font-bold mb-4">
+          <Zap size={14} />
+          {brand.hideGodMode ? brand.builderLabel.toUpperCase() : 'GOD MODE BUILDER'}
+        </div>
+        <h1 className="text-4xl font-black text-white mb-2">
+          Quelle page voulez-vous éditer ?
+        </h1>
+        <p className="text-slate-500 text-base">
+          Sélectionnez une page existante ou créez-en une nouvelle
+        </p>
       </div>
-    </DndContext>
+
+      {/* Card */}
+      <div className="w-full max-w-3xl bg-[#12121f] border border-[#252538] rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
+        {/* Search bar */}
+        <div className="p-4 border-b border-[#252538] flex items-center gap-3">
+          <div className="relative flex-1">
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Rechercher une page par titre ou slug..."
+              className="w-full bg-[#0d0d1a] border border-[#252538] rounded-lg pl-9 pr-4 py-2.5 text-sm text-slate-300 placeholder:text-slate-600 focus:outline-none focus:border-indigo-500 transition-colors"
+            />
+          </div>
+          <button
+            onClick={() => navigate('/admin?tab=pages')}
+            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-sm font-bold rounded-lg transition-all shadow-lg shadow-indigo-900/20 shrink-0"
+          >
+            <Plus size={14} />
+            Nouvelle page
+          </button>
+        </div>
+
+        {/* Pages list */}
+        <div className="max-h-[60vh] overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: '#252538 transparent' }}>
+          {loading && (
+            <div className="flex items-center justify-center gap-2 py-16 text-slate-500">
+              <Loader2 size={18} className="animate-spin" />
+              <span className="text-sm">Chargement des pages...</span>
+            </div>
+          )}
+
+          {error && (
+            <div className="m-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm text-center">
+              ⚠️ {error}
+            </div>
+          )}
+
+          {!loading && !error && filtered.length === 0 && (
+            <div className="py-16 text-center text-slate-500">
+              <FileText size={32} className="mx-auto mb-3 opacity-30" />
+              <p className="text-sm">
+                {search ? `Aucune page trouvée pour "${search}"` : 'Aucune page disponible'}
+              </p>
+              <button
+                onClick={() => navigate('/admin?tab=pages')}
+                className="mt-4 text-indigo-400 hover:text-indigo-300 text-sm underline underline-offset-2 transition-colors"
+              >
+                Créer la première page →
+              </button>
+            </div>
+          )}
+
+          {!loading && filtered.map(page => (
+            <button
+              key={page.id}
+              onClick={() => navigate(`/admin/builder/${page.slug || page.id}`)}
+              className="w-full flex items-center justify-between px-5 py-4 hover:bg-[#1a1a2a] border-b border-[#1a1a2a] transition-all group text-left"
+            >
+              <div className="flex items-center gap-4 min-w-0">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center shrink-0">
+                  <FileText size={14} className="text-white" />
+                </div>
+                <div className="min-w-0">
+                  <div className="font-semibold text-sm text-slate-200 group-hover:text-white transition-colors truncate">
+                    {page.title || 'Sans titre'}
+                  </div>
+                  <div className="text-[11px] text-slate-500 font-mono truncate">
+                    /{page.slug || page.id}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0 ml-4">
+                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${statusColors[page.workflow_status] || statusColors.draft}`}>
+                  {statusLabels[page.workflow_status] || page.workflow_status || 'Brouillon'}
+                </span>
+                <ChevronRight size={14} className="text-slate-600 group-hover:text-indigo-400 transition-colors" />
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {/* Footer */}
+        {!loading && filtered.length > 0 && (
+          <div className="px-5 py-3 border-t border-[#252538] text-[11px] text-slate-600 flex items-center justify-between">
+            <span>{filtered.length} page{filtered.length > 1 ? 's' : ''} {search ? 'trouvée' + (filtered.length > 1 ? 's' : '') : 'disponible' + (filtered.length > 1 ? 's' : '')}</span>
+            <span className="text-slate-700">Cliquez pour ouvrir dans le builder</span>
+          </div>
+        )}
+      </div>
+
+      {/* Back link */}
+      <button
+        onClick={() => navigate('/dashboard')}
+        className="mt-6 text-slate-600 hover:text-slate-400 text-sm transition-colors"
+      >
+        ← Retour au dashboard
+      </button>
+    </div>
   );
 };
 
-export default React.memo(BuilderPage);
+// ─────────────────────────────────────────────────────────
+// EDITOR LAYOUT
+// ─────────────────────────────────────────────────────────
+const BuilderPageContent = () => (
+  <>
+    <GodToolbar />
+    <div className="flex-1 flex overflow-hidden">
+      <div className="flex flex-col h-full overflow-hidden" style={{ backgroundColor: '#1a1a2a' }}>
+        <div className="flex flex-1 overflow-hidden">
+          <GodToolbox />
+        </div>
+        <GodLayers />
+      </div>
+      <BuilderErrorBoundary>
+        <GodCanvas />
+      </BuilderErrorBoundary>
+      <GodSettings />
+      <GodTimeline />
+    </div>
+  </>
+);
+
+// ─────────────────────────────────────────────────────────
+// MAIN EXPORT
+// ─────────────────────────────────────────────────────────
+const BuilderPage = () => {
+  const { pageId } = useParams<{ pageId: string }>();
+
+  // No pageId → show page selection screen
+  if (!pageId) {
+    return <PageSelectorScreen />;
+  }
+
+  // pageId present → open editor
+  return (
+    <div className="h-screen w-screen flex flex-col overflow-hidden font-sans" style={{ backgroundColor: '#0d0d1a' }}>
+      <Editor resolver={RESOLVER}>
+        <GodEditorProvider pageId={pageId}>
+          <DynamicContextProvider>
+            <BuilderPageContent />
+          </DynamicContextProvider>
+        </GodEditorProvider>
+      </Editor>
+
+      <style>{`
+        .custom-scrollbar { scrollbar-width: thin; scrollbar-color: #3f3f5a #1a1a2a; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1a1a2a; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #3f3f5a; border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #5a5a7d; }
+        /* Style des blocs HtmlBlock dans le canvas */
+        [data-htmlblock] {
+          margin-bottom: 2px;
+        }
+        [data-htmlblock].craft-selected {
+          outline: 2px solid rgba(99, 102, 241, 0.8);
+          box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+          z-index: 10;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default BuilderPage;

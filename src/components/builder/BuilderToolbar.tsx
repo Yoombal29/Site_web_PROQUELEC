@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
   Undo, Redo, Monitor, Tablet, Smartphone, Code, Eye, Save, Loader2,
-  ChevronLeft
+  ChevronLeft, Sparkles, FileCode, Clock
 } from 'lucide-react';
 import {
   Dialog,
@@ -33,6 +33,10 @@ interface BuilderToolbarProps {
   setShowPreview: (show: boolean) => void;
   setVersionDialogOpen: (open: boolean) => void;
   setShowAnalytics: (show: boolean) => void;
+  setShowAIGeneration: (show: boolean) => void;
+  setShowExport: (show: boolean) => void;
+  showTimeline?: boolean;
+  setShowTimeline?: (show: boolean) => void;
 }
 
 export const BuilderToolbar: React.FC<BuilderToolbarProps> = ({
@@ -52,7 +56,11 @@ export const BuilderToolbar: React.FC<BuilderToolbarProps> = ({
   handleSave,
   setShowPreview,
   setVersionDialogOpen,
-  setShowAnalytics
+  setShowAnalytics,
+  setShowAIGeneration,
+  setShowExport,
+  showTimeline,
+  setShowTimeline,
 }) => {
   return (
     <header className="h-14 bg-white border-b grid grid-cols-[auto_1fr_auto] items-center px-4 z-10 w-full shadow-sm shrink-0 gap-4">
@@ -65,24 +73,29 @@ export const BuilderToolbar: React.FC<BuilderToolbarProps> = ({
         </Button>
 
         <div className="flex bg-slate-100 rounded p-1">
-          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={undo} disabled={!canUndo()} title="Annuler (Ctrl+Z)">
+          <Button data-testid="undo-button" variant="ghost" size="icon" className="h-7 w-7" onClick={undo} disabled={!canUndo()} title="Annuler (Ctrl+Z)">
             <Undo className="w-4 h-4 text-slate-600" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-7 w-7" onClick={redo} disabled={!canRedo()} title="Rétablir (Ctrl+Y)">
+          <Button data-testid="redo-button" variant="ghost" size="icon" className="h-7 w-7" onClick={redo} disabled={!canRedo()} title="Rétablir (Ctrl+Y)">
             <Redo className="w-4 h-4 text-slate-600" />
           </Button>
+          {setShowTimeline && (
+            <Button variant="ghost" size="icon" className={`h-7 w-7 ${showTimeline ? 'bg-white shadow text-blue-600' : ''}`} onClick={() => setShowTimeline(!showTimeline)} title="Historique">
+              <Clock className="w-4 h-4" />
+            </Button>
+          )}
         </div>
         <span className="h-6 w-px bg-slate-200 mx-2"></span>
 
         {/* Device Selector */}
         <div className="flex bg-slate-100 rounded p-1">
-          <Button variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'desktop' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('desktop')}>
+          <Button data-testid="view-desktop" variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'desktop' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('desktop')}>
             <Monitor className="w-4 h-4" />
           </Button>
-          <Button variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'tablet' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('tablet')}>
+          <Button data-testid="view-tablet" variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'tablet' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('tablet')}>
             <Tablet className="w-4 h-4" />
           </Button>
-          <Button variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'mobile' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('mobile')}>
+          <Button data-testid="view-mobile" variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'mobile' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('mobile')}>
             <Smartphone className="w-4 h-4" />
           </Button>
         </div>
@@ -116,6 +129,13 @@ export const BuilderToolbar: React.FC<BuilderToolbarProps> = ({
 
       {/* Right Actions */}
       <div className="flex items-center gap-2 justify-end min-w-0 overflow-x-auto">
+        <Button size="sm" variant="outline" onClick={() => setShowAIGeneration(true)} className="inline-flex text-violet-600 border-violet-200 hover:bg-violet-50">
+          <Sparkles className="w-4 h-4 mr-2" /> IA
+        </Button>
+        <Button size="sm" variant="outline" onClick={() => setShowExport(true)} className="inline-flex text-emerald-600 border-emerald-200 hover:bg-emerald-50">
+          <FileCode className="w-4 h-4 mr-2" /> Export
+        </Button>
+
         {/* Code View Dialog */}
         <Dialog>
           <DialogTrigger asChild>
@@ -159,6 +179,7 @@ export const BuilderToolbar: React.FC<BuilderToolbarProps> = ({
           </a>
         </Button>
         <Button
+          data-testid="save-button"
           size="sm"
           className="bg-blue-600 hover:bg-blue-700 min-w-[120px] text-white"
           onClick={handleSave}

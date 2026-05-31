@@ -49,14 +49,23 @@ export async function apiFetch<T>(url: string, options: RequestInit = {}, retrie
 
     if (!response.ok) {
       if (isJson) {
-        const errorData = data as AppErrorResponse;
-        const error = new Error(errorData?.message || DEFAULT_ERRORS[errorData?.code] || DEFAULT_ERRORS['UNKNOWN']);
+        const errorData = data as any;
+        console.error("API ERROR", {
+          status: response.status,
+          data: errorData,
+        });
+        const message = errorData?.message || errorData?.error || DEFAULT_ERRORS[errorData?.code] || DEFAULT_ERRORS['UNKNOWN'];
+        const error = new Error(message);
         (error as unknown).code = errorData?.code;
         (error as unknown).status = response.status;
         (error as unknown).icon = errorData?.icon;
         throw error;
       }
 
+      console.error("API ERROR", {
+        status: response.status,
+        text: data,
+      });
       const message = typeof data === 'string' && data.trim().length > 0
         ? data
         : DEFAULT_ERRORS['UNKNOWN'];

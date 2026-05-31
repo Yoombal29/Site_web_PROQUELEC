@@ -34,6 +34,34 @@ global.ResizeObserver = class ResizeObserver {
   disconnect() {}
 };
 
+// Polyfill for Blob.prototype.text in environments where it is missing
+if (typeof Blob !== 'undefined' && !Blob.prototype.text) {
+  Blob.prototype.text = function() {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsText(this);
+    });
+  };
+}
+
+// Polyfill for Pointer Capture APIs which are missing in JSDOM but required by modern UI libraries like Radix
+if (typeof window !== 'undefined' && window.Element) {
+  if (!window.Element.prototype.hasPointerCapture) {
+    window.Element.prototype.hasPointerCapture = function() { return false; };
+  }
+  if (!window.Element.prototype.setPointerCapture) {
+    window.Element.prototype.setPointerCapture = function() {};
+  }
+  if (!window.Element.prototype.releasePointerCapture) {
+    window.Element.prototype.releasePointerCapture = function() {};
+  }
+  if (!window.Element.prototype.scrollIntoView) {
+    window.Element.prototype.scrollIntoView = function() {};
+  }
+}
+
 // Polyfill pour matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -74,6 +102,128 @@ vi.mock('@monaco-editor/react', () => {
       init: () => Promise.resolve(),
       config: () => {}
     }
+  };
+});
+
+// Mock useLiveSettings globally to avoid QueryClientProvider requirements in component tests
+vi.mock('@/hooks/useLiveSettings', () => ({
+  useLiveSettings: () => ({
+    settings: {
+      site_name: "PROQUELEC SENEGAL",
+      slogan: "Sécurité · Qualité · Formation",
+      contact_email: "contact@proquelec.sn",
+      phone_number: "+221 XX XXX XX XX",
+      address: "Dakar, Sénégal",
+      primary_color: "#2376df",
+      secondary_color: "#054393",
+      accent_color: "#1a73e8",
+      background_color: "#f8f9fa",
+      text_color: "#333333",
+      font_family: "Roboto",
+    },
+    isLoading: false,
+    error: null,
+    refetch: vi.fn(),
+  }),
+}));
+
+// Mock Radix Tooltip component globally to render inline for reliable testing in JSDOM
+vi.mock('@/components/ui/tooltip', () => {
+  const React = require('react');
+  return {
+    TooltipProvider: ({ children }: any) => children,
+    Tooltip: ({ children }: any) => children,
+    TooltipTrigger: ({ children }: any) => children,
+    TooltipContent: ({ children }: any) => React.createElement('div', {}, children),
+  };
+});
+
+// Mock Radix Select component globally to render inline with context for robust testing in JSDOM
+vi.mock('@radix-ui/react-select', () => {
+  const React = require('react');
+  const SelectContext = React.createContext(null);
+
+  const Root = ({ children, value, onValueChange }: any) => {
+    return React.createElement(
+      SelectContext.Provider,
+      { value: { value, onValueChange } },
+      React.createElement('div', {}, children)
+    );
+  };
+  Root.displayName = 'Select';
+
+  const Trigger = ({ children, id }: any) => {
+    return React.createElement('button', { id, type: 'button' }, children);
+  };
+  Trigger.displayName = 'Trigger';
+
+  const Value = ({ placeholder, children }: any) => children || placeholder || null;
+  Value.displayName = 'Value';
+
+  const Content = ({ children }: any) => {
+    return React.createElement('div', {}, children);
+  };
+  Content.displayName = 'Content';
+
+  const Item = ({ children, value }: any) => {
+    const context = React.useContext(SelectContext) as any;
+    return React.createElement('button', {
+      type: 'button',
+      onClick: () => {
+        if (context && context.onValueChange) {
+          context.onValueChange(value);
+        }
+      }
+    }, children);
+  };
+  Item.displayName = 'Item';
+
+  const Group = ({ children }: any) => children;
+  Group.displayName = 'Group';
+
+  const Label = ({ children }: any) => children;
+  Label.displayName = 'Label';
+
+  const Separator = () => null;
+  Separator.displayName = 'Separator';
+
+  const ScrollUpButton = () => null;
+  ScrollUpButton.displayName = 'ScrollUpButton';
+
+  const ScrollDownButton = () => null;
+  ScrollDownButton.displayName = 'ScrollDownButton';
+
+  const Viewport = ({ children }: any) => children;
+  Viewport.displayName = 'Viewport';
+
+  const Icon = ({ children }: any) => children || null;
+  Icon.displayName = 'Icon';
+
+  const Portal = ({ children }: any) => children;
+  Portal.displayName = 'Portal';
+
+  const ItemIndicator = ({ children }: any) => children || null;
+  ItemIndicator.displayName = 'ItemIndicator';
+
+  const ItemText = ({ children }: any) => children;
+  ItemText.displayName = 'ItemText';
+
+  return {
+    Root,
+    Trigger,
+    Value,
+    Content,
+    Item,
+    Group,
+    Label,
+    Separator,
+    ScrollUpButton,
+    ScrollDownButton,
+    Viewport,
+    Icon,
+    Portal,
+    ItemIndicator,
+    ItemText
   };
 });
 

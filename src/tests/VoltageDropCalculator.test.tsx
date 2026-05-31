@@ -1,4 +1,4 @@
-import { describe, expect } from '@jest/globals';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import VoltageDropCalculator from '../components/tools/VoltageDropCalculator';
@@ -55,43 +55,43 @@ describe('VoltageDropCalculator', () => {
     const voltageInput = screen.getByLabelText(/Tension/);
     const powerFactorInput = screen.getByLabelText(/Facteur de Puissance/);
 
-    await user.type(currentInput, '16');
-    await user.type(lengthInput, '50');
-    await user.type(voltageInput, '230');
-    await user.type(powerFactorInput, '1.0');
+    fireEvent.change(currentInput, { target: { value: '16' } });
+    fireEvent.change(lengthInput, { target: { value: '50' } });
+    fireEvent.change(voltageInput, { target: { value: '230' } });
+    fireEvent.change(powerFactorInput, { target: { value: '1.0' } });
 
     // Select required dropdowns
     const conductorSelect = screen.getByLabelText(/Matériau/);
     await user.click(conductorSelect);
-    await user.click(screen.getByText('Cuivre'));
+    await user.click(screen.getByRole('button', { name: /Cuivre/ }));
 
     const phaseSelect = screen.getByLabelText(/Régime Électrique/);
     await user.click(phaseSelect);
-    await user.click(screen.getByText(/Monophasé/));
+    await user.click(screen.getByRole('button', { name: /Monophasé/ }));
 
     const installationSelect = screen.getByLabelText(/Type d'Installation/);
     await user.click(installationSelect);
-    await user.click(screen.getByText('Éclairage'));
+    await user.click(screen.getByRole('button', { name: /Éclairage/ }));
 
     const modeSelect = screen.getByLabelText(/Mode de Pose/);
     await user.click(modeSelect);
-    await user.click(screen.getByText('B1 - Fixation directe'));
+    await user.click(screen.getByRole('button', { name: /B1/ }));
 
     // Set temperature and insulation
     const tempInput = screen.getByLabelText(/Température Ambiante/);
-    await user.type(tempInput, '30');
+    fireEvent.change(tempInput, { target: { value: '30' } });
 
     const insulationSelect = screen.getByLabelText(/Type d'Isolation/);
     await user.click(insulationSelect);
-    await user.click(screen.getByText('PVC'));
+    await user.click(screen.getByRole('button', { name: /PVC/ }));
 
     const circuitsInput = screen.getByLabelText(/Nombre de Circuits/);
-    await user.type(circuitsInput, '1');
+    fireEvent.change(circuitsInput, { target: { value: '1' } });
 
     // Select cross section for manual mode
     const sectionSelect = screen.getByLabelText(/Section Normalisée/);
     await user.click(sectionSelect);
-    await user.click(screen.getByText('2.5 mm²'));
+    await user.click(screen.getByRole('button', { name: /2.5/ }));
 
     // Button should be enabled
     const calculateButton = screen.getByRole('button', { name: /Calculer/ });
@@ -104,7 +104,9 @@ describe('VoltageDropCalculator', () => {
 
     // Fill required fields quickly
     const currentInput = screen.getByLabelText(/Courant/);
-    await user.type(currentInput, '16');
+    const lengthInput = screen.getByLabelText(/Longueur/);
+    fireEvent.change(currentInput, { target: { value: '16' } });
+    fireEvent.change(lengthInput, { target: { value: '50' } });
 
     // Mock rapid clicks
     const calculateButton = screen.getByRole('button', { name: /Calculer/ });

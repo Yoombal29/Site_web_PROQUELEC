@@ -517,7 +517,7 @@ export default function VoltageDropCalculator({
       role: "IA Certifiée Bureau d'Études",
       hash_calcul: calculationHash,
       hash_audit: auditHash,
-      conformite_eidas: "Signature électronique simulée (eIDAS compliant en production)"
+      conformite_eidas: "Empreinte numérique d'intégrité (signature électronique certifiée en production)"
     };
 
     const jsonString = JSON.stringify(signatureData, null, 2);
@@ -1413,7 +1413,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                 Mode de Calcul
                             </Label>
                             <Select value={calculationMode} onValueChange={setCalculationMode}>
-                                <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                <SelectTrigger id="calculationMode" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1429,7 +1429,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                 Type d'Alimentation
                             </Label>
                             <Select value={alimentationType} onValueChange={setAlimentationType}>
-                                <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                <SelectTrigger id="alimentationType" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1551,7 +1551,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     </TooltipProvider>
                                 </div>
                                 <Select value={crossSection} onValueChange={setCrossSection} disabled={calculationMode === 'auto'}>
-                                    <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                    <SelectTrigger id="crossSection" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -1573,7 +1573,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                 Matériau du Conducteur
                             </Label>
                             <Select value={conductorType} onValueChange={setConductorType}>
-                                <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                <SelectTrigger id="conductorType" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1588,7 +1588,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                 Régime Électrique
                             </Label>
                             <Select value={phaseSystem} onValueChange={setPhaseSystem}>
-                                <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                <SelectTrigger id="phaseSystem" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1604,7 +1604,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     Type d'Installation
                                 </Label>
                                 <Select value={installationType} onValueChange={setInstallationType}>
-                                    <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                    <SelectTrigger id="installationType" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -1669,7 +1669,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     </TooltipProvider>
                                 </div>
                                 <Select value={modeOfInstallation} onValueChange={setModeOfInstallation}>
-                                    <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                    <SelectTrigger id="modeOfInstallation" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -1709,7 +1709,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     Type d'Isolation
                                 </Label>
                                 <Select value={insulationType} onValueChange={setInsulationType}>
-                                    <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                    <SelectTrigger id="insulationType" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>

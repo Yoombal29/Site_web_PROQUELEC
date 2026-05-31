@@ -44,7 +44,7 @@ const authFetch = async (url: string, options: RequestInit = {}) => {
 export function useCreateMenuItem() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (menuItem: MenuItemInsert) => {
+    mutationFn: async (menuItem: MenuItemInsert & { linked_page_id?: string | null }) => {
       return authFetch("/api/menu-items", {
         method: 'POST',
         body: JSON.stringify(menuItem)

@@ -455,9 +455,8 @@ export const AdminPageEditor: React.FC<AdminPageEditorProps> = ({ pageId, onSave
                       className="rounded-l-none" />
                     
                                     </div>
-                                    <p className="text-[10px] text-orange-600 mt-1 flex items-center gap-1">
-                                        <AlertTriangle className="w-3 h-3" />
-                                        Attention: Si vous modifiez ce slug, mettez à jour le Menu correspondant.
+                                    <p className="text-[10px] text-green-600 mt-1 flex items-center gap-1">
+                                        Le menu sera automatiquement mis à jour lors de l'enregistrement.
                                     </p>
                                 </div>
                             </CardContent>
