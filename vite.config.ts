@@ -67,7 +67,8 @@ export default defineConfig(async ({ mode }) => {
               if (id.includes('node_modules/lucide-react')) return 'lucide-react';
               if (id.includes('node_modules/framer-motion')) return 'framer-motion';
               if (id.includes('node_modules/sonner')) return 'sonner';
-              if (id.includes('node_modules/yjs')) return 'yjs';
+              // yjs dans vendor pour eviter les erreurs d'initialisation (TDZ)
+              if (id.includes('node_modules/yjs')) return 'vendor';
               if (id.includes('node_modules/react-router-dom')) return 'router';
               if (id.includes('node_modules/@tanstack')) return 'tanstack';
 
