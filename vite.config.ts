@@ -59,7 +59,6 @@ export default defineConfig(async ({ mode }) => {
         output: {
           manualChunks(id: string) {
             if (id.includes('node_modules')) {
-              if (id.includes('elm') || id.includes('elk') || id.includes('flowchart')) return 'flowchart-elk';
               if (id.includes('@tiptap') || id.includes('tiptap')) return 'tiptap';
               if (id.includes('katex')) return 'katex';
               if (id.includes('html2canvas')) return 'html2canvas';
@@ -70,14 +69,18 @@ export default defineConfig(async ({ mode }) => {
               if (id.includes('node_modules/sonner')) return 'sonner';
               if (id.includes('node_modules/yjs')) return 'yjs';
               if (id.includes('node_modules/react-router-dom')) return 'router';
-              if (id.includes('node_modules/@radix-ui') || id.includes('node_modules/@radix')) return 'radix-ui';
               if (id.includes('node_modules/@tanstack')) return 'tanstack';
+
+              // Radix UI must be in vendor chunk with React to avoid forwardRef issues
+              if (id.includes('node_modules/@radix-ui')) return 'vendor';
+              // Fallback for react and react-dom specifically to avoid undefined forwardRef
+              if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) return 'vendor';
+
               return 'vendor';
             }
 
             // local heavy libs / lib entrypoints
             if (id.includes('/src/lib/ai-master')) return 'ai-master';
-            if (id.includes('/src/lib/elk') || id.includes('flowchart-elk')) return 'flowchart-elk';
           },
         },
       },
