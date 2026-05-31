@@ -70,7 +70,7 @@ export default defineConfig(async ({ mode }) => {
               // yjs dans vendor pour eviter les erreurs d'initialisation (TDZ)
               if (id.includes('node_modules/yjs')) return 'vendor';
               if (id.includes('node_modules/react-router-dom')) return 'router';
-              if (id.includes('node_modules/@tanstack')) return 'tanstack';
+              if (id.includes('node_modules/@tanstack')) return 'vendor';
 
               // Radix UI must be in vendor chunk with React to avoid forwardRef issues
               if (id.includes('node_modules/@radix-ui')) return 'vendor';
