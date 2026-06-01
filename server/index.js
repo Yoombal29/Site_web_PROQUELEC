@@ -1975,7 +1975,10 @@ app.post('/api/auth/login', async (req, res) => {
     }
 
     if (user.is_active === false) {
-      return res.status(403).json({ error: 'Account disabled' });
+      return res.status(403).json({
+        error: 'Votre compte est en attente de validation par un administrateur.',
+        code: 'ACCOUNT_PENDING'
+      });
     }
 
     const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, {
@@ -2031,7 +2034,7 @@ app.post('/api/auth/register', async (req, res) => {
     try {
       result = await pool.query(
         `INSERT INTO public.users (email, password_hash, role, is_active, full_name, phone, company, created_at)
-                 VALUES ($1, $2, $3, true, $4, $5, $6, NOW()) RETURNING id, email, role, is_active`,
+                 VALUES ($1, $2, $3, false, $4, $5, $6, NOW()) RETURNING id, email, role, is_active`,
         [
           normalizedEmail,
           hashedPassword,
@@ -2063,6 +2066,7 @@ app.post('/api/auth/register', async (req, res) => {
     res.status(201).json({
       access_token: token,
       user: { id: user.id, email: user.email, role: user.role, is_active: user.is_active },
+      message: "Votre compte a été créé et est en attente de validation par un administrateur."
     });
   } catch (err) {
     console.error('Registration error:', err);
