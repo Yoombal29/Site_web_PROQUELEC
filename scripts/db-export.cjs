@@ -5,14 +5,17 @@ const path = require('path');
 const DB_DIR = path.join(__dirname, '..', 'db');
 if (!fs.existsSync(DB_DIR)) fs.mkdirSync(DB_DIR, { recursive: true });
 
-const pool = new Pool({
-  host: '127.0.0.1',
-  port: 5437,
-  database: 'proquelec',
-  user: 'postgres',
-  password: 'proquelec_secure_db_pass',
-  ssl: false
-});
+// Utiliser DATABASE_URL si disponible (VPS), sinon config Docker locale
+const pool = process.env.DATABASE_URL
+  ? new Pool({ connectionString: process.env.DATABASE_URL })
+  : new Pool({
+      host: '127.0.0.1',
+      port: 5437,    // Docker PostgreSQL
+      database: 'proquelec',
+      user: 'postgres',
+      password: 'proquelec_secure_db_pass',
+      ssl: false
+    });
 
 const tables = [
   'pages', 'menu_items', 'site_settings', 'theme_settings',
