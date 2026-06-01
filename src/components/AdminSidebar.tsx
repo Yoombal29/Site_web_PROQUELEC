@@ -247,6 +247,13 @@ export const menuItems = [
     roles: ["admin"]
   },
   {
+    id: "tech-tools",
+    label: "Outils techniques",
+    icon: Wrench,
+    category: "communaute",
+    roles: ["admin"]
+  },
+  {
     id: "partners",
     label: "Réseau Partenaires",
     icon: Share2,

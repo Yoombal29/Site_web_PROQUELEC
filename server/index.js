@@ -5698,6 +5698,55 @@ app.delete('/api/templates/:id', authenticateToken, async (req, res) => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
+// TECH TOOLS API
+// ─────────────────────────────────────────────────────────────────────────────
+app.get('/api/tech-tools', async (req, res) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM public.tech_tools ORDER BY name ASC');
+    res.json(rows);
+  } catch (error) {
+    handleAppError(error, res);
+  }
+});
+
+app.post('/api/tech-tools', authenticateToken, async (req, res) => {
+  try {
+    const { name, description, icon, route, roles, is_paid, price } = req.body;
+    const { rows } = await pool.query(
+      'INSERT INTO public.tech_tools (name, description, icon, route, roles, is_paid, price) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      [name, description, icon, route, JSON.stringify(roles || []), is_paid || false, price || 0]
+    );
+    res.status(201).json(rows[0]);
+  } catch (error) {
+    handleAppError(error, res);
+  }
+});
+
+app.put('/api/tech-tools/:id', authenticateToken, async (req, res) => {
+  try {
+    const { name, description, icon, route, roles, is_paid, price, is_active } = req.body;
+    const { rows } = await pool.query(
+      'UPDATE public.tech_tools SET name=$1, description=$2, icon=$3, route=$4, roles=$5, is_paid=$6, price=$7, is_active=$8, updated_at=NOW() WHERE id=$9 RETURNING *',
+      [name, description, icon, route, roles ? JSON.stringify(roles) : null, is_paid, price, is_active, req.params.id]
+    );
+    if (rows.length === 0) return res.status(404).json({ error: 'Tool not found' });
+    res.json(rows[0]);
+  } catch (error) {
+    handleAppError(error, res);
+  }
+});
+
+app.delete('/api/tech-tools/:id', authenticateToken, async (req, res) => {
+  try {
+    const { rowCount } = await pool.query('DELETE FROM public.tech_tools WHERE id=$1', [req.params.id]);
+    if (rowCount === 0) return res.status(404).json({ error: 'Tool not found' });
+    res.json({ success: true });
+  } catch (error) {
+    handleAppError(error, res);
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Admin Specialized Page Editor (ICE Engine Support)
 // ─────────────────────────────────────────────────────────────────────────────
 // Seed Homepage → injects the pixel-perfect structure JSON for BE Builder

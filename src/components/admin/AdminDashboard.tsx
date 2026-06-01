@@ -9,7 +9,7 @@ import {
   Shield, Globe, Cpu, Eye, Brain,
   Save, X, RefreshCw,
   TrendingUp, Search,
-  Share2, Bell, ChevronDown } from
+  Share2, Bell, ChevronDown, Wrench } from
 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -19,6 +19,8 @@ import { apiFetch } from '@/lib/api-client';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
 import { useAnalytics } from '@/hooks/useAnalytics';
 import { useRealAnalytics } from '@/hooks/useRealAnalytics';
+import AdminUsersPanel from './AdminUsersPanel';
+import TechToolsPanel from './TechToolsPanel';
 
 interface TabConfig {
   id: string;
@@ -280,7 +282,9 @@ const AdminDashboard: React.FC = () => {
   const tabs: TabConfig[] = [
   { id: 'overview', label: 'Aperçu Global', icon: <BarChart3 className="w-5 h-5" />, color: 'text-blue-600' },
   { id: 'settings', label: 'Configuration Site', icon: <Settings className="w-5 h-5" />, color: 'text-green-600' },
-  { id: 'ai', label: 'Assistant IA', icon: <Brain className="w-5 h-5" />, color: 'text-orange-600' }];
+  { id: 'ai', label: 'Assistant IA', icon: <Brain className="w-5 h-5" />, color: 'text-orange-600' },
+    { id: 'users', label: 'Utilisateurs', icon: <Users className="w-5 h-5" />, color: 'text-purple-600' },
+    { id: 'tech-tools', label: 'Outils techniques', icon: <Wrench className="w-5 h-5" />, color: 'text-cyan-600' }]
 
 
   return (
@@ -322,7 +326,7 @@ const AdminDashboard: React.FC = () => {
               'border-blue-600 text-blue-600' :
               'border-transparent text-muted-foreground hover:text-foreground'}`
               } aria-label="Action">
-              
+
                 {tab.icon}
                 {tab.label}
               </button>
@@ -438,7 +442,7 @@ const AdminDashboard: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="flex-1 outline-none text-foreground bg-transparent" />
-              
+
               </div>
             </div>
 
@@ -452,7 +456,7 @@ const AdminDashboard: React.FC = () => {
                   <button
                   onClick={() => toggleCategory(category)}
                   className={`w-full px-6 py-4 flex items-center justify-between ${categoryInfo.color} dark:bg-opacity-10 dark:hover:bg-opacity-20 hover:bg-opacity-75 transition`} aria-label="Action">
-                  
+
                     <div className="flex items-center gap-3">
                       {categoryInfo.icon}
                       <span className="font-semibold text-foreground">{categoryInfo.label}</span>
@@ -525,7 +529,7 @@ const AdminDashboard: React.FC = () => {
                         onChange={(e) => handleParameterChange(param.id, e.target.value)}
                         className="w-20 h-10 border border-border rounded-lg cursor-pointer bg-background"
                         title={`Choisir la couleur pour ${param.name}`} />
-                      
+
                               <input
                         type="text"
                         defaultValue={param.value as string}
@@ -533,7 +537,7 @@ const AdminDashboard: React.FC = () => {
                         className="flex-1 px-3 py-2 border border-border bg-background text-foreground rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 font-mono text-sm"
                         title={`Code couleur hexadécimal pour ${param.name}`}
                         placeholder="#FFFFFF" />
-                      
+
                             </div>
                     }
 
@@ -544,7 +548,7 @@ const AdminDashboard: React.FC = () => {
                       'bg-green-100 text-green-700' :
                       'bg-gray-100 text-gray-700'}`
                       } aria-label="Action">
-                      
+
                               {editingParams[param.id] ?? param.value ? 'Activé' : 'Désactivé'}
                             </button>
                     }
@@ -555,7 +559,7 @@ const AdminDashboard: React.FC = () => {
                     onChange={(e) => handleParameterChange(param.id, e.target.value)}
                     className="w-full px-3 py-2 border border-border bg-background text-foreground rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
                     title={`Sélectionner une option pour ${param.name}`}>
-                      
+
                               {param.options.map((opt) =>
                       <option key={opt.value} value={opt.value} className="bg-background text-foreground">{opt.label}</option>
                       )}
@@ -614,13 +618,13 @@ const AdminDashboard: React.FC = () => {
                     placeholder="Ex: Écris un résumé technique sur la norme NFC 15-100..."
                     rows={6}
                     className="w-full px-4 py-3 border border-border bg-background text-foreground rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600" />
-                  
+
                   </div>
                   <Button
                   onClick={handleAiGenerate}
                   disabled={aiLoading}
                   className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg gap-2">
-                  
+
                     {aiLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Brain className="w-4 h-4" />}
                     Lancer la génération assistée
                   </Button>
@@ -643,6 +647,20 @@ const AdminDashboard: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+        }
+
+        {/* SECTION : GESTION DES UTILISATEURS */}
+        {activeTab === 'users' &&
+          <div className="animate-fade-in">
+            <AdminUsersPanel />
+          </div>
+        }
+
+        {/* SECTION : OUTILS TECHNIQUES */}
+        {activeTab === 'tech-tools' &&
+          <div className="animate-fade-in">
+            <TechToolsPanel />
           </div>
         }
       </div>
