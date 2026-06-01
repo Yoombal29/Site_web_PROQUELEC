@@ -14,14 +14,6 @@ echo ""
 echo "  === PROQUELEC DEPLOY ==="
 echo ""
 
-# 0. DB Export from Docker (pages, menus, settings, etc.)
-echo "[0/6] Export de la base de données locale..."
-node scripts/db-export.cjs
-if [ $? -ne 0 ]; then
-    echo "⚠️  Erreur d'export DB (ignorée)"
-fi
-echo ""
-
 # 1. Git status
 echo "[1/6] Modifications en cours :"
 git status --short
@@ -60,10 +52,18 @@ fi
 echo "✅ Code mis à jour"
 echo ""
 
-# 5. Import DB on VPS + Build
-echo "[5/6] Import DB + Build sur le VPS..."
-ssh -i "$SSH_KEY" "$SSH_HOST" "cd $REMOTE_PATH && node scripts/db-import.cjs"
-echo "✅ DB importée"
+# 5. Option: Sync DB (attention: ecrase les donnees VPS par les donnees locales)
+echo "[5/6] Sync DB ?"
+read -p "  Importer la DB locale vers le VPS ? (o/N) " sync_db
+if [ "$sync_db" = "o" ] || [ "$sync_db" = "O" ]; then
+    echo "  Export de la DB locale..."
+    node scripts/db-export.cjs
+    echo "  Import vers le VPS..."
+    ssh -i "$SSH_KEY" "$SSH_HOST" "cd $REMOTE_PATH && node scripts/db-import.cjs"
+    echo "  ✅ DB synchronisee (local -> VPS)"
+else
+    echo "  ⏭️  DB locale ignoree, les donnees VPS sont conservees"
+fi
 echo ""
 
 echo "[6/6] Build..."
