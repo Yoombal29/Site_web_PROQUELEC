@@ -1086,8 +1086,8 @@ export const HtmlBlock = (props: any) => {
 
   const cleanHtml = React.useMemo(() => {
     return DOMPurify.sanitize(html || '', {
-      ADD_TAGS: ['iframe', 'style', 'link', 'meta', 'div', 'section', 'span', 'svg', 'path'],
-      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'target', 'class', 'style', 'data-aos', 'd', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin'],
+      ADD_TAGS: ['iframe', 'style', 'link', 'meta', 'div', 'section', 'span', 'svg', 'path', 'script'],
+      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling', 'target', 'class', 'style', 'data-aos', 'd', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'onclick', 'onsubmit', 'onload', 'onerror', 'disabled', 'id'],
     });
   }, [html]);
 
