@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
+import { cloneNodeTreeWithNewIds } from './cloneNodeTree';
 
 import {
   ContainerBlock, TextBlock, HeroBlock, ButtonBlock, ImageBlock,
@@ -557,7 +558,7 @@ export const GodToolbox = () => {
   const handleAddDbTemplate = (defaultStructure: string | object) => {
     try {
       const tree = typeof defaultStructure === 'string' ? JSON.parse(defaultStructure) : defaultStructure;
-      actions.addNodeTree(tree, 'ROOT');
+      actions.addNodeTree(cloneNodeTreeWithNewIds(tree, 'tpl'), 'ROOT');
       toast.success('Modèle inséré avec succès');
     } catch (err) {
       console.error(err);
@@ -818,7 +819,7 @@ const GlobalBlocksTab = ({ expanded }: { expanded: boolean }) => {
   const handleAddGlobal = (serializedNode: any) => {
     try {
       const tree = typeof serializedNode === 'string' ? JSON.parse(serializedNode) : serializedNode;
-      actions.addNodeTree(tree, 'ROOT');
+      actions.addNodeTree(cloneNodeTreeWithNewIds(tree, 'global'), 'ROOT');
       toast.success('Bloc global inséré');
     } catch (err) {
       console.error(err);

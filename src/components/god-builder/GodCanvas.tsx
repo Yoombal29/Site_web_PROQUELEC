@@ -13,6 +13,7 @@ import { BuilderErrorBoundary } from './BuilderErrorBoundary';
 import { useBuilderUiStore } from '@/stores/builder-ui.store';
 import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
 import { useAnimateOnScroll } from '@/hooks/useAnimateOnScroll';
+import { cloneNodeTreeWithNewIds } from './cloneNodeTree';
 
 const VIEWPORT_WIDTHS: Record<string, string> = {
   desktop: '100%',
@@ -471,28 +472,8 @@ export const GodCanvas = () => {
     }
 
     try {
-      const tree = JSON.parse(clipboard);
-
-      // Generate unique IDs for all nodes (same logic as handleDuplicate)
-      const idMap: Record<string, string> = {};
-      const newTree: any = { rootNodeId: '', nodes: {} };
-      for (const oldId of Object.keys(tree.nodes)) {
-        const newId = 'paste_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
-        idMap[oldId] = newId;
-      }
-      for (const [oldId, nodeData] of Object.entries(tree.nodes)) {
-        const newId = idMap[oldId];
-        const newNodeData: any = { ...(nodeData as any) };
-        newNodeData.id = newId;
-        if (newNodeData.parent && idMap[newNodeData.parent]) {
-          newNodeData.parent = idMap[newNodeData.parent];
-        }
-        if (newNodeData.data) {
-          newNodeData.data = { ...newNodeData.data };
-        }
-        newTree.nodes[newId] = newNodeData;
-      }
-      newTree.rootNodeId = idMap[tree.rootNodeId];
+      const tree = JSON.parse(clipboard) as import('@craftjs/core').NodeTree;
+      const newTree = cloneNodeTreeWithNewIds(tree, 'paste');
 
       const targetNode = query.node(parentId).get();
       let resolvedParentId = parentId;
@@ -566,32 +547,12 @@ export const GodCanvas = () => {
       const siblings = query.node(parentId).childNodes();
       const index = siblings.indexOf(id) + 1;
 
-      // Utiliser toNodeTree + addNodeTree avec remplacement des IDs
       const tree = query.node(id).toNodeTree();
-      // Remplacer les IDs dans le tree par des IDs uniques
-      const idMap: Record<string, string> = {};
-      const newTree: any = { rootNodeId: '', nodes: {} };
-      for (const oldId of Object.keys(tree.nodes)) {
-        const newId = 'dup_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
-        idMap[oldId] = newId;
-      }
-      for (const [oldId, nodeData] of Object.entries(tree.nodes)) {
-        const newId = idMap[oldId];
-        const newNodeData: any = { ...(nodeData as any) };
-        newNodeData.id = newId;
-        // Mettre à jour le parent si c'était dans l'arbre
-        if (newNodeData.parent && idMap[newNodeData.parent]) {
-          newNodeData.parent = idMap[newNodeData.parent];
-        }
-        if (newNodeData.data) {
-          newNodeData.data = { ...newNodeData.data };
-        }
-        newTree.nodes[newId] = newNodeData;
-      }
-      newTree.rootNodeId = idMap[tree.rootNodeId];
+      const newTree = cloneNodeTreeWithNewIds(tree, 'dup');
       actions.addNodeTree(newTree, parentId, index);
+      actions.selectNode(newTree.rootNodeId);
 
-      toast.success('Bloc dupliqué avec succès (ID unique)');
+      toast.success('Bloc dupliqué avec succès');
     } catch (err) {
       console.error('Duplicate error:', err);
       toast.error('Erreur lors de la duplication');
