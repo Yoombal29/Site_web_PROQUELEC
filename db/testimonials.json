@@ -1,0 +1,29 @@
+[
+  {
+    "id": 10,
+    "name": "M. Diop",
+    "role": "Autorité Locale",
+    "content": "PROQUELEC a transformé la sécurité de nos marchés. Un partenaire indispensable.",
+    "rating": 5,
+    "avatar_url": null,
+    "created_at": "2026-05-30T23:25:04.154Z"
+  },
+  {
+    "id": 11,
+    "name": "Mme Fall",
+    "role": "Ménage",
+    "content": "Grâce au diagnostic de PROQUELEC, nous dormons l'esprit tranquille.",
+    "rating": 5,
+    "avatar_url": null,
+    "created_at": "2026-05-30T23:25:04.154Z"
+  },
+  {
+    "id": 12,
+    "name": "S. Kane",
+    "role": "Électricien Certifié",
+    "content": "La formation PROQUELEC m'a permis de monter en compétence et en crédibilité.",
+    "rating": 4,
+    "avatar_url": null,
+    "created_at": "2026-05-30T23:25:04.154Z"
+  }
+]

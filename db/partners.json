@@ -1,0 +1,42 @@
+[
+  {
+    "id": 9,
+    "name": "Ministère de l'Énergie",
+    "logo_url": "/images/partners/energie.png",
+    "category": "institution",
+    "display_order": 10,
+    "is_active": true,
+    "created_at": "2026-05-25T18:42:54.916Z",
+    "updated_at": "2026-05-30T23:25:01.617Z"
+  },
+  {
+    "id": 10,
+    "name": "ASN",
+    "logo_url": "/images/partners/asn.png",
+    "category": "institution",
+    "display_order": 10,
+    "is_active": true,
+    "created_at": "2026-05-25T18:42:54.923Z",
+    "updated_at": "2026-05-30T23:25:01.617Z"
+  },
+  {
+    "id": 12,
+    "name": "CRSE",
+    "logo_url": "/images/partners/crse.png",
+    "category": "institution",
+    "display_order": 10,
+    "is_active": true,
+    "created_at": "2026-05-25T18:42:54.930Z",
+    "updated_at": "2026-05-30T23:25:01.617Z"
+  },
+  {
+    "id": 11,
+    "name": "SENELEC",
+    "logo_url": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=200",
+    "category": "entreprise",
+    "display_order": 1,
+    "is_active": true,
+    "created_at": "2026-05-25T18:42:54.927Z",
+    "updated_at": "2026-05-30T23:25:01.617Z"
+  }
+]

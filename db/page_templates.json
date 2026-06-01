@@ -1,0 +1,100 @@
+[
+  {
+    "id": "38d181bb-292a-432a-8ab9-d4cc14ddb8ac",
+    "name": "Heroshome",
+    "description": "",
+    "structure": {
+      "ROOT": {
+        "type": {
+          "resolvedName": "ContainerBlock"
+        },
+        "nodes": [
+          "i4giWBkRNf",
+          "info_1780231249393_0854c27201d5"
+        ],
+        "props": {
+          "padding": 0,
+          "maxWidth": "100%",
+          "backgroundColor": "#ffffff"
+        },
+        "custom": {},
+        "hidden": false,
+        "isCanvas": true,
+        "displayName": "Conteneur",
+        "linkedNodes": {}
+      },
+      "1sARykfZX4": {
+        "type": {
+          "resolvedName": "HeroBlock"
+        },
+        "nodes": [],
+        "props": {
+          "title": "Titre accrocheur",
+          "ctaHref": "/contact",
+          "ctaText": "Commencer",
+          "ctaLabel": "",
+          "headline": "",
+          "subtitle": "Sous-titre convaincant",
+          "badgeText": "",
+          "boxShadow": "0 1px 3px rgba(0,0,0,0.12)",
+          "showStats": true,
+          "hideMobile": false,
+          "slidesJson": "",
+          "accentColor": "#ea9a10",
+          "subheadline": "",
+          "entryAnimation": "slideInRight",
+          "autoplayInterval": 8000,
+          "secondaryCtaHref": "#",
+          "secondaryCtaLabel": ""
+        },
+        "custom": {},
+        "hidden": false,
+        "parent": "i4giWBkRNf",
+        "isCanvas": false,
+        "displayName": "Hero Accueil",
+        "linkedNodes": {}
+      },
+      "i4giWBkRNf": {
+        "type": {
+          "resolvedName": "ContainerBlock"
+        },
+        "nodes": [
+          "1sARykfZX4"
+        ],
+        "props": {
+          "padding": 0,
+          "maxWidth": "100%",
+          "backgroundColor": "#ffffff"
+        },
+        "custom": {},
+        "hidden": false,
+        "parent": "ROOT",
+        "isCanvas": true,
+        "displayName": "Conteneur",
+        "linkedNodes": {}
+      },
+      "info_1780231249393_0854c27201d5": {
+        "type": {
+          "resolvedName": "HtmlBlock"
+        },
+        "nodes": [],
+        "props": {
+          "html": "<!-- ============================================================ -->\r\n<!-- SECTION 1 : HERO – épurée, impactante, accessible           -->\r\n<!-- ============================================================ -->\r\n<section class=\"relative bg-gradient-to-br from-[#1e3a5f] via-[#1a3366] to-[#2563eb] text-white overflow-hidden\"\r\n  aria-labelledby=\"hero-heading\">\r\n  <div\r\n    class=\"absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10\"\r\n    aria-hidden=\"true\"></div>\r\n  <div class=\"relative max-w-7xl mx-auto px-5 py-24 md:py-32 lg:py-36\">\r\n    <div class=\"max-w-4xl\">\r\n      <span class=\"inline-block px-4 py-1.5 bg-white/15 backdrop-blur-sm rounded-full text-sm font-semibold mb-6 border border-white/20 shadow-sm\">\r\n        PROQUELEC — SÉNÉGAL · DEPUIS 1995\r\n      </span>\r\n      <h1 id=\"hero-heading\" class=\"text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 tracking-tight\">\r\n        Promotion de la Qualité des\r\n        <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-400\">Installations Électriques</span>\r\n      </h1>\r\n      <p class=\"text-xl md:text-2xl text-white/85 max-w-3xl mb-8 leading-relaxed\">\r\n        Sécurité · Qualité · Formation — L’organisme national de référence pour la conformité des installations\r\n        électriques intérieures au Sénégal.\r\n      </p>\r\n      <div class=\"flex flex-col sm:flex-row gap-5\">\r\n        <a href=\"/contact\"\r\n          class=\"inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#1e3a5f] rounded-xl font-bold text-lg shadow-2xl shadow-white/20 hover:bg-blue-50 hover:scale-[1.02] focus:ring-4 focus:ring-white/40\">\r\n          Demander un contrôle <span aria-hidden=\"true\">→</span>\r\n        </a>\r\n        <a href=\"/formations\"\r\n          class=\"inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/40 text-white rounded-xl font-bold text-lg hover:bg-white/10 hover:border-white/60 focus:ring-4 focus:ring-white/30\">\r\n          Découvrir nos formations\r\n        </a>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white to-transparent pointer-events-none\">\r\n  </div>\r\n</section>\r\n\r\n<!-- ============================================================ -->\r\n<!-- SECTION 2 : STATISTIQUES – données clés, animées            -->\r\n<!-- ============================================================ -->\r\n<section class=\"py-16 px-5 bg-white\" aria-label=\"Chiffres clés\">\r\n  <div class=\"max-w-7xl mx-auto\">\r\n    <div class=\"grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8\">\r\n      <div\r\n        class=\"text-center p-6 md:p-8 rounded-2xl bg-gradient-to-b from-blue-50 to-white border border-blue-100 shadow-sm\">\r\n        <div class=\"text-5xl font-black text-blue-700 mb-2\">29<span class=\"text-3xl\">+</span></div>\r\n        <div class=\"text-gray-800 font-semibold\">Années d'expertise</div>\r\n        <p class=\"text-sm text-gray-500 mt-1\">Depuis 1995</p>\r\n      </div>\r\n      <div\r\n        class=\"text-center p-6 md:p-8 rounded-2xl bg-gradient-to-b from-green-50 to-white border border-green-100 shadow-sm\">\r\n        <div class=\"text-5xl font-black text-green-700 mb-2\">15 000<span class=\"text-3xl\">+</span></div>\r\n        <div class=\"text-gray-800 font-semibold\">Installations contrôlées</div>\r\n        <p class=\"text-sm text-gray-500 mt-1\">À travers le Sénégal</p>\r\n      </div>\r\n      <div\r\n        class=\"text-center p-6 md:p-8 rounded-2xl bg-gradient-to-b from-purple-50 to-white border border-purple-100 shadow-sm\">\r\n        <div class=\"text-5xl font-black text-purple-700 mb-2\">500<span class=\"text-3xl\">+</span></div>\r\n        <div class=\"text-gray-800 font-semibold\">Professionnels certifiés</div>\r\n        <p class=\"text-sm text-gray-500 mt-1\">Électriciens agréés</p>\r\n      </div>\r\n      <div\r\n        class=\"text-center p-6 md:p-8 rounded-2xl bg-gradient-to-b from-amber-50 to-white border border-amber-100 shadow-sm\">\r\n        <div class=\"text-5xl font-black text-amber-700 mb-2\">14</div>\r\n        <div class=\"text-gray-800 font-semibold\">Régions couvertes</div>\r\n        <p class=\"text-sm text-gray-500 mt-1\">Présence nationale</p>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n\r\n<!-- ============================================================ -->\r\n<!-- SECTION 3 : SERVICES – 3 piliers avec listes claires        -->\r\n<!-- ============================================================ -->\r\n<section class=\"py-20 px-5 bg-gray-50\" aria-labelledby=\"services-heading\">\r\n  <div class=\"max-w-7xl mx-auto\">\r\n    <div class=\"text-center mb-14\">\r\n      <span class=\"inline-block px-4 py-1.5 bg-blue-100 text-blue-800 rounded-full text-sm font-bold mb-4 tracking-wide\">NOS SERVICES</span>\r\n      <h2 id=\"services-heading\" class=\"text-3xl md:text-4xl font-black text-gray-900 mb-4\">Des solutions complètes pour\r\n        des installations sûres</h2>\r\n      <p class=\"text-lg text-gray-600 max-w-3xl mx-auto\">PROQUELEC vous accompagne à chaque étape pour garantir la\r\n        conformité et la sécurité de vos installations électriques.</p>\r\n    </div>\r\n    <div class=\"grid grid-cols-1 md:grid-cols-3 gap-8\">\r\n      <div\r\n        class=\"bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1\">\r\n        <div class=\"w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6\">\r\n          <span class=\"text-3xl\" aria-hidden=\"true\">🔍</span>\r\n        </div>\r\n        <h3 class=\"text-2xl font-bold text-gray-900 mb-3\">Contrôle & Diagnostic</h3>\r\n        <p class=\"text-gray-600 mb-5\">Vérification complète selon la norme NS 01-001.</p>\r\n        <ul class=\"space-y-2 text-sm text-gray-600\">\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Audit de conformité</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Diagnostic de sécurité</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Rapport détaillé personnalisé</li>\r\n        </ul>\r\n      </div>\r\n      <div\r\n        class=\"bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1\">\r\n        <div class=\"w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6\">\r\n          <span class=\"text-3xl\" aria-hidden=\"true\">🎓</span>\r\n        </div>\r\n        <h3 class=\"text-2xl font-bold text-gray-900 mb-3\">Formation & Certification</h3>\r\n        <p class=\"text-gray-600 mb-5\">Programmes certifiants pour les professionnels de l’électricité.</p>\r\n        <ul class=\"space-y-2 text-sm text-gray-600\">\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Installateur électricien</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Inspecteur électrique</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Normes et réglementation</li>\r\n        </ul>\r\n      </div>\r\n      <div\r\n        class=\"bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1\">\r\n        <div class=\"w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mb-6\">\r\n          <span class=\"text-3xl\" aria-hidden=\"true\">🛡️</span>\r\n        </div>\r\n        <h3 class=\"text-2xl font-bold text-gray-900 mb-3\">Sécurisation & Conseil</h3>\r\n        <p class=\"text-gray-600 mb-5\">Accompagnement pour la mise en conformité de vos installations.</p>\r\n        <ul class=\"space-y-2 text-sm text-gray-600\">\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Mise en conformité</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Sécurisation des marchés</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Assistance technique sur site</li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n\r\n<!-- ============================================================ -->\r\n<!-- SECTION 4 : MISSION & VISION – avec chiffre choc            -->\r\n<!-- ============================================================ -->\r\n<section class=\"py-20 px-5 bg-white\" aria-labelledby=\"mission-heading\">\r\n  <div class=\"max-w-7xl mx-auto\">\r\n    <div class=\"grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center\">\r\n      <div>\r\n        <span class=\"inline-block px-4 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-bold mb-4\">NOTRE MISSION</span>\r\n        <h2 id=\"mission-heading\" class=\"text-3xl md:text-4xl font-black text-gray-900 mb-5\">Garantir la sécurité\r\n          électrique pour tous les Sénégalais</h2>\r\n        <p class=\"text-lg text-gray-600 mb-7 leading-relaxed\">Depuis 1995, PROQUELEC s’engage pour la promotion de la\r\n          qualité des installations électriques intérieures au Sénégal.</p>\r\n        <div class=\"space-y-6\">\r\n          <div class=\"flex items-start gap-4\">\r\n            <div class=\"w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0 mt-0.5\">\r\n              <span class=\"text-xl\" aria-hidden=\"true\">🎯</span>\r\n            </div>\r\n            <div>\r\n              <h3 class=\"font-bold text-gray-900 text-lg\">Notre Vision</h3>\r\n              <p class=\"text-gray-600\">Devenir la référence nationale en sécurité électrique et innovation normative.\r\n              </p>\r\n            </div>\r\n          </div>\r\n          <div class=\"flex items-start gap-4\">\r\n            <div class=\"w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center shrink-0 mt-0.5\">\r\n              <span class=\"text-xl\" aria-hidden=\"true\">⭐</span>\r\n            </div>\r\n            <div>\r\n              <h3 class=\"font-bold text-gray-900 text-lg\">Nos Valeurs</h3>\r\n              <p class=\"text-gray-600\">Sécurité, Qualité, Excellence et Innovation.</p>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"bg-gradient-to-br from-[#1e3a5f] to-[#2563eb] rounded-3xl p-8 md:p-10 text-white shadow-2xl\">\r\n        <div class=\"text-6xl mb-5\" aria-hidden=\"true\">⚡</div>\r\n        <h3 class=\"text-2xl md:text-3xl font-bold mb-4\">Le saviez-vous ?</h3>\r\n        <p class=\"text-white/85 text-lg mb-7 leading-relaxed\">\r\n          93 % des installations électriques au Sénégal ne sont pas conformes aux normes en vigueur.<br>\r\n          <strong class=\"text-yellow-200\">Un contrôle PROQUELEC peut sauver des vies.</strong>\r\n        </p>\r\n        <a href=\"/contact\"\r\n          class=\"inline-flex items-center gap-2 bg-white text-[#1e3a5f] px-6 py-3 rounded-xl font-bold hover:bg-blue-50 hover:scale-[1.02] transition-all shadow-xl\">\r\n          Faites contrôler votre installation <span aria-hidden=\"true\">→</span>\r\n        </a>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n\r\n<!-- ============================================================ -->\r\n<!-- SECTION 5 : CTA FINAL + FOOTER MINIMAL                      -->\r\n<!-- ============================================================ -->\r\n<section class=\"py-20 px-5 bg-gradient-to-r from-[#1e3a5f] to-[#2563eb] text-white text-center\"\r\n  aria-labelledby=\"cta-heading\">\r\n  <div class=\"max-w-4xl mx-auto\">\r\n    <h2 id=\"cta-heading\" class=\"text-3xl md:text-4xl font-black mb-5\">Prêt à sécuriser vos installations ?</h2>\r\n    <p class=\"text-xl text-white/85 mb-9 max-w-2xl mx-auto\">Que vous soyez un particulier, un professionnel ou une\r\n      collectivité, PROQUELEC vous accompagne.</p>\r\n    <div class=\"flex flex-col sm:flex-row gap-5 justify-center\">\r\n      <a href=\"/contact\"\r\n        class=\"inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#1e3a5f] rounded-xl font-bold text-lg shadow-2xl hover:bg-gray-100 hover:scale-[1.02] transition-all\">\r\n        Contactez-nous\r\n      </a>\r\n      <a href=\"/formations\"\r\n        class=\"inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/40 text-white rounded-xl font-bold text-lg hover:bg-white/10 hover:border-white/60 transition-all\">\r\n        Découvrir nos formations\r\n      </a>\r\n    </div>\r\n  </div>\r\n</section>\r\n\r\n<footer class=\"py-8 px-5 bg-gray-50 border-t border-gray-200\">\r\n  <div class=\"max-w-7xl mx-auto text-center text-sm text-gray-500\">\r\n    <p class=\"font-medium text-gray-600\">PROQUELEC — Organisme national de promotion de la qualité des installations\r\n      électriques intérieures au Sénégal.</p>\r\n    <address class=\"not-italic mt-2\">\r\n      Route de l'Aéroport, Lotissement Mermoz · BP 1234 Dakar ·\r\n      <a href=\"mailto:contact@proquelec.sn\"\r\n        class=\"hover:text-blue-700 underline underline-offset-2\">contact@proquelec.sn</a> ·\r\n      <a href=\"tel:+221330000000\" class=\"hover:text-blue-700\">+221 33 000 00 00</a>\r\n    </address>\r\n    <p class=\"mt-4 text-xs text-gray-400\">© 2025 PROQUELEC – Tous droits réservés.</p>\r\n  </div>\r\n</footer>",
+          "padding": 0
+        },
+        "custom": {},
+        "hidden": false,
+        "parent": "ROOT",
+        "isCanvas": false,
+        "displayName": "Code HTML",
+        "linkedNodes": {}
+      }
+    },
+    "theme_config": null,
+    "category": "page",
+    "tags": null,
+    "thumbnail": null,
+    "created_at": "2026-05-31T18:31:52.181Z",
+    "updated_at": "2026-05-31T18:31:52.181Z"
+  }
+]

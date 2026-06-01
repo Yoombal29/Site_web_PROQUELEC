@@ -1,0 +1,57 @@
+[
+  {
+    "id": "cb92557e-9a37-46cd-82c7-f9f639514a26",
+    "name": "btp-modern",
+    "display_name": "BTP Modern Excellence",
+    "description": "Design épuré et professionnel pour les entreprises de construction.",
+    "preview_image": null,
+    "category": "construction",
+    "design_config": {
+      "layout": "default",
+      "body_font": "Inter",
+      "text_color": "#212529",
+      "hero_height": "medium",
+      "accent_color": "#ff6b00",
+      "heading_font": "Outfit",
+      "hero_enabled": true,
+      "hero_overlay": 0.3,
+      "content_width": "default",
+      "hero_alignment": "left",
+      "sidebar_enabled": false,
+      "background_color": "#f8f9fa"
+    },
+    "header_config": {},
+    "footer_config": {},
+    "is_premium": false,
+    "created_at": "2026-05-30T23:24:37.035Z",
+    "updated_at": "2026-05-30T23:24:37.035Z"
+  },
+  {
+    "id": "7019e139-1851-4128-9dce-fc63af8a2acc",
+    "name": "security-pro",
+    "display_name": "Sécurité & Protection",
+    "description": "Thème sombre et robuste pour les services de sécurité électrique.",
+    "preview_image": null,
+    "category": "security",
+    "design_config": {
+      "layout": "full-width",
+      "body_font": "Open Sans",
+      "text_color": "#f1faee",
+      "hero_height": "large",
+      "accent_color": "#e63946",
+      "heading_font": "Roboto",
+      "hero_enabled": true,
+      "hero_overlay": 0.5,
+      "content_width": "wide",
+      "hero_alignment": "center",
+      "sidebar_enabled": true,
+      "background_color": "#0a0a0a",
+      "sidebar_position": "right"
+    },
+    "header_config": {},
+    "footer_config": {},
+    "is_premium": false,
+    "created_at": "2026-05-30T23:24:37.035Z",
+    "updated_at": "2026-05-30T23:24:37.035Z"
+  }
+]

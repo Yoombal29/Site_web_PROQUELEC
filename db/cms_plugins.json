@@ -1,0 +1,62 @@
+[
+  {
+    "id": "96db6bbf-65d2-4d1c-a75d-b6658bc31a99",
+    "name": "seo-pro",
+    "display_name": "SEO Pro Advanced",
+    "description": "Analyseur de mots-clés et optimisation sémantique en temps-réel.",
+    "version": "1.0.0",
+    "category": "seo",
+    "author": "PROQUELEC",
+    "icon": "Search",
+    "settings_schema": {},
+    "default_settings": {},
+    "is_active_globally": false,
+    "created_at": "2026-05-30T23:24:37.023Z",
+    "updated_at": "2026-05-30T23:24:37.023Z"
+  },
+  {
+    "id": "41b0c4de-66af-4a09-b61e-b11cd7db179f",
+    "name": "stats-live",
+    "display_name": "Statistiques Live",
+    "description": "Tableau de bord analytics intégré directement dans l'éditeur.",
+    "version": "1.0.0",
+    "category": "analytics",
+    "author": "PROQUELEC",
+    "icon": "BarChart3",
+    "settings_schema": {},
+    "default_settings": {},
+    "is_active_globally": false,
+    "created_at": "2026-05-30T23:24:37.023Z",
+    "updated_at": "2026-05-30T23:24:37.023Z"
+  },
+  {
+    "id": "5cc67509-9426-4e5b-9ec4-abb4846dcc26",
+    "name": "payment-africa",
+    "display_name": "Paiement Afrique",
+    "description": "Passerelle de paiement Orange Money, Wave, Paydunya.",
+    "version": "1.0.0",
+    "category": "ecommerce",
+    "author": "PROQUELEC",
+    "icon": "DollarSign",
+    "settings_schema": {},
+    "default_settings": {},
+    "is_active_globally": false,
+    "created_at": "2026-05-30T23:24:37.023Z",
+    "updated_at": "2026-05-30T23:24:37.023Z"
+  },
+  {
+    "id": "5b8d1a1f-d462-48bd-870a-58d509c30e23",
+    "name": "form-builder",
+    "display_name": "FormBuilder Advanced",
+    "description": "Créateur de formulaires complexes par drag & drop.",
+    "version": "1.0.0",
+    "category": "tools",
+    "author": "PROQUELEC",
+    "icon": "Layout",
+    "settings_schema": {},
+    "default_settings": {},
+    "is_active_globally": false,
+    "created_at": "2026-05-30T23:24:37.023Z",
+    "updated_at": "2026-05-30T23:24:37.023Z"
+  }
+]

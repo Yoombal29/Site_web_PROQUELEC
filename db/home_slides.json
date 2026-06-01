@@ -1,0 +1,44 @@
+[
+  {
+    "id": 9,
+    "badge": "Nouveau",
+    "title": "Annuaire des Électriciens",
+    "subtitle": "Trouvez un professionnel qualifié",
+    "description": "Accédez au plus grand réseau d'électriciens certifiés du Sénégal.",
+    "background_url": null,
+    "cta_text": "Rechercher",
+    "cta_link": "/reseau-electriciens",
+    "secondary_cta_text": null,
+    "secondary_cta_link": null,
+    "display_order": 0,
+    "updated_at": "2026-05-25T18:42:54.941Z"
+  },
+  {
+    "id": 10,
+    "badge": "Formation",
+    "title": "Formations Certifiantes",
+    "subtitle": "Montez en compétences",
+    "description": "Des formations agréées par l'État pour tous les niveaux.",
+    "background_url": null,
+    "cta_text": "Voir les formations",
+    "cta_link": "/formation",
+    "secondary_cta_text": null,
+    "secondary_cta_link": null,
+    "display_order": 1,
+    "updated_at": "2026-05-25T18:42:54.947Z"
+  },
+  {
+    "id": 11,
+    "badge": "Observatoire",
+    "title": "Observatoire de l'Énergie",
+    "subtitle": "Données et analyses",
+    "description": "Suivez les indicateurs clés du secteur électrique sénégalais en temps réel.",
+    "background_url": null,
+    "cta_text": "Explorer",
+    "cta_link": "/observatoire",
+    "secondary_cta_text": null,
+    "secondary_cta_link": null,
+    "display_order": 2,
+    "updated_at": "2026-05-25T18:42:54.951Z"
+  }
+]
