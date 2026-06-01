@@ -23,12 +23,12 @@ function getTransporter() {
   return { transporter, from, to };
 }
 
-async function sendEmail({ subject, html, text, replyTo }) {
+async function sendEmail({ subject, html, text, replyTo, to: recipient }) {
   try {
-    const { transporter, from, to } = getTransporter();
+    const { transporter, from, to: defaultTo } = getTransporter();
     const info = await transporter.sendMail({
       from: `"PROQUELEC" <${from}>`,
-      to,
+      to: recipient || defaultTo,
       subject,
       html,
       text,

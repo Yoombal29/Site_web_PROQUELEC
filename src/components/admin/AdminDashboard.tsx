@@ -9,7 +9,7 @@ import {
   Shield, Globe, Cpu, Eye, Brain,
   Save, X, RefreshCw,
   TrendingUp, Search,
-  Share2, Bell, ChevronDown, Wrench } from
+  Share2, Bell, ChevronDown, Wrench, MessageSquare } from
 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -22,6 +22,7 @@ import { useRealAnalytics } from '@/hooks/useRealAnalytics';
 import AdminUsersPanel from './AdminUsersPanel';
 import TechToolsPanel from './TechToolsPanel';
 import NewsletterAdminPanel from './NewsletterAdminPanel';
+import NotificationsAdminPanel from './NotificationsAdminPanel';
 
 interface TabConfig {
   id: string;
@@ -286,7 +287,8 @@ const AdminDashboard: React.FC = () => {
   { id: 'ai', label: 'Assistant IA', icon: <Brain className="w-5 h-5" />, color: 'text-orange-600' },
     { id: 'users', label: 'Utilisateurs', icon: <Users className="w-5 h-5" />, color: 'text-purple-600' },
     { id: 'tech-tools', label: 'Outils techniques', icon: <Wrench className="w-5 h-5" />, color: 'text-cyan-600' },
-    { id: 'newsletter', label: 'Newsletter', icon: <Mail className="w-5 h-5" />, color: 'text-pink-600' }]
+    { id: 'newsletter', label: 'Newsletter', icon: <Mail className="w-5 h-5" />, color: 'text-pink-600' },
+    { id: 'notifications', label: 'Notifications', icon: <MessageSquare className="w-5 h-5" />, color: 'text-orange-600' }]
 
 
   return (
@@ -670,6 +672,13 @@ const AdminDashboard: React.FC = () => {
         {activeTab === 'newsletter' &&
           <div className="animate-fade-in">
             <NewsletterAdminPanel />
+          </div>
+        }
+
+        {/* SECTION : NOTIFICATIONS */}
+        {activeTab === 'notifications' &&
+          <div className="animate-fade-in">
+            <NotificationsAdminPanel />
           </div>
         }
       </div>

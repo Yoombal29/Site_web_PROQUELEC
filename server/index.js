@@ -5757,6 +5757,110 @@ app.delete('/api/tech-tools/:id', authenticateToken, async (req, res) => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
+// NOTIFICATIONS API
+// ─────────────────────────────────────────────────────────────────────────────
+
+// GET /api/admin/notifications — Liste toutes les notifications (admin only)
+app.get('/api/admin/notifications', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM notifications ORDER BY created_at DESC LIMIT 100'
+    );
+    res.json(rows);
+  } catch (error) {
+    handleAppError(error, res);
+  }
+});
+
+// POST /api/admin/notifications — Créer une notification groupée (admin only)
+app.post('/api/admin/notifications', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { title, message, target_role } = req.body;
+    if (!title || !message) return res.status(400).json({ error: 'Titre et message requis' });
+
+    const { rows } = await pool.query(
+      'INSERT INTO notifications (title, message, target_role, created_by) VALUES ($1, $2, $3, $4) RETURNING *',
+      [title, message, target_role || null, req.user.id]
+    );
+
+    // Envoyer email aux utilisateurs du rôle cible (non bloquant)
+    if (target_role) {
+      const users = await pool.query('SELECT email, full_name FROM users WHERE role = $1 AND is_active = true', [target_role]);
+      for (const user of users.rows) {
+        try {
+          await sendEmail({
+            to: user.email,
+            subject: `[PROQUELEC] ${title}`,
+            html: `<div style="padding:20px;font-family:Arial"><h2 style="color:#1e3a5f">${title}</h2><p>${message}</p><hr><p style="color:#999;font-size:12px">Message de PROQUELEC</p></div>`,
+            text: `${title}\n\n${message}`
+          });
+        } catch(e) { console.warn('[NOTIF] Email failed:', user.email); }
+      }
+    }
+
+    res.status(201).json(rows[0]);
+  } catch (error) {
+    handleAppError(error, res);
+  }
+});
+
+// GET /api/notifications — Notifications pour l'utilisateur connecté
+app.get('/api/notifications', authenticateToken, async (req, res) => {
+  try {
+    const { rows } = await pool.query(`
+      SELECT n.*, nr.id IS NOT NULL as read
+      FROM notifications n
+      LEFT JOIN notification_reads nr ON nr.notification_id = n.id AND nr.user_id = $1
+      WHERE n.target_role IS NULL OR n.target_role = $2
+      ORDER BY n.created_at DESC
+      LIMIT 50
+    `, [req.user.id, req.user.role]);
+    res.json(rows);
+  } catch (error) {
+    handleAppError(error, res);
+  }
+});
+
+// GET /api/notifications/unread-count — Nombre de notifications non lues
+app.get('/api/notifications/unread-count', authenticateToken, async (req, res) => {
+  try {
+    const { rows } = await pool.query(`
+      SELECT COUNT(*) as count FROM notifications n
+      LEFT JOIN notification_reads nr ON nr.notification_id = n.id AND nr.user_id = $1
+      WHERE (n.target_role IS NULL OR n.target_role = $2)
+      AND nr.id IS NULL
+    `, [req.user.id, req.user.role]);
+    res.json({ count: parseInt(rows[0].count) });
+  } catch (error) {
+    handleAppError(error, res);
+  }
+});
+
+// PUT /api/notifications/:id/read — Marquer une notification comme lue
+app.put('/api/notifications/:id/read', authenticateToken, async (req, res) => {
+  try {
+    await pool.query(
+      'INSERT INTO notification_reads (notification_id, user_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+      [req.params.id, req.user.id]
+    );
+    res.json({ success: true });
+  } catch (error) {
+    handleAppError(error, res);
+  }
+});
+
+// DELETE /api/admin/notifications/:id — Supprimer une notification (admin only)
+app.delete('/api/admin/notifications/:id', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    await pool.query('DELETE FROM notification_reads WHERE notification_id = $1', [req.params.id]);
+    await pool.query('DELETE FROM notifications WHERE id = $1', [req.params.id]);
+    res.json({ success: true });
+  } catch (error) {
+    handleAppError(error, res);
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Admin Specialized Page Editor (ICE Engine Support)
 // ─────────────────────────────────────────────────────────────────────────────
 // Seed Homepage → injects the pixel-perfect structure JSON for BE Builder
