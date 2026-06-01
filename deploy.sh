@@ -2,6 +2,7 @@
 # ============================================================
 #  deploy.sh — PROQUELEC
 #  Push to GitHub + Deploy to VPS (proquelec.sn)
+#  INCLUDES: Database sync (Docker → GitHub → VPS)
 # ============================================================
 
 SSH_KEY="$HOME/.ssh/gem_vps"
@@ -13,8 +14,16 @@ echo ""
 echo "  === PROQUELEC DEPLOY ==="
 echo ""
 
+# 0. DB Export from Docker (pages, menus, settings, etc.)
+echo "[0/6] Export de la base de données locale..."
+node scripts/db-export.cjs
+if [ $? -ne 0 ]; then
+    echo "⚠️  Erreur d'export DB (ignorée)"
+fi
+echo ""
+
 # 1. Git status
-echo "[1/5] Modifications en cours :"
+echo "[1/6] Modifications en cours :"
 git status --short
 echo ""
 read -p "Continuer le déploiement ? (O/n) " confirm
@@ -25,7 +34,7 @@ fi
 
 # 2. Commit
 echo ""
-echo "[2/5] Ajout des fichiers..."
+echo "[2/6] Ajout des fichiers..."
 git add -A
 read -p "Message de commit : " commit_msg
 if [ -z "$commit_msg" ]; then
@@ -33,7 +42,7 @@ if [ -z "$commit_msg" ]; then
 fi
 
 # 3. Push
-echo "[3/5] Commit et push vers GitHub..."
+echo "[3/6] Commit et push vers GitHub..."
 git commit -m "$commit_msg"
 if ! git push origin "$GIT_BRANCH"; then
     echo "❌ ERREUR: Push échoué"
@@ -43,24 +52,28 @@ echo "✅ Push GitHub réussi"
 echo ""
 
 # 4. Pull on VPS
-echo "[4/5] Mise à jour du VPS..."
+echo "[4/6] Mise à jour du code sur le VPS..."
 if ! ssh -i "$SSH_KEY" "$SSH_HOST" "cd $REMOTE_PATH && git pull origin $GIT_BRANCH"; then
     echo "❌ ERREUR: Pull VPS échoué"
     exit 1
 fi
-echo "✅ Code mis à jour sur le VPS"
+echo "✅ Code mis à jour"
 echo ""
 
-# 5. Build on VPS
-echo "[5/5] Build sur le VPS (1-2 min)..."
+# 5. Import DB on VPS + Build
+echo "[5/6] Import DB + Build sur le VPS..."
+ssh -i "$SSH_KEY" "$SSH_HOST" "cd $REMOTE_PATH && node scripts/db-import.cjs"
+echo "✅ DB importée"
+echo ""
+
+echo "[6/6] Build..."
 if ! ssh -i "$SSH_KEY" "$SSH_HOST" "cd $REMOTE_PATH && NODE_OPTIONS='--max-old-space-size=4096' npm run build"; then
     echo "❌ ERREUR: Build échoué"
     exit 1
 fi
 echo "✅ Build réussi"
-echo ""
 
-# 6. Restart PM2
+# Restart PM2
 echo "Redémarrage du serveur API..."
 ssh -i "$SSH_KEY" "$SSH_HOST" "pm2 restart proquelec-api"
 

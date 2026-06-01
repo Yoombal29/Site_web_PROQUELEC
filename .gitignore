@@ -33,9 +33,15 @@ export_full.cjs
 # Playwright auth state & test artifacts
 .auth/
 test-results/
-playwright-report/docker/postgres/data/
+playwright-report/
+docker/postgres/data/
 
 # Deploy scripts
 deploy.bat
 deploy.sh
 server/.ghost_cache/
+
+# Database data files (exported for VPS deployment)
+db/
+nul
+tmp_pages.json
