@@ -44,20 +44,36 @@ async function sendEmail({ subject, html, text, replyTo, to: recipient }) {
 
 function emailLayout(title, content) {
   return `
-    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.04)">
-      <div style="background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%);padding:32px 24px;text-align:center">
-        <div style="font-size:32px;margin-bottom:8px">⚡</div>
-        <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;letter-spacing:-0.3px">PROQUELEC</h1>
-        <p style="color:rgba(255,255,255,0.7);margin:4px 0 0;font-size:13px">Sécurité &middot; Qualité &middot; Formation</p>
+    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(30,58,95,0.08),0 1px 4px rgba(30,58,95,0.04)">
+      <!-- Header avec logo PROQUELEC -->
+      <div style="background:linear-gradient(135deg,#0f2a4a 0%,#1e3a5f 40%,#2563eb 100%);padding:36px 24px;text-align:center;position:relative">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right,#f59e0b,#2563eb)"></div>
+        <img src="https://proquelec.sn/logo.png" alt="PROQUELEC" style="width:auto;height:48px;margin-bottom:10px" onerror="this.style.display='none'">
+        <h1 style="color:#ffffff;margin:0;font-size:20px;font-weight:700;letter-spacing:-0.3px">PROQUELEC</h1>
+        <p style="color:rgba(255,255,255,0.6);margin:4px 0 0;font-size:12px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase">Sécurité &middot; Qualité &middot; Formation</p>
       </div>
-      <div style="padding:32px 24px">
-        <h2 style="color:#111827;font-size:18px;font-weight:600;margin:0 0 4px">${title}</h2>
-        <p style="color:#6b7280;font-size:14px;margin:0 0 24px;border-bottom:1px solid #f3f4f6;padding-bottom:16px">Notification depuis le site proquelec.sn</p>
+
+      <!-- Corps du message -->
+      <div style="padding:36px 28px">
+        <div style="width:40px;height:4px;background:linear-gradient(to right,#2563eb,#f59e0b);border-radius:2px;margin-bottom:20px"></div>
+        <h2 style="color:#0f2a4a;font-size:20px;font-weight:700;margin:0 0 4px;line-height:1.3">${title}</h2>
+        <p style="color:#6b7280;font-size:13px;margin:0 0 24px;padding-bottom:16px;border-bottom:1px solid #e5e7eb">Notification du site proquelec.sn</p>
         ${content}
       </div>
-      <div style="background:#f9fafb;padding:16px 24px;text-align:center;border-top:1px solid #f3f4f6">
-        <p style="color:#9ca3af;font-size:11px;margin:0">PROQUELEC &mdash; Promotion de la Qualité des Installations Électriques au Sénégal</p>
-        <p style="color:#d1d5db;font-size:10px;margin:4px 0 0">© ${new Date().getFullYear()} PROQUELEC &bull; contact@proquelec.sn</p>
+
+      <!-- Footer -->
+      <div style="background:#f8fafc;padding:24px 28px;text-align:center;border-top:1px solid #e5e7eb">
+        <p style="color:#94a3b8;font-size:11px;margin:0 0 8px;line-height:1.5">
+          <strong style="color:#1e3a5f">PROQUELEC</strong><br>
+          Promotion de la Qualité des Installations Électriques au Sénégal
+        </p>
+        <p style="color:#cbd5e1;font-size:10px;margin:0">
+          Route de l'Aéroport, Lotissement Mermoz &bull; BP 1234 Dakar<br>
+          <a href="tel:+221330000000" style="color:#2563eb;text-decoration:none">+221 33 000 00 00</a>
+          &nbsp;&bull;&nbsp;
+          <a href="mailto:contact@proquelec.sn" style="color:#2563eb;text-decoration:none">contact@proquelec.sn</a>
+        </p>
+        <p style="color:#e2e8f0;font-size:9px;margin:12px 0 0;padding-top:12px;border-top:1px solid #e2e8f0">&copy; ${new Date().getFullYear()} PROQUELEC &mdash; Tous droits réservés</p>
       </div>
     </div>
   `;
