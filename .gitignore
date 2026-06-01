@@ -45,3 +45,8 @@ server/.ghost_cache/
 db/
 nul
 tmp_pages.json
+teste.py
+tmp_*.py
+tmp_*.sql
+tmp_page_response.txt
+tmp_pages_schema.txt

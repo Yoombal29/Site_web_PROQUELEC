@@ -1,0 +1,1415 @@
+{
+  "timestamp": "2026-05-30T19:40:24.993Z",
+  "baseUrl": "http://localhost:5175",
+  "summary": {
+    "totalPagesTested": 18,
+    "pagesWorking": 18,
+    "pagesBroken": 0,
+    "totalLinksFound": 53,
+    "internalLinksWorking": 30,
+    "internalLinksBroken": 0,
+    "internalLinksNotTested": 19
+  },
+  "pages": [
+    {
+      "path": "/",
+      "name": "Accueil",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 1,
+      "internalLinks": 1,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "← Retour à l'accueil",
+          "href": "/",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/about",
+      "name": "À propos",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 1,
+      "internalLinks": 1,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "← Retour à l'accueil",
+          "href": "/",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/services",
+      "name": "Services",
+      "status": 200,
+      "title": "Page Introuvable - PROQUELEC | PROQUELEC SENEGAL - Qualité Électrique au Sénégal",
+      "totalLinks": 16,
+      "internalLinks": 14,
+      "externalLinks": 0,
+      "mailLinks": 1,
+      "telLinks": 1,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "Accueil",
+          "href": "/",
+          "title": null
+        },
+        {
+          "text": "Nous contacter",
+          "href": "/contact",
+          "title": null
+        },
+        {
+          "text": "Connexion",
+          "href": "/connexion",
+          "title": null
+        },
+        {
+          "text": "À propos",
+          "href": "/about",
+          "title": null
+        },
+        {
+          "text": "Utilité Publique",
+          "href": "/utilite-publique",
+          "title": null
+        },
+        {
+          "text": "+221 33 848 68 55",
+          "href": "tel:+221 33 848 68 55",
+          "title": null
+        },
+        {
+          "text": "",
+          "href": "mailto:proquelec@proquelec.sn",
+          "title": null
+        },
+        {
+          "text": "Activités",
+          "href": "/activities",
+          "title": null
+        },
+        {
+          "text": "Labels",
+          "href": "/labels",
+          "title": null
+        },
+        {
+          "text": "Documentation",
+          "href": "/documents",
+          "title": null
+        },
+        {
+          "text": "Blog & Actualités",
+          "href": "/blog",
+          "title": null
+        },
+        {
+          "text": "Événements",
+          "href": "/events",
+          "title": null
+        },
+        {
+          "text": "Formations",
+          "href": "/formations",
+          "title": null
+        },
+        {
+          "text": "Certifications",
+          "href": "/certifications",
+          "title": null
+        },
+        {
+          "text": "Confidentialité",
+          "href": "/legal",
+          "title": null
+        },
+        {
+          "text": "Plan du site",
+          "href": "/sitemap",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/projects",
+      "name": "Projets",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 0,
+      "internalLinks": 0,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": []
+    },
+    {
+      "path": "/contact",
+      "name": "Contact",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 1,
+      "internalLinks": 1,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "← Retour à l'accueil",
+          "href": "/",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/blog",
+      "name": "Blog",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 1,
+      "internalLinks": 1,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "← Retour à l'accueil",
+          "href": "/",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/certifications",
+      "name": "Certifications",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 1,
+      "internalLinks": 1,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "← Retour à l'accueil",
+          "href": "/",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/formations",
+      "name": "Formations",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 1,
+      "internalLinks": 1,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "← Retour à l'accueil",
+          "href": "/",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/actualites",
+      "name": "Actualités",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 1,
+      "internalLinks": 1,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "← Retour à l'accueil",
+          "href": "/",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/events",
+      "name": "Évènements",
+      "status": 200,
+      "title": "Événements & Agenda - PROQUELEC | PROQUELEC SENEGAL - Qualité Électrique au Sénégal",
+      "totalLinks": 17,
+      "internalLinks": 15,
+      "externalLinks": 0,
+      "mailLinks": 1,
+      "telLinks": 1,
+      "anchorLinks": 2,
+      "linksDetails": [
+        {
+          "text": "Accueil",
+          "href": "/",
+          "title": null
+        },
+        {
+          "text": "Nous contacter",
+          "href": "/contact",
+          "title": null
+        },
+        {
+          "text": "Connexion",
+          "href": "/connexion",
+          "title": null
+        },
+        {
+          "text": "Voir les événements officiels",
+          "href": "#official",
+          "title": null
+        },
+        {
+          "text": "Événements partenaires",
+          "href": "#partners",
+          "title": null
+        },
+        {
+          "text": "+221 33 848 68 55",
+          "href": "tel:+221 33 848 68 55",
+          "title": null
+        },
+        {
+          "text": "",
+          "href": "mailto:proquelec@proquelec.sn",
+          "title": null
+        },
+        {
+          "text": "À propos",
+          "href": "/about",
+          "title": null
+        },
+        {
+          "text": "Activités",
+          "href": "/activities",
+          "title": null
+        },
+        {
+          "text": "Labels",
+          "href": "/labels",
+          "title": null
+        },
+        {
+          "text": "Documentation",
+          "href": "/documents",
+          "title": null
+        },
+        {
+          "text": "Blog & Actualités",
+          "href": "/blog",
+          "title": null
+        },
+        {
+          "text": "Événements",
+          "href": "/events",
+          "title": null
+        },
+        {
+          "text": "Formations",
+          "href": "/formations",
+          "title": null
+        },
+        {
+          "text": "Certifications",
+          "href": "/certifications",
+          "title": null
+        },
+        {
+          "text": "Confidentialité",
+          "href": "/legal",
+          "title": null
+        },
+        {
+          "text": "Plan du site",
+          "href": "/sitemap",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/partenaires",
+      "name": "Partenaires",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 1,
+      "internalLinks": 1,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "← Retour à l'accueil",
+          "href": "/",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/press",
+      "name": "Press",
+      "status": 200,
+      "title": "Page Introuvable - PROQUELEC | PROQUELEC SENEGAL - Qualité Électrique au Sénégal",
+      "totalLinks": 16,
+      "internalLinks": 14,
+      "externalLinks": 0,
+      "mailLinks": 1,
+      "telLinks": 1,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "Accueil",
+          "href": "/",
+          "title": null
+        },
+        {
+          "text": "Nous contacter",
+          "href": "/contact",
+          "title": null
+        },
+        {
+          "text": "Connexion",
+          "href": "/connexion",
+          "title": null
+        },
+        {
+          "text": "À propos",
+          "href": "/about",
+          "title": null
+        },
+        {
+          "text": "Utilité Publique",
+          "href": "/utilite-publique",
+          "title": null
+        },
+        {
+          "text": "+221 33 848 68 55",
+          "href": "tel:+221 33 848 68 55",
+          "title": null
+        },
+        {
+          "text": "",
+          "href": "mailto:proquelec@proquelec.sn",
+          "title": null
+        },
+        {
+          "text": "Activités",
+          "href": "/activities",
+          "title": null
+        },
+        {
+          "text": "Labels",
+          "href": "/labels",
+          "title": null
+        },
+        {
+          "text": "Documentation",
+          "href": "/documents",
+          "title": null
+        },
+        {
+          "text": "Blog & Actualités",
+          "href": "/blog",
+          "title": null
+        },
+        {
+          "text": "Événements",
+          "href": "/events",
+          "title": null
+        },
+        {
+          "text": "Formations",
+          "href": "/formations",
+          "title": null
+        },
+        {
+          "text": "Certifications",
+          "href": "/certifications",
+          "title": null
+        },
+        {
+          "text": "Confidentialité",
+          "href": "/legal",
+          "title": null
+        },
+        {
+          "text": "Plan du site",
+          "href": "/sitemap",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/showroom",
+      "name": "Showroom",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 0,
+      "internalLinks": 0,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": []
+    },
+    {
+      "path": "/documents",
+      "name": "Documents",
+      "status": 200,
+      "title": "Documents & Ressources - PROQUELEC | PROQUELEC SENEGAL - Qualité Électrique au Sénégal",
+      "totalLinks": 15,
+      "internalLinks": 13,
+      "externalLinks": 0,
+      "mailLinks": 1,
+      "telLinks": 1,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "Accueil",
+          "href": "/",
+          "title": null
+        },
+        {
+          "text": "Nous contacter",
+          "href": "/contact",
+          "title": null
+        },
+        {
+          "text": "Connexion",
+          "href": "/connexion",
+          "title": null
+        },
+        {
+          "text": "+221 33 848 68 55",
+          "href": "tel:+221 33 848 68 55",
+          "title": null
+        },
+        {
+          "text": "",
+          "href": "mailto:proquelec@proquelec.sn",
+          "title": null
+        },
+        {
+          "text": "À propos",
+          "href": "/about",
+          "title": null
+        },
+        {
+          "text": "Activités",
+          "href": "/activities",
+          "title": null
+        },
+        {
+          "text": "Labels",
+          "href": "/labels",
+          "title": null
+        },
+        {
+          "text": "Documentation",
+          "href": "/documents",
+          "title": null
+        },
+        {
+          "text": "Blog & Actualités",
+          "href": "/blog",
+          "title": null
+        },
+        {
+          "text": "Événements",
+          "href": "/events",
+          "title": null
+        },
+        {
+          "text": "Formations",
+          "href": "/formations",
+          "title": null
+        },
+        {
+          "text": "Certifications",
+          "href": "/certifications",
+          "title": null
+        },
+        {
+          "text": "Confidentialité",
+          "href": "/legal",
+          "title": null
+        },
+        {
+          "text": "Plan du site",
+          "href": "/sitemap",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/ged",
+      "name": "GED",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 2,
+      "internalLinks": 2,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "PROQUELECEspace Professionnel",
+          "href": "/",
+          "title": null
+        },
+        {
+          "text": "conditions d'utilisation",
+          "href": "/legal",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/dashboard",
+      "name": "Tableau de bord",
+      "status": 200,
+      "title": "Proquelec Neural-Next | Monitoring Dashboard",
+      "totalLinks": 0,
+      "internalLinks": 0,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": []
+    },
+    {
+      "path": "/connexion",
+      "name": "Connexion",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 2,
+      "internalLinks": 2,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "PROQUELECEspace Professionnel",
+          "href": "/",
+          "title": null
+        },
+        {
+          "text": "conditions d'utilisation",
+          "href": "/legal",
+          "title": null
+        }
+      ]
+    },
+    {
+      "path": "/sitemap",
+      "name": "Plan du site",
+      "status": 200,
+      "title": "PROQUELEC SENEGAL",
+      "totalLinks": 47,
+      "internalLinks": 47,
+      "externalLinks": 0,
+      "mailLinks": 0,
+      "telLinks": 0,
+      "anchorLinks": 0,
+      "linksDetails": [
+        {
+          "text": "Accueil",
+          "href": "/",
+          "title": null
+        },
+        {
+          "text": "À propos",
+          "href": "/about",
+          "title": null
+        },
+        {
+          "text": "Activités",
+          "href": "/activities",
+          "title": null
+        },
+        {
+          "text": "Actualités",
+          "href": "/actualites",
+          "title": null
+        },
+        {
+          "text": "Actualités & Événements",
+          "href": "/actualites-evenements",
+          "title": null
+        },
+        {
+          "text": "Blog & Actualités",
+          "href": "/blog",
+          "title": null
+        },
+        {
+          "text": "Labels & Qualité",
+          "href": "/labels",
+          "title": null
+        },
+        {
+          "text": "Partenaires",
+          "href": "/partenaires",
+          "title": null
+        },
+        {
+          "text": "Contact",
+          "href": "/contact",
+          "title": null
+        },
+        {
+          "text": "Contact Premium",
+          "href": "/contact-premium",
+          "title": null
+        },
+        {
+          "text": "Mentions Légales",
+          "href": "/legal",
+          "title": null
+        },
+        {
+          "text": "Formation & Certification",
+          "href": "/formation-certification",
+          "title": null
+        },
+        {
+          "text": "Certifications",
+          "href": "/certifications",
+          "title": null
+        },
+        {
+          "text": "Formations",
+          "href": "/formations",
+          "title": null
+        },
+        {
+          "text": "Formations PROQUELEC",
+          "href": "/formations-proquelec",
+          "title": null
+        },
+        {
+          "text": "Normes & Ressources",
+          "href": "/normes-ressources",
+          "title": null
+        },
+        {
+          "text": "Expertises Techniques",
+          "href": "/expertises-techniques",
+          "title": null
+        },
+        {
+          "text": "Projets & Réalisations",
+          "href": "/projets-realisations",
+          "title": null
+        },
+        {
+          "text": "Plateforme d'Outils",
+          "href": "/outils",
+          "title": null
+        },
+        {
+          "text": "Showroom Technique",
+          "href": "/showroom",
+          "title": null
+        },
+        {
+          "text": "Gestionnaire GED",
+          "href": "/ged",
+          "title": null
+        },
+        {
+          "text": "Schema Builder",
+          "href": "/schema-builder",
+          "title": null
+        },
+        {
+          "text": "Avantages Membres",
+          "href": "/avantages",
+          "title": null
+        },
+        {
+          "text": "Sélecteur de Rubrique",
+          "href": "/rubrique-selector",
+          "title": null
+        },
+        {
+          "text": "Utilité Publique",
+          "href": "/utilite-publique",
+          "title": null
+        },
+        {
+          "text": "Espace Autorités",
+          "href": "/autorites",
+          "title": null
+        },
+        {
+          "text": "Espace Ménages",
+          "href": "/menages",
+          "title": null
+        },
+        {
+          "text": "Espace Professionnels",
+          "href": "/professionnels",
+          "title": null
+        },
+        {
+          "text": "Espace Presse",
+          "href": "/presse",
+          "title": null
+        },
+        {
+          "text": "Réseaux & Social",
+          "href": "/social",
+          "title": null
+        },
+        {
+          "text": "Espace Ménages (Avancé)",
+          "href": "/espace-menages",
+          "title": null
+        },
+        {
+          "text": "Espace Professionnels (Avancé)",
+          "href": "/espace-professionnels",
+          "title": null
+        },
+        {
+          "text": "Espace Autorités (Avancé)",
+          "href": "/espace-autorites",
+          "title": null
+        },
+        {
+          "text": "Documents & GED",
+          "href": "/documents",
+          "title": null
+        },
+        {
+          "text": "Événements",
+          "href": "/events",
+          "title": null
+        },
+        {
+          "text": "Console Expert",
+          "href": "/expert",
+          "title": null
+        },
+        {
+          "text": "Expert Lab",
+          "href": "/expert-lab",
+          "title": null
+        },
+        {
+          "text": "Assistant Chat IA",
+          "href": "/expert/chat",
+          "title": null
+        },
+        {
+          "text": "Calculatrices Normatives",
+          "href": "/expert/calculators",
+          "title": null
+        },
+        {
+          "text": "Scanner de Conformité",
+          "href": "/expert/scanner",
+          "title": null
+        },
+        {
+          "text": "Archives & Historique",
+          "href": "/expert/history",
+          "title": null
+        },
+        {
+          "text": "Logs Système",
+          "href": "/expert/logs",
+          "title": null
+        },
+        {
+          "text": "Dashboard Admin",
+          "href": "/admin",
+          "title": null
+        },
+        {
+          "text": "Gestionnaire de Pages",
+          "href": "/admin?tab=pages",
+          "title": null
+        },
+        {
+          "text": "Paramètres Système",
+          "href": "/expert/config",
+          "title": null
+        },
+        {
+          "text": "Fournisseurs IA",
+          "href": "/expert/ai-providers",
+          "title": null
+        },
+        {
+          "text": "Statistiques Globales",
+          "href": "/analytics",
+          "title": null
+        }
+      ]
+    }
+  ],
+  "linkTests": {
+    "working": [
+      {
+        "href": "/",
+        "status": 200
+      },
+      {
+        "href": "/contact",
+        "status": 200
+      },
+      {
+        "href": "/connexion",
+        "status": 200
+      },
+      {
+        "href": "/about",
+        "status": 200
+      },
+      {
+        "href": "/utilite-publique",
+        "status": 200
+      },
+      {
+        "href": "/activities",
+        "status": 200
+      },
+      {
+        "href": "/labels",
+        "status": 200
+      },
+      {
+        "href": "/documents",
+        "status": 200
+      },
+      {
+        "href": "/blog",
+        "status": 200
+      },
+      {
+        "href": "/events",
+        "status": 200
+      },
+      {
+        "href": "/formations",
+        "status": 200
+      },
+      {
+        "href": "/certifications",
+        "status": 200
+      },
+      {
+        "href": "/legal",
+        "status": 200
+      },
+      {
+        "href": "/sitemap",
+        "status": 200
+      },
+      {
+        "href": "/actualites",
+        "status": 200
+      },
+      {
+        "href": "/actualites-evenements",
+        "status": 200
+      },
+      {
+        "href": "/partenaires",
+        "status": 200
+      },
+      {
+        "href": "/contact-premium",
+        "status": 200
+      },
+      {
+        "href": "/formation-certification",
+        "status": 200
+      },
+      {
+        "href": "/formations-proquelec",
+        "status": 200
+      },
+      {
+        "href": "/normes-ressources",
+        "status": 200
+      },
+      {
+        "href": "/expertises-techniques",
+        "status": 200
+      },
+      {
+        "href": "/projets-realisations",
+        "status": 200
+      },
+      {
+        "href": "/outils",
+        "status": 200
+      },
+      {
+        "href": "/showroom",
+        "status": 200
+      },
+      {
+        "href": "/ged",
+        "status": 200
+      },
+      {
+        "href": "/schema-builder",
+        "status": 200
+      },
+      {
+        "href": "/avantages",
+        "status": 200
+      },
+      {
+        "href": "/rubrique-selector",
+        "status": 200
+      },
+      {
+        "href": "/autorites",
+        "status": 200
+      }
+    ],
+    "broken": [],
+    "notTested": [
+      "/menages",
+      "/professionnels",
+      "/presse",
+      "/social",
+      "/espace-menages",
+      "/espace-professionnels",
+      "/espace-autorites",
+      "/expert",
+      "/expert-lab",
+      "/expert/chat",
+      "/expert/calculators",
+      "/expert/scanner",
+      "/expert/history",
+      "/expert/logs",
+      "/admin",
+      "/admin?tab=pages",
+      "/expert/config",
+      "/expert/ai-providers",
+      "/analytics"
+    ]
+  },
+  "allUniqueLinks": [
+    {
+      "href": "/",
+      "foundOn": [
+        "/",
+        "/about",
+        "/services",
+        "/contact",
+        "/blog",
+        "/certifications",
+        "/formations",
+        "/actualites",
+        "/events",
+        "/partenaires",
+        "/press",
+        "/documents",
+        "/ged",
+        "/connexion",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/contact",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/connexion",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents"
+      ]
+    },
+    {
+      "href": "/about",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/utilite-publique",
+      "foundOn": [
+        "/services",
+        "/press",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "tel:+221 33 848 68 55",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents"
+      ]
+    },
+    {
+      "href": "mailto:proquelec@proquelec.sn",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents"
+      ]
+    },
+    {
+      "href": "/activities",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/labels",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/documents",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/blog",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/events",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/formations",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/certifications",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/legal",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents",
+        "/ged",
+        "/connexion",
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/sitemap",
+      "foundOn": [
+        "/services",
+        "/events",
+        "/press",
+        "/documents"
+      ]
+    },
+    {
+      "href": "#official",
+      "foundOn": [
+        "/events"
+      ]
+    },
+    {
+      "href": "#partners",
+      "foundOn": [
+        "/events"
+      ]
+    },
+    {
+      "href": "/actualites",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/actualites-evenements",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/partenaires",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/contact-premium",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/formation-certification",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/formations-proquelec",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/normes-ressources",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/expertises-techniques",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/projets-realisations",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/outils",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/showroom",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/ged",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/schema-builder",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/avantages",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/rubrique-selector",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/autorites",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/menages",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/professionnels",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/presse",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/social",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/espace-menages",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/espace-professionnels",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/espace-autorites",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/expert",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/expert-lab",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/expert/chat",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/expert/calculators",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/expert/scanner",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/expert/history",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/expert/logs",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/admin",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/admin?tab=pages",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/expert/config",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/expert/ai-providers",
+      "foundOn": [
+        "/sitemap"
+      ]
+    },
+    {
+      "href": "/analytics",
+      "foundOn": [
+        "/sitemap"
+      ]
+    }
+  ]
+}
