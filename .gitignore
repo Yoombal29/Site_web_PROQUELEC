@@ -29,3 +29,12 @@ ACCESS_HELPER.md
 docker/postgres/init/backup_proquelec.sql
 public/normative-corpus
 export_full.cjs
+
+# Playwright auth state & test artifacts
+.auth/
+test-results/
+playwright-report/docker/postgres/data/
+
+# Deploy scripts
+deploy.bat
+deploy.sh
