@@ -34,7 +34,7 @@ try {
 }
 const { orchestrate } = require('./orchestrator');
 const { spawn } = require('child_process');
-const { sendEmail, emailTemplates } = require('./email-service');
+const { sendEmail, sendContactNotification, sendNewUserNotification } = require('./email-service');
 const { startSyncEngine } = require('./sync-engine'); // Observatoire Sync
 
 // -- LOG BUFFER FOR REAL-TIME MONITORING --
@@ -2052,6 +2052,12 @@ app.post('/api/auth/register', async (req, res) => {
     const user = result.rows[0];
     const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, {
       expiresIn: '24h',
+    });
+
+    // Notification email non bloquante
+    sendNewUserNotification({ email: user.email, nom: full_name, phone, role: userRole }).then(r => {
+      if (r.success) console.log('[REGISTER] Email notification sent');
+      else console.warn('[REGISTER] Email notification failed:', r.error);
     });
 
     res.status(201).json({
@@ -6222,6 +6228,11 @@ app.post('/api/contact-requests', async (req, res) => {
       'INSERT INTO public.contact_requests (nom, email, telephone, sujet, message, submitted_at, status) VALUES ($1, $2, $3, $4, $5, NOW(), $6) RETURNING *',
       [nom, email, telephone, sujet, message, 'nouveau'],
     );
+    // Envoi de la notification par email (non bloquant)
+    sendContactNotification({ nom, email, telephone, sujet, message }).then(r => {
+      if (r.success) console.log('[CONTACT] Email notification sent');
+      else console.warn('[CONTACT] Email notification failed:', r.error);
+    });
     res.status(201).json(result.rows[0]);
   } catch (error) {
     handleAppError(error, res);
