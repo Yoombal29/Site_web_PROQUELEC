@@ -21,6 +21,7 @@ import { useAnalytics } from '@/hooks/useAnalytics';
 import { useRealAnalytics } from '@/hooks/useRealAnalytics';
 import AdminUsersPanel from './AdminUsersPanel';
 import TechToolsPanel from './TechToolsPanel';
+import NewsletterAdminPanel from './NewsletterAdminPanel';
 
 interface TabConfig {
   id: string;
@@ -284,7 +285,8 @@ const AdminDashboard: React.FC = () => {
   { id: 'settings', label: 'Configuration Site', icon: <Settings className="w-5 h-5" />, color: 'text-green-600' },
   { id: 'ai', label: 'Assistant IA', icon: <Brain className="w-5 h-5" />, color: 'text-orange-600' },
     { id: 'users', label: 'Utilisateurs', icon: <Users className="w-5 h-5" />, color: 'text-purple-600' },
-    { id: 'tech-tools', label: 'Outils techniques', icon: <Wrench className="w-5 h-5" />, color: 'text-cyan-600' }]
+    { id: 'tech-tools', label: 'Outils techniques', icon: <Wrench className="w-5 h-5" />, color: 'text-cyan-600' },
+    { id: 'newsletter', label: 'Newsletter', icon: <Mail className="w-5 h-5" />, color: 'text-pink-600' }]
 
 
   return (
@@ -661,6 +663,13 @@ const AdminDashboard: React.FC = () => {
         {activeTab === 'tech-tools' &&
           <div className="animate-fade-in">
             <TechToolsPanel />
+          </div>
+        }
+
+        {/* SECTION : NEWSLETTER */}
+        {activeTab === 'newsletter' &&
+          <div className="animate-fade-in">
+            <NewsletterAdminPanel />
           </div>
         }
       </div>
