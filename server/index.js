@@ -5785,7 +5785,7 @@ app.post('/api/admin/notifications', authenticateToken, requireAdmin, async (req
 
     // Envoyer email aux utilisateurs du rôle cible (non bloquant)
     if (target_role) {
-      const users = await pool.query('SELECT email, COALESCE(full_name, name, email) as full_name FROM users WHERE role = $1 AND is_active = true', [target_role]);
+      const users = await pool.query('SELECT email, COALESCE(name, email) as full_name FROM users WHERE role = $1 AND is_active = true', [target_role]);
       for (const user of users.rows) {
         try {
           await sendEmail({
