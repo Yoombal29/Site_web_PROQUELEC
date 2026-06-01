@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "site_name": "PROQUELEC SÉNÉGAL",
+    "slogan": "Sécurité · Qualité · Formation",
+    "logo_url": null,
+    "favicon_url": null,
+    "updated_at": "2026-05-23T00:57:59.106Z",
+    "phone_number": null,
+    "facebook_url": null,
+    "linkedin_url": null,
+    "twitter_url": null,
+    "copyright_text": null,
+    "require_email_confirmation": false,
+    "logo_height": 50,
+    "logo_scale": "1.2",
+    "logo_brightness": 100,
+    "logo_contrast": 100,
+    "primary_color": "#2376df",
+    "secondary_color": "#ffffff",
+    "text_color": "#333333",
+    "background_color": "#ffffff",
+    "font_family": "Inter, sans-serif",
+    "meta_description": "PROQUELEC - Organisme national de référence pour la qualité et la sécurité des installations électriques au Sénégal",
+    "meta_keywords": "PROQUELEC, qualité électrique, sécurité installations, Sénégal, normes électriques",
+    "contact_email": null,
+    "contact_phone": null,
+    "address": null,
+    "social_facebook": null,
+    "social_linkedin": null,
+    "social_twitter": null
+  }
+]

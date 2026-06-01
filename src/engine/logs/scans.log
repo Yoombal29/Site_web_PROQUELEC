@@ -1,0 +1,1329 @@
+[2026-02-12T11:00:21.257Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:00:21.272Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:00:21.273Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:00:21.273Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:00:21.274Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:00:21.274Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:00:21.276Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:00:21.277Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:00:21.280Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:00:21.282Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:00:21.284Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:00:21.284Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:00:21.287Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:00:21.289Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:00:21.290Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:00:21.290Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:00:21.294Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:00:21.295Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:00:21.298Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:00:21.298Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:00:21.299Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:00:21.300Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:00:21.301Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:00:21.302Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:00:21.305Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:00:21.314Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:00:21.330Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:00:21.340Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:00:21.349Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:00:21.350Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:00:21.352Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:00:21.368Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:00:21.369Z] Problèmes identifiés : 17
+[2026-02-12T11:00:21.369Z] Correctifs appliqués : 0
+[2026-02-12T11:00:21.370Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:00:40.759Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:00:40.795Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:00:40.795Z] Problèmes identifiés : 0
+[2026-02-12T11:00:40.795Z] Correctifs appliqués : 0
+[2026-02-12T11:00:40.796Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:00:45.162Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:00:45.197Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:00:45.198Z] Problèmes identifiés : 0
+[2026-02-12T11:00:45.198Z] Correctifs appliqués : 0
+[2026-02-12T11:00:45.198Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:00:57.265Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:00:57.299Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:00:57.300Z] Problèmes identifiés : 0
+[2026-02-12T11:00:57.300Z] Correctifs appliqués : 0
+[2026-02-12T11:00:57.301Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:01:01.050Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:01:01.082Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:01:01.083Z] Problèmes identifiés : 0
+[2026-02-12T11:01:01.083Z] Correctifs appliqués : 0
+[2026-02-12T11:01:01.083Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:01:02.755Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:01:02.791Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:01:02.791Z] Problèmes identifiés : 0
+[2026-02-12T11:01:02.791Z] Correctifs appliqués : 0
+[2026-02-12T11:01:02.792Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:05:28.731Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:05:28.765Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:05:28.766Z] Problèmes identifiés : 0
+[2026-02-12T11:05:28.767Z] Correctifs appliqués : 0
+[2026-02-12T11:05:28.767Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:05:30.699Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:05:30.732Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:05:30.733Z] Problèmes identifiés : 0
+[2026-02-12T11:05:30.733Z] Correctifs appliqués : 0
+[2026-02-12T11:05:30.733Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:05:37.280Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:05:37.324Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:05:37.326Z] Problèmes identifiés : 0
+[2026-02-12T11:05:37.328Z] Correctifs appliqués : 0
+[2026-02-12T11:05:37.329Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:05:40.986Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:05:41.020Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:05:41.021Z] Problèmes identifiés : 0
+[2026-02-12T11:05:41.021Z] Correctifs appliqués : 0
+[2026-02-12T11:05:41.022Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:05:43.721Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:05:43.757Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:05:43.758Z] Problèmes identifiés : 0
+[2026-02-12T11:05:43.758Z] Correctifs appliqués : 0
+[2026-02-12T11:05:43.758Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:05:49.419Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:05:49.465Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:05:49.466Z] Problèmes identifiés : 0
+[2026-02-12T11:05:49.466Z] Correctifs appliqués : 0
+[2026-02-12T11:05:49.467Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:05:52.500Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:05:52.533Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:05:52.534Z] Problèmes identifiés : 0
+[2026-02-12T11:05:52.534Z] Correctifs appliqués : 0
+[2026-02-12T11:05:52.535Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:05:55.107Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:05:55.138Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:05:55.139Z] Problèmes identifiés : 0
+[2026-02-12T11:05:55.150Z] Correctifs appliqués : 0
+[2026-02-12T11:05:55.157Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:05:58.376Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:05:58.418Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:05:58.418Z] Problèmes identifiés : 0
+[2026-02-12T11:05:58.420Z] Correctifs appliqués : 0
+[2026-02-12T11:05:58.420Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:01.072Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:01.109Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:01.110Z] Problèmes identifiés : 0
+[2026-02-12T11:06:01.110Z] Correctifs appliqués : 0
+[2026-02-12T11:06:01.111Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:03.438Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:03.473Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:03.474Z] Problèmes identifiés : 0
+[2026-02-12T11:06:03.474Z] Correctifs appliqués : 0
+[2026-02-12T11:06:03.475Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:06.107Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:06.231Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:06.231Z] Problèmes identifiés : 0
+[2026-02-12T11:06:06.232Z] Correctifs appliqués : 0
+[2026-02-12T11:06:06.233Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:12.182Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:06:12.202Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:06:12.203Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:06:12.204Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:06:12.205Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:06:12.206Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:06:12.207Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:06:12.208Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:06:12.213Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:06:12.214Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:06:12.216Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:06:12.217Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:06:12.219Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:06:12.223Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:06:12.225Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:06:12.226Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:06:12.233Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:06:12.234Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:06:12.236Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:06:12.237Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:06:12.239Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:06:12.241Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:06:12.247Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:06:12.250Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:06:12.254Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:06:12.268Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:06:12.293Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:06:12.305Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:06:12.320Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:06:12.320Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:06:12.323Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:06:12.337Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:12.338Z] Problèmes identifiés : 17
+[2026-02-12T11:06:12.338Z] Correctifs appliqués : 0
+[2026-02-12T11:06:12.338Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:06:13.906Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:13.942Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:13.943Z] Problèmes identifiés : 0
+[2026-02-12T11:06:13.944Z] Correctifs appliqués : 0
+[2026-02-12T11:06:13.948Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:17.645Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:17.681Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:17.681Z] Problèmes identifiés : 0
+[2026-02-12T11:06:17.682Z] Correctifs appliqués : 0
+[2026-02-12T11:06:17.683Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:18.990Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:19.024Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:19.025Z] Problèmes identifiés : 0
+[2026-02-12T11:06:19.025Z] Correctifs appliqués : 0
+[2026-02-12T11:06:19.025Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:20.535Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:20.582Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:20.583Z] Problèmes identifiés : 0
+[2026-02-12T11:06:20.583Z] Correctifs appliqués : 0
+[2026-02-12T11:06:20.583Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:21.434Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:21.473Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:21.473Z] Problèmes identifiés : 0
+[2026-02-12T11:06:21.474Z] Correctifs appliqués : 0
+[2026-02-12T11:06:21.474Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:22.732Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:22.771Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:22.771Z] Problèmes identifiés : 0
+[2026-02-12T11:06:22.772Z] Correctifs appliqués : 0
+[2026-02-12T11:06:22.772Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:23.881Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:23.922Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:23.923Z] Problèmes identifiés : 0
+[2026-02-12T11:06:23.923Z] Correctifs appliqués : 0
+[2026-02-12T11:06:23.924Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:26.037Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:26.082Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:26.082Z] Problèmes identifiés : 0
+[2026-02-12T11:06:26.083Z] Correctifs appliqués : 0
+[2026-02-12T11:06:26.083Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:32.150Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:32.184Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:32.184Z] Problèmes identifiés : 0
+[2026-02-12T11:06:32.185Z] Correctifs appliqués : 0
+[2026-02-12T11:06:32.185Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:34.465Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:34.497Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:34.498Z] Problèmes identifiés : 0
+[2026-02-12T11:06:34.498Z] Correctifs appliqués : 0
+[2026-02-12T11:06:34.499Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:36.095Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:36.138Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:36.139Z] Problèmes identifiés : 0
+[2026-02-12T11:06:36.139Z] Correctifs appliqués : 0
+[2026-02-12T11:06:36.140Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:37.205Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:37.245Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:37.245Z] Problèmes identifiés : 0
+[2026-02-12T11:06:37.245Z] Correctifs appliqués : 0
+[2026-02-12T11:06:37.246Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:39.791Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:39.843Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:39.844Z] Problèmes identifiés : 0
+[2026-02-12T11:06:39.844Z] Correctifs appliqués : 0
+[2026-02-12T11:06:39.845Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:42.918Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:42.949Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:42.950Z] Problèmes identifiés : 0
+[2026-02-12T11:06:42.950Z] Correctifs appliqués : 0
+[2026-02-12T11:06:42.950Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:44.500Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:44.547Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:44.548Z] Problèmes identifiés : 0
+[2026-02-12T11:06:44.548Z] Correctifs appliqués : 0
+[2026-02-12T11:06:44.548Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:46.195Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:46.229Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:46.230Z] Problèmes identifiés : 0
+[2026-02-12T11:06:46.230Z] Correctifs appliqués : 0
+[2026-02-12T11:06:46.230Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:47.425Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:06:47.460Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:47.460Z] Problèmes identifiés : 0
+[2026-02-12T11:06:47.461Z] Correctifs appliqués : 0
+[2026-02-12T11:06:47.461Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:06:50.423Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:06:50.461Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:06:50.463Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:06:50.464Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:06:50.466Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:06:50.466Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:06:50.467Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:06:50.467Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:06:50.471Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:06:50.472Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:06:50.474Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:06:50.475Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:06:50.476Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:06:50.477Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:06:50.478Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:06:50.478Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:06:50.481Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:06:50.482Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:06:50.483Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:06:50.484Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:06:50.485Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:06:50.485Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:06:50.486Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:06:50.487Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:06:50.490Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:06:50.501Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:06:50.514Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:06:50.523Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:06:50.534Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:06:50.641Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:06:50.647Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:06:50.682Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:06:50.682Z] Problèmes identifiés : 17
+[2026-02-12T11:06:50.683Z] Correctifs appliqués : 0
+[2026-02-12T11:06:50.683Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:07:04.729Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:04.765Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:04.766Z] Problèmes identifiés : 0
+[2026-02-12T11:07:04.766Z] Correctifs appliqués : 0
+[2026-02-12T11:07:04.766Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:06.114Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:06.151Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:06.151Z] Problèmes identifiés : 0
+[2026-02-12T11:07:06.151Z] Correctifs appliqués : 0
+[2026-02-12T11:07:06.152Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:07.462Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:07:07.480Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:07:07.481Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:07:07.481Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:07:07.482Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:07:07.483Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:07:07.484Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:07:07.484Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:07:07.490Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:07:07.493Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:07:07.495Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:07:07.496Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:07:07.498Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:07:07.499Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:07:07.500Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:07:07.501Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:07:07.505Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:07:07.514Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:07:07.515Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:07:07.515Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:07:07.518Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:07:07.519Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:07:07.520Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:07:07.523Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:07:07.528Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:07:07.540Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:07:07.557Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:07:07.567Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:07:07.583Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:07:07.583Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:07:07.586Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:07:07.600Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:07.600Z] Problèmes identifiés : 17
+[2026-02-12T11:07:07.602Z] Correctifs appliqués : 0
+[2026-02-12T11:07:07.603Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:07:13.614Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:13.649Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:13.649Z] Problèmes identifiés : 0
+[2026-02-12T11:07:13.650Z] Correctifs appliqués : 0
+[2026-02-12T11:07:13.650Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:15.959Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:15.995Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:15.996Z] Problèmes identifiés : 0
+[2026-02-12T11:07:15.996Z] Correctifs appliqués : 0
+[2026-02-12T11:07:15.996Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:26.579Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:07:26.595Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:07:26.597Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:07:26.597Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:07:26.598Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:07:26.599Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:07:26.600Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:07:26.600Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:07:26.603Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:07:26.605Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:07:26.606Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:07:26.607Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:07:26.609Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:07:26.609Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:07:26.610Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:07:26.610Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:07:26.613Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:07:26.614Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:07:26.616Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:07:26.617Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:07:26.618Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:07:26.619Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:07:26.619Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:07:26.621Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:07:26.625Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:07:26.647Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:07:26.664Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:07:26.675Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:07:26.685Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:07:26.685Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:07:26.687Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:07:26.700Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:26.700Z] Problèmes identifiés : 17
+[2026-02-12T11:07:26.701Z] Correctifs appliqués : 0
+[2026-02-12T11:07:26.701Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:07:30.008Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:30.067Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:30.068Z] Problèmes identifiés : 0
+[2026-02-12T11:07:30.069Z] Correctifs appliqués : 0
+[2026-02-12T11:07:30.069Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:31.184Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:31.221Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:31.222Z] Problèmes identifiés : 0
+[2026-02-12T11:07:31.222Z] Correctifs appliqués : 0
+[2026-02-12T11:07:31.222Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:32.321Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:32.355Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:32.356Z] Problèmes identifiés : 0
+[2026-02-12T11:07:32.356Z] Correctifs appliqués : 0
+[2026-02-12T11:07:32.356Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:33.064Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:33.097Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:33.097Z] Problèmes identifiés : 0
+[2026-02-12T11:07:33.098Z] Correctifs appliqués : 0
+[2026-02-12T11:07:33.098Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:33.776Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:33.817Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:33.817Z] Problèmes identifiés : 0
+[2026-02-12T11:07:33.818Z] Correctifs appliqués : 0
+[2026-02-12T11:07:33.819Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:34.994Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:35.026Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:35.026Z] Problèmes identifiés : 0
+[2026-02-12T11:07:35.027Z] Correctifs appliqués : 0
+[2026-02-12T11:07:35.027Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:36.005Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:36.039Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:36.039Z] Problèmes identifiés : 0
+[2026-02-12T11:07:36.040Z] Correctifs appliqués : 0
+[2026-02-12T11:07:36.040Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:37.251Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:37.287Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:37.288Z] Problèmes identifiés : 0
+[2026-02-12T11:07:37.289Z] Correctifs appliqués : 0
+[2026-02-12T11:07:37.290Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:38.531Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:38.564Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:38.565Z] Problèmes identifiés : 0
+[2026-02-12T11:07:38.565Z] Correctifs appliqués : 0
+[2026-02-12T11:07:38.566Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:39.874Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:39.913Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:39.913Z] Problèmes identifiés : 0
+[2026-02-12T11:07:39.914Z] Correctifs appliqués : 0
+[2026-02-12T11:07:39.914Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:41.257Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:41.300Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:41.300Z] Problèmes identifiés : 0
+[2026-02-12T11:07:41.301Z] Correctifs appliqués : 0
+[2026-02-12T11:07:41.301Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:43.828Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:43.866Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:43.866Z] Problèmes identifiés : 0
+[2026-02-12T11:07:43.867Z] Correctifs appliqués : 0
+[2026-02-12T11:07:43.867Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:45.267Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:45.305Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:45.305Z] Problèmes identifiés : 0
+[2026-02-12T11:07:45.307Z] Correctifs appliqués : 0
+[2026-02-12T11:07:45.312Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:48.115Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:48.151Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:48.151Z] Problèmes identifiés : 0
+[2026-02-12T11:07:48.151Z] Correctifs appliqués : 0
+[2026-02-12T11:07:48.152Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:49.282Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:49.314Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:49.315Z] Problèmes identifiés : 0
+[2026-02-12T11:07:49.315Z] Correctifs appliqués : 0
+[2026-02-12T11:07:49.315Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:51.497Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:51.529Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:51.530Z] Problèmes identifiés : 0
+[2026-02-12T11:07:51.530Z] Correctifs appliqués : 0
+[2026-02-12T11:07:51.531Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:52.982Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:07:53.014Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:53.015Z] Problèmes identifiés : 0
+[2026-02-12T11:07:53.015Z] Correctifs appliqués : 0
+[2026-02-12T11:07:53.016Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:07:58.167Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:07:58.185Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:07:58.187Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:07:58.189Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:07:58.190Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:07:58.190Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:07:58.192Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:07:58.193Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:07:58.196Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:07:58.198Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:07:58.199Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:07:58.200Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:07:58.202Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:07:58.205Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:07:58.208Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:07:58.208Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:07:58.214Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:07:58.215Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:07:58.216Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:07:58.216Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:07:58.219Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:07:58.220Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:07:58.221Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:07:58.223Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:07:58.225Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:07:58.235Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:07:58.251Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:07:58.261Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:07:58.273Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:07:58.274Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:07:58.277Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:07:58.295Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:07:58.296Z] Problèmes identifiés : 17
+[2026-02-12T11:07:58.296Z] Correctifs appliqués : 0
+[2026-02-12T11:07:58.297Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:15:49.141Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:15:49.159Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:15:49.160Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:15:49.161Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:15:49.162Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:15:49.162Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:15:49.163Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:15:49.164Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:15:49.168Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:15:49.169Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:15:49.172Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:15:49.172Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:15:49.174Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:15:49.175Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:15:49.176Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:15:49.176Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:15:49.181Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:15:49.183Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:15:49.185Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:15:49.186Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:15:49.187Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:15:49.189Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:15:49.189Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:15:49.191Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:15:49.194Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:15:49.205Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:15:49.223Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:15:49.236Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:15:49.248Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:15:49.249Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:15:49.253Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:15:49.266Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:15:49.267Z] Problèmes identifiés : 17
+[2026-02-12T11:15:49.267Z] Correctifs appliqués : 0
+[2026-02-12T11:15:49.267Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:15:50.422Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:15:50.464Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:15:50.468Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:15:50.469Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:15:50.471Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:15:50.472Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:15:50.474Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:15:50.476Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:15:50.482Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:15:50.490Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:15:50.499Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:15:50.501Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:15:50.503Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:15:50.504Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:15:50.505Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:15:50.505Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:15:50.510Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:15:50.512Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:15:50.514Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:15:50.515Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:15:50.517Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:15:50.518Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:15:50.519Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:15:50.521Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:15:50.524Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:15:50.541Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:15:50.561Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:15:50.576Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:15:50.607Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:15:50.607Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:15:50.610Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:15:50.632Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:15:50.633Z] Problèmes identifiés : 17
+[2026-02-12T11:15:50.633Z] Correctifs appliqués : 0
+[2026-02-12T11:15:50.634Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:16:24.824Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:16:24.867Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:16:24.871Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:16:24.872Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:16:24.875Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:16:24.875Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:16:24.881Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:16:24.884Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:16:24.897Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:16:24.901Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:16:24.909Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:16:24.911Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:16:24.918Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:16:24.920Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:16:24.921Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:16:24.921Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:16:24.933Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:16:24.935Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:16:24.940Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:16:24.941Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:16:24.943Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:16:24.946Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:16:24.947Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:16:24.953Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:16:24.963Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:16:25.000Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:16:25.038Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:16:25.063Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:16:25.091Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:16:25.091Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:16:25.098Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:16:25.126Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:25.126Z] Problèmes identifiés : 17
+[2026-02-12T11:16:25.127Z] Correctifs appliqués : 0
+[2026-02-12T11:16:25.127Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:16:31.055Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:31.073Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:31.073Z] Problèmes identifiés : 0
+[2026-02-12T11:16:31.073Z] Correctifs appliqués : 0
+[2026-02-12T11:16:31.074Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:33.947Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:33.965Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:33.966Z] Problèmes identifiés : 0
+[2026-02-12T11:16:33.966Z] Correctifs appliqués : 0
+[2026-02-12T11:16:33.967Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:35.950Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:35.972Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:35.972Z] Problèmes identifiés : 0
+[2026-02-12T11:16:35.973Z] Correctifs appliqués : 0
+[2026-02-12T11:16:35.973Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:36.954Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:36.986Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:36.986Z] Problèmes identifiés : 0
+[2026-02-12T11:16:36.986Z] Correctifs appliqués : 0
+[2026-02-12T11:16:36.986Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:37.765Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:37.781Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:37.781Z] Problèmes identifiés : 0
+[2026-02-12T11:16:37.781Z] Correctifs appliqués : 0
+[2026-02-12T11:16:37.782Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:39.639Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:39.657Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:39.657Z] Problèmes identifiés : 0
+[2026-02-12T11:16:39.657Z] Correctifs appliqués : 0
+[2026-02-12T11:16:39.657Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:40.488Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:40.506Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:40.506Z] Problèmes identifiés : 0
+[2026-02-12T11:16:40.507Z] Correctifs appliqués : 0
+[2026-02-12T11:16:40.507Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:43.786Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:43.804Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:43.804Z] Problèmes identifiés : 0
+[2026-02-12T11:16:43.805Z] Correctifs appliqués : 0
+[2026-02-12T11:16:43.805Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:44.831Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:44.850Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:44.850Z] Problèmes identifiés : 0
+[2026-02-12T11:16:44.850Z] Correctifs appliqués : 0
+[2026-02-12T11:16:44.851Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:45.826Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:45.851Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:45.851Z] Problèmes identifiés : 0
+[2026-02-12T11:16:45.852Z] Correctifs appliqués : 0
+[2026-02-12T11:16:45.852Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:47.234Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:47.251Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:47.252Z] Problèmes identifiés : 0
+[2026-02-12T11:16:47.252Z] Correctifs appliqués : 0
+[2026-02-12T11:16:47.252Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:48.286Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:48.303Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:48.303Z] Problèmes identifiés : 0
+[2026-02-12T11:16:48.303Z] Correctifs appliqués : 0
+[2026-02-12T11:16:48.304Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:50.366Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:50.383Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:50.383Z] Problèmes identifiés : 0
+[2026-02-12T11:16:50.384Z] Correctifs appliqués : 0
+[2026-02-12T11:16:50.384Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:51.483Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:51.500Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:51.501Z] Problèmes identifiés : 0
+[2026-02-12T11:16:51.501Z] Correctifs appliqués : 0
+[2026-02-12T11:16:51.502Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:52.420Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:52.438Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:52.439Z] Problèmes identifiés : 0
+[2026-02-12T11:16:52.439Z] Correctifs appliqués : 0
+[2026-02-12T11:16:52.439Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:54.016Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:54.034Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:54.035Z] Problèmes identifiés : 0
+[2026-02-12T11:16:54.035Z] Correctifs appliqués : 0
+[2026-02-12T11:16:54.035Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:16:57.528Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:16:57.544Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:16:57.544Z] Problèmes identifiés : 0
+[2026-02-12T11:16:57.544Z] Correctifs appliqués : 0
+[2026-02-12T11:16:57.544Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:17:00.509Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:17:00.518Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:17:00.519Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:17:00.519Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:17:00.519Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:17:00.520Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:17:00.521Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:17:00.522Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:17:00.523Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:17:00.524Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:17:00.525Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:17:00.526Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:17:00.527Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:17:00.528Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:17:00.528Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:17:00.528Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:17:00.531Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:17:00.531Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:17:00.532Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:17:00.532Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:17:00.533Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:17:00.534Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:17:00.534Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:17:00.535Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:17:00.536Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:17:00.541Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:17:00.548Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:17:00.553Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:17:00.559Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:17:00.560Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:17:00.562Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:17:00.571Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:17:00.571Z] Problèmes identifiés : 17
+[2026-02-12T11:17:00.571Z] Correctifs appliqués : 0
+[2026-02-12T11:17:00.572Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:18:19.129Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:18:19.169Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:18:19.173Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:18:19.174Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:18:19.176Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:18:19.176Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:18:19.182Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:18:19.184Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:18:19.194Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:18:19.197Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:18:19.204Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:18:19.205Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:18:19.213Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:18:19.216Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:18:19.218Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:18:19.218Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:18:19.233Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:18:19.236Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:18:19.241Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:18:19.242Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:18:19.244Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:18:19.247Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:18:19.249Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:18:19.254Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:18:19.263Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:18:19.295Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:18:19.336Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:18:19.366Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:18:19.392Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:18:19.393Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:18:19.400Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:18:19.424Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:18:19.425Z] Problèmes identifiés : 17
+[2026-02-12T11:18:19.425Z] Correctifs appliqués : 0
+[2026-02-12T11:18:19.425Z] Stabilité actuelle estimée : 66%
+[2026-02-12T11:19:10.096Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:10.100Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:19:10.103Z] [32m[FIX] Correctif appliqué dans src\components\admin\AdminAssetsPanel.tsx[39m
+[2026-02-12T11:19:10.118Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:10.119Z] Problèmes identifiés : 1
+[2026-02-12T11:19:10.119Z] Correctifs appliqués : 1
+[2026-02-12T11:19:10.119Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:13.841Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:19:13.851Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:19:13.851Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:19:13.852Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:19:13.852Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:19:13.853Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:19:13.853Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:19:13.855Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:19:13.856Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:19:13.857Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:19:13.858Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:19:13.859Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:19:13.860Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:19:13.861Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:19:13.861Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:19:13.864Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:19:13.865Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:19:13.866Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:19:13.867Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:19:13.867Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:19:13.868Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:19:13.869Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:19:13.869Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:19:13.871Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:19:13.877Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:19:13.885Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:19:13.890Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:19:13.895Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:19:13.896Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:19:13.897Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:19:13.904Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:13.905Z] Problèmes identifiés : 16
+[2026-02-12T11:19:13.905Z] Correctifs appliqués : 0
+[2026-02-12T11:19:13.905Z] Stabilité actuelle estimée : 68%
+[2026-02-12T11:19:18.605Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:18.610Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:19:18.611Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:19:18.612Z] [32m[FIX] Correctif appliqué dans src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:19:18.625Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:18.626Z] Problèmes identifiés : 1
+[2026-02-12T11:19:18.626Z] Correctifs appliqués : 1
+[2026-02-12T11:19:18.626Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:21.252Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:21.257Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:19:21.257Z] [32m[FIX] Correctif appliqué dans src\components\admin\AdminGalleryPanel.tsx[39m
+[2026-02-12T11:19:21.272Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:21.273Z] Problèmes identifiés : 1
+[2026-02-12T11:19:21.273Z] Correctifs appliqués : 1
+[2026-02-12T11:19:21.273Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:23.945Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:23.951Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:19:23.953Z] [32m[FIX] Correctif appliqué dans src\components\admin\AdminHeaderPanel.tsx[39m
+[2026-02-12T11:19:23.967Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:23.967Z] Problèmes identifiés : 1
+[2026-02-12T11:19:23.967Z] Correctifs appliqués : 2
+[2026-02-12T11:19:23.967Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:27.933Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:27.938Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:19:27.940Z] [32m[FIX] Correctif appliqué dans src\components\admin\AdminPagesPanel.tsx[39m
+[2026-02-12T11:19:27.954Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:27.954Z] Problèmes identifiés : 1
+[2026-02-12T11:19:27.955Z] Correctifs appliqués : 8
+[2026-02-12T11:19:27.955Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:30.989Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:31.006Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:19:31.007Z] [32m[FIX] Correctif appliqué dans src\components\admin\AdminUniversalDashboard.tsx[39m
+[2026-02-12T11:19:31.025Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:31.026Z] Problèmes identifiés : 1
+[2026-02-12T11:19:31.026Z] Correctifs appliqués : 1
+[2026-02-12T11:19:31.026Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:33.573Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:33.581Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:19:33.584Z] [32m[FIX] Correctif appliqué dans src\components\admin\DesignEditor.tsx[39m
+[2026-02-12T11:19:33.596Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:33.597Z] Problèmes identifiés : 1
+[2026-02-12T11:19:33.597Z] Correctifs appliqués : 10
+[2026-02-12T11:19:33.597Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:36.325Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:36.332Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:19:36.334Z] [32m[FIX] Correctif appliqué dans src\components\admin\MenuManager.tsx[39m
+[2026-02-12T11:19:36.347Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:36.347Z] Problèmes identifiés : 1
+[2026-02-12T11:19:36.348Z] Correctifs appliqués : 1
+[2026-02-12T11:19:36.348Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:37.675Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:37.685Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:19:37.685Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:19:37.688Z] [32m[FIX] Correctif appliqué dans src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:19:37.702Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:37.702Z] Problèmes identifiés : 1
+[2026-02-12T11:19:37.702Z] Correctifs appliqués : 2
+[2026-02-12T11:19:37.702Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:38.722Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:38.731Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:19:38.733Z] [32m[FIX] Correctif appliqué dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:19:38.743Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:38.744Z] Problèmes identifiés : 1
+[2026-02-12T11:19:38.745Z] Correctifs appliqués : 1
+[2026-02-12T11:19:38.745Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:40.969Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:40.978Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:19:40.979Z] [32m[FIX] Correctif appliqué dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:19:40.992Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:40.992Z] Problèmes identifiés : 1
+[2026-02-12T11:19:40.992Z] Correctifs appliqués : 3
+[2026-02-12T11:19:40.993Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:43.567Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:43.574Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:19:43.575Z] [32m[FIX] Correctif appliqué dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:19:43.589Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:43.589Z] Problèmes identifiés : 1
+[2026-02-12T11:19:43.589Z] Correctifs appliqués : 1
+[2026-02-12T11:19:43.589Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:45.912Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:45.921Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:19:45.923Z] [32m[FIX] Correctif appliqué dans src\components\DocumentManager.tsx[39m
+[2026-02-12T11:19:45.935Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:45.935Z] Problèmes identifiés : 1
+[2026-02-12T11:19:45.936Z] Correctifs appliqués : 2
+[2026-02-12T11:19:45.936Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:49.420Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:49.428Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:19:49.429Z] [32m[FIX] Correctif appliqué dans src\components\editors\NodeParameterEditor.tsx[39m
+[2026-02-12T11:19:49.439Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:49.440Z] Problèmes identifiés : 1
+[2026-02-12T11:19:49.440Z] Correctifs appliqués : 4
+[2026-02-12T11:19:49.440Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:51.333Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:51.342Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:19:51.342Z] [32m[FIX] Correctif appliqué dans src\components\ImageManager.tsx[39m
+[2026-02-12T11:19:51.355Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:51.355Z] Problèmes identifiés : 1
+[2026-02-12T11:19:51.355Z] Correctifs appliqués : 2
+[2026-02-12T11:19:51.356Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:53.072Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:53.081Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:19:53.082Z] [32m[FIX] Correctif appliqué dans src\components\EventCalendar.tsx[39m
+[2026-02-12T11:19:53.093Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:53.094Z] Problèmes identifiés : 1
+[2026-02-12T11:19:53.094Z] Correctifs appliqués : 3
+[2026-02-12T11:19:53.094Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:56.076Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE REPAIR MODE[22m[39m
+[2026-02-12T11:19:56.099Z] [33m[VULN] Accessibility (Missing Title) trouvé dans src\pages\Blog.tsx[39m
+[2026-02-12T11:19:56.100Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:19:56.103Z] [32m[FIX] Correctif appliqué dans src\pages\Blog.tsx[39m
+[2026-02-12T11:19:56.106Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:56.107Z] Problèmes identifiés : 1
+[2026-02-12T11:19:56.107Z] Correctifs appliqués : 1
+[2026-02-12T11:19:56.107Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:19:59.335Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:19:59.343Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:19:59.343Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:19:59.344Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:19:59.347Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:19:59.348Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:19:59.350Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:19:59.353Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:19:59.356Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:19:59.361Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:19:59.369Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:19:59.375Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:19:59.382Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:19:59.384Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:19:59.393Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:19:59.393Z] Problèmes identifiés : 0
+[2026-02-12T11:19:59.394Z] Correctifs appliqués : 0
+[2026-02-12T11:19:59.394Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:20:04.502Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:20:04.522Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:20:04.523Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:20:04.524Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:20:04.531Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:20:04.533Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:20:04.539Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:20:04.545Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:20:04.552Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:20:04.570Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:20:04.577Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:20:04.584Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:20:04.589Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:20:04.591Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:20:04.598Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:20:04.598Z] Problèmes identifiés : 0
+[2026-02-12T11:20:04.599Z] Correctifs appliqués : 0
+[2026-02-12T11:20:04.599Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:20:59.448Z] [34m[1m🚀 PROQUELEC ULTRA-AI REPAIR ENGINE SCAN MODE[22m[39m
+[2026-02-12T11:20:59.457Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminBlogPanel.tsx[39m
+[2026-02-12T11:20:59.457Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminCategoryPanel.tsx[39m
+[2026-02-12T11:20:59.458Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminDashboard.tsx[39m
+[2026-02-12T11:20:59.460Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminProfessionalTrainingPanel.tsx[39m
+[2026-02-12T11:20:59.461Z] [33m[WARN] Possible TDZ pattern in src\components\admin\AdminUserManagementPanel.tsx[39m
+[2026-02-12T11:20:59.463Z] [33m[WARN] Possible TDZ pattern in src\components\admin\MenuManagerAdvanced.tsx[39m
+[2026-02-12T11:20:59.466Z] [33m[WARN] Possible TDZ pattern in src\components\DynamicMenu.tsx[39m
+[2026-02-12T11:20:59.468Z] [33m[WARN] Possible TDZ pattern in src\components\office\document\DocumentEditor.tsx[39m
+[2026-02-12T11:20:59.473Z] [33m[WARN] Possible TDZ pattern in src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:20:59.480Z] [33m[WARN] Possible TDZ pattern in src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:20:59.488Z] [33m[WARN] Possible TDZ pattern in src\hooks\useGlobalSearch.ts[39m
+[2026-02-12T11:20:59.494Z] [33m[WARN] Possible TDZ pattern in src\pages\Blog.tsx[39m
+[2026-02-12T11:20:59.497Z] [33m[WARN] Possible TDZ pattern in src\pages\Documents.tsx[39m
+[2026-02-12T11:20:59.504Z] 
+--- BILAN DU GÉNÉRÉ ---
+[2026-02-12T11:20:59.504Z] Problèmes identifiés : 0
+[2026-02-12T11:20:59.505Z] Correctifs appliqués : 0
+[2026-02-12T11:20:59.506Z] Stabilité actuelle estimée : 100%
+[2026-02-12T11:43:24.683Z] [34m[1m🚀 PROQUELEC ULTRA-AI ENGINE V2 (AST-POWERED) SCAN MODE[22m[39m
+[2026-02-12T11:43:24.820Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\CoursePreview.tsx[39m
+[2026-02-12T11:43:24.913Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\DrawingCanvas.tsx[39m
+[2026-02-12T11:43:24.917Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx[39m
+[2026-02-12T11:43:24.918Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx[39m
+[2026-02-12T11:43:24.919Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx[39m
+[2026-02-12T11:43:24.919Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx[39m
+[2026-02-12T11:43:24.920Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx[39m
+[2026-02-12T11:43:24.926Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\PresentationToolbar.tsx[39m
+[2026-02-12T11:43:24.931Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\SlideTransitions.tsx[39m
+[2026-02-12T11:43:24.947Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx[39m
+[2026-02-12T11:43:24.948Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx[39m
+[2026-02-12T11:43:24.948Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx[39m
+[2026-02-12T11:43:24.950Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx[39m
+[2026-02-12T11:43:25.292Z] [33m[WARN] Inline Style détecté dans src\components\admin\ExampleCustomEditors.tsx[39m
+[2026-02-12T11:43:25.374Z] [33m[WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx[39m
+[2026-02-12T11:43:25.375Z] [33m[WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx[39m
+[2026-02-12T11:43:25.376Z] [33m[WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx[39m
+[2026-02-12T11:43:25.377Z] [33m[WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx[39m
+[2026-02-12T11:43:25.383Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:25.384Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:25.385Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:25.386Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:25.386Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:25.387Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:25.392Z] [33m[WARN] Inline Style détecté dans src\components\builder\BuilderPageRenderer.tsx[39m
+[2026-02-12T11:43:25.393Z] [33m[WARN] Inline Style détecté dans src\components\builder\BuilderPageRenderer.tsx[39m
+[2026-02-12T11:43:25.414Z] [33m[WARN] Inline Style détecté dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:43:25.419Z] [33m[WARN] Inline Style détecté dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:43:25.426Z] [33m[WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx[39m
+[2026-02-12T11:43:25.427Z] [33m[WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx[39m
+[2026-02-12T11:43:25.428Z] [33m[WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx[39m
+[2026-02-12T11:43:25.429Z] [33m[WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx[39m
+[2026-02-12T11:43:25.459Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:25.460Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:25.461Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:25.462Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:25.463Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:25.464Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:25.465Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:25.466Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:25.474Z] [33m[WARN] Inline Style détecté dans src\components\cms\SectionRenderer.tsx[39m
+[2026-02-12T11:43:25.479Z] [33m[WARN] Inline Style détecté dans src\components\ConfigurableDownloadButton.tsx[39m
+[2026-02-12T11:43:25.500Z] [33m[WARN] Inline Style détecté dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:43:25.511Z] [33m[WARN] Inline Style détecté dans src\components\DynamicPageRenderer.tsx[39m
+[2026-02-12T11:43:25.563Z] [33m[WARN] Inline Style détecté dans src\components\Header.tsx[39m
+[2026-02-12T11:43:25.569Z] [33m[WARN] Inline Style détecté dans src\components\HeroBanner.tsx[39m
+[2026-02-12T11:43:25.570Z] [33m[WARN] Inline Style détecté dans src\components\HeroBanner.tsx[39m
+[2026-02-12T11:43:25.570Z] [33m[WARN] Inline Style détecté dans src\components\HeroBanner.tsx[39m
+[2026-02-12T11:43:25.571Z] [33m[WARN] Inline Style détecté dans src\components\HeroBanner.tsx[39m
+[2026-02-12T11:43:25.600Z] [33m[WARN] Inline Style détecté dans src\components\LatestNews.tsx[39m
+[2026-02-12T11:43:25.601Z] [33m[WARN] Inline Style détecté dans src\components\LatestNews.tsx[39m
+[2026-02-12T11:43:25.602Z] [33m[WARN] Inline Style détecté dans src\components\LatestNews.tsx[39m
+[2026-02-12T11:43:25.603Z] [33m[WARN] Inline Style détecté dans src\components\LatestNews.tsx[39m
+[2026-02-12T11:43:25.683Z] [33m[WARN] Inline Style détecté dans src\components\office\shared\OfficeCreationMenu.tsx[39m
+[2026-02-12T11:43:25.735Z] [33m[WARN] Inline Style détecté dans src\components\ThemeProvider.tsx[39m
+[2026-02-12T11:43:25.793Z] [33m[WARN] Inline Style détecté dans src\components\tools\VoltageDropCalculator.tsx[39m
+[2026-02-12T11:43:25.822Z] [33m[WARN] Inline Style détecté dans src\components\ui\button.tsx[39m
+[2026-02-12T11:43:25.836Z] [33m[WARN] Inline Style détecté dans src\components\ui\chart.tsx[39m
+[2026-02-12T11:43:25.837Z] [33m[WARN] Inline Style détecté dans src\components\ui\chart.tsx[39m
+[2026-02-12T11:43:25.886Z] [33m[WARN] Inline Style détecté dans src\components\ui\progress.tsx[39m
+[2026-02-12T11:43:25.911Z] [33m[WARN] Inline Style détecté dans src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:25.912Z] [33m[WARN] Inline Style détecté dans src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:25.914Z] [33m[WARN] Inline Style détecté dans src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:25.948Z] [33m[WARN] Inline Style détecté dans src\components\VisualPageEditor.tsx[39m
+[2026-02-12T11:43:26.054Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\app-sidebar.tsx[39m
+[2026-02-12T11:43:26.099Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\chart.tsx[39m
+[2026-02-12T11:43:26.101Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\chart.tsx[39m
+[2026-02-12T11:43:26.145Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\progress.tsx[39m
+[2026-02-12T11:43:26.167Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:26.168Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:26.171Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:26.211Z] [33m[WARN] Inline Style détecté dans src\expert-lab\pages\AIProvidersPage.tsx[39m
+[2026-02-12T11:43:26.212Z] [33m[WARN] Inline Style détecté dans src\expert-lab\pages\AIProvidersPage.tsx[39m
+[2026-02-12T11:43:26.263Z] [33m[WARN] Inline Style détecté dans src\expert-lab\pages\ChatPage.tsx[39m
+[2026-02-12T11:43:26.317Z] [33m[WARN] Inline Style détecté dans src\expert-lab\pages\StatsPage.tsx[39m
+[2026-02-12T11:43:26.518Z] [33m[WARN] Inline Style détecté dans src\pages\admin\BuilderPage.tsx[39m
+[2026-02-12T11:43:26.519Z] [33m[WARN] Inline Style détecté dans src\pages\admin\BuilderPage.tsx[39m
+[2026-02-12T11:43:26.520Z] [33m[WARN] Inline Style détecté dans src\pages\admin\BuilderPage.tsx[39m
+[2026-02-12T11:43:26.636Z] [33m[WARN] Inline Style détecté dans src\pages\HomePage.tsx[39m
+[2026-02-12T11:43:26.637Z] [33m[WARN] Inline Style détecté dans src\pages\HomePage.tsx[39m
+[2026-02-12T11:43:26.684Z] [33m[WARN] Inline Style détecté dans src\pages\SchemaBuilder.tsx[39m
+[2026-02-12T11:43:26.685Z] [33m[WARN] Inline Style détecté dans src\pages\SchemaBuilder.tsx[39m
+[2026-02-12T11:43:26.911Z] 
+--- BILAN DUScanner V2 (AST) ---
+[2026-02-12T11:43:26.911Z] Problèmes identifiés : 82
+[2026-02-12T11:43:26.912Z] Correctifs appliqués : 0
+[2026-02-12T11:43:26.913Z] Stabilité actuelle estimée : 59.0%
+[2026-02-12T11:43:37.666Z] [34m[1m🚀 PROQUELEC ULTRA-AI ENGINE V2 (AST-POWERED) SCAN MODE[22m[39m
+[2026-02-12T11:43:37.740Z] 
+--- BILAN DUScanner V2 (AST) ---
+[2026-02-12T11:43:37.741Z] Problèmes identifiés : 0
+[2026-02-12T11:43:37.742Z] Correctifs appliqués : 0
+[2026-02-12T11:43:37.742Z] Stabilité actuelle estimée : 100.0%
+[2026-02-12T11:43:56.370Z] [34m[1m🚀 PROQUELEC ULTRA-AI ENGINE V2 (AST-POWERED) SCAN MODE[22m[39m
+[2026-02-12T11:43:56.497Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\CoursePreview.tsx[39m
+[2026-02-12T11:43:56.577Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\DrawingCanvas.tsx[39m
+[2026-02-12T11:43:56.581Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx[39m
+[2026-02-12T11:43:56.582Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx[39m
+[2026-02-12T11:43:56.583Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx[39m
+[2026-02-12T11:43:56.584Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx[39m
+[2026-02-12T11:43:56.584Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx[39m
+[2026-02-12T11:43:56.591Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\PresentationToolbar.tsx[39m
+[2026-02-12T11:43:56.596Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\presentation\SlideTransitions.tsx[39m
+[2026-02-12T11:43:56.605Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx[39m
+[2026-02-12T11:43:56.605Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx[39m
+[2026-02-12T11:43:56.606Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx[39m
+[2026-02-12T11:43:56.607Z] [33m[WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx[39m
+[2026-02-12T11:43:56.856Z] [33m[WARN] Inline Style détecté dans src\components\admin\ExampleCustomEditors.tsx[39m
+[2026-02-12T11:43:56.913Z] [33m[WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx[39m
+[2026-02-12T11:43:56.914Z] [33m[WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx[39m
+[2026-02-12T11:43:56.914Z] [33m[WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx[39m
+[2026-02-12T11:43:56.915Z] [33m[WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx[39m
+[2026-02-12T11:43:56.918Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:56.919Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:56.920Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:56.920Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:56.921Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:56.921Z] [33m[WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx[39m
+[2026-02-12T11:43:56.923Z] [33m[WARN] Inline Style détecté dans src\components\builder\BuilderPageRenderer.tsx[39m
+[2026-02-12T11:43:56.924Z] [33m[WARN] Inline Style détecté dans src\components\builder\BuilderPageRenderer.tsx[39m
+[2026-02-12T11:43:56.940Z] [33m[WARN] Inline Style détecté dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:43:56.943Z] [33m[WARN] Inline Style détecté dans src\components\builder\PropertyPanel.tsx[39m
+[2026-02-12T11:43:56.946Z] [33m[WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx[39m
+[2026-02-12T11:43:56.947Z] [33m[WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx[39m
+[2026-02-12T11:43:56.947Z] [33m[WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx[39m
+[2026-02-12T11:43:56.948Z] [33m[WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx[39m
+[2026-02-12T11:43:56.967Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:56.968Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:56.968Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:56.969Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:56.970Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:56.970Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:56.971Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:56.971Z] [33m[WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx[39m
+[2026-02-12T11:43:56.975Z] [33m[WARN] Inline Style détecté dans src\components\cms\SectionRenderer.tsx[39m
+[2026-02-12T11:43:56.980Z] [33m[WARN] Inline Style détecté dans src\components\ConfigurableDownloadButton.tsx[39m
+[2026-02-12T11:43:56.994Z] [33m[WARN] Inline Style détecté dans src\components\DownloadButtonAdminForm.tsx[39m
+[2026-02-12T11:43:57.000Z] [33m[WARN] Inline Style détecté dans src\components\DynamicPageRenderer.tsx[39m
+[2026-02-12T11:43:57.032Z] [33m[WARN] Inline Style détecté dans src\components\Header.tsx[39m
+[2026-02-12T11:43:57.036Z] [33m[WARN] Inline Style détecté dans src\components\HeroBanner.tsx[39m
+[2026-02-12T11:43:57.036Z] [33m[WARN] Inline Style détecté dans src\components\HeroBanner.tsx[39m
+[2026-02-12T11:43:57.037Z] [33m[WARN] Inline Style détecté dans src\components\HeroBanner.tsx[39m
+[2026-02-12T11:43:57.037Z] [33m[WARN] Inline Style détecté dans src\components\HeroBanner.tsx[39m
+[2026-02-12T11:43:57.056Z] [33m[WARN] Inline Style détecté dans src\components\LatestNews.tsx[39m
+[2026-02-12T11:43:57.057Z] [33m[WARN] Inline Style détecté dans src\components\LatestNews.tsx[39m
+[2026-02-12T11:43:57.057Z] [33m[WARN] Inline Style détecté dans src\components\LatestNews.tsx[39m
+[2026-02-12T11:43:57.058Z] [33m[WARN] Inline Style détecté dans src\components\LatestNews.tsx[39m
+[2026-02-12T11:43:57.102Z] [33m[WARN] Inline Style détecté dans src\components\office\shared\OfficeCreationMenu.tsx[39m
+[2026-02-12T11:43:57.145Z] [33m[WARN] Inline Style détecté dans src\components\ThemeProvider.tsx[39m
+[2026-02-12T11:43:57.184Z] [33m[WARN] Inline Style détecté dans src\components\tools\VoltageDropCalculator.tsx[39m
+[2026-02-12T11:43:57.196Z] [33m[WARN] Inline Style détecté dans src\components\ui\button.tsx[39m
+[2026-02-12T11:43:57.212Z] [33m[WARN] Inline Style détecté dans src\components\ui\chart.tsx[39m
+[2026-02-12T11:43:57.213Z] [33m[WARN] Inline Style détecté dans src\components\ui\chart.tsx[39m
+[2026-02-12T11:43:57.243Z] [33m[WARN] Inline Style détecté dans src\components\ui\progress.tsx[39m
+[2026-02-12T11:43:57.257Z] [33m[WARN] Inline Style détecté dans src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:57.258Z] [33m[WARN] Inline Style détecté dans src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:57.259Z] [33m[WARN] Inline Style détecté dans src\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:57.285Z] [33m[WARN] Inline Style détecté dans src\components\VisualPageEditor.tsx[39m
+[2026-02-12T11:43:57.358Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\app-sidebar.tsx[39m
+[2026-02-12T11:43:57.380Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\chart.tsx[39m
+[2026-02-12T11:43:57.381Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\chart.tsx[39m
+[2026-02-12T11:43:57.407Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\progress.tsx[39m
+[2026-02-12T11:43:57.418Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:57.419Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:57.420Z] [33m[WARN] Inline Style détecté dans src\expert-lab\components\ui\sidebar.tsx[39m
+[2026-02-12T11:43:57.442Z] [33m[WARN] Inline Style détecté dans src\expert-lab\pages\AIProvidersPage.tsx[39m
+[2026-02-12T11:43:57.443Z] [33m[WARN] Inline Style détecté dans src\expert-lab\pages\AIProvidersPage.tsx[39m
+[2026-02-12T11:43:57.472Z] [33m[WARN] Inline Style détecté dans src\expert-lab\pages\ChatPage.tsx[39m
+[2026-02-12T11:43:57.516Z] [33m[WARN] Inline Style détecté dans src\expert-lab\pages\StatsPage.tsx[39m
+[2026-02-12T11:43:57.638Z] [33m[WARN] Inline Style détecté dans src\pages\admin\BuilderPage.tsx[39m
+[2026-02-12T11:43:57.638Z] [33m[WARN] Inline Style détecté dans src\pages\admin\BuilderPage.tsx[39m
+[2026-02-12T11:43:57.639Z] [33m[WARN] Inline Style détecté dans src\pages\admin\BuilderPage.tsx[39m
+[2026-02-12T11:43:57.727Z] [33m[WARN] Inline Style détecté dans src\pages\HomePage.tsx[39m
+[2026-02-12T11:43:57.728Z] [33m[WARN] Inline Style détecté dans src\pages\HomePage.tsx[39m
+[2026-02-12T11:43:57.763Z] [33m[WARN] Inline Style détecté dans src\pages\SchemaBuilder.tsx[39m
+[2026-02-12T11:43:57.764Z] [33m[WARN] Inline Style détecté dans src\pages\SchemaBuilder.tsx[39m
+[2026-02-12T11:43:57.897Z] 
+--- BILAN DUScanner V2 (AST) ---
+[2026-02-12T11:43:57.898Z] Problèmes identifiés : 82
+[2026-02-12T11:43:57.898Z] Correctifs appliqués : 0
+[2026-02-12T11:43:57.899Z] Stabilité actuelle estimée : 59.0%
+[2026-02-12T11:44:23.776Z] 🚀 PROQUELEC ULTRA-AI ENGINE V2 (AST-POWERED) SCAN MODE
+[2026-02-12T11:44:23.905Z] [WARN] Inline Style détecté dans src\components\admin\academy\CoursePreview.tsx
+[2026-02-12T11:44:23.986Z] [WARN] Inline Style détecté dans src\components\admin\academy\presentation\DrawingCanvas.tsx
+[2026-02-12T11:44:23.989Z] [WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx
+[2026-02-12T11:44:23.989Z] [WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx
+[2026-02-12T11:44:23.989Z] [WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx
+[2026-02-12T11:44:23.990Z] [WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx
+[2026-02-12T11:44:23.990Z] [WARN] Inline Style détecté dans src\components\admin\academy\presentation\LaserPointer.tsx
+[2026-02-12T11:44:23.995Z] [WARN] Inline Style détecté dans src\components\admin\academy\presentation\PresentationToolbar.tsx
+[2026-02-12T11:44:24.000Z] [WARN] Inline Style détecté dans src\components\admin\academy\presentation\SlideTransitions.tsx
+[2026-02-12T11:44:24.012Z] [WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx
+[2026-02-12T11:44:24.013Z] [WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx
+[2026-02-12T11:44:24.013Z] [WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx
+[2026-02-12T11:44:24.014Z] [WARN] Inline Style détecté dans src\components\admin\academy\PresentationMode.tsx
+[2026-02-12T11:44:24.251Z] [WARN] Inline Style détecté dans src\components\admin\ExampleCustomEditors.tsx
+[2026-02-12T11:44:24.302Z] [WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx
+[2026-02-12T11:44:24.303Z] [WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx
+[2026-02-12T11:44:24.303Z] [WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx
+[2026-02-12T11:44:24.304Z] [WARN] Inline Style détecté dans src\components\blocks\ContentBlocks.tsx
+[2026-02-12T11:44:24.311Z] [WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx
+[2026-02-12T11:44:24.311Z] [WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx
+[2026-02-12T11:44:24.312Z] [WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx
+[2026-02-12T11:44:24.312Z] [WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx
+[2026-02-12T11:44:24.312Z] [WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx
+[2026-02-12T11:44:24.313Z] [WARN] Inline Style détecté dans src\components\builder\blocks\CoreBlocks.tsx
+[2026-02-12T11:44:24.315Z] [WARN] Inline Style détecté dans src\components\builder\BuilderPageRenderer.tsx
+[2026-02-12T11:44:24.315Z] [WARN] Inline Style détecté dans src\components\builder\BuilderPageRenderer.tsx
+[2026-02-12T11:44:24.327Z] [WARN] Inline Style détecté dans src\components\builder\PropertyPanel.tsx
+[2026-02-12T11:44:24.329Z] [WARN] Inline Style détecté dans src\components\builder\PropertyPanel.tsx
+[2026-02-12T11:44:24.337Z] [WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx
+[2026-02-12T11:44:24.338Z] [WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx
+[2026-02-12T11:44:24.338Z] [WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx
+[2026-02-12T11:44:24.338Z] [WARN] Inline Style détecté dans src\components\canvas\Ruler.tsx
+[2026-02-12T11:44:24.351Z] [WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx
+[2026-02-12T11:44:24.352Z] [WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx
+[2026-02-12T11:44:24.352Z] [WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx
+[2026-02-12T11:44:24.353Z] [WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx
+[2026-02-12T11:44:24.354Z] [WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx
+[2026-02-12T11:44:24.354Z] [WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx
+[2026-02-12T11:44:24.354Z] [WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx
+[2026-02-12T11:44:24.355Z] [WARN] Inline Style détecté dans src\components\canvas\SchematicCanvas.tsx
+[2026-02-12T11:44:24.363Z] [WARN] Inline Style détecté dans src\components\cms\SectionRenderer.tsx
+[2026-02-12T11:44:24.368Z] [WARN] Inline Style détecté dans src\components\ConfigurableDownloadButton.tsx
+[2026-02-12T11:44:24.377Z] [WARN] Inline Style détecté dans src\components\DownloadButtonAdminForm.tsx
+[2026-02-12T11:44:24.387Z] [WARN] Inline Style détecté dans src\components\DynamicPageRenderer.tsx
+[2026-02-12T11:44:24.418Z] [WARN] Inline Style détecté dans src\components\Header.tsx
+[2026-02-12T11:44:24.422Z] [WARN] Inline Style détecté dans src\components\HeroBanner.tsx
+[2026-02-12T11:44:24.422Z] [WARN] Inline Style détecté dans src\components\HeroBanner.tsx
+[2026-02-12T11:44:24.423Z] [WARN] Inline Style détecté dans src\components\HeroBanner.tsx
+[2026-02-12T11:44:24.423Z] [WARN] Inline Style détecté dans src\components\HeroBanner.tsx
+[2026-02-12T11:44:24.441Z] [WARN] Inline Style détecté dans src\components\LatestNews.tsx
+[2026-02-12T11:44:24.442Z] [WARN] Inline Style détecté dans src\components\LatestNews.tsx
+[2026-02-12T11:44:24.442Z] [WARN] Inline Style détecté dans src\components\LatestNews.tsx
+[2026-02-12T11:44:24.443Z] [WARN] Inline Style détecté dans src\components\LatestNews.tsx
+[2026-02-12T11:44:24.486Z] [WARN] Inline Style détecté dans src\components\office\shared\OfficeCreationMenu.tsx
+[2026-02-12T11:44:24.513Z] [WARN] Inline Style détecté dans src\components\ThemeProvider.tsx
+[2026-02-12T11:44:24.558Z] [WARN] Inline Style détecté dans src\components\tools\VoltageDropCalculator.tsx
+[2026-02-12T11:44:24.575Z] [WARN] Inline Style détecté dans src\components\ui\button.tsx
+[2026-02-12T11:44:24.585Z] [WARN] Inline Style détecté dans src\components\ui\chart.tsx
+[2026-02-12T11:44:24.585Z] [WARN] Inline Style détecté dans src\components\ui\chart.tsx
+[2026-02-12T11:44:24.621Z] [WARN] Inline Style détecté dans src\components\ui\progress.tsx
+[2026-02-12T11:44:24.635Z] [WARN] Inline Style détecté dans src\components\ui\sidebar.tsx
+[2026-02-12T11:44:24.636Z] [WARN] Inline Style détecté dans src\components\ui\sidebar.tsx
+[2026-02-12T11:44:24.637Z] [WARN] Inline Style détecté dans src\components\ui\sidebar.tsx
+[2026-02-12T11:44:24.657Z] [WARN] Inline Style détecté dans src\components\VisualPageEditor.tsx
+[2026-02-12T11:44:24.719Z] [WARN] Inline Style détecté dans src\expert-lab\components\app-sidebar.tsx
+[2026-02-12T11:44:24.744Z] [WARN] Inline Style détecté dans src\expert-lab\components\ui\chart.tsx
+[2026-02-12T11:44:24.744Z] [WARN] Inline Style détecté dans src\expert-lab\components\ui\chart.tsx
+[2026-02-12T11:44:24.771Z] [WARN] Inline Style détecté dans src\expert-lab\components\ui\progress.tsx
+[2026-02-12T11:44:24.784Z] [WARN] Inline Style détecté dans src\expert-lab\components\ui\sidebar.tsx
+[2026-02-12T11:44:24.785Z] [WARN] Inline Style détecté dans src\expert-lab\components\ui\sidebar.tsx
+[2026-02-12T11:44:24.786Z] [WARN] Inline Style détecté dans src\expert-lab\components\ui\sidebar.tsx
+[2026-02-12T11:44:24.810Z] [WARN] Inline Style détecté dans src\expert-lab\pages\AIProvidersPage.tsx
+[2026-02-12T11:44:24.811Z] [WARN] Inline Style détecté dans src\expert-lab\pages\AIProvidersPage.tsx
+[2026-02-12T11:44:24.834Z] [WARN] Inline Style détecté dans src\expert-lab\pages\ChatPage.tsx
+[2026-02-12T11:44:24.873Z] [WARN] Inline Style détecté dans src\expert-lab\pages\StatsPage.tsx
+[2026-02-12T11:44:25.002Z] [WARN] Inline Style détecté dans src\pages\admin\BuilderPage.tsx
+[2026-02-12T11:44:25.003Z] [WARN] Inline Style détecté dans src\pages\admin\BuilderPage.tsx
+[2026-02-12T11:44:25.003Z] [WARN] Inline Style détecté dans src\pages\admin\BuilderPage.tsx
+[2026-02-12T11:44:25.080Z] [WARN] Inline Style détecté dans src\pages\HomePage.tsx
+[2026-02-12T11:44:25.081Z] [WARN] Inline Style détecté dans src\pages\HomePage.tsx
+[2026-02-12T11:44:25.132Z] [WARN] Inline Style détecté dans src\pages\SchemaBuilder.tsx
+[2026-02-12T11:44:25.132Z] [WARN] Inline Style détecté dans src\pages\SchemaBuilder.tsx
+[2026-02-12T11:44:25.294Z] 
+--- BILAN DUScanner V2 (AST) ---
+[2026-02-12T11:44:25.294Z] Problèmes identifiés : 82
+[2026-02-12T11:44:25.295Z] Correctifs appliqués : 0
+[2026-02-12T11:44:25.295Z] Stabilité actuelle estimée : 59.0%
