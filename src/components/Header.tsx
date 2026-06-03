@@ -26,6 +26,7 @@ import {
   MoreHorizontal,
   Globe,
   Sparkles,
+  CreditCard,
 } from 'lucide-react';
 
 // Icon mapping for dynamic icons from DB
@@ -894,6 +895,14 @@ export const Header = ({ solid = false }: HeaderProps) => {
                                 BE Builder (Pages)
                               </Link>
                             )}
+                            <Link
+                              to="/abonnements"
+                              onClick={() => setIsUserMenuOpen(false)}
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors"
+                            >
+                              <CreditCard className="h-4 w-4 text-amber-500" />
+                              Abonnements
+                            </Link>
                             <button
                               type="button"
                               onClick={handleLogout}
