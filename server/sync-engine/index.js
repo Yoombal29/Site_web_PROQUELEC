@@ -43,42 +43,76 @@ async function runSyncCycle() {
         console.log(`📦 [SYNC-ENGINE] ${dossiers.length} dossiers récupérés depuis COSSUEL.`);
 
         // 3. Sauvegarder dans Data Warehouse
-        // Utilisation d'une transaction pour garantir l'intégrité
+        // Vérifier l'existence des tables attendues avant d'écrire
         const client = await pool.connect();
         try {
-            await client.query('BEGIN');
+            const check = async (tableName) => {
+                const r = await client.query("SELECT to_regclass($1) AS exists", [tableName]);
+                return !!(r.rows && r.rows[0] && r.rows[0].exists);
+            };
 
-            for (const dossier of dossiers) {
-                // Upsert Dossier
-                await client.query(`
-                    INSERT INTO public.cossuel_dossiers (id, region, status, installation_type, submission_date)
-                    VALUES ($1, $2, $3, $4, $5)
-                    ON CONFLICT (id) DO UPDATE 
-                    SET status = EXCLUDED.status, 
-                        last_sync_at = NOW();
-                `, [dossier.id, dossier.region, dossier.status, dossier.type, dossier.date]);
+            const hasDossiers = await check('public.cossuel_dossiers');
+            const hasLogs = await check('public.cossuel_sync_logs');
+            const hasStats = await check('public.cossuel_stats_daily');
 
-                recordsProcessed++;
+            if (!hasDossiers) {
+                console.warn('⚠️ [SYNC-ENGINE] Table `public.cossuel_dossiers` manquante — écriture ignorée.');
+            }
+            if (!hasLogs) {
+                console.warn('⚠️ [SYNC-ENGINE] Table `public.cossuel_sync_logs` manquante — logs de sync non enregistrés.');
+            }
+            if (!hasStats) {
+                console.warn('⚠️ [SYNC-ENGINE] Table `public.cossuel_stats_daily` manquante — stats journalières non mises à jour.');
             }
 
-            // 4. Mettre à jour les stats journalières
-            const today = new Date().toISOString().split('T')[0];
-            await client.query(`
-                INSERT INTO public.cossuel_stats_daily (date, total_dossiers, updated_at)
-                VALUES ($1, $2, NOW())
-                ON CONFLICT (date) DO UPDATE
-                SET total_dossiers = cossuel_stats_daily.total_dossiers + $2, updated_at = NOW();
-            `, [today, recordsProcessed]); // Simplifié pour l'exemple
+            if (hasDossiers) {
+                try {
+                    await client.query('BEGIN');
 
-            await client.query('COMMIT');
-            console.log(`✅ [SYNC-ENGINE] Cycle terminé avec succès. ${recordsProcessed} enregistrements traités.`);
+                    for (const dossier of dossiers) {
+                        // Upsert Dossier
+                        await client.query(`
+                            INSERT INTO public.cossuel_dossiers (id, region, status, installation_type, submission_date)
+                            VALUES ($1, $2, $3, $4, $5)
+                            ON CONFLICT (id) DO UPDATE 
+                            SET status = EXCLUDED.status, 
+                                last_sync_at = NOW();
+                        `, [dossier.id, dossier.region, dossier.status, dossier.type, dossier.date]);
 
-            // Log Success
-            await logSync(client, startTime, 'SUCCESS', recordsProcessed, 0, 'Cycle complet OK');
+                        recordsProcessed++;
+                    }
 
-        } catch (dbError) {
-            await client.query('ROLLBACK');
-            throw dbError;
+                    // 4. Mettre à jour les stats journalières si la table existe
+                    if (hasStats) {
+                        const today = new Date().toISOString().split('T')[0];
+                        await client.query(`
+                            INSERT INTO public.cossuel_stats_daily (date, total_dossiers, updated_at)
+                            VALUES ($1, $2, NOW())
+                            ON CONFLICT (date) DO UPDATE
+                            SET total_dossiers = cossuel_stats_daily.total_dossiers + $2, updated_at = NOW();
+                        `, [today, recordsProcessed]);
+                    }
+
+                    await client.query('COMMIT');
+                    console.log(`✅ [SYNC-ENGINE] Cycle terminé avec succès. ${recordsProcessed} enregistrements traités.`);
+
+                } catch (dbError) {
+                    await client.query('ROLLBACK');
+                    throw dbError;
+                }
+            } else {
+                console.log('ℹ️ [SYNC-ENGINE] Ignoré: pas de tables cossuel présentes pour inscription.');
+            }
+
+            // Log Success if logs table exists
+            if (hasLogs) {
+                try {
+                    await logSync(client, startTime, 'SUCCESS', recordsProcessed, 0, 'Cycle complet OK');
+                } catch (e) {
+                    console.error('Impossible d\'enregistrer le log de sync:', e.message || e);
+                }
+            }
+
         } finally {
             client.release();
         }

@@ -11,6 +11,7 @@ import {
 'lucide-react';
 
 import { LAYOUT_TEMPLATES } from '@/utils/pageLayouts';
+import type { PageRecord, PageDesignOptions, PageSeoOptions, CustomSection } from '@/types/PageSystem';
 
 interface DesignEditorProps {
   page: PageRecord;
@@ -68,7 +69,7 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
         </button>
       </div>
 
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as unknown)} className="w-full">
+      <Tabs value={activeTab} onValueChange={(v: 'layout' | 'colors' | 'typography' | 'sections' | 'seo' | 'css') => setActiveTab(v)} className="w-full">
         <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="layout" className="flex items-center gap-2">
             <Layout className="w-4 h-4" />
@@ -118,6 +119,16 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
                   
                     <div className="font-semibold text-sm">{template.name}</div>
                     <div className="text-xs text-gray-600 mt-1">{template.description}</div>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <span className="rounded-full bg-slate-100 text-slate-700 px-2 py-0.5 text-[11px] uppercase tracking-[0.12em]">
+                        {template.category}
+                      </span>
+                      {template.premium && (
+                        <span className="rounded-full bg-amber-100 text-amber-800 px-2 py-0.5 text-[11px] uppercase tracking-[0.12em]">
+                          Premium
+                        </span>
+                      )}
+                    </div>
                   </button>
                 )}
               </div>
@@ -125,9 +136,9 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                 <div>
                   <Label>Largeur du contenu</Label>
-                  <select title="Sélectionner une option"
+                  <select
                   value={design.content_width}
-                  onChange={(e) => updateDesign({ content_width: e.target.value as unknown })}
+                  onChange={(e) => updateDesign({ content_width: e.target.value as PageDesignOptions['content_width'] })}
                   className="w-full border rounded px-3 py-2 mt-1"
                   title="Largeur du contenu">
                     
@@ -140,9 +151,9 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
 
                 <div>
                   <Label>Type de layout</Label>
-                  <select title="Sélectionner une option"
+                  <select
                   value={design.layout}
-                  onChange={(e) => updateDesign({ layout: e.target.value as unknown })}
+                  onChange={(e) => updateDesign({ layout: e.target.value as PageDesignOptions['layout'] })}
                   className="w-full border rounded px-3 py-2 mt-1"
                   title="Type de layout">
                     
@@ -172,9 +183,9 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
                 <div className="grid grid-cols-2 gap-3 ml-4 p-3 bg-blue-50 rounded">
                     <div>
                       <Label className="text-sm">Hauteur Hero</Label>
-                      <select title="Sélectionner une option"
+                      <select
                     value={design.hero_height}
-                    onChange={(e) => updateDesign({ hero_height: e.target.value as unknown })}
+                    onChange={(e) => updateDesign({ hero_height: e.target.value as PageDesignOptions['hero_height'] })}
                     className="w-full border rounded px-3 py-2 mt-1 text-sm"
                     title="Hauteur Hero">
                       
@@ -187,9 +198,9 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
 
                     <div>
                       <Label className="text-sm">Alignment Hero</Label>
-                      <select title="Sélectionner une option"
+                      <select
                     value={design.hero_alignment}
-                    onChange={(e) => updateDesign({ hero_alignment: e.target.value as unknown })}
+                    onChange={(e) => updateDesign({ hero_alignment: e.target.value as PageDesignOptions['hero_alignment'] })}
                     className="w-full border rounded px-3 py-2 mt-1 text-sm"
                     title="Alignment Hero">
                       
@@ -232,9 +243,9 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
                 {design.sidebar_enabled &&
                 <div className="ml-4 p-3 bg-blue-50 rounded">
                     <Label className="text-sm">Position Sidebar</Label>
-                    <select title="Sélectionner une option"
+                    <select
                   value={design.sidebar_position}
-                  onChange={(e) => updateDesign({ sidebar_position: e.target.value as unknown })}
+                  onChange={(e) => updateDesign({ sidebar_position: e.target.value as PageDesignOptions['sidebar_position'] })}
                   className="w-full border rounded px-3 py-2 mt-1 text-sm"
                   title="Position Sidebar">
                     
@@ -362,7 +373,7 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
             <CardContent className="space-y-4">
               <div>
                 <Label>Police des titres</Label>
-                <select title="Sélectionner une option"
+                <select
                 value={design.heading_font}
                 onChange={(e) => updateDesign({ heading_font: e.target.value })}
                 className="w-full border rounded px-3 py-2 mt-2"
@@ -378,7 +389,7 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
 
               <div>
                 <Label>Police du corps</Label>
-                <select title="Sélectionner une option"
+                <select
                 value={design.body_font}
                 onChange={(e) => updateDesign({ body_font: e.target.value })}
                 className="w-full border rounded px-3 py-2 mt-2"
@@ -446,11 +457,11 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
                     }} />
                   
 
-                    <select title="Sélectionner une option"
+                    <select
                   value={section.type}
                   onChange={(e) => {
                     const updated = [...design.custom_sections];
-                    updated[idx].type = e.target.value as unknown;
+                    updated[idx].type = e.target.value as CustomSection['type'];
                     updateDesign({ custom_sections: updated });
                   }}
                   className="w-full border rounded px-3 py-2"
@@ -560,9 +571,9 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
 
                 <div>
                   <Label>Twitter Card Type</Label>
-                  <select title="Sélectionner une option"
+                  <select
                   value={seo.twitter_card}
-                  onChange={(e) => updateSeo({ twitter_card: e.target.value as unknown })}
+                  onChange={(e) => updateSeo({ twitter_card: e.target.value as PageSeoOptions['twitter_card'] })}
                   className="w-full border rounded px-3 py-2 mt-2"
                   title="Type de carte Twitter">
                     
@@ -587,7 +598,7 @@ export const DesignEditor: React.FC<DesignEditorProps> = ({
 
               <div>
                 <Label>Schema Type</Label>
-                <select title="Sélectionner une option"
+                <select
                 value={seo.schema_type}
                 onChange={(e) => updateSeo({ schema_type: e.target.value })}
                 className="w-full border rounded px-3 py-2 mt-2"

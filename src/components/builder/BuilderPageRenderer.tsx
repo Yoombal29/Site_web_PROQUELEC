@@ -42,6 +42,7 @@ const SortableBlockWrapper = React.memo<{
   return (
     <div
       ref={setNodeRef}
+      // eslint-disable-next-line no-inline-styles
       style={style}
       className={`relative group transition-all duration-200 mb-1 ${isSelected ?
       'outline outline-2 outline-blue-500 z-10 shadow-lg' :
@@ -168,6 +169,7 @@ const BlockRenderer = React.memo<{
         id={block.id}
         {...blockProps}
         content={block.content ?? {}}
+        // eslint-disable-next-line no-inline-styles
         style={(baseStyle ?? {}) as BlockStyle}
         className={baseStyle?.className}
         children={

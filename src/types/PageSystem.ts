@@ -37,10 +37,14 @@ export interface PageDesignOptions {
   hero_enabled: boolean;
   hero_height: 'small' | 'medium' | 'large' | 'fullscreen';
   hero_overlay: number;
+  hero_gradient?: string;
   hero_alignment: 'left' | 'center' | 'right';
   content_width: 'default' | 'narrow' | 'wide' | 'full';
   sidebar_enabled: boolean;
   sidebar_position: 'left' | 'right';
+  header_style?: 'standard' | 'overlay' | 'minimal';
+  button_style?: 'solid' | 'outline' | 'ghost';
+  section_spacing?: 'compact' | 'normal' | 'spacious';
   footer_cta_enabled: boolean;
   background_color: string;
   accent_color: string;

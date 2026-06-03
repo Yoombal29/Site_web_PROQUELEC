@@ -9,6 +9,12 @@ import {
 import { toast } from 'sonner';
 import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
 import { cloneNodeTreeWithNewIds } from './cloneNodeTree';
+import {
+  SECTION_TEMPLATES,
+  TEMPLATE_CATEGORY_LABELS,
+  type TemplateCategory,
+} from './builderTemplates';
+import { TemplatePreviewCard } from './TemplatePreviewCard';
 
 import {
   ContainerBlock, TextBlock, HeroBlock, ButtonBlock, ImageBlock,
@@ -247,246 +253,7 @@ const BLOCK_GROUPS = [
   },
 ];
 
-// ─────────────────────────────────────────────────────────
-// SECTION TEMPLATES
-// ─────────────────────────────────────────────────────────
-const SECTION_TEMPLATES = [
-  // ── HERO ──
-  {
-    label: 'Hero + Stats',
-    description: 'Section héro avec statistiques',
-    emoji: '🚀',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={0} backgroundColor="#ffffff" maxWidth="100%">
-        <HeroBlock title="Titre accrocheur" subtitle="Sous-titre convaincant" ctaText="Commencer" />
-        <StatsBlock />
-      </Element>
-    ),
-  },
-  {
-    label: 'Hero Simple',
-    description: 'Bannière minimaliste avec CTA',
-    emoji: '🎯',
-    factory: () => <HeroBlock title="Votre slogan" subtitle="Phrase percutante" ctaText="Découvrir" backgroundColor="#2563eb" />,
-  },
-  {
-    label: 'Hero Vidéo',
-    description: 'Hero avec fond vidéo et overlay',
-    emoji: '🎬',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={60} backgroundColor="#0f172a" maxWidth="100%">
-        <HeroBlock title="Notre Mission" subtitle="Découvrez nos services" ctaText="En savoir plus" backgroundColor="#1e293b" />
-      </Element>
-    ),
-  },
-  {
-    label: 'Hero Split',
-    description: 'Hero moitié texte / moitié image',
-    emoji: '🖼️',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={0} backgroundColor="#ffffff" maxWidth="100%">
-        <Element is={ColumnsBlock} canvas columns={2} gap={0}>
-          <Element is={ContainerBlock} canvas padding={48} backgroundColor="#f8fafc">
-            <HeadingBlock text="Notre Vision" level="h1" fontSize={42} color="#0f172a" />
-            <SpacerBlock height={16} />
-            <TextBlock text="Description convaincante…" fontSize={18} color="#475569" />
-            <SpacerBlock height={24} />
-            <ButtonBlock text="Commencer" type="primary" />
-          </Element>
-          <Element is={ContainerBlock} canvas padding={0} backgroundColor="#2563eb" />
-        </Element>
-      </Element>
-    ),
-  },
-  // ── CONTENU ──
-  {
-    label: 'Section Services',
-    description: '3 cartes de services côte à côte',
-    emoji: '⚡',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={40} paddingY={60} backgroundColor="#f8fafc" maxWidth="100%">
-        <TextBlock text="Nos Services" fontSize={36} textAlign="center" fontWeight="900" color="#0f172a" />
-        <SpacerBlock height={32} />
-        <Element is={ColumnsBlock} canvas columns={3} gap={24}>
-          <CardBlock icon="⚡" title="Service 1" text="Description du service..." />
-          <CardBlock icon="🔧" title="Service 2" text="Description du service..." />
-          <CardBlock icon="🛡️" title="Service 3" text="Description du service..." />
-        </Element>
-      </Element>
-    ),
-  },
-  {
-    label: 'Section Témoignages',
-    description: 'Avis clients avec fond coloré',
-    emoji: '💬',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={40} paddingY={60} backgroundColor="#0f172a" maxWidth="100%">
-        <TextBlock text="Ce que disent nos clients" fontSize={32} textAlign="center" fontWeight="900" color="#ffffff" />
-        <SpacerBlock height={32} />
-        <TestimonialsBlock />
-      </Element>
-    ),
-  },
-  {
-    label: 'Section Contact',
-    description: 'Formulaire de contact centré',
-    emoji: '📬',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={40} paddingY={60} backgroundColor="#ffffff" maxWidth="1024px">
-        <TextBlock text="Contactez-nous" fontSize={36} textAlign="center" fontWeight="900" color="#0f172a" />
-        <SpacerBlock height={8} />
-        <TextBlock text="Réponse sous 24h" fontSize={16} textAlign="center" color="#64748b" />
-        <SpacerBlock height={32} />
-        <FormBlock />
-      </Element>
-    ),
-  },
-  {
-    label: 'Section Tarifs',
-    description: '3 colonnes de prix avec mise en avant',
-    emoji: '💰',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={60} backgroundColor="#f8fafc" maxWidth="100%">
-        <TextBlock text="Nos Offres" fontSize={36} textAlign="center" fontWeight="900" color="#0f172a" />
-        <SpacerBlock height={32} />
-        <PricingBlock />
-      </Element>
-    ),
-  },
-  {
-    label: 'Section FAQ',
-    description: 'Accordéon questions/réponses',
-    emoji: '❓',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={60} backgroundColor="#ffffff" maxWidth="768px">
-        <TextBlock text="FAQ" fontSize={36} textAlign="center" fontWeight="900" color="#0f172a" />
-        <SpacerBlock height={32} />
-        <AccordionBlock />
-      </Element>
-    ),
-  },
-  {
-    label: 'Section Chiffres',
-    description: 'Statistiques et KPIs',
-    emoji: '📊',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={60} backgroundColor="#1e293b" maxWidth="100%">
-        <TextBlock text="Nos Chiffres" fontSize={36} textAlign="center" fontWeight="900" color="#ffffff" />
-        <SpacerBlock height={32} />
-        <StatsBlock />
-      </Element>
-    ),
-  },
-  {
-    label: 'Section Newsletter',
-    description: 'Inscription à la newsletter',
-    emoji: '📧',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={60} backgroundColor="#2563eb" maxWidth="100%">
-        <TextBlock text="Restez informé" fontSize={36} textAlign="center" fontWeight="900" color="#ffffff" />
-        <SpacerBlock height={8} />
-        <TextBlock text="Recevez nos actualités chaque mois" fontSize={16} textAlign="center" color="#bfdbfe" />
-        <SpacerBlock height={24} />
-        <NewsletterBlock />
-      </Element>
-    ),
-  },
-  // ── MÉDIA ──
-  {
-    label: 'Section Galerie',
-    description: 'Grille d\'images avec lightbox',
-    emoji: '🖼️',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} backgroundColor="#f8fafc" maxWidth="100%">
-        <TextBlock text="Galerie" fontSize={36} textAlign="center" fontWeight="900" color="#0f172a" />
-        <SpacerBlock height={32} />
-        <GalleryBlock />
-      </Element>
-    ),
-  },
-  {
-    label: 'Section Équipe',
-    description: 'Membres de l\'équipe en grille',
-    emoji: '👥',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} backgroundColor="#ffffff" maxWidth="100%">
-        <TextBlock text="Notre Équipe" fontSize={36} textAlign="center" fontWeight="900" color="#0f172a" />
-        <SpacerBlock height={32} />
-        <TeamMembersGridBlock members={[
-          { name: 'Alice Dupont', role: 'CEO', photo: '', bio: 'Fondatrice visionnaire' },
-          { name: 'Bob Martin', role: 'CTO', photo: '', bio: 'Expert technique' },
-          { name: 'Claire Dubois', role: 'CMO', photo: '', bio: 'Stratège marketing' },
-        ]} />
-      </Element>
-    ),
-  },
-  {
-    label: 'Section Logo Clients',
-    description: 'Grille de logos partenaires',
-    emoji: '🤝',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={32} backgroundColor="#f8fafc" maxWidth="100%">
-        <TextBlock text="Ils nous font confiance" fontSize={24} textAlign="center" fontWeight="600" color="#64748b" />
-        <SpacerBlock height={24} />
-        <LogoGridBlock />
-      </Element>
-    ),
-  },
-  {
-    label: 'Section Timeline',
-    description: 'Historique chronologique',
-    emoji: '📅',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} backgroundColor="#ffffff" maxWidth="768px">
-        <TextBlock text="Notre Histoire" fontSize={36} textAlign="center" fontWeight="900" color="#0f172a" />
-        <SpacerBlock height={32} />
-        <TimelineBlock items={[
-          { year: '2010', title: 'Création', desc: 'Fondation de l\'entreprise' },
-          { year: '2015', title: 'Expansion', desc: 'Ouverture de 3 agences' },
-          { year: '2020', title: 'Innovation', desc: 'Lancement des services digitaux' },
-          { year: '2024', title: 'Leader', desc: 'Positionnement national' },
-        ]} />
-      </Element>
-    ),
-  },
-  {
-    label: 'Section CTA Large',
-    description: 'Bannière d\'appel à l\'action',
-    emoji: '🎯',
-    factory: () => (
-      <CallToActionBlock title="Prêt à démarrer ?" description="Rejoignez les 500+ entreprises qui nous font confiance" buttonText="Nous contacter" bgColor="#2563eb" textColor="#ffffff" buttonBg="#ffffff" buttonTextColor="#2563eb" />
-    ),
-  },
-  {
-    label: 'Section Compte à Rebours',
-    description: 'Timer pour événement',
-    emoji: '⏱️',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} backgroundColor="#0f172a" maxWidth="100%">
-        <TextBlock text="Événement à venir" fontSize={36} textAlign="center" fontWeight="900" color="#ffffff" />
-        <SpacerBlock height={24} />
-        <CountdownBlock targetDate="2027-01-01T00:00:00" boxBg="#1e293b" boxTextColor="#ffffff" />
-      </Element>
-    ),
-  },
-  {
-    label: 'Section Étapes',
-    description: 'Processus en 3-4 étapes',
-    emoji: '📋',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} backgroundColor="#ffffff" maxWidth="100%">
-        <TextBlock text="Comment ça marche" fontSize={36} textAlign="center" fontWeight="900" color="#0f172a" />
-        <SpacerBlock height={32} />
-        <StepsBlock items={[
-          { title: '1. Contact', desc: 'Prenez rendez-vous en ligne' },
-          { title: '2. Diagnostic', desc: 'Analyse gratuite de vos besoins' },
-          { title: '3. Devis', desc: 'Proposition personnalisée' },
-          { title: '4. Réalisation', desc: 'Mise en œuvre par nos experts' },
-        ]} />
-      </Element>
-    ),
-  },
-];
+const TEMPLATE_CATEGORY_ORDER: TemplateCategory[] = ['hero', 'content', 'conversion', 'media', 'trust'];
 
 // ─────────────────────────────────────────────────────────
 // MAIN TOOLBOX
@@ -587,12 +354,23 @@ export const GodToolbox = () => {
     })).filter(g => g.items.length > 0);
   }, [search]);
 
-  const handleAddTemplate = (factory: () => React.ReactElement) => {
-    const rootNodes = query.getSerializedNodes();
-    // We add the template to the ROOT node
-    // This uses Craft.js's add method
-    const el = factory();
-    connectors.create(document.createElement('div'), el);
+  const handleInsertTemplate = (factory: () => React.ReactElement, label: string) => {
+    try {
+      const element = factory();
+      if (!element?.type) {
+        throw new Error('Modèle invalide (composant manquant)');
+      }
+      const tree = query.parseReactElement(element).toNodeTree();
+      actions.addNodeTree(cloneNodeTreeWithNewIds(tree, 'tpl'), 'ROOT');
+      toast.success(`Modèle « ${label} » inséré`);
+    } catch (err) {
+      console.error('[GodToolbox] insert template:', err);
+      toast.error(
+        err instanceof Error && err.message.includes('resolver')
+          ? 'Modèle incompatible : rechargez la page ou choisissez un autre modèle.'
+          : 'Impossible d\'insérer le modèle'
+      );
+    }
   };
 
   return (
@@ -650,7 +428,10 @@ export const GodToolbox = () => {
                 />
                 {search && (
                   <button
+                    type="button"
                     onClick={() => setSearch('')}
+                    aria-label="Effacer la recherche"
+                    title="Effacer la recherche"
                     className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white"
                   >
                     <X size={10} />
@@ -765,33 +546,37 @@ export const GodToolbox = () => {
               )}
             </div>
 
-            {/* Default Static Templates */}
+            {/* Modèles prédéfinis — par catégorie avec aperçu visuel */}
             <div>
               <div className="px-1 py-1 text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5 border-b border-[#252538]/50">
                 <Layers size={10} />
-                Modèles Prédéfinis
+                Modèles prédéfinis ({SECTION_TEMPLATES.length})
               </div>
-              <div className="space-y-1.5">
-                {SECTION_TEMPLATES.map(tmpl => (
-                  <button
-                    key={tmpl.label}
-                    ref={(ref) => { if (ref) connectors.create(ref, tmpl.factory()); }}
-                    className="w-full text-left p-2.5 bg-[#0d0d1a] hover:bg-[#1a1a2a] border border-[#252538] hover:border-amber-500/30 rounded-lg transition-all cursor-grab active:cursor-grabbing group"
-                    title={`Glisser: ${tmpl.label}`}
-                  >
-                    <div className="flex items-start gap-2">
-                      <span className="text-base shrink-0">{tmpl.emoji}</span>
-                      <div>
-                        <div className="text-xs font-semibold text-slate-200 group-hover:text-white transition-colors">
-                          {tmpl.label}
-                        </div>
-                        <div className="text-[10px] text-slate-500 mt-0.5 leading-tight">
-                          {tmpl.description}
-                        </div>
+              <div className="space-y-4">
+                {TEMPLATE_CATEGORY_ORDER.map((cat) => {
+                  const items = SECTION_TEMPLATES.filter((t) => t.category === cat);
+                  if (items.length === 0) return null;
+                  return (
+                    <div key={cat}>
+                      <div className="px-1 mb-1.5 text-[8px] font-bold text-amber-500/90 uppercase tracking-widest">
+                        {TEMPLATE_CATEGORY_LABELS[cat]}
+                      </div>
+                      <div className="grid grid-cols-1 gap-2">
+                        {items.map((tmpl) => (
+                          <TemplatePreviewCard
+                            key={tmpl.label}
+                            template={tmpl}
+                            expanded={expanded}
+                            connectRef={(ref) => {
+                              if (ref) connectors.create(ref, tmpl.factory());
+                            }}
+                            onInsert={() => handleInsertTemplate(tmpl.factory, tmpl.label)}
+                          />
+                        ))}
                       </div>
                     </div>
-                  </button>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -803,7 +588,11 @@ export const GodToolbox = () => {
       {/* Footer hint */}
       {expanded && (
         <div className="px-3 py-2 border-t border-[#252538] shrink-0">
-          <p className="text-[9px] text-slate-600 text-center">Glissez un bloc sur le canvas →</p>
+          <p className="text-[9px] text-slate-600 text-center">
+            {activeTab === 'templates'
+              ? 'Glisser ou double-clic pour insérer un modèle'
+              : 'Glissez un bloc sur le canvas →'}
+          </p>
         </div>
       )}
     </div>

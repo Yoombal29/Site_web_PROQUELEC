@@ -1,0 +1,17 @@
+{
+  "ROOT": {
+    "type": {
+      "resolvedName": "ContainerBlock"
+    },
+    "nodes": [],
+    "props": {
+      "padding": 0,
+      "maxWidth": "100%"
+    },
+    "custom": {},
+    "hidden": false,
+    "isCanvas": true,
+    "displayName": "Page: Évènements",
+    "linkedNodes": {}
+  }
+}

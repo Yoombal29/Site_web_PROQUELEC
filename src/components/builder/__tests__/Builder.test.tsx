@@ -38,6 +38,30 @@ describe('BE Builder Unit Tests', () => {
       expect(newState.history).toHaveLength(1); // The snapshot of the empty state before adding the block
     });
 
+    it('should insert a child block when adding with a parentId', () => {
+      useBuilderStore.setState({
+        blocks: [
+          {
+            id: 'parent-block',
+            type: 'hero',
+            content: { title: 'Parent' },
+            style: {},
+            children: []
+          }
+        ],
+        history: [],
+        historyIndex: -1,
+        selectedBlockId: null
+      });
+
+      useBuilderStore.getState().addBlock('hero', 'parent-block');
+      const result = useBuilderStore.getState();
+
+      expect(result.blocks).toHaveLength(1);
+      expect(result.blocks[0].children).toHaveLength(1);
+      expect(result.blocks[0].children?.[0].type).toBe('hero');
+    });
+
     it('should update block content without adding to history (live update)', () => {
       const store = useBuilderStore.getState();
       store.addBlock('hero');

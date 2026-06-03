@@ -97,7 +97,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
   const handleLogout = async () => {
     await signOut();
     setIsUserMenuOpen(false);
-    navigate("/");
+    navigate("/connexion");
   };
 
   useEffect(() => {
@@ -685,6 +685,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                 <div className="flex items-center gap-2">
                     <div className="relative">
                       <button
+                      type="button"
                       onClick={toggleUserMenu}
                       className="text-xs md:text-sm px-3 py-2 font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2 bg-white text-blue-600" aria-label="Action">
 
@@ -709,7 +710,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                             </Link>
                             {isAdmin &&
                         <Link
-                          to="/admin?tab=pages"
+                          to="/admin/builder"
                           onClick={() => setIsUserMenuOpen(false)}
                           className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors border-t border-border mt-1 font-bold text-emerald-600">
 
@@ -718,6 +719,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                               </Link>
                         }
                             <button
+                          type="button"
                           onClick={handleLogout}
                           className="w-full text-left flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-500/10 rounded-lg transition-colors border-t border-border mt-1">
 
@@ -731,6 +733,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                     {/* Notification Bell */}
                     <div className="relative">
                       <button
+                      type="button"
                       className="p-2 rounded-full hover:bg-white/10 transition-colors relative group"
                       aria-label="Notifications">
 
@@ -817,6 +820,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                     </Button>
                   </Link>
                   <Button
+                type="button"
                 variant="destructive"
                 onClick={() => {handleLogout();setIsMenuOpen(false);}}
                 className="w-full justify-center gap-2 rounded-2xl py-4 bg-red-500 text-white hover:bg-red-600 shadow-sm">

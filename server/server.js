@@ -678,8 +678,12 @@ const initDB = async () => {
             END $$;
         `);
 
-        const adminEmail = process.env.ADMIN_EMAIL || 'admin@proquelec.com';
-        const adminPassword = process.env.ADMIN_PASSWORD;
+        const adminEmail = process.env.ADMIN_EMAIL || 'admin@proquelec.sn';
+        let adminPassword = process.env.ADMIN_PASSWORD;
+        if (!adminPassword && process.env.NODE_ENV !== 'production') {
+            adminPassword = 'admin123';
+            console.warn('[DB] No ADMIN_PASSWORD set. Seeding default admin admin@proquelec.sn with password admin123 for local development.');
+        }
         if (adminPassword) {
             const bcrypt = require('bcrypt');
             const userCheck = await pool.query('SELECT * FROM public.users WHERE email = $1', [adminEmail]);

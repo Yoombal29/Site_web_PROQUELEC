@@ -9,6 +9,8 @@ const createPageSchema = z.object({
     meta_keywords: z.string().optional(),
 });
 
+const jsonDataSchema = z.union([z.string(), z.record(z.any()), z.array(z.any())]);
+
 const updatePageSchema = z.object({
     title: z.string().min(1).optional(),
     slug: z.string().min(1).optional(),
@@ -18,12 +20,22 @@ const updatePageSchema = z.object({
     meta_keywords: z.string().optional(),
 });
 
+const themeConfigSchema = z.object({
+    theme_config: z.object({
+        primaryColor: z.string().optional(),
+        secondaryColor: z.string().optional(),
+        fontFamily: z.string().optional(),
+        borderRadius: z.string().optional(),
+        spacingScale: z.string().optional(),
+    }).passthrough(),
+});
+
 const adminUpdatePageSchema = z.object({
     content_raw: z.string().optional(),
     content: z.string().optional(),
-    content_blocks: z.any().optional(),
-    structure_json: z.any().optional(),
-    design_options: z.any().optional(),
+    content_blocks: z.array(z.any()).optional(),
+    structure_json: jsonDataSchema.optional(),
+    design_options: z.record(z.any()).optional(),
     security_level: z.string().optional(),
     immutable: z.boolean().optional(),
     title: z.string().optional(),
@@ -31,8 +43,8 @@ const adminUpdatePageSchema = z.object({
     meta_description: z.string().optional(),
     meta_keywords: z.string().optional(),
     is_published: z.boolean().optional(),
-    categories: z.any().optional(),
-    tags: z.any().optional(),
+    categories: z.array(z.string()).optional(),
+    tags: z.array(z.string()).optional(),
     author: z.string().optional(),
     excerpt: z.string().optional(),
     meta_robots: z.string().optional(),
@@ -53,6 +65,16 @@ const adminUpdatePageSchema = z.object({
     publish_date: z.string().optional(),
     unpublish_date: z.string().optional(),
     reading_time: z.number().optional(),
+    theme_config: themeConfigSchema.shape.theme_config.optional(),
+});
+
+const draftPageSchema = z.object({
+    draft_json: jsonDataSchema,
+});
+
+const namedVersionSchema = z.object({
+    version_name: z.string().min(1, 'Nom de version requis'),
+    structure_json: jsonDataSchema,
 });
 
 const createMenuItemSchema = z.object({
@@ -76,6 +98,7 @@ const constructionModeSchema = z.object({
 
 module.exports = {
     createPageSchema, updatePageSchema, adminUpdatePageSchema,
+    draftPageSchema, namedVersionSchema, themeConfigSchema,
     createMenuItemSchema, updateMenuItemSchema,
     constructionModeSchema
 };

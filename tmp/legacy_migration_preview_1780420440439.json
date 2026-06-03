@@ -1,0 +1,232 @@
+[
+  {
+    "id": "80c43bda-af7d-483f-ac2f-21306f778516",
+    "slug": "formations",
+    "nodes": 1
+  },
+  {
+    "id": "81914f9c-319c-453e-92ac-b0dda234fdd5",
+    "slug": "about",
+    "nodes": 1
+  },
+  {
+    "id": "11111111-1111-1111-1111-111111111111",
+    "slug": "home",
+    "nodes": 16
+  },
+  {
+    "id": "585de769-8775-414e-bb70-ca7168641ced",
+    "slug": "formations-proquelec",
+    "nodes": 1
+  },
+  {
+    "id": "92084bb5-32c9-46a7-88ee-8a766739fc3e",
+    "slug": "events",
+    "nodes": 1
+  },
+  {
+    "id": "6648ee1c-1638-46a9-b11f-bb6070650c47",
+    "slug": "legal",
+    "nodes": 1
+  },
+  {
+    "id": "3d67c362-4624-4a3e-9d24-de5f10dbb2f7",
+    "slug": "contact",
+    "nodes": 1
+  },
+  {
+    "id": "f008542a-8a9e-448d-a0fe-e18ab08c780d",
+    "slug": "trainings",
+    "nodes": 1
+  },
+  {
+    "id": "23550362-32cf-4786-a5ab-d586166aad5e",
+    "slug": "expertises-techniques",
+    "nodes": 1
+  },
+  {
+    "id": "149cd8aa-7d22-431d-9310-ad364ece6af3",
+    "slug": "utilite-publique",
+    "nodes": 1
+  },
+  {
+    "id": "4f88b1e9-9515-42ab-919b-03f5c70c0443",
+    "slug": "certifications",
+    "nodes": 1
+  },
+  {
+    "id": "b93c6204-8472-4048-8261-7313c474a038",
+    "slug": "espace-autorites",
+    "nodes": 1
+  },
+  {
+    "id": "408a9794-62a8-4ad2-854c-8a80c4e30298",
+    "slug": "espace-menages",
+    "nodes": 1
+  },
+  {
+    "id": "6d594d8b-a088-42c1-953e-2eecf0fb2e53",
+    "slug": "espace-professionnels",
+    "nodes": 1
+  },
+  {
+    "id": "a84d94d9-8761-4d62-9877-3877291ee72c",
+    "slug": "nos-actions",
+    "nodes": 1
+  },
+  {
+    "id": "0c887822-0daf-49c3-96fe-b60ba567af8f",
+    "slug": "normes-ressources",
+    "nodes": 1
+  },
+  {
+    "id": "d0ccd180-93dc-4774-9de7-34e041157fe5",
+    "slug": "activities",
+    "nodes": 1
+  },
+  {
+    "id": "c84286a5-f48b-4423-a8ed-4b750d5506f0",
+    "slug": "documents",
+    "nodes": 1
+  },
+  {
+    "id": "86a5b7ca-1e53-4770-b87a-06d2ae5b7706",
+    "slug": "labels",
+    "nodes": 1
+  },
+  {
+    "id": "3a37a864-4eeb-4b67-9604-a69628820407",
+    "slug": "blog",
+    "nodes": 1
+  },
+  {
+    "id": "c1b3cb7f-92c1-448a-82cd-4b56561763a6",
+    "slug": "evenements/seminaires",
+    "nodes": 1
+  },
+  {
+    "id": "38835c2d-db5c-400a-9e12-eec37bbeced7",
+    "slug": "actions/sensibilisation",
+    "nodes": 1
+  },
+  {
+    "id": "f6a6dfb3-0d97-4dd9-b30b-82e4ec4112cd",
+    "slug": "actions/conformite",
+    "nodes": 1
+  },
+  {
+    "id": "39304ada-a67e-4c2c-b2c0-51add628cc33",
+    "slug": "actions/securisation",
+    "nodes": 1
+  },
+  {
+    "id": "08d842a7-c9bb-43c5-9f81-46c218d1f401",
+    "slug": "actions/collectivites",
+    "nodes": 1
+  },
+  {
+    "id": "bdd0b47c-fae5-4b4c-8042-5a434dfa48b2",
+    "slug": "formations/artisans",
+    "nodes": 1
+  },
+  {
+    "id": "64f9f5b9-0c9b-4625-a4e8-b283e29d3231",
+    "slug": "formations/collectivites",
+    "nodes": 1
+  },
+  {
+    "id": "ac06bee8-4b0b-4fea-86c1-b030d9c668e7",
+    "slug": "ressources-pedagogiques",
+    "nodes": 1
+  },
+  {
+    "id": "47cdc579-9a5d-4f41-b9ae-16ccb31628ef",
+    "slug": "evenements/ateliers",
+    "nodes": 1
+  },
+  {
+    "id": "1396d127-65fc-4102-8b78-794a74f17daf",
+    "slug": "evenements/conferences",
+    "nodes": 1
+  },
+  {
+    "id": "f4fce9b8-b3d0-4bea-bd35-1f7533c67819",
+    "slug": "presse/communiques",
+    "nodes": 1
+  },
+  {
+    "id": "38abcb19-80ab-463a-9e43-74161c0c7626",
+    "slug": "presse/revue",
+    "nodes": 1
+  },
+  {
+    "id": "93c7f570-2c9a-414b-addb-08a82c9bb8e8",
+    "slug": "faq",
+    "nodes": 1
+  },
+  {
+    "id": "0c2509dc-1a4b-4ef5-806e-1b6d8d313ff9",
+    "slug": "publications",
+    "nodes": 1
+  },
+  {
+    "id": "cf9d0adb-1758-4add-8df7-8e7956b60650",
+    "slug": "galerie",
+    "nodes": 1
+  },
+  {
+    "id": "c664e922-59be-4bea-a58c-a3d3b760beb6",
+    "slug": "temoignages",
+    "nodes": 1
+  },
+  {
+    "id": "055e16c0-e1c7-4baa-8de0-c202316b4c74",
+    "slug": "projets",
+    "nodes": 1
+  },
+  {
+    "id": "1be3de50-5796-4c43-86fe-397e2863b886",
+    "slug": "portal/marches",
+    "nodes": 1
+  },
+  {
+    "id": "f75ae6ff-06c8-443c-8b8b-3da7f9c6eee8",
+    "slug": "portal/formations",
+    "nodes": 1
+  },
+  {
+    "id": "75a0aa7b-1259-48b3-8792-cafd3d67a653",
+    "slug": "portal/dashboard",
+    "nodes": 1
+  },
+  {
+    "id": "860748f3-90c5-4842-aa06-854a5d332c43",
+    "slug": "partenaires-liste",
+    "nodes": 1
+  },
+  {
+    "id": "1db62a72-f779-4d48-a71b-b3e74669bc24",
+    "slug": "collectivites",
+    "nodes": 1
+  },
+  {
+    "id": "dd7bd027-46ee-4693-87d8-be14dfbcce68",
+    "slug": "marches",
+    "nodes": 1
+  },
+  {
+    "id": "c69bf7ef-41eb-4fde-99c3-417b8092e9db",
+    "slug": "actions/diagnostics",
+    "nodes": 1
+  },
+  {
+    "id": "accb2643-5998-48bc-af65-f95e0f37ef10",
+    "slug": "conseils-menages",
+    "nodes": 1
+  },
+  {
+    "id": "08a07242-e97e-4976-9ddf-54d924ec3163",
+    "slug": "partenariat-senelec",
+    "nodes": 1
+  }
+]

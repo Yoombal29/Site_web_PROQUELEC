@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import type { Block, BlockStyle, BlockContent } from '@/types/builder';
 import { secureSetItem, secureGetItem, secureRemoveItem } from '@/lib/crypto-utils';
 import cloneDeep from 'lodash.clonedeep';
-import { produce } from 'immer';
 import { eventBus } from '@/engine/events/bus';
 
 
@@ -325,6 +324,87 @@ const DEFAULT_BUILDER_TEMPLATES: BlockTemplate[] = [
         }
       ]
     }
+  },
+  {
+    id: uuidv4(),
+    name: 'Page Modèle',
+    createdAt: Date.now(),
+    block: {
+      id: uuidv4(),
+      type: 'section',
+      content: {
+        title: 'Page Modèle Builder',
+        subtitle: 'Un modèle complet pour tester toutes les capacités du builder.'
+      },
+      style: {
+        padding: '0',
+        backgroundColor: '#0f172a',
+        color: '#f8fafc',
+        fontFamily: 'Inter'
+      },
+      children: [
+        {
+          id: uuidv4(),
+          type: 'text-block',
+          content: {
+            html: '<section class="bg-gradient-to-r from-sky-700 via-indigo-900 to-slate-900 text-white py-32"><div class="max-w-6xl mx-auto px-6 text-center"><h1 class="text-5xl md:text-6xl font-extrabold mb-6">Testez le Builder avec un modèle complet</h1><p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-200 mb-8">Hero, fonctionnalités, chiffres clés, témoignages, tarifs et FAQ — tout est présent pour valider le rendu et la personnalisation.</p><a href="#" class="inline-flex items-center justify-center rounded-full bg-amber-400 px-8 py-3 text-base font-semibold text-slate-950 shadow-xl hover:bg-amber-300 transition">Démarrer le test</a></div></section>'
+          },
+          style: {
+            padding: '0',
+            backgroundColor: 'transparent',
+            fontFamily: 'Inter'
+          }
+        },
+        {
+          id: uuidv4(),
+          type: 'text-block',
+          content: {
+            html: '<section class="bg-white py-24"><div class="max-w-6xl mx-auto px-6 grid gap-8 lg:grid-cols-3"><div class="rounded-3xl p-8 border border-slate-200 shadow-sm"><h2 class="text-2xl font-semibold mb-4">Modules multi-usages</h2><p class="text-slate-600">Un ensemble prêt à l’emploi pour tester des blocs de contenu et des sections visuelles.</p></div><div class="rounded-3xl p-8 border border-slate-200 shadow-sm"><h2 class="text-2xl font-semibold mb-4">Hero enrichi</h2><p class="text-slate-600">Section d’accueil immersive avec CTA, visuels et message premium.</p></div><div class="rounded-3xl p-8 border border-slate-200 shadow-sm"><h2 class="text-2xl font-semibold mb-4">Validation UX</h2><p class="text-slate-600">Navigation fluide et composants testés pour l’édition en temps réel.</p></div></div></section>'
+          },
+          style: {
+            padding: '0',
+            backgroundColor: 'transparent',
+            fontFamily: 'Inter'
+          }
+        },
+        {
+          id: uuidv4(),
+          type: 'text-block',
+          content: {
+            html: '<section class="bg-slate-950 text-white py-24"><div class="max-w-6xl mx-auto px-6 grid gap-6 md:grid-cols-3"><div class="p-8 bg-slate-900 rounded-3xl shadow-xl"><h3 class="text-3xl font-bold mb-3">150+</h3><p class="text-slate-300">Projets testés</p></div><div class="p-8 bg-slate-900 rounded-3xl shadow-xl"><h3 class="text-3xl font-bold mb-3">99%</h3><p class="text-slate-300">Interfaces réactives</p></div><div class="p-8 bg-slate-900 rounded-3xl shadow-xl"><h3 class="text-3xl font-bold mb-3">24/7</h3><p class="text-slate-300">Support de test</p></div></div></section>'
+          },
+          style: {
+            padding: '0',
+            backgroundColor: 'transparent',
+            fontFamily: 'Inter'
+          }
+        },
+        {
+          id: uuidv4(),
+          type: 'text-block',
+          content: {
+            html: '<section class="bg-white py-24"><div class="max-w-6xl mx-auto px-6"><h2 class="text-3xl font-semibold mb-8 text-center">Témoignages et retours</h2><div class="grid gap-6 md:grid-cols-2"><div class="rounded-3xl p-8 border border-slate-200 shadow-sm"><p class="text-slate-600 mb-4">« Le builder supporte parfaitement des pages complexes et des composants variés. »</p><span class="font-semibold">- Client test 1</span></div><div class="rounded-3xl p-8 border border-slate-200 shadow-sm"><p class="text-slate-600 mb-4">« Nous avons pu monter un prototype très rapidement. »</p><span class="font-semibold">- Client test 2</span></div></div></div></section>'
+          },
+          style: {
+            padding: '0',
+            backgroundColor: 'transparent',
+            fontFamily: 'Inter'
+          }
+        },
+        {
+          id: uuidv4(),
+          type: 'text-block',
+          content: {
+            html: '<section class="bg-slate-100 py-24"><div class="max-w-6xl mx-auto px-6"><h2 class="text-3xl font-semibold mb-8 text-center">FAQ de test</h2><div class="space-y-4"><div class="rounded-3xl p-6 bg-white shadow-sm"><h3 class="font-semibold mb-2">Comment personnaliser ce modèle ?</h3><p class="text-slate-600">Utilisez le builder pour modifier le hero, les sections et les styles en temps réel.</p></div><div class="rounded-3xl p-6 bg-white shadow-sm"><h3 class="font-semibold mb-2">Est-ce que les sections sont réordonnables ?</h3><p class="text-slate-600">Oui, chaque bloc est conçu pour être déplacé et configuré dynamiquement.</p></div></div></div></section>'
+          },
+          style: {
+            padding: '0',
+            backgroundColor: 'transparent',
+            fontFamily: 'Inter'
+          }
+        }
+      ]
+    }
   }
 ];
 
@@ -491,11 +571,10 @@ const findBlockParent = (
   return null;
 };
 
-// Helper: Save current state to history using immer for memory efficiency
+// Helper: Save current state to history using deep clones for reliable undo/redo
 const saveHistory = (state: BuilderState): Partial<BuilderState> => {
   const newHistory = state.history.slice(0, state.historyIndex + 1);
-  // Use immer to create immutable patches instead of full clones
-  newHistory.push(produce(state.blocks, draft => draft));
+  newHistory.push(cloneDeep(state.blocks));
 
   if (newHistory.length > 20) newHistory.shift(); // Limit to 20 steps
 
@@ -522,7 +601,8 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
   },
 
   setBlocks: (blocks) => {
-    set({ blocks, history: [blocks], historyIndex: 0 });
+    const cloned = cloneDeep(blocks);
+    set({ blocks: cloned, history: [cloned], historyIndex: 0 });
     eventBus.emit('state:changed', { action: 'setBlocks', timestamp: Date.now() });
   },
 
@@ -545,12 +625,7 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
 
       if (parentId) {
         const info = findBlockParent(state.blocks, parentId);
-        if (info) {
-          resolvedParentId = info.parent?.id;
-          targetIndex = info.index;
-        } else {
-          resolvedParentId = parentId;
-        }
+        resolvedParentId = info ? parentId : undefined;
       }
 
       const newBlocks = insertBlockRecursive(state.blocks, newBlock, resolvedParentId, targetIndex);
@@ -577,12 +652,7 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
 
       if (parentId) {
         const info = findBlockParent(state.blocks, parentId);
-        if (info) {
-          resolvedParentId = info.parent?.id;
-          targetIndex = info.index;
-        } else {
-          resolvedParentId = parentId;
-        }
+        resolvedParentId = info ? parentId : undefined;
       }
 
       const newBlocks = insertBlockRecursive(state.blocks, newBlock, resolvedParentId, targetIndex);
@@ -606,14 +676,16 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
       const activeInfo = findBlockParent(state.blocks, activeId);
       const overInfo = findBlockParent(state.blocks, overId);
 
-      if (activeInfo && overInfo) {
+      if (activeInfo && overInfo && activeId !== overId) {
         prevIdx = activeInfo.index;
+        const sameParent = activeInfo.parent?.id === overInfo.parent?.id;
         newIdx = overInfo.index;
+        if (sameParent && activeInfo.index < overInfo.index) {
+          newIdx = Math.max(0, overInfo.index - 1);
+        }
 
         const movedBlock = activeInfo.block;
-        // 1. Enlever de l'ancienne position
         let newBlocks = removeBlockRecursive(state.blocks, activeId);
-        // 2. Insérer à la nouvelle position
         newBlocks = insertBlockRecursive(newBlocks, movedBlock, overInfo.parent?.id, newIdx);
         
         moved = true;
@@ -640,22 +712,11 @@ export const useBuilderStore = create<BuilderState>((set, get) => ({
     let blockIndex: number | undefined;
     set((state) => {
       const historyUpdate = saveHistory(state);
-      // Find block info before removal
-      for (let i = 0; i < state.blocks.length; i++) {
-        if (state.blocks[i].id === id) {
-          deletedBlock = state.blocks[i];
-          blockIndex = i;
-          break;
-        }
-        if (state.blocks[i].children) {
-          const ci = state.blocks[i].children!.findIndex((c) => c.id === id);
-          if (ci !== -1) {
-            deletedBlock = state.blocks[i].children![ci];
-            parentId = state.blocks[i].id;
-            blockIndex = ci;
-            break;
-          }
-        }
+      const info = findBlockParent(state.blocks, id);
+      if (info) {
+        deletedBlock = info.block;
+        parentId = info.parent?.id;
+        blockIndex = info.index;
       }
       return {
         ...historyUpdate,

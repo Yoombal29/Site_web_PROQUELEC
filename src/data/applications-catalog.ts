@@ -187,6 +187,37 @@ export const premiumApps: ProquelecApp[] = [
   route: "/apps/mise-terre"
 },
 {
+  id: "verif-mise-terre",
+  title: "Vérif Terre Avancée",
+  description: "Vérifiez la prise de terre et la conformité avec NF C 15-100.",
+  icon: ShieldCheck,
+  category: "premium",
+  status: "active",
+  norme: "NF C 15-100",
+  group: "Électriciens",
+  route: "/outils"
+},
+{
+  id: "convertisseur-unites",
+  title: "Convertisseur Unités Électriques",
+  description: "Convertissez tensions, courants, puissances, impédances et fréquences.",
+  icon: Calculator,
+  category: "premium",
+  status: "active",
+  group: "Électriciens",
+  route: "/outils"
+},
+{
+  id: "calcul-eclairage",
+  title: "Calculateur d'Éclairage",
+  description: "Calculez l'éclairement en lux pour vos espaces et pièces.",
+  icon: Lightbulb,
+  category: "premium",
+  status: "active",
+  group: "Électriciens",
+  route: "/outils"
+},
+{
   id: "notes-calcul-pdf",
   title: "Notes de Calcul PDF",
   description: "Générateur de notes de calcul certifiables au format PDF.",

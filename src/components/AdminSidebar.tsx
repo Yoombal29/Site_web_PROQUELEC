@@ -167,13 +167,6 @@ export const menuItems = [
 
   // --- 4. GESTION DE CONTENU (CMS) ---
   {
-    id: "pages",
-    label: "Pages & Architecture",
-    icon: Layout,
-    category: "cms",
-    roles: ["admin", "secondary_admin"]
-  },
-  {
     id: "dynamic_content",
     label: "Sections & Contenus",
     icon: FileText,

@@ -11,12 +11,12 @@ async function login(email, password) {
 
     const user = await repository.findByEmail(normalizedEmail);
     if (!user) {
-        throw Object.assign(new Error('Invalid credentials'), { status: 401 });
+        throw Object.assign(new Error('Identifiants invalides'), { status: 401 });
     }
 
     const validPassword = await bcrypt.compare(password, user.password_hash);
     if (!validPassword) {
-        throw Object.assign(new Error('Invalid credentials'), { status: 401 });
+        throw Object.assign(new Error('Identifiants invalides'), { status: 401 });
     }
 
     if (user.is_active === false) {

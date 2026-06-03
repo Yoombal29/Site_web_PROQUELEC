@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "next-themes";
 import { ThemeSync } from "@/components/ThemeSync";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from "react-router-dom";
 import { MainLayout } from "@/components/MainLayout";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { NotificationContainer } from "@/components/NotificationContainer";
@@ -25,6 +25,7 @@ import Auth from "./pages/Auth";
 import PartnerDashboard from "./pages/admin/PartnerDashboard";
 import AdminSecondaryDashboard from "./pages/admin/AdminSecondaryDashboard";
 import PageSectionsAdmin from "./pages/admin/PageSectionsAdmin";
+import AdminDashboard from "@/components/admin/AdminDashboard";
 import SchemaBuilder from "./pages/SchemaBuilder";
 import RubriqueSelectorPage from "./pages/RubriqueSelectorPage";
 import ObservatoirePage from "./pages/observatoire/ObservatoirePage";
@@ -66,6 +67,7 @@ import RBACDemo from "./pages/examples/RBACDemo";
 // Lazy-load heavy pages
 const AnalyticsPageLazy = lazy(() => import("./pages/AnalyticsPage").then(mod => ({ default: mod.AnalyticsPage })));
 import BuilderPage from "./pages/admin/BuilderPage";
+import BuilderConfigPage from "./pages/admin/BuilderConfigPage";
 const SchematicEditorPage = lazy(() => import("./pages/admin/SchematicEditorPage"));
 const CraftBuilderPage = lazy(() => import("./pages/admin/CraftBuilderPage"));
 
@@ -112,9 +114,8 @@ const AppContent = () => {
         path: "/admin",
         element:
           <RoleProtectedRoute allowedRoles={["admin"]}>
-            <Dashboard />
+            <AdminDashboard />
           </RoleProtectedRoute>
-
       }];
 
 
@@ -345,6 +346,14 @@ const AppContent = () => {
           element: (
             <RoleProtectedRoute allowedRoles={["admin"]}>
               <BuilderPage />
+            </RoleProtectedRoute>
+          )
+        },
+        {
+          path: "/admin/builder/config",
+          element: (
+            <RoleProtectedRoute allowedRoles={["admin"]}>
+              <BuilderConfigPage />
             </RoleProtectedRoute>
           )
         },

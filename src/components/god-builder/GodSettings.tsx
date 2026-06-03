@@ -21,6 +21,7 @@ import { useGodEditor } from './GodEditorContext';
 import { useBuilderThemeStore } from '@/stores/builder-theme.store';
 import { useBuilderUiStore } from '@/stores/builder-ui.store';
 import { useFontsStore } from '@/stores/fonts.store';
+import { toast } from 'sonner';
 
 // ─────────────────────────────────────────────────────────
 // TAB BUTTON

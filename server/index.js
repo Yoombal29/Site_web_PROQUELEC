@@ -1964,14 +1964,14 @@ app.post('/api/auth/login', async (req, res) => {
     ]);
 
     if (result.rows.length === 0) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Identifiants invalides' });
     }
 
     const user = result.rows[0];
     const validPassword = await bcrypt.compare(password, user.password_hash);
 
     if (!validPassword) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Identifiants invalides' });
     }
 
     if (user.is_active === false) {
@@ -4746,8 +4746,12 @@ const initDB = async () => {
         `);
 
     // SEED ADMIN USER IF NOT EXISTS (Recovery & First Run)
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@proquelec.com';
-    const adminPassword = process.env.ADMIN_PASSWORD;
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@proquelec.sn';
+    let adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword && process.env.NODE_ENV !== 'production') {
+      adminPassword = 'admin123';
+      console.warn('[DB] No ADMIN_PASSWORD set. Seeding default admin admin@proquelec.sn with password admin123 for local development.');
+    }
     if (adminPassword) {
       const userCheck = await pool.query('SELECT * FROM public.users WHERE email = $1', [
         adminEmail,

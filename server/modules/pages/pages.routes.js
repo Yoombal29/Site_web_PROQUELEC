@@ -3,6 +3,7 @@ const controller = require('./pages.controller');
 const { authenticateToken, requireAdmin, validate } = require('../../core/middleware');
 const {
     createPageSchema, updatePageSchema, adminUpdatePageSchema,
+    draftPageSchema, namedVersionSchema, themeConfigSchema,
     createMenuItemSchema, updateMenuItemSchema,
     constructionModeSchema
 } = require('./pages.validator');
@@ -23,11 +24,11 @@ router.get('/admin/page-versions/:id/:version', authenticateToken, requireAdmin,
 router.post('/admin/seed-homepage', authenticateToken, requireAdmin, controller.seedHomepage);
 
 // --- Draft Autosave, Named Versions & Theme Config ---
-router.put('/admin/pages/:id/draft', authenticateToken, requireAdmin, controller.saveDraft);
-router.post('/admin/pages/:id/versions', authenticateToken, requireAdmin, controller.createNamedVersion);
+router.put('/admin/pages/:id/draft', authenticateToken, requireAdmin, validate(draftPageSchema), controller.saveDraft);
+router.post('/admin/pages/:id/versions', authenticateToken, requireAdmin, validate(namedVersionSchema), controller.createNamedVersion);
 router.get('/admin/pages/:id/versions', authenticateToken, requireAdmin, controller.listNamedVersions);
 router.get('/admin/pages/:id/versions/:versionId', authenticateToken, requireAdmin, controller.getNamedVersionById);
-router.put('/admin/pages/:id/theme-config', authenticateToken, requireAdmin, controller.saveThemeConfig);
+router.put('/admin/pages/:id/theme-config', authenticateToken, requireAdmin, validate(themeConfigSchema), controller.saveThemeConfig);
 
 router.get('/menu-items', controller.listMenuItems);
 router.post('/menu-items', authenticateToken, validate(createMenuItemSchema), controller.createMenuItem);

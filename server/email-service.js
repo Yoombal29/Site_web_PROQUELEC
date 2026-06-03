@@ -157,9 +157,53 @@ async function sendNewUserNotification({ email, nom, telephone, role }) {
   });
 }
 
+function welcomeTemplate(name) {
+  const subject = `Bienvenue sur PROQUELEC, ${name}`;
+  const html = emailLayout(`Bienvenue ${name}`, `<p>Merci de vous être inscrit sur PROQUELEC. Nous sommes ravis de vous compter parmi nos membres engagés pour la sécurité électrique.</p>`);
+  const text = `Bienvenue ${name} !\nMerci de vous être inscrit sur PROQUELEC.`;
+  return { subject, html, text };
+}
+
+function formationConfirmationTemplate(formationName, name) {
+  const subject = `Confirmation d'inscription à ${formationName}`;
+  const html = emailLayout(`Confirmation de formation`, `<p>Bonjour ${name},</p><p>Votre inscription à la formation <strong>${formationName}</strong> a bien été prise en compte.</p>`);
+  const text = `Bonjour ${name},\nVotre inscription à la formation ${formationName} a bien été prise en compte.`;
+  return { subject, html, text };
+}
+
+function certificationNotificationTemplate(certificationName, name) {
+  const subject = `Notification de certification : ${certificationName}`;
+  const html = emailLayout(`Certification enregistrée`, `<p>Bonjour ${name},</p><p>Votre certification <strong>${certificationName}</strong> a été enregistrée avec succès.</p>`);
+  const text = `Bonjour ${name},\nVotre certification ${certificationName} a été enregistrée avec succès.`;
+  return { subject, html, text };
+}
+
+function contactTemplate(nom, email, sujet, message) {
+  const subject = `[PROQUELEC] Nouveau message : ${sujet}`;
+  const content = `
+    <table style="width:100%;border-collapse:collapse;background:#f9fafb;border-radius:12px;overflow:hidden">
+      ${fieldRow('Nom', nom)}
+      ${fieldRow('Email', email)}
+      ${fieldRow('Sujet', sujet)}
+      ${fieldRow('Message', message)}
+    </table>
+  `;
+  const html = emailLayout('Nouveau contact', content);
+  const text = `Nouveau message de contact\nNom: ${nom}\nEmail: ${email}\nSujet: ${sujet}\nMessage: ${message}`;
+  return { subject, html, text };
+}
+
+const emailTemplates = {
+  welcome: welcomeTemplate,
+  formationConfirmation: formationConfirmationTemplate,
+  certificationNotification: certificationNotificationTemplate,
+  contact: contactTemplate,
+};
+
 module.exports = {
   sendEmail,
   sendContactNotification,
   sendNewUserNotification,
   sendGroupNotification,
+  emailTemplates,
 };

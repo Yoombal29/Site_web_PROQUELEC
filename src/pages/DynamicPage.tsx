@@ -193,7 +193,20 @@ const DynamicPageComponent: React.FC = () => {
         const pageData = {
           ...data,
           content: rawData.content_raw || data.content,
-          content_blocks: typeof data.content_blocks === 'string' ? JSON.parse(data.content_blocks) : data.content_blocks || [],
+          content_blocks: (() => {
+            const rawValue = data.content_blocks;
+            if (Array.isArray(rawValue)) return rawValue;
+            if (typeof rawValue === 'string') {
+              try {
+                const parsed = JSON.parse(rawValue);
+                return Array.isArray(parsed) ? parsed : parsed ? [parsed] : [];
+              } catch {
+                return [];
+              }
+            }
+            if (rawValue && typeof rawValue === 'object') return [rawValue];
+            return [];
+          })(),
           design_options: typeof data.design_options === 'string' ? JSON.parse(data.design_options) : data.design_options || {},
           seo_options: typeof data.seo_options === 'string' ? JSON.parse(data.seo_options) : data.seo_options || {},
           structure_json: typeof data.structure_json === 'string' ? JSON.parse(data.structure_json) : data.structure_json || null,
@@ -269,18 +282,19 @@ const DynamicPageComponent: React.FC = () => {
   } : {};
 
   const renderPageContent = () => {
-    // Strategy 1: Craft.js structure (object with ROOT key) — read-only rendering
-    if (structureJson && isCraftJsStructure(structureJson)) {
-      return (
-        <Editor resolver={CRAFT_RESOLVER} enabled={false}>
-          <Frame data={JSON.stringify(structureJson)} />
-        </Editor>
-      );
-    }
-
-    // Strategy 2: Legacy builder array of blocks
+    // Pour les pages publiques, utiliser toujours BuilderPageRenderer (legacy reader)
+    // Les pages Craft.js ne sont éditées que dans /admin/builder
+    
+    // Strategy 1: Legacy builder array of blocks (PRIORITAIRE pour public)
     if (structureJson && Array.isArray(structureJson) && structureJson.length > 0) {
       return <BuilderPageRenderer blocks={structureJson as Block[]} />;
+    }
+
+    // Strategy 2: Craft.js structure only if legacy blocks don't exist
+    // (Désactiver Craft.js pour les pages publiques - utiliser seulement en admin)
+    if (structureJson && isCraftJsStructure(structureJson) && Array.isArray(structureJson) === false) {
+      // Ne pas utiliser Craft.js en public
+      return <PageRenderer page={page} />;
     }
 
     // Strategy 3: HTML content fallback (PageRenderer)

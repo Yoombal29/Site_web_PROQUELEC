@@ -8,7 +8,7 @@
 import React, { useEffect, useState } from 'react';
 import { Editor } from '@craftjs/core';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Zap, FileText, Plus, Search, ExternalLink, Loader2, ChevronRight } from 'lucide-react';
+import { Zap, FileText, Plus, Search, ExternalLink, Loader2, ChevronRight, Menu, X } from 'lucide-react';
 import { apiFetch } from '@/lib/api-client';
 
 import { GodToolbar } from '@/components/god-builder/GodToolbar';
@@ -22,7 +22,7 @@ import { useBrandingStore } from '@/stores/branding.store';
 
 import { CRAFT_RESOLVER as RESOLVER } from '@/components/blocks/craftResolver';
 
-import { GodEditorProvider } from '@/components/god-builder/GodEditorContext';
+import { GodEditorProvider, useGodEditor } from '@/components/god-builder/GodEditorContext';
 import { DynamicContextProvider } from '@/components/blocks/DynamicDataBlocks';
 
 // ─────────────────────────────────────────────────────────
@@ -35,6 +35,7 @@ const PageSelectorScreen = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
 
   useEffect(() => {
     const load = async () => {
@@ -69,120 +70,132 @@ const PageSelectorScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a15] flex flex-col items-center justify-center p-8 font-sans">
+    <div className="min-h-screen bg-[#0a0a15] flex flex-col">
       {/* Header */}
-      <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 px-4 py-1.5 rounded-full text-sm font-bold mb-4">
-          <Zap size={14} />
-          {brand.hideGodMode ? brand.builderLabel.toUpperCase() : 'GOD MODE BUILDER'}
-        </div>
-        <h1 className="text-4xl font-black text-white mb-2">
-          Quelle page voulez-vous éditer ?
-        </h1>
-        <p className="text-slate-500 text-base">
-          Sélectionnez une page existante ou créez-en une nouvelle
-        </p>
-      </div>
-
-      {/* Card */}
-      <div className="w-full max-w-3xl bg-[#12121f] border border-[#252538] rounded-2xl shadow-2xl shadow-black/40 overflow-hidden">
-        {/* Search bar */}
-        <div className="p-4 border-b border-[#252538] flex items-center gap-3">
-          <div className="relative flex-1">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
-            <input
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Rechercher une page par titre ou slug..."
-              className="w-full bg-[#0d0d1a] border border-[#252538] rounded-lg pl-9 pr-4 py-2.5 text-sm text-slate-300 placeholder:text-slate-600 focus:outline-none focus:border-indigo-500 transition-colors"
-            />
+      <div className="bg-[#12121f] border-b border-[#252538] px-6 py-4 sticky top-0 z-40">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="p-2 hover:bg-[#252538] rounded-lg transition text-slate-300"
+              title="Basculer le menu"
+            >
+              <Menu size={20} />
+            </button>
+            <div>
+              <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-xs font-bold">
+                <Zap size={12} />
+                {brand.hideGodMode ? brand.builderLabel : 'BUILDER'}
+              </div>
+              <h1 className="text-2xl font-bold text-white mt-1">Studio de Création</h1>
+            </div>
           </div>
           <button
-            onClick={() => navigate('/admin?tab=pages')}
-            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-sm font-bold rounded-lg transition-all shadow-lg shadow-indigo-900/20 shrink-0"
+            onClick={() => navigate('/admin')}
+            className="px-4 py-2 text-slate-300 hover:text-white transition text-sm"
           >
-            <Plus size={14} />
-            Nouvelle page
+            ← Admin
           </button>
         </div>
-
-        {/* Pages list */}
-        <div className="max-h-[60vh] overflow-y-auto" style={{ scrollbarWidth: 'thin', scrollbarColor: '#252538 transparent' }}>
-          {loading && (
-            <div className="flex items-center justify-center gap-2 py-16 text-slate-500">
-              <Loader2 size={18} className="animate-spin" />
-              <span className="text-sm">Chargement des pages...</span>
-            </div>
-          )}
-
-          {error && (
-            <div className="m-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm text-center">
-              ⚠️ {error}
-            </div>
-          )}
-
-          {!loading && !error && filtered.length === 0 && (
-            <div className="py-16 text-center text-slate-500">
-              <FileText size={32} className="mx-auto mb-3 opacity-30" />
-              <p className="text-sm">
-                {search ? `Aucune page trouvée pour "${search}"` : 'Aucune page disponible'}
-              </p>
-              <button
-                onClick={() => navigate('/admin?tab=pages')}
-                className="mt-4 text-indigo-400 hover:text-indigo-300 text-sm underline underline-offset-2 transition-colors"
-              >
-                Créer la première page →
-              </button>
-            </div>
-          )}
-
-          {!loading && filtered.map(page => (
-            <button
-              key={page.id}
-              onClick={() => navigate(`/admin/builder/${page.slug || page.id}`)}
-              className="w-full flex items-center justify-between px-5 py-4 hover:bg-[#1a1a2a] border-b border-[#1a1a2a] transition-all group text-left"
-            >
-              <div className="flex items-center gap-4 min-w-0">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center shrink-0">
-                  <FileText size={14} className="text-white" />
-                </div>
-                <div className="min-w-0">
-                  <div className="font-semibold text-sm text-slate-200 group-hover:text-white transition-colors truncate">
-                    {page.title || 'Sans titre'}
-                  </div>
-                  <div className="text-[11px] text-slate-500 font-mono truncate">
-                    /{page.slug || page.id}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 shrink-0 ml-4">
-                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${statusColors[page.workflow_status] || statusColors.draft}`}>
-                  {statusLabels[page.workflow_status] || page.workflow_status || 'Brouillon'}
-                </span>
-                <ChevronRight size={14} className="text-slate-600 group-hover:text-indigo-400 transition-colors" />
-              </div>
-            </button>
-          ))}
-        </div>
-
-        {/* Footer */}
-        {!loading && filtered.length > 0 && (
-          <div className="px-5 py-3 border-t border-[#252538] text-[11px] text-slate-600 flex items-center justify-between">
-            <span>{filtered.length} page{filtered.length > 1 ? 's' : ''} {search ? 'trouvée' + (filtered.length > 1 ? 's' : '') : 'disponible' + (filtered.length > 1 ? 's' : '')}</span>
-            <span className="text-slate-700">Cliquez pour ouvrir dans le builder</span>
-          </div>
-        )}
       </div>
 
-      {/* Back link */}
-      <button
-        onClick={() => navigate('/dashboard')}
-        className="mt-6 text-slate-600 hover:text-slate-400 text-sm transition-colors"
-      >
-        ← Retour au dashboard
-      </button>
+      {/* Layout with Sidebar */}
+      <div className="flex flex-1 overflow-hidden gap-4 p-4">
+        {/* Sidebar - Pages List */}
+        {sidebarOpen && (
+          <div className="w-80 bg-[#12121f] border border-[#252538] rounded-xl flex flex-col overflow-hidden">
+            {/* Search */}
+            <div className="p-4 border-b border-[#252538]">
+              <div className="relative">
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
+                <input
+                  type="text"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  placeholder="Rechercher..."
+                  className="w-full bg-[#0d0d1a] border border-[#252538] rounded-lg pl-9 pr-4 py-2.5 text-sm text-slate-300 placeholder:text-slate-600 focus:outline-none focus:border-indigo-500 transition-colors"
+                />
+              </div>
+            </div>
+
+            {/* Pages List */}
+            <div className="flex-1 overflow-y-auto scrollbar-thin">
+              {loading && (
+                <div className="flex items-center justify-center gap-2 py-8 text-slate-500">
+                  <Loader2 size={16} className="animate-spin" />
+                  <span className="text-sm">Chargement...</span>
+                </div>
+              )}
+
+              {error && (
+                <div className="m-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-xs text-center">
+                  ⚠️ Erreur: {error}
+                </div>
+              )}
+
+              {!loading && !error && filtered.length === 0 && (
+                <div className="py-8 text-center text-slate-500 text-xs">
+                  <FileText size={20} className="mx-auto mb-2 opacity-30" />
+                  {search ? `Aucune page trouvée` : 'Aucune page'}
+                </div>
+              )}
+
+              {!loading && filtered.map(page => (
+                <button
+                  key={page.id}
+                  onClick={() => navigate(`/admin/builder/${page.id}`)}
+                  className="w-full text-left px-4 py-3 border-b border-[#252538] hover:bg-[#16161f] transition flex items-center justify-between group"
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-slate-200 text-sm font-medium truncate group-hover:text-white">{page.title || 'Sans titre'}</p>
+                    <p className="text-slate-500 text-xs truncate">/{page.slug}</p>
+                  </div>
+                  {page.status && (
+                    <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ml-2 ${statusColors[page.status] || ''}`}>
+                      {statusLabels[page.status] || page.status}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* New Page Button */}
+            <div className="p-4 border-t border-[#252538]">
+              <button
+                onClick={() => navigate('/admin/builder')}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-sm font-bold rounded-lg transition-all shadow-lg shadow-indigo-900/20"
+              >
+                <Plus size={14} />
+                Nouvelle page
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Main Content Area */}
+        <div className="flex-1 bg-[#12121f] border border-[#252538] rounded-xl p-8 flex flex-col items-center justify-center">
+          <div className="text-center max-w-2xl">
+            <div className="mb-6">
+              <FileText size={48} className="mx-auto opacity-40 text-slate-500" />
+            </div>
+            <h2 className="text-3xl font-black text-white mb-3">Sélectionnez une page</h2>
+            <p className="text-slate-400 mb-8">
+              {filtered.length === 0
+                ? search
+                  ? `Aucune page ne correspond à "${search}"`
+                  : 'Aucune page disponible. Créez-en une pour commencer!'
+                : `Sélectionnez une page dans la liste pour l'éditer`}
+            </p>
+            <button
+              onClick={() => navigate('/admin/builder')}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-lg transition-all shadow-lg shadow-indigo-900/20"
+            >
+              <Plus size={18} />
+              Créer une nouvelle page
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -190,24 +203,75 @@ const PageSelectorScreen = () => {
 // ─────────────────────────────────────────────────────────
 // EDITOR LAYOUT
 // ─────────────────────────────────────────────────────────
-const BuilderPageContent = () => (
-  <>
-    <GodToolbar />
-    <div className="flex-1 flex overflow-hidden">
-      <div className="flex flex-col h-full overflow-hidden" style={{ backgroundColor: '#1a1a2a' }}>
-        <div className="flex flex-1 overflow-hidden">
-          <GodToolbox />
+// BUILDER CONTENT (with loading state handling)
+// ─────────────────────────────────────────────────────────
+const BuilderPageContent = () => {
+  try {
+    const { isLoading, error } = useGodEditor();
+
+    if (isLoading) {
+      return (
+        <div className="h-screen w-screen flex items-center justify-center bg-[#0d0d1a]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-slate-300 text-sm">Chargement de l'éditeur...</p>
+          </div>
         </div>
-        <GodLayers />
+      );
+    }
+
+    if (error) {
+      return (
+        <div className="h-screen w-screen flex items-center justify-center bg-[#0d0d1a]">
+          <div className="max-w-md bg-red-900/30 border border-red-600 rounded-lg p-6 text-center">
+            <p className="text-red-200 font-semibold mb-2">Erreur de chargement</p>
+            <p className="text-red-100 text-sm mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded transition"
+            >
+              Réessayer
+            </button>
+          </div>
+        </div>
+      );
+    }
+  } catch (err: any) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-[#0d0d1a]">
+        <div className="max-w-md bg-yellow-900/30 border border-yellow-600 rounded-lg p-6 text-center">
+          <p className="text-yellow-200 font-semibold mb-2">Erreur d'initialisation du builder</p>
+          <p className="text-yellow-100 text-sm mb-4 font-mono break-words">{err?.message || 'Erreur inconnue'}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded transition"
+          >
+            Réessayer
+          </button>
+        </div>
       </div>
-      <BuilderErrorBoundary>
-        <GodCanvas />
-      </BuilderErrorBoundary>
-      <GodSettings />
-      <GodTimeline />
-    </div>
-  </>
-);
+    );
+  }
+
+  return (
+    <>
+      <GodToolbar />
+      <div className="flex-1 flex overflow-hidden">
+        <div className="flex flex-col h-full overflow-hidden bg-[#1a1a2a]">
+          <div className="flex flex-1 overflow-hidden">
+            <GodToolbox />
+          </div>
+          <GodLayers />
+        </div>
+        <BuilderErrorBoundary>
+          <GodCanvas />
+        </BuilderErrorBoundary>
+        <GodSettings />
+        <GodTimeline />
+      </div>
+    </>
+  );
+};
 
 // ─────────────────────────────────────────────────────────
 // MAIN EXPORT
@@ -220,9 +284,17 @@ const BuilderPage = () => {
     return <PageSelectorScreen />;
   }
 
+
   // pageId present → open editor
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden font-sans" style={{ backgroundColor: '#0d0d1a' }}>
+    <div className="h-screen w-screen flex flex-col overflow-hidden font-sans bg-[#0d0d1a]">
+      <button
+        onClick={() => window.location.pathname = '/admin/builder/config'}
+        title="Ouvrir configuration Builder"
+        className="fixed right-4 top-4 z-50 inline-flex items-center gap-2 px-3 py-2 bg-indigo-600 text-white rounded-md shadow-lg hover:bg-indigo-500 transition"
+      >
+        Config Builder
+      </button>
       <Editor resolver={RESOLVER}>
         <GodEditorProvider pageId={pageId}>
           <DynamicContextProvider>

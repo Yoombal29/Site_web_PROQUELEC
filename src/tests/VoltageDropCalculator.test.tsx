@@ -45,11 +45,10 @@ describe('VoltageDropCalculator', () => {
     }
   });
 
-  it('validates input fields', async () => {
-    const user = userEvent.setup();
+  it('validates input fields', () => {
     render(<VoltageDropCalculator />);
 
-    // Fill required fields with valid data
+    // Fill required numeric fields with valid data
     const currentInput = screen.getByLabelText(/Courant/);
     const lengthInput = screen.getByLabelText(/Longueur/);
     const voltageInput = screen.getByLabelText(/Tension/);
@@ -60,40 +59,6 @@ describe('VoltageDropCalculator', () => {
     fireEvent.change(voltageInput, { target: { value: '230' } });
     fireEvent.change(powerFactorInput, { target: { value: '1.0' } });
 
-    // Select required dropdowns
-    const conductorSelect = screen.getByLabelText(/Matériau/);
-    await user.click(conductorSelect);
-    await user.click(screen.getByRole('button', { name: /Cuivre/ }));
-
-    const phaseSelect = screen.getByLabelText(/Régime Électrique/);
-    await user.click(phaseSelect);
-    await user.click(screen.getByRole('button', { name: /Monophasé/ }));
-
-    const installationSelect = screen.getByLabelText(/Type d'Installation/);
-    await user.click(installationSelect);
-    await user.click(screen.getByRole('button', { name: /Éclairage/ }));
-
-    const modeSelect = screen.getByLabelText(/Mode de Pose/);
-    await user.click(modeSelect);
-    await user.click(screen.getByRole('button', { name: /B1/ }));
-
-    // Set temperature and insulation
-    const tempInput = screen.getByLabelText(/Température Ambiante/);
-    fireEvent.change(tempInput, { target: { value: '30' } });
-
-    const insulationSelect = screen.getByLabelText(/Type d'Isolation/);
-    await user.click(insulationSelect);
-    await user.click(screen.getByRole('button', { name: /PVC/ }));
-
-    const circuitsInput = screen.getByLabelText(/Nombre de Circuits/);
-    fireEvent.change(circuitsInput, { target: { value: '1' } });
-
-    // Select cross section for manual mode
-    const sectionSelect = screen.getByLabelText(/Section Normalisée/);
-    await user.click(sectionSelect);
-    await user.click(screen.getByRole('button', { name: /2.5/ }));
-
-    // Button should be enabled
     const calculateButton = screen.getByRole('button', { name: /Calculer/ });
     expect(calculateButton).not.toBeDisabled();
   });
@@ -121,13 +86,30 @@ describe('VoltageDropCalculator', () => {
     expect(calculateButton).not.toBeDisabled();
   });
 
-  it('displays calculation results correctly', async () => {
+  it('performs a full manual calculation and displays a normative result', async () => {
     const user = userEvent.setup();
     render(<VoltageDropCalculator />);
 
-    // Fill all required fields and perform calculation
-    // (This would require a full integration test with mocked calculation results)
-    // For now, just verify the results section exists
-    expect(screen.getByText('Résultats du Calcul')).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText(/Courant/), { target: { value: '16' } });
+    fireEvent.change(screen.getByLabelText(/Longueur/), { target: { value: '50' } });
+    fireEvent.change(screen.getByLabelText(/Tension/), { target: { value: '230' } });
+    fireEvent.change(screen.getByLabelText(/Facteur de Puissance/), { target: { value: '1.0' } });
+    fireEvent.change(screen.getByLabelText(/Nombre de Circuits/), { target: { value: '1' } });
+
+    await user.click(screen.getByLabelText(/Section Normalisée/));
+    await user.click(screen.getByRole('button', { name: /16 mm²/ }));
+
+    await user.click(screen.getByLabelText(/Type d'Isolation/));
+    await user.click(screen.getByRole('button', { name: /PVC/ }));
+
+    const calculateButton = screen.getByRole('button', { name: /Calculer/i });
+    expect(calculateButton).not.toBeDisabled();
+
+    await user.click(calculateButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Limite Autorisée/)).toBeInTheDocument();
+      expect(screen.queryByText(/Saisissez les paramètres et cliquez sur/)).not.toBeInTheDocument();
+    });
   });
 });

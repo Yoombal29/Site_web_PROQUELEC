@@ -18,14 +18,14 @@ async function initializeDatabase() {
         console.log('✅ Database initialized successfully!');
 
         // Check if admin user exists
-        const adminCheck = await pool.query(`SELECT * FROM auth.users WHERE email = 'admin@proquelec.sn'`);
+        const adminCheck = await pool.query(`SELECT * FROM public.users WHERE email = 'admin@proquelec.sn'`);
         if (adminCheck.rows.length > 0) {
             console.log('✅ Admin user exists');
             console.log('Admin user details:', {
                 id: adminCheck.rows[0].id,
                 email: adminCheck.rows[0].email,
                 role: adminCheck.rows[0].role,
-                confirmed_at: adminCheck.rows[0].confirmed_at
+                is_active: adminCheck.rows[0].is_active
             });
         } else {
             console.log('⚠️  Admin user not found');

@@ -15,7 +15,10 @@ import { Badge } from "@/components/ui/badge";
 
 import YEAISenegal from "@/components/tools/YEAISenegal";
 import VoltageDropCalculator from "@/components/tools/VoltageDropCalculator";
-import { freeApps, premiumApps, appGroups } from "@/data/applications-catalog";
+import EarthResistanceChecker from "@/components/tools/EarthResistanceChecker";
+import ElectricalUnitConverter from "@/components/tools/ElectricalUnitConverter";
+import LightingCalculator from "@/components/tools/LightingCalculator";
+import { freeApps, premiumApps, appGroups, type ProquelecApp } from "@/data/applications-catalog";
 
 /**
  * TOOLS PLATFORM - HUB D'INGÉNIERIE SOUVERAIN
@@ -57,6 +60,15 @@ export default function ToolsPlatform() {
         break;
       case 'eng-calcs':
         setActiveTool('eng-calcs');
+        break;
+      case 'verif-mise-terre':
+        setActiveTool('verif-mise-terre');
+        break;
+      case 'convertisseur-unites':
+        setActiveTool('convertisseur-unites');
+        break;
+      case 'calcul-eclairage':
+        setActiveTool('calcul-eclairage');
         break;
       case 'schema-modulaire':
         navigate('/rubrique-selector');
@@ -156,6 +168,36 @@ export default function ToolsPlatform() {
                                 <RotateCcw className="w-4 h-4" /> Retour au Hub
                             </button>
                             <VoltageDropCalculator />
+                        </div> :
+          activeTool === 'verif-mise-terre' ?
+          <div className="space-y-8">
+                            <button
+              onClick={() => setActiveTool(null)}
+              className="flex items-center gap-2 text-emerald-500 font-black uppercase text-xs tracking-widest hover:text-white transition-colors">
+              
+                                <RotateCcw className="w-4 h-4" /> Retour au Hub
+                            </button>
+                            <EarthResistanceChecker />
+                        </div> :
+          activeTool === 'convertisseur-unites' ?
+          <div className="space-y-8">
+                            <button
+              onClick={() => setActiveTool(null)}
+              className="flex items-center gap-2 text-emerald-500 font-black uppercase text-xs tracking-widest hover:text-white transition-colors">
+              
+                                <RotateCcw className="w-4 h-4" /> Retour au Hub
+                            </button>
+                            <ElectricalUnitConverter />
+                        </div> :
+          activeTool === 'calcul-eclairage' ?
+          <div className="space-y-8">
+                            <button
+              onClick={() => setActiveTool(null)}
+              className="flex items-center gap-2 text-emerald-500 font-black uppercase text-xs tracking-widest hover:text-white transition-colors">
+              
+                                <RotateCcw className="w-4 h-4" /> Retour au Hub
+                            </button>
+                            <LightingCalculator />
                         </div> :
 
           <>

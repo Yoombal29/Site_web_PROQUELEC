@@ -85,6 +85,89 @@ export const BlockSchema = z.object({
   props: BlockContentSchema.optional(),
 });
 
+const CustomSectionSchema = z.object({
+  id: z.string().uuid(),
+  type: z.enum(['text', 'image', 'gallery', 'testimonials', 'cta', 'stats', 'features']),
+  title: z.string().max(200),
+  content: z.string().max(10000),
+  position: z.number().int().min(0),
+  enabled: z.boolean(),
+  settings: z.record(z.string(), z.any()).optional()
+});
+
+const ContentBlockSchema = z.object({
+  id: z.string().uuid(),
+  type: z.string().min(1).max(100),
+  version: z.number().int().min(0),
+  data: z.any(),
+  settings: z.object({
+    isVisible: z.boolean().optional(),
+    customClass: z.string().optional(),
+    anchor: z.string().optional(),
+  }).optional(),
+});
+
+const PageDesignOptionsSchema = z.object({
+  theme_id: z.string().optional(),
+  layout: z.enum(['default', 'full-width', 'boxed', 'card']),
+  hero_enabled: z.boolean(),
+  hero_height: z.enum(['small', 'medium', 'large', 'fullscreen']),
+  hero_overlay: z.number().min(0).max(1),
+  hero_gradient: z.string().optional(),
+  hero_alignment: z.enum(['left', 'center', 'right']),
+  content_width: z.enum(['default', 'narrow', 'wide', 'full']),
+  sidebar_enabled: z.boolean(),
+  sidebar_position: z.enum(['left', 'right']),
+  header_style: z.enum(['standard', 'overlay', 'minimal']).optional(),
+  button_style: z.enum(['solid', 'outline', 'ghost']).optional(),
+  section_spacing: z.enum(['compact', 'normal', 'spacious']).optional(),
+  footer_cta_enabled: z.boolean(),
+  background_color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
+  accent_color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
+  text_color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
+  heading_font: z.string(),
+  body_font: z.string(),
+  custom_css: z.string().max(10000).optional(),
+  custom_sections: z.array(CustomSectionSchema)
+});
+
+const PageSeoOptionsSchema = z.object({
+  focus_keyword: z.string().optional(),
+  meta_description: z.string().optional(),
+  canonical_url: z.string().url().optional(),
+  og_image: z.string().url().optional(),
+  og_title: z.string().optional(),
+  og_description: z.string().optional(),
+  twitter_card: z.enum(['summary', 'summary_large_image']),
+  schema_type: z.string().optional(),
+  language: z.string().optional()
+});
+
+export const PageRecordSchema = z.object({
+  id: z.string(),
+  title: z.string().max(200),
+  slug: z.string().regex(/^[a-z0-9-]+$/),
+  content: z.string(),
+  excerpt: z.string().optional(),
+  content_blocks: z.array(ContentBlockSchema),
+  workflow_status: z.enum(['draft', 'review', 'approved', 'published', 'archived']),
+  is_published: z.boolean(),
+  is_sticky: z.boolean(),
+  comment_status: z.enum(['open', 'closed']),
+  published_at: z.string().optional(),
+  meta_description: z.string().max(500).optional(),
+  meta_keywords: z.string().max(500).optional(),
+  featured_image: z.string().url().optional(),
+  design_options: PageDesignOptionsSchema,
+  seo_options: PageSeoOptionsSchema,
+  plugins_active: z.array(z.string()),
+  language_code: z.string(),
+  translation_of: z.string().optional(),
+  created_at: z.string(),
+  updated_at: z.string(),
+  author: z.string().max(100).optional(),
+});
+
 /**
  * Block Template Schema
  */
@@ -137,8 +220,26 @@ export const PageMetadataSchema = z.object({
  */
 export const PageStructureSchema = z.object({
   blocks: z.array(BlockSchema),
-  version: z.number(),
+  version: z.number().optional(),
 });
+
+const CraftJsStructureSchema = z.object({
+  ROOT: z.any(),
+}).passthrough();
+
+export const BuilderStructureSchema = z.union([
+  z.array(BlockSchema),
+  PageStructureSchema,
+  CraftJsStructureSchema,
+]);
+
+export const ThemeConfigSchema = z.object({
+  primaryColor: z.string().optional(),
+  secondaryColor: z.string().optional(),
+  fontFamily: z.string().optional(),
+  borderRadius: z.string().optional(),
+  spacingScale: z.string().optional(),
+}).passthrough();
 
 /**
  * Validation helper functions
@@ -146,4 +247,7 @@ export const PageStructureSchema = z.object({
 export const validateBlock = (data: unknown) => BlockSchema.safeParse(data);
 export const validateTemplate = (data: unknown) => BlockTemplateSchema.safeParse(data);
 export const validatePageMetadata = (data: unknown) => PageMetadataSchema.safeParse(data);
+export const validatePageRecord = (data: unknown) => PageRecordSchema.safeParse(data);
 export const validatePageStructure = (data: unknown) => PageStructureSchema.safeParse(data);
+export const validateBuilderStructure = (data: unknown) => BuilderStructureSchema.safeParse(data);
+export const validateThemeConfig = (data: unknown) => ThemeConfigSchema.safeParse(data);

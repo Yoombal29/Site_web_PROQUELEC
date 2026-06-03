@@ -1,3 +1,10 @@
+// ─────────────────────────────────────────────────────────
+// CRAFT.JS RESOLVER
+// Maps block type names to React components for Craft.js deserialization
+// ─────────────────────────────────────────────────────────
+
+import React from 'react';
+
 import {
   ContainerBlock,
   TextBlock,
@@ -23,6 +30,15 @@ import {
   ProgressBarBlock,
   AlertBlock,
 } from './ProquelecBlocks';
+import {
+  HeroBannerBlock,
+  AudienceOffersBlock,
+  VisionMissionBlock,
+  LandingStatsBlock,
+  LatestNewsBlock,
+  PartnerLogosBlock,
+} from '../builder/HomepageBlocks';
+
 import {
   HeadingBlock,
   ListBlock,
@@ -78,6 +94,10 @@ import {
   ParticlesBlock,
   TableOfContentsBlock,
 } from './ProquelecBlocksPlus';
+
+import { RichTextBlock } from './RichTextEditorBlock';
+import { PopupBlock } from './PopupBuilderBlock';
+
 import {
   FormBuilderBlock,
   TextFieldBlock,
@@ -88,18 +108,15 @@ import {
   RadioFieldBlock,
   FileUploadFieldBlock,
   HiddenFieldBlock,
-  DateFieldBlock,
-  TelFieldBlock,
-  ColorFieldBlock,
 } from './FormBuilderBlocks';
-import { RichTextBlock } from './RichTextEditorBlock';
-import { PopupBlock } from './PopupBuilderBlock';
+
 import {
   DynamicTextBlock,
   DynamicRepeaterBlock,
   DynamicImageBlock,
   DataSourceConfigBlock,
 } from './DynamicDataBlocks';
+
 import {
   ProductGridBlock,
   CartBlock,
@@ -109,10 +126,24 @@ import {
   AddToCartButtonBlock,
   CheckoutBlock,
 } from './EcommerceBlocks';
+
 import { NavMenuBlock, MenuItemBlock, MegaMenuContainerBlock } from './MegaMenuBlock';
 import { OffCanvasPanelBlock, OffCanvasToggleBlock } from './OffCanvasBlock';
 
+/**
+ * Fallback component for missing/unknown block types
+ */
+const FallbackBlock = ({ type }: { type?: string }) => React.createElement('div', 
+  { className: 'p-4 bg-gray-100 border-2 border-dashed border-gray-300 rounded text-gray-600 text-sm' },
+  React.createElement('p', null, '⚠️ Block type not available: ' + (type || 'unknown'))
+);
+
+/**
+ * Complete resolver for Craft.js deserialization
+ * Maps serialized node types to their React component implementations
+ */
 export const CRAFT_RESOLVER = {
+  // Core blocks from ProquelecBlocks
   ContainerBlock,
   TextBlock,
   HeroBlock,
@@ -136,6 +167,8 @@ export const CRAFT_RESOLVER = {
   CarouselBlock,
   ProgressBarBlock,
   AlertBlock,
+
+  // Extended blocks from ProquelecBlocksPlus
   HeadingBlock,
   ListBlock,
   QuoteBlock,
@@ -179,20 +212,6 @@ export const CRAFT_RESOLVER = {
   SearchBlock,
   AvatarBlock,
   BadgeBlock,
-  FormBuilderBlock,
-  TextFieldBlock,
-  EmailFieldBlock,
-  TextareaFieldBlock,
-  SelectFieldBlock,
-  CheckboxFieldBlock,
-  RadioFieldBlock,
-  FileUploadFieldBlock,
-  HiddenFieldBlock,
-  DateFieldBlock,
-  TelFieldBlock,
-  ColorFieldBlock,
-  RichTextBlock,
-  PopupBlock,
   ShapeDividerBlock,
   AnimatedHeadlineBlock,
   FeatureListBlock,
@@ -203,10 +222,29 @@ export const CRAFT_RESOLVER = {
   StickyContainerBlock,
   ParticlesBlock,
   TableOfContentsBlock,
+
+  // Rich text & popup
+  RichTextBlock,
+  PopupBlock,
+
+  // Form builder
+  FormBuilderBlock,
+  TextFieldBlock,
+  EmailFieldBlock,
+  TextareaFieldBlock,
+  SelectFieldBlock,
+  CheckboxFieldBlock,
+  RadioFieldBlock,
+  FileUploadFieldBlock,
+  HiddenFieldBlock,
+
+  // Dynamic data
   DynamicTextBlock,
   DynamicRepeaterBlock,
   DynamicImageBlock,
   DataSourceConfigBlock,
+
+  // E-commerce
   ProductGridBlock,
   CartBlock,
   ProductBlock,
@@ -214,9 +252,27 @@ export const CRAFT_RESOLVER = {
   PriceBlock,
   AddToCartButtonBlock,
   CheckoutBlock,
+
+  // Navigation & panels
   NavMenuBlock,
   MenuItemBlock,
   MegaMenuContainerBlock,
   OffCanvasPanelBlock,
   OffCanvasToggleBlock,
+
+  // Legacy / homepage-specific aliases
+  cardBlock: CardBlock,
+  statsBlock: StatsBlock,
+  textBlockBlock: TextBlock,
+  HeroBannerBlock,
+  LatestNewsBlock,
+  PartnerLogosBlock,
+  VisionMissionBlock,
+  AudienceOffersBlock,
+  LandingStatsBlock,
+
+  // Fallback for missing types
+  '': FallbackBlock,
+  'undefined': FallbackBlock,
+  'ROOT': ContainerBlock,
 };

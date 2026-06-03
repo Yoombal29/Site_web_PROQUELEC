@@ -209,7 +209,7 @@ export const GodToolbar = () => {
       {/* LEFT: Navigation & Title */}
       <div className="flex items-center gap-3 min-w-0">
         <button
-          onClick={() => navigate('/admin?tab=pages')}
+          onClick={() => navigate('/admin/builder')}
           className="p-2 hover:bg-[#252538] rounded-lg transition-colors text-slate-400 hover:text-white shrink-0"
           title="Retour aux pages"
         >
@@ -327,6 +327,15 @@ export const GodToolbar = () => {
           title="Gestionnaire de templates"
         >
           <FileJson size={14} className="text-indigo-400" />
+        </button>
+
+        {/* Quick access to Builder config */}
+        <button
+          onClick={() => navigate('/admin/builder/config')}
+          className="p-2 text-slate-500 hover:text-slate-300 hover:bg-[#252538] rounded-lg transition-colors"
+          title="Configuration Builder"
+        >
+          <FileJson size={14} className="text-emerald-400" />
         </button>
 
         {/* HTML Editor Dialog (Global) */}

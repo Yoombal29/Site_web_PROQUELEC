@@ -2,9 +2,29 @@ const { z } = require('zod');
 
 const snapshotTypeEnum = z.enum(['manual', 'auto', 'publish', 'ai_generated', 'collaboration_merge']);
 
+const builderBlockSchema = z.lazy(() => z.object({
+    id: z.string().min(1, 'Block id requis'),
+    type: z.string().min(1, 'Type de bloc requis'),
+    content: z.record(z.any()).optional().default({}),
+    style: z.record(z.any()).optional().default({}),
+    children: z.array(builderBlockSchema).optional().default([]),
+}).passthrough());
+
+const builderBlocksSchema = z.array(builderBlockSchema);
+
+const themeConfigSchema = z.object({
+    primaryColor: z.string().optional(),
+    secondaryColor: z.string().optional(),
+    fontFamily: z.string().optional(),
+    borderRadius: z.string().optional(),
+    spacingScale: z.string().optional(),
+}).passthrough();
+
+const jsonDataSchema = z.union([z.string(), z.record(z.any()), z.array(z.any())]);
+
 const createSnapshotSchema = z.object({
     label: z.string().min(1, 'Label requis').max(255),
-    snapshot: z.any(),
+    snapshot: jsonDataSchema,
     snapshot_type: snapshotTypeEnum.optional().default('manual'),
     metadata: z.record(z.any()).optional().default({}),
 });
@@ -14,9 +34,9 @@ const createTemplateSchema = z.object({
     category: z.string().min(1, 'Catégorie requise').max(100),
     description: z.string().optional(),
     preview_image: z.string().url('URL invalide').optional().or(z.literal('')),
-    blocks: z.array(z.any()).optional().default([]),
+    blocks: builderBlocksSchema.optional().default([]),
     layout_tree: z.array(z.any()).optional().default([]),
-    theme_config: z.record(z.any()).optional().default({}),
+    theme_config: themeConfigSchema.optional().default({}),
     animation_config: z.record(z.any()).optional().default({}),
     tags: z.array(z.string()).optional().default([]),
     is_system: z.boolean().optional().default(false),
@@ -27,9 +47,9 @@ const updateTemplateSchema = z.object({
     category: z.string().min(1).max(100).optional(),
     description: z.string().optional(),
     preview_image: z.string().optional(),
-    blocks: z.array(z.any()).optional(),
+    blocks: builderBlocksSchema.optional(),
     layout_tree: z.array(z.any()).optional(),
-    theme_config: z.record(z.any()).optional(),
+    theme_config: themeConfigSchema.optional(),
     animation_config: z.record(z.any()).optional(),
     tags: z.array(z.string()).optional(),
 });
@@ -104,7 +124,7 @@ const updateCollaborationSchema = z.object({
 
 const updatePageBuilderSchema = z.object({
     layout_tree: z.array(z.any()).optional(),
-    theme_config: z.record(z.any()).optional(),
+    theme_config: themeConfigSchema.optional(),
     bindings: z.array(z.any()).optional(),
     animation_config: z.record(z.any()).optional(),
     published_snapshot_id: z.string().uuid().optional(),

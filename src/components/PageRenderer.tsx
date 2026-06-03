@@ -71,7 +71,23 @@ export const PageRenderer: React.FC<PageRendererProps> = ({ page, className = ''
 
   const slug = (page.slug || '').toLowerCase();
   const isHome = slug === 'home' || slug === 'home_page';
-  const hasHeroBlock = Array.isArray(page.content_blocks) && page.content_blocks.some((b: any) => b?.type === 'hero');
+  const rawContentBlocks = (page as any).content_blocks;
+  const contentBlocks = Array.isArray(rawContentBlocks)
+    ? rawContentBlocks
+    : typeof rawContentBlocks === 'string'
+      ? (() => {
+          try {
+            const parsed = JSON.parse(rawContentBlocks);
+            return Array.isArray(parsed) ? parsed : parsed ? [parsed] : [];
+          } catch {
+            return [];
+          }
+        })()
+      : rawContentBlocks && typeof rawContentBlocks === 'object'
+        ? [rawContentBlocks]
+        : [];
+
+  const hasHeroBlock = contentBlocks.some((b: any) => b?.type === 'hero');
   const builderBlocks = (page as any).structure_json;
   const hasBuilderHero = Array.isArray(builderBlocks) && builderBlocks.some((b: any) => b?.type === 'hero');
   const showHero = (page as any).show_hero ?? (isHome ? (!hasHeroBlock && !hasBuilderHero) : design.hero_enabled);
@@ -150,16 +166,16 @@ export const PageRenderer: React.FC<PageRendererProps> = ({ page, className = ''
 
   // Identify sections for sticky nav
   const sections = useMemo(() => {
-    if (page.content_blocks && page.content_blocks.length > 0) {
-      return (page.content_blocks as any[]).
-      filter((b) => b.type === 'section' || b.type === 'heading').
-      map((b) => ({
-        id: b.id,
-        label: (b as any)?.data?.title || (b as any)?.data?.label || (b as any)?.data?.content || 'Section'
-      }));
+    if (contentBlocks.length > 0) {
+      return contentBlocks
+        .filter((b) => b.type === 'section' || b.type === 'heading')
+        .map((b) => ({
+          id: b.id,
+          label: (b as any)?.data?.title || (b as any)?.data?.label || (b as any)?.data?.content || 'Section'
+        }));
     }
     return [];
-  }, [page.content_blocks]);
+  }, [contentBlocks]);
 
   const renderBlocks = () => {
     // FALLBACK: Legacy content (HTML stored in `content` column)
@@ -177,10 +193,11 @@ export const PageRenderer: React.FC<PageRendererProps> = ({ page, className = ''
     // BLOCKS SYSTEM (New standard like be-builder)
     return (
       <div className="space-y-0">
-        {((page.content_blocks as any) as any[]).map((block, index: number) => {
+        {contentBlocks.map((block, index: number) => {
           const blockData = (block as any)?.data || {};
+          const blockKey = block?.id || `${block.type}-${index}`;
           return (
-            <div key={block.id} id={block.id} className="scroll-mt-32">
+            <div key={blockKey} id={block?.id || undefined} className="scroll-mt-32">
               {(() => {
                 switch (block.type) {
                   case 'section':

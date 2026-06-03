@@ -67,7 +67,7 @@ export const BuilderToolbar: React.FC<BuilderToolbarProps> = ({
       {/* Left Controls (Undo/Redo) */}
       <div className="flex items-center gap-2 min-w-fit">
         <Button variant="ghost" size="icon" className="mr-2 text-slate-400 hover:text-slate-600" title="Retour à la liste" asChild>
-          <a href="/dashboard?tab=pages" title="Retour à la liste des pages">
+          <a href="/admin" title="Retour au dashboard admin">
             <ChevronLeft className="w-5 h-5" />
           </a>
         </Button>
@@ -169,7 +169,7 @@ export const BuilderToolbar: React.FC<BuilderToolbarProps> = ({
         </Button>
 
         <Button size="sm" variant="outline" asChild>
-          <Link to="/admin?tab=pages">
+          <Link to="/admin/builder">
             Retour au menu
           </Link>
         </Button>

@@ -6,7 +6,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import DashboardHome from "@/components/admin/DashboardHome";
-import AdminPagesPanel from "@/components/admin/AdminPagesPanel";
 import AdminBlogPanel from "@/components/admin/AdminBlogPanel";
 import { EventCalendar } from "@/components/EventCalendar";
 import InfraDocs from '@/components/admin/InfraDocs';
@@ -40,8 +39,6 @@ export default function AdminSecondaryDashboard() {
                 return <DashboardHome />;
             case "projects": // Integrated ProjectList Tab
                 return <ProjectList />;
-            case "pages":
-                return <AdminPagesPanel />;
             case "blog":
                 return <AdminBlogPanel />;
             case "events":

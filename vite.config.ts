@@ -7,30 +7,32 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ mode }) => {
-  const fallbackPort = await getPort({ port: 8080 });
+  const defaultPort = Number(process.env.VITE_PORT) || 5173;
+  const apiTarget = process.env.VITE_API_URL || 'http://127.0.0.1:3010';
+
   return {
     plugins: [
       react(),
       mode === 'development' && componentTagger(),
     ].filter(Boolean),
     server: {
-      port: Number(process.env.VITE_PORT) || 5173,
+      port: defaultPort,
       host: true,
       strictPort: true,
       // Redirige toutes les routes inconnues vers index.html (React Router SPA)
       historyApiFallback: true,
       hmr: {
-        clientPort: Number(process.env.VITE_PORT) || 5173,
-        port: Number(process.env.VITE_PORT) || 5173,
+        clientPort: defaultPort,
+        port: defaultPort,
       },
       proxy: {
         '/api': {
-          target: process.env.VITE_API_URL || 'http://127.0.0.1:3010',
+          target: apiTarget,
           changeOrigin: true,
           secure: false,
         },
         '/uploads': {
-          target: process.env.VITE_API_URL || 'http://127.0.0.1:3010',
+          target: apiTarget,
           changeOrigin: true,
           secure: false,
         }

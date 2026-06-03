@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { Frame, Element, useEditor } from '@craftjs/core';
 import {
@@ -13,13 +13,29 @@ import { BuilderErrorBoundary } from './BuilderErrorBoundary';
 import { useBuilderUiStore } from '@/stores/builder-ui.store';
 import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
 import { useAnimateOnScroll } from '@/hooks/useAnimateOnScroll';
-import { cloneNodeTreeWithNewIds } from './cloneNodeTree';
+import { cloneNodeTreeWithNewIds } from './cloneNodeTree.ts';
 
 const VIEWPORT_WIDTHS: Record<string, string> = {
   desktop: '100%',
   tablet: '768px',
   mobile: '390px',
 };
+
+const ZOOM_CLASS_MAP: Record<number, string> = {
+  50: 'builder-canvas-scale-50',
+  75: 'builder-canvas-scale-75',
+  100: 'builder-canvas-scale-100',
+  125: 'builder-canvas-scale-125',
+  150: 'builder-canvas-scale-150',
+};
+
+const CONTEXT_MENU_CLASS = 'builder-context-menu';
+const HOVER_OUTLINE_CLASS = 'builder-hover-outline';
+const SELECTED_OUTLINE_CLASS = 'builder-selected-outline';
+const PADDING_TOP_CLASS = 'builder-padding-top';
+const PADDING_BOTTOM_CLASS = 'builder-padding-bottom';
+const PADDING_LEFT_CLASS = 'builder-padding-left';
+const PADDING_RIGHT_CLASS = 'builder-padding-right';
 
 // ─────────────────────────────────────────────────────────
 // FLOATING ACTION BAR (appears above selected block)
@@ -71,10 +87,7 @@ const FloatingActionBar = () => {
   };
 
   return (
-    <div
-      className="fixed z-[9999] pointer-events-none"
-      style={{ top: 0, left: 0, right: 0 }}
-    >
+    <div className="fixed inset-x-0 top-0 z-[9999] pointer-events-none">
       {/* Selection outline & actions is managed natively or via custom menu */}
     </div>
   );
@@ -236,57 +249,65 @@ export const CanvasOverlays = () => {
     };
   }, [updateRects]);
 
+  const overlayStyles = useMemo(() => {
+    let css = '';
+
+    if (hoverRect) {
+      css += `.${HOVER_OUTLINE_CLASS}{top:${hoverRect.top}px;left:${hoverRect.left}px;width:${hoverRect.width}px;height:${hoverRect.height}px;}`;
+    }
+
+    if (selectedRect) {
+      css += `.${SELECTED_OUTLINE_CLASS}{top:${selectedRect.top}px;left:${selectedRect.left}px;width:${selectedRect.width}px;height:${selectedRect.height}px;}`;
+    }
+
+    if (paddingStyles) {
+      css += `.${PADDING_TOP_CLASS}{height:${paddingStyles.top};}`;
+      css += `.${PADDING_BOTTOM_CLASS}{height:${paddingStyles.bottom};}`;
+      css += `.${PADDING_LEFT_CLASS}{width:${paddingStyles.left};}`;
+      css += `.${PADDING_RIGHT_CLASS}{width:${paddingStyles.right};}`;
+    }
+
+    return css;
+  }, [hoverRect, selectedRect, paddingStyles]);
+
   if (!isEnabled) return null;
 
   return createPortal(
-    <div className="pointer-events-none fixed inset-0 z-[999999]">
-      {/* Hover Outline */}
-      {hoverRect && hoveredNodeId !== selectedNodeId && (
-        <div
-          className="absolute border border-sky-400 bg-sky-400/5 transition-all duration-75"
-          style={{
-            top: hoverRect.top,
-            left: hoverRect.left,
-            width: hoverRect.width,
-            height: hoverRect.height,
-          }}
-        >
-          <div className="absolute -top-5 left-0 bg-sky-400 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow flex items-center gap-1">
-            <span>{hoverName}</span>
-            <span className="opacity-75">{Math.round(hoverRect.width)} x {Math.round(hoverRect.height)}</span>
-          </div>
-        </div>
-      )}
-
-      {/* Selected Outline & Spacing Guides */}
-      {selectedRect && (
-        <div
-          className="absolute border-2 border-indigo-500 transition-all duration-75"
-          style={{
-            top: selectedRect.top,
-            left: selectedRect.left,
-            width: selectedRect.width,
-            height: selectedRect.height,
-          }}
-        >
-          <div className="absolute -top-5.5 left-0 bg-indigo-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow flex items-center gap-1.5">
-            <span>{selectedName}</span>
-            <span className="opacity-75">{Math.round(selectedRect.width)} x {Math.round(selectedRect.height)}</span>
-          </div>
-
-          {/* Padding Visualizer (Inside) */}
-          {paddingStyles && (
-            <div className="absolute inset-0 border border-emerald-400/30 bg-emerald-400/5 pointer-events-none">
-              {/* Padding Indicators */}
-              <div className="absolute top-0 left-0 right-0 bg-emerald-400/10" style={{ height: paddingStyles.top }} />
-              <div className="absolute bottom-0 left-0 right-0 bg-emerald-400/10" style={{ height: paddingStyles.bottom }} />
-              <div className="absolute top-0 bottom-0 left-0 bg-emerald-400/10" style={{ width: paddingStyles.left }} />
-              <div className="absolute top-0 bottom-0 right-0 bg-emerald-400/10" style={{ width: paddingStyles.right }} />
+    <>
+      <style>{overlayStyles}</style>
+      <div className="pointer-events-none fixed inset-0 z-[999999]">
+        {/* Hover Outline */}
+        {hoverRect && hoveredNodeId !== selectedNodeId && (
+          <div className={`absolute border border-sky-400 bg-sky-400/5 transition-all duration-75 ${HOVER_OUTLINE_CLASS}`}>
+            <div className="absolute -top-5 left-0 bg-sky-400 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow flex items-center gap-1">
+              <span>{hoverName}</span>
+              <span className="opacity-75">{Math.round(hoverRect.width)} x {Math.round(hoverRect.height)}</span>
             </div>
-          )}
-        </div>
-      )}
-    </div>,
+          </div>
+        )}
+
+        {/* Selected Outline & Spacing Guides */}
+        {selectedRect && (
+          <div className={`absolute border-2 border-indigo-500 transition-all duration-75 ${SELECTED_OUTLINE_CLASS}`}>
+            <div className="absolute -top-5.5 left-0 bg-indigo-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow flex items-center gap-1.5">
+              <span>{selectedName}</span>
+              <span className="opacity-75">{Math.round(selectedRect.width)} x {Math.round(selectedRect.height)}</span>
+            </div>
+
+            {/* Padding Visualizer (Inside) */}
+            {paddingStyles && (
+              <div className="absolute inset-0 border border-emerald-400/30 bg-emerald-400/5 pointer-events-none">
+                {/* Padding Indicators */}
+                <div className={`absolute top-0 left-0 right-0 bg-emerald-400/10 ${PADDING_TOP_CLASS}`} />
+                <div className={`absolute bottom-0 left-0 right-0 bg-emerald-400/10 ${PADDING_BOTTOM_CLASS}`} />
+                <div className={`absolute top-0 bottom-0 left-0 bg-emerald-400/10 ${PADDING_LEFT_CLASS}`} />
+                <div className={`absolute top-0 bottom-0 right-0 bg-emerald-400/10 ${PADDING_RIGHT_CLASS}`} />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </>,
     document.body
   );
 };
@@ -749,23 +770,11 @@ export const GodCanvas = () => {
         <div
           data-viewport={device}
           className="canvas-viewport-wrapper"
-          style={{
-            '--viewport-width': VIEWPORT_WIDTHS[device],
-            width: VIEWPORT_WIDTHS[device],
-          }}
         >
           <div
             ref={canvasRef}
             data-builder-canvas
-            className="relative bg-white shadow-2xl shadow-black/40 transition-all duration-300 ease-out"
-            style={{
-              width: '100%',
-              minHeight: '900px',
-              transform: `scale(${zoom / 100})`,
-              transformOrigin: 'top center',
-              marginBottom: zoom < 100 ? `-${(1 - zoom / 100) * 900}px` : '0',
-              outline: !isEnabled ? 'none' : '1px solid rgba(99,102,241,0.15)',
-            }}
+            className={`relative bg-white shadow-2xl shadow-black/40 transition-all duration-300 ease-out build-canvas-wrapper ${ZOOM_CLASS_MAP[zoom] ?? ''} ${isEnabled ? 'builder-canvas-enabled' : 'builder-canvas-disabled'}`}
           >
             <BuilderErrorBoundary>
               <Frame>
@@ -803,11 +812,12 @@ export const GodCanvas = () => {
 
       {/* Sleek Context Menu */}
       {contextMenu && (
-        <div
-          className="fixed z-[99999] bg-[#0c0c14]/90 backdrop-blur-md border border-[#252538] rounded-xl p-1.5 shadow-2xl w-52 text-left animate-in fade-in zoom-in-95 duration-100"
-          style={{ top: contextMenu.y, left: contextMenu.x }}
-          onClick={e => e.stopPropagation()}
-        >
+        <>
+          <style>{`.${CONTEXT_MENU_CLASS}{top:${contextMenu.y}px;left:${contextMenu.x}px;}`}</style>
+          <div
+            className={`fixed z-[99999] bg-[#0c0c14]/90 backdrop-blur-md border border-[#252538] rounded-xl p-1.5 shadow-2xl w-52 text-left animate-in fade-in zoom-in-95 duration-100 ${CONTEXT_MENU_CLASS}`}
+            onClick={e => e.stopPropagation()}
+          >
           {/* Header */}
           <div className="px-2.5 py-1.5 text-[9px] font-bold text-slate-500 uppercase tracking-wider border-b border-[#252538] mb-1 flex items-center justify-between gap-1.5">
             <span className="flex items-center gap-1.5 truncate">
@@ -918,6 +928,7 @@ export const GodCanvas = () => {
             )}
           </div>
         </div>
+      </>
       )}
       {/* Visual Canvas Overlays (Hover Outlines & Spacing Guides) */}
       <CanvasOverlays />
@@ -927,19 +938,37 @@ export const GodCanvas = () => {
         .canvas-viewport-wrapper {
           transition: width 0.3s ease-out;
         }
-
-        /* Simulate media queries based on data-viewport attribute */
         .canvas-viewport-wrapper[data-viewport="mobile"] {
+          width: 390px;
           --responsive-breakpoint: 390px;
         }
         .canvas-viewport-wrapper[data-viewport="tablet"] {
+          width: 768px;
           --responsive-breakpoint: 768px;
         }
         .canvas-viewport-wrapper[data-viewport="desktop"] {
+          width: 100%;
           --responsive-breakpoint: 100%;
         }
 
-        /* Inside mobile viewport, force blocks to behave as on a narrow screen */
+        .build-canvas-wrapper {
+          width: 100%;
+          min-height: 900px;
+          transform-origin: top center;
+        }
+        .builder-canvas-enabled {
+          outline: 1px solid rgba(99,102,241,0.15);
+        }
+        .builder-canvas-disabled {
+          outline: none;
+        }
+        .builder-canvas-scale-50 { transform: scale(0.5); margin-bottom: -450px; }
+        .builder-canvas-scale-75 { transform: scale(0.75); margin-bottom: -225px; }
+        .builder-canvas-scale-100 { transform: scale(1); margin-bottom: 0; }
+        .builder-canvas-scale-125 { transform: scale(1.25); margin-bottom: 0; }
+        .builder-canvas-scale-150 { transform: scale(1.5); margin-bottom: 0; }
+
+        /* Simulate media queries based on data-viewport attribute */
         .canvas-viewport-wrapper[data-viewport="mobile"] [data-builder-canvas] .container-block {
           --viewport-width: 390px;
         }

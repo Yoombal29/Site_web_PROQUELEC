@@ -29,32 +29,35 @@ import { HeroBanner } from '@/components/HeroBanner';
 export const SettingsLabel = ({ label }: { label: string }) => (
   <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">{label}</label>
 );
-export const SettingsInput = ({ value, onChange, type = 'text', min, max, step }: any) => (
+export const SettingsInput = ({ value, onChange, type = 'text', min, max, step, ...props }: any) => (
   <input
     type={type} value={value ?? ''} min={min} max={max} step={step}
     onChange={onChange}
+    {...props}
     className="w-full bg-[#252538] border border-[#3a3a5a] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500"
   />
 );
-export const SettingsTextarea = ({ value, onChange, rows = 3 }: any) => (
+export const SettingsTextarea = ({ value, onChange, rows = 3, ...props }: any) => (
   <textarea
     rows={rows} value={value ?? ''} onChange={onChange}
+    {...props}
     className="w-full bg-[#252538] border border-[#3a3a5a] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500 resize-y"
   />
 );
-export const SettingsSelect = ({ value, onChange, options }: { value: string; onChange: any; options: { value: string; label: string }[] }) => (
+export const SettingsSelect = ({ value, onChange, options, ...props }: { value: string; onChange: any; options: { value: string; label: string }[]; [key: string]: any }) => (
   <select
     value={value}
     onChange={onChange}
+    {...props}
     className="w-full bg-[#252538] border border-[#3a3a5a] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500"
   >
     {options.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
   </select>
 );
-export const SettingsColor = ({ value, onChange }: any) => (
+export const SettingsColor = ({ value, onChange, ...props }: any) => (
   <div className="flex gap-2 items-center">
-    <input type="color" value={value ?? '#ffffff'} onChange={onChange} className="w-10 h-8 rounded cursor-pointer bg-transparent border-0" />
-    <SettingsInput value={value} onChange={onChange} />
+    <input type="color" value={value ?? '#ffffff'} onChange={onChange} aria-label={props['aria-label'] ?? 'Couleur'} className="w-10 h-8 rounded cursor-pointer bg-transparent border-0" />
+    <SettingsInput value={value} onChange={onChange} {...props} />
   </div>
 );
 export const SettingsRow = ({ children }: { children: React.ReactNode }) => (
@@ -338,6 +341,7 @@ const HeroSettings = () => {
           <SettingsRow>
             <SettingsLabel label="Afficher les stats flottantes" />
             <select
+              aria-label="Afficher les stats flottantes"
               value={showStats ? 'yes' : 'no'}
               onChange={(e) => setProp((p: any) => p.showStats = e.target.value === 'yes')}
               className="w-full bg-[#252538] border border-[#3a3a5a] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500"
@@ -1404,18 +1408,28 @@ export const CarouselBlock = (props: any) => {
         <div className="bg-slate-800 text-slate-400 py-20 text-center text-sm">Aucune image dans le carrousel</div>
       ) : (
         <div className="relative aspect-[21/9] bg-slate-900 flex items-center justify-center">
-          <img src={imgList[currentIndex]} className="w-full h-full object-cover transition-all duration-700 ease-in-out" />
+          <img
+            src={imgList[currentIndex]}
+            alt={`Slide ${currentIndex + 1} sur ${imgList.length}`}
+            className="w-full h-full object-cover transition-all duration-700 ease-in-out"
+          />
 
           {imgList.length > 1 && (
             <>
               <button
+                type="button"
                 onClick={() => setCurrentIndex((currentIndex - 1 + imgList.length) % imgList.length)}
+                aria-label="Image précédente"
+                title="Image précédente"
                 className="absolute left-4 z-10 w-8 h-8 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full text-sm font-bold transition-all hover:scale-105"
               >
                 ◀
               </button>
               <button
+                type="button"
                 onClick={() => setCurrentIndex((currentIndex + 1) % imgList.length)}
+                aria-label="Image suivante"
+                title="Image suivante"
                 className="absolute right-4 z-10 w-8 h-8 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full text-sm font-bold transition-all hover:scale-105"
               >
                 ▶
@@ -1427,7 +1441,10 @@ export const CarouselBlock = (props: any) => {
             {imgList.map((_, idx) => (
               <button
                 key={idx}
+                type="button"
                 onClick={() => setCurrentIndex(idx)}
+                aria-label={`Afficher l'image ${idx + 1}`}
+                title={`Afficher l'image ${idx + 1}`}
                 className={`w-2 h-2 rounded-full transition-all ${currentIndex === idx ? 'bg-white scale-125' : 'bg-white/40'}`}
               />
             ))}

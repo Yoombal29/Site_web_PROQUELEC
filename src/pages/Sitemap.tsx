@@ -178,7 +178,7 @@ const Sitemap = () => {
     description: "Gestion centralisée du contenu et du système PROQUELEC.",
     items: [
     { label: "Dashboard Admin", href: "/admin" },
-    { label: "Gestionnaire de Pages", href: "/admin?tab=pages" },
+    { label: "Studio de création", href: "/admin/builder" },
     { label: "Paramètres Système", href: "/expert/config" },
     { label: "Fournisseurs IA", href: "/expert/ai-providers" },
     { label: "Statistiques Globales", href: "/analytics" }]

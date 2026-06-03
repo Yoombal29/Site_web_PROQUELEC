@@ -22,9 +22,13 @@ console.log(`📊 ${files.length} fichiers SQL trouvés`);
 
 
 // Helper to run SQL in docker via STDIN (safer for Windows/Special chars)
+const dbUrl = process.env.DATABASE_URL || 'postgresql://postgres:postgres@127.0.0.1:5432/postgres';
+const parsedUrl = new URL(dbUrl);
+const dbName = (parsedUrl.pathname || '').replace(/^\//, '') || 'postgres';
+
 const runSql = (sql, logError = true) => {
     try {
-        const cmd = `docker exec -i site-proquelec-db-1 psql -U postgres -d postgres -t`;
+        const cmd = `docker exec -i site-proquelec-db-1 psql -U postgres -d ${dbName} -t`;
         return execSync(cmd, {
             input: sql,
             stdio: ['pipe', 'pipe', 'pipe'] // Capture stdout/stderr
@@ -66,7 +70,7 @@ for (const file of files) {
     process.stdout.write(`📡 Migration NOUVELLE : ${file} ... `);
     try {
         const filePath = path.join(migrationsDir, file);
-        const command = `docker exec -i site-proquelec-db-1 psql -U postgres -d postgres`;
+        const command = `docker exec -i site-proquelec-db-1 psql -U postgres -d ${dbName}`;
         const sqlContent = fs.readFileSync(filePath);
         execSync(command, { input: sqlContent });
 
