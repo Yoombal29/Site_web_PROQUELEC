@@ -214,7 +214,22 @@ export const GodToolbar = () => {
   // Quick save (Ctrl+S) without version prompt
   const handleQuickSave = async () => {
     await savePage(undefined);
-    toast.success('Page sauvegardée !');
+    const slug = pageData?.slug;
+    const pageUrl = slug ? `/${slug}?t=${Date.now()}` : '/';
+    toast.success(
+      <div className="flex items-center gap-3">
+        <span>Page sauvegardée !</span>
+        <a
+          href={pageUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs px-2 py-1 rounded bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 transition font-medium"
+        >
+          Voir la page →
+        </a>
+      </div>,
+      { duration: 5000 },
+    );
   };
 
   const togglePreview = () => {
