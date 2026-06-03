@@ -33,7 +33,7 @@ Write-Host "  ✅ Push GitHub reussi" -ForegroundColor Green
 
 # 3. VPS pull + build
 Write-Host "`n  [2/3] Pull code sur le VPS..." -ForegroundColor Yellow
-ssh -i $SSH_KEY $SSH_HOST "cd $REMOTE_PATH && git pull origin chore/remove-unused-docker-services"
+ssh -i $SSH_KEY $SSH_HOST "cd $REMOTE_PATH && git stash && git pull origin chore/remove-unused-docker-services"
 if ($LASTEXITCODE -ne 0) {
     Write-Host "  ❌ Erreur pull VPS" -ForegroundColor Red
     exit 1
