@@ -1,49 +1,110 @@
-const { Router } = require('express');
-const paymentService = require('./payments.service');
+/**
+ * Routes de paiement
+ * PayDunya webhook + création de paiement
+ */
+const express = require('express');
+const router = express.Router();
+const { Pool } = require('pg');
+const { createPaydunyaInvoice, confirmPaydunyaPayment } = require('./paydunya.service');
 
-const router = Router();
+const pool = new Pool({
+  host: process.env.DB_HOST || '127.0.0.1',
+  port: parseInt(process.env.DB_PORT || '5437'),
+  database: process.env.DB_NAME || 'proquelec',
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASS || 'proquelec_secure_db_pass',
+});
 
-// Generic checkout (auto-selects provider)
-router.post('/checkout', async (req, res) => {
+// ── Créer un paiement pour un abonnement ──
+router.post('/api/payments/create', async (req, res) => {
   try {
-    const { amount, currency, description, metadata, customer, storeName, cancelUrl, returnUrl, provider, channels } = req.body;
-    if (!amount || amount <= 0) return res.status(400).json({ error: 'Montant invalide' });
-    const session = await paymentService.createCheckoutSession({
-      amount, currency, description, metadata, customer, storeName, cancelUrl, returnUrl, channels,
+    const { planId, userId, email, name, phone } = req.body;
+    if (!planId || !userId) return res.status(400).json({ error: 'Plan et utilisateur requis' });
+
+    // Récupérer le plan
+    const plan = await pool.query(
+      'SELECT * FROM public.subscription_plans WHERE id = $1 AND is_active = true',
+      [planId],
+    );
+    if (plan.rows.length === 0) return res.status(404).json({ error: 'Plan non trouvé' });
+
+    const { name: planName, price, duration_days } = plan.rows[0];
+    if (price <= 0)
+      return res.status(400).json({ error: 'Plan gratuit, pas de paiement nécessaire' });
+
+    // Créer la facture PayDunya
+    const invoice = await createPaydunyaInvoice({
+      amount: price,
+      description: `Abonnement ${planName} - PROQUELEC (${duration_days} jours)`,
+      customerEmail: email,
+      customerName: name,
+      customerPhone: phone,
+      metadata: { plan_id: planId, user_id: userId },
     });
-    res.json(session);
+
+    // Enregistrer la transaction
+    await pool.query(
+      `INSERT INTO public.user_subscriptions (user_id, plan_id, end_date, payment_status, is_active)
+       VALUES ($1, $2, NOW() + INTERVAL '1 day', 'pending', false)
+       ON CONFLICT DO NOTHING`,
+      [userId, planId],
+    );
+
+    res.json({
+      success: true,
+      invoice_url: invoice.invoice_url,
+      token: invoice.token,
+    });
   } catch (err) {
-    console.error('[PAYMENTS] Checkout error:', err.message);
-    res.status(err.code === 'CONFIG_ERROR' ? 503 : 500).json({ error: err.message });
+    console.error('[PAYMENT] Create error:', err.message);
+    res.status(500).json({ error: err.message || 'Erreur paiement' });
   }
 });
 
-// Confirm a payment (check status)
-router.post('/confirm', async (req, res) => {
+// ── Webhook PayDunya (appelé après paiement) ──
+router.post('/api/payments/webhook', async (req, res) => {
   try {
-    const { sessionId, provider } = req.body;
-    if (!sessionId) return res.status(400).json({ error: 'sessionId requis' });
-    const result = await paymentService.confirmPayment(sessionId, provider || 'paydunya');
-    res.json(result);
+    const { token, status, custom_data } = req.body;
+    console.log('[WEBHOOK] PayDunya notification:', { token, status, custom_data });
+
+    if (status === 'completed' || status === 'success') {
+      const planId = custom_data?.plan_id;
+      const userId = custom_data?.user_id;
+
+      if (planId && userId) {
+        const plan = await pool.query('SELECT * FROM public.subscription_plans WHERE id = $1', [
+          planId,
+        ]);
+        if (plan.rows.length > 0) {
+          const endDate = new Date();
+          endDate.setDate(endDate.getDate() + plan.rows[0].duration_days);
+
+          await pool.query(
+            `UPDATE public.user_subscriptions
+             SET is_active = true, payment_status = 'completed', end_date = $1, updated_at = NOW()
+             WHERE user_id = $2 AND plan_id = $3 AND payment_status = 'pending'`,
+            [endDate, userId, planId],
+          );
+          console.log(`[WEBHOOK] Subscription activated for user ${userId}, plan ${planId}`);
+        }
+      }
+    }
+
+    res.json({ success: true });
   } catch (err) {
-    console.error('[PAYMENTS] Confirm error:', err.message);
+    console.error('[WEBHOOK] Error:', err.message);
     res.status(500).json({ error: err.message });
   }
 });
 
-// PayDunya-specific checkout (returns redirect URL)
-router.post('/paydunya/checkout', async (req, res) => {
+// ── Vérifier le statut d'un paiement ──
+router.get('/api/payments/status/:token', async (req, res) => {
   try {
-    const { amount, currency, description, metadata, customer, storeName, cancelUrl, returnUrl, channels } = req.body;
-    if (!amount || amount <= 0) return res.status(400).json({ error: 'Montant invalide' });
-    const session = await paymentService.createCheckoutSession({
-      amount, currency: currency || 'XOF', description, metadata, customer, storeName, cancelUrl, returnUrl, channels,
-    });
-    res.json(session);
+    const result = await confirmPaydunyaPayment(req.params.token);
+    res.json(result || { status: 'unknown' });
   } catch (err) {
-    console.error('[PAYMENTS] PayDunya error:', err.message);
-    res.status(err.code === 'CONFIG_ERROR' ? 503 : 500).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-module.exports = { router, basePath: '/api/payments' };
+module.exports = router;

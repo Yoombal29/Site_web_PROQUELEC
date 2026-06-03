@@ -29,6 +29,7 @@ import RubriqueSelectorPage from './pages/RubriqueSelectorPage';
 import ObservatoirePage from './pages/observatoire/ObservatoirePage';
 import { RoleProtectedRoute } from '@/components/RoleProtectedRoute';
 import GEDPage from './pages/GEDPage';
+import SubscriptionPage from './pages/SubscriptionPage';
 
 // Expert Lab Imports
 import ExpertDashboard from './expert-lab/pages/Dashboard';
@@ -320,6 +321,8 @@ const AppContent = () => {
 
         // GED Route (Document Management)
         { path: '/ged', element: <GEDPage /> },
+        { path: '/abonnements', element: <SubscriptionPage /> },
+        { path: '/subscriptions', element: <SubscriptionPage /> },
 
         // ELECTRO-GED 4.0: Project Management
         { path: '/projects', element: <ProjectList /> },
