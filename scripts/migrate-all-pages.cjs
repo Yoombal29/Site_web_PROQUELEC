@@ -209,7 +209,7 @@ function generateCraftStructure(route, title) {
       linkedNodes: {},
     },
     container_1: {
-      type: 'ContainerBlock',
+      type: { resolvedName: 'ContainerBlock' },
       nodes: ['hero_1', 'text_1'],
       props: {
         padding: 64,
@@ -219,9 +219,11 @@ function generateCraftStructure(route, title) {
       },
       parent: 'ROOT',
       linkedNodes: {},
+      isCanvas: true,
+      displayName: 'ContainerBlock',
     },
     hero_1: {
-      type: 'HeroBlock',
+      type: { resolvedName: 'HeroBlock' },
       nodes: [],
       props: {
         headline: title || 'Page en construction',
@@ -234,9 +236,11 @@ function generateCraftStructure(route, title) {
       },
       parent: 'container_1',
       linkedNodes: {},
+      isCanvas: false,
+      displayName: 'HeroBlock',
     },
     text_1: {
-      type: 'TextBlock',
+      type: { resolvedName: 'TextBlock' },
       nodes: [],
       props: {
         text: '<p>Cette page a été automatiquement créée par la migration. Utilisez le <strong>God Mode Builder</strong> pour personnaliser son contenu et son design.</p>',
@@ -246,6 +250,8 @@ function generateCraftStructure(route, title) {
       },
       parent: 'container_1',
       linkedNodes: {},
+      isCanvas: false,
+      displayName: 'TextBlock',
     },
   };
 }

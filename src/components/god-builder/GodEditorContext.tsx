@@ -189,7 +189,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
               linkedNodes: {},
             },
             func_page_block: {
-              type: 'FunctionalPageBlock',
+              type: { resolvedName: 'FunctionalPageBlock' },
               nodes: [],
               props: {
                 slug: page.slug || 'dashboard',
@@ -197,6 +197,8 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
               },
               parent: 'ROOT',
               linkedNodes: {},
+              isCanvas: false,
+              displayName: 'FunctionalPageBlock',
             },
           };
           // @ts-ignore - Craft.js deserialize accepte les objets bruts

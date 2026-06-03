@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-06-03T14:43:23.284Z",
+  "timestamp": "2026-06-03T16:28:32.701Z",
   "mode": "execution",
   "summary": {
-    "totalProcessed": 106,
+    "totalProcessed": 51,
     "totalCreated": 0,
     "totalSkipped": 0,
-    "totalErrors": 0
+    "totalErrors": 55
   },
   "categories": [
     {
@@ -26,17 +26,10 @@
     {
       "category": "orphan",
       "label": "⚪ Orpheline (sans route)",
-      "count": 4
+      "count": 0
     }
   ],
   "operations": [
-    {
-      "route": "/",
-      "slug": "home",
-      "action": "UPDATE",
-      "category": "content",
-      "title": "Home"
-    },
     {
       "route": "/about",
       "slug": "about",
@@ -108,25 +101,11 @@
       "title": "Activities"
     },
     {
-      "route": "/labels",
-      "slug": "labels",
-      "action": "UPDATE",
-      "category": "content",
-      "title": "Labels"
-    },
-    {
       "route": "/legal",
       "slug": "legal",
       "action": "UPDATE",
       "category": "content",
       "title": "Legal"
-    },
-    {
-      "route": "/certifications",
-      "slug": "certifications",
-      "action": "UPDATE",
-      "category": "content",
-      "title": "Certifications"
     },
     {
       "route": "/formations",
@@ -197,27 +176,6 @@
       "action": "UPDATE",
       "category": "content",
       "title": "Espace Autorites"
-    },
-    {
-      "route": "/documents",
-      "slug": "documents",
-      "action": "UPDATE",
-      "category": "content",
-      "title": "Documents"
-    },
-    {
-      "route": "/events",
-      "slug": "events",
-      "action": "UPDATE",
-      "category": "content",
-      "title": "Events"
-    },
-    {
-      "route": "/expertises-techniques",
-      "slug": "expertises-techniques",
-      "action": "UPDATE",
-      "category": "content",
-      "title": "Expertises Techniques"
     },
     {
       "route": "/expert-lab",
@@ -428,349 +386,6 @@
       "action": "UPDATE",
       "category": "content",
       "title": "Sitemap"
-    },
-    {
-      "route": "/blog/:slug",
-      "slug": "blog/{slug}",
-      "action": "UPDATE",
-      "category": "hybrid",
-      "title": "Blog {slug}"
-    },
-    {
-      "route": "/expert-kebe",
-      "slug": "expert-kebe",
-      "action": "UPDATE",
-      "category": "hybrid",
-      "title": "Expert Kebe"
-    },
-    {
-      "route": "/rubrique-selector",
-      "slug": "rubrique-selector",
-      "action": "UPDATE",
-      "category": "hybrid",
-      "title": "Rubrique Selector"
-    },
-    {
-      "route": "/schema-builder",
-      "slug": "schema-builder",
-      "action": "UPDATE",
-      "category": "hybrid",
-      "title": "Schema Builder"
-    },
-    {
-      "route": "/connexion",
-      "slug": "connexion",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Connexion"
-    },
-    {
-      "route": "/login",
-      "slug": "login",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Login"
-    },
-    {
-      "route": "/auth",
-      "slug": "auth",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Auth"
-    },
-    {
-      "route": "/dashboard",
-      "slug": "dashboard",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Dashboard"
-    },
-    {
-      "route": "/admin",
-      "slug": "admin",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Admin"
-    },
-    {
-      "route": "/admin-secondary",
-      "slug": "admin-secondary",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Admin Secondary"
-    },
-    {
-      "route": "/partner",
-      "slug": "partner",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Partner"
-    },
-    {
-      "route": "/dashboard/electricien",
-      "slug": "dashboard/electricien",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Dashboard Electricien"
-    },
-    {
-      "route": "/dashboard/entreprise",
-      "slug": "dashboard/entreprise",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Dashboard Entreprise"
-    },
-    {
-      "route": "/dashboard/membre",
-      "slug": "dashboard/membre",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Dashboard Membre"
-    },
-    {
-      "route": "/admin/page-sections",
-      "slug": "admin/page-sections",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Admin Page Sections"
-    },
-    {
-      "route": "/admin/builder",
-      "slug": "admin/builder",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Admin Builder"
-    },
-    {
-      "route": "/admin/builder/:pageId",
-      "slug": "admin/builder/{pageId}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Admin Builder {pageId}"
-    },
-    {
-      "route": "/admin/builder/config",
-      "slug": "admin/builder/config",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Admin Builder Config"
-    },
-    {
-      "route": "/admin/builder/legacy",
-      "slug": "admin/builder/legacy",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Admin Builder Legacy"
-    },
-    {
-      "route": "/admin/craft-builder/:pageId",
-      "slug": "admin/craft-builder/{pageId}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Admin Craft Builder {pageId}"
-    },
-    {
-      "route": "/admin/schematic-editor/:pageId",
-      "slug": "admin/schematic-editor/{pageId}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Admin Schematic Editor {pageId}"
-    },
-    {
-      "route": "/admin/permissions",
-      "slug": "admin/permissions",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Admin Permissions"
-    },
-    {
-      "route": "/expert/chat",
-      "slug": "expert/chat",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert Chat"
-    },
-    {
-      "route": "/expert/calculators",
-      "slug": "expert/calculators",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert Calculators"
-    },
-    {
-      "route": "/expert/schemas",
-      "slug": "expert/schemas",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert Schemas"
-    },
-    {
-      "route": "/expert/docs",
-      "slug": "expert/docs",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert Docs"
-    },
-    {
-      "route": "/expert/history",
-      "slug": "expert/history",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert History"
-    },
-    {
-      "route": "/expert/config",
-      "slug": "expert/config",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert Config"
-    },
-    {
-      "route": "/expert/ai-providers",
-      "slug": "expert/ai-providers",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert Ai Providers"
-    },
-    {
-      "route": "/expert/logs",
-      "slug": "expert/logs",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert Logs"
-    },
-    {
-      "route": "/expert/scanner",
-      "slug": "expert/scanner",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert Scanner"
-    },
-    {
-      "route": "/expert/models",
-      "slug": "expert/models",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert Models"
-    },
-    {
-      "route": "/expert/stats",
-      "slug": "expert/stats",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Expert Stats"
-    },
-    {
-      "route": "/ged",
-      "slug": "ged",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Ged"
-    },
-    {
-      "route": "/projects",
-      "slug": "projects",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Projects"
-    },
-    {
-      "route": "/projects/:id",
-      "slug": "projects/{id}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Projects {id}"
-    },
-    {
-      "route": "/observatoire",
-      "slug": "observatoire",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Observatoire"
-    },
-    {
-      "route": "/diagnostics/:id",
-      "slug": "diagnostics/{id}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Diagnostics {id}"
-    },
-    {
-      "route": "/office/document/new",
-      "slug": "office/document/new",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Office Document New"
-    },
-    {
-      "route": "/office/document/:id",
-      "slug": "office/document/{id}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Office Document {id}"
-    },
-    {
-      "route": "/office/document/template/:templateId",
-      "slug": "office/document/template/{templateId}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Office Document Template {templateId}"
-    },
-    {
-      "route": "/office/spreadsheet/new",
-      "slug": "office/spreadsheet/new",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Office Spreadsheet New"
-    },
-    {
-      "route": "/office/spreadsheet/:id",
-      "slug": "office/spreadsheet/{id}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Office Spreadsheet {id}"
-    },
-    {
-      "route": "/office/spreadsheet/template/:templateId",
-      "slug": "office/spreadsheet/template/{templateId}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Office Spreadsheet Template {templateId}"
-    },
-    {
-      "route": "/office/presentation/new",
-      "slug": "office/presentation/new",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Office Presentation New"
-    },
-    {
-      "route": "/office/presentation/:id",
-      "slug": "office/presentation/{id}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Office Presentation {id}"
-    },
-    {
-      "route": "/office/presentation/template/:templateId",
-      "slug": "office/presentation/template/{templateId}",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Office Presentation Template {templateId}"
-    },
-    {
-      "route": "/analytics",
-      "slug": "analytics",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Analytics"
-    },
-    {
-      "route": "/demo/rbac",
-      "slug": "demo/rbac",
-      "action": "UPDATE",
-      "category": "functional",
-      "title": "Demo Rbac"
     }
   ]
 }

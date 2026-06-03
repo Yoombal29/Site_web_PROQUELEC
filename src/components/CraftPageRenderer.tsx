@@ -38,11 +38,38 @@ export const CraftPageRenderer: React.FC<CraftPageRendererProps> = ({
   structureJson,
   fallback,
 }) => {
+  // Normaliser la structure : convertir type: 'BlockName' en type: { resolvedName: 'BlockName' }
+  const normalizeStructure = (data: any): any => {
+    if (!data || typeof data !== 'object') return data;
+    const normalized: any = Array.isArray(data) ? [] : {};
+    for (const key of Object.keys(data)) {
+      const val = data[key];
+      if (val && typeof val === 'object' && !Array.isArray(val)) {
+        const entry: any = { ...val };
+        // Si type est une string simple, le convertir en { resolvedName }
+        if (typeof entry.type === 'string' && entry.type !== 'div') {
+          entry.type = { resolvedName: entry.type };
+        }
+        // Ajouter les champs manquants
+        if (entry.type?.resolvedName && entry.isCanvas === undefined) {
+          entry.isCanvas = Array.isArray(entry.nodes) && entry.nodes.length > 0;
+        }
+        if (entry.type?.resolvedName && !entry.displayName) {
+          entry.displayName = entry.type.resolvedName;
+        }
+        normalized[key] = entry;
+      } else {
+        normalized[key] = val;
+      }
+    }
+    return normalized;
+  };
+
   return (
     <CraftErrorBoundary fallback={fallback}>
       <Editor resolver={CRAFT_RESOLVER} enabled={false}>
         {/* @ts-ignore - Frame accepte les objets JSON bruts */}
-        <Frame data={structureJson} />
+        <Frame data={normalizeStructure(structureJson)} />
       </Editor>
     </CraftErrorBoundary>
   );
