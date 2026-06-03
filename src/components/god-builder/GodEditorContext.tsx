@@ -7,7 +7,7 @@ import { useBuilderHistoryStore } from '@/stores/builder-history.store';
 import { validateBuilderStructure, validateThemeConfig } from '@/validation/builderSchema';
 import convertLegacyBlocksToCraftGraph from '@/utils/legacyToCraft';
 import {
-  createFunctionalPageStructure,
+  getFunctionalStructureForPage,
   isFunctionalPageStructure,
 } from '@/lib/functional-page-structure';
 
@@ -184,10 +184,11 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
         const parsedDbStructure = parseBuilderStructure(dbStructure);
 
         if (isFunctional && !isFunctionalPageStructure(parsedDbStructure)) {
-          const functionalStructure = createFunctionalPageStructure(
+          const functionalStructure = getFunctionalStructureForPage(
+            page,
             page.slug || 'dashboard',
             page.title || 'Page fonctionnelle',
-          );
+          ).structure;
           // @ts-ignore - Craft.js deserialize accepte les objets bruts
           actionsRef.current.deserialize(functionalStructure);
           lastSerializedRef.current = JSON.stringify(functionalStructure);

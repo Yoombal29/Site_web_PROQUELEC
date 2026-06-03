@@ -11,6 +11,10 @@ import UniversalSectionsPage from '@/pages/UniversalSectionsPage';
 // @ts-ignore
 import BuilderPageRenderer from '@/components/builder/BuilderPageRenderer';
 import { Block } from '@/types/builder';
+import {
+  getFunctionalStructureForPage,
+  isDesignLockedFunctionalPage,
+} from '@/lib/functional-page-structure';
 import ToolsPlatform from './ToolsPlatform';
 import Showroom from './Showroom';
 import Documents from './Documents';
@@ -322,6 +326,24 @@ const DynamicPageComponent: React.FC = () => {
 
   const renderPageContent = () => {
     try {
+      // Functional immutable pages are design-locked: never render stale editable placeholders.
+      if (isDesignLockedFunctionalPage(page as any)) {
+        const { structure } = getFunctionalStructureForPage(
+          page as any,
+          (page as any).slug || effectiveSlug,
+          page.title || 'Page fonctionnelle',
+        );
+
+        return (
+          <Suspense fallback={<PageLoading />}>
+            <CraftPageRenderer
+              structureJson={structure}
+              fallback={<RenderFallback page={page} />}
+            />
+          </Suspense>
+        );
+      }
+
       // Strategy 1: Legacy builder array of blocks
       if (structureJson && Array.isArray(structureJson) && structureJson.length > 0) {
         return <BuilderPageRenderer blocks={structureJson as Block[]} />;

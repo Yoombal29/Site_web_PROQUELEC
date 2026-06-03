@@ -1,9 +1,11 @@
 import React, { Suspense, useEffect, useMemo, useState } from 'react';
-import CraftPageRenderer from '@/components/CraftPageRenderer';
 import {
-  createFunctionalPageStructure,
-  isFunctionalPageStructure,
+  getFunctionalStructureForPage,
+  isDesignLockedFunctionalPage,
 } from '@/lib/functional-page-structure';
+import { getFunctionalPageDefinition } from '@/lib/functional-pages';
+
+const CraftPageRenderer = React.lazy(() => import('@/components/CraftPageRenderer'));
 
 type FunctionalBuilderRouteProps = {
   slug: string;
@@ -25,15 +27,6 @@ const LoadingFallback = () => (
   </div>
 );
 
-function parseJsonField(value: unknown) {
-  if (typeof value !== 'string') return value;
-  try {
-    return JSON.parse(value);
-  } catch {
-    return null;
-  }
-}
-
 export const FunctionalBuilderRoute: React.FC<FunctionalBuilderRouteProps> = ({
   slug,
   title,
@@ -42,6 +35,7 @@ export const FunctionalBuilderRoute: React.FC<FunctionalBuilderRouteProps> = ({
   const [page, setPage] = useState<PageLike | null>(null);
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
+  const definition = useMemo(() => getFunctionalPageDefinition(slug), [slug]);
 
   useEffect(() => {
     let cancelled = false;
@@ -74,13 +68,14 @@ export const FunctionalBuilderRoute: React.FC<FunctionalBuilderRouteProps> = ({
   }, [slug]);
 
   const structure = useMemo(() => {
-    if (!page || page.immutable !== true) return null;
+    if (!isDesignLockedFunctionalPage(page)) return null;
 
-    const dbStructure = parseJsonField(page.structure_json);
-    if (isFunctionalPageStructure(dbStructure)) return dbStructure;
-
-    return createFunctionalPageStructure(page.slug || slug, page.title || title);
-  }, [page, slug, title]);
+    return getFunctionalStructureForPage(
+      page,
+      definition?.slug || slug,
+      definition?.title || title,
+    ).structure;
+  }, [definition?.slug, definition?.title, page, slug, title]);
 
   if (loading) return <LoadingFallback />;
   if (failed || !structure) return <>{fallback}</>;
