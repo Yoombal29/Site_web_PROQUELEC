@@ -3,9 +3,26 @@ import { useEditor } from '@craftjs/core';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
-  Monitor, Smartphone, Tablet, Undo2, Redo2, Code2, Save,
-  ChevronLeft, Eye, EyeOff, Copy, Keyboard, Layers, Zap, Sparkles,
-  Download, Upload, History, Loader2, FileJson
+  Monitor,
+  Smartphone,
+  Tablet,
+  Undo2,
+  Redo2,
+  Code2,
+  Save,
+  ChevronLeft,
+  Eye,
+  EyeOff,
+  Copy,
+  Keyboard,
+  Layers,
+  Zap,
+  Sparkles,
+  Download,
+  Upload,
+  History,
+  Loader2,
+  FileJson,
 } from 'lucide-react';
 import { useGodEditor } from './GodEditorContext';
 import { useBrandingStore } from '@/stores/branding.store';
@@ -24,26 +41,28 @@ import { Button } from '@/components/ui/button';
 const LazyMonacoEditor = lazy(() => import('@monaco-editor/react'));
 
 export const GodToolbar = () => {
-  const { actions, query, canUndo, canRedo, isEnabled, htmlNodeId, htmlValue } = useEditor((state, query) => {
-    let foundId: string | null = null;
-    let foundHtml = '';
+  const { actions, query, canUndo, canRedo, isEnabled, htmlNodeId, htmlValue } = useEditor(
+    (state, query) => {
+      let foundId: string | null = null;
+      let foundHtml = '';
 
-    Object.entries(state.nodes).forEach(([id, node]) => {
-      const resolvedName = (node.data.type as any)?.resolvedName || '';
-      if (resolvedName === 'HtmlBlock') {
-        foundId = id;
-        foundHtml = node.data.props.html || '';
-      }
-    });
+      Object.entries(state.nodes).forEach(([id, node]) => {
+        const resolvedName = (node.data.type as any)?.resolvedName || '';
+        if (resolvedName === 'HtmlBlock') {
+          foundId = id;
+          foundHtml = node.data.props.html || '';
+        }
+      });
 
-    return {
-      canUndo: query.history.canUndo(),
-      canRedo: query.history.canRedo(),
-      isEnabled: state.options.enabled,
-      htmlNodeId: foundId,
-      htmlValue: foundHtml,
-    };
-  });
+      return {
+        canUndo: query.history.canUndo(),
+        canRedo: query.history.canRedo(),
+        isEnabled: state.options.enabled,
+        htmlNodeId: foundId,
+        htmlValue: foundHtml,
+      };
+    },
+  );
 
   const { savePage, isSaving, pageData } = useGodEditor();
   const { autosaveStatus, timelineOpen, setTimelineOpen } = useBuilderHistoryStore();
@@ -59,27 +78,64 @@ export const GodToolbar = () => {
   // Sync state when dialog opens
   useEffect(() => {
     if (htmlDialogOpen) {
-      setGlobalHtml(htmlValue);
+      // Si la page a déjà un HtmlBlock, utiliser son HTML
+      // Sinon, sérialiser TOUS les blocs en HTML complet
+      if (htmlNodeId) {
+        setGlobalHtml(htmlValue);
+      } else {
+        // Générer le HTML complet à partir de tous les blocs de la page
+        const fullHtml = generateFullPageHtml(query);
+        setGlobalHtml(fullHtml);
+      }
     }
-  }, [htmlDialogOpen, htmlValue]);
+  }, [htmlDialogOpen, htmlNodeId, htmlValue, query]);
+
+  /**
+   * Génère le HTML complet de la page à partir des blocs Craft.js
+   */
+  const generateFullPageHtml = (q: any): string => {
+    try {
+      const serialized = q.serialize();
+      return `<div class="proquelec-page-content">
+  <!-- Page construite avec le Builder PROQUELEC -->
+  <!-- Structure Craft.js stockée en base de données -->
+  ${JSON.stringify(serialized, null, 2)}
+</div>`;
+    } catch (e) {
+      return '<div class="proquelec-page-content">\n  <p>Contenu de la page (mode HTML).</p>\n</div>';
+    }
+  };
 
   const handleSaveHtml = () => {
+    // Si un bloc HtmlBlock existe déjà, le mettre à jour
     if (htmlNodeId) {
       actions.setProp(htmlNodeId, (props: any) => {
         props.html = globalHtml;
       });
-      toast.success('Code HTML de la page mis à jour.');
+      toast.success('Code HTML mis à jour.');
     } else {
+      // Sinon, remplacer TOUTE la page par un HtmlBlock
+      // 1. Supprimer tous les noeuds existants (sauf ROOT)
+      try {
+        const state = query.getState();
+        Object.keys(state.nodes).forEach((id) => {
+          if (id !== 'ROOT') {
+            actions.delete(id);
+          }
+        });
+      } catch (e) {
+        // Silencieux - supprimer ce qui peut l'être
+      }
+      // 2. Créer le HtmlBlock
       try {
         const htmlNode = query.createNode(
-          React.createElement(HtmlBlock, { html: globalHtml })
+          React.createElement(HtmlBlock, { html: globalHtml, padding: 10, hideLabel: false }),
         );
         actions.add(htmlNode, 'ROOT');
-        toast.success('Bloc HTML créé et ajouté au conteneur principal.');
-      } catch (err) {
-        console.error('Erreur lors de la création du bloc HTML:', err);
-        toast.error('Impossible de créer le bloc HTML.');
+      } catch (e) {
+        console.error('Erreur création HtmlBlock:', e);
       }
+      toast.success('Page convertie en HTML. Tous les blocs ont été remplacés.');
     }
     setHtmlDialogOpen(false);
   };
@@ -111,18 +167,25 @@ export const GodToolbar = () => {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
-      const isTyping = ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) || target.isContentEditable;
+      const isTyping =
+        ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName) || target.isContentEditable;
 
       if (e.key === 's' && (e.ctrlKey || e.metaKey) && !isTyping) {
         e.preventDefault();
-        handleSave();
+        handleQuickSave();
       }
       if (e.key === 'z' && (e.ctrlKey || e.metaKey) && !e.shiftKey && !isTyping) {
         e.preventDefault();
         if (canUndo) actions.history.undo();
       }
-      if ((e.key === 'y' && (e.ctrlKey || e.metaKey)) || (e.key === 'z' && (e.ctrlKey || e.metaKey) && e.shiftKey)) {
-        if (!isTyping) { e.preventDefault(); if (canRedo) actions.history.redo(); }
+      if (
+        (e.key === 'y' && (e.ctrlKey || e.metaKey)) ||
+        (e.key === 'z' && (e.ctrlKey || e.metaKey) && e.shiftKey)
+      ) {
+        if (!isTyping) {
+          e.preventDefault();
+          if (canRedo) actions.history.redo();
+        }
       }
       if (e.key === 'p' && (e.ctrlKey || e.metaKey) && !isTyping) {
         e.preventDefault();
@@ -141,13 +204,23 @@ export const GodToolbar = () => {
   }, [canUndo, canRedo, isEnabled, timelineOpen]);
 
   const handleSave = async () => {
-    const name = window.prompt("Nommer cette version historique (laisser vide pour publication simple) :");
-    if (name === null) return; // User cancelled
+    const name = window.prompt(
+      'Nommer cette version historique (laisser vide pour publication simple) :',
+    );
+    if (name === null) return;
     await savePage(name.trim() || undefined);
   };
 
+  // Quick save (Ctrl+S) without version prompt
+  const handleQuickSave = async () => {
+    await savePage(undefined);
+    toast.success('Page sauvegardée !');
+  };
+
   const togglePreview = () => {
-    actions.setOptions(options => { options.enabled = !options.enabled; });
+    actions.setOptions((options) => {
+      options.enabled = !options.enabled;
+    });
   };
 
   const handleExport = () => {
@@ -205,7 +278,6 @@ export const GodToolbar = () => {
 
   return (
     <div className="w-full h-14 bg-[#12121f] border-b border-[#252538] flex items-center justify-between px-3 text-white shadow-lg z-50 shrink-0">
-
       {/* LEFT: Navigation & Title */}
       <div className="flex items-center gap-3 min-w-0">
         <button
@@ -235,17 +307,21 @@ export const GodToolbar = () => {
       <div className="flex items-center gap-3 absolute left-1/2 -translate-x-1/2">
         {/* Viewport */}
         <div className="flex items-center bg-[#0d0d1a] rounded-lg p-1 border border-[#252538]">
-          {([
-            { key: 'desktop', Icon: Monitor, label: 'Desktop (Ctrl+1)' },
-            { key: 'tablet', Icon: Tablet, label: 'Tablet (Ctrl+2)' },
-            { key: 'mobile', Icon: Smartphone, label: 'Mobile (Ctrl+3)' },
-          ] as const).map(({ key, Icon, label }) => (
+          {(
+            [
+              { key: 'desktop', Icon: Monitor, label: 'Desktop (Ctrl+1)' },
+              { key: 'tablet', Icon: Tablet, label: 'Tablet (Ctrl+2)' },
+              { key: 'mobile', Icon: Smartphone, label: 'Mobile (Ctrl+3)' },
+            ] as const
+          ).map(({ key, Icon, label }) => (
             <button
               key={key}
               onClick={() => changeViewport(key)}
-              className={`p-1.5 rounded transition-all ${device === key
-                ? 'bg-[#252538] text-white shadow-inner'
-                : 'text-slate-500 hover:text-slate-300 hover:bg-[#1a1a2a]'}`}
+              className={`p-1.5 rounded transition-all ${
+                device === key
+                  ? 'bg-[#252538] text-white shadow-inner'
+                  : 'text-slate-500 hover:text-slate-300 hover:bg-[#1a1a2a]'
+              }`}
               title={label}
             >
               <Icon size={15} />
@@ -355,17 +431,33 @@ export const GodToolbar = () => {
                   <Code2 size={20} className="text-indigo-400" />
                   Éditeur HTML Global
                 </DialogTitle>
-                <p className="text-xs text-slate-500 mt-1">Modifiez le contenu HTML complet de la page. Les modifications sont appliquées au bloc HtmlBlock principal.</p>
+                <p className="text-xs text-slate-500 mt-1">
+                  Modifiez le code HTML de la page.
+                  {htmlNodeId
+                    ? 'Le bloc HtmlBlock existant sera mis à jour.'
+                    : '⚠️ Tous les blocs seront remplacés par ce code HTML.'}
+                </p>
+                {!htmlNodeId && (
+                  <div className="mt-2 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+                    <p className="text-[11px] text-amber-300 font-medium">
+                      ⚠️ Mode HTML : Cette action va supprimer tous les blocs du Builder et les
+                      remplacer par un seul bloc HTML. Vous ne pourrez plus éditer chaque bloc
+                      individuellement.
+                    </p>
+                  </div>
+                )}
               </div>
             </DialogHeader>
 
             <div className="flex-1 min-h-0 bg-[#07070a] border border-[#252538] rounded-lg overflow-hidden mt-4 relative">
-              <Suspense fallback={
-                <div className="absolute inset-0 flex items-center justify-center text-slate-500 bg-[#07070a]">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500 mb-2 mr-3" />
-                  <span>Chargement de Monaco Editor...</span>
-                </div>
-              }>
+              <Suspense
+                fallback={
+                  <div className="absolute inset-0 flex items-center justify-center text-slate-500 bg-[#07070a]">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500 mb-2 mr-3" />
+                    <span>Chargement de Monaco Editor...</span>
+                  </div>
+                }
+              >
                 <LazyMonacoEditor
                   height="100%"
                   language="html"
@@ -387,24 +479,46 @@ export const GodToolbar = () => {
 
             <div className="flex items-center justify-between border-t border-[#252538] pt-4 mt-4 shrink-0">
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" onClick={handleGlobalFormat} className="border-[#252538] bg-[#161624] text-slate-300 hover:text-white hover:bg-[#252538] flex items-center gap-1.5 font-semibold">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleGlobalFormat}
+                  className="border-[#252538] bg-[#161624] text-slate-300 hover:text-white hover:bg-[#252538] flex items-center gap-1.5 font-semibold"
+                >
                   <Sparkles size={13} className="text-indigo-400" />
                   Beautifier
                 </Button>
-                <Button variant="outline" size="sm" onClick={handleGlobalExport} className="border-[#252538] bg-[#161624] text-slate-300 hover:text-white hover:bg-[#252538] flex items-center gap-1.5 font-semibold">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleGlobalExport}
+                  className="border-[#252538] bg-[#161624] text-slate-300 hover:text-white hover:bg-[#252538] flex items-center gap-1.5 font-semibold"
+                >
                   <Download size={13} className="text-emerald-400" />
                   Exporter
                 </Button>
-                <Button variant="outline" size="sm" onClick={handleGlobalImport} className="border-[#252538] bg-[#161624] text-slate-300 hover:text-white hover:bg-[#252538] flex items-center gap-1.5 font-semibold">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleGlobalImport}
+                  className="border-[#252538] bg-[#161624] text-slate-300 hover:text-white hover:bg-[#252538] flex items-center gap-1.5 font-semibold"
+                >
                   <Upload size={13} className="text-amber-400" />
                   Importer
                 </Button>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" onClick={() => setHtmlDialogOpen(false)} className="border-[#252538] bg-transparent text-slate-400 hover:text-white hover:bg-[#161624]">
+                <Button
+                  variant="outline"
+                  onClick={() => setHtmlDialogOpen(false)}
+                  className="border-[#252538] bg-transparent text-slate-400 hover:text-white hover:bg-[#161624]"
+                >
                   Annuler
                 </Button>
-                <Button onClick={handleSaveHtml} className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold px-6">
+                <Button
+                  onClick={handleSaveHtml}
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold px-6"
+                >
                   Appliquer
                 </Button>
               </div>
@@ -415,18 +529,48 @@ export const GodToolbar = () => {
         <div className="w-px h-5 bg-[#252538] mx-1" />
 
         {/* Manual Publish/Save version button */}
-        <button
-          onClick={handleSave}
-          disabled={isSaving}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold shadow-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border border-blue-400/20 shadow-blue-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isSaving ? (
-            <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-          ) : (
-            <Save size={14} />
-          )}
-          <span>{isSaving ? 'Publication...' : 'Publier'}</span>
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={handleQuickSave}
+            disabled={isSaving}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold shadow-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border border-blue-400/20 shadow-blue-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            title="Sauvegarder (Ctrl+S)"
+          >
+            {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+            <span>{isSaving ? 'Sauvegarde...' : 'Sauvegarder'}</span>
+          </button>
+          <div className="relative group">
+            <button
+              className="px-2 py-2 rounded-lg text-sm font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border border-blue-400/20 transition-all"
+              title="Options de sauvegarde"
+            >
+              ▾
+            </button>
+            <div className="absolute right-0 top-full mt-1 bg-[#12121f] border border-[#252538] rounded-xl shadow-2xl py-2 min-w-[220px] hidden group-hover:block z-50">
+              <button
+                onClick={handleSave}
+                className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-[#1a1a2a] hover:text-white transition flex items-center gap-2"
+              >
+                <Save size={12} className="text-indigo-400" />
+                Sauvegarder comme version...
+              </button>
+              <button
+                onClick={togglePreview}
+                className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-[#1a1a2a] hover:text-white transition flex items-center gap-2"
+              >
+                <Eye size={12} className="text-emerald-400" />
+                {isEnabled ? 'Mode aperçu' : 'Mode édition'}
+              </button>
+              <button
+                onClick={() => setTimelineOpen(!timelineOpen)}
+                className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-[#1a1a2a] hover:text-white transition flex items-center gap-2"
+              >
+                <History size={12} className="text-amber-400" />
+                {timelineOpen ? 'Masquer la timeline' : 'Afficher la timeline'}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       <TemplateManagerDialog open={templateDialogOpen} onOpenChange={setTemplateDialogOpen} />
     </div>

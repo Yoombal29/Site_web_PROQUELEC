@@ -1,42 +1,44 @@
 [
   {
-    "id": 12,
-    "title": "Annuaire des Électriciens",
-    "description": "Trouvez un électricien qualifié près de chez vous.",
-    "icon_name": "zap",
-    "link": "/reseau-electriciens",
-    "features": null,
-    "display_order": 0,
-    "created_at": "2026-05-25T18:42:54.955Z"
-  },
-  {
-    "id": 13,
+    "id": 1,
     "title": "Formations Certifiantes",
-    "description": "Accédez à des formations agréées par l'État.",
-    "icon_name": "graduation-cap",
-    "link": "/formation",
-    "features": null,
+    "description": "Habilitations électriques et formations aux normes NF C 15-100",
+    "icon_name": "BookOpen",
+    "link": "/events",
+    "features": [
+      "Certificats reconnus",
+      "Formateurs experts",
+      "Programmes adaptés"
+    ],
+    "display_order": 0,
+    "created_at": "2026-05-23T00:57:59.050Z"
+  },
+  {
+    "id": 2,
+    "title": "Contrôles & Audits",
+    "description": "Vérifications de conformité et diagnostics sécuritaires",
+    "icon_name": "Shield",
+    "link": "/activities",
+    "features": [
+      "Normes en vigueur",
+      "Rapports détaillés",
+      "Recommandations"
+    ],
     "display_order": 1,
-    "created_at": "2026-05-25T18:42:54.962Z"
+    "created_at": "2026-05-23T00:57:59.050Z"
   },
   {
-    "id": 14,
-    "title": "Observatoire de l'Énergie",
-    "description": "Suivez les indicateurs clés du secteur électrique sénégalais.",
-    "icon_name": "bar-chart",
-    "link": "/observatoire",
-    "features": null,
+    "id": 3,
+    "title": "Efficacité Énergétique",
+    "description": "Audits énergétiques et optimisation des installations",
+    "icon_name": "Zap",
+    "link": "/contact",
+    "features": [
+      "Économies garanties",
+      "Solutions durables",
+      "ROI calculé"
+    ],
     "display_order": 2,
-    "created_at": "2026-05-25T18:42:54.965Z"
-  },
-  {
-    "id": 15,
-    "title": "Bibliothèque Technique",
-    "description": "Consultez les normes, guides et documents techniques.",
-    "icon_name": "book-open",
-    "link": "/documentation",
-    "features": null,
-    "display_order": 3,
-    "created_at": "2026-05-25T18:42:54.967Z"
+    "created_at": "2026-05-23T00:57:59.050Z"
   }
 ]

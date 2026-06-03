@@ -1,24 +1,5 @@
 [
   {
-    "id": "default",
-    "schema": {
-      "address": "Dakar, Sénégal",
-      "currency": "XOF",
-      "site_url": "https://proquelec.sn",
-      "timezone": "Africa/Dakar",
-      "languages": [
-        "fr",
-        "en",
-        "wo"
-      ],
-      "site_name": "PROQUELEC Sénégal",
-      "contact_email": "contact@proquelec.sn",
-      "contact_phone": "+221 33 800 00 00",
-      "default_language": "fr"
-    },
-    "updated_at": "2026-05-25T18:42:54.887Z"
-  },
-  {
     "id": "global_v1",
     "schema": {
       "pages": [
@@ -64,6 +45,6 @@
         }
       }
     },
-    "updated_at": "2026-05-25T21:59:54.852Z"
+    "updated_at": "2026-05-23T00:57:58.994Z"
   }
 ]

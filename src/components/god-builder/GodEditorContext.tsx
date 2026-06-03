@@ -151,12 +151,21 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
 
         // Load theme configuration
         if (page.theme_config) {
-          const rawThemeConfig = typeof page.theme_config === 'string' ? JSON.parse(page.theme_config) : page.theme_config;
+          const rawThemeConfig =
+            typeof page.theme_config === 'string'
+              ? JSON.parse(page.theme_config)
+              : page.theme_config;
           const themeValidation = validateThemeConfig(rawThemeConfig);
           if (themeValidation.success) {
-            useBuilderThemeStore.getState().loadTheme(themeValidation.data);
+            // Fusion avec le thème par défaut pour garantir tous les champs obligatoires
+            useBuilderThemeStore
+              .getState()
+              .loadTheme({ ...DEFAULT_THEME, ...themeValidation.data } as any);
           } else {
-            console.warn('[GodEditor] Theme config invalide, chargement du thème par défaut.', themeValidation.error.format());
+            console.warn(
+              '[GodEditor] Theme config invalide, chargement du thème par défaut.',
+              themeValidation.error.format(),
+            );
             useBuilderThemeStore.getState().resetThemeState();
           }
         } else {
@@ -165,7 +174,36 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
 
         // Check structure: prioritize draft_json over structure_json
         const dbStructure = page.draft_json || page.structure_json;
-        if (dbStructure) {
+
+        // Pages fonctionnelles : créer une structure par défaut avec FunctionalPageBlock
+        const isFunctional = page.immutable === true;
+        const isHybrid = page.design_options?.page_type === 'hybrid';
+
+        if (isFunctional && !dbStructure) {
+          // Créer une structure Craft.js avec FunctionalPageBlock
+          const functionalStructure = {
+            ROOT: {
+              type: 'div',
+              nodes: ['func_page_block'],
+              props: { style: {} },
+              linkedNodes: {},
+            },
+            func_page_block: {
+              type: 'FunctionalPageBlock',
+              nodes: [],
+              props: {
+                slug: page.slug || 'dashboard',
+                pageTitle: page.title || 'Page fonctionnelle',
+              },
+              parent: 'ROOT',
+              linkedNodes: {},
+            },
+          };
+          // @ts-ignore - Craft.js deserialize accepte les objets bruts
+          actionsRef.current.deserialize(functionalStructure);
+          lastSerializedRef.current = JSON.stringify(functionalStructure);
+          console.info('[GodEditor] Structure fonctionnelle créée pour:', page.slug);
+        } else if (dbStructure) {
           let parsed: any = null;
           if (typeof dbStructure === 'string') {
             parsed = JSON.parse(dbStructure);
@@ -179,16 +217,23 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
             actionsRef.current.deserialize(parsed);
           } else if (Array.isArray(parsed)) {
             try {
-              const craftGraph = convertLegacyBlocksToCraftGraph(parsed, page.title || page.slug || 'Page');
+              const craftGraph = convertLegacyBlocksToCraftGraph(
+                parsed,
+                page.title || page.slug || 'Page',
+              );
               actionsRef.current.deserialize(craftGraph);
               lastSerializedRef.current = JSON.stringify(craftGraph);
               console.info('[GodEditor] Page legacy convertie en format Craft et désérialisée.');
             } catch (e) {
               console.error('[GodEditor] Conversion legacy→Craft échouée:', e);
-              console.warn('Structure JSON détectée au format legacy. Le canvas par défaut sera utilisé.');
+              console.warn(
+                'Structure JSON détectée au format legacy. Le canvas par défaut sera utilisé.',
+              );
             }
           } else {
-            console.warn('Structure JSON détectée au format legacy. Le canvas par défaut sera utilisé.');
+            console.warn(
+              'Structure JSON détectée au format legacy. Le canvas par défaut sera utilisé.',
+            );
           }
         }
 
@@ -245,7 +290,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
     let localSaveTimer: any;
     let dbSaveTimer: any;
 
-    const unsubscribe = store.subscribe(() => {
+    const unsubscribe = (store as any).subscribe(() => {
       // Mark as dirty
       const historyStore = useBuilderHistoryStore.getState();
       if (historyStore.autosaveStatus === 'saved') {
@@ -260,14 +305,18 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
           const validStructure = ensureValidBuilderStructure(structureJson);
           if (!validStructure) return;
 
-          const jsonStr = typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
-          
+          const jsonStr =
+            typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
+
           if (jsonStr !== lastSerializedRef.current) {
-            localStorage.setItem(`proquelec_builder_backup_${pageId}`, JSON.stringify({
-              timestamp: Date.now(),
-              structure_json: validStructure,
-              pageData
-            }));
+            localStorage.setItem(
+              `proquelec_builder_backup_${pageId}`,
+              JSON.stringify({
+                timestamp: Date.now(),
+                structure_json: validStructure,
+                pageData,
+              }),
+            );
             useBuilderHistoryStore.getState().setAutosaveStatus('local_draft');
           }
         } catch (e) {
@@ -283,14 +332,15 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
           const validStructure = ensureValidBuilderStructure(structureJson);
           if (!validStructure) return;
 
-          const jsonStr = typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
+          const jsonStr =
+            typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
 
           if (jsonStr !== lastSerializedRef.current) {
             useBuilderHistoryStore.getState().setAutosaveStatus('saving');
 
             await apiFetch(`/api/admin/pages/${pageId}/draft`, {
               method: 'PUT',
-              body: JSON.stringify({ draft_json: validStructure })
+              body: JSON.stringify({ draft_json: validStructure }),
             });
 
             lastSerializedRef.current = jsonStr;
@@ -312,95 +362,101 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
   }, [store, pageId, pageData, query]);
 
   // Save/Publish page data manually
-  const savePage = useCallback(async (versionName?: string) => {
-    if (!pageId) {
-      toast.error('Identifiant de page manquant.');
-      return;
-    }
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-      toast.error('Authentification requise. Connectez-vous pour sauvegarder la page.');
-      return;
-    }
-
-    setIsSaving(true);
-    try {
-      const structureJson = query.serialize();
-      const validStructure = ensureValidBuilderStructure(structureJson);
-      if (!validStructure) {
-        throw new Error('Structure du builder invalide, sauvegarde interrompue');
+  const savePage = useCallback(
+    async (versionName?: string) => {
+      if (!pageId) {
+        toast.error('Identifiant de page manquant.');
+        return;
       }
 
-      const themeConfig = useBuilderThemeStore.getState().themeConfig;
-      const themeValidation = validateThemeConfig(themeConfig);
-      if (!themeValidation.success) {
-        throw new Error('Configuration de thème invalide, sauvegarde interrompue');
+      const token = localStorage.getItem('token');
+      if (!token) {
+        toast.error('Authentification requise. Connectez-vous pour sauvegarder la page.');
+        return;
       }
 
-      // Update page published version
-      await apiFetch(`/api/admin/pages/${pageId}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          structure_json: validStructure,
-          theme_config: themeConfig ?? {},
-          title: pageData?.title,
-          slug: pageData?.slug,
-          meta_description: pageData?.metaDescription,
-          meta_keywords: pageData?.metaKeywords,
-          meta_robots: pageData?.metaRobots,
-          custom_css: pageData?.customCss,
-          custom_js: pageData?.customJs,
-          design_options: pageData?.designOptions,
-          is_published: pageData?.isPublished,
-          workflow_status: pageData?.workflowStatus,
-        }),
-      });
-
-      // Brouillon optionnel (colonnes draft_json — migration builder)
+      setIsSaving(true);
       try {
-        await apiFetch(`/api/admin/pages/${pageId}/draft`, {
+        const structureJson = query.serialize();
+        const validStructure = ensureValidBuilderStructure(structureJson);
+        if (!validStructure) {
+          throw new Error('Structure du builder invalide, sauvegarde interrompue');
+        }
+
+        const themeConfig = useBuilderThemeStore.getState().themeConfig;
+        const themeValidation = validateThemeConfig(themeConfig);
+        if (!themeValidation.success) {
+          throw new Error('Configuration de thème invalide, sauvegarde interrompue');
+        }
+
+        // Update page published version
+        await apiFetch(`/api/admin/pages/${pageId}`, {
           method: 'PUT',
-          body: JSON.stringify({ draft_json: validStructure }),
-        });
-      } catch (draftErr) {
-        console.warn('[GodEditor] Sauvegarde brouillon ignorée:', draftErr);
-      }
-
-      // Clear local backup
-      localStorage.removeItem(`proquelec_builder_backup_${pageId}`);
-      setHasLocalBackup(false);
-
-      // Create page version if versionName is provided (Timeline checkpoint)
-      if (versionName) {
-        await apiFetch(`/api/admin/pages/${pageId}/versions`, {
-          method: 'POST',
           body: JSON.stringify({
-            version_name: versionName,
             structure_json: validStructure,
+            theme_config: themeConfig ?? {},
+            title: pageData?.title,
+            slug: pageData?.slug,
+            meta_description: pageData?.metaDescription,
+            meta_keywords: pageData?.metaKeywords,
+            meta_robots: pageData?.metaRobots,
+            custom_css: pageData?.customCss,
+            custom_js: pageData?.customJs,
+            design_options: pageData?.designOptions,
+            is_published: pageData?.isPublished,
+            workflow_status: pageData?.workflowStatus,
           }),
         });
-      }
 
-      lastSerializedRef.current = typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
-      useBuilderHistoryStore.getState().setAutosaveStatus('saved');
-      toast.success(versionName ? 'Version historique créée avec succès !' : 'Page publiée avec succès !');
-    } catch (error: unknown) {
-      console.error('Erreur sauvegarde:', error);
-      const err = error as { message?: string; status?: number; code?: string };
-      let hint = '';
-      if (err.status === 401 || err.code === 'AUTH_EXPIRED') {
-        hint = ' Reconnectez-vous à l’admin.';
-      } else if (err.status === 500) {
-        hint = ' Vérifiez que PostgreSQL tourne et lancez npm run migrate:auto.';
-      } else if (err.code === 'NETWORK_FAIL') {
-        hint = ' Le serveur API (port 3010) est-il démarré ?';
+        // Brouillon optionnel (colonnes draft_json — migration builder)
+        try {
+          await apiFetch(`/api/admin/pages/${pageId}/draft`, {
+            method: 'PUT',
+            body: JSON.stringify({ draft_json: validStructure }),
+          });
+        } catch (draftErr) {
+          console.warn('[GodEditor] Sauvegarde brouillon ignorée:', draftErr);
+        }
+
+        // Clear local backup
+        localStorage.removeItem(`proquelec_builder_backup_${pageId}`);
+        setHasLocalBackup(false);
+
+        // Create page version if versionName is provided (Timeline checkpoint)
+        if (versionName) {
+          await apiFetch(`/api/admin/pages/${pageId}/versions`, {
+            method: 'POST',
+            body: JSON.stringify({
+              version_name: versionName,
+              structure_json: validStructure,
+            }),
+          });
+        }
+
+        lastSerializedRef.current =
+          typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
+        useBuilderHistoryStore.getState().setAutosaveStatus('saved');
+        toast.success(
+          versionName ? 'Version historique créée avec succès !' : 'Page publiée avec succès !',
+        );
+      } catch (error: unknown) {
+        console.error('Erreur sauvegarde:', error);
+        const err = error as { message?: string; status?: number; code?: string };
+        let hint = '';
+        if (err.status === 401 || err.code === 'AUTH_EXPIRED') {
+          hint = ' Reconnectez-vous à l’admin.';
+        } else if (err.status === 500) {
+          hint = ' Vérifiez que PostgreSQL tourne et lancez npm run migrate:auto.';
+        } else if (err.code === 'NETWORK_FAIL') {
+          hint = ' Le serveur API (port 3010) est-il démarré ?';
+        }
+        toast.error(`Erreur lors de la sauvegarde : ${err.message || 'Erreur inconnue'}${hint}`);
+      } finally {
+        setIsSaving(false);
       }
-      toast.error(`Erreur lors de la sauvegarde : ${err.message || 'Erreur inconnue'}${hint}`);
-    } finally {
-      setIsSaving(false);
-    }
-  }, [pageId, pageData, query]);
+    },
+    [pageId, pageData, query],
+  );
 
   const updateMetadata = useCallback((changes: Partial<PageDataState>) => {
     setPageData((prev) => (prev ? { ...prev, ...changes } : null));

@@ -1,6 +1,6 @@
 [
   {
-    "id": "96db6bbf-65d2-4d1c-a75d-b6658bc31a99",
+    "id": "b4ffd123-b5ff-4c29-9302-cd0967f4c503",
     "name": "seo-pro",
     "display_name": "SEO Pro Advanced",
     "description": "Analyseur de mots-clés et optimisation sémantique en temps-réel.",
@@ -11,11 +11,11 @@
     "settings_schema": {},
     "default_settings": {},
     "is_active_globally": false,
-    "created_at": "2026-05-30T23:24:37.023Z",
-    "updated_at": "2026-05-30T23:24:37.023Z"
+    "created_at": "2026-06-03T14:51:44.430Z",
+    "updated_at": "2026-06-03T14:51:44.430Z"
   },
   {
-    "id": "41b0c4de-66af-4a09-b61e-b11cd7db179f",
+    "id": "90795fb7-1e5a-4c16-80cb-2bd1f7f2c33f",
     "name": "stats-live",
     "display_name": "Statistiques Live",
     "description": "Tableau de bord analytics intégré directement dans l'éditeur.",
@@ -26,11 +26,11 @@
     "settings_schema": {},
     "default_settings": {},
     "is_active_globally": false,
-    "created_at": "2026-05-30T23:24:37.023Z",
-    "updated_at": "2026-05-30T23:24:37.023Z"
+    "created_at": "2026-06-03T14:51:44.430Z",
+    "updated_at": "2026-06-03T14:51:44.430Z"
   },
   {
-    "id": "5cc67509-9426-4e5b-9ec4-abb4846dcc26",
+    "id": "24b9fe32-f8e5-46f0-9c2b-70ece2644fdf",
     "name": "payment-africa",
     "display_name": "Paiement Afrique",
     "description": "Passerelle de paiement Orange Money, Wave, Paydunya.",
@@ -41,11 +41,11 @@
     "settings_schema": {},
     "default_settings": {},
     "is_active_globally": false,
-    "created_at": "2026-05-30T23:24:37.023Z",
-    "updated_at": "2026-05-30T23:24:37.023Z"
+    "created_at": "2026-06-03T14:51:44.430Z",
+    "updated_at": "2026-06-03T14:51:44.430Z"
   },
   {
-    "id": "5b8d1a1f-d462-48bd-870a-58d509c30e23",
+    "id": "4e48bdf4-6bad-49fa-a186-504cce1065a6",
     "name": "form-builder",
     "display_name": "FormBuilder Advanced",
     "description": "Créateur de formulaires complexes par drag & drop.",
@@ -56,7 +56,7 @@
     "settings_schema": {},
     "default_settings": {},
     "is_active_globally": false,
-    "created_at": "2026-05-30T23:24:37.023Z",
-    "updated_at": "2026-05-30T23:24:37.023Z"
+    "created_at": "2026-06-03T14:51:44.430Z",
+    "updated_at": "2026-06-03T14:51:44.430Z"
   }
 ]

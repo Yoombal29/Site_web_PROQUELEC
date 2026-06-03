@@ -1,10 +1,37 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useEditor, Element } from '@craftjs/core';
 import {
-  Type, Square, LayoutTemplate, Image, SeparatorHorizontal, MoveVertical,
-  Columns, BarChart3, Video, FileText, MousePointerClick, CreditCard,
-  Search, MessageSquare, DollarSign, ChevronDown, List, Zap,
-  Hash, MapPin, Share2, X, Layers, BookOpen, Code2, Trash2, Sparkles, Palette, Database, Save
+  Type,
+  Square,
+  LayoutTemplate,
+  Image,
+  SeparatorHorizontal,
+  MoveVertical,
+  Columns,
+  BarChart3,
+  Video,
+  FileText,
+  MousePointerClick,
+  CreditCard,
+  Search,
+  MessageSquare,
+  DollarSign,
+  ChevronDown,
+  List,
+  Zap,
+  Hash,
+  MapPin,
+  Share2,
+  X,
+  Layers,
+  BookOpen,
+  Code2,
+  Trash2,
+  Sparkles,
+  Palette,
+  Database,
+  Save,
+  Lock,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
@@ -17,42 +44,116 @@ import {
 import { TemplatePreviewCard } from './TemplatePreviewCard';
 
 import {
-  ContainerBlock, TextBlock, HeroBlock, ButtonBlock, ImageBlock,
-  StatsBlock, VideoBlock, DividerBlock, SpacerBlock, CardBlock,
-  ColumnsBlock, FormBlock,
-  TestimonialsBlock, PricingBlock, AccordionBlock,
-  IconBoxBlock, CounterBlock, GalleryBlock, HtmlBlock,
-  TabsBlock, CarouselBlock, ProgressBarBlock, AlertBlock,
+  ContainerBlock,
+  TextBlock,
+  HeroBlock,
+  ButtonBlock,
+  ImageBlock,
+  StatsBlock,
+  VideoBlock,
+  DividerBlock,
+  SpacerBlock,
+  CardBlock,
+  ColumnsBlock,
+  FormBlock,
+  TestimonialsBlock,
+  PricingBlock,
+  AccordionBlock,
+  IconBoxBlock,
+  CounterBlock,
+  GalleryBlock,
+  HtmlBlock,
+  TabsBlock,
+  CarouselBlock,
+  ProgressBarBlock,
+  AlertBlock,
 } from '../blocks/ProquelecBlocks';
 import {
-  HeadingBlock, ListBlock, QuoteBlock, TableBlock, CodeBlock,
-  BlockquoteBlock, HighlightedTextBlock, DropCapBlock, PullquoteBlock,
-  DefinitionListBlock, AddressBlock, ImageCarouselBlock, VideoPopupBlock,
-  ImageHotspotBlock, ImageComparisonBlock, MasonryGalleryBlock, LottieBlock,
-  AudioBlock, FileDownloadBlock, ThumbnailGalleryBlock,
-  FlipBoxBlock, CountdownBlock, TestimonialCarouselBlock, FAQBlock,
-  ModalBlock, ToggleBlock, TimelineBlock, StepsBlock, TeamMembersGridBlock,
-  CallToActionBlock, PriceListBlock, StarRatingBlock, SocialIconsBlock,
-  ShareButtonsBlock, NewsletterBlock,
-  BreadcrumbsBlock, AuthorBoxBlock, LogoGridBlock, CookieConsentBlock,
-  BackToTopBlock, SearchBlock, AvatarBlock, BadgeBlock,
-  ShapeDividerBlock, AnimatedHeadlineBlock, FeatureListBlock,
-  ParallaxContainerBlock, ScrollProgressBlock, ImageAccordionBlock,
-  PaginationBlock, StickyContainerBlock, ParticlesBlock,
+  HeadingBlock,
+  ListBlock,
+  QuoteBlock,
+  TableBlock,
+  CodeBlock,
+  BlockquoteBlock,
+  HighlightedTextBlock,
+  DropCapBlock,
+  PullquoteBlock,
+  DefinitionListBlock,
+  AddressBlock,
+  ImageCarouselBlock,
+  VideoPopupBlock,
+  ImageHotspotBlock,
+  ImageComparisonBlock,
+  MasonryGalleryBlock,
+  LottieBlock,
+  AudioBlock,
+  FileDownloadBlock,
+  ThumbnailGalleryBlock,
+  FlipBoxBlock,
+  CountdownBlock,
+  TestimonialCarouselBlock,
+  FAQBlock,
+  ModalBlock,
+  ToggleBlock,
+  TimelineBlock,
+  StepsBlock,
+  TeamMembersGridBlock,
+  CallToActionBlock,
+  PriceListBlock,
+  StarRatingBlock,
+  SocialIconsBlock,
+  ShareButtonsBlock,
+  NewsletterBlock,
+  BreadcrumbsBlock,
+  AuthorBoxBlock,
+  LogoGridBlock,
+  CookieConsentBlock,
+  BackToTopBlock,
+  SearchBlock,
+  AvatarBlock,
+  BadgeBlock,
+  ShapeDividerBlock,
+  AnimatedHeadlineBlock,
+  FeatureListBlock,
+  ParallaxContainerBlock,
+  ScrollProgressBlock,
+  ImageAccordionBlock,
+  PaginationBlock,
+  StickyContainerBlock,
+  ParticlesBlock,
   TableOfContentsBlock,
 } from '../blocks/ProquelecBlocksPlus';
+import { FunctionalPageBlock, getFunctionalPageToolboxItems } from '../blocks/FunctionalPageBlock';
 import {
-  FormBuilderBlock, TextFieldBlock, EmailFieldBlock, TextareaFieldBlock,
-  SelectFieldBlock, CheckboxFieldBlock, RadioFieldBlock, FileUploadFieldBlock,
-  HiddenFieldBlock, DateFieldBlock, TelFieldBlock, ColorFieldBlock,
+  FormBuilderBlock,
+  TextFieldBlock,
+  EmailFieldBlock,
+  TextareaFieldBlock,
+  SelectFieldBlock,
+  CheckboxFieldBlock,
+  RadioFieldBlock,
+  FileUploadFieldBlock,
+  HiddenFieldBlock,
+  DateFieldBlock,
+  TelFieldBlock,
+  ColorFieldBlock,
 } from '../blocks/FormBuilderBlocks';
 import { RichTextBlock } from '../blocks/RichTextEditorBlock';
 import { PopupBlock } from '../blocks/PopupBuilderBlock';
 import {
-  DynamicTextBlock, DynamicRepeaterBlock, DynamicImageBlock, DataSourceConfigBlock,
+  DynamicTextBlock,
+  DynamicRepeaterBlock,
+  DynamicImageBlock,
+  DataSourceConfigBlock,
 } from '../blocks/DynamicDataBlocks';
 import {
-  ProductGridBlock, CartBlock, ProductBlock, ProductAdminBlock, PriceBlock, AddToCartButtonBlock, CheckoutBlock,
+  ProductGridBlock,
+  CartBlock,
+  ProductBlock,
+  ProductAdminBlock,
+  PriceBlock,
+  AddToCartButtonBlock,
+  CheckoutBlock,
 } from '../blocks/EcommerceBlocks';
 import { NavMenuBlock, MenuItemBlock, MegaMenuContainerBlock } from '../blocks/MegaMenuBlock';
 import { OffCanvasPanelBlock, OffCanvasToggleBlock } from '../blocks/OffCanvasBlock';
@@ -66,194 +167,850 @@ const BLOCK_GROUPS = [
     color: 'text-indigo-400',
     icon: Layers,
     items: [
-      { icon: Square, label: 'Conteneur', color: 'text-indigo-400', tags: ['layout', 'wrapper', 'section'], factory: () => <ContainerBlock /> },
-      { icon: Columns, label: 'Colonnes', color: 'text-indigo-400', tags: ['grid', 'layout', 'columns'], factory: () => <ColumnsBlock /> },
-      { icon: MoveVertical, label: 'Espace', color: 'text-slate-400', tags: ['spacer', 'gap'], factory: () => <SpacerBlock /> },
-      { icon: SeparatorHorizontal, label: 'Séparateur', color: 'text-slate-400', tags: ['divider', 'line', 'hr'], factory: () => <DividerBlock /> },
-      { icon: MoveVertical, label: 'Conteneur Sticky', color: 'text-indigo-400', tags: ['sticky', 'fixed', 'header'], factory: () => <StickyContainerBlock /> },
-      { icon: LayoutTemplate, label: 'Séparateur Forme', color: 'text-indigo-400', tags: ['divider', 'shape', 'svg', 'wave'], factory: () => <ShapeDividerBlock /> },
-      { icon: Image, label: 'Parallaxe', color: 'text-indigo-400', tags: ['parallax', 'scroll', 'background'], factory: () => <ParallaxContainerBlock /> },
-    ]
+      {
+        icon: Square,
+        label: 'Conteneur',
+        color: 'text-indigo-400',
+        tags: ['layout', 'wrapper', 'section'],
+        factory: () => <ContainerBlock />,
+      },
+      {
+        icon: Columns,
+        label: 'Colonnes',
+        color: 'text-indigo-400',
+        tags: ['grid', 'layout', 'columns'],
+        factory: () => <ColumnsBlock />,
+      },
+      {
+        icon: MoveVertical,
+        label: 'Espace',
+        color: 'text-slate-400',
+        tags: ['spacer', 'gap'],
+        factory: () => <SpacerBlock />,
+      },
+      {
+        icon: SeparatorHorizontal,
+        label: 'Séparateur',
+        color: 'text-slate-400',
+        tags: ['divider', 'line', 'hr'],
+        factory: () => <DividerBlock />,
+      },
+      {
+        icon: MoveVertical,
+        label: 'Conteneur Sticky',
+        color: 'text-indigo-400',
+        tags: ['sticky', 'fixed', 'header'],
+        factory: () => <StickyContainerBlock />,
+      },
+      {
+        icon: LayoutTemplate,
+        label: 'Séparateur Forme',
+        color: 'text-indigo-400',
+        tags: ['divider', 'shape', 'svg', 'wave'],
+        factory: () => <ShapeDividerBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Parallaxe',
+        color: 'text-indigo-400',
+        tags: ['parallax', 'scroll', 'background'],
+        factory: () => <ParallaxContainerBlock />,
+      },
+    ],
   },
   {
     label: 'Contenu',
     color: 'text-emerald-400',
     icon: Type,
     items: [
-      { icon: Type, label: 'Texte', color: 'text-emerald-400', tags: ['text', 'paragraph', 'heading', 'titre'], factory: () => <TextBlock /> },
-      { icon: Image, label: 'Image', color: 'text-emerald-400', tags: ['image', 'photo', 'picture'], factory: () => <ImageBlock /> },
-      { icon: Video, label: 'Vidéo', color: 'text-emerald-400', tags: ['video', 'youtube', 'embed'], factory: () => <VideoBlock /> },
-      { icon: FileText, label: 'Formulaire', color: 'text-emerald-400', tags: ['form', 'contact', 'mail'], factory: () => <FormBlock /> },
-      { icon: MousePointerClick, label: 'Bouton CTA', color: 'text-rose-400', tags: ['button', 'cta', 'link', 'action'], factory: () => <ButtonBlock /> },
-      { icon: Hash, label: 'Compteur', color: 'text-cyan-400', tags: ['counter', 'number', 'animate'], factory: () => <CounterBlock /> },
-      { icon: Code2, label: 'Code HTML', color: 'text-indigo-400', tags: ['html', 'code', 'raw', 'embed'], factory: () => <HtmlBlock /> },
-      { icon: FileText, label: 'Texte enrichi', color: 'text-emerald-400', tags: ['rich', 'text', 'tiptap', 'wysiwyg'], factory: () => <RichTextBlock /> },
-    ]
+      {
+        icon: Type,
+        label: 'Texte',
+        color: 'text-emerald-400',
+        tags: ['text', 'paragraph', 'heading', 'titre'],
+        factory: () => <TextBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Image',
+        color: 'text-emerald-400',
+        tags: ['image', 'photo', 'picture'],
+        factory: () => <ImageBlock />,
+      },
+      {
+        icon: Video,
+        label: 'Vidéo',
+        color: 'text-emerald-400',
+        tags: ['video', 'youtube', 'embed'],
+        factory: () => <VideoBlock />,
+      },
+      {
+        icon: FileText,
+        label: 'Formulaire',
+        color: 'text-emerald-400',
+        tags: ['form', 'contact', 'mail'],
+        factory: () => <FormBlock />,
+      },
+      {
+        icon: MousePointerClick,
+        label: 'Bouton CTA',
+        color: 'text-rose-400',
+        tags: ['button', 'cta', 'link', 'action'],
+        factory: () => <ButtonBlock />,
+      },
+      {
+        icon: Hash,
+        label: 'Compteur',
+        color: 'text-cyan-400',
+        tags: ['counter', 'number', 'animate'],
+        factory: () => <CounterBlock />,
+      },
+      {
+        icon: Code2,
+        label: 'Code HTML',
+        color: 'text-indigo-400',
+        tags: ['html', 'code', 'raw', 'embed'],
+        factory: () => <HtmlBlock />,
+      },
+      {
+        icon: FileText,
+        label: 'Texte enrichi',
+        color: 'text-emerald-400',
+        tags: ['rich', 'text', 'tiptap', 'wysiwyg'],
+        factory: () => <RichTextBlock />,
+      },
+    ],
   },
   {
     label: 'Formulaires',
     color: 'text-emerald-400',
     icon: FileText,
     items: [
-      { icon: FileText, label: 'Formulaire Builder', color: 'text-emerald-400', tags: ['form', 'builder', 'contact'], factory: () => <FormBuilderBlock /> },
-      { icon: Type, label: 'Champ Texte', color: 'text-emerald-400', tags: ['input', 'text'], factory: () => <TextFieldBlock /> },
-      { icon: Type, label: 'Champ Email', color: 'text-emerald-400', tags: ['input', 'email'], factory: () => <EmailFieldBlock /> },
-      { icon: FileText, label: 'Zone de texte', color: 'text-emerald-400', tags: ['textarea', 'message'], factory: () => <TextareaFieldBlock /> },
-      { icon: List, label: 'Liste déroulante', color: 'text-emerald-400', tags: ['select', 'dropdown'], factory: () => <SelectFieldBlock /> },
-      { icon: Square, label: 'Case à cocher', color: 'text-emerald-400', tags: ['checkbox', 'accept'], factory: () => <CheckboxFieldBlock /> },
-      { icon: Square, label: 'Bouton radio', color: 'text-emerald-400', tags: ['radio', 'choice'], factory: () => <RadioFieldBlock /> },
-      { icon: Image, label: 'Fichier', color: 'text-emerald-400', tags: ['file', 'upload'], factory: () => <FileUploadFieldBlock /> },
-      { icon: Code2, label: 'Champ caché', color: 'text-emerald-400', tags: ['hidden', 'input'], factory: () => <HiddenFieldBlock /> },
-      { icon: Type, label: 'Date', color: 'text-emerald-400', tags: ['date', 'calendar'], factory: () => <DateFieldBlock /> },
-      { icon: Type, label: 'Téléphone', color: 'text-emerald-400', tags: ['tel', 'phone'], factory: () => <TelFieldBlock /> },
-      { icon: Palette, label: 'Couleur', color: 'text-emerald-400', tags: ['color', 'picker'], factory: () => <ColorFieldBlock /> },
-    ]
+      {
+        icon: FileText,
+        label: 'Formulaire Builder',
+        color: 'text-emerald-400',
+        tags: ['form', 'builder', 'contact'],
+        factory: () => <FormBuilderBlock />,
+      },
+      {
+        icon: Type,
+        label: 'Champ Texte',
+        color: 'text-emerald-400',
+        tags: ['input', 'text'],
+        factory: () => <TextFieldBlock />,
+      },
+      {
+        icon: Type,
+        label: 'Champ Email',
+        color: 'text-emerald-400',
+        tags: ['input', 'email'],
+        factory: () => <EmailFieldBlock />,
+      },
+      {
+        icon: FileText,
+        label: 'Zone de texte',
+        color: 'text-emerald-400',
+        tags: ['textarea', 'message'],
+        factory: () => <TextareaFieldBlock />,
+      },
+      {
+        icon: List,
+        label: 'Liste déroulante',
+        color: 'text-emerald-400',
+        tags: ['select', 'dropdown'],
+        factory: () => <SelectFieldBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Case à cocher',
+        color: 'text-emerald-400',
+        tags: ['checkbox', 'accept'],
+        factory: () => <CheckboxFieldBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Bouton radio',
+        color: 'text-emerald-400',
+        tags: ['radio', 'choice'],
+        factory: () => <RadioFieldBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Fichier',
+        color: 'text-emerald-400',
+        tags: ['file', 'upload'],
+        factory: () => <FileUploadFieldBlock />,
+      },
+      {
+        icon: Code2,
+        label: 'Champ caché',
+        color: 'text-emerald-400',
+        tags: ['hidden', 'input'],
+        factory: () => <HiddenFieldBlock />,
+      },
+      {
+        icon: Type,
+        label: 'Date',
+        color: 'text-emerald-400',
+        tags: ['date', 'calendar'],
+        factory: () => <DateFieldBlock />,
+      },
+      {
+        icon: Type,
+        label: 'Téléphone',
+        color: 'text-emerald-400',
+        tags: ['tel', 'phone'],
+        factory: () => <TelFieldBlock />,
+      },
+      {
+        icon: Palette,
+        label: 'Couleur',
+        color: 'text-emerald-400',
+        tags: ['color', 'picker'],
+        factory: () => <ColorFieldBlock />,
+      },
+    ],
   },
   {
     label: 'Contenu Avancé',
     color: 'text-teal-400',
     icon: Type,
     items: [
-      { icon: Type, label: 'Titre (H1-H6)', color: 'text-teal-400', tags: ['heading', 'title', 'titre'], factory: () => <HeadingBlock /> },
-      { icon: List, label: 'Liste', color: 'text-teal-400', tags: ['list', 'bullet', 'numbered'], factory: () => <ListBlock /> },
-      { icon: MessageSquare, label: 'Citation', color: 'text-teal-400', tags: ['quote', 'citation'], factory: () => <QuoteBlock /> },
-      { icon: Columns, label: 'Tableau', color: 'text-teal-400', tags: ['table', 'grid', 'data'], factory: () => <TableBlock /> },
-      { icon: Code2, label: 'Code', color: 'text-teal-400', tags: ['code', 'pre', 'syntax'], factory: () => <CodeBlock /> },
-      { icon: MessageSquare, label: 'Bloc Citation', color: 'text-teal-400', tags: ['blockquote', 'quote'], factory: () => <BlockquoteBlock /> },
-      { icon: Type, label: 'Texte surligné', color: 'text-teal-400', tags: ['highlight', 'mark'], factory: () => <HighlightedTextBlock /> },
-      { icon: Type, label: 'Lettrine', color: 'text-teal-400', tags: ['dropcap', 'lettrine'], factory: () => <DropCapBlock /> },
-      { icon: Square, label: 'Citation flottante', color: 'text-teal-400', tags: ['pullquote', 'floating'], factory: () => <PullquoteBlock /> },
-      { icon: List, label: 'Définitions', color: 'text-teal-400', tags: ['definition', 'dl', 'terms'], factory: () => <DefinitionListBlock /> },
-      { icon: MapPin, label: 'Adresse', color: 'text-teal-400', tags: ['address', 'contact', 'info'], factory: () => <AddressBlock /> },
-      { icon: Type, label: 'Titre animé', color: 'text-teal-400', tags: ['animated', 'headline', 'rotating', 'text'], factory: () => <AnimatedHeadlineBlock /> },
-      { icon: List, label: 'Liste fonctionnalités', color: 'text-teal-400', tags: ['feature', 'list', 'icon', 'bullet'], factory: () => <FeatureListBlock /> },
-    ]
+      {
+        icon: Type,
+        label: 'Titre (H1-H6)',
+        color: 'text-teal-400',
+        tags: ['heading', 'title', 'titre'],
+        factory: () => <HeadingBlock />,
+      },
+      {
+        icon: List,
+        label: 'Liste',
+        color: 'text-teal-400',
+        tags: ['list', 'bullet', 'numbered'],
+        factory: () => <ListBlock />,
+      },
+      {
+        icon: MessageSquare,
+        label: 'Citation',
+        color: 'text-teal-400',
+        tags: ['quote', 'citation'],
+        factory: () => <QuoteBlock />,
+      },
+      {
+        icon: Columns,
+        label: 'Tableau',
+        color: 'text-teal-400',
+        tags: ['table', 'grid', 'data'],
+        factory: () => <TableBlock />,
+      },
+      {
+        icon: Code2,
+        label: 'Code',
+        color: 'text-teal-400',
+        tags: ['code', 'pre', 'syntax'],
+        factory: () => <CodeBlock />,
+      },
+      {
+        icon: MessageSquare,
+        label: 'Bloc Citation',
+        color: 'text-teal-400',
+        tags: ['blockquote', 'quote'],
+        factory: () => <BlockquoteBlock />,
+      },
+      {
+        icon: Type,
+        label: 'Texte surligné',
+        color: 'text-teal-400',
+        tags: ['highlight', 'mark'],
+        factory: () => <HighlightedTextBlock />,
+      },
+      {
+        icon: Type,
+        label: 'Lettrine',
+        color: 'text-teal-400',
+        tags: ['dropcap', 'lettrine'],
+        factory: () => <DropCapBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Citation flottante',
+        color: 'text-teal-400',
+        tags: ['pullquote', 'floating'],
+        factory: () => <PullquoteBlock />,
+      },
+      {
+        icon: List,
+        label: 'Définitions',
+        color: 'text-teal-400',
+        tags: ['definition', 'dl', 'terms'],
+        factory: () => <DefinitionListBlock />,
+      },
+      {
+        icon: MapPin,
+        label: 'Adresse',
+        color: 'text-teal-400',
+        tags: ['address', 'contact', 'info'],
+        factory: () => <AddressBlock />,
+      },
+      {
+        icon: Type,
+        label: 'Titre animé',
+        color: 'text-teal-400',
+        tags: ['animated', 'headline', 'rotating', 'text'],
+        factory: () => <AnimatedHeadlineBlock />,
+      },
+      {
+        icon: List,
+        label: 'Liste fonctionnalités',
+        color: 'text-teal-400',
+        tags: ['feature', 'list', 'icon', 'bullet'],
+        factory: () => <FeatureListBlock />,
+      },
+    ],
   },
   {
     label: 'Média',
     color: 'text-sky-400',
     icon: Image,
     items: [
-      { icon: Image, label: 'Carrousel Images', color: 'text-sky-400', tags: ['carousel', 'slider', 'gallery'], factory: () => <ImageCarouselBlock /> },
-      { icon: Video, label: 'Popup Vidéo', color: 'text-sky-400', tags: ['video', 'popup', 'youtube'], factory: () => <VideoPopupBlock /> },
-      { icon: Image, label: 'Image Hotspots', color: 'text-sky-400', tags: ['hotspot', 'interactive', 'image'], factory: () => <ImageHotspotBlock /> },
-      { icon: Image, label: 'Comparaison', color: 'text-sky-400', tags: ['comparison', 'before', 'after'], factory: () => <ImageComparisonBlock /> },
-      { icon: Image, label: 'Galerie Masonry', color: 'text-sky-400', tags: ['masonry', 'gallery', 'grid'], factory: () => <MasonryGalleryBlock /> },
-      { icon: Zap, label: 'Animation Lottie', color: 'text-sky-400', tags: ['lottie', 'animation'], factory: () => <LottieBlock /> },
-      { icon: Video, label: 'Audio', color: 'text-sky-400', tags: ['audio', 'music', 'podcast'], factory: () => <AudioBlock /> },
-      { icon: FileText, label: 'Téléchargement', color: 'text-sky-400', tags: ['download', 'file', 'pdf'], factory: () => <FileDownloadBlock /> },
-      { icon: Image, label: 'Galerie Vignettes', color: 'text-sky-400', tags: ['thumbnail', 'gallery', 'preview'], factory: () => <ThumbnailGalleryBlock /> },
-      { icon: Image, label: 'Accordéon Images', color: 'text-sky-400', tags: ['accordion', 'image', 'gallery', 'interactive'], factory: () => <ImageAccordionBlock /> },
-    ]
+      {
+        icon: Image,
+        label: 'Carrousel Images',
+        color: 'text-sky-400',
+        tags: ['carousel', 'slider', 'gallery'],
+        factory: () => <ImageCarouselBlock />,
+      },
+      {
+        icon: Video,
+        label: 'Popup Vidéo',
+        color: 'text-sky-400',
+        tags: ['video', 'popup', 'youtube'],
+        factory: () => <VideoPopupBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Image Hotspots',
+        color: 'text-sky-400',
+        tags: ['hotspot', 'interactive', 'image'],
+        factory: () => <ImageHotspotBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Comparaison',
+        color: 'text-sky-400',
+        tags: ['comparison', 'before', 'after'],
+        factory: () => <ImageComparisonBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Galerie Masonry',
+        color: 'text-sky-400',
+        tags: ['masonry', 'gallery', 'grid'],
+        factory: () => <MasonryGalleryBlock />,
+      },
+      {
+        icon: Zap,
+        label: 'Animation Lottie',
+        color: 'text-sky-400',
+        tags: ['lottie', 'animation'],
+        factory: () => <LottieBlock />,
+      },
+      {
+        icon: Video,
+        label: 'Audio',
+        color: 'text-sky-400',
+        tags: ['audio', 'music', 'podcast'],
+        factory: () => <AudioBlock />,
+      },
+      {
+        icon: FileText,
+        label: 'Téléchargement',
+        color: 'text-sky-400',
+        tags: ['download', 'file', 'pdf'],
+        factory: () => <FileDownloadBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Galerie Vignettes',
+        color: 'text-sky-400',
+        tags: ['thumbnail', 'gallery', 'preview'],
+        factory: () => <ThumbnailGalleryBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Accordéon Images',
+        color: 'text-sky-400',
+        tags: ['accordion', 'image', 'gallery', 'interactive'],
+        factory: () => <ImageAccordionBlock />,
+      },
+    ],
   },
   {
     label: 'Sections PROQUELEC',
     color: 'text-amber-400',
     icon: Zap,
     items: [
-      { icon: LayoutTemplate, label: 'Hero Section', color: 'text-amber-400', tags: ['hero', 'banner', 'header'], factory: () => <HeroBlock /> },
-      { icon: BarChart3, label: 'Statistiques', color: 'text-amber-400', tags: ['stats', 'numbers', 'chiffres'], factory: () => <StatsBlock /> },
-      { icon: CreditCard, label: 'Carte', color: 'text-amber-400', tags: ['card', 'feature', 'service'], factory: () => <CardBlock /> },
-      { icon: MessageSquare, label: 'Témoignages', color: 'text-violet-400', tags: ['testimonials', 'reviews', 'avis'], factory: () => <TestimonialsBlock /> },
-      { icon: DollarSign, label: 'Tarification', color: 'text-green-400', tags: ['pricing', 'plans', 'tarifs'], factory: () => <PricingBlock /> },
-      { icon: List, label: 'Accordéon FAQ', color: 'text-orange-400', tags: ['accordion', 'faq', 'collapse'], factory: () => <AccordionBlock /> },
-      { icon: Zap, label: 'IconBox', color: 'text-sky-400', tags: ['icon', 'feature', 'box', 'service'], factory: () => <IconBoxBlock /> },
-      { icon: Image, label: 'Galerie', color: 'text-pink-400', tags: ['gallery', 'photos', 'grid'], factory: () => <GalleryBlock /> },
-    ]
+      {
+        icon: LayoutTemplate,
+        label: 'Hero Section',
+        color: 'text-amber-400',
+        tags: ['hero', 'banner', 'header'],
+        factory: () => <HeroBlock />,
+      },
+      {
+        icon: BarChart3,
+        label: 'Statistiques',
+        color: 'text-amber-400',
+        tags: ['stats', 'numbers', 'chiffres'],
+        factory: () => <StatsBlock />,
+      },
+      {
+        icon: CreditCard,
+        label: 'Carte',
+        color: 'text-amber-400',
+        tags: ['card', 'feature', 'service'],
+        factory: () => <CardBlock />,
+      },
+      {
+        icon: MessageSquare,
+        label: 'Témoignages',
+        color: 'text-violet-400',
+        tags: ['testimonials', 'reviews', 'avis'],
+        factory: () => <TestimonialsBlock />,
+      },
+      {
+        icon: DollarSign,
+        label: 'Tarification',
+        color: 'text-green-400',
+        tags: ['pricing', 'plans', 'tarifs'],
+        factory: () => <PricingBlock />,
+      },
+      {
+        icon: List,
+        label: 'Accordéon FAQ',
+        color: 'text-orange-400',
+        tags: ['accordion', 'faq', 'collapse'],
+        factory: () => <AccordionBlock />,
+      },
+      {
+        icon: Zap,
+        label: 'IconBox',
+        color: 'text-sky-400',
+        tags: ['icon', 'feature', 'box', 'service'],
+        factory: () => <IconBoxBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Galerie',
+        color: 'text-pink-400',
+        tags: ['gallery', 'photos', 'grid'],
+        factory: () => <GalleryBlock />,
+      },
+    ],
   },
   {
     label: 'Interactif',
     color: 'text-orange-400',
     icon: Sparkles,
     items: [
-      { icon: Square, label: 'FlipBox', color: 'text-orange-400', tags: ['flip', 'card', '3d'], factory: () => <FlipBoxBlock /> },
-      { icon: Hash, label: 'Compte à rebours', color: 'text-orange-400', tags: ['countdown', 'timer'], factory: () => <CountdownBlock /> },
-      { icon: MessageSquare, label: 'Témoignages Dyn.', color: 'text-orange-400', tags: ['testimonial', 'carousel', 'slider'], factory: () => <TestimonialCarouselBlock /> },
-      { icon: List, label: 'FAQ', color: 'text-orange-400', tags: ['faq', 'questions', 'accordion'], factory: () => <FAQBlock /> },
-      { icon: Square, label: 'Modale', color: 'text-orange-400', tags: ['modal', 'popup', 'dialog'], factory: () => <ModalBlock /> },
-      { icon: Square, label: 'Toggle', color: 'text-orange-400', tags: ['toggle', 'collapse', 'show'], factory: () => <ToggleBlock /> },
-      { icon: List, label: 'Timeline', color: 'text-orange-400', tags: ['timeline', 'history', 'steps'], factory: () => <TimelineBlock /> },
-      { icon: List, label: 'Étapes', color: 'text-orange-400', tags: ['steps', 'process', 'guide'], factory: () => <StepsBlock /> },
-      { icon: Image, label: 'Membres Équipe', color: 'text-orange-400', tags: ['team', 'members', 'people'], factory: () => <TeamMembersGridBlock /> },
-    ]
+      {
+        icon: Square,
+        label: 'FlipBox',
+        color: 'text-orange-400',
+        tags: ['flip', 'card', '3d'],
+        factory: () => <FlipBoxBlock />,
+      },
+      {
+        icon: Hash,
+        label: 'Compte à rebours',
+        color: 'text-orange-400',
+        tags: ['countdown', 'timer'],
+        factory: () => <CountdownBlock />,
+      },
+      {
+        icon: MessageSquare,
+        label: 'Témoignages Dyn.',
+        color: 'text-orange-400',
+        tags: ['testimonial', 'carousel', 'slider'],
+        factory: () => <TestimonialCarouselBlock />,
+      },
+      {
+        icon: List,
+        label: 'FAQ',
+        color: 'text-orange-400',
+        tags: ['faq', 'questions', 'accordion'],
+        factory: () => <FAQBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Modale',
+        color: 'text-orange-400',
+        tags: ['modal', 'popup', 'dialog'],
+        factory: () => <ModalBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Toggle',
+        color: 'text-orange-400',
+        tags: ['toggle', 'collapse', 'show'],
+        factory: () => <ToggleBlock />,
+      },
+      {
+        icon: List,
+        label: 'Timeline',
+        color: 'text-orange-400',
+        tags: ['timeline', 'history', 'steps'],
+        factory: () => <TimelineBlock />,
+      },
+      {
+        icon: List,
+        label: 'Étapes',
+        color: 'text-orange-400',
+        tags: ['steps', 'process', 'guide'],
+        factory: () => <StepsBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Membres Équipe',
+        color: 'text-orange-400',
+        tags: ['team', 'members', 'people'],
+        factory: () => <TeamMembersGridBlock />,
+      },
+    ],
   },
   {
     label: 'Marketing',
     color: 'text-rose-400',
     icon: MousePointerClick,
     items: [
-      { icon: MousePointerClick, label: 'CTA', color: 'text-rose-400', tags: ['cta', 'call', 'action', 'banner'], factory: () => <CallToActionBlock /> },
-      { icon: CreditCard, label: 'Grille Tarifs', color: 'text-rose-400', tags: ['pricing', 'price', 'plans'], factory: () => <PriceListBlock /> },
-      { icon: Zap, label: 'Avis ★', color: 'text-rose-400', tags: ['rating', 'stars', 'review'], factory: () => <StarRatingBlock /> },
-      { icon: Share2, label: 'Réseaux sociaux', color: 'text-rose-400', tags: ['social', 'facebook', 'twitter'], factory: () => <SocialIconsBlock /> },
-      { icon: Share2, label: 'Boutons partage', color: 'text-rose-400', tags: ['share', 'social'], factory: () => <ShareButtonsBlock /> },
-      { icon: MessageSquare, label: 'Newsletter', color: 'text-rose-400', tags: ['newsletter', 'email', 'subscribe'], factory: () => <NewsletterBlock /> },
-    ]
+      {
+        icon: MousePointerClick,
+        label: 'CTA',
+        color: 'text-rose-400',
+        tags: ['cta', 'call', 'action', 'banner'],
+        factory: () => <CallToActionBlock />,
+      },
+      {
+        icon: CreditCard,
+        label: 'Grille Tarifs',
+        color: 'text-rose-400',
+        tags: ['pricing', 'price', 'plans'],
+        factory: () => <PriceListBlock />,
+      },
+      {
+        icon: Zap,
+        label: 'Avis ★',
+        color: 'text-rose-400',
+        tags: ['rating', 'stars', 'review'],
+        factory: () => <StarRatingBlock />,
+      },
+      {
+        icon: Share2,
+        label: 'Réseaux sociaux',
+        color: 'text-rose-400',
+        tags: ['social', 'facebook', 'twitter'],
+        factory: () => <SocialIconsBlock />,
+      },
+      {
+        icon: Share2,
+        label: 'Boutons partage',
+        color: 'text-rose-400',
+        tags: ['share', 'social'],
+        factory: () => <ShareButtonsBlock />,
+      },
+      {
+        icon: MessageSquare,
+        label: 'Newsletter',
+        color: 'text-rose-400',
+        tags: ['newsletter', 'email', 'subscribe'],
+        factory: () => <NewsletterBlock />,
+      },
+    ],
   },
   {
     label: 'Premium & Interactivité',
     color: 'text-purple-400',
     icon: Sparkles,
     items: [
-      { icon: List, label: 'Onglets', color: 'text-purple-400', tags: ['tabs', 'switch', 'onglets', 'content'], factory: () => <TabsBlock /> },
-      { icon: LayoutTemplate, label: 'Carrousel Slides', color: 'text-purple-400', tags: ['carousel', 'slider', 'slideshow'], factory: () => <CarouselBlock /> },
-      { icon: BarChart3, label: 'Barre de Progrès', color: 'text-purple-400', tags: ['progress', 'skills', 'pourcentage'], factory: () => <ProgressBarBlock /> },
-      { icon: Zap, label: 'Bannière d\'Alerte', color: 'text-purple-400', tags: ['alert', 'banner', 'warning', 'info'], factory: () => <AlertBlock /> },
-      { icon: Square, label: 'Popup Builder', color: 'text-purple-400', tags: ['popup', 'modal', 'overlay', 'trigger'], factory: () => <PopupBlock /> },
-      { icon: Zap, label: 'Particules', color: 'text-purple-400', tags: ['particles', 'background', 'animated', 'canvas'], factory: () => <ParticlesBlock /> },
-      { icon: List, label: 'Menu Navigation', color: 'text-purple-400', tags: ['nav', 'menu', 'navigation'], factory: () => <NavMenuBlock /> },
-      { icon: List, label: 'Lien Menu', color: 'text-purple-400', tags: ['link', 'menu', 'nav'], factory: () => <MenuItemBlock /> },
-      { icon: Square, label: 'Mega Menu', color: 'text-purple-400', tags: ['megamenu', 'dropdown', 'nav'], factory: () => <MegaMenuContainerBlock /> },
-      { icon: Square, label: 'Panneau Off-Canvas', color: 'text-purple-400', tags: ['offcanvas', 'panel', 'slide'], factory: () => <OffCanvasPanelBlock /> },
-      { icon: Square, label: 'Bouton Off-Canvas', color: 'text-purple-400', tags: ['offcanvas', 'toggle', 'button'], factory: () => <OffCanvasToggleBlock /> },
-    ]
+      {
+        icon: List,
+        label: 'Onglets',
+        color: 'text-purple-400',
+        tags: ['tabs', 'switch', 'onglets', 'content'],
+        factory: () => <TabsBlock />,
+      },
+      {
+        icon: LayoutTemplate,
+        label: 'Carrousel Slides',
+        color: 'text-purple-400',
+        tags: ['carousel', 'slider', 'slideshow'],
+        factory: () => <CarouselBlock />,
+      },
+      {
+        icon: BarChart3,
+        label: 'Barre de Progrès',
+        color: 'text-purple-400',
+        tags: ['progress', 'skills', 'pourcentage'],
+        factory: () => <ProgressBarBlock />,
+      },
+      {
+        icon: Zap,
+        label: "Bannière d'Alerte",
+        color: 'text-purple-400',
+        tags: ['alert', 'banner', 'warning', 'info'],
+        factory: () => <AlertBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Popup Builder',
+        color: 'text-purple-400',
+        tags: ['popup', 'modal', 'overlay', 'trigger'],
+        factory: () => <PopupBlock />,
+      },
+      {
+        icon: Zap,
+        label: 'Particules',
+        color: 'text-purple-400',
+        tags: ['particles', 'background', 'animated', 'canvas'],
+        factory: () => <ParticlesBlock />,
+      },
+      {
+        icon: List,
+        label: 'Menu Navigation',
+        color: 'text-purple-400',
+        tags: ['nav', 'menu', 'navigation'],
+        factory: () => <NavMenuBlock />,
+      },
+      {
+        icon: List,
+        label: 'Lien Menu',
+        color: 'text-purple-400',
+        tags: ['link', 'menu', 'nav'],
+        factory: () => <MenuItemBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Mega Menu',
+        color: 'text-purple-400',
+        tags: ['megamenu', 'dropdown', 'nav'],
+        factory: () => <MegaMenuContainerBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Panneau Off-Canvas',
+        color: 'text-purple-400',
+        tags: ['offcanvas', 'panel', 'slide'],
+        factory: () => <OffCanvasPanelBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Bouton Off-Canvas',
+        color: 'text-purple-400',
+        tags: ['offcanvas', 'toggle', 'button'],
+        factory: () => <OffCanvasToggleBlock />,
+      },
+    ],
   },
   {
     label: 'Données',
     color: 'text-cyan-400',
     icon: Database,
     items: [
-      { icon: Database, label: 'Texte Dynamique', color: 'text-cyan-400', tags: ['dynamic', 'data', 'expression'], factory: () => <DynamicTextBlock /> },
-      { icon: Database, label: 'Liste Dynamique', color: 'text-cyan-400', tags: ['dynamic', 'list', 'repeater'], factory: () => <DynamicRepeaterBlock /> },
-      { icon: Database, label: 'Image Dynamique', color: 'text-cyan-400', tags: ['dynamic', 'image', 'data'], factory: () => <DynamicImageBlock /> },
-      { icon: Database, label: 'Sources de Données', color: 'text-cyan-400', tags: ['source', 'api', 'data', 'config'], factory: () => <DataSourceConfigBlock /> },
-    ]
+      {
+        icon: Database,
+        label: 'Texte Dynamique',
+        color: 'text-cyan-400',
+        tags: ['dynamic', 'data', 'expression'],
+        factory: () => <DynamicTextBlock />,
+      },
+      {
+        icon: Database,
+        label: 'Liste Dynamique',
+        color: 'text-cyan-400',
+        tags: ['dynamic', 'list', 'repeater'],
+        factory: () => <DynamicRepeaterBlock />,
+      },
+      {
+        icon: Database,
+        label: 'Image Dynamique',
+        color: 'text-cyan-400',
+        tags: ['dynamic', 'image', 'data'],
+        factory: () => <DynamicImageBlock />,
+      },
+      {
+        icon: Database,
+        label: 'Sources de Données',
+        color: 'text-cyan-400',
+        tags: ['source', 'api', 'data', 'config'],
+        factory: () => <DataSourceConfigBlock />,
+      },
+    ],
   },
   {
     label: 'E-commerce',
     color: 'text-amber-400',
     icon: DollarSign,
     items: [
-      { icon: Image, label: 'Grille Produits', color: 'text-amber-400', tags: ['shop', 'products', 'grid', 'ecommerce'], factory: () => <ProductGridBlock /> },
-      { icon: Square, label: 'Produit', color: 'text-amber-400', tags: ['product', 'single', 'details'], factory: () => <ProductBlock /> },
-      { icon: DollarSign, label: 'Prix', color: 'text-amber-400', tags: ['price', 'product'], factory: () => <PriceBlock /> },
-      { icon: MousePointerClick, label: 'Bouton Achat', color: 'text-amber-400', tags: ['addtocart', 'buy', 'button'], factory: () => <AddToCartButtonBlock /> },
-      { icon: CreditCard, label: 'Panier', color: 'text-amber-400', tags: ['cart', 'shopping', 'basket'], factory: () => <CartBlock /> },
-      { icon: CreditCard, label: 'Checkout', color: 'text-amber-400', tags: ['checkout', 'payment', 'order'], factory: () => <CheckoutBlock /> },
-      { icon: CreditCard, label: 'Catalogue Produits', color: 'text-amber-400', tags: ['admin', 'catalog', 'products', 'manage'], factory: () => <ProductAdminBlock /> },
-    ]
+      {
+        icon: Image,
+        label: 'Grille Produits',
+        color: 'text-amber-400',
+        tags: ['shop', 'products', 'grid', 'ecommerce'],
+        factory: () => <ProductGridBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Produit',
+        color: 'text-amber-400',
+        tags: ['product', 'single', 'details'],
+        factory: () => <ProductBlock />,
+      },
+      {
+        icon: DollarSign,
+        label: 'Prix',
+        color: 'text-amber-400',
+        tags: ['price', 'product'],
+        factory: () => <PriceBlock />,
+      },
+      {
+        icon: MousePointerClick,
+        label: 'Bouton Achat',
+        color: 'text-amber-400',
+        tags: ['addtocart', 'buy', 'button'],
+        factory: () => <AddToCartButtonBlock />,
+      },
+      {
+        icon: CreditCard,
+        label: 'Panier',
+        color: 'text-amber-400',
+        tags: ['cart', 'shopping', 'basket'],
+        factory: () => <CartBlock />,
+      },
+      {
+        icon: CreditCard,
+        label: 'Checkout',
+        color: 'text-amber-400',
+        tags: ['checkout', 'payment', 'order'],
+        factory: () => <CheckoutBlock />,
+      },
+      {
+        icon: CreditCard,
+        label: 'Catalogue Produits',
+        color: 'text-amber-400',
+        tags: ['admin', 'catalog', 'products', 'manage'],
+        factory: () => <ProductAdminBlock />,
+      },
+    ],
   },
   {
     label: 'Utilitaire',
     color: 'text-slate-400',
     icon: Search,
     items: [
-      { icon: List, label: 'Fil d\'Ariane', color: 'text-slate-400', tags: ['breadcrumb', 'nav'], factory: () => <BreadcrumbsBlock /> },
-      { icon: Image, label: 'Boîte Auteur', color: 'text-slate-400', tags: ['author', 'bio'], factory: () => <AuthorBoxBlock /> },
-      { icon: Image, label: 'Grille Logos', color: 'text-slate-400', tags: ['logo', 'grid', 'clients'], factory: () => <LogoGridBlock /> },
-      { icon: FileText, label: 'Cookies Consent', color: 'text-slate-400', tags: ['cookie', 'gdpr', 'consent'], factory: () => <CookieConsentBlock /> },
-      { icon: Square, label: 'Retour Haut', color: 'text-slate-400', tags: ['back', 'top', 'scroll'], factory: () => <BackToTopBlock /> },
-      { icon: Search, label: 'Recherche', color: 'text-slate-400', tags: ['search', 'input'], factory: () => <SearchBlock /> },
-      { icon: Image, label: 'Avatar', color: 'text-slate-400', tags: ['avatar', 'profile'], factory: () => <AvatarBlock /> },
-      { icon: Zap, label: 'Badge', color: 'text-slate-400', tags: ['badge', 'tag', 'label'], factory: () => <BadgeBlock /> },
-      { icon: BarChart3, label: 'Barre Progression', color: 'text-slate-400', tags: ['progress', 'scroll', 'bar', 'reading'], factory: () => <ScrollProgressBlock /> },
-      { icon: List, label: 'Pagination', color: 'text-slate-400', tags: ['pagination', 'pages', 'nav'], factory: () => <PaginationBlock /> },
-      { icon: List, label: 'Table des matières', color: 'text-slate-400', tags: ['toc', 'table', 'contents', 'sommaire'], factory: () => <TableOfContentsBlock /> },
-    ]
+      {
+        icon: List,
+        label: "Fil d'Ariane",
+        color: 'text-slate-400',
+        tags: ['breadcrumb', 'nav'],
+        factory: () => <BreadcrumbsBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Boîte Auteur',
+        color: 'text-slate-400',
+        tags: ['author', 'bio'],
+        factory: () => <AuthorBoxBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Grille Logos',
+        color: 'text-slate-400',
+        tags: ['logo', 'grid', 'clients'],
+        factory: () => <LogoGridBlock />,
+      },
+      {
+        icon: FileText,
+        label: 'Cookies Consent',
+        color: 'text-slate-400',
+        tags: ['cookie', 'gdpr', 'consent'],
+        factory: () => <CookieConsentBlock />,
+      },
+      {
+        icon: Square,
+        label: 'Retour Haut',
+        color: 'text-slate-400',
+        tags: ['back', 'top', 'scroll'],
+        factory: () => <BackToTopBlock />,
+      },
+      {
+        icon: Search,
+        label: 'Recherche',
+        color: 'text-slate-400',
+        tags: ['search', 'input'],
+        factory: () => <SearchBlock />,
+      },
+      {
+        icon: Image,
+        label: 'Avatar',
+        color: 'text-slate-400',
+        tags: ['avatar', 'profile'],
+        factory: () => <AvatarBlock />,
+      },
+      {
+        icon: Zap,
+        label: 'Badge',
+        color: 'text-slate-400',
+        tags: ['badge', 'tag', 'label'],
+        factory: () => <BadgeBlock />,
+      },
+      {
+        icon: BarChart3,
+        label: 'Barre Progression',
+        color: 'text-slate-400',
+        tags: ['progress', 'scroll', 'bar', 'reading'],
+        factory: () => <ScrollProgressBlock />,
+      },
+      {
+        icon: List,
+        label: 'Pagination',
+        color: 'text-slate-400',
+        tags: ['pagination', 'pages', 'nav'],
+        factory: () => <PaginationBlock />,
+      },
+      {
+        icon: List,
+        label: 'Table des matières',
+        color: 'text-slate-400',
+        tags: ['toc', 'table', 'contents', 'sommaire'],
+        factory: () => <TableOfContentsBlock />,
+      },
+    ],
+  },
+  {
+    label: 'Fonctionnel',
+    color: 'text-amber-400',
+    icon: Lock,
+    items: [
+      ...getFunctionalPageToolboxItems().map((item) => ({
+        icon: Lock,
+        label: item.label,
+        color: 'text-amber-400',
+        tags: ['fonctionnel', 'block', 'locked', 'page', ...item.label.toLowerCase().split(' ')],
+        factory: () => <FunctionalPageBlock slug={item.slug} pageTitle={item.label} />,
+      })),
+    ],
   },
 ];
 
-const TEMPLATE_CATEGORY_ORDER: TemplateCategory[] = ['hero', 'content', 'conversion', 'media', 'trust'];
+const TEMPLATE_CATEGORY_ORDER: TemplateCategory[] = [
+  'hero',
+  'content',
+  'conversion',
+  'media',
+  'trust',
+];
 
 // ─────────────────────────────────────────────────────────
 // MAIN TOOLBOX
@@ -273,8 +1030,8 @@ export const GodToolbox = () => {
       const token = localStorage.getItem('token');
       const response = await fetch('/api/admin/page-components', {
         headers: {
-          'Authorization': token ? `Bearer ${token}` : ''
-        }
+          Authorization: token ? `Bearer ${token}` : '',
+        },
       });
       if (response.ok) {
         const data = await response.json();
@@ -300,41 +1057,42 @@ export const GodToolbox = () => {
 
   const handleDeleteTemplate = async (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
-    if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce modèle ?")) return;
+    if (!window.confirm('Êtes-vous sûr de vouloir supprimer ce modèle ?')) return;
 
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(`/api/admin/page-components/${id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': token ? `Bearer ${token}` : ''
-        }
+          Authorization: token ? `Bearer ${token}` : '',
+        },
       });
       if (response.ok) {
-        toast.success("Modèle supprimé");
+        toast.success('Modèle supprimé');
         fetchTemplates();
       } else {
-        toast.error("Erreur lors de la suppression");
+        toast.error('Erreur lors de la suppression');
       }
     } catch (err) {
       console.error(err);
-      toast.error("Impossible de supprimer le modèle");
+      toast.error('Impossible de supprimer le modèle');
     }
   };
 
   const handleAddDbTemplate = (defaultStructure: string | object) => {
     try {
-      const tree = typeof defaultStructure === 'string' ? JSON.parse(defaultStructure) : defaultStructure;
+      const tree =
+        typeof defaultStructure === 'string' ? JSON.parse(defaultStructure) : defaultStructure;
       actions.addNodeTree(cloneNodeTreeWithNewIds(tree, 'tpl'), 'ROOT');
       toast.success('Modèle inséré avec succès');
     } catch (err) {
       console.error(err);
-      toast.error('Erreur lors de l\'insertion du modèle');
+      toast.error("Erreur lors de l'insertion du modèle");
     }
   };
 
   const toggleGroup = (label: string) => {
-    setCollapsedGroups(prev => {
+    setCollapsedGroups((prev) => {
       const next = new Set(prev);
       if (next.has(label)) next.delete(label);
       else next.add(label);
@@ -345,13 +1103,12 @@ export const GodToolbox = () => {
   const filteredGroups = useMemo(() => {
     if (!search.trim()) return BLOCK_GROUPS;
     const q = search.toLowerCase();
-    return BLOCK_GROUPS.map(g => ({
+    return BLOCK_GROUPS.map((g) => ({
       ...g,
-      items: g.items.filter(item =>
-        item.label.toLowerCase().includes(q) ||
-        item.tags.some(t => t.includes(q))
-      )
-    })).filter(g => g.items.length > 0);
+      items: g.items.filter(
+        (item) => item.label.toLowerCase().includes(q) || item.tags.some((t) => t.includes(q)),
+      ),
+    })).filter((g) => g.items.length > 0);
   }, [search]);
 
   const handleInsertTemplate = (factory: () => React.ReactElement, label: string) => {
@@ -368,21 +1125,24 @@ export const GodToolbox = () => {
       toast.error(
         err instanceof Error && err.message.includes('resolver')
           ? 'Modèle incompatible : rechargez la page ou choisissez un autre modèle.'
-          : 'Impossible d\'insérer le modèle'
+          : "Impossible d'insérer le modèle",
       );
     }
   };
 
   return (
-    <div className={`${expanded ? 'w-56' : 'w-12'} transition-all duration-300 ease-in-out bg-[#12121f] border-r border-[#252538] h-full flex flex-col shrink-0 z-40 relative`}>
-
+    <div
+      className={`${expanded ? 'w-56' : 'w-12'} transition-all duration-300 ease-in-out bg-[#12121f] border-r border-[#252538] h-full flex flex-col shrink-0 z-40 relative`}
+    >
       {/* Header */}
       <div className="h-12 flex items-center justify-between px-3 border-b border-[#252538] shrink-0">
-        <span className={`text-slate-300 font-bold uppercase text-[10px] tracking-wider transition-opacity ${expanded ? 'opacity-100' : 'opacity-0 w-0'}`}>
+        <span
+          className={`text-slate-300 font-bold uppercase text-[10px] tracking-wider transition-opacity ${expanded ? 'opacity-100' : 'opacity-0 w-0'}`}
+        >
           {activeTab === 'blocks' ? 'Blocs' : activeTab === 'templates' ? 'Templates' : 'Globaux'}
         </span>
         <button
-          onClick={() => setExpanded(v => !v)}
+          onClick={() => setExpanded((v) => !v)}
           className="p-1.5 rounded-lg text-slate-500 hover:text-white hover:bg-[#252538] transition-colors shrink-0"
           title={expanded ? 'Réduire' : 'Agrandir'}
         >
@@ -398,19 +1158,22 @@ export const GodToolbox = () => {
               onClick={() => setActiveTab('blocks')}
               className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'blocks' ? 'text-white border-b-2 border-indigo-500' : 'text-slate-500 hover:text-slate-300'}`}
             >
-              <Layers size={10} className="inline mr-1" />Blocs
+              <Layers size={10} className="inline mr-1" />
+              Blocs
             </button>
             <button
               onClick={() => setActiveTab('templates')}
               className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'templates' ? 'text-white border-b-2 border-amber-500' : 'text-slate-500 hover:text-slate-300'}`}
             >
-              <BookOpen size={10} className="inline mr-1" />Templates
+              <BookOpen size={10} className="inline mr-1" />
+              Templates
             </button>
             <button
               onClick={() => setActiveTab('globals')}
               className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'globals' ? 'text-white border-b-2 border-emerald-500' : 'text-slate-500 hover:text-slate-300'}`}
             >
-              <Layers size={10} className="inline mr-1" />Globaux
+              <Layers size={10} className="inline mr-1" />
+              Globaux
             </button>
           </div>
 
@@ -418,11 +1181,14 @@ export const GodToolbox = () => {
           {activeTab === 'blocks' && (
             <div className="px-2 pt-2 pb-1 shrink-0">
               <div className="relative">
-                <Search size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
+                <Search
+                  size={12}
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"
+                />
                 <input
                   type="text"
                   value={search}
-                  onChange={e => setSearch(e.target.value)}
+                  onChange={(e) => setSearch(e.target.value)}
                   placeholder="Rechercher..."
                   className="w-full bg-[#0d0d1a] border border-[#252538] rounded-lg pl-7 pr-6 py-1.5 text-xs text-slate-300 placeholder:text-slate-600 focus:outline-none focus:border-indigo-500"
                 />
@@ -448,7 +1214,7 @@ export const GodToolbox = () => {
         {activeTab === 'blocks' ? (
           // ── BLOCKS TAB ──
           <div className="space-y-1">
-            {filteredGroups.map(group => {
+            {filteredGroups.map((group) => {
               const isCollapsed = collapsedGroups.has(group.label);
               const GroupIcon = group.icon;
               return (
@@ -462,22 +1228,30 @@ export const GodToolbox = () => {
                         <GroupIcon size={10} />
                         {group.label}
                       </span>
-                      <ChevronDown size={10} className={`text-slate-600 transition-transform ${isCollapsed ? '' : 'rotate-180'}`} />
+                      <ChevronDown
+                        size={10}
+                        className={`text-slate-600 transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
+                      />
                     </button>
                   )}
 
                   {!isCollapsed && (
                     <div className="px-1.5 space-y-0.5 pb-1">
-                      {group.items.map(item => {
+                      {group.items.map((item) => {
                         const Icon = item.icon;
                         return (
                           <button
                             key={item.label}
-                            ref={(ref) => { if (ref) connectors.create(ref, item.factory()); }}
+                            ref={(ref) => {
+                              if (ref) connectors.create(ref, item.factory());
+                            }}
                             className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#1e1e30] text-slate-400 hover:text-white transition-all cursor-grab active:cursor-grabbing text-left group"
                             title={item.label}
                           >
-                            <Icon size={14} className={`${item.color} shrink-0 group-hover:scale-110 transition-transform`} />
+                            <Icon
+                              size={14}
+                              className={`${item.color} shrink-0 group-hover:scale-110 transition-transform`}
+                            />
                             {expanded && (
                               <span className="text-xs font-medium truncate">{item.label}</span>
                             )}
@@ -505,17 +1279,18 @@ export const GodToolbox = () => {
                 <BookOpen size={10} />
                 Mes Modèles ({dbTemplates.length})
               </div>
-              
+
               {loadingTemplates ? (
                 <div className="text-[10px] text-slate-500 text-center py-4">Chargement...</div>
               ) : dbTemplates.length === 0 ? (
                 <div className="text-[10px] text-slate-600 text-center py-4 leading-normal">
-                  Aucun modèle enregistré.<br />
+                  Aucun modèle enregistré.
+                  <br />
                   Faites un clic droit sur un bloc pour l'enregistrer comme modèle.
                 </div>
               ) : (
                 <div className="space-y-1.5">
-                  {dbTemplates.map(tmpl => (
+                  {dbTemplates.map((tmpl) => (
                     <div
                       key={tmpl.id}
                       onClick={() => handleAddDbTemplate(tmpl.default_structure)}
@@ -612,7 +1387,7 @@ const GlobalBlocksTab = ({ expanded }: { expanded: boolean }) => {
       toast.success('Bloc global inséré');
     } catch (err) {
       console.error(err);
-      toast.error('Erreur lors de l\'insertion du bloc global');
+      toast.error("Erreur lors de l'insertion du bloc global");
     }
   };
 
@@ -627,8 +1402,10 @@ const GlobalBlocksTab = ({ expanded }: { expanded: boolean }) => {
 
       {blocks.length === 0 ? (
         <div className="text-[10px] text-slate-600 text-center py-6 leading-normal">
-          Aucun bloc global.<br />
-          Faites un clic droit sur un bloc et choisissez<br />
+          Aucun bloc global.
+          <br />
+          Faites un clic droit sur un bloc et choisissez
+          <br />
           <span className="text-emerald-400">"Enregistrer comme Global"</span>
         </div>
       ) : (
@@ -652,7 +1429,11 @@ const GlobalBlocksTab = ({ expanded }: { expanded: boolean }) => {
                 </div>
               </div>
               <button
-                onClick={(e) => { e.stopPropagation(); removeBlock(block.id); toast.success('Bloc global supprimé'); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeBlock(block.id);
+                  toast.success('Bloc global supprimé');
+                }}
                 className="p-1 rounded text-slate-600 hover:text-rose-400 hover:bg-rose-500/10 transition-colors shrink-0"
                 title="Supprimer"
               >

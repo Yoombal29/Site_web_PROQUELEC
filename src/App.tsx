@@ -1,83 +1,84 @@
-
 import { lazy, Suspense } from 'react';
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "next-themes";
-import { ThemeSync } from "@/components/ThemeSync";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createBrowserRouter, RouterProvider, Outlet, Navigate } from "react-router-dom";
-import { MainLayout } from "@/components/MainLayout";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { NotificationContainer } from "@/components/NotificationContainer";
-import ConstructionPage from "@/components/ConstructionPage";
-import { useConstructionMode } from "@/hooks/useConstructionMode";
-import { useSession } from "@/hooks/useSession";
-import { useIsAdmin } from "@/hooks/useIsAdmin";
-import { useDynamicRoutes } from "@/hooks/useDynamicRoutes";
-import DynamicPage from "./pages/DynamicPage";
-import BlogPost from "./pages/BlogPost";
-import NotFound from "./pages/NotFound";
-import ContactPremium from "./pages/ContactPremium";
-import Sitemap from "./pages/Sitemap";
-import Dashboard from "./pages/Dashboard";
-import Auth from "./pages/Auth";
-import PartnerDashboard from "./pages/admin/PartnerDashboard";
-import AdminSecondaryDashboard from "./pages/admin/AdminSecondaryDashboard";
-import PageSectionsAdmin from "./pages/admin/PageSectionsAdmin";
-import AdminDashboard from "@/components/admin/AdminDashboard";
-import SchemaBuilder from "./pages/SchemaBuilder";
-import RubriqueSelectorPage from "./pages/RubriqueSelectorPage";
-import ObservatoirePage from "./pages/observatoire/ObservatoirePage";
-import { RoleProtectedRoute } from "@/components/RoleProtectedRoute";
-import GEDPage from "./pages/GEDPage";
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as Sonner } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { ThemeProvider } from 'next-themes';
+import { ThemeSync } from '@/components/ThemeSync';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
+import { MainLayout } from '@/components/MainLayout';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { NotificationContainer } from '@/components/NotificationContainer';
+import ConstructionPage from '@/components/ConstructionPage';
+import { useConstructionMode } from '@/hooks/useConstructionMode';
+import { useSession } from '@/hooks/useSession';
+import { useIsAdmin } from '@/hooks/useIsAdmin';
+import { useDynamicRoutes } from '@/hooks/useDynamicRoutes';
+import DynamicPage from './pages/DynamicPage';
+import BlogPost from './pages/BlogPost';
+import NotFound from './pages/NotFound';
+import Sitemap from './pages/Sitemap';
+import Dashboard from './pages/Dashboard';
+import Auth from './pages/Auth';
+import PartnerDashboard from './pages/admin/PartnerDashboard';
+import AdminSecondaryDashboard from './pages/admin/AdminSecondaryDashboard';
+import PageSectionsAdmin from './pages/admin/PageSectionsAdmin';
+import AdminDashboard from '@/components/admin/AdminDashboard';
+import SchemaBuilder from './pages/SchemaBuilder';
+import RubriqueSelectorPage from './pages/RubriqueSelectorPage';
+import ObservatoirePage from './pages/observatoire/ObservatoirePage';
+import { RoleProtectedRoute } from '@/components/RoleProtectedRoute';
+import GEDPage from './pages/GEDPage';
 
 // Expert Lab Imports
-import ExpertDashboard from "./expert-lab/pages/Dashboard";
-import ExpertChatPage from "./expert-lab/pages/ChatPage";
-import InspecteurKEBE from "./pages/InspecteurKEBE";
+import ExpertDashboard from './expert-lab/pages/Dashboard';
+import ExpertChatPage from './expert-lab/pages/ChatPage';
+import InspecteurKEBE from './pages/InspecteurKEBE';
 
 // Office Suite Imports
-const DocumentEditorPage = lazy(() => import("./pages/DocumentEditorPage").then((mod) => ({ default: mod.DocumentEditorPage })));
-import { SpreadsheetEditorPage } from "./pages/SpreadsheetEditorPage";
-import { PresentationEditorPage } from "./pages/PresentationEditorPage";
-import { AnalyticsPage } from "./pages/AnalyticsPage";
-import ExpertCalculatorsPage from "./expert-lab/pages/CalculatorsPage";
-import ExpertLogsPage from "./expert-lab/pages/LogsPage";
-import ExpertConfigPage from "./expert-lab/pages/ConfigPage";
-import ExpertDocsPage from "./expert-lab/pages/DocsPage";
-import ExpertAIProvidersPage from "./expert-lab/pages/AIProvidersPage";
-import ExpertHistoryPage from "./expert-lab/pages/HistoryPage";
-import ExpertSchemasPage from "./expert-lab/pages/SchemasPage";
-import ExpertModelsPage from "./expert-lab/pages/ModelsPage";
-import ExpertStatsPage from "./expert-lab/pages/StatsPage";
-import ComplianceScannerPage from "./expert-lab/pages/ComplianceScannerPage";
+const DocumentEditorPage = lazy(() =>
+  import('./pages/DocumentEditorPage').then((mod) => ({ default: mod.DocumentEditorPage })),
+);
+import { SpreadsheetEditorPage } from './pages/SpreadsheetEditorPage';
+import { PresentationEditorPage } from './pages/PresentationEditorPage';
+import { AnalyticsPage } from './pages/AnalyticsPage';
+import ExpertCalculatorsPage from './expert-lab/pages/CalculatorsPage';
+import ExpertLogsPage from './expert-lab/pages/LogsPage';
+import ExpertConfigPage from './expert-lab/pages/ConfigPage';
+import ExpertDocsPage from './expert-lab/pages/DocsPage';
+import ExpertAIProvidersPage from './expert-lab/pages/AIProvidersPage';
+import ExpertHistoryPage from './expert-lab/pages/HistoryPage';
+import ExpertSchemasPage from './expert-lab/pages/SchemasPage';
+import ExpertModelsPage from './expert-lab/pages/ModelsPage';
+import ExpertStatsPage from './expert-lab/pages/StatsPage';
+import ComplianceScannerPage from './expert-lab/pages/ComplianceScannerPage';
 
+import ElectricianDashboard from './pages/dashboards/ElectricianDashboard';
+import CompanyDashboard from './pages/dashboards/CompanyDashboard';
+import MemberDashboard from './pages/dashboards/MemberDashboard';
+import ProjectList from './pages/projects/ProjectList';
+import ProjectDetail from './pages/projects/ProjectDetail';
+import InspectionDetail from './pages/inspections/InspectionDetail';
 
-import ElectricianDashboard from "./pages/dashboards/ElectricianDashboard";
-import CompanyDashboard from "./pages/dashboards/CompanyDashboard";
-import MemberDashboard from "./pages/dashboards/MemberDashboard";
-import ProjectList from "./pages/projects/ProjectList";
-import ProjectDetail from "./pages/projects/ProjectDetail";
-import InspectionDetail from "./pages/inspections/InspectionDetail";
-
-import PermissionsAdmin from "./pages/admin/PermissionsAdmin";
-import RBACDemo from "./pages/examples/RBACDemo";
+import PermissionsAdmin from './pages/admin/PermissionsAdmin';
+import RBACDemo from './pages/examples/RBACDemo';
 
 // Lazy-load heavy pages
-const AnalyticsPageLazy = lazy(() => import("./pages/AnalyticsPage").then(mod => ({ default: mod.AnalyticsPage })));
-import BuilderPage from "./pages/admin/BuilderPage";
-import BuilderConfigPage from "./pages/admin/BuilderConfigPage";
-const SchematicEditorPage = lazy(() => import("./pages/admin/SchematicEditorPage"));
-const CraftBuilderPage = lazy(() => import("./pages/admin/CraftBuilderPage"));
+const AnalyticsPageLazy = lazy(() =>
+  import('./pages/AnalyticsPage').then((mod) => ({ default: mod.AnalyticsPage })),
+);
+import BuilderPage from './pages/admin/BuilderPage';
+import BuilderConfigPage from './pages/admin/BuilderConfigPage';
+const SchematicEditorPage = lazy(() => import('./pages/admin/SchematicEditorPage'));
+const CraftBuilderPage = lazy(() => import('./pages/admin/CraftBuilderPage'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5, // 5 minutes
-      retry: 1
-    }
-  }
+      retry: 1,
+    },
+  },
 });
 
 const AppContent = () => {
@@ -94,8 +95,8 @@ const AppContent = () => {
           <div className="animate-spin w-8 h-8 border-2 border-white border-t-transparent rounded-full mx-auto mb-4"></div>
           <p>Chargement...</p>
         </div>
-      </div>);
-
+      </div>
+    );
   }
 
   // Si le mode construction est activé ET l'utilisateur n'est pas admin
@@ -106,275 +107,369 @@ const AppContent = () => {
   const createRoutes = () => {
     const routes = [
       // Routes accessibles même en mode construction
-      { path: "/connexion", element: <Auth /> },
-      { path: "/login", element: <Auth /> },
-      { path: "/auth", element: <Auth /> },
-      { path: "/dashboard", element: <Dashboard /> },
+      { path: '/connexion', element: <Auth /> },
+      { path: '/login', element: <Auth /> },
+      { path: '/auth', element: <Auth /> },
+      { path: '/dashboard', element: <Dashboard /> },
       {
-        path: "/admin",
-        element:
-          <RoleProtectedRoute allowedRoles={["admin"]}>
+        path: '/admin',
+        element: (
+          <RoleProtectedRoute allowedRoles={['admin']}>
             <AdminDashboard />
           </RoleProtectedRoute>
-      }];
-
+        ),
+      },
+    ];
 
     if (showConstructionPage) {
       // Mode construction : toutes les routes publiques mènent à la page de construction
       routes.push(
-        { path: "/", element: <ConstructionPage /> },
-        { path: "/about", element: <ConstructionPage /> },
-        { path: "/utilite-publique", element: <ConstructionPage /> },
-        { path: "/formation-certification", element: <ConstructionPage /> },
-        { path: "/activities", element: <ConstructionPage /> },
-        { path: "/labels", element: <ConstructionPage /> },
-        { path: "/documents", element: <ConstructionPage /> },
-        { path: "/events", element: <ConstructionPage /> },
-        { path: "/certifications", element: <ConstructionPage /> },
-        { path: "/formations", element: <ConstructionPage /> },
-        { path: "/blog", element: <ConstructionPage /> },
-        { path: "/blog/:slug", element: <ConstructionPage /> },
-        { path: "/contact", element: <ConstructionPage /> },
-        { path: "/outils", element: <ConstructionPage /> },
-        { path: "/showroom", element: <ConstructionPage /> },
-        { path: "/legal", element: <ConstructionPage /> },
-        ...(dynamicRoutes?.map((route) => ({ path: route.path, element: <ConstructionPage /> })) || []),
-        { path: "*", element: <ConstructionPage /> }
+        { path: '/', element: <ConstructionPage /> },
+        { path: '/about', element: <ConstructionPage /> },
+        { path: '/utilite-publique', element: <ConstructionPage /> },
+        { path: '/formation-certification', element: <ConstructionPage /> },
+        { path: '/activities', element: <ConstructionPage /> },
+        { path: '/labels', element: <ConstructionPage /> },
+        { path: '/documents', element: <ConstructionPage /> },
+        { path: '/events', element: <ConstructionPage /> },
+        { path: '/certifications', element: <ConstructionPage /> },
+        { path: '/formations', element: <ConstructionPage /> },
+        { path: '/blog', element: <ConstructionPage /> },
+        { path: '/blog/:slug', element: <ConstructionPage /> },
+        { path: '/contact', element: <ConstructionPage /> },
+        { path: '/outils', element: <ConstructionPage /> },
+        { path: '/showroom', element: <ConstructionPage /> },
+        { path: '/legal', element: <ConstructionPage /> },
+        ...((dynamicRoutes as any[])?.map((route) => ({
+          path: route.path,
+          element: <ConstructionPage />,
+        })) || []),
+        { path: '*', element: <ConstructionPage /> },
       );
     } else {
       // Mode normal : routes complètes
       routes.push(
-        { path: "/", element: <DynamicPage /> },
-        { path: "/about", element: <DynamicPage /> },
-        { path: "/utilite-publique", element: <DynamicPage /> },
-        { path: "/formation-certification", element: <DynamicPage /> },
-        { path: "/normes-ressources", element: <DynamicPage /> },
-        { path: "/projets-realisations", element: <DynamicPage /> },
-        { path: "/actualites-evenements", element: <DynamicPage /> },
-        { path: "/partenaires", element: <DynamicPage /> },
-        { path: "/contact", element: <DynamicPage /> },
-        { path: "/contact-premium", element: <DynamicPage /> },
-        { path: "/activities", element: <DynamicPage /> },
-        { path: "/labels", element: <DynamicPage /> },
-        { path: "/legal", element: <DynamicPage /> },
-        { path: "/certifications", element: <DynamicPage /> },
-        { path: "/formations", element: <DynamicPage /> },
-        { path: "/actualites", element: <DynamicPage /> },
-        { path: "/presse", element: <DynamicPage /> },
-        { path: "/autorites", element: <DynamicPage /> },
-        { path: "/menages", element: <DynamicPage /> },
-        { path: "/professionnels", element: <DynamicPage /> },
-        { path: "/social", element: <DynamicPage /> },
-        { path: "/espace-menages", element: <DynamicPage /> },
-        { path: "/espace-professionnels", element: <DynamicPage /> },
-        { path: "/espace-autorites", element: <DynamicPage /> },
+        { path: '/', element: <DynamicPage /> },
+        { path: '/about', element: <DynamicPage /> },
+        { path: '/utilite-publique', element: <DynamicPage /> },
+        { path: '/formation-certification', element: <DynamicPage /> },
+        { path: '/normes-ressources', element: <DynamicPage /> },
+        { path: '/projets-realisations', element: <DynamicPage /> },
+        { path: '/actualites-evenements', element: <DynamicPage /> },
+        { path: '/partenaires', element: <DynamicPage /> },
+        { path: '/contact', element: <DynamicPage /> },
+        { path: '/contact-premium', element: <DynamicPage /> },
+        { path: '/activities', element: <DynamicPage /> },
+        { path: '/labels', element: <DynamicPage /> },
+        { path: '/legal', element: <DynamicPage /> },
+        { path: '/certifications', element: <DynamicPage /> },
+        { path: '/formations', element: <DynamicPage /> },
+        { path: '/actualites', element: <DynamicPage /> },
+        { path: '/presse', element: <DynamicPage /> },
+        { path: '/autorites', element: <DynamicPage /> },
+        { path: '/menages', element: <DynamicPage /> },
+        { path: '/professionnels', element: <DynamicPage /> },
+        { path: '/social', element: <DynamicPage /> },
+        { path: '/espace-menages', element: <DynamicPage /> },
+        { path: '/espace-professionnels', element: <DynamicPage /> },
+        { path: '/espace-autorites', element: <DynamicPage /> },
 
         // --- PAGES CMS DYNAMIQUES ---
-        { path: "/documents", element: <DynamicPage /> },
-        { path: "/events", element: <DynamicPage /> },
+        { path: '/documents', element: <DynamicPage /> },
+        { path: '/events', element: <DynamicPage /> },
 
-        { path: "/expertises-techniques", element: <DynamicPage /> },
-        { path: "/expert-lab", element: <DynamicPage /> },
-        { path: "/formations-proquelec", element: <DynamicPage /> },
-        { path: "/blog", element: <DynamicPage /> },
-        { path: "/blog/:slug", element: <BlogPost /> },
-        { path: "/outils", element: <DynamicPage /> },
-        { path: "/showroom", element: <DynamicPage /> },
-        { path: "/rubrique-selector", element: <RubriqueSelectorPage /> },
-        { path: "/schema-builder", element: <SchemaBuilder /> },
-        { path: "/apps/:appId", element: <DynamicPage /> },
-        { path: "/avantages", element: <DynamicPage /> },
+        { path: '/expertises-techniques', element: <DynamicPage /> },
+        { path: '/expert-lab', element: <DynamicPage /> },
+        { path: '/formations-proquelec', element: <DynamicPage /> },
+        { path: '/blog', element: <DynamicPage /> },
+        { path: '/blog/:slug', element: <BlogPost /> },
+        { path: '/outils', element: <DynamicPage /> },
+        { path: '/showroom', element: <DynamicPage /> },
+        { path: '/rubrique-selector', element: <RubriqueSelectorPage /> },
+        { path: '/schema-builder', element: <SchemaBuilder /> },
+        { path: '/apps/:appId', element: <DynamicPage /> },
+        { path: '/avantages', element: <DynamicPage /> },
         {
-          path: "/dashboard/electricien",
-          element:
-            <RoleProtectedRoute allowedRoles={["admin", "electricien"]}>
+          path: '/dashboard/electricien',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin', 'electricien']}>
               <ElectricianDashboard />
             </RoleProtectedRoute>
-
+          ),
         },
         {
-          path: "/dashboard/entreprise",
-          element:
-            <RoleProtectedRoute allowedRoles={["admin", "entreprise"]}>
+          path: '/dashboard/entreprise',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin', 'entreprise']}>
               <CompanyDashboard />
             </RoleProtectedRoute>
-
+          ),
         },
         {
-          path: "/dashboard/membre",
-          element:
-            <RoleProtectedRoute allowedRoles={["admin", "membre"]}>
+          path: '/dashboard/membre',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin', 'membre']}>
               <MemberDashboard />
             </RoleProtectedRoute>
-
+          ),
         },
 
         // Backoffices sécurisés avec RBAC
         {
-          path: "/admin/page-sections",
-          element:
-            <RoleProtectedRoute allowedRoles={["admin"]}>
+          path: '/admin/page-sections',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
               <PageSectionsAdmin />
             </RoleProtectedRoute>
-
+          ),
         },
         {
-          path: "/admin-secondary",
-          element:
-            <RoleProtectedRoute allowedRoles={["admin", "secondary_admin"]}>
+          path: '/admin-secondary',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin', 'secondary_admin']}>
               <AdminSecondaryDashboard />
             </RoleProtectedRoute>
-
+          ),
         },
         {
-          path: "/partner",
-          element:
-            <RoleProtectedRoute allowedRoles={["partner"]}>
+          path: '/partner',
+          element: (
+            <RoleProtectedRoute allowedRoles={['partner']}>
               <PartnerDashboard />
             </RoleProtectedRoute>
-
+          ),
         },
 
         // Expert Lab Routes (Souveraineté & Ingénierie)
         {
-          path: "/expert",
-          element:
-            <RoleProtectedRoute allowedRoles={["admin", "secondary_admin"]}>
+          path: '/expert',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin', 'secondary_admin']}>
               <ExpertDashboard />
             </RoleProtectedRoute>
-
+          ),
         },
-        { path: "/expert/chat", element: <RoleProtectedRoute allowedRoles={["admin"]}><ExpertChatPage /></RoleProtectedRoute> },
-        { path: "/expert-kebe", element: <InspecteurKEBE /> },
-        { path: "/expert/calculators", element: <ExpertCalculatorsPage /> },
-        { path: "/expert/schemas", element: <ExpertSchemasPage /> },
-        { path: "/expert/docs", element: <ExpertDocsPage /> },
-        { path: "/expert/history", element: <RoleProtectedRoute allowedRoles={["admin"]}><ExpertHistoryPage /></RoleProtectedRoute> },
-        { path: "/expert/config", element: <RoleProtectedRoute allowedRoles={["admin"]}><ExpertConfigPage /></RoleProtectedRoute> },
-        { path: "/expert/ai-providers", element: <RoleProtectedRoute allowedRoles={["admin"]}><ExpertAIProvidersPage /></RoleProtectedRoute> },
-        { path: "/expert/logs", element: <RoleProtectedRoute allowedRoles={["admin"]}><ExpertLogsPage /></RoleProtectedRoute> },
-        { path: "/expert/scanner", element: <RoleProtectedRoute allowedRoles={["admin"]}><ComplianceScannerPage /></RoleProtectedRoute> },
-        { path: "/expert/models", element: <RoleProtectedRoute allowedRoles={["admin"]}><ExpertModelsPage /></RoleProtectedRoute> },
-        { path: "/expert/stats", element: <RoleProtectedRoute allowedRoles={["admin"]}><ExpertStatsPage /></RoleProtectedRoute> },
+        {
+          path: '/expert/chat',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <ExpertChatPage />
+            </RoleProtectedRoute>
+          ),
+        },
+        { path: '/expert-kebe', element: <InspecteurKEBE /> },
+        { path: '/expert/calculators', element: <ExpertCalculatorsPage /> },
+        { path: '/expert/schemas', element: <ExpertSchemasPage /> },
+        { path: '/expert/docs', element: <ExpertDocsPage /> },
+        {
+          path: '/expert/history',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <ExpertHistoryPage />
+            </RoleProtectedRoute>
+          ),
+        },
+        {
+          path: '/expert/config',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <ExpertConfigPage />
+            </RoleProtectedRoute>
+          ),
+        },
+        {
+          path: '/expert/ai-providers',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <ExpertAIProvidersPage />
+            </RoleProtectedRoute>
+          ),
+        },
+        {
+          path: '/expert/logs',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <ExpertLogsPage />
+            </RoleProtectedRoute>
+          ),
+        },
+        {
+          path: '/expert/scanner',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <ComplianceScannerPage />
+            </RoleProtectedRoute>
+          ),
+        },
+        {
+          path: '/expert/models',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <ExpertModelsPage />
+            </RoleProtectedRoute>
+          ),
+        },
+        {
+          path: '/expert/stats',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <ExpertStatsPage />
+            </RoleProtectedRoute>
+          ),
+        },
 
         // GED Route (Document Management)
-        { path: "/ged", element: <GEDPage /> },
+        { path: '/ged', element: <GEDPage /> },
 
         // ELECTRO-GED 4.0: Project Management
-        { path: "/projects", element: <ProjectList /> },
-        { path: "/projects/:id", element: <ProjectDetail /> },
+        { path: '/projects', element: <ProjectList /> },
+        { path: '/projects/:id', element: <ProjectDetail /> },
         {
-          path: "/observatoire",
+          path: '/observatoire',
           element: (
-            <RoleProtectedRoute allowedRoles={["admin", "ministere"]}>
+            <RoleProtectedRoute allowedRoles={['admin', 'ministere']}>
               <ObservatoirePage />
             </RoleProtectedRoute>
-          )
+          ),
         },
-        { path: "/diagnostics/:id", element: <InspectionDetail /> },
+        { path: '/diagnostics/:id', element: <InspectionDetail /> },
 
         // Office Suite Routes
         {
-          path: "/office/document/new",
+          path: '/office/document/new',
           element: (
-            <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement de l'éditeur…</div>}>
+            <Suspense
+              fallback={
+                <div className="min-h-screen bg-white flex items-center justify-center text-slate-600">
+                  Chargement de l'éditeur…
+                </div>
+              }
+            >
               <DocumentEditorPage />
             </Suspense>
-          )
+          ),
         },
         {
-          path: "/office/document/:id",
+          path: '/office/document/:id',
           element: (
-            <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement de l'éditeur…</div>}>
+            <Suspense
+              fallback={
+                <div className="min-h-screen bg-white flex items-center justify-center text-slate-600">
+                  Chargement de l'éditeur…
+                </div>
+              }
+            >
               <DocumentEditorPage />
             </Suspense>
-          )
+          ),
         },
         {
-          path: "/office/document/template/:templateId",
+          path: '/office/document/template/:templateId',
           element: (
-            <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement de l'éditeur…</div>}>
+            <Suspense
+              fallback={
+                <div className="min-h-screen bg-white flex items-center justify-center text-slate-600">
+                  Chargement de l'éditeur…
+                </div>
+              }
+            >
               <DocumentEditorPage />
             </Suspense>
-          )
+          ),
         },
-        { path: "/office/spreadsheet/new", element: <SpreadsheetEditorPage /> },
-        { path: "/office/spreadsheet/:id", element: <SpreadsheetEditorPage /> },
-        { path: "/office/spreadsheet/template/:templateId", element: <SpreadsheetEditorPage /> },
-        { path: "/office/presentation/new", element: <PresentationEditorPage /> },
-        { path: "/office/presentation/:id", element: <PresentationEditorPage /> },
-        { path: "/office/presentation/template/:templateId", element: <PresentationEditorPage /> },
+        { path: '/office/spreadsheet/new', element: <SpreadsheetEditorPage /> },
+        { path: '/office/spreadsheet/:id', element: <SpreadsheetEditorPage /> },
+        { path: '/office/spreadsheet/template/:templateId', element: <SpreadsheetEditorPage /> },
+        { path: '/office/presentation/new', element: <PresentationEditorPage /> },
+        { path: '/office/presentation/:id', element: <PresentationEditorPage /> },
+        { path: '/office/presentation/template/:templateId', element: <PresentationEditorPage /> },
 
-        { path: "/analytics", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement…</div>}><AnalyticsPageLazy /></Suspense> },
-        { path: "/plan-du-site", element: <Sitemap /> },
-        { path: "/sitemap", element: <Sitemap /> },
+        {
+          path: '/analytics',
+          element: (
+            <Suspense
+              fallback={
+                <div className="min-h-screen bg-white flex items-center justify-center text-slate-600">
+                  Chargement…
+                </div>
+              }
+            >
+              <AnalyticsPageLazy />
+            </Suspense>
+          ),
+        },
+        { path: '/plan-du-site', element: <Sitemap /> },
+        { path: '/sitemap', element: <Sitemap /> },
 
         // --- ROUTES MENU BD (slugs référencés dans menu_items) ---
-        { path: "/nos-actions", element: <DynamicPage /> },
-        { path: "/actions/:slug", element: <DynamicPage /> },
-        { path: "/projets", element: <DynamicPage /> },
-        { path: "/galerie", element: <DynamicPage /> },
-        { path: "/marches", element: <DynamicPage /> },
-        { path: "/collectivites", element: <DynamicPage /> },
-        { path: "/evenements/:slug", element: <DynamicPage /> },
-        { path: "/evenements", element: <DynamicPage /> },
-        { path: "/presse/:slug", element: <DynamicPage /> },
-        { path: "/formations/:slug", element: <DynamicPage /> },
-        { path: "/publications", element: <DynamicPage /> },
-        { path: "/faq", element: <DynamicPage /> },
-        { path: "/normative-corpus", element: <DynamicPage /> },
-        { path: "/conseils-menages", element: <DynamicPage /> },
-        { path: "/ressources-pedagogiques", element: <DynamicPage /> },
-        { path: "/partenaires-liste", element: <DynamicPage /> },
-        { path: "/partenaires", element: <DynamicPage /> },
-        { path: "/partenariat-senelec", element: <DynamicPage /> },
-        { path: "/temoignages", element: <DynamicPage /> },
-        { path: "/espace-partenaires", element: <DynamicPage /> },
-        { path: "/portal/:slug", element: <DynamicPage /> },
-        { path: "/portal", element: <DynamicPage /> },
+        { path: '/nos-actions', element: <DynamicPage /> },
+        { path: '/actions/:slug', element: <DynamicPage /> },
+        { path: '/projets', element: <DynamicPage /> },
+        { path: '/galerie', element: <DynamicPage /> },
+        { path: '/marches', element: <DynamicPage /> },
+        { path: '/collectivites', element: <DynamicPage /> },
+        { path: '/evenements/:slug', element: <DynamicPage /> },
+        { path: '/evenements', element: <DynamicPage /> },
+        { path: '/presse/:slug', element: <DynamicPage /> },
+        { path: '/formations/:slug', element: <DynamicPage /> },
+        { path: '/publications', element: <DynamicPage /> },
+        { path: '/faq', element: <DynamicPage /> },
+        { path: '/normative-corpus', element: <DynamicPage /> },
+        { path: '/conseils-menages', element: <DynamicPage /> },
+        { path: '/ressources-pedagogiques', element: <DynamicPage /> },
+        { path: '/partenaires-liste', element: <DynamicPage /> },
+        { path: '/partenaires', element: <DynamicPage /> },
+        { path: '/partenariat-senelec', element: <DynamicPage /> },
+        { path: '/temoignages', element: <DynamicPage /> },
+        { path: '/espace-partenaires', element: <DynamicPage /> },
+        { path: '/portal/:slug', element: <DynamicPage /> },
+        { path: '/portal', element: <DynamicPage /> },
 
-        { 
-          path: "/admin/builder", 
+        {
+          path: '/admin/builder',
           element: (
-            <RoleProtectedRoute allowedRoles={["admin"]}>
+            <RoleProtectedRoute allowedRoles={['admin']}>
               <BuilderPage />
             </RoleProtectedRoute>
-          )
-        },
-        { 
-          path: "/admin/builder/:pageId", 
-          element: (
-            <RoleProtectedRoute allowedRoles={["admin"]}>
-              <BuilderPage />
-            </RoleProtectedRoute>
-          )
+          ),
         },
         {
-          path: "/admin/builder/config",
+          path: '/admin/builder/:pageId',
           element: (
-            <RoleProtectedRoute allowedRoles={["admin"]}>
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <BuilderPage />
+            </RoleProtectedRoute>
+          ),
+        },
+        {
+          path: '/admin/builder/config',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
               <BuilderConfigPage />
             </RoleProtectedRoute>
-          )
+          ),
         },
 
         {
-          path: "/admin/permissions",
-          element:
-            <RoleProtectedRoute allowedRoles={["admin"]}>
+          path: '/admin/permissions',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
               <PermissionsAdmin />
             </RoleProtectedRoute>
-
+          ),
         },
-        { path: "/demo/rbac", element: <RBACDemo /> },
+        { path: '/demo/rbac', element: <RBACDemo /> },
 
         // Routes dynamiques (pages CMS)
-        ...(dynamicRoutes?.map((route) => ({ path: route.path, element: <DynamicPage /> })) || []),
+        ...((dynamicRoutes as any[])?.map((route) => ({
+          path: route.path,
+          element: <DynamicPage />,
+        })) || []),
         // Routes legacy avec préfixe de langue → DynamicPage les redirige proprement
-        { path: "/fr/*", element: <DynamicPage /> },
-        { path: "/en/*", element: <DynamicPage /> },
+        { path: '/fr/*', element: <DynamicPage /> },
+        { path: '/en/*', element: <DynamicPage /> },
 
-        { path: "*", element: <NotFound /> }
+        { path: '*', element: <NotFound /> },
       );
     }
 
@@ -383,10 +478,14 @@ const AppContent = () => {
 
   const finalRoutes = [
     {
-      path: "/",
-      element: <MainLayout><Outlet /></MainLayout>,
-      children: createRoutes()
-    }
+      path: '/',
+      element: (
+        <MainLayout>
+          <Outlet />
+        </MainLayout>
+      ),
+      children: createRoutes(),
+    },
   ];
 
   const router = createBrowserRouter(finalRoutes);
@@ -395,16 +494,21 @@ const AppContent = () => {
     <RouterProvider
       router={router}
       future={{
-        v7_startTransition: true
-      }} />);
-
-
+        v7_startTransition: true,
+      }}
+    />
+  );
 };
 
-const App = () =>
+const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="system" storageKey="proquelec-ui-theme" enableSystem>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        storageKey="proquelec-ui-theme"
+        enableSystem
+      >
         <ThemeSync />
         <TooltipProvider>
           <Toaster />
@@ -414,7 +518,7 @@ const App = () =>
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
-  </ErrorBoundary>;
-
+  </ErrorBoundary>
+);
 
 export default App;

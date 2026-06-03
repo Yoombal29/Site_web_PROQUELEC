@@ -98,6 +98,8 @@ import {
 import { RichTextBlock } from './RichTextEditorBlock';
 import { PopupBlock } from './PopupBuilderBlock';
 
+import { FunctionalPageBlock } from './FunctionalPageBlock';
+
 import {
   FormBuilderBlock,
   TextFieldBlock,
@@ -133,10 +135,15 @@ import { OffCanvasPanelBlock, OffCanvasToggleBlock } from './OffCanvasBlock';
 /**
  * Fallback component for missing/unknown block types
  */
-const FallbackBlock = ({ type }: { type?: string }) => React.createElement('div', 
-  { className: 'p-4 bg-gray-100 border-2 border-dashed border-gray-300 rounded text-gray-600 text-sm' },
-  React.createElement('p', null, '⚠️ Block type not available: ' + (type || 'unknown'))
-);
+const FallbackBlock = ({ type }: { type?: string }) =>
+  React.createElement(
+    'div',
+    {
+      className:
+        'p-4 bg-gray-100 border-2 border-dashed border-gray-300 rounded text-gray-600 text-sm',
+    },
+    React.createElement('p', null, '⚠️ Block type not available: ' + (type || 'unknown')),
+  );
 
 /**
  * Complete resolver for Craft.js deserialization
@@ -227,6 +234,9 @@ export const CRAFT_RESOLVER = {
   RichTextBlock,
   PopupBlock,
 
+  // Functional page blocks (design-locked)
+  FunctionalPageBlock,
+
   // Form builder
   FormBuilderBlock,
   TextFieldBlock,
@@ -273,6 +283,6 @@ export const CRAFT_RESOLVER = {
 
   // Fallback for missing types
   '': FallbackBlock,
-  'undefined': FallbackBlock,
-  'ROOT': ContainerBlock,
+  undefined: FallbackBlock,
+  ROOT: ContainerBlock,
 };

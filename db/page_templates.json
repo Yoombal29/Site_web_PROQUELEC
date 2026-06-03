@@ -1,100 +1,1296 @@
 [
   {
-    "id": "38d181bb-292a-432a-8ab9-d4cc14ddb8ac",
-    "name": "Heroshome",
-    "description": "",
+    "id": "e462e924-5af1-4266-90c0-8f94c9d3df45",
+    "name": "Services premium",
+    "description": "Grille de services avec processus, tarification et FAQ.",
     "structure": {
       "ROOT": {
-        "type": {
-          "resolvedName": "ContainerBlock"
-        },
+        "type": "div",
         "nodes": [
-          "i4giWBkRNf",
-          "info_1780231249393_0854c27201d5"
+          "services_root"
         ],
         "props": {
-          "padding": 0,
-          "maxWidth": "100%",
-          "backgroundColor": "#ffffff"
+          "style": {}
         },
-        "custom": {},
-        "hidden": false,
-        "isCanvas": true,
-        "displayName": "Conteneur",
         "linkedNodes": {}
       },
-      "1sARykfZX4": {
-        "type": {
-          "resolvedName": "HeroBlock"
-        },
+      "svc_faq": {
+        "type": "AccordionBlock",
         "nodes": [],
         "props": {
-          "title": "Titre accrocheur",
+          "items": [
+            {
+              "title": "Comment demander un audit ?",
+              "content": "Contactez-nous via le formulaire ou par téléphone."
+            },
+            {
+              "title": "Quels sont vos délais d'intervention ?",
+              "content": "Sous 48h ouvrées pour une première évaluation."
+            },
+            {
+              "title": "Proposez-vous des formations ?",
+              "content": "Oui, consultez notre catalogue formations."
+            }
+          ],
+          "title": "Questions Fréquentes",
+          "accentColor": "#2563eb"
+        },
+        "parent": "services_root",
+        "linkedNodes": {}
+      },
+      "svc_grid": {
+        "type": "ColumnsBlock",
+        "nodes": [
+          "svc_item_1",
+          "svc_item_2",
+          "svc_item_3",
+          "svc_item_4",
+          "svc_item_5",
+          "svc_item_6"
+        ],
+        "props": {
+          "gap": 24,
+          "columns": 3
+        },
+        "parent": "services_root",
+        "linkedNodes": {}
+      },
+      "svc_hero": {
+        "type": "HeroBlock",
+        "nodes": [],
+        "props": {
           "ctaHref": "/contact",
-          "ctaText": "Commencer",
-          "ctaLabel": "",
-          "headline": "",
-          "subtitle": "Sous-titre convaincant",
-          "badgeText": "",
-          "boxShadow": "0 1px 3px rgba(0,0,0,0.12)",
+          "ctaLabel": "Demander un devis",
+          "headline": "Nos Services",
+          "badgeText": "SERVICES",
           "showStats": true,
-          "hideMobile": false,
-          "slidesJson": "",
-          "accentColor": "#ea9a10",
-          "subheadline": "",
-          "entryAnimation": "slideInRight",
-          "autoplayInterval": 8000,
-          "secondaryCtaHref": "#",
-          "secondaryCtaLabel": ""
+          "accentColor": "#2563eb",
+          "subheadline": "Des solutions complètes pour vos projets électriques"
         },
-        "custom": {},
-        "hidden": false,
-        "parent": "i4giWBkRNf",
-        "isCanvas": false,
-        "displayName": "Hero Accueil",
+        "parent": "services_root",
         "linkedNodes": {}
       },
-      "i4giWBkRNf": {
-        "type": {
-          "resolvedName": "ContainerBlock"
+      "svc_item_1": {
+        "type": "IconBoxBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Zap",
+          "text": "Diagnostic complet de vos installations.",
+          "title": "Audit Électrique",
+          "layout": "card",
+          "textColor": "#334155",
+          "accentColor": "#2563eb",
+          "backgroundColor": "#f8fafc"
         },
+        "parent": "services_root",
+        "linkedNodes": {}
+      },
+      "svc_item_2": {
+        "type": "IconBoxBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Shield",
+          "text": "Mise aux normes selon NF C 15-100.",
+          "title": "Conformité",
+          "layout": "card",
+          "textColor": "#334155",
+          "accentColor": "#059669",
+          "backgroundColor": "#f0fdf4"
+        },
+        "parent": "services_root",
+        "linkedNodes": {}
+      },
+      "svc_item_3": {
+        "type": "IconBoxBlock",
+        "nodes": [],
+        "props": {
+          "icon": "GraduationCap",
+          "text": "Formations professionnelles certifiantes.",
+          "title": "Formation",
+          "layout": "card",
+          "textColor": "#334155",
+          "accentColor": "#d97706",
+          "backgroundColor": "#fffbeb"
+        },
+        "parent": "services_root",
+        "linkedNodes": {}
+      },
+      "svc_item_4": {
+        "type": "IconBoxBlock",
+        "nodes": [],
+        "props": {
+          "icon": "BarChart",
+          "text": "Analyse approfondie de vos équipements.",
+          "title": "Diagnostic",
+          "layout": "card",
+          "textColor": "#334155",
+          "accentColor": "#7c3aed",
+          "backgroundColor": "#f5f3ff"
+        },
+        "parent": "services_root",
+        "linkedNodes": {}
+      },
+      "svc_item_5": {
+        "type": "IconBoxBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Tool",
+          "text": "Entretien préventif et correctif.",
+          "title": "Maintenance",
+          "layout": "card",
+          "textColor": "#334155",
+          "accentColor": "#0891b2",
+          "backgroundColor": "#ecfeff"
+        },
+        "parent": "services_root",
+        "linkedNodes": {}
+      },
+      "svc_item_6": {
+        "type": "IconBoxBlock",
+        "nodes": [],
+        "props": {
+          "icon": "FileText",
+          "text": "Conseil et assistance technique.",
+          "title": "Consulting",
+          "layout": "card",
+          "textColor": "#334155",
+          "accentColor": "#dc2626",
+          "backgroundColor": "#fef2f2"
+        },
+        "parent": "services_root",
+        "linkedNodes": {}
+      },
+      "svc_process": {
+        "type": "StepsBlock",
+        "nodes": [],
+        "props": {
+          "items": [
+            {
+              "desc": "Analyse de vos besoins",
+              "title": "Consultation"
+            },
+            {
+              "desc": "Devis personnalisé détaillé",
+              "title": "Proposition"
+            },
+            {
+              "desc": "Mise en œuvre par nos experts",
+              "title": "Réalisation"
+            },
+            {
+              "desc": "Accompagnement post-service",
+              "title": "Suivi"
+            }
+          ],
+          "layout": "horizontal",
+          "accentColor": "#2563eb"
+        },
+        "parent": "services_root",
+        "linkedNodes": {}
+      },
+      "services_root": {
+        "type": "ContainerBlock",
         "nodes": [
-          "1sARykfZX4"
+          "svc_hero",
+          "svc_grid",
+          "svc_process",
+          "svc_pricing",
+          "svc_faq"
         ],
         "props": {
           "padding": 0,
           "maxWidth": "100%",
           "backgroundColor": "#ffffff"
         },
-        "custom": {},
-        "hidden": false,
         "parent": "ROOT",
-        "isCanvas": true,
-        "displayName": "Conteneur",
-        "linkedNodes": {}
-      },
-      "info_1780231249393_0854c27201d5": {
-        "type": {
-          "resolvedName": "HtmlBlock"
-        },
-        "nodes": [],
-        "props": {
-          "html": "<!-- ============================================================ -->\r\n<!-- SECTION 1 : HERO – épurée, impactante, accessible           -->\r\n<!-- ============================================================ -->\r\n<section class=\"relative bg-gradient-to-br from-[#1e3a5f] via-[#1a3366] to-[#2563eb] text-white overflow-hidden\"\r\n  aria-labelledby=\"hero-heading\">\r\n  <div\r\n    class=\"absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10\"\r\n    aria-hidden=\"true\"></div>\r\n  <div class=\"relative max-w-7xl mx-auto px-5 py-24 md:py-32 lg:py-36\">\r\n    <div class=\"max-w-4xl\">\r\n      <span class=\"inline-block px-4 py-1.5 bg-white/15 backdrop-blur-sm rounded-full text-sm font-semibold mb-6 border border-white/20 shadow-sm\">\r\n        PROQUELEC — SÉNÉGAL · DEPUIS 1995\r\n      </span>\r\n      <h1 id=\"hero-heading\" class=\"text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 tracking-tight\">\r\n        Promotion de la Qualité des\r\n        <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-400\">Installations Électriques</span>\r\n      </h1>\r\n      <p class=\"text-xl md:text-2xl text-white/85 max-w-3xl mb-8 leading-relaxed\">\r\n        Sécurité · Qualité · Formation — L’organisme national de référence pour la conformité des installations\r\n        électriques intérieures au Sénégal.\r\n      </p>\r\n      <div class=\"flex flex-col sm:flex-row gap-5\">\r\n        <a href=\"/contact\"\r\n          class=\"inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#1e3a5f] rounded-xl font-bold text-lg shadow-2xl shadow-white/20 hover:bg-blue-50 hover:scale-[1.02] focus:ring-4 focus:ring-white/40\">\r\n          Demander un contrôle <span aria-hidden=\"true\">→</span>\r\n        </a>\r\n        <a href=\"/formations\"\r\n          class=\"inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/40 text-white rounded-xl font-bold text-lg hover:bg-white/10 hover:border-white/60 focus:ring-4 focus:ring-white/30\">\r\n          Découvrir nos formations\r\n        </a>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white to-transparent pointer-events-none\">\r\n  </div>\r\n</section>\r\n\r\n<!-- ============================================================ -->\r\n<!-- SECTION 2 : STATISTIQUES – données clés, animées            -->\r\n<!-- ============================================================ -->\r\n<section class=\"py-16 px-5 bg-white\" aria-label=\"Chiffres clés\">\r\n  <div class=\"max-w-7xl mx-auto\">\r\n    <div class=\"grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8\">\r\n      <div\r\n        class=\"text-center p-6 md:p-8 rounded-2xl bg-gradient-to-b from-blue-50 to-white border border-blue-100 shadow-sm\">\r\n        <div class=\"text-5xl font-black text-blue-700 mb-2\">29<span class=\"text-3xl\">+</span></div>\r\n        <div class=\"text-gray-800 font-semibold\">Années d'expertise</div>\r\n        <p class=\"text-sm text-gray-500 mt-1\">Depuis 1995</p>\r\n      </div>\r\n      <div\r\n        class=\"text-center p-6 md:p-8 rounded-2xl bg-gradient-to-b from-green-50 to-white border border-green-100 shadow-sm\">\r\n        <div class=\"text-5xl font-black text-green-700 mb-2\">15 000<span class=\"text-3xl\">+</span></div>\r\n        <div class=\"text-gray-800 font-semibold\">Installations contrôlées</div>\r\n        <p class=\"text-sm text-gray-500 mt-1\">À travers le Sénégal</p>\r\n      </div>\r\n      <div\r\n        class=\"text-center p-6 md:p-8 rounded-2xl bg-gradient-to-b from-purple-50 to-white border border-purple-100 shadow-sm\">\r\n        <div class=\"text-5xl font-black text-purple-700 mb-2\">500<span class=\"text-3xl\">+</span></div>\r\n        <div class=\"text-gray-800 font-semibold\">Professionnels certifiés</div>\r\n        <p class=\"text-sm text-gray-500 mt-1\">Électriciens agréés</p>\r\n      </div>\r\n      <div\r\n        class=\"text-center p-6 md:p-8 rounded-2xl bg-gradient-to-b from-amber-50 to-white border border-amber-100 shadow-sm\">\r\n        <div class=\"text-5xl font-black text-amber-700 mb-2\">14</div>\r\n        <div class=\"text-gray-800 font-semibold\">Régions couvertes</div>\r\n        <p class=\"text-sm text-gray-500 mt-1\">Présence nationale</p>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n\r\n<!-- ============================================================ -->\r\n<!-- SECTION 3 : SERVICES – 3 piliers avec listes claires        -->\r\n<!-- ============================================================ -->\r\n<section class=\"py-20 px-5 bg-gray-50\" aria-labelledby=\"services-heading\">\r\n  <div class=\"max-w-7xl mx-auto\">\r\n    <div class=\"text-center mb-14\">\r\n      <span class=\"inline-block px-4 py-1.5 bg-blue-100 text-blue-800 rounded-full text-sm font-bold mb-4 tracking-wide\">NOS SERVICES</span>\r\n      <h2 id=\"services-heading\" class=\"text-3xl md:text-4xl font-black text-gray-900 mb-4\">Des solutions complètes pour\r\n        des installations sûres</h2>\r\n      <p class=\"text-lg text-gray-600 max-w-3xl mx-auto\">PROQUELEC vous accompagne à chaque étape pour garantir la\r\n        conformité et la sécurité de vos installations électriques.</p>\r\n    </div>\r\n    <div class=\"grid grid-cols-1 md:grid-cols-3 gap-8\">\r\n      <div\r\n        class=\"bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1\">\r\n        <div class=\"w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6\">\r\n          <span class=\"text-3xl\" aria-hidden=\"true\">🔍</span>\r\n        </div>\r\n        <h3 class=\"text-2xl font-bold text-gray-900 mb-3\">Contrôle & Diagnostic</h3>\r\n        <p class=\"text-gray-600 mb-5\">Vérification complète selon la norme NS 01-001.</p>\r\n        <ul class=\"space-y-2 text-sm text-gray-600\">\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Audit de conformité</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Diagnostic de sécurité</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Rapport détaillé personnalisé</li>\r\n        </ul>\r\n      </div>\r\n      <div\r\n        class=\"bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1\">\r\n        <div class=\"w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6\">\r\n          <span class=\"text-3xl\" aria-hidden=\"true\">🎓</span>\r\n        </div>\r\n        <h3 class=\"text-2xl font-bold text-gray-900 mb-3\">Formation & Certification</h3>\r\n        <p class=\"text-gray-600 mb-5\">Programmes certifiants pour les professionnels de l’électricité.</p>\r\n        <ul class=\"space-y-2 text-sm text-gray-600\">\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Installateur électricien</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Inspecteur électrique</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Normes et réglementation</li>\r\n        </ul>\r\n      </div>\r\n      <div\r\n        class=\"bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1\">\r\n        <div class=\"w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mb-6\">\r\n          <span class=\"text-3xl\" aria-hidden=\"true\">🛡️</span>\r\n        </div>\r\n        <h3 class=\"text-2xl font-bold text-gray-900 mb-3\">Sécurisation & Conseil</h3>\r\n        <p class=\"text-gray-600 mb-5\">Accompagnement pour la mise en conformité de vos installations.</p>\r\n        <ul class=\"space-y-2 text-sm text-gray-600\">\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Mise en conformité</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Sécurisation des marchés</li>\r\n          <li class=\"flex items-center gap-2\"><span class=\"text-green-600\">✓</span> Assistance technique sur site</li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n\r\n<!-- ============================================================ -->\r\n<!-- SECTION 4 : MISSION & VISION – avec chiffre choc            -->\r\n<!-- ============================================================ -->\r\n<section class=\"py-20 px-5 bg-white\" aria-labelledby=\"mission-heading\">\r\n  <div class=\"max-w-7xl mx-auto\">\r\n    <div class=\"grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center\">\r\n      <div>\r\n        <span class=\"inline-block px-4 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-bold mb-4\">NOTRE MISSION</span>\r\n        <h2 id=\"mission-heading\" class=\"text-3xl md:text-4xl font-black text-gray-900 mb-5\">Garantir la sécurité\r\n          électrique pour tous les Sénégalais</h2>\r\n        <p class=\"text-lg text-gray-600 mb-7 leading-relaxed\">Depuis 1995, PROQUELEC s’engage pour la promotion de la\r\n          qualité des installations électriques intérieures au Sénégal.</p>\r\n        <div class=\"space-y-6\">\r\n          <div class=\"flex items-start gap-4\">\r\n            <div class=\"w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shrink-0 mt-0.5\">\r\n              <span class=\"text-xl\" aria-hidden=\"true\">🎯</span>\r\n            </div>\r\n            <div>\r\n              <h3 class=\"font-bold text-gray-900 text-lg\">Notre Vision</h3>\r\n              <p class=\"text-gray-600\">Devenir la référence nationale en sécurité électrique et innovation normative.\r\n              </p>\r\n            </div>\r\n          </div>\r\n          <div class=\"flex items-start gap-4\">\r\n            <div class=\"w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center shrink-0 mt-0.5\">\r\n              <span class=\"text-xl\" aria-hidden=\"true\">⭐</span>\r\n            </div>\r\n            <div>\r\n              <h3 class=\"font-bold text-gray-900 text-lg\">Nos Valeurs</h3>\r\n              <p class=\"text-gray-600\">Sécurité, Qualité, Excellence et Innovation.</p>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"bg-gradient-to-br from-[#1e3a5f] to-[#2563eb] rounded-3xl p-8 md:p-10 text-white shadow-2xl\">\r\n        <div class=\"text-6xl mb-5\" aria-hidden=\"true\">⚡</div>\r\n        <h3 class=\"text-2xl md:text-3xl font-bold mb-4\">Le saviez-vous ?</h3>\r\n        <p class=\"text-white/85 text-lg mb-7 leading-relaxed\">\r\n          93 % des installations électriques au Sénégal ne sont pas conformes aux normes en vigueur.<br>\r\n          <strong class=\"text-yellow-200\">Un contrôle PROQUELEC peut sauver des vies.</strong>\r\n        </p>\r\n        <a href=\"/contact\"\r\n          class=\"inline-flex items-center gap-2 bg-white text-[#1e3a5f] px-6 py-3 rounded-xl font-bold hover:bg-blue-50 hover:scale-[1.02] transition-all shadow-xl\">\r\n          Faites contrôler votre installation <span aria-hidden=\"true\">→</span>\r\n        </a>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n\r\n<!-- ============================================================ -->\r\n<!-- SECTION 5 : CTA FINAL + FOOTER MINIMAL                      -->\r\n<!-- ============================================================ -->\r\n<section class=\"py-20 px-5 bg-gradient-to-r from-[#1e3a5f] to-[#2563eb] text-white text-center\"\r\n  aria-labelledby=\"cta-heading\">\r\n  <div class=\"max-w-4xl mx-auto\">\r\n    <h2 id=\"cta-heading\" class=\"text-3xl md:text-4xl font-black mb-5\">Prêt à sécuriser vos installations ?</h2>\r\n    <p class=\"text-xl text-white/85 mb-9 max-w-2xl mx-auto\">Que vous soyez un particulier, un professionnel ou une\r\n      collectivité, PROQUELEC vous accompagne.</p>\r\n    <div class=\"flex flex-col sm:flex-row gap-5 justify-center\">\r\n      <a href=\"/contact\"\r\n        class=\"inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#1e3a5f] rounded-xl font-bold text-lg shadow-2xl hover:bg-gray-100 hover:scale-[1.02] transition-all\">\r\n        Contactez-nous\r\n      </a>\r\n      <a href=\"/formations\"\r\n        class=\"inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/40 text-white rounded-xl font-bold text-lg hover:bg-white/10 hover:border-white/60 transition-all\">\r\n        Découvrir nos formations\r\n      </a>\r\n    </div>\r\n  </div>\r\n</section>\r\n\r\n<footer class=\"py-8 px-5 bg-gray-50 border-t border-gray-200\">\r\n  <div class=\"max-w-7xl mx-auto text-center text-sm text-gray-500\">\r\n    <p class=\"font-medium text-gray-600\">PROQUELEC — Organisme national de promotion de la qualité des installations\r\n      électriques intérieures au Sénégal.</p>\r\n    <address class=\"not-italic mt-2\">\r\n      Route de l'Aéroport, Lotissement Mermoz · BP 1234 Dakar ·\r\n      <a href=\"mailto:contact@proquelec.sn\"\r\n        class=\"hover:text-blue-700 underline underline-offset-2\">contact@proquelec.sn</a> ·\r\n      <a href=\"tel:+221330000000\" class=\"hover:text-blue-700\">+221 33 000 00 00</a>\r\n    </address>\r\n    <p class=\"mt-4 text-xs text-gray-400\">© 2025 PROQUELEC – Tous droits réservés.</p>\r\n  </div>\r\n</footer>",
-          "padding": 0
-        },
-        "custom": {},
-        "hidden": false,
-        "parent": "ROOT",
-        "isCanvas": false,
-        "displayName": "Code HTML",
         "linkedNodes": {}
       }
     },
-    "theme_config": null,
-    "category": "page",
-    "tags": null,
-    "thumbnail": null,
-    "created_at": "2026-05-31T18:31:52.181Z",
-    "updated_at": "2026-05-31T18:31:52.181Z"
+    "theme_config": {},
+    "category": "contenu",
+    "tags": [
+      "premium",
+      "services",
+      "grille",
+      "processus"
+    ],
+    "thumbnail": "",
+    "created_at": "2026-06-03T14:19:31.655Z",
+    "updated_at": "2026-06-03T15:06:07.251Z"
+  },
+  {
+    "id": "4952f0db-9f05-423b-8554-1b49f55a265b",
+    "name": "Contact premium",
+    "description": "Page contact avec carte, informations et formulaire intégré.",
+    "structure": {
+      "ROOT": {
+        "type": "div",
+        "nodes": [
+          "contact_container"
+        ],
+        "props": {
+          "style": {}
+        },
+        "linkedNodes": {}
+      },
+      "contact_form": {
+        "type": "FormBlock",
+        "nodes": [],
+        "props": {
+          "title": "Envoyez-nous un message",
+          "subtitle": "Remplissez le formulaire ci-dessous",
+          "submitText": "Envoyer",
+          "backgroundColor": "#f8fafc"
+        },
+        "parent": "contact_container",
+        "linkedNodes": {}
+      },
+      "contact_hero": {
+        "type": "HeroBlock",
+        "nodes": [],
+        "props": {
+          "ctaHref": "",
+          "ctaLabel": "",
+          "headline": "Contactez-Nous",
+          "badgeText": "CONTACT",
+          "showStats": false,
+          "accentColor": "#2563eb",
+          "subheadline": "Une équipe d'experts à votre écoute"
+        },
+        "parent": "contact_container",
+        "linkedNodes": {}
+      },
+      "contact_info": {
+        "type": "ColumnsBlock",
+        "nodes": [
+          "contact_address",
+          "contact_phone",
+          "contact_email",
+          "contact_hours"
+        ],
+        "props": {
+          "gap": 16,
+          "columns": 4
+        },
+        "parent": "contact_container",
+        "linkedNodes": {}
+      },
+      "contact_email": {
+        "type": "CardBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Mail",
+          "text": "contact@proquelec.sn",
+          "title": "Email",
+          "subtitle": "Écrivez-nous",
+          "accentColor": "#059669",
+          "backgroundColor": "#f8fafc"
+        },
+        "parent": "contact_container",
+        "linkedNodes": {}
+      },
+      "contact_hours": {
+        "type": "CardBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Clock",
+          "text": "Lun-Ven: 8h-18h",
+          "title": "Horaires",
+          "subtitle": "Disponibilité",
+          "accentColor": "#d97706",
+          "backgroundColor": "#f8fafc"
+        },
+        "parent": "contact_container",
+        "linkedNodes": {}
+      },
+      "contact_phone": {
+        "type": "CardBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Phone",
+          "text": "+221 33 000 00 00",
+          "title": "Téléphone",
+          "subtitle": "Appelez-nous",
+          "accentColor": "#2563eb",
+          "backgroundColor": "#f8fafc"
+        },
+        "parent": "contact_container",
+        "linkedNodes": {}
+      },
+      "contact_address": {
+        "type": "AddressBlock",
+        "nodes": [],
+        "props": {
+          "city": "Dakar, Sénégal",
+          "email": "contact@proquelec.sn",
+          "phone": "+221 33 000 00 00",
+          "street": "Route de l'Aéroport",
+          "company": "PROQUELEC"
+        },
+        "parent": "contact_container",
+        "linkedNodes": {}
+      },
+      "contact_container": {
+        "type": "ContainerBlock",
+        "nodes": [
+          "contact_hero",
+          "contact_info",
+          "contact_form"
+        ],
+        "props": {
+          "padding": 0,
+          "maxWidth": "100%",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "ROOT",
+        "linkedNodes": {}
+      }
+    },
+    "theme_config": {},
+    "category": "conversion",
+    "tags": [
+      "premium",
+      "contact",
+      "formulaire"
+    ],
+    "thumbnail": "",
+    "created_at": "2026-06-03T14:19:31.662Z",
+    "updated_at": "2026-06-03T15:06:07.255Z"
+  },
+  {
+    "id": "26b8feb9-5dc6-4b3a-bfb8-4c2860c6faac",
+    "name": "À propos premium",
+    "description": "Page présentation complète : hero, mission, valeurs, équipe et CTA.",
+    "structure": {
+      "ROOT": {
+        "type": "div",
+        "nodes": [
+          "about_container"
+        ],
+        "props": {
+          "style": {}
+        },
+        "linkedNodes": {}
+      },
+      "value_1": {
+        "type": "CardBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Star",
+          "text": "La recherche constante de la qualité dans chaque projet.",
+          "title": "Excellence",
+          "subtitle": "Qualité",
+          "accentColor": "#2563eb",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "value_2": {
+        "type": "CardBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Lightbulb",
+          "text": "Des solutions à la pointe de la technologie.",
+          "title": "Innovation",
+          "subtitle": "Modernité",
+          "accentColor": "#059669",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "value_3": {
+        "type": "CardBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Shield",
+          "text": "Une conduite irréprochable en toutes circonstances.",
+          "title": "Intégrité",
+          "subtitle": "Éthique",
+          "accentColor": "#d97706",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "value_4": {
+        "type": "CardBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Heart",
+          "text": "Un engagement total envers nos clients et partenaires.",
+          "title": "Engagement",
+          "subtitle": "Dévouement",
+          "accentColor": "#dc2626",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "about_cta": {
+        "type": "CallToActionBlock",
+        "nodes": [],
+        "props": {
+          "title": "Prêt à collaborer avec nous ?",
+          "layout": "center",
+          "bgColor": "#1e3a5f",
+          "padding": 64,
+          "buttonBg": "#2563eb",
+          "buttonUrl": "/contact",
+          "textColor": "#ffffff",
+          "buttonText": "Nous contacter",
+          "description": "Contactez notre équipe pour discuter de votre projet"
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "about_hero": {
+        "type": "HeroBlock",
+        "nodes": [],
+        "props": {
+          "ctaHref": "#equipe",
+          "ctaLabel": "Notre équipe",
+          "headline": "À Propos de Nous",
+          "badgeText": "QUI SOMMES-NOUS",
+          "showStats": true,
+          "accentColor": "#1e3a5f",
+          "subheadline": "Notre histoire, notre mission, notre engagement"
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "about_team": {
+        "type": "TeamMembersGridBlock",
+        "nodes": [],
+        "props": {
+          "gap": 24,
+          "columns": 3,
+          "members": [
+            {
+              "bio": "20+ ans d'expérience dans le secteur électrique.",
+              "name": "Mamadou Diop",
+              "role": "Directeur Général",
+              "photo": ""
+            },
+            {
+              "bio": "Experte en conformité et normes électriques.",
+              "name": "Aïssatou Diallo",
+              "role": "Directrice Technique",
+              "photo": ""
+            }
+          ]
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "values_grid": {
+        "type": "ColumnsBlock",
+        "nodes": [
+          "value_1",
+          "value_2",
+          "value_3",
+          "value_4"
+        ],
+        "props": {
+          "gap": 16,
+          "columns": 4
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "about_values": {
+        "type": "ContainerBlock",
+        "nodes": [
+          "values_header",
+          "values_grid"
+        ],
+        "props": {
+          "padding": 64,
+          "maxWidth": "1200px",
+          "backgroundColor": "#f8fafc"
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "mission_text": {
+        "type": "TextBlock",
+        "nodes": [],
+        "props": {
+          "text": "<h2 style=\"font-size:1.8rem;font-weight:700;color:#0f172a\">Notre Mission</h2><p style=\"font-size:1rem;color:#475569;line-height:1.8;margin-top:1rem\">Depuis notre création, nous nous engageons à fournir des services d'excellence dans le domaine de l'ingénierie électrique. Notre équipe d'experts met son savoir-faire au service de la qualité et de la sécurité des installations.</p><p style=\"font-size:1rem;color:#475569;line-height:1.8;margin-top:1rem\">Nous croyons en une approche transparente, innovante et centrée sur le client.</p>",
+          "color": "#475569",
+          "fontSize": 16,
+          "lineHeight": 1.8
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "about_mission": {
+        "type": "ColumnsBlock",
+        "nodes": [
+          "mission_text",
+          "mission_image"
+        ],
+        "props": {
+          "gap": 48,
+          "columns": 2
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "mission_image": {
+        "type": "ImageBlock",
+        "nodes": [],
+        "props": {
+          "alt": "Notre équipe au travail",
+          "src": "https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?w=800&q=80",
+          "height": 400,
+          "objectFit": "cover"
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "values_header": {
+        "type": "TextBlock",
+        "nodes": [],
+        "props": {
+          "text": "<h2 style=\"text-align:center;font-size:2rem;font-weight:800;color:#0f172a\">Nos Valeurs</h2>",
+          "fontSize": 16,
+          "textAlign": "center"
+        },
+        "parent": "about_container",
+        "linkedNodes": {}
+      },
+      "about_container": {
+        "type": "ContainerBlock",
+        "nodes": [
+          "about_hero",
+          "about_mission",
+          "about_values",
+          "about_team",
+          "about_cta"
+        ],
+        "props": {
+          "padding": 0,
+          "maxWidth": "100%",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "ROOT",
+        "linkedNodes": {}
+      }
+    },
+    "theme_config": {},
+    "category": "contenu",
+    "tags": [
+      "premium",
+      "about",
+      "equipe",
+      "valeurs"
+    ],
+    "thumbnail": "",
+    "created_at": "2026-06-03T14:19:31.629Z",
+    "updated_at": "2026-06-03T15:06:07.233Z"
+  },
+  {
+    "id": "07525696-9a04-4402-b1e5-9acd9005c908",
+    "name": "Présentation premium",
+    "description": "Page présentation avec timeline, galerie et statistiques.",
+    "structure": {
+      "ROOT": {
+        "type": "div",
+        "nodes": [
+          "pres_root"
+        ],
+        "props": {
+          "style": {}
+        },
+        "linkedNodes": {}
+      },
+      "pres_cta": {
+        "type": "CallToActionBlock",
+        "nodes": [],
+        "props": {
+          "title": "Faites partie de notre succès",
+          "layout": "center",
+          "bgColor": "#1e3a5f",
+          "padding": 64,
+          "buttonBg": "#2563eb",
+          "buttonUrl": "/contact",
+          "textColor": "#ffffff",
+          "buttonText": "Nous contacter",
+          "description": "Rejoignez nos 500+ clients satisfaits"
+        },
+        "parent": "pres_root",
+        "linkedNodes": {}
+      },
+      "pres_hero": {
+        "type": "HeroBlock",
+        "nodes": [],
+        "props": {
+          "ctaHref": "#timeline",
+          "ctaLabel": "Découvrir",
+          "headline": "Notre Histoire",
+          "badgeText": "PRÉSENTATION",
+          "showStats": false,
+          "accentColor": "#1e3a5f",
+          "subheadline": "D'une vision à une référence nationale"
+        },
+        "parent": "pres_root",
+        "linkedNodes": {}
+      },
+      "pres_root": {
+        "type": "ContainerBlock",
+        "nodes": [
+          "pres_hero",
+          "pres_stats",
+          "pres_timeline",
+          "pres_gallery",
+          "pres_cta"
+        ],
+        "props": {
+          "padding": 0,
+          "maxWidth": "100%",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "ROOT",
+        "linkedNodes": {}
+      },
+      "pres_stats": {
+        "type": "StatsBlock",
+        "nodes": [],
+        "props": {
+          "stat1Label": "Années d'expertise",
+          "stat1Value": "25+",
+          "stat2Label": "Projets réalisés",
+          "stat2Value": "500+",
+          "stat3Label": "Clients satisfaits",
+          "stat3Value": "98%",
+          "accentColor": "#f59e0b",
+          "backgroundColor": "#1e3a5f"
+        },
+        "parent": "pres_root",
+        "linkedNodes": {}
+      },
+      "pres_gallery": {
+        "type": "GalleryBlock",
+        "nodes": [],
+        "props": {
+          "gap": 8,
+          "images": [
+            {
+              "alt": "Bureau",
+              "src": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80"
+            },
+            {
+              "alt": "Équipe",
+              "src": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&q=80"
+            },
+            {
+              "alt": "Travail",
+              "src": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80"
+            }
+          ],
+          "columns": 3,
+          "rounded": true
+        },
+        "parent": "pres_root",
+        "linkedNodes": {}
+      },
+      "pres_timeline": {
+        "type": "TimelineBlock",
+        "nodes": [],
+        "props": {
+          "items": [
+            {
+              "desc": "Fondation de PROQUELEC",
+              "year": "1998",
+              "title": "Création"
+            },
+            {
+              "desc": "Ouverture de nouveaux services",
+              "year": "2005",
+              "title": "Expansion"
+            },
+            {
+              "desc": "Lancement des outils numériques",
+              "year": "2015",
+              "title": "Innovation"
+            },
+            {
+              "desc": "Leader national de la qualité électrique",
+              "year": "2024",
+              "title": "Référence"
+            }
+          ],
+          "accentColor": "#2563eb"
+        },
+        "parent": "pres_root",
+        "linkedNodes": {}
+      }
+    },
+    "theme_config": {},
+    "category": "contenu",
+    "tags": [
+      "premium",
+      "presentation",
+      "timeline",
+      "galerie"
+    ],
+    "thumbnail": "",
+    "created_at": "2026-06-03T14:19:31.668Z",
+    "updated_at": "2026-06-03T15:06:07.262Z"
+  },
+  {
+    "id": "990a1388-4eef-4fa8-9e12-4c89c7496e62",
+    "name": "Blog & Actualités premium",
+    "description": "Page blog avec hero, grille d'articles et inscription newsletter.",
+    "structure": {
+      "ROOT": {
+        "type": "div",
+        "nodes": [
+          "blog_root"
+        ],
+        "props": {
+          "style": {}
+        },
+        "linkedNodes": {}
+      },
+      "blog_cta": {
+        "type": "NewsletterBlock",
+        "nodes": [],
+        "props": {
+          "title": "Restez informé",
+          "bgColor": "#1e3a5f",
+          "textColor": "#ffffff",
+          "buttonText": "S'abonner",
+          "accentColor": "#2563eb",
+          "description": "Recevez nos dernières actualités par email",
+          "placeholder": "votre@email.com"
+        },
+        "parent": "blog_root",
+        "linkedNodes": {}
+      },
+      "blog_grid": {
+        "type": "ColumnsBlock",
+        "nodes": [
+          "blog_card_1",
+          "blog_card_2",
+          "blog_card_3"
+        ],
+        "props": {
+          "gap": 24,
+          "columns": 3
+        },
+        "parent": "blog_root",
+        "linkedNodes": {}
+      },
+      "blog_hero": {
+        "type": "HeroBlock",
+        "nodes": [],
+        "props": {
+          "ctaHref": "#newsletter",
+          "ctaLabel": "S'abonner",
+          "headline": "Actualités & Événements",
+          "badgeText": "BLOG",
+          "showStats": false,
+          "accentColor": "#2563eb",
+          "subheadline": "Suivez toutes nos actualités"
+        },
+        "parent": "blog_root",
+        "linkedNodes": {}
+      },
+      "blog_root": {
+        "type": "ContainerBlock",
+        "nodes": [
+          "blog_hero",
+          "blog_grid",
+          "blog_cta"
+        ],
+        "props": {
+          "padding": 0,
+          "maxWidth": "100%",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "ROOT",
+        "linkedNodes": {}
+      },
+      "blog_card_1": {
+        "type": "CardBlock",
+        "nodes": [],
+        "props": {
+          "icon": "FileText",
+          "text": "Découvrez les dernières évolutions de la norme.",
+          "title": "Nouvelle norme NFC 15-100",
+          "subtitle": "Mise à jour",
+          "accentColor": "#2563eb",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "blog_root",
+        "linkedNodes": {}
+      },
+      "blog_card_2": {
+        "type": "CardBlock",
+        "nodes": [],
+        "props": {
+          "icon": "GraduationCap",
+          "text": "Inscrivez-vous à nos formations professionnelles.",
+          "title": "Formation certifiante",
+          "subtitle": "Inscription",
+          "accentColor": "#059669",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "blog_root",
+        "linkedNodes": {}
+      },
+      "blog_card_3": {
+        "type": "CardBlock",
+        "nodes": [],
+        "props": {
+          "icon": "Shield",
+          "text": "Un accompagnement personnalisé pour vos installations.",
+          "title": "Audit de conformité",
+          "subtitle": "Nouveau service",
+          "accentColor": "#d97706",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "blog_root",
+        "linkedNodes": {}
+      }
+    },
+    "theme_config": {},
+    "category": "contenu",
+    "tags": [
+      "premium",
+      "blog",
+      "actualites",
+      "newsletter"
+    ],
+    "thumbnail": "",
+    "created_at": "2026-06-03T14:50:30.295Z",
+    "updated_at": "2026-06-03T15:06:07.268Z"
+  },
+  {
+    "id": "39af0125-a500-4677-8471-2be2da8da297",
+    "name": "Mentions Légales premium",
+    "description": "Page mentions légales avec identité, hébergement, droits et contact.",
+    "structure": {
+      "ROOT": {
+        "type": "div",
+        "nodes": [
+          "legal_root"
+        ],
+        "props": {
+          "style": {}
+        },
+        "linkedNodes": {}
+      },
+      "legal_hero": {
+        "type": "HeroBlock",
+        "nodes": [],
+        "props": {
+          "ctaHref": "",
+          "ctaLabel": "",
+          "headline": "Mentions Légales",
+          "badgeText": "LÉGAL",
+          "showStats": false,
+          "accentColor": "#1e3a5f",
+          "subheadline": "Informations légales et crédits"
+        },
+        "parent": "legal_root",
+        "linkedNodes": {}
+      },
+      "legal_root": {
+        "type": "ContainerBlock",
+        "nodes": [
+          "legal_hero",
+          "legal_content"
+        ],
+        "props": {
+          "padding": 0,
+          "maxWidth": "100%",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "ROOT",
+        "linkedNodes": {}
+      },
+      "legal_rights": {
+        "type": "TextBlock",
+        "nodes": [],
+        "props": {
+          "text": "<h2>Propriété intellectuelle</h2><p>L'ensemble des contenus du site (textes, images, vidéos, normes) est protégé par le droit d'auteur. Toute reproduction est soumise à autorisation préalable.</p>",
+          "color": "#334155",
+          "fontSize": 15,
+          "lineHeight": 1.8
+        },
+        "parent": "legal_root",
+        "linkedNodes": {}
+      },
+      "legal_contact": {
+        "type": "AddressBlock",
+        "nodes": [],
+        "props": {
+          "city": "Dakar, Sénégal",
+          "email": "contact@proquelec.sn",
+          "phone": "+221 33 000 00 00",
+          "street": "Route de l'Aéroport",
+          "company": "PROQUELEC"
+        },
+        "parent": "legal_root",
+        "linkedNodes": {}
+      },
+      "legal_content": {
+        "type": "ContainerBlock",
+        "nodes": [
+          "legal_identity",
+          "legal_hosting",
+          "legal_rights",
+          "legal_contact"
+        ],
+        "props": {
+          "padding": 48,
+          "maxWidth": "800px",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "legal_root",
+        "linkedNodes": {}
+      },
+      "legal_hosting": {
+        "type": "TextBlock",
+        "nodes": [],
+        "props": {
+          "text": "<h2>Hébergement</h2><p>Site hébergé par nos propres infrastructures sécurisées au Sénégal.</p>",
+          "color": "#334155",
+          "fontSize": 15,
+          "lineHeight": 1.8
+        },
+        "parent": "legal_root",
+        "linkedNodes": {}
+      },
+      "legal_identity": {
+        "type": "TextBlock",
+        "nodes": [],
+        "props": {
+          "text": "<h2>Éditeur du site</h2><p><strong>PROQUELEC</strong><br>Promotion de la Qualité des Installations Électriques au Sénégal<br>Association d'Utilité Publique<br>Route de l'Aéroport, Lotissement Mermoz<br>BP 1234 Dakar, Sénégal</p>",
+          "color": "#334155",
+          "fontSize": 15,
+          "lineHeight": 1.8
+        },
+        "parent": "legal_root",
+        "linkedNodes": {}
+      }
+    },
+    "theme_config": {},
+    "category": "contenu",
+    "tags": [
+      "premium",
+      "legal",
+      "mentions",
+      "cgv"
+    ],
+    "thumbnail": "",
+    "created_at": "2026-06-03T14:50:30.306Z",
+    "updated_at": "2026-06-03T15:06:07.277Z"
+  },
+  {
+    "id": "c68258fa-c035-47a5-add0-ada1e86aee22",
+    "name": "Page d'accueil premium",
+    "description": "Template complet avec hero, services, chiffres, actualités et partenaires — design épuré et professionnel.",
+    "structure": {
+      "ROOT": {
+        "type": "div",
+        "nodes": [
+          "hero_container"
+        ],
+        "props": {
+          "style": {}
+        },
+        "linkedNodes": {}
+      },
+      "hero_text": {
+        "type": "TextBlock",
+        "nodes": [],
+        "props": {
+          "text": "<p style=\"font-size:1.1rem;color:#64748b;line-height:1.8\">Description convaincante de votre offre ou service. Mettez en avant les bénéfices clés pour engager vos visiteurs.</p>",
+          "color": "#475569",
+          "fontSize": 16,
+          "lineHeight": 1.8
+        },
+        "parent": "hero_container",
+        "linkedNodes": {}
+      },
+      "stats_block": {
+        "type": "StatsBlock",
+        "nodes": [],
+        "props": {
+          "stat1Label": "Années",
+          "stat1Value": "25+",
+          "stat2Label": "Projets",
+          "stat2Value": "500+",
+          "stat3Label": "Satisfaction",
+          "stat3Value": "98%",
+          "accentColor": "#f59e0b",
+          "backgroundColor": "#1e3a5f"
+        },
+        "parent": "ROOT",
+        "linkedNodes": {}
+      },
+      "hero_buttons": {
+        "type": "ButtonBlock",
+        "nodes": [],
+        "props": {
+          "href": "#",
+          "size": "large",
+          "label": "En savoir plus →",
+          "rounded": true,
+          "fullWidth": false,
+          "textColor": "#ffffff",
+          "backgroundColor": "#1e3a5f"
+        },
+        "parent": "hero_container",
+        "linkedNodes": {}
+      },
+      "hero_section": {
+        "type": "HeroBlock",
+        "nodes": [],
+        "props": {
+          "ctaHref": "#",
+          "ctaLabel": "Commencer",
+          "headline": "Titre Principal",
+          "badgeText": "PREMIUM",
+          "showStats": false,
+          "accentColor": "#1e3a5f",
+          "subheadline": "Sous-titre élégant pour captiver votre audience"
+        },
+        "parent": "hero_container",
+        "linkedNodes": {}
+      },
+      "hero_container": {
+        "type": "ContainerBlock",
+        "nodes": [
+          "hero_section",
+          "hero_text",
+          "hero_buttons"
+        ],
+        "props": {
+          "padding": 80,
+          "maxWidth": "100%",
+          "paddingY": 60,
+          "backgroundColor": "#f8fafc"
+        },
+        "parent": "ROOT",
+        "linkedNodes": {}
+      }
+    },
+    "theme_config": {
+      "fontFamily": "Inter, sans-serif",
+      "borderRadius": "12px",
+      "primaryColor": "#1e3a5f",
+      "spacingScale": "1",
+      "secondaryColor": "#2563eb"
+    },
+    "category": "accueil",
+    "tags": [
+      "premium",
+      "accueil",
+      "hero",
+      "complet"
+    ],
+    "thumbnail": "",
+    "created_at": "2026-06-03T14:19:31.590Z",
+    "updated_at": "2026-06-03T15:06:07.216Z"
+  },
+  {
+    "id": "c8cc832f-901e-4680-85fa-79101d9757a2",
+    "name": "FAQ premium",
+    "description": "Page FAQ avec hero et accordéon de questions-réponses.",
+    "structure": {
+      "ROOT": {
+        "type": "div",
+        "nodes": [
+          "faq_root"
+        ],
+        "props": {
+          "style": {}
+        },
+        "linkedNodes": {}
+      },
+      "faq_hero": {
+        "type": "HeroBlock",
+        "nodes": [],
+        "props": {
+          "ctaHref": "",
+          "ctaLabel": "",
+          "headline": "Questions Fréquentes",
+          "badgeText": "FAQ",
+          "showStats": false,
+          "accentColor": "#2563eb",
+          "subheadline": "Tout ce que vous devez savoir"
+        },
+        "parent": "faq_root",
+        "linkedNodes": {}
+      },
+      "faq_root": {
+        "type": "ContainerBlock",
+        "nodes": [
+          "faq_hero",
+          "faq_section"
+        ],
+        "props": {
+          "padding": 0,
+          "maxWidth": "100%",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "ROOT",
+        "linkedNodes": {}
+      },
+      "faq_section": {
+        "type": "AccordionBlock",
+        "nodes": [],
+        "props": {
+          "items": [
+            {
+              "title": "Comment obtenir un diagnostic ?",
+              "content": "Contactez-nous via le formulaire ou par téléphone. Nos experts vous répondent sous 48h."
+            },
+            {
+              "title": "Quels sont vos tarifs ?",
+              "content": "Nos tarifs varient selon la prestation. Demandez un devis personnalisé gratuit."
+            },
+            {
+              "title": "Proposez-vous des formations ?",
+              "content": "Oui, consultez notre catalogue de formations professionnelles certifiantes."
+            },
+            {
+              "title": "Comment devenir membre ?",
+              "content": "Créez un compte sur notre plateforme et choisissez votre profil."
+            },
+            {
+              "title": "Quelles normes appliquez-vous ?",
+              "content": "Nous appliquons la NS 01-001, NFC 15-100, IEC 60364 et toutes les normes en vigueur."
+            }
+          ],
+          "title": "Nos réponses à vos questions",
+          "accentColor": "#2563eb"
+        },
+        "parent": "faq_root",
+        "linkedNodes": {}
+      }
+    },
+    "theme_config": {},
+    "category": "contenu",
+    "tags": [
+      "premium",
+      "faq",
+      "questions",
+      "accordeon"
+    ],
+    "thumbnail": "",
+    "created_at": "2026-06-03T14:50:30.300Z",
+    "updated_at": "2026-06-03T15:06:07.273Z"
+  },
+  {
+    "id": "c24ead4b-9d6e-40ca-b174-fd2876715590",
+    "name": "Équipe premium",
+    "description": "Page équipe avec hero, statistiques et grille des membres.",
+    "structure": {
+      "ROOT": {
+        "type": "div",
+        "nodes": [
+          "team_root"
+        ],
+        "props": {
+          "style": {}
+        },
+        "linkedNodes": {}
+      },
+      "team_grid": {
+        "type": "TeamMembersGridBlock",
+        "nodes": [],
+        "props": {
+          "gap": 24,
+          "columns": 3,
+          "members": [
+            {
+              "bio": "25 ans d'expérience dans le secteur électrique. Fondateur de PROQUELEC.",
+              "name": "Mamadou Diop",
+              "role": "Directeur Général",
+              "photo": ""
+            },
+            {
+              "bio": "Experte en conformité électrique et normalisation.",
+              "name": "Aïssatou Diallo",
+              "role": "Directrice Technique",
+              "photo": ""
+            },
+            {
+              "bio": "Pédagogue passionné par la transmission des savoirs techniques.",
+              "name": "Oumar Sall",
+              "role": "Responsable Formation",
+              "photo": ""
+            },
+            {
+              "bio": "Stratège digitale au service de la sécurité électrique.",
+              "name": "Fatou Ndiaye",
+              "role": "Chargée de Communication",
+              "photo": ""
+            },
+            {
+              "bio": "Expert en diagnostics et audits de conformité.",
+              "name": "Ibrahima Ba",
+              "role": "Inspecteur Principal",
+              "photo": ""
+            },
+            {
+              "bio": "Gestion des adhésions et du support client.",
+              "name": "Mariam Touré",
+              "role": "Assistante Administrative",
+              "photo": ""
+            }
+          ]
+        },
+        "parent": "team_root",
+        "linkedNodes": {}
+      },
+      "team_hero": {
+        "type": "HeroBlock",
+        "nodes": [],
+        "props": {
+          "ctaHref": "",
+          "ctaLabel": "",
+          "headline": "Notre Équipe",
+          "badgeText": "ÉQUIPE",
+          "showStats": true,
+          "accentColor": "#1e3a5f",
+          "subheadline": "Des experts à votre service"
+        },
+        "parent": "team_root",
+        "linkedNodes": {}
+      },
+      "team_root": {
+        "type": "ContainerBlock",
+        "nodes": [
+          "team_hero",
+          "team_grid"
+        ],
+        "props": {
+          "padding": 0,
+          "maxWidth": "100%",
+          "backgroundColor": "#ffffff"
+        },
+        "parent": "ROOT",
+        "linkedNodes": {}
+      }
+    },
+    "theme_config": {},
+    "category": "contenu",
+    "tags": [
+      "premium",
+      "equipe",
+      "membres",
+      "team"
+    ],
+    "thumbnail": "",
+    "created_at": "2026-06-03T14:50:30.312Z",
+    "updated_at": "2026-06-03T15:06:07.280Z"
   }
 ]

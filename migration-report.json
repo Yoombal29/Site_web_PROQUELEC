@@ -1,0 +1,776 @@
+{
+  "timestamp": "2026-06-03T14:43:23.284Z",
+  "mode": "execution",
+  "summary": {
+    "totalProcessed": 106,
+    "totalCreated": 0,
+    "totalSkipped": 0,
+    "totalErrors": 0
+  },
+  "categories": [
+    {
+      "category": "content",
+      "label": "🟢 Contenu éditable",
+      "count": 57
+    },
+    {
+      "category": "hybrid",
+      "label": "🔵 Hybride (contenu + logique)",
+      "count": 4
+    },
+    {
+      "category": "functional",
+      "label": "🔴 Fonctionnel (logique métier)",
+      "count": 45
+    },
+    {
+      "category": "orphan",
+      "label": "⚪ Orpheline (sans route)",
+      "count": 4
+    }
+  ],
+  "operations": [
+    {
+      "route": "/",
+      "slug": "home",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Home"
+    },
+    {
+      "route": "/about",
+      "slug": "about",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "About"
+    },
+    {
+      "route": "/utilite-publique",
+      "slug": "utilite-publique",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Utilite Publique"
+    },
+    {
+      "route": "/formation-certification",
+      "slug": "formation-certification",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Formation Certification"
+    },
+    {
+      "route": "/normes-ressources",
+      "slug": "normes-ressources",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Normes Ressources"
+    },
+    {
+      "route": "/projets-realisations",
+      "slug": "projets-realisations",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Projets Realisations"
+    },
+    {
+      "route": "/actualites-evenements",
+      "slug": "actualites-evenements",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Actualites Evenements"
+    },
+    {
+      "route": "/partenaires",
+      "slug": "partenaires",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Partenaires"
+    },
+    {
+      "route": "/contact",
+      "slug": "contact",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Contact"
+    },
+    {
+      "route": "/contact-premium",
+      "slug": "contact-premium",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Contact Premium"
+    },
+    {
+      "route": "/activities",
+      "slug": "activities",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Activities"
+    },
+    {
+      "route": "/labels",
+      "slug": "labels",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Labels"
+    },
+    {
+      "route": "/legal",
+      "slug": "legal",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Legal"
+    },
+    {
+      "route": "/certifications",
+      "slug": "certifications",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Certifications"
+    },
+    {
+      "route": "/formations",
+      "slug": "formations",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Formations"
+    },
+    {
+      "route": "/actualites",
+      "slug": "actualites",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Actualites"
+    },
+    {
+      "route": "/presse",
+      "slug": "presse",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Presse"
+    },
+    {
+      "route": "/autorites",
+      "slug": "autorites",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Autorites"
+    },
+    {
+      "route": "/menages",
+      "slug": "menages",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Menages"
+    },
+    {
+      "route": "/professionnels",
+      "slug": "professionnels",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Professionnels"
+    },
+    {
+      "route": "/social",
+      "slug": "social",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Social"
+    },
+    {
+      "route": "/espace-menages",
+      "slug": "espace-menages",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Espace Menages"
+    },
+    {
+      "route": "/espace-professionnels",
+      "slug": "espace-professionnels",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Espace Professionnels"
+    },
+    {
+      "route": "/espace-autorites",
+      "slug": "espace-autorites",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Espace Autorites"
+    },
+    {
+      "route": "/documents",
+      "slug": "documents",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Documents"
+    },
+    {
+      "route": "/events",
+      "slug": "events",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Events"
+    },
+    {
+      "route": "/expertises-techniques",
+      "slug": "expertises-techniques",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Expertises Techniques"
+    },
+    {
+      "route": "/expert-lab",
+      "slug": "expert-lab",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Expert Lab"
+    },
+    {
+      "route": "/formations-proquelec",
+      "slug": "formations-proquelec",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Formations Proquelec"
+    },
+    {
+      "route": "/blog",
+      "slug": "blog",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Blog"
+    },
+    {
+      "route": "/outils",
+      "slug": "outils",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Outils"
+    },
+    {
+      "route": "/showroom",
+      "slug": "showroom",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Showroom"
+    },
+    {
+      "route": "/avantages",
+      "slug": "avantages",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Avantages"
+    },
+    {
+      "route": "/nos-actions",
+      "slug": "nos-actions",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Nos Actions"
+    },
+    {
+      "route": "/actions/:slug",
+      "slug": "actions/{slug}",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Actions {slug}"
+    },
+    {
+      "route": "/projets",
+      "slug": "projets",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Projets"
+    },
+    {
+      "route": "/galerie",
+      "slug": "galerie",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Galerie"
+    },
+    {
+      "route": "/marches",
+      "slug": "marches",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Marches"
+    },
+    {
+      "route": "/collectivites",
+      "slug": "collectivites",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Collectivites"
+    },
+    {
+      "route": "/evenements/:slug",
+      "slug": "evenements/{slug}",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Evenements {slug}"
+    },
+    {
+      "route": "/evenements",
+      "slug": "evenements",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Evenements"
+    },
+    {
+      "route": "/presse/:slug",
+      "slug": "presse/{slug}",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Presse {slug}"
+    },
+    {
+      "route": "/formations/:slug",
+      "slug": "formations/{slug}",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Formations {slug}"
+    },
+    {
+      "route": "/publications",
+      "slug": "publications",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Publications"
+    },
+    {
+      "route": "/faq",
+      "slug": "faq",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Faq"
+    },
+    {
+      "route": "/normative-corpus",
+      "slug": "normative-corpus",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Normative Corpus"
+    },
+    {
+      "route": "/conseils-menages",
+      "slug": "conseils-menages",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Conseils Menages"
+    },
+    {
+      "route": "/ressources-pedagogiques",
+      "slug": "ressources-pedagogiques",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Ressources Pedagogiques"
+    },
+    {
+      "route": "/partenaires-liste",
+      "slug": "partenaires-liste",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Partenaires Liste"
+    },
+    {
+      "route": "/partenariat-senelec",
+      "slug": "partenariat-senelec",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Partenariat Senelec"
+    },
+    {
+      "route": "/temoignages",
+      "slug": "temoignages",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Temoignages"
+    },
+    {
+      "route": "/espace-partenaires",
+      "slug": "espace-partenaires",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Espace Partenaires"
+    },
+    {
+      "route": "/portal/:slug",
+      "slug": "portal/{slug}",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Portal {slug}"
+    },
+    {
+      "route": "/portal",
+      "slug": "portal",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Portal"
+    },
+    {
+      "route": "/apps/:appId",
+      "slug": "apps/{appId}",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Apps {appId}"
+    },
+    {
+      "route": "/plan-du-site",
+      "slug": "plan-du-site",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Plan Du Site"
+    },
+    {
+      "route": "/sitemap",
+      "slug": "sitemap",
+      "action": "UPDATE",
+      "category": "content",
+      "title": "Sitemap"
+    },
+    {
+      "route": "/blog/:slug",
+      "slug": "blog/{slug}",
+      "action": "UPDATE",
+      "category": "hybrid",
+      "title": "Blog {slug}"
+    },
+    {
+      "route": "/expert-kebe",
+      "slug": "expert-kebe",
+      "action": "UPDATE",
+      "category": "hybrid",
+      "title": "Expert Kebe"
+    },
+    {
+      "route": "/rubrique-selector",
+      "slug": "rubrique-selector",
+      "action": "UPDATE",
+      "category": "hybrid",
+      "title": "Rubrique Selector"
+    },
+    {
+      "route": "/schema-builder",
+      "slug": "schema-builder",
+      "action": "UPDATE",
+      "category": "hybrid",
+      "title": "Schema Builder"
+    },
+    {
+      "route": "/connexion",
+      "slug": "connexion",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Connexion"
+    },
+    {
+      "route": "/login",
+      "slug": "login",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Login"
+    },
+    {
+      "route": "/auth",
+      "slug": "auth",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Auth"
+    },
+    {
+      "route": "/dashboard",
+      "slug": "dashboard",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Dashboard"
+    },
+    {
+      "route": "/admin",
+      "slug": "admin",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Admin"
+    },
+    {
+      "route": "/admin-secondary",
+      "slug": "admin-secondary",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Admin Secondary"
+    },
+    {
+      "route": "/partner",
+      "slug": "partner",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Partner"
+    },
+    {
+      "route": "/dashboard/electricien",
+      "slug": "dashboard/electricien",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Dashboard Electricien"
+    },
+    {
+      "route": "/dashboard/entreprise",
+      "slug": "dashboard/entreprise",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Dashboard Entreprise"
+    },
+    {
+      "route": "/dashboard/membre",
+      "slug": "dashboard/membre",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Dashboard Membre"
+    },
+    {
+      "route": "/admin/page-sections",
+      "slug": "admin/page-sections",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Admin Page Sections"
+    },
+    {
+      "route": "/admin/builder",
+      "slug": "admin/builder",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Admin Builder"
+    },
+    {
+      "route": "/admin/builder/:pageId",
+      "slug": "admin/builder/{pageId}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Admin Builder {pageId}"
+    },
+    {
+      "route": "/admin/builder/config",
+      "slug": "admin/builder/config",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Admin Builder Config"
+    },
+    {
+      "route": "/admin/builder/legacy",
+      "slug": "admin/builder/legacy",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Admin Builder Legacy"
+    },
+    {
+      "route": "/admin/craft-builder/:pageId",
+      "slug": "admin/craft-builder/{pageId}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Admin Craft Builder {pageId}"
+    },
+    {
+      "route": "/admin/schematic-editor/:pageId",
+      "slug": "admin/schematic-editor/{pageId}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Admin Schematic Editor {pageId}"
+    },
+    {
+      "route": "/admin/permissions",
+      "slug": "admin/permissions",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Admin Permissions"
+    },
+    {
+      "route": "/expert/chat",
+      "slug": "expert/chat",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert Chat"
+    },
+    {
+      "route": "/expert/calculators",
+      "slug": "expert/calculators",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert Calculators"
+    },
+    {
+      "route": "/expert/schemas",
+      "slug": "expert/schemas",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert Schemas"
+    },
+    {
+      "route": "/expert/docs",
+      "slug": "expert/docs",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert Docs"
+    },
+    {
+      "route": "/expert/history",
+      "slug": "expert/history",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert History"
+    },
+    {
+      "route": "/expert/config",
+      "slug": "expert/config",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert Config"
+    },
+    {
+      "route": "/expert/ai-providers",
+      "slug": "expert/ai-providers",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert Ai Providers"
+    },
+    {
+      "route": "/expert/logs",
+      "slug": "expert/logs",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert Logs"
+    },
+    {
+      "route": "/expert/scanner",
+      "slug": "expert/scanner",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert Scanner"
+    },
+    {
+      "route": "/expert/models",
+      "slug": "expert/models",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert Models"
+    },
+    {
+      "route": "/expert/stats",
+      "slug": "expert/stats",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Expert Stats"
+    },
+    {
+      "route": "/ged",
+      "slug": "ged",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Ged"
+    },
+    {
+      "route": "/projects",
+      "slug": "projects",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Projects"
+    },
+    {
+      "route": "/projects/:id",
+      "slug": "projects/{id}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Projects {id}"
+    },
+    {
+      "route": "/observatoire",
+      "slug": "observatoire",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Observatoire"
+    },
+    {
+      "route": "/diagnostics/:id",
+      "slug": "diagnostics/{id}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Diagnostics {id}"
+    },
+    {
+      "route": "/office/document/new",
+      "slug": "office/document/new",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Office Document New"
+    },
+    {
+      "route": "/office/document/:id",
+      "slug": "office/document/{id}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Office Document {id}"
+    },
+    {
+      "route": "/office/document/template/:templateId",
+      "slug": "office/document/template/{templateId}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Office Document Template {templateId}"
+    },
+    {
+      "route": "/office/spreadsheet/new",
+      "slug": "office/spreadsheet/new",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Office Spreadsheet New"
+    },
+    {
+      "route": "/office/spreadsheet/:id",
+      "slug": "office/spreadsheet/{id}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Office Spreadsheet {id}"
+    },
+    {
+      "route": "/office/spreadsheet/template/:templateId",
+      "slug": "office/spreadsheet/template/{templateId}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Office Spreadsheet Template {templateId}"
+    },
+    {
+      "route": "/office/presentation/new",
+      "slug": "office/presentation/new",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Office Presentation New"
+    },
+    {
+      "route": "/office/presentation/:id",
+      "slug": "office/presentation/{id}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Office Presentation {id}"
+    },
+    {
+      "route": "/office/presentation/template/:templateId",
+      "slug": "office/presentation/template/{templateId}",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Office Presentation Template {templateId}"
+    },
+    {
+      "route": "/analytics",
+      "slug": "analytics",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Analytics"
+    },
+    {
+      "route": "/demo/rbac",
+      "slug": "demo/rbac",
+      "action": "UPDATE",
+      "category": "functional",
+      "title": "Demo Rbac"
+    }
+  ]
+}

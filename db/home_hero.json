@@ -1,12 +1,12 @@
 [
   {
-    "id": 4,
-    "title": "PROQUELEC Sénégal",
-    "subtitle": "La première plateforme dédiée aux professionnels de l'électricité",
-    "description": "Référence nationale pour les électriciens, installateurs et professionnels du secteur électrique sénégalais.",
-    "cta_text": "Découvrir nos services",
-    "cta_link": "/services",
+    "id": 1,
+    "title": "93% des installations électriques",
+    "subtitle": "au Sénégal ne sont pas conformes !",
+    "description": "Enquête nationale PROQUELEC 2012 - Première étude en Afrique révélant un danger imminent",
+    "cta_text": "Contrôler mon installation",
+    "cta_link": "/contact",
     "background_url": null,
-    "updated_at": "2026-05-25T18:42:54.932Z"
+    "updated_at": "2026-05-23T00:57:59.009Z"
   }
 ]

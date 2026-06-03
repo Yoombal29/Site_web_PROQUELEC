@@ -1,6 +1,6 @@
 [
   {
-    "id": "cb92557e-9a37-46cd-82c7-f9f639514a26",
+    "id": "f0b15fed-a168-4001-9c41-914615866f00",
     "name": "btp-modern",
     "display_name": "BTP Modern Excellence",
     "description": "Design épuré et professionnel pour les entreprises de construction.",
@@ -23,11 +23,11 @@
     "header_config": {},
     "footer_config": {},
     "is_premium": false,
-    "created_at": "2026-05-30T23:24:37.035Z",
-    "updated_at": "2026-05-30T23:24:37.035Z"
+    "created_at": "2026-06-03T14:51:44.437Z",
+    "updated_at": "2026-06-03T14:51:44.437Z"
   },
   {
-    "id": "7019e139-1851-4128-9dce-fc63af8a2acc",
+    "id": "f88379e5-73b8-4b16-b5f9-67568d210c3d",
     "name": "security-pro",
     "display_name": "Sécurité & Protection",
     "description": "Thème sombre et robuste pour les services de sécurité électrique.",
@@ -51,7 +51,7 @@
     "header_config": {},
     "footer_config": {},
     "is_premium": false,
-    "created_at": "2026-05-30T23:24:37.035Z",
-    "updated_at": "2026-05-30T23:24:37.035Z"
+    "created_at": "2026-06-03T14:51:44.437Z",
+    "updated_at": "2026-06-03T14:51:44.437Z"
   }
 ]
