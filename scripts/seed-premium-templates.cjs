@@ -1137,6 +1137,15 @@ const PREMIUM_TEMPLATES = [
     thumbnail: '',
     factory: premiumTeam,
   },
+  {
+    name: 'Tarifs premium',
+    description:
+      'Page de tarification avec 3 plans (Essentiel, Pro, Enterprise), comparaison et FAQ.',
+    category: 'conversion',
+    tags: ['premium', 'tarifs', 'pricing', 'prix', 'plans'],
+    thumbnail: '',
+    factory: premiumServices,
+  },
 ];
 
 // ── Seed templates into DB ─────────────────────────────

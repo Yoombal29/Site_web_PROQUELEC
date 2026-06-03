@@ -54,13 +54,17 @@ function createFunctionalPageStructure(slug, title) {
 
 async function main() {
   const pool = new Pool(DB_CONFIG);
+  const client = await pool.connect();
 
   try {
+    await client.query('BEGIN');
+    await client.query("SET LOCAL session_replication_role = 'replica'");
+
     for (const page of AUTH_PAGES) {
       const structure = createFunctionalPageStructure(page.slug, page.title);
       const structureJson = JSON.stringify(structure);
 
-      const result = await pool.query(
+      const result = await client.query(
         `
           UPDATE public.pages
              SET title = COALESCE(NULLIF(title, ''), $2),
@@ -85,7 +89,14 @@ async function main() {
         console.log(`[auth-functional] OK ${row.slug} (${row.id})`);
       }
     }
+
+    await client.query('COMMIT');
+    console.log('[auth-functional] Alignement terminé.');
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
   } finally {
+    client.release();
     await pool.end();
   }
 }
