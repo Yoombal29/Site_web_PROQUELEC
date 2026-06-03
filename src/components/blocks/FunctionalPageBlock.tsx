@@ -109,6 +109,9 @@ const FUNCTIONAL_PAGE_REGISTRY: Record<
   'demo-rbac': lazy(() =>
     import('@/pages/examples/RBACDemo').then((m) => ({ default: m.default || m })),
   ),
+  abonnements: lazy(() =>
+    import('@/pages/SubscriptionPage').then((m) => ({ default: m.default || m })),
+  ),
 };
 
 // Métadonnées descriptives pour chaque page fonctionnelle
@@ -263,6 +266,11 @@ const FUNCTIONAL_PAGE_META: Record<string, { title: string; description: string;
       title: 'Démo RBAC',
       description: 'Démonstration des permissions',
       route: '/demo/rbac',
+    },
+    abonnements: {
+      title: 'Abonnements',
+      description: "Page d'abonnement avec paiement",
+      route: '/abonnements',
     },
   };
 

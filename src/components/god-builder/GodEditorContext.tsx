@@ -6,6 +6,10 @@ import { useBuilderThemeStore, DEFAULT_THEME } from '@/stores/builder-theme.stor
 import { useBuilderHistoryStore } from '@/stores/builder-history.store';
 import { validateBuilderStructure, validateThemeConfig } from '@/validation/builderSchema';
 import convertLegacyBlocksToCraftGraph from '@/utils/legacyToCraft';
+import {
+  createFunctionalPageStructure,
+  isFunctionalPageStructure,
+} from '@/lib/functional-page-structure';
 
 export type PageDesignOptions = {
   theme?: string;
@@ -175,45 +179,23 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
         // Check structure: prioritize draft_json over structure_json
         const dbStructure = page.draft_json || page.structure_json;
 
-        // Pages fonctionnelles : créer une structure par défaut avec FunctionalPageBlock
-        const isFunctional = page.immutable === true;
         const isHybrid = page.design_options?.page_type === 'hybrid';
+        const isFunctional = page.immutable === true && !isHybrid;
+        const parsedDbStructure = parseBuilderStructure(dbStructure);
 
-        if (isFunctional && !dbStructure) {
-          // Créer une structure Craft.js avec FunctionalPageBlock
-          const functionalStructure = {
-            ROOT: {
-              type: 'div',
-              nodes: ['func_page_block'],
-              props: { style: {} },
-              linkedNodes: {},
-            },
-            func_page_block: {
-              type: { resolvedName: 'FunctionalPageBlock' },
-              nodes: [],
-              props: {
-                slug: page.slug || 'dashboard',
-                pageTitle: page.title || 'Page fonctionnelle',
-              },
-              parent: 'ROOT',
-              linkedNodes: {},
-              isCanvas: false,
-              displayName: 'FunctionalPageBlock',
-            },
-          };
+        if (isFunctional && !isFunctionalPageStructure(parsedDbStructure)) {
+          const functionalStructure = createFunctionalPageStructure(
+            page.slug || 'dashboard',
+            page.title || 'Page fonctionnelle',
+          );
           // @ts-ignore - Craft.js deserialize accepte les objets bruts
           actionsRef.current.deserialize(functionalStructure);
           lastSerializedRef.current = JSON.stringify(functionalStructure);
           console.info('[GodEditor] Structure fonctionnelle créée pour:', page.slug);
-        } else if (dbStructure) {
-          let parsed: any = null;
-          if (typeof dbStructure === 'string') {
-            parsed = JSON.parse(dbStructure);
-            lastSerializedRef.current = dbStructure;
-          } else {
-            parsed = dbStructure;
-            lastSerializedRef.current = JSON.stringify(dbStructure);
-          }
+        } else if (parsedDbStructure) {
+          const parsed: any = parsedDbStructure;
+          lastSerializedRef.current =
+            typeof dbStructure === 'string' ? dbStructure : JSON.stringify(dbStructure);
 
           if (isCraftJsFormat(parsed)) {
             actionsRef.current.deserialize(parsed);

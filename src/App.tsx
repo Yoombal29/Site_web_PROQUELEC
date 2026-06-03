@@ -10,6 +10,7 @@ import { MainLayout } from '@/components/MainLayout';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { NotificationContainer } from '@/components/NotificationContainer';
 import ConstructionPage from '@/components/ConstructionPage';
+import FunctionalBuilderRoute from '@/components/FunctionalBuilderRoute';
 import { useConstructionMode } from '@/hooks/useConstructionMode';
 import { useSession } from '@/hooks/useSession';
 import { useIsAdmin } from '@/hooks/useIsAdmin';
@@ -108,9 +109,18 @@ const AppContent = () => {
   const createRoutes = () => {
     const routes = [
       // Routes accessibles même en mode construction
-      { path: '/connexion', element: <Auth /> },
-      { path: '/login', element: <Auth /> },
-      { path: '/auth', element: <Auth /> },
+      {
+        path: '/connexion',
+        element: <FunctionalBuilderRoute slug="connexion" title="Connexion" fallback={<Auth />} />,
+      },
+      {
+        path: '/login',
+        element: <FunctionalBuilderRoute slug="login" title="Login" fallback={<Auth />} />,
+      },
+      {
+        path: '/auth',
+        element: <FunctionalBuilderRoute slug="auth" title="Auth" fallback={<Auth />} />,
+      },
       { path: '/dashboard', element: <Dashboard /> },
       {
         path: '/admin',

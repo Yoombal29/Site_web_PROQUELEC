@@ -256,6 +256,29 @@ function generateCraftStructure(route, title) {
   };
 }
 
+function generateFunctionalStructure(slug, title) {
+  return {
+    ROOT: {
+      type: 'div',
+      nodes: ['func_page_block'],
+      props: { style: {} },
+      linkedNodes: {},
+    },
+    func_page_block: {
+      type: { resolvedName: 'FunctionalPageBlock' },
+      nodes: [],
+      props: {
+        slug,
+        pageTitle: title || 'Page fonctionnelle',
+      },
+      parent: 'ROOT',
+      linkedNodes: {},
+      isCanvas: false,
+      displayName: 'FunctionalPageBlock',
+    },
+  };
+}
+
 // ── Page metadata templates ─────────────────────────────
 function getPageMeta(slug, category) {
   const meta = {
@@ -356,7 +379,11 @@ async function migrate() {
         }
 
         // Prepare page data
-        const structureJson = JSON.stringify(generateCraftStructure(route, title));
+        const structureJson = JSON.stringify(
+          category === 'functional'
+            ? generateFunctionalStructure(slug, title)
+            : generateCraftStructure(route, title),
+        );
         const meta = getPageMeta(slug, category);
         const now = new Date().toISOString();
 
