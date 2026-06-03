@@ -35,6 +35,7 @@ export_full.cjs
 test-results/
 playwright-report/
 docker/postgres/data/
+docker/postgres/data-fresh/
 
 # Deploy scripts
 deploy.bat

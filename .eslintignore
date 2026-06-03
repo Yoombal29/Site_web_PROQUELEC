@@ -1,0 +1,11 @@
+# Ignore component blocks with dynamic styles
+src/components/blocks/ProquelecBlocks.tsx
+src/components/blocks/ContainerBlock.tsx
+src/components/builder/BuilderPageRenderer.tsx
+src/pages/DynamicPage.tsx
+
+# Standard ignores
+dist
+node_modules
+build
+.next

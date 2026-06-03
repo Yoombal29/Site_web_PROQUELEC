@@ -1,4 +1,3 @@
-/* eslint-disable no-inline-styles */
 import React, { useEffect, useState, ComponentType } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { PageRenderer } from '@/components/PageRenderer';

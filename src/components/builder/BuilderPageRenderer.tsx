@@ -1,4 +1,3 @@
-/* eslint-disable no-inline-styles */
 import React, { useEffect } from 'react';
 import { useSortable, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';

@@ -1,4 +1,3 @@
-/* eslint-disable no-inline-styles */
 import React from 'react';
 import { useNode } from '@craftjs/core';
 import { getUniversalStyles } from './universalStyles';
@@ -20,7 +19,6 @@ export const ContainerBlock = (props: ContainerProps & any) => {
   if (!visible) return null;
 
   return (
-    // eslint-disable-next-line no-inline-styles
     <div
       ref={(ref) => { if (ref) connect(drag(ref)); }}
       style={{

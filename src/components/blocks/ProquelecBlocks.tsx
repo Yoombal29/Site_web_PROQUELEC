@@ -1,4 +1,3 @@
-/* eslint-disable no-inline-styles */
 /**
  * ProquelecBlocks.tsx
  * Tous les blocs PROQUELEC adaptés pour Craft.js.
