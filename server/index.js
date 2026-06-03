@@ -2286,6 +2286,117 @@ app.patch('/api/admin/users/:id/status', authenticateToken, requireAdmin, async 
   }
 });
 
+// == SUB-ADMIN & PERMISSIONS ==
+
+// Créer un sous-admin avec pouvoirs limités
+app.post('/api/admin/sub-admin', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { email, password, permissions } = req.body;
+    if (!email || !password) return res.status(400).json({ error: 'Email et mot de passe requis' });
+    const normalizedEmail = String(email).trim().toLowerCase();
+    const exists = await pool.query('SELECT id FROM public.users WHERE email = $1', [
+      normalizedEmail,
+    ]);
+    if (exists.rows.length > 0) return res.status(409).json({ error: 'Cet email existe déjà' });
+    const passwordHash = await bcrypt.hash(password, 10);
+    const result = await pool.query(
+      'INSERT INTO public.users (email, password_hash, role, is_active, created_at, updated_at) VALUES ($1, $2, $3, true, NOW(), NOW()) RETURNING id, email, role, is_active, created_at',
+      [normalizedEmail, passwordHash, 'secondary_admin'],
+    );
+    if (permissions && Array.isArray(permissions)) {
+      for (const perm of permissions) {
+        await pool.query(
+          'INSERT INTO public.user_permissions (user_id, permission_id, granted) SELECT $1, id, true FROM public.permissions WHERE name = $2 ON CONFLICT DO NOTHING',
+          [result.rows[0].id, perm],
+        );
+      }
+    }
+    res.status(201).json({ ...result.rows[0], permissions: permissions || [] });
+  } catch (err) {
+    console.error('[SUBADMIN] Error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Lister les permissions disponibles
+app.get('/api/admin/permissions-list', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT id, name, description, category FROM public.permissions ORDER BY category, name',
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// == ABONNEMENTS ==
+
+// Plans d'abonnement
+app.get('/api/subscription-plans', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM public.subscription_plans WHERE is_active = true ORDER BY price',
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Souscrire à un plan
+app.post('/api/subscriptions', authenticateToken, async (req, res) => {
+  try {
+    const { plan_id } = req.body;
+    if (!plan_id) return res.status(400).json({ error: 'Plan requis' });
+    const plan = await pool.query(
+      'SELECT * FROM public.subscription_plans WHERE id = $1 AND is_active = true',
+      [plan_id],
+    );
+    if (plan.rows.length === 0) return res.status(404).json({ error: 'Plan non trouvé' });
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + plan.rows[0].duration_days);
+    const result = await pool.query(
+      'INSERT INTO public.user_subscriptions (user_id, plan_id, end_date, payment_status, is_active) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [
+        req.user.id,
+        plan_id,
+        endDate,
+        plan.rows[0].price > 0 ? 'pending' : 'active',
+        plan.rows[0].price === 0,
+      ],
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Mon abonnement
+app.get('/api/my-subscription', authenticateToken, async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT us.*, sp.name, sp.description, sp.features, sp.price FROM public.user_subscriptions us JOIN public.subscription_plans sp ON us.plan_id = sp.id WHERE us.user_id = $1 AND us.is_active = true AND us.end_date > NOW() ORDER BY us.end_date DESC LIMIT 1',
+      [req.user.id],
+    );
+    res.json(result.rows[0] || null);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Admin: lister abonnements
+app.get('/api/admin/subscriptions', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT us.*, sp.name as plan_name, u.email as user_email FROM public.user_subscriptions us JOIN public.subscription_plans sp ON us.plan_id = sp.id JOIN public.users u ON us.user_id = u.id ORDER BY us.created_at DESC',
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // == DATA ENDPOINTS ==
 
 // Site Settings
