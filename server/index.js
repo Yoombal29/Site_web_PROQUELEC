@@ -1977,7 +1977,7 @@ app.post('/api/auth/login', async (req, res) => {
     if (user.is_active === false) {
       return res.status(403).json({
         error: 'Votre compte est en attente de validation par un administrateur.',
-        code: 'ACCOUNT_PENDING'
+        code: 'ACCOUNT_PENDING',
       });
     }
 
@@ -2058,15 +2058,17 @@ app.post('/api/auth/register', async (req, res) => {
     });
 
     // Notification email non bloquante
-    sendNewUserNotification({ email: user.email, nom: full_name, phone, role: userRole }).then(r => {
-      if (r.success) console.log('[REGISTER] Email notification sent');
-      else console.warn('[REGISTER] Email notification failed:', r.error);
-    });
+    sendNewUserNotification({ email: user.email, nom: full_name, phone, role: userRole }).then(
+      (r) => {
+        if (r.success) console.log('[REGISTER] Email notification sent');
+        else console.warn('[REGISTER] Email notification failed:', r.error);
+      },
+    );
 
     res.status(201).json({
       access_token: token,
       user: { id: user.id, email: user.email, role: user.role, is_active: user.is_active },
-      message: "Votre compte a été créé et est en attente de validation par un administrateur."
+      message: 'Votre compte a été créé et est en attente de validation par un administrateur.',
     });
   } catch (err) {
     console.error('Registration error:', err);
@@ -2167,6 +2169,29 @@ app.post('/api/admin/users', authenticateToken, requireAdmin, async (req, res) =
 app.put('/api/admin/users/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const id = req.params.id;
+
+    // Vérifier si l'utilisateur est immutable
+    const check = await pool.query('SELECT immutable FROM public.users WHERE id = $1', [id]);
+    if (check.rows.length === 0) return res.status(404).json({ error: 'Utilisateur non trouvé' });
+
+    if (check.rows[0].immutable) {
+      // Vérifier le code 2FA pour les comptes protégés
+      const twoFactorCode = req.headers['x-2fa-code'];
+      if (!twoFactorCode) {
+        return res.status(403).json({
+          error: '2FA_REQUIRED',
+          message: 'Code 2FA requis pour modifier ce compte protégé.',
+        });
+      }
+      const valid = await pool.query(
+        'SELECT id FROM public.users WHERE id = $1 AND two_factor_secret = $2',
+        [id, twoFactorCode],
+      );
+      if (valid.rows.length === 0) {
+        return res.status(403).json({ error: 'Code 2FA invalide.' });
+      }
+    }
+
     const { email, role, password, is_active } = req.body;
     const updates = [];
     const params = [];
@@ -2188,9 +2213,9 @@ app.put('/api/admin/users/:id', authenticateToken, requireAdmin, async (req, res
       updates.push(`password_hash = $${idx++}`);
       params.push(hash);
     }
-    if (updates.length === 0) return res.status(400).json({ error: 'No updates provided' });
+    if (updates.length === 0) return res.status(400).json({ error: 'Aucune modification fournie' });
     params.push(id);
-    const q = `UPDATE public.users SET ${updates.join(', ')} WHERE id = $${idx} RETURNING id, email, role, is_active, created_at`;
+    const q = `UPDATE public.users SET ${updates.join(', ')} WHERE id = $${idx} RETURNING id, email, role, is_active, created_at, immutable`;
     const result = await pool.query(q, params);
     res.json(result.rows[0]);
   } catch (err) {
@@ -2202,6 +2227,18 @@ app.put('/api/admin/users/:id', authenticateToken, requireAdmin, async (req, res
 app.delete('/api/admin/users/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const id = req.params.id;
+
+    // Vérifier si l'utilisateur est immutable
+    const check = await pool.query('SELECT immutable FROM public.users WHERE id = $1', [id]);
+    if (check.rows.length === 0) return res.status(404).json({ error: 'Utilisateur non trouvé' });
+
+    if (check.rows[0].immutable) {
+      return res.status(403).json({
+        error: 'IMMUTABLE_USER',
+        message: 'Ce compte est protégé et ne peut pas être supprimé.',
+      });
+    }
+
     await pool.query('DELETE FROM public.users WHERE id = $1', [id]);
     res.sendStatus(204);
   } catch (err) {
@@ -2213,11 +2250,33 @@ app.delete('/api/admin/users/:id', authenticateToken, requireAdmin, async (req, 
 app.patch('/api/admin/users/:id/status', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const id = req.params.id;
+
+    // Vérifier si l'utilisateur est immutable
+    const check = await pool.query('SELECT immutable FROM public.users WHERE id = $1', [id]);
+    if (check.rows.length === 0) return res.status(404).json({ error: 'Utilisateur non trouvé' });
+
+    if (check.rows[0].immutable) {
+      const twoFactorCode = req.headers['x-2fa-code'];
+      if (!twoFactorCode) {
+        return res.status(403).json({
+          error: '2FA_REQUIRED',
+          message: 'Code 2FA requis pour modifier ce compte protégé.',
+        });
+      }
+      const valid = await pool.query(
+        'SELECT id FROM public.users WHERE id = $1 AND two_factor_secret = $2',
+        [id, twoFactorCode],
+      );
+      if (valid.rows.length === 0) {
+        return res.status(403).json({ error: 'Code 2FA invalide.' });
+      }
+    }
+
     const { is_active } = req.body;
     if (typeof is_active === 'undefined')
       return res.status(400).json({ error: 'is_active required' });
     const result = await pool.query(
-      'UPDATE public.users SET is_active = $1 WHERE id = $2 RETURNING id, email, role, is_active, created_at',
+      'UPDATE public.users SET is_active = $1 WHERE id = $2 RETURNING id, email, role, is_active, created_at, immutable',
       [!!is_active, id],
     );
     res.json(result.rows[0]);
@@ -4750,7 +4809,9 @@ const initDB = async () => {
     let adminPassword = process.env.ADMIN_PASSWORD;
     if (!adminPassword && process.env.NODE_ENV !== 'production') {
       adminPassword = 'admin123';
-      console.warn('[DB] No ADMIN_PASSWORD set. Seeding default admin admin@proquelec.sn with password admin123 for local development.');
+      console.warn(
+        '[DB] No ADMIN_PASSWORD set. Seeding default admin admin@proquelec.sn with password admin123 for local development.',
+      );
     }
     if (adminPassword) {
       const userCheck = await pool.query('SELECT * FROM public.users WHERE email = $1', [
@@ -5728,7 +5789,7 @@ app.post('/api/tech-tools', authenticateToken, async (req, res) => {
     const { name, description, icon, route, roles, is_paid, price } = req.body;
     const { rows } = await pool.query(
       'INSERT INTO public.tech_tools (name, description, icon, route, roles, is_paid, price) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
-      [name, description, icon, route, JSON.stringify(roles || []), is_paid || false, price || 0]
+      [name, description, icon, route, JSON.stringify(roles || []), is_paid || false, price || 0],
     );
     res.status(201).json(rows[0]);
   } catch (error) {
@@ -5741,7 +5802,17 @@ app.put('/api/tech-tools/:id', authenticateToken, async (req, res) => {
     const { name, description, icon, route, roles, is_paid, price, is_active } = req.body;
     const { rows } = await pool.query(
       'UPDATE public.tech_tools SET name=$1, description=$2, icon=$3, route=$4, roles=$5, is_paid=$6, price=$7, is_active=$8, updated_at=NOW() WHERE id=$9 RETURNING *',
-      [name, description, icon, route, roles ? JSON.stringify(roles) : null, is_paid, price, is_active, req.params.id]
+      [
+        name,
+        description,
+        icon,
+        route,
+        roles ? JSON.stringify(roles) : null,
+        is_paid,
+        price,
+        is_active,
+        req.params.id,
+      ],
     );
     if (rows.length === 0) return res.status(404).json({ error: 'Tool not found' });
     res.json(rows[0]);
@@ -5752,7 +5823,9 @@ app.put('/api/tech-tools/:id', authenticateToken, async (req, res) => {
 
 app.delete('/api/tech-tools/:id', authenticateToken, async (req, res) => {
   try {
-    const { rowCount } = await pool.query('DELETE FROM public.tech_tools WHERE id=$1', [req.params.id]);
+    const { rowCount } = await pool.query('DELETE FROM public.tech_tools WHERE id=$1', [
+      req.params.id,
+    ]);
     if (rowCount === 0) return res.status(404).json({ error: 'Tool not found' });
     res.json({ success: true });
   } catch (error) {
@@ -5768,7 +5841,7 @@ app.delete('/api/tech-tools/:id', authenticateToken, async (req, res) => {
 app.get('/api/admin/notifications', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const { rows } = await pool.query(
-      'SELECT * FROM notifications ORDER BY created_at DESC LIMIT 100'
+      'SELECT * FROM notifications ORDER BY created_at DESC LIMIT 100',
     );
     res.json(rows);
   } catch (error) {
@@ -5784,21 +5857,26 @@ app.post('/api/admin/notifications', authenticateToken, requireAdmin, async (req
 
     const { rows } = await pool.query(
       'INSERT INTO notifications (title, message, target_role, created_by) VALUES ($1, $2, $3, $4) RETURNING *',
-      [title, message, target_role || null, req.user.id]
+      [title, message, target_role || null, req.user.id],
     );
 
     // Envoyer email aux utilisateurs du rôle cible (non bloquant)
     if (target_role) {
-      const users = await pool.query('SELECT email, COALESCE(name, email) as full_name FROM users WHERE role = $1 AND is_active = true', [target_role]);
+      const users = await pool.query(
+        'SELECT email, COALESCE(name, email) as full_name FROM users WHERE role = $1 AND is_active = true',
+        [target_role],
+      );
       for (const user of users.rows) {
         try {
           await sendEmail({
             to: user.email,
             subject: `[PROQUELEC] ${title}`,
             html: `<div style="padding:20px;font-family:Arial"><h2 style="color:#1e3a5f">${title}</h2><p>${message}</p><hr><p style="color:#999;font-size:12px">Message de PROQUELEC</p></div>`,
-            text: `${title}\n\n${message}`
+            text: `${title}\n\n${message}`,
           });
-        } catch(e) { console.warn('[NOTIF] Email failed:', user.email); }
+        } catch (e) {
+          console.warn('[NOTIF] Email failed:', user.email);
+        }
       }
     }
 
@@ -5811,14 +5889,17 @@ app.post('/api/admin/notifications', authenticateToken, requireAdmin, async (req
 // GET /api/notifications — Notifications pour l'utilisateur connecté
 app.get('/api/notifications', authenticateToken, async (req, res) => {
   try {
-    const { rows } = await pool.query(`
+    const { rows } = await pool.query(
+      `
       SELECT n.*, nr.id IS NOT NULL as read
       FROM notifications n
       LEFT JOIN notification_reads nr ON nr.notification_id = n.id AND nr.user_id = $1
       WHERE n.target_role IS NULL OR n.target_role = $2
       ORDER BY n.created_at DESC
       LIMIT 50
-    `, [req.user.id, req.user.role]);
+    `,
+      [req.user.id, req.user.role],
+    );
     res.json(rows);
   } catch (error) {
     handleAppError(error, res);
@@ -5828,12 +5909,15 @@ app.get('/api/notifications', authenticateToken, async (req, res) => {
 // GET /api/notifications/unread-count — Nombre de notifications non lues
 app.get('/api/notifications/unread-count', authenticateToken, async (req, res) => {
   try {
-    const { rows } = await pool.query(`
+    const { rows } = await pool.query(
+      `
       SELECT COUNT(*) as count FROM notifications n
       LEFT JOIN notification_reads nr ON nr.notification_id = n.id AND nr.user_id = $1
       WHERE (n.target_role IS NULL OR n.target_role = $2)
       AND nr.id IS NULL
-    `, [req.user.id, req.user.role]);
+    `,
+      [req.user.id, req.user.role],
+    );
     res.json({ count: parseInt(rows[0].count) });
   } catch (error) {
     handleAppError(error, res);
@@ -5845,7 +5929,7 @@ app.put('/api/notifications/:id/read', authenticateToken, async (req, res) => {
   try {
     await pool.query(
       'INSERT INTO notification_reads (notification_id, user_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
-      [req.params.id, req.user.id]
+      [req.params.id, req.user.id],
     );
     res.json({ success: true });
   } catch (error) {
@@ -6341,7 +6425,7 @@ app.post('/api/contact-requests', async (req, res) => {
       [nom, email, telephone, sujet, message, 'nouveau'],
     );
     // Envoi de la notification par email (non bloquant)
-    sendContactNotification({ nom, email, telephone, sujet, message }).then(r => {
+    sendContactNotification({ nom, email, telephone, sujet, message }).then((r) => {
       if (r.success) console.log('[CONTACT] Email notification sent');
       else console.warn('[CONTACT] Email notification failed:', r.error);
     });
