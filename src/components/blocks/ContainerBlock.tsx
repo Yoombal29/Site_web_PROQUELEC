@@ -50,39 +50,29 @@ const ContainerSettings = () => {
             value={backgroundColor || '#ffffff'}
             onChange={(e) => setProp((props: any) => props.backgroundColor = e.target.value)}
             className="w-10 h-8 rounded cursor-pointer bg-transparent border-0"
-            aria-label="Sélecteur de couleur de fond"
-            title="Choisir la couleur de fond"
           />
           <input
             type="text"
             value={backgroundColor || '#ffffff'}
             onChange={(e) => setProp((props: any) => props.backgroundColor = e.target.value)}
             className="flex-1 bg-[#151521] border border-[#252538] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500"
-            aria-label="Code couleur de fond"
-            title="Code couleur hexadécimal"
           />
         </div>
       </div>
       <div>
         <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Padding H (px)</label>
         <input
-          type="number"
-          value={padding || 0}
+          type="number" value={padding || 0}
           onChange={(e) => setProp((props: any) => props.padding = parseInt(e.target.value, 10))}
           className="w-full bg-[#151521] border border-[#252538] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500"
-          aria-label="Padding horizontal en pixels"
-          title="Espacement horizontal intérieur"
         />
       </div>
       <div>
         <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Padding V (px)</label>
         <input
-          type="number"
-          value={paddingY ?? ''}
+          type="number" value={paddingY ?? ''}
           onChange={(e) => setProp((props: any) => props.paddingY = parseInt(e.target.value, 10))}
           className="w-full bg-[#151521] border border-[#252538] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500"
-          aria-label="Padding vertical en pixels"
-          title="Espacement vertical intérieur"
         />
       </div>
       <div>
@@ -91,8 +81,6 @@ const ContainerSettings = () => {
           value={maxWidth || '100%'}
           onChange={(e) => setProp((props: any) => props.maxWidth = e.target.value)}
           className="w-full bg-[#151521] border border-[#252538] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500"
-          aria-label="Largeur maximale du conteneur"
-          title="Sélectionner la largeur maximale"
         >
           <option value="100%">Pleine largeur</option>
           <option value="1280px">1280px (XL)</option>
