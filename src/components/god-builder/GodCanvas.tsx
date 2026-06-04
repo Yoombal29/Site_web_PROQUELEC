@@ -15,6 +15,7 @@ import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
 import { useAnimateOnScroll } from '@/hooks/useAnimateOnScroll';
 import { cloneNodeTreeWithNewIds } from './cloneNodeTree.ts';
 import { useGodEditor } from './GodEditorContext';
+import { buildAnimationRuntimeCss } from '@/components/blocks/animationPresets';
 
 const VIEWPORT_WIDTHS: Record<string, string> = {
   desktop: '100%',
@@ -1018,50 +1019,7 @@ export const GodCanvas = () => {
           user-select: none !important;
         }
 
-        /* Entrance Animations — paused by default, triggered on scroll via IntersectionObserver */
-        .animate-fadeIn, .animate-fadeInUp, .animate-fadeInDown, .animate-fadeInLeft, .animate-fadeInRight,
-        .animate-slideInUp, .animate-slideInDown, .animate-slideInLeft, .animate-slideInRight,
-        .animate-zoomIn, .animate-zoomInUp, .animate-zoomInDown,
-        .animate-bounceIn, .animate-flipInX, .animate-flipInY {
-          animation-play-state: paused !important;
-        }
-        .animate-fadeIn.is-visible, .animate-fadeInUp.is-visible, .animate-fadeInDown.is-visible, .animate-fadeInLeft.is-visible, .animate-fadeInRight.is-visible,
-        .animate-slideInUp.is-visible, .animate-slideInDown.is-visible, .animate-slideInLeft.is-visible, .animate-slideInRight.is-visible,
-        .animate-zoomIn.is-visible, .animate-zoomInUp.is-visible, .animate-zoomInDown.is-visible,
-        .animate-bounceIn.is-visible, .animate-flipInX.is-visible, .animate-flipInY.is-visible {
-          animation-play-state: running !important;
-        }
-        .animate-fadeIn { animation: anim-fadeIn var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-fadeInUp { animation: anim-fadeInUp var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-fadeInDown { animation: anim-fadeInDown var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-fadeInLeft { animation: anim-fadeInLeft var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-fadeInRight { animation: anim-fadeInRight var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-slideInUp { animation: anim-slideInUp var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-slideInDown { animation: anim-slideInDown var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-slideInLeft { animation: anim-slideInLeft var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-slideInRight { animation: anim-slideInRight var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-zoomIn { animation: anim-zoomIn var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-zoomInUp { animation: anim-zoomInUp var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-zoomInDown { animation: anim-zoomInDown var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-bounceIn { animation: anim-bounceIn var(--anim-duration, 800ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-flipInX { animation: anim-flipInX var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-        .animate-flipInY { animation: anim-flipInY var(--anim-duration, 600ms) var(--anim-easing, ease-out) var(--anim-delay, 0ms) both; }
-
-        @keyframes anim-fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes anim-fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes anim-fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes anim-fadeInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes anim-fadeInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes anim-slideInUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        @keyframes anim-slideInDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-        @keyframes anim-slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-        @keyframes anim-slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
-        @keyframes anim-zoomIn { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: scale(1); } }
-        @keyframes anim-zoomInUp { from { opacity: 0; transform: scale(0.6) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        @keyframes anim-zoomInDown { from { opacity: 0; transform: scale(0.6) translateY(-30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        @keyframes anim-bounceIn { from { opacity: 0; transform: scale(0.3); } 50% { transform: scale(1.05); } 70% { transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        @keyframes anim-flipInX { from { opacity: 0; transform: perspective(400px) rotateX(90deg); } to { opacity: 1; transform: perspective(400px) rotateX(0); } }
-        @keyframes anim-flipInY { from { opacity: 0; transform: perspective(400px) rotateY(90deg); } to { opacity: 1; transform: perspective(400px) rotateY(0); } }
+        ${buildAnimationRuntimeCss()}
       `}</style>
     </div>
   );

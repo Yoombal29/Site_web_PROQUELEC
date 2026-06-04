@@ -3629,6 +3629,49 @@ app.post('/api/newsletter-subscribers', async (req, res) => {
   );
 });
 
+// Désabonnement newsletter
+app.get('/api/newsletter/unsubscribe', async (req, res) => {
+  const { email } = req.query;
+  if (!email) return res.status(400).json({ error: 'Email requis' });
+  await pool.query('UPDATE public.newsletter_subscribers SET is_active = false WHERE email = $1', [
+    email,
+  ]);
+  res.send('\u2705 Vous avez \u00e9t\u00e9 d\u00e9sabonn\u00e9 de la newsletter PROQUELEC.');
+});
+
+// Envoi de newsletter (admin)
+app.post('/api/admin/newsletter/send', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { title, content, subject } = req.body;
+    if (!title || !content) return res.status(400).json({ error: 'Titre et contenu requis' });
+
+    const { sendNewsletter } = require('./newsletter-service');
+    const result = await sendNewsletter({ title, content, subject });
+
+    res.json({
+      success: true,
+      sent: result.sent,
+      failed: result.failed,
+      message: `Newsletter envoy\u00e9e \u00e0 ${result.sent} abonn\u00e9(s)`,
+    });
+  } catch (err) {
+    console.error('[NEWSLETTER] Send error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Campagnes newsletter (admin)
+app.get('/api/admin/newsletter/campaigns', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM public.newsletter_campaigns ORDER BY sent_at DESC',
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // -- Media Files --
 app.get('/api/media-files', authenticateToken, async (req, res) => {
   await getTable(req, res, 'media_files', 'uploaded_at DESC');

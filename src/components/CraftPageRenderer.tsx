@@ -4,9 +4,11 @@
  * Séparé de DynamicPage pour permettre le lazy loading
  * et éviter d'alourdir le bundle public avec Craft.js.
  */
-import React from 'react';
+import React, { useRef } from 'react';
 import { Editor, Frame } from '@craftjs/core';
 import { CRAFT_RESOLVER } from '@/components/blocks/craftResolver';
+import { buildAnimationRuntimeCss } from '@/components/blocks/animationPresets';
+import { useAnimateOnScroll } from '@/hooks/useAnimateOnScroll';
 
 // ErrorBoundary pour le rendu Craft.js
 class CraftErrorBoundary extends React.Component<
@@ -38,6 +40,9 @@ export const CraftPageRenderer: React.FC<CraftPageRendererProps> = ({
   structureJson,
   fallback,
 }) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  useAnimateOnScroll(containerRef, { threshold: 0.1, once: true });
+
   // Normaliser la structure : convertir type: 'BlockName' en type: { resolvedName: 'BlockName' }
   const normalizeStructure = (data: any): any => {
     if (!data || typeof data !== 'object') return data;
@@ -67,10 +72,13 @@ export const CraftPageRenderer: React.FC<CraftPageRendererProps> = ({
 
   return (
     <CraftErrorBoundary fallback={fallback}>
-      <Editor resolver={CRAFT_RESOLVER} enabled={false}>
-        {/* @ts-ignore - Frame accepte les objets JSON bruts */}
-        <Frame data={normalizeStructure(structureJson)} />
-      </Editor>
+      <div ref={containerRef}>
+        <style>{buildAnimationRuntimeCss()}</style>
+        <Editor resolver={CRAFT_RESOLVER} enabled={false}>
+          {/* @ts-ignore - Frame accepte les objets JSON bruts */}
+          <Frame data={normalizeStructure(structureJson)} />
+        </Editor>
+      </div>
     </CraftErrorBoundary>
   );
 };

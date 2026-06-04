@@ -27,7 +27,7 @@ export interface UniversalStylesProps {
   opacity?: number;
   boxShadow?: string;
   zIndex?: number | 'auto';
-  entryAnimation?: string;
+  entryAnimation?: ResponsiveProp<string>;
   customInlineCss?: string;
   extraClasses?: string;
   htmlId?: string;
@@ -65,10 +65,23 @@ export interface UniversalStylesProps {
   fontColor?: string;
 
   // Entrance Animation
-  entranceAnimation?: string;
+  entranceAnimation?: ResponsiveProp<string>;
   animationDuration?: ResponsiveProp<number>;
   animationDelay?: ResponsiveProp<number>;
-  animationEasing?: string;
+  animationEasing?: ResponsiveProp<string>;
+  animationTrigger?: ResponsiveProp<'viewport' | 'load'>;
+  animationRepeat?: ResponsiveProp<string | number>;
+  animationDirection?: ResponsiveProp<'normal' | 'reverse' | 'alternate' | 'alternate-reverse'>;
+  animationFillMode?: ResponsiveProp<'none' | 'forwards' | 'backwards' | 'both'>;
+
+  // Motion & visual effects
+  hoverEffect?: ResponsiveProp<string>;
+  hoverDuration?: ResponsiveProp<number>;
+  hoverIntensity?: ResponsiveProp<number>;
+  hoverEasing?: ResponsiveProp<string>;
+  hoverGlowColor?: string;
+  filterEffect?: ResponsiveProp<string>;
+  filterIntensity?: ResponsiveProp<number>;
 }
 
 /**
@@ -100,6 +113,21 @@ export const getUniversalStyles = (props: UniversalStylesProps) => {
       style[`--tablet-${varName}`] = `${val}${unit}`;
       style[`--mobile-${varName}`] = `${val}${unit}`;
     }
+  };
+
+  const getValue = <T,>(value: ResponsiveProp<T> | undefined, fallback?: T): T | undefined => {
+    if (value === undefined || value === null) return fallback;
+    if (typeof value === 'object' && !Array.isArray(value)) {
+      const responsive = value as { desktop?: T; tablet?: T; mobile?: T };
+      return responsive.desktop ?? responsive.tablet ?? responsive.mobile ?? fallback;
+    }
+    return value as T;
+  };
+
+  const getNumberValue = (value: ResponsiveProp<number> | undefined, fallback: number) => {
+    const resolved = getValue<number>(value, fallback);
+    const numeric = typeof resolved === 'number' ? resolved : Number(resolved);
+    return Number.isFinite(numeric) ? numeric : fallback;
   };
 
   // 1. Spacing (Marge & Padding)
@@ -168,6 +196,30 @@ export const getUniversalStyles = (props: UniversalStylesProps) => {
     style['--z-index'] = props.zIndex === 'auto' ? 'auto' : props.zIndex;
   }
 
+  const hoverEffect = getValue<string>(props.hoverEffect, 'none');
+  const hoverDuration = getNumberValue(props.hoverDuration, 220);
+  const hoverIntensity = getNumberValue(props.hoverIntensity, 10);
+  const hoverEasing = getValue<string>(props.hoverEasing, 'ease-out');
+  const filterEffect = getValue<string>(props.filterEffect, 'none');
+  const filterIntensity = getNumberValue(props.filterIntensity, 100);
+
+  if (hoverEffect && hoverEffect !== 'none') {
+    style['--hover-duration'] = `${hoverDuration}ms`;
+    style['--hover-easing'] = hoverEasing;
+    style['--hover-distance'] = `${hoverIntensity}px`;
+    style['--hover-scale'] = `${1 + Math.min(hoverIntensity, 40) / 250}`;
+    style['--hover-zoom'] = `${1 + Math.min(hoverIntensity, 40) / 160}`;
+    style['--hover-rotate'] = `${Math.max(1, hoverIntensity / 3)}deg`;
+    style['--hover-blur'] = `${Math.max(1, hoverIntensity / 8)}px`;
+    style['--hover-glow-color'] = props.hoverGlowColor ?? '#2563eb';
+  }
+
+  if (filterEffect && filterEffect !== 'none') {
+    const percent = `${Math.max(0, filterIntensity)}%`;
+    style['--filter-amount'] = percent;
+    style['--filter-blur'] = `${Math.max(0, filterIntensity / 25)}px`;
+  }
+
   // 4. CSS personnalisé (inline parse)
   if (props.customInlineCss) {
     try {
@@ -189,18 +241,35 @@ export const getUniversalStyles = (props: UniversalStylesProps) => {
 
   // 5. Entrance Animation & Visibility
   let animationClass = '';
-  if (props.entranceAnimation && props.entranceAnimation !== 'none') {
-    animationClass = `animate-${props.entranceAnimation}`;
+  const entranceAnimation = getValue<string>(props.entranceAnimation ?? props.entryAnimation, 'none');
+  if (entranceAnimation && entranceAnimation !== 'none') {
+    animationClass = `animate-${entranceAnimation}`;
     if (props.animationDuration !== undefined && props.animationDuration !== null) {
-      const dur = typeof props.animationDuration === 'object' ? props.animationDuration.desktop : props.animationDuration;
-      style['--anim-duration'] = `${dur}ms`;
+      style['--anim-duration'] = `${getNumberValue(props.animationDuration, 600)}ms`;
     }
     if (props.animationDelay !== undefined && props.animationDelay !== null) {
-      const del = typeof props.animationDelay === 'object' ? props.animationDelay.desktop : props.animationDelay;
-      style['--anim-delay'] = `${del}ms`;
+      style['--anim-delay'] = `${getNumberValue(props.animationDelay, 0)}ms`;
     }
-    if (props.animationEasing) {
-      style['--anim-easing'] = props.animationEasing;
+    const easing = getValue<string>(props.animationEasing, 'ease-out');
+    const repeat = getValue<string | number>(props.animationRepeat, 1);
+    const direction = getValue<string>(props.animationDirection, 'normal');
+    const fillMode = getValue<string>(props.animationFillMode, 'both');
+    const trigger = getValue<string>(props.animationTrigger, 'viewport');
+
+    if (easing) {
+      style['--anim-easing'] = easing;
+    }
+    if (repeat !== undefined && repeat !== null) {
+      style['--anim-iteration-count'] = String(repeat);
+    }
+    if (direction) {
+      style['--anim-direction'] = direction;
+    }
+    if (fillMode) {
+      style['--anim-fill-mode'] = fillMode;
+    }
+    if (trigger === 'load') {
+      animationClass += ' animation-trigger-load';
     }
   }
 
@@ -210,8 +279,12 @@ export const getUniversalStyles = (props: UniversalStylesProps) => {
   if (props.hideMobile) visibilityClasses.push('hide-mobile');
   if (props.reverseMobile) visibilityClasses.push('reverse-mobile');
 
+  const effectClasses = [];
+  if (hoverEffect && hoverEffect !== 'none') effectClasses.push(`effect-hover-${hoverEffect}`);
+  if (filterEffect && filterEffect !== 'none') effectClasses.push(`effect-filter-${filterEffect}`);
+
   return {
     style,
-    className: `${animationClass} ${visibilityClasses.join(' ')} ${props.extraClasses || ''}`.trim(),
+    className: `${animationClass} ${effectClasses.join(' ')} ${visibilityClasses.join(' ')} ${props.extraClasses || ''}`.trim(),
   };
 };

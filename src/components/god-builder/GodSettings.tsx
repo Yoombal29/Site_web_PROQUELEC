@@ -22,6 +22,12 @@ import { useBuilderThemeStore } from '@/stores/builder-theme.store';
 import { useBuilderUiStore } from '@/stores/builder-ui.store';
 import { useFontsStore } from '@/stores/fonts.store';
 import { toast } from 'sonner';
+import {
+  BUILDER_ANIMATION_EASING_OPTIONS,
+  BUILDER_FILTER_EFFECT_OPTIONS,
+  BUILDER_HOVER_EFFECT_OPTIONS,
+  getAnimationPresetOptions,
+} from '@/components/blocks/animationPresets';
 
 // ─────────────────────────────────────────────────────────
 // TAB BUTTON
@@ -605,23 +611,14 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
         <ResponsiveSelect
           label="Animation"
           propKey="entranceAnimation"
+          options={getAnimationPresetOptions()}
+        />
+        <ResponsiveSelect
+          label="Déclenchement"
+          propKey="animationTrigger"
           options={[
-            { value: 'none', label: 'Aucune' },
-            { value: 'fadeIn', label: 'Fade In' },
-            { value: 'fadeInUp', label: 'Fade In (haut)' },
-            { value: 'fadeInDown', label: 'Fade In (bas)' },
-            { value: 'fadeInLeft', label: 'Fade In (gauche)' },
-            { value: 'fadeInRight', label: 'Fade In (droite)' },
-            { value: 'slideInUp', label: 'Slide In (haut)' },
-            { value: 'slideInDown', label: 'Slide In (bas)' },
-            { value: 'slideInLeft', label: 'Slide In (gauche)' },
-            { value: 'slideInRight', label: 'Slide In (droite)' },
-            { value: 'zoomIn', label: 'Zoom In' },
-            { value: 'zoomInUp', label: 'Zoom In (haut)' },
-            { value: 'zoomInDown', label: 'Zoom In (bas)' },
-            { value: 'bounceIn', label: 'Bounce In' },
-            { value: 'flipInX', label: 'Flip X' },
-            { value: 'flipInY', label: 'Flip Y' },
+            { value: 'viewport', label: 'Au scroll / visible' },
+            { value: 'load', label: 'Au chargement' },
           ]}
         />
         <ResponsiveNumberInput
@@ -641,12 +638,36 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
         <ResponsiveSelect
           label="Easing"
           propKey="animationEasing"
+          options={BUILDER_ANIMATION_EASING_OPTIONS}
+        />
+        <ResponsiveSelect
+          label="Répétition"
+          propKey="animationRepeat"
           options={[
-            { value: 'ease', label: 'Ease' },
-            { value: 'ease-in', label: 'Ease In' },
-            { value: 'ease-out', label: 'Ease Out' },
-            { value: 'ease-in-out', label: 'Ease In Out' },
-            { value: 'linear', label: 'Linear' },
+            { value: '1', label: '1 fois' },
+            { value: '2', label: '2 fois' },
+            { value: '3', label: '3 fois' },
+            { value: 'infinite', label: 'Infini' },
+          ]}
+        />
+        <ResponsiveSelect
+          label="Direction"
+          propKey="animationDirection"
+          options={[
+            { value: 'normal', label: 'Normale' },
+            { value: 'reverse', label: 'Inversée' },
+            { value: 'alternate', label: 'Alternée' },
+            { value: 'alternate-reverse', label: 'Alternée inversée' },
+          ]}
+        />
+        <ResponsiveSelect
+          label="État final"
+          propKey="animationFillMode"
+          options={[
+            { value: 'both', label: 'Conserver début + fin' },
+            { value: 'forwards', label: 'Conserver fin' },
+            { value: 'backwards', label: 'Conserver début' },
+            { value: 'none', label: 'Aucun' },
           ]}
         />
       </Section>
@@ -735,6 +756,70 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
       </Section>
 
       <Section id="effects" title="✨ Effets">
+        <ResponsiveSelect
+          label="Effet au survol"
+          propKey="hoverEffect"
+          options={BUILDER_HOVER_EFFECT_OPTIONS}
+        />
+        <ResponsiveNumberInput
+          label="Durée survol (ms)"
+          propKey="hoverDuration"
+          min={80}
+          max={2000}
+          step={20}
+        />
+        <ResponsiveNumberInput
+          label="Intensité survol"
+          propKey="hoverIntensity"
+          min={0}
+          max={40}
+          step={1}
+        />
+        <ResponsiveSelect
+          label="Easing survol"
+          propKey="hoverEasing"
+          options={BUILDER_ANIMATION_EASING_OPTIONS}
+        />
+        <div>
+          <label className="block text-[10px] text-slate-500 mb-1 uppercase tracking-wider">
+            Couleur glow
+          </label>
+          <div className="flex gap-2 items-center">
+            <input
+              type="color"
+              value={nodeProps.hoverGlowColor ?? '#2563eb'}
+              onChange={(e) =>
+                setProp((p: any) => {
+                  p.hoverGlowColor = e.target.value;
+                })
+              }
+              className="w-10 h-8 rounded cursor-pointer bg-transparent border-0"
+            />
+            <input
+              type="text"
+              value={nodeProps.hoverGlowColor ?? '#2563eb'}
+              onChange={(e) =>
+                setProp((p: any) => {
+                  p.hoverGlowColor = e.target.value;
+                })
+              }
+              className="flex-1 bg-[#151521] border border-[#252538] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500"
+            />
+          </div>
+        </div>
+        <ResponsiveSelect
+          label="Filtre visuel"
+          propKey="filterEffect"
+          options={BUILDER_FILTER_EFFECT_OPTIONS}
+        />
+        <ResponsiveNumberInput
+          label="Intensité filtre"
+          propKey="filterIntensity"
+          min={0}
+          max={200}
+          step={5}
+        />
+        <div className="border-t border-[#252538] my-2" />
         <div>
           <label className="block text-[10px] text-slate-500 mb-1 uppercase tracking-wider">
             Opacité (%)
@@ -812,28 +897,6 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
               );
             })}
           </div>
-        </div>
-        <div>
-          <label className="block text-[10px] text-slate-500 mb-1 uppercase tracking-wider">
-            Animation d'entrée
-          </label>
-          <select
-            value={nodeProps.entryAnimation ?? 'none'}
-            onChange={(e) =>
-              setProp((p: any) => {
-                p.entryAnimation = e.target.value;
-              })
-            }
-            className="w-full bg-[#151521] border border-[#252538] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500"
-          >
-            <option value="none">Aucune</option>
-            <option value="fadeIn">Fade In</option>
-            <option value="slideInUp">Glisser vers le haut</option>
-            <option value="slideInLeft">Glisser depuis gauche</option>
-            <option value="slideInRight">Glisser depuis droite</option>
-            <option value="zoomIn">Zoom avant</option>
-            <option value="bounceIn">Rebond</option>
-          </select>
         </div>
       </Section>
 

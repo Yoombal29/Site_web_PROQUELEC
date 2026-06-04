@@ -7,6 +7,7 @@ import type {
   PipelineProgress
 } from './types';
 import { DEFAULT_PUBLISH_OPTIONS } from './types';
+import { ANIMATION_DEFINITIONS, ANIMATION_KEYFRAMES } from '@/components/blocks/animationPresets';
 
 export class RuntimeCompiler {
   private options: Required<PublishOptions>;
@@ -110,29 +111,42 @@ export class RuntimeCompiler {
 
     // Extract entrance animation from block props and populate animationClasses
     const props = block.content as Record<string, unknown>;
-    const entranceAnim = props.entranceAnimation as string | undefined;
+    const entranceAnim = this.getResponsiveValue<string>(props.entranceAnimation ?? props.entryAnimation, 'none');
     if (entranceAnim && entranceAnim !== 'none') {
       // Store animation duration/delay as CSS variables on style
       const animStyle: Record<string, string> = {};
       const duration = props.animationDuration;
       if (duration !== undefined && duration !== null) {
-        const dur = typeof duration === 'object'
-          ? ((duration as any).desktop ?? 600)
-          : duration;
+        const dur = this.getResponsiveValue<number | string>(duration, 600);
         animStyle['--anim-duration'] = `${dur}ms`;
       }
       const delay = props.animationDelay;
       if (delay !== undefined && delay !== null) {
-        const del = typeof delay === 'object'
-          ? ((delay as any).desktop ?? 0)
-          : delay;
+        const del = this.getResponsiveValue<number | string>(delay, 0);
         animStyle['--anim-delay'] = `${del}ms`;
       }
       if (props.animationEasing) {
-        animStyle['--anim-easing'] = props.animationEasing as string;
+        const easing = this.getResponsiveValue<string>(props.animationEasing);
+        if (easing) animStyle['--anim-easing'] = String(easing);
+      }
+      if (props.animationRepeat) {
+        const repeat = this.getResponsiveValue<string | number>(props.animationRepeat);
+        if (repeat) animStyle['--anim-iteration-count'] = String(repeat);
+      }
+      if (props.animationDirection) {
+        const direction = this.getResponsiveValue<string>(props.animationDirection);
+        if (direction) animStyle['--anim-direction'] = String(direction);
+      }
+      if (props.animationFillMode) {
+        const fillMode = this.getResponsiveValue<string>(props.animationFillMode);
+        if (fillMode) animStyle['--anim-fill-mode'] = String(fillMode);
       }
 
       compiled.animationClasses = [`animate-${entranceAnim}-vp`];
+      const trigger = this.getResponsiveValue<string>(props.animationTrigger);
+      if (trigger === 'load') {
+        compiled.animationClasses.push('animation-trigger-load');
+      }
       if (Object.keys(animStyle).length > 0) {
         compiled.style = { ...compiled.style, ...animStyle };
       }
@@ -154,6 +168,15 @@ export class RuntimeCompiler {
     }
 
     return compiled;
+  }
+
+  private getResponsiveValue<T>(value: unknown, fallback?: T): T | undefined {
+    if (value === undefined || value === null) return fallback;
+    if (typeof value === 'object' && !Array.isArray(value)) {
+      const responsive = value as { desktop?: T; tablet?: T; mobile?: T };
+      return responsive.desktop ?? responsive.tablet ?? responsive.mobile ?? fallback;
+    }
+    return value as T;
   }
 
   private stripEditorMeta(block: CompiledBlock) {
@@ -208,61 +231,25 @@ export class RuntimeCompiler {
 
     if (usedAnimations.size === 0) return '/* No entrance animations */';
 
-    const animationDefs: Record<string, { duration: string; easing: string }> = {
-      fadeIn: { duration: '600ms', easing: 'ease-out' },
-      fadeInUp: { duration: '600ms', easing: 'ease-out' },
-      fadeInDown: { duration: '600ms', easing: 'ease-out' },
-      fadeInLeft: { duration: '600ms', easing: 'ease-out' },
-      fadeInRight: { duration: '600ms', easing: 'ease-out' },
-      slideInUp: { duration: '600ms', easing: 'ease-out' },
-      slideInDown: { duration: '600ms', easing: 'ease-out' },
-      slideInLeft: { duration: '600ms', easing: 'ease-out' },
-      slideInRight: { duration: '600ms', easing: 'ease-out' },
-      zoomIn: { duration: '600ms', easing: 'ease-out' },
-      zoomInUp: { duration: '600ms', easing: 'ease-out' },
-      zoomInDown: { duration: '600ms', easing: 'ease-out' },
-      bounceIn: { duration: '800ms', easing: 'ease-out' },
-      flipInX: { duration: '600ms', easing: 'ease-out' },
-      flipInY: { duration: '600ms', easing: 'ease-out' },
-    };
-
-    const keyframes: Record<string, string> = {
-      'anim-fadeIn': '@keyframes anim-fadeIn { from { opacity: 0; } to { opacity: 1; } }',
-      'anim-fadeInUp': '@keyframes anim-fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }',
-      'anim-fadeInDown': '@keyframes anim-fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }',
-      'anim-fadeInLeft': '@keyframes anim-fadeInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }',
-      'anim-fadeInRight': '@keyframes anim-fadeInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }',
-      'anim-slideInUp': '@keyframes anim-slideInUp { from { transform: translateY(100%); } to { transform: translateY(0); } }',
-      'anim-slideInDown': '@keyframes anim-slideInDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }',
-      'anim-slideInLeft': '@keyframes anim-slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }',
-      'anim-slideInRight': '@keyframes anim-slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }',
-      'anim-zoomIn': '@keyframes anim-zoomIn { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: scale(1); } }',
-      'anim-zoomInUp': '@keyframes anim-zoomInUp { from { opacity: 0; transform: scale(0.6) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }',
-      'anim-zoomInDown': '@keyframes anim-zoomInDown { from { opacity: 0; transform: scale(0.6) translateY(-30px); } to { opacity: 1; transform: scale(1) translateY(0); } }',
-      'anim-bounceIn': '@keyframes anim-bounceIn { from { opacity: 0; transform: scale(0.3); } 50% { transform: scale(1.05); } 70% { transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }',
-      'anim-flipInX': '@keyframes anim-flipInX { from { opacity: 0; transform: perspective(400px) rotateX(90deg); } to { opacity: 1; transform: perspective(400px) rotateX(0); } }',
-      'anim-flipInY': '@keyframes anim-flipInY { from { opacity: 0; transform: perspective(400px) rotateY(90deg); } to { opacity: 1; transform: perspective(400px) rotateY(0); } }',
-    };
-
     for (const animName of usedAnimations) {
-      const def = animationDefs[animName];
+      const def = ANIMATION_DEFINITIONS[animName];
       if (!def) continue;
 
       // CSS class with viewport-trigger support
       cssParts.push(
         `.animate-${animName}-vp {\n` +
-        `  animation: anim-${animName} var(--anim-duration, ${def.duration}) var(--anim-easing, ${def.easing}) var(--anim-delay, 0ms) both;\n` +
+        `  animation: anim-${animName} var(--anim-duration, ${def.duration}) var(--anim-easing, ${def.easing}) var(--anim-delay, 0ms) var(--anim-iteration-count, 1) var(--anim-direction, normal) var(--anim-fill-mode, both);\n` +
         `  animation-play-state: paused;\n` +
         `}\n` +
-        `.animate-${animName}-vp.anim-visible {\n` +
+        `.animate-${animName}-vp.anim-visible,\n` +
+        `.animate-${animName}-vp.animation-trigger-load {\n` +
         `  animation-play-state: running;\n` +
         `}`
       );
 
       // Include keyframes if not already present from another animation
-      const kfKey = `anim-${animName}`;
-      if (keyframes[kfKey]) {
-        cssParts.push(keyframes[kfKey]);
+      if (ANIMATION_KEYFRAMES[animName]) {
+        cssParts.push(ANIMATION_KEYFRAMES[animName]);
       }
     }
 
