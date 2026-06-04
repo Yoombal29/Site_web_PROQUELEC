@@ -50,7 +50,7 @@ export const FunctionalBuilderRoute: React.FC<FunctionalBuilderRouteProps> = ({
         const data = (await response.json()) as PageLike;
         if (!cancelled) setPage(data);
       } catch (error) {
-        console.warn(`[FunctionalBuilderRoute] Fallback React pour /${slug}:`, error);
+        // Pages fonctionnelles sans entrée DB : comportement normal, fallback React utilisé
         if (!cancelled) {
           setFailed(true);
           setPage(null);
@@ -70,11 +70,8 @@ export const FunctionalBuilderRoute: React.FC<FunctionalBuilderRouteProps> = ({
   const structure = useMemo(() => {
     if (!isDesignLockedFunctionalPage(page)) return null;
 
-    return getFunctionalStructureForPage(
-      page,
-      definition?.slug || slug,
-      definition?.title || title,
-    ).structure;
+    return getFunctionalStructureForPage(page, definition?.slug || slug, definition?.title || title)
+      .structure;
   }, [definition?.slug, definition?.title, page, slug, title]);
 
   if (loading) return <LoadingFallback />;
