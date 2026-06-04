@@ -6401,8 +6401,7 @@ app.put('/api/admin/pages/:id/draft', authenticateToken, requireAdmin, async (re
     const { draft_json } = req.body;
     const { rows } = await pool.query(
       `UPDATE public.pages
-             SET draft_json = $1,
-                 updated_at = NOW()
+             SET draft_json = $1
              WHERE slug = $2 OR id::text = $2 RETURNING *`,
       [
         draft_json

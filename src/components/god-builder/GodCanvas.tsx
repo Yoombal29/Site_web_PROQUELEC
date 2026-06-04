@@ -14,6 +14,7 @@ import { useBuilderUiStore } from '@/stores/builder-ui.store';
 import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
 import { useAnimateOnScroll } from '@/hooks/useAnimateOnScroll';
 import { cloneNodeTreeWithNewIds } from './cloneNodeTree.ts';
+import { useGodEditor } from './GodEditorContext';
 
 const VIEWPORT_WIDTHS: Record<string, string> = {
   desktop: '100%',
@@ -329,10 +330,25 @@ export const GodCanvas = () => {
     isEnabled: state.options.enabled
   }));
 
+  const { initialStructure, markCanvasHydrated } = useGodEditor();
   const { setHoveredNodeId, hoveredNodeId } = useBuilderUiStore();
 
   const canvasRef = useRef<HTMLDivElement | null>(null);
   useAnimateOnScroll(canvasRef, { threshold: 0.1, once: true });
+
+  useEffect(() => {
+    if (!initialStructure) return;
+
+    const timer = window.setTimeout(() => {
+      try {
+        markCanvasHydrated(query.serialize());
+      } catch {
+        markCanvasHydrated();
+      }
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [initialStructure, markCanvasHydrated, query]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isEnabled) return;
@@ -777,23 +793,28 @@ export const GodCanvas = () => {
             className={`relative bg-white shadow-2xl shadow-black/40 transition-all duration-300 ease-out build-canvas-wrapper ${ZOOM_CLASS_MAP[zoom] ?? ''} ${isEnabled ? 'builder-canvas-enabled' : 'builder-canvas-disabled'}`}
           >
             <BuilderErrorBoundary>
-              <Frame>
-                <Element is={ContainerBlock} canvas padding={0} backgroundColor="#ffffff" maxWidth="100%">
-                  <Element is={HeroBlock} canvas />
-                  <Element is={ContainerBlock} canvas padding={60} paddingY={60} backgroundColor="#f8fafc">
-                    <TextBlock
-                      text="🚀 GOD MODE — ÉDITEUR CENTRALISÉ"
-                      fontSize={28} textAlign="center"
-                      color="#0f172a" fontWeight="900"
-                    />
-                    <SpacerBlock height={16} />
-                    <TextBlock
-                      text="Glissez des blocs depuis la barre de gauche. Cliquez pour éditer leurs propriétés dans le panneau de droite."
-                      fontSize={16} textAlign="center" color="#64748b"
-                    />
+              <Frame
+                key={initialStructure ? 'loaded-page-structure' : 'fallback-default-structure'}
+                {...(initialStructure ? ({ data: initialStructure } as any) : {})}
+              >
+                {!initialStructure && (
+                  <Element is={ContainerBlock} canvas padding={0} backgroundColor="#ffffff" maxWidth="100%">
+                    <Element is={HeroBlock} canvas />
+                    <Element is={ContainerBlock} canvas padding={60} paddingY={60} backgroundColor="#f8fafc">
+                      <TextBlock
+                        text="🚀 GOD MODE — ÉDITEUR CENTRALISÉ"
+                        fontSize={28} textAlign="center"
+                        color="#0f172a" fontWeight="900"
+                      />
+                      <SpacerBlock height={16} />
+                      <TextBlock
+                        text="Glissez des blocs depuis la barre de gauche. Cliquez pour éditer leurs propriétés dans le panneau de droite."
+                        fontSize={16} textAlign="center" color="#64748b"
+                      />
+                    </Element>
+                    <Element is={StatsBlock} canvas />
                   </Element>
-                  <Element is={StatsBlock} canvas />
-                </Element>
+                )}
               </Frame>
             </BuilderErrorBoundary>
 

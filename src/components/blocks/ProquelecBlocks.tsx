@@ -2141,7 +2141,30 @@ const AccordionSettings = () => {
     actions: { setProp },
     title,
     accentColor,
+    items,
   } = useNode((n) => ({ ...n.data.props }));
+  const [localItems, setLocalItems] = useState<any[]>(items || []);
+
+  const addItem = () => {
+    const newItems = [...localItems, { q: 'Nouvelle question', a: 'Nouvelle réponse' }];
+    setLocalItems(newItems);
+    setProp((p: any) => (p.items = newItems));
+  };
+
+  const removeItem = (idx: number) => {
+    const newItems = localItems.filter((_: any, i: number) => i !== idx);
+    setLocalItems(newItems);
+    setProp((p: any) => (p.items = newItems));
+  };
+
+  const updateItem = (idx: number, field: string, value: string) => {
+    const newItems = localItems.map((item: any, i: number) =>
+      i === idx ? { ...item, [field]: value } : item,
+    );
+    setLocalItems(newItems);
+    setProp((p: any) => (p.items = newItems));
+  };
+
   return (
     <div className="space-y-3">
       <SettingsRow>
@@ -2166,6 +2189,48 @@ const AccordionSettings = () => {
           }
         />
       </SettingsRow>
+      <div className="border-t border-slate-700 pt-3">
+        <div className="flex items-center justify-between mb-2">
+          <SettingsLabel label={`Questions (${localItems.length})`} />
+          <button
+            onClick={addItem}
+            className="text-[10px] px-2 py-1 rounded bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30 transition"
+          >
+            + Ajouter
+          </button>
+        </div>
+        <div className="space-y-2 max-h-60 overflow-y-auto">
+          {localItems.map((item: any, idx: number) => (
+            <div
+              key={idx}
+              className="p-2 rounded-lg bg-slate-800/50 border border-slate-700 space-y-1.5"
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-slate-400">Q{idx + 1}</span>
+                <button
+                  onClick={() => removeItem(idx)}
+                  className="text-[10px] text-red-400 hover:text-red-300"
+                >
+                  ✕
+                </button>
+              </div>
+              <input
+                value={item.q}
+                onChange={(e) => updateItem(idx, 'q', e.target.value)}
+                className="w-full bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-slate-200"
+                placeholder="Question"
+              />
+              <textarea
+                value={item.a}
+                onChange={(e) => updateItem(idx, 'a', e.target.value)}
+                rows={2}
+                className="w-full bg-slate-900 border border-slate-600 rounded px-2 py-1 text-xs text-slate-200 resize-none"
+                placeholder="Réponse"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
@@ -2486,7 +2551,18 @@ const GallerySettings = () => {
     columns,
     gap,
     rounded,
+    images,
   } = useNode((n) => ({ ...n.data.props }));
+  const [imagesText, setImagesText] = useState<string>((images || []).join('\n'));
+
+  const applyImages = () => {
+    const newImages = imagesText
+      .split('\n')
+      .map((s: string) => s.trim())
+      .filter(Boolean);
+    setProp((p: any) => (p.images = newImages));
+  };
+
   return (
     <div className="space-y-3">
       <SettingsRow>
@@ -2533,6 +2609,21 @@ const GallerySettings = () => {
           }
         />
       </SettingsRow>
+      <div className="border-t border-slate-700 pt-3">
+        <SettingsLabel label={`Images (URLs, 1 par ligne)`} />
+        <textarea
+          value={imagesText}
+          onChange={(e) => setImagesText(e.target.value)}
+          onBlur={applyImages}
+          rows={4}
+          className="w-full mt-1 bg-slate-900 border border-slate-600 rounded px-2 py-1.5 text-xs text-slate-200 font-mono resize-y"
+          placeholder="https://example.com/image1.jpg"
+        />
+        <p className="text-[10px] text-slate-500 mt-1">
+          {(imagesText || '').split('\n').filter(Boolean).length} image(s) · Entrez une URL par
+          ligne
+        </p>
+      </div>
     </div>
   );
 };

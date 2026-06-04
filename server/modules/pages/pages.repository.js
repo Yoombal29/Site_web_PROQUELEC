@@ -202,7 +202,7 @@ async function setConstructionMode(isEnabled, userId) {
 async function saveDraft(pageId, draftJson) {
     const jsonStr = typeof draftJson === 'string' ? draftJson : JSON.stringify(draftJson);
     const result = await pool.query(
-        `UPDATE public.pages SET draft_json = $1, updated_at = NOW() WHERE id = $2 RETURNING id, draft_json, updated_at`,
+        `UPDATE public.pages SET draft_json = $1 WHERE id = $2 RETURNING id, draft_json, updated_at`,
         [jsonStr, pageId]
     );
     return result.rows[0] || null;

@@ -38,11 +38,13 @@ interface GodEditorContextType {
   pageId: string | undefined;
   pageData: PageDataState | null;
   setPageData: React.Dispatch<React.SetStateAction<PageDataState | null>>;
+  initialStructure: any | null;
   isLoading: boolean;
   isSaving: boolean;
   error: string | null;
   savePage: (versionName?: string) => Promise<void>;
   updateMetadata: (changes: Partial<PageDataState>) => void;
+  markCanvasHydrated: (serialized?: string) => void;
   hasLocalBackup: boolean;
   restoreLocalBackup: () => void;
   discardLocalBackup: () => void;
@@ -72,6 +74,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
   });
 
   const [pageData, setPageData] = useState<PageDataState | null>(null);
+  const [initialStructure, setInitialStructure] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -82,6 +85,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
 
   // Ref to prevent autosave loops
   const lastSerializedRef = useRef<string>('');
+  const hydrationReadyRef = useRef(false);
 
   const isCraftJsFormat = (jsonObj: any): boolean => {
     return jsonObj && typeof jsonObj === 'object' && !Array.isArray(jsonObj) && 'ROOT' in jsonObj;
@@ -139,6 +143,8 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
       }
 
       setIsLoading(true);
+      setInitialStructure(null);
+      hydrationReadyRef.current = false;
       try {
         const page = await apiFetch<any>(`/api/admin/pages/${pageId}`);
         const designOptions =
@@ -194,9 +200,9 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
         // structure by default, otherwise the editor and public page drift silently.
         const dbStructure = page.structure_json || page.draft_json;
 
-        const isHybrid = pageType === 'hybrid';
         const isFunctional = pageType === 'functional';
         const parsedDbStructure = parseBuilderStructure(dbStructure);
+        let structureToLoad: any | null = null;
 
         if (isFunctional && !isFunctionalPageStructure(parsedDbStructure)) {
           const functionalStructure = getFunctionalStructureForPage(
@@ -204,25 +210,20 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
             page.slug || 'dashboard',
             page.title || 'Page fonctionnelle',
           ).structure;
-          // @ts-ignore - Craft.js deserialize accepte les objets bruts
-          actionsRef.current.deserialize(functionalStructure);
-          lastSerializedRef.current = JSON.stringify(functionalStructure);
+          structureToLoad = functionalStructure;
           console.info('[GodEditor] Structure fonctionnelle créée pour:', page.slug);
         } else if (parsedDbStructure) {
           const parsed: any = parsedDbStructure;
-          lastSerializedRef.current =
-            typeof dbStructure === 'string' ? dbStructure : JSON.stringify(dbStructure);
 
           if (isCraftJsFormat(parsed)) {
-            actionsRef.current.deserialize(parsed);
+            structureToLoad = parsed;
           } else if (Array.isArray(parsed)) {
             try {
               const craftGraph = convertLegacyBlocksToCraftGraph(
                 parsed,
                 page.title || page.slug || 'Page',
               );
-              actionsRef.current.deserialize(craftGraph);
-              lastSerializedRef.current = JSON.stringify(craftGraph);
+              structureToLoad = craftGraph;
               console.info('[GodEditor] Page legacy convertie en format Craft et désérialisée.');
             } catch (e) {
               console.error('[GodEditor] Conversion legacy→Craft échouée:', e);
@@ -238,10 +239,17 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
         } else {
           const htmlContent = page.content_raw || page.content || '';
           const htmlStructure = createHtmlCraftStructure(htmlContent);
-          actionsRef.current.deserialize(htmlStructure);
-          lastSerializedRef.current = JSON.stringify(htmlStructure);
+          structureToLoad = htmlStructure;
           console.info('[GodEditor] Page sans structure Builder ouverte via HtmlBlock.');
         }
+
+        if (!structureToLoad) {
+          const htmlContent = page.content_raw || page.content || '';
+          structureToLoad = createHtmlCraftStructure(htmlContent);
+        }
+
+        setInitialStructure(structureToLoad);
+        lastSerializedRef.current = JSON.stringify(structureToLoad);
 
         // Check local storage backup
         const localBackupStr = localStorage.getItem(`proquelec_builder_backup_${pageId}`);
@@ -289,6 +297,19 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
     toast.info('Sauvegarde locale ignorée.');
   }, [pageId]);
 
+  const markCanvasHydrated = useCallback(
+    (serialized?: string) => {
+      try {
+        lastSerializedRef.current = serialized || query.serialize();
+      } catch {
+        lastSerializedRef.current = initialStructure ? JSON.stringify(initialStructure) : '';
+      }
+      hydrationReadyRef.current = true;
+      useBuilderHistoryStore.getState().setAutosaveStatus('saved');
+    },
+    [initialStructure, query],
+  );
+
   // Autosave subscription to Craft.js store
   useEffect(() => {
     if (!pageId || !store) return;
@@ -297,6 +318,8 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
     let dbSaveTimer: any;
 
     const unsubscribe = (store as any).subscribe(() => {
+      if (!hydrationReadyRef.current || isLoading) return;
+
       // Mark as dirty
       const historyStore = useBuilderHistoryStore.getState();
       if (historyStore.autosaveStatus === 'saved') {
@@ -370,7 +393,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
       clearTimeout(localSaveTimer);
       clearTimeout(dbSaveTimer);
     };
-  }, [store, pageId, pageData, query]);
+  }, [store, pageId, pageData, query, isLoading]);
 
   // Save/Publish page data manually
   const savePage = useCallback(
@@ -388,6 +411,11 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
 
       setIsSaving(true);
       try {
+        if (!hydrationReadyRef.current) {
+          toast.error('Le builder termine le chargement de la page. Réessayez dans un instant.');
+          return;
+        }
+
         if (pageData?.pageType === 'functional') {
           useBuilderHistoryStore.getState().setAutosaveStatus('saved');
           toast.info(
@@ -489,11 +517,13 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
         pageId,
         pageData,
         setPageData,
+        initialStructure,
         isLoading,
         isSaving,
         error,
         savePage,
         updateMetadata,
+        markCanvasHydrated,
         hasLocalBackup,
         restoreLocalBackup,
         discardLocalBackup,
