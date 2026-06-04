@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useEditor, Element } from '@craftjs/core';
+import { useEditor } from '@craftjs/core';
+import type { NodeTree } from '@craftjs/core';
 import {
   Type,
   Square,
@@ -1134,6 +1135,13 @@ const TEMPLATE_CATEGORY_ORDER: TemplateCategory[] = [
   'trust',
 ];
 
+type DbTemplate = {
+  id: string;
+  name: string;
+  category?: string;
+  default_structure: string | NodeTree;
+};
+
 // ─────────────────────────────────────────────────────────
 // MAIN TOOLBOX
 // ─────────────────────────────────────────────────────────
@@ -1143,7 +1151,7 @@ export const GodToolbox = () => {
   const [activeTab, setActiveTab] = useState<'blocks' | 'templates' | 'globals'>('blocks');
   const [search, setSearch] = useState('');
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
-  const [dbTemplates, setDbTemplates] = useState<any[]>([]);
+  const [dbTemplates, setDbTemplates] = useState<DbTemplate[]>([]);
   const [loadingTemplates, setLoadingTemplates] = useState(false);
 
   const fetchTemplates = async () => {
@@ -1156,8 +1164,8 @@ export const GodToolbox = () => {
         },
       });
       if (response.ok) {
-        const data = await response.json();
-        setDbTemplates(data);
+        const data = (await response.json()) as DbTemplate[];
+        setDbTemplates(Array.isArray(data) ? data : []);
       }
     } catch (err) {
       console.error('Failed to fetch templates:', err);
@@ -1249,6 +1257,21 @@ export const GodToolbox = () => {
           ? 'Modèle incompatible : rechargez la page ou choisissez un autre modèle.'
           : "Impossible d'insérer le modèle",
       );
+    }
+  };
+
+  const handleInsertBlock = (factory: () => React.ReactElement, label: string) => {
+    try {
+      const element = factory();
+      if (!element?.type) {
+        throw new Error('Bloc invalide (composant manquant)');
+      }
+      const tree = query.parseReactElement(element).toNodeTree();
+      actions.addNodeTree(cloneNodeTreeWithNewIds(tree, 'block'), 'ROOT');
+      toast.success(`Bloc « ${label} » inséré`);
+    } catch (err) {
+      console.error('[GodToolbox] insert block:', err);
+      toast.error("Impossible d'insérer le bloc");
     }
   };
 
@@ -1362,15 +1385,20 @@ export const GodToolbox = () => {
                     <div className="px-1.5 space-y-0.5 pb-1">
                       {group.items.map((item, index) => {
                         const Icon = item.icon;
-                        const itemKey = (item as any).id || `${group.label}-${item.label}-${index}`;
+                        const itemKey =
+                          (item as { id?: string }).id || `${group.label}-${item.label}-${index}`;
                         return (
                           <button
                             key={itemKey}
                             ref={(ref) => {
                               if (ref) connectors.create(ref, item.factory());
                             }}
+                            onDoubleClick={(e) => {
+                              e.preventDefault();
+                              handleInsertBlock(item.factory, item.label);
+                            }}
                             className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg hover:bg-[#1e1e30] text-slate-400 hover:text-white transition-all cursor-grab active:cursor-grabbing text-left group"
-                            title={item.label}
+                            title={`${item.label} · glisser ou double-clic pour insérer`}
                           >
                             <Icon
                               size={14}
@@ -1491,7 +1519,7 @@ export const GodToolbox = () => {
           <p className="text-[9px] text-slate-600 text-center">
             {activeTab === 'templates'
               ? 'Glisser ou double-clic pour insérer un modèle'
-              : 'Glissez un bloc sur le canvas →'}
+              : 'Glisser ou double-clic pour insérer un bloc'}
           </p>
         </div>
       )}
@@ -1505,9 +1533,11 @@ const GlobalBlocksTab = ({ expanded }: { expanded: boolean }) => {
   const blocks = useGlobalBlocksStore((s) => s.blocks);
   const removeBlock = useGlobalBlocksStore((s) => s.removeBlock);
 
-  const handleAddGlobal = (serializedNode: any) => {
+  const handleAddGlobal = (serializedNode: string | NodeTree) => {
     try {
-      const tree = typeof serializedNode === 'string' ? JSON.parse(serializedNode) : serializedNode;
+      const tree = (
+        typeof serializedNode === 'string' ? JSON.parse(serializedNode) : serializedNode
+      ) as NodeTree;
       actions.addNodeTree(cloneNodeTreeWithNewIds(tree, 'global'), 'ROOT');
       toast.success('Bloc global inséré');
     } catch (err) {

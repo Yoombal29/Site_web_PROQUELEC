@@ -9,7 +9,9 @@ const isLocalDevHost = () => {
   );
 };
 
-const clearLocalServiceWorker = async () => {
+const SERVICE_WORKER_DISABLED = true;
+
+const clearServiceWorker = async () => {
   if (!('serviceWorker' in navigator)) return;
 
   const registrations = await navigator.serviceWorker.getRegistrations();
@@ -24,10 +26,10 @@ const clearLocalServiceWorker = async () => {
 export const registerServiceWorker = () => {
   if (!('serviceWorker' in navigator)) return;
 
-  if (isLocalDevHost()) {
+  if (SERVICE_WORKER_DISABLED || isLocalDevHost()) {
     window.addEventListener('load', () => {
-      clearLocalServiceWorker().catch((error) => {
-        console.warn('[ServiceWorker] Local cleanup failed:', error);
+      clearServiceWorker().catch((error) => {
+        console.warn('[ServiceWorker] Cleanup failed:', error);
       });
     });
     return;
@@ -41,7 +43,7 @@ export const registerServiceWorker = () => {
 };
 
 export const precacheCriticalNorms = () => {
-  if (isLocalDevHost()) return;
+  if (SERVICE_WORKER_DISABLED || isLocalDevHost()) return;
 
   if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
     navigator.serviceWorker.controller.postMessage({

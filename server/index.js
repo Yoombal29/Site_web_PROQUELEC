@@ -2601,7 +2601,23 @@ app.get('/api/pages/slug/:slug', async (req, res) => {
   const { slug } = req.params;
   try {
     const result = await pool.query('SELECT * FROM public.pages WHERE slug = $1', [slug]);
-    if (result.rows.length === 0) return res.status(404).json({ error: 'Page non trouvée' });
+    if (result.rows.length === 0) {
+      const functionalFallbacks = {
+        connexion: 'Connexion',
+        login: 'Connexion',
+        auth: 'Authentification',
+      };
+      if (functionalFallbacks[slug]) {
+        return res.json({
+          title: functionalFallbacks[slug],
+          slug,
+          immutable: false,
+          structure_json: null,
+          draft_json: null,
+        });
+      }
+      return res.status(404).json({ error: 'Page non trouvée' });
+    }
     res.json(result.rows[0]);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -5803,9 +5819,101 @@ app.delete('/api/pages/:id', authenticateToken, async (req, res) => {
   }
 });
 
+async function ensureBuilderRuntimeTables() {
+  await pool.query('CREATE EXTENSION IF NOT EXISTS pgcrypto');
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS public.page_components (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      name TEXT NOT NULL,
+      category TEXT DEFAULT 'Mes Sections',
+      default_structure JSONB NOT NULL DEFAULT '{}',
+      thumbnail_url TEXT,
+      is_global BOOLEAN DEFAULT false,
+      schema_props JSONB DEFAULT '{}',
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      updated_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+
+  await pool.query(`
+    ALTER TABLE public.page_components
+      ADD COLUMN IF NOT EXISTS category TEXT DEFAULT 'Mes Sections',
+      ADD COLUMN IF NOT EXISTS default_structure JSONB DEFAULT '{}',
+      ADD COLUMN IF NOT EXISTS thumbnail_url TEXT,
+      ADD COLUMN IF NOT EXISTS is_global BOOLEAN DEFAULT false,
+      ADD COLUMN IF NOT EXISTS schema_props JSONB DEFAULT '{}',
+      ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT NOW(),
+      ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW()
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS public.builder_snapshots (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      page_id UUID NOT NULL REFERENCES public.pages(id) ON DELETE CASCADE,
+      label VARCHAR(255) NOT NULL,
+      snapshot JSONB NOT NULL,
+      snapshot_type VARCHAR(50) NOT NULL DEFAULT 'manual',
+      metadata JSONB DEFAULT '{}',
+      created_by UUID,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS public.builder_templates (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      name VARCHAR(255) NOT NULL,
+      category VARCHAR(100) NOT NULL,
+      description TEXT,
+      preview_image TEXT,
+      blocks JSONB NOT NULL DEFAULT '[]',
+      layout_tree JSONB DEFAULT '[]',
+      theme_config JSONB DEFAULT '{}',
+      animation_config JSONB DEFAULT '{}',
+      tags TEXT[] DEFAULT '{}',
+      is_system BOOLEAN DEFAULT false,
+      version INTEGER DEFAULT 1,
+      created_by UUID,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      updated_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS public.builder_components (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      name VARCHAR(255) NOT NULL,
+      category VARCHAR(100) DEFAULT 'custom',
+      schema JSONB NOT NULL DEFAULT '[]',
+      preview_image TEXT,
+      version INTEGER DEFAULT 1,
+      is_global BOOLEAN DEFAULT false,
+      tags TEXT[] DEFAULT '{}',
+      created_by UUID,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      updated_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_page_components_category
+    ON public.page_components(category)
+  `);
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_builder_templates_category
+    ON public.builder_templates(category)
+  `);
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_builder_components_category
+    ON public.builder_components(category)
+  `);
+}
+
 // --- BIBLIOTHÈQUE DE COMPOSANTS/MODÈLES (Builder) ---
 app.get('/api/admin/page-components', authenticateToken, async (req, res) => {
   try {
+    await ensureBuilderRuntimeTables();
     const { rows } = await pool.query(
       'SELECT * FROM public.page_components ORDER BY category ASC, name ASC',
     );
@@ -5821,6 +5929,7 @@ app.post('/api/admin/page-components', authenticateToken, async (req, res) => {
     return res.status(400).json({ error: 'Name and default_structure are required' });
   }
   try {
+    await ensureBuilderRuntimeTables();
     const result = await pool.query(
       `INSERT INTO public.page_components (name, category, default_structure, thumbnail_url, is_global, schema_props, created_at, updated_at)
              VALUES ($1, $2, $3, $4, $5, $6, NOW(), NOW()) RETURNING *`,
@@ -5847,6 +5956,7 @@ app.post('/api/admin/page-components', authenticateToken, async (req, res) => {
 
 app.delete('/api/admin/page-components/:id', authenticateToken, async (req, res) => {
   try {
+    await ensureBuilderRuntimeTables();
     const { id } = req.params;
     const result = await pool.query(
       'DELETE FROM public.page_components WHERE id = $1 RETURNING *',
@@ -7276,26 +7386,26 @@ app.get('/api/normative-articles', async (req, res) => {
 const projectsRouter = require('./routes/projects');
 const inspectionsRouter = require('./routes/inspections');
 const observatoireRouter = require('./routes/observatoire');
+const builderModule = require('./modules/builder/builder.routes');
+const templatesModule = require('./modules/templates/templates.routes');
 app.use('/api', projectsRouter);
 app.use('/api', inspectionsRouter);
 app.use('/api', observatoireRouter);
-
-// Catch-all 404 pour les routes API inexistantes
-app.use('/api', (req, res) => {
-  handleAppError(
-    new AppError(
-      'DB_NOT_FOUND',
-      `L'endpoint ${req.originalUrl} n'existe pas encore sur ce serveur.`,
-    ),
-    res,
-  );
-});
-
-// Final error middleware - Transforme les crashes en messages humains
-app.use((err, req, res, next) => {
-  console.error('SERVER CRASH DETECTED:', err);
-  handleAppError(err, res);
-});
+app.use(
+  builderModule.basePath || '/api',
+  async (req, res, next) => {
+    try {
+      if (req.path.startsWith('/builder')) {
+        await ensureBuilderRuntimeTables();
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
+  },
+  builderModule.router,
+);
+app.use(templatesModule.basePath || '/api', templatesModule.router);
 
 // --- MODULE OBSERVATOIRE (COSSUEL) ---
 
@@ -7367,9 +7477,22 @@ app.post('/api/observatoire/sync/trigger', authenticateToken, requireAdmin, asyn
   }
 });
 
-// Mount Modular Templates Route
-const templatesModule = require('./modules/templates/templates.routes');
-app.use('/api', templatesModule.router);
+// Catch-all 404 pour les routes API inexistantes
+app.use('/api', (req, res) => {
+  handleAppError(
+    new AppError(
+      'DB_NOT_FOUND',
+      `L'endpoint ${req.originalUrl} n'existe pas encore sur ce serveur.`,
+    ),
+    res,
+  );
+});
+
+// Final error middleware - Transforme les crashes en messages humains
+app.use((err, req, res, next) => {
+  console.error('SERVER CRASH DETECTED:', err);
+  handleAppError(err, res);
+});
 
 // Démarrage de l'initialisation DB puis du serveur
 initDB()

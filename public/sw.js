@@ -1,5 +1,6 @@
-const CACHE_NAME = 'proquelec-app-v3';
-const DATA_CACHE_NAME = 'proquelec-data-v3';
+const CACHE_NAME = 'proquelec-app-v4';
+const DATA_CACHE_NAME = 'proquelec-data-v4';
+const DISABLE_SERVICE_WORKER = true;
 const IS_LOCAL_DEV = ['localhost', '127.0.0.1', '[::1]'].includes(self.location.hostname)
   || ['5173', '5175'].includes(self.location.port);
 
@@ -24,7 +25,7 @@ const CRITICAL_DATA = [
 self.addEventListener('install', (event) => {
   console.log('[ServiceWorker] Install');
 
-  if (IS_LOCAL_DEV) {
+  if (DISABLE_SERVICE_WORKER || IS_LOCAL_DEV) {
     event.waitUntil(
       caches.keys()
         .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
@@ -46,7 +47,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   console.log('[ServiceWorker] Activate');
 
-  if (IS_LOCAL_DEV) {
+  if (DISABLE_SERVICE_WORKER || IS_LOCAL_DEV) {
     event.waitUntil(
       caches.keys()
         .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
@@ -73,7 +74,7 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  if (IS_LOCAL_DEV) {
+  if (DISABLE_SERVICE_WORKER || IS_LOCAL_DEV) {
     return;
   }
 
