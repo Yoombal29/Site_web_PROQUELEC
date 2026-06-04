@@ -5,7 +5,8 @@ const {
     createPageSchema, updatePageSchema, adminUpdatePageSchema,
     draftPageSchema, namedVersionSchema, themeConfigSchema,
     createMenuItemSchema, updateMenuItemSchema,
-    constructionModeSchema
+    constructionModeSchema,
+    releaseAnalyzeSchema, releaseImportSchema, releasePublishSchema
 } = require('./pages.validator');
 
 const router = Router();
@@ -18,6 +19,13 @@ router.put('/pages/:id', authenticateToken, validate(updatePageSchema), controll
 router.delete('/pages/:id', authenticateToken, controller.deletePage);
 
 router.get('/admin/pages', authenticateToken, requireAdmin, controller.listPages);
+router.post('/admin/pages/release/analyze', authenticateToken, requireAdmin, validate(releaseAnalyzeSchema), controller.analyzePageRelease);
+router.post('/admin/pages/release/import', authenticateToken, requireAdmin, validate(releaseImportSchema), controller.importPageRelease);
+router.get('/admin/pages/release/candidates', authenticateToken, requireAdmin, controller.listReleaseCandidates);
+router.get('/admin/pages/release/candidates/:candidateId', authenticateToken, requireAdmin, controller.getReleaseCandidate);
+router.post('/admin/pages/release/candidates/:candidateId/publish', authenticateToken, requireAdmin, validate(releasePublishSchema), controller.publishReleaseCandidate);
+router.delete('/admin/pages/release/candidates/:candidateId', authenticateToken, requireAdmin, controller.rejectReleaseCandidate);
+router.get('/admin/pages/:id/release/export', authenticateToken, requireAdmin, controller.exportPageRelease);
 router.get('/admin/pages/:id', authenticateToken, requireAdmin, controller.adminGetPage);
 router.put('/admin/pages/:id', authenticateToken, requireAdmin, validate(adminUpdatePageSchema), controller.adminUpdatePage);
 router.get('/admin/page-versions/:id/:version', authenticateToken, requireAdmin, controller.getPageVersion);

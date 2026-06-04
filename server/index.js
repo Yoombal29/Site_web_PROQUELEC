@@ -7386,11 +7386,13 @@ app.get('/api/normative-articles', async (req, res) => {
 const projectsRouter = require('./routes/projects');
 const inspectionsRouter = require('./routes/inspections');
 const observatoireRouter = require('./routes/observatoire');
+const pagesModule = require('./modules/pages/pages.routes');
 const builderModule = require('./modules/builder/builder.routes');
 const templatesModule = require('./modules/templates/templates.routes');
 app.use('/api', projectsRouter);
 app.use('/api', inspectionsRouter);
 app.use('/api', observatoireRouter);
+app.use(pagesModule.basePath || '/api', pagesModule.router);
 app.use(
   builderModule.basePath || '/api',
   async (req, res, next) => {

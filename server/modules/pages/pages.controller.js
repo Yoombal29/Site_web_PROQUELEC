@@ -1,4 +1,5 @@
 const service = require('./pages.service');
+const releaseManager = require('./release-manager');
 
 async function listPages(req, res) {
     try {
@@ -219,10 +220,98 @@ async function saveThemeConfig(req, res) {
     }
 }
 
+function handleReleaseError(err, res) {
+    console.error('[BUILDER-RELEASE]', err);
+    res.status(err.status || 500).json({
+        error: err.message || 'Erreur Release Manager',
+        details: err.details || undefined,
+    });
+}
+
+async function exportPageRelease(req, res) {
+    try {
+        const pkg = await releaseManager.exportPageRelease(
+            req.params.id,
+            req.user,
+            req.query.environment || process.env.APP_ENV || process.env.NODE_ENV || 'local',
+        );
+        res.json(pkg);
+    } catch (err) {
+        handleReleaseError(err, res);
+    }
+}
+
+async function analyzePageRelease(req, res) {
+    try {
+        const analysis = await releaseManager.analyzeReleasePackage(req.body.package);
+        res.json(analysis);
+    } catch (err) {
+        handleReleaseError(err, res);
+    }
+}
+
+async function importPageRelease(req, res) {
+    try {
+        const result = await releaseManager.importReleasePackage(
+            req.body.package,
+            req.user?.id,
+            req.body.mode || 'stage',
+        );
+        res.status(result.mode === 'published' ? 200 : 201).json(result);
+    } catch (err) {
+        handleReleaseError(err, res);
+    }
+}
+
+async function listReleaseCandidates(req, res) {
+    try {
+        const candidates = await releaseManager.listReleaseCandidates({
+            status: req.query.status,
+        });
+        res.json(candidates);
+    } catch (err) {
+        handleReleaseError(err, res);
+    }
+}
+
+async function getReleaseCandidate(req, res) {
+    try {
+        const candidate = await releaseManager.getReleaseCandidate(req.params.candidateId);
+        if (!candidate) return res.status(404).json({ error: 'Candidat introuvable' });
+        res.json(candidate);
+    } catch (err) {
+        handleReleaseError(err, res);
+    }
+}
+
+async function publishReleaseCandidate(req, res) {
+    try {
+        const page = await releaseManager.publishReleaseCandidate(req.params.candidateId, {
+            userId: req.user?.id,
+            force: req.body.force === true,
+        });
+        res.json({ success: true, page });
+    } catch (err) {
+        handleReleaseError(err, res);
+    }
+}
+
+async function rejectReleaseCandidate(req, res) {
+    try {
+        const candidate = await releaseManager.rejectReleaseCandidate(req.params.candidateId, req.user?.id);
+        if (!candidate) return res.status(404).json({ error: 'Candidat introuvable ou déjà finalisé' });
+        res.json(candidate);
+    } catch (err) {
+        handleReleaseError(err, res);
+    }
+}
+
 module.exports = {
     listPages, getPage, getPageById, createPage, updatePage, deletePage,
     adminGetPage, adminUpdatePage, getPageVersion, seedHomepage,
     saveDraft, createNamedVersion, listNamedVersions, getNamedVersionById, saveThemeConfig,
+    exportPageRelease, analyzePageRelease, importPageRelease,
+    listReleaseCandidates, getReleaseCandidate, publishReleaseCandidate, rejectReleaseCandidate,
     listMenuItems, createMenuItem, updateMenuItem, deleteMenuItem,
     getConstructionMode, setConstructionMode,
 };

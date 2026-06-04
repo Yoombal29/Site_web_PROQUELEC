@@ -14,7 +14,7 @@ import FunctionalBuilderRoute from '@/components/FunctionalBuilderRoute';
 import { useConstructionMode } from '@/hooks/useConstructionMode';
 import { useSession } from '@/hooks/useSession';
 import { useIsAdmin } from '@/hooks/useIsAdmin';
-import { useDynamicRoutes } from '@/hooks/useDynamicRoutes';
+import { useDynamicRoutes, type DynamicRoute } from '@/hooks/useDynamicRoutes';
 import DynamicPage from './pages/DynamicPage';
 import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
@@ -69,6 +69,7 @@ import RBACDemo from './pages/examples/RBACDemo';
 const AnalyticsPageLazy = lazy(() =>
   import('./pages/AnalyticsPage').then((mod) => ({ default: mod.AnalyticsPage })),
 );
+const BuilderReleaseManagerPage = lazy(() => import('./pages/admin/BuilderReleaseManagerPage'));
 import BuilderPage from './pages/admin/BuilderPage';
 import BuilderConfigPage from './pages/admin/BuilderConfigPage';
 const SchematicEditorPage = lazy(() => import('./pages/admin/SchematicEditorPage'));
@@ -151,7 +152,7 @@ const AppContent = () => {
         { path: '/outils', element: <ConstructionPage /> },
         { path: '/showroom', element: <ConstructionPage /> },
         { path: '/legal', element: <ConstructionPage /> },
-        ...((dynamicRoutes as any[])?.map((route) => ({
+        ...((dynamicRoutes as DynamicRoute[])?.map((route) => ({
           path: route.path,
           element: <ConstructionPage />,
         })) || []),
@@ -231,6 +232,16 @@ const AppContent = () => {
           element: (
             <RoleProtectedRoute allowedRoles={['admin']}>
               <PageSectionsAdmin />
+            </RoleProtectedRoute>
+          ),
+        },
+        {
+          path: '/admin/builder-release-manager',
+          element: (
+            <RoleProtectedRoute allowedRoles={['admin']}>
+              <Suspense fallback={<div className="p-8">Chargement...</div>}>
+                <BuilderReleaseManagerPage />
+              </Suspense>
             </RoleProtectedRoute>
           ),
         },
@@ -474,7 +485,7 @@ const AppContent = () => {
         { path: '/demo/rbac', element: <RBACDemo /> },
 
         // Routes dynamiques (pages CMS)
-        ...((dynamicRoutes as any[])?.map((route) => ({
+        ...((dynamicRoutes as DynamicRoute[])?.map((route) => ({
           path: route.path,
           element: <DynamicPage />,
         })) || []),

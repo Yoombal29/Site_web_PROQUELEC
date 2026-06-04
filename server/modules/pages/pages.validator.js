@@ -96,9 +96,25 @@ const constructionModeSchema = z.object({
     is_enabled: z.boolean(),
 });
 
+const releasePackageSchema = z.union([z.string(), z.record(z.any())]);
+
+const releaseAnalyzeSchema = z.object({
+    package: releasePackageSchema,
+});
+
+const releaseImportSchema = z.object({
+    package: releasePackageSchema,
+    mode: z.enum(['stage', 'safe-apply']).optional().default('stage'),
+});
+
+const releasePublishSchema = z.object({
+    force: z.boolean().optional().default(false),
+});
+
 module.exports = {
     createPageSchema, updatePageSchema, adminUpdatePageSchema,
     draftPageSchema, namedVersionSchema, themeConfigSchema,
     createMenuItemSchema, updateMenuItemSchema,
-    constructionModeSchema
+    constructionModeSchema,
+    releaseAnalyzeSchema, releaseImportSchema, releasePublishSchema
 };
