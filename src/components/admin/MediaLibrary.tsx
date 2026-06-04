@@ -95,23 +95,24 @@ const getExtension = (name = '') => {
 
 const getFileCategory = (mime: string, fileName = '', fileType = ''): string => {
   const lowerType = String(fileType || '').toLowerCase();
-  if (lowerType && lowerType !== 'general') return lowerType;
   const ext = getExtension(fileName);
-  if (mime.startsWith('image/')) return 'image';
-  if (mime.startsWith('video/')) return 'video';
-  if (mime.startsWith('audio/')) return 'audio';
-  if (mime.includes('pdf') || ext === '.pdf') return 'pdf';
+  if (lowerType === 'image' || mime.startsWith('image/')) return 'image';
+  if (lowerType === 'video' || mime.startsWith('video/')) return 'video';
+  if (lowerType === 'audio' || mime.startsWith('audio/')) return 'audio';
+  if (lowerType === 'pdf' || mime.includes('pdf') || ext === '.pdf') return 'pdf';
   if (
+    lowerType === 'spreadsheet' ||
     mime.includes('spreadsheet') ||
     mime.includes('excel') ||
     mime.includes('sheet') ||
     ['.xls', '.xlsx', '.xlsm', '.csv', '.ods'].includes(ext)
   )
     return 'spreadsheet';
-  if (['.ppt', '.pptx', '.odp'].includes(ext)) return 'presentation';
-  if (['.zip', '.rar', '.7z'].includes(ext)) return 'archive';
+  if (lowerType === 'presentation' || ['.ppt', '.pptx', '.odp'].includes(ext)) return 'presentation';
+  if (lowerType === 'archive' || ['.zip', '.rar', '.7z'].includes(ext)) return 'archive';
   if (['.doc', '.docx', '.odt', '.rtf', '.txt', '.md', '.json', '.xml'].includes(ext))
     return 'document';
+  if (lowerType === 'other') return 'other';
   return 'document';
 };
 
@@ -153,7 +154,21 @@ export default function MediaLibrary({ onSelect }: MediaLibraryProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [replacing, setReplacing] = useState(false);
+  const [previewRows, setPreviewRows] = useState<string[][]>([]);
+  const [previewError, setPreviewError] = useState('');
+  const [editDraft, setEditDraft] = useState({
+    file_name: '',
+    file_type: 'document',
+    alt_text: '',
+    folder_path: '/',
+    status: 'draft',
+    description: '',
+    tags: '',
+  });
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const replaceInputRef = useRef<HTMLInputElement>(null);
 
   const fetchFiles = useCallback(async () => {
     try {
@@ -177,17 +192,20 @@ export default function MediaLibrary({ onSelect }: MediaLibraryProps) {
       formData.append('file', f);
     }
     try {
-      await fetch('/api/storage/upload', {
+      const response = await fetch('/api/storage/upload', {
         method: 'POST',
         headers: { Authorization: 'Bearer ' + (localStorage.getItem('token') || '') },
         body: formData,
       });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || data.message || 'Erreur upload');
       toast.success('Fichier(s) uploadé(s)');
-      fetchFiles();
+      await fetchFiles();
     } catch {
       toast.error('Erreur upload');
     } finally {
       setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
 
@@ -209,6 +227,109 @@ export default function MediaLibrary({ onSelect }: MediaLibraryProps) {
     toast.success('URL copiée');
   };
 
+  const selectedFile = files.find((f) => f.id === selectedId) || null;
+
+  useEffect(() => {
+    if (!selectedFile) return;
+    const metadata = selectedFile.metadata || {};
+    setEditDraft({
+      file_name: selectedFile.file_name || '',
+      file_type: getFileCategory(
+        selectedFile.mime_type || '',
+        selectedFile.file_name || selectedFile.file_path,
+        selectedFile.file_type,
+      ),
+      alt_text: selectedFile.alt_text || '',
+      folder_path: selectedFile.folder_path || '/',
+      status: selectedFile.status || 'draft',
+      description: typeof metadata.description === 'string' ? metadata.description : '',
+      tags: Array.isArray(metadata.tags) ? metadata.tags.join(', ') : typeof metadata.tags === 'string' ? metadata.tags : '',
+    });
+  }, [selectedFile?.id]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setPreviewRows([]);
+    setPreviewError('');
+    if (!selectedFile) return;
+    const cat = getFileCategory(selectedFile.mime_type || '', selectedFile.file_name || selectedFile.file_path, selectedFile.file_type);
+    if (cat !== 'spreadsheet') return;
+
+    fetch(getFileUrl(selectedFile))
+      .then((response) => {
+        if (!response.ok) throw new Error('Aperçu indisponible');
+        return response.arrayBuffer();
+      })
+      .then((buffer) => {
+        if (cancelled) return;
+        const wb = XLSX.read(buffer, { type: 'array' });
+        const sheet = wb.Sheets[wb.SheetNames[0]];
+        const rows = XLSX.utils.sheet_to_json<string[]>(sheet, { header: 1, raw: false });
+        setPreviewRows(rows.slice(0, 10).map((row) => row.slice(0, 6).map((cell) => String(cell ?? ''))));
+      })
+      .catch(() => !cancelled && setPreviewError('Aperçu Excel indisponible'));
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedFile?.id, selectedFile?.file_path]);
+
+  const handleSaveMetadata = async () => {
+    if (!selectedFile) return;
+    setSaving(true);
+    try {
+      const metadata = {
+        ...(selectedFile.metadata || {}),
+        description: editDraft.description,
+        tags: editDraft.tags
+          .split(',')
+          .map((tag) => tag.trim())
+          .filter(Boolean),
+      };
+      const data = await apiFetch<{ file: MediaFile }>(`/api/storage/files/${selectedFile.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          file_name: editDraft.file_name,
+          file_type: editDraft.file_type,
+          alt_text: editDraft.alt_text,
+          folder_path: editDraft.folder_path,
+          status: editDraft.status,
+          metadata,
+        }),
+      });
+      setFiles((prev) => prev.map((file) => (file.id === data.file.id ? data.file : file)));
+      toast.success('Fiche média sauvegardée');
+    } catch (error) {
+      toast.error(`Erreur sauvegarde: ${(error as Error).message}`);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleReplace = async (fileList: FileList | null) => {
+    const replacement = fileList?.[0];
+    if (!selectedFile || !replacement) return;
+    setReplacing(true);
+    const formData = new FormData();
+    formData.append('file', replacement);
+    try {
+      const response = await fetch(`/api/storage/files/${selectedFile.id}/replace`, {
+        method: 'PUT',
+        headers: { Authorization: 'Bearer ' + (localStorage.getItem('token') || '') },
+        body: formData,
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || data.message || 'Erreur remplacement');
+      setFiles((prev) => prev.map((file) => (file.id === data.file.id ? data.file : file)));
+      toast.success('Fichier remplacé');
+    } catch (error) {
+      toast.error(`Erreur remplacement: ${(error as Error).message}`);
+    } finally {
+      setReplacing(false);
+      if (replaceInputRef.current) replaceInputRef.current.value = '';
+    }
+  };
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragOver(false);
@@ -217,17 +338,25 @@ export default function MediaLibrary({ onSelect }: MediaLibraryProps) {
 
   const filtered = files.filter((f) => {
     const matchSearch = f.file_name.toLowerCase().includes(search.toLowerCase());
-    const cat = getFileCategory(f.mime_type);
+    const cat = getFileCategory(f.mime_type || '', f.file_name || f.file_path, f.file_type);
     const matchType = typeFilter === 'all' || cat === typeFilter;
     return matchSearch && matchType;
   });
 
-  const getFileUrl = (f: MediaFile) => `/uploads/${f.file_path}`;
-  const isImage = (mime: string) => mime.startsWith('image/');
+  const getFileUrl = (f: MediaFile) => {
+    if (f.url) return f.url;
+    const raw = f.file_path || '';
+    if (raw.startsWith('http')) return raw;
+    const cleaned = raw.replace(/^\/?uploads\//, '');
+    return `/uploads/${cleaned}`;
+  };
+  const isImage = (mime?: string) => String(mime || '').startsWith('image/');
 
   const tabs = [
     { id: 'all', label: 'Tous', icon: FileText },
     { id: 'image', label: 'Images', icon: Image },
+    { id: 'pdf', label: 'PDF', icon: FileText },
+    { id: 'spreadsheet', label: 'Excel', icon: FileSpreadsheet },
     { id: 'video', label: 'Vidéos', icon: Video },
     { id: 'document', label: 'Documents', icon: FileText },
   ];
@@ -282,6 +411,7 @@ export default function MediaLibrary({ onSelect }: MediaLibraryProps) {
             ref={fileInputRef}
             type="file"
             multiple
+            accept={ACCEPTED_UPLOADS}
             className="hidden"
             onChange={(e) => e.target.files && handleUpload(e.target.files)}
           />
@@ -345,7 +475,7 @@ export default function MediaLibrary({ onSelect }: MediaLibraryProps) {
         {viewMode === 'grid' && filtered.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 p-3">
             {filtered.map((f) => {
-              const cat = getFileCategory(f.mime_type);
+              const cat = getFileCategory(f.mime_type || '', f.file_name || f.file_path, f.file_type);
               const url = getFileUrl(f);
               const selected = selectedId === f.id;
               return (
@@ -447,7 +577,7 @@ export default function MediaLibrary({ onSelect }: MediaLibraryProps) {
                     />
                   ) : (
                     <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                      {FILE_ICONS[getFileCategory(f.mime_type)] || (
+                      {FILE_ICONS[getFileCategory(f.mime_type || '', f.file_name || f.file_path, f.file_type)] || (
                         <File className="w-5 h-5 text-slate-400" />
                       )}
                     </div>
@@ -500,6 +630,246 @@ export default function MediaLibrary({ onSelect }: MediaLibraryProps) {
         )}
       </div>
 
+      {selectedFile && (
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-4 rounded-xl border border-border bg-white dark:bg-slate-900 p-4">
+          <div className="min-h-[320px] rounded-lg overflow-hidden border border-border bg-slate-50 dark:bg-slate-950">
+            {(() => {
+              const cat = getFileCategory(
+                selectedFile.mime_type || '',
+                selectedFile.file_name || selectedFile.file_path,
+                selectedFile.file_type,
+              );
+              const url = getFileUrl(selectedFile);
+              if (cat === 'image') {
+                return (
+                  <img
+                    src={url}
+                    alt={selectedFile.alt_text || selectedFile.file_name}
+                    className="w-full h-[320px] object-contain"
+                  />
+                );
+              }
+              if (cat === 'video') {
+                return <video src={url} controls className="w-full h-[320px] bg-black" />;
+              }
+              if (cat === 'audio') {
+                return (
+                  <div className="h-[320px] flex items-center justify-center p-8">
+                    <audio src={url} controls className="w-full" />
+                  </div>
+                );
+              }
+              if (cat === 'pdf') {
+                return <iframe src={url} title={selectedFile.file_name} className="w-full h-[320px] bg-white" />;
+              }
+              if (cat === 'spreadsheet') {
+                if (previewError) {
+                  return (
+                    <div className="h-[320px] flex flex-col items-center justify-center gap-2 text-slate-500">
+                      <FileSpreadsheet className="w-10 h-10 text-emerald-500" />
+                      <span className="text-sm">{previewError}</span>
+                    </div>
+                  );
+                }
+                if (previewRows.length === 0) {
+                  return (
+                    <div className="h-[320px] flex items-center justify-center">
+                      <Loader2 className="w-5 h-5 animate-spin text-slate-400" />
+                    </div>
+                  );
+                }
+                return (
+                  <div className="h-[320px] overflow-auto bg-white">
+                    <table className="w-full text-xs">
+                      <tbody>
+                        {previewRows.map((row, rowIndex) => (
+                          <tr key={rowIndex} className="border-b border-slate-100">
+                            {Array.from({ length: Math.max(1, row.length) }).map((_, colIndex) => (
+                              <td key={colIndex} className="border-r border-slate-100 px-2 py-1.5 min-w-24">
+                                {row[colIndex] || ''}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              }
+              return (
+                <div className="h-[320px] flex flex-col items-center justify-center gap-2 text-slate-500">
+                  {FILE_ICONS[cat] || <File className="w-10 h-10 text-slate-400" />}
+                  <span className="text-sm font-semibold">{getCategoryLabel(cat)}</span>
+                </div>
+              );
+            })()}
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-sm font-bold truncate">{selectedFile.file_name}</p>
+                <p className="text-xs text-slate-500">
+                  {formatSize(selectedFile.file_size)} · {formatDate(selectedFile.uploaded_at)}
+                </p>
+              </div>
+              <button
+                onClick={() => setSelectedId(null)}
+                className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+                title="Fermer"
+                aria-label="Fermer le panneau"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <a
+                href={getFileUrl(selectedFile)}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-border text-xs font-semibold hover:bg-slate-50"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Ouvrir
+              </a>
+              <a
+                href={getFileUrl(selectedFile)}
+                download
+                className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-border text-xs font-semibold hover:bg-slate-50"
+              >
+                <Download className="w-4 h-4" />
+                Télécharger
+              </a>
+              <button
+                onClick={(event) => handleCopyUrl(getFileUrl(selectedFile), event)}
+                className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-border text-xs font-semibold hover:bg-slate-50"
+              >
+                <Copy className="w-4 h-4" />
+                Copier URL
+              </button>
+              {onSelect && (
+                <button
+                  onClick={() => onSelect(getFileUrl(selectedFile))}
+                  className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-blue-600 text-white text-xs font-bold hover:bg-blue-700"
+                >
+                  <Check className="w-4 h-4" />
+                  Utiliser
+                </button>
+              )}
+            </div>
+
+            <label className="block space-y-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Nom</span>
+              <input
+                value={editDraft.file_name}
+                onChange={(event) => setEditDraft((draft) => ({ ...draft, file_name: event.target.value }))}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+              />
+            </label>
+
+            <div className="grid grid-cols-2 gap-2">
+              <label className="block space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Type</span>
+                <select
+                  value={editDraft.file_type}
+                  onChange={(event) => setEditDraft((draft) => ({ ...draft, file_type: event.target.value }))}
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+                >
+                  <option value="image">Image</option>
+                  <option value="pdf">PDF</option>
+                  <option value="spreadsheet">Excel</option>
+                  <option value="document">Document</option>
+                  <option value="presentation">Présentation</option>
+                  <option value="video">Vidéo</option>
+                  <option value="audio">Audio</option>
+                  <option value="archive">Archive</option>
+                  <option value="other">Autre</option>
+                </select>
+              </label>
+
+              <label className="block space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Statut</span>
+                <select
+                  value={editDraft.status}
+                  onChange={(event) => setEditDraft((draft) => ({ ...draft, status: event.target.value }))}
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+                >
+                  <option value="draft">Brouillon</option>
+                  <option value="published">Publié</option>
+                  <option value="archived">Archivé</option>
+                </select>
+              </label>
+            </div>
+
+            <label className="block space-y-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Texte alternatif</span>
+              <input
+                value={editDraft.alt_text}
+                onChange={(event) => setEditDraft((draft) => ({ ...draft, alt_text: event.target.value }))}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+              />
+            </label>
+
+            <label className="block space-y-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Dossier</span>
+              <input
+                value={editDraft.folder_path}
+                onChange={(event) => setEditDraft((draft) => ({ ...draft, folder_path: event.target.value }))}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+              />
+            </label>
+
+            <label className="block space-y-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Description</span>
+              <textarea
+                value={editDraft.description}
+                onChange={(event) => setEditDraft((draft) => ({ ...draft, description: event.target.value }))}
+                rows={2}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm resize-none"
+              />
+            </label>
+
+            <label className="block space-y-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Tags</span>
+              <input
+                value={editDraft.tags}
+                onChange={(event) => setEditDraft((draft) => ({ ...draft, tags: event.target.value }))}
+                placeholder="norme, formation, audit"
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+              />
+            </label>
+
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <button
+                onClick={handleSaveMetadata}
+                disabled={saving}
+                className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 disabled:opacity-60"
+              >
+                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                Sauvegarder
+              </button>
+
+              <input
+                ref={replaceInputRef}
+                type="file"
+                accept={ACCEPTED_UPLOADS}
+                className="hidden"
+                onChange={(event) => handleReplace(event.target.files)}
+              />
+              <button
+                onClick={() => replaceInputRef.current?.click()}
+                disabled={replacing}
+                className="flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-border text-xs font-bold hover:bg-slate-50 disabled:opacity-60"
+              >
+                {replacing ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+                Remplacer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Count */}
       <p className="text-xs text-slate-500">
         {filtered.length} fichier(s) sur {files.length}
@@ -521,17 +891,19 @@ export function MediaSelector({
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-4xl max-h-[85vh] overflow-hidden shadow-2xl m-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-7xl max-h-[90vh] overflow-hidden shadow-2xl m-4">
         <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <h2 className="text-lg font-bold">Médiathèque</h2>
           <button
             onClick={() => onOpenChange(false)}
             className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+            title="Fermer"
+            aria-label="Fermer la médiathèque"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
-        <div className="p-6 overflow-y-auto max-h-[calc(85vh-80px)]">
+        <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
           <MediaLibrary
             onSelect={(url) => {
               onSelect(url);

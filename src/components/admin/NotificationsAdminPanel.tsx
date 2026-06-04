@@ -164,7 +164,7 @@ const NotificationsAdminPanel: React.FC = () => {
       setFormOpen(false);
       setFormTitle('');
       setFormMessage('');
-      setFormRole('');
+      setFormRole('_all');
       fetchNotifications();
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Erreur lors de l'envoi";
