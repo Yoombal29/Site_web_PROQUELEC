@@ -6,6 +6,7 @@
  */
 import React, { useRef } from 'react';
 import { Editor, Frame } from '@craftjs/core';
+import type { SerializedNode, SerializedNodes } from '@craftjs/core';
 import { CRAFT_RESOLVER } from '@/components/blocks/craftResolver';
 import { buildAnimationRuntimeCss } from '@/components/blocks/animationPresets';
 import { useAnimateOnScroll } from '@/hooks/useAnimateOnScroll';
@@ -32,9 +33,94 @@ class CraftErrorBoundary extends React.Component<
 }
 
 interface CraftPageRendererProps {
-  structureJson: any;
+  structureJson: string | SerializedNodes | null | undefined;
   fallback: React.ReactNode;
 }
+
+type MutableSerializedNode = Omit<SerializedNode, 'props' | 'type'> & {
+  type: unknown;
+  props?: Record<string, unknown>;
+};
+
+type MutableSerializedNodes = Record<string, MutableSerializedNode>;
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const getResolvedName = (type: unknown) => {
+  if (typeof type === 'string') return type;
+  if (isRecord(type) && typeof type.resolvedName === 'string') return type.resolvedName;
+  return null;
+};
+
+const toFiniteNumber = (value: unknown) => {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+  if (typeof value === 'string' && value.trim() !== '') {
+    const parsed = Number.parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
+};
+
+const normalizePageShellWidth = (nodes: MutableSerializedNodes) => {
+  const root = nodes.ROOT;
+  if (!root || !Array.isArray(root.nodes) || root.nodes.length !== 1) return;
+
+  const wrapperId = root.nodes[0];
+  const wrapper = nodes[wrapperId];
+  if (!wrapper || !isRecord(wrapper.props)) return;
+
+  const typeName = getResolvedName(wrapper.type);
+  const isPageShell =
+    wrapperId === 'container_1' || typeName === 'ROOT' || wrapper.displayName === 'ROOT';
+  if (!isPageShell) return;
+
+  const horizontalPadding = toFiniteNumber(wrapper.props.padding) ?? 0;
+  const verticalPadding = toFiniteNumber(wrapper.props.paddingY) ?? horizontalPadding;
+  const hasLegacyWidth = wrapper.props.maxWidth === '1200px';
+
+  if (hasLegacyWidth && horizontalPadding === 0 && verticalPadding === 0) {
+    wrapper.props = {
+      ...wrapper.props,
+      maxWidth: '100%',
+    };
+  }
+};
+
+// Normaliser la structure : convertir type: 'BlockName' en type: { resolvedName: 'BlockName' }
+const normalizeStructure = (
+  data: CraftPageRendererProps['structureJson'],
+): string | SerializedNodes | null | undefined => {
+  if (!isRecord(data)) return data;
+
+  const normalized: MutableSerializedNodes = {};
+  for (const key of Object.keys(data)) {
+    const value = data[key];
+    if (!isRecord(value)) continue;
+
+    const entry: MutableSerializedNode = { ...value } as MutableSerializedNode;
+    const typeName = getResolvedName(entry.type);
+
+    // Si type est une string simple, le convertir en { resolvedName }
+    if (typeof entry.type === 'string' && entry.type !== 'div') {
+      entry.type = { resolvedName: entry.type };
+    }
+
+    // Ajouter les champs manquants
+    if (typeName && typeName !== 'div' && entry.isCanvas === undefined) {
+      entry.isCanvas = Array.isArray(entry.nodes) && entry.nodes.length > 0;
+    }
+    if (typeName && typeName !== 'div' && !entry.displayName) {
+      entry.displayName = typeName;
+    }
+
+    normalized[key] = entry;
+  }
+
+  normalizePageShellWidth(normalized);
+
+  return normalized as unknown as SerializedNodes;
+};
 
 export const CraftPageRenderer: React.FC<CraftPageRendererProps> = ({
   structureJson,
@@ -43,40 +129,14 @@ export const CraftPageRenderer: React.FC<CraftPageRendererProps> = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   useAnimateOnScroll(containerRef, { threshold: 0.1, once: true });
 
-  // Normaliser la structure : convertir type: 'BlockName' en type: { resolvedName: 'BlockName' }
-  const normalizeStructure = (data: any): any => {
-    if (!data || typeof data !== 'object') return data;
-    const normalized: any = Array.isArray(data) ? [] : {};
-    for (const key of Object.keys(data)) {
-      const val = data[key];
-      if (val && typeof val === 'object' && !Array.isArray(val)) {
-        const entry: any = { ...val };
-        // Si type est une string simple, le convertir en { resolvedName }
-        if (typeof entry.type === 'string' && entry.type !== 'div') {
-          entry.type = { resolvedName: entry.type };
-        }
-        // Ajouter les champs manquants
-        if (entry.type?.resolvedName && entry.isCanvas === undefined) {
-          entry.isCanvas = Array.isArray(entry.nodes) && entry.nodes.length > 0;
-        }
-        if (entry.type?.resolvedName && !entry.displayName) {
-          entry.displayName = entry.type.resolvedName;
-        }
-        normalized[key] = entry;
-      } else {
-        normalized[key] = val;
-      }
-    }
-    return normalized;
-  };
+  const normalizedStructure = normalizeStructure(structureJson);
 
   return (
     <CraftErrorBoundary fallback={fallback}>
-      <div ref={containerRef}>
+      <div ref={containerRef} className="w-full max-w-none overflow-x-hidden">
         <style>{buildAnimationRuntimeCss()}</style>
         <Editor resolver={CRAFT_RESOLVER} enabled={false}>
-          {/* @ts-ignore - Frame accepte les objets JSON bruts */}
-          <Frame data={normalizeStructure(structureJson)} />
+          <Frame data={normalizedStructure ?? undefined} />
         </Editor>
       </div>
     </CraftErrorBoundary>
