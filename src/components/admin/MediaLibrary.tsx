@@ -4,6 +4,7 @@
  * Upload, gestion, sélection de fichiers (images, vidéos, documents)
  */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import * as XLSX from 'xlsx';
 import { apiFetch } from '@/lib/api-client';
 import { toast } from 'sonner';
 import {
@@ -26,6 +27,8 @@ import {
   ExternalLink,
   Check,
   AlertCircle,
+  Save,
+  RefreshCw,
 } from 'lucide-react';
 
 interface MediaFile {
@@ -38,6 +41,10 @@ interface MediaFile {
   url?: string;
   thumbnail_url?: string;
   uploaded_at: string;
+  alt_text?: string | null;
+  folder_path?: string | null;
+  status?: string | null;
+  metadata?: Record<string, any> | null;
 }
 
 interface MediaLibraryProps {
@@ -51,16 +58,76 @@ const FILE_ICONS: Record<string, React.ReactNode> = {
   document: <FileText className="w-8 h-8 text-amber-400" />,
   spreadsheet: <FileSpreadsheet className="w-8 h-8 text-emerald-400" />,
   pdf: <FileText className="w-8 h-8 text-red-400" />,
+  presentation: <FileText className="w-8 h-8 text-orange-400" />,
+  archive: <File className="w-8 h-8 text-slate-400" />,
+  other: <File className="w-8 h-8 text-slate-400" />,
 };
 
-const getFileCategory = (mime: string): string => {
+const ACCEPTED_UPLOADS = [
+  'image/*',
+  'video/*',
+  'audio/*',
+  '.pdf',
+  '.doc',
+  '.docx',
+  '.odt',
+  '.rtf',
+  '.xls',
+  '.xlsx',
+  '.xlsm',
+  '.csv',
+  '.ods',
+  '.ppt',
+  '.pptx',
+  '.txt',
+  '.md',
+  '.json',
+  '.xml',
+  '.zip',
+  '.rar',
+  '.7z',
+].join(',');
+
+const getExtension = (name = '') => {
+  const index = name.lastIndexOf('.');
+  return index >= 0 ? name.slice(index).toLowerCase() : '';
+};
+
+const getFileCategory = (mime: string, fileName = '', fileType = ''): string => {
+  const lowerType = String(fileType || '').toLowerCase();
+  if (lowerType && lowerType !== 'general') return lowerType;
+  const ext = getExtension(fileName);
   if (mime.startsWith('image/')) return 'image';
   if (mime.startsWith('video/')) return 'video';
   if (mime.startsWith('audio/')) return 'audio';
-  if (mime.includes('pdf')) return 'pdf';
-  if (mime.includes('spreadsheet') || mime.includes('excel') || mime.includes('sheet'))
+  if (mime.includes('pdf') || ext === '.pdf') return 'pdf';
+  if (
+    mime.includes('spreadsheet') ||
+    mime.includes('excel') ||
+    mime.includes('sheet') ||
+    ['.xls', '.xlsx', '.xlsm', '.csv', '.ods'].includes(ext)
+  )
     return 'spreadsheet';
+  if (['.ppt', '.pptx', '.odp'].includes(ext)) return 'presentation';
+  if (['.zip', '.rar', '.7z'].includes(ext)) return 'archive';
+  if (['.doc', '.docx', '.odt', '.rtf', '.txt', '.md', '.json', '.xml'].includes(ext))
+    return 'document';
   return 'document';
+};
+
+const getCategoryLabel = (category: string) => {
+  const labels: Record<string, string> = {
+    image: 'Image',
+    video: 'Vidéo',
+    audio: 'Audio',
+    pdf: 'PDF',
+    spreadsheet: 'Excel',
+    document: 'Document',
+    presentation: 'Présentation',
+    archive: 'Archive',
+    other: 'Autre',
+  };
+  return labels[category] || category;
 };
 
 const formatSize = (bytes: number): string => {

@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Plus,
-  Trash2,
-  Loader2,
-  Send,
-  Bell,
-  CheckCircle,
-  XCircle,
-} from 'lucide-react';
+import { Plus, Trash2, Loader2, Send, Bell, CheckCircle, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { apiFetch } from '@/lib/api-client';
 
@@ -110,7 +102,7 @@ const NotificationsAdminPanel: React.FC = () => {
   const [formOpen, setFormOpen] = useState(false);
   const [formTitle, setFormTitle] = useState('');
   const [formMessage, setFormMessage] = useState('');
-  const [formRole, setFormRole] = useState<string>('');
+  const [formRole, setFormRole] = useState<string>('_all');
 
   // --- Delete confirmation ---
   const [deleteTarget, setDeleteTarget] = useState<Notification | null>(null);
@@ -165,7 +157,7 @@ const NotificationsAdminPanel: React.FC = () => {
         body: JSON.stringify({
           title: formTitle.trim(),
           message: formMessage.trim(),
-          target_role: formRole || null,
+          target_role: formRole === '_all' ? null : formRole,
         }),
       });
       toast.success('Notification envoyée avec succès');
@@ -235,9 +227,7 @@ const NotificationsAdminPanel: React.FC = () => {
             <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
           </div>
         ) : notifications.length === 0 ? (
-          <div className="text-center py-16 text-muted-foreground">
-            Aucune notification envoyée
-          </div>
+          <div className="text-center py-16 text-muted-foreground">Aucune notification envoyée</div>
         ) : (
           <Table>
             <TableHeader>
@@ -261,7 +251,9 @@ const NotificationsAdminPanel: React.FC = () => {
                   <TableCell>
                     {notif.target_role ? (
                       <Badge
-                        className={ROLE_BADGE_STYLES[notif.target_role] || 'bg-gray-100 text-gray-700'}
+                        className={
+                          ROLE_BADGE_STYLES[notif.target_role] || 'bg-gray-100 text-gray-700'
+                        }
                       >
                         {getRoleLabel(notif.target_role)}
                       </Badge>
@@ -304,8 +296,9 @@ const NotificationsAdminPanel: React.FC = () => {
               Envoyer une notification
             </DialogTitle>
             <DialogDescription>
-              Remplissez le formulaire ci-dessous pour envoyer une notification groupée.
-              Les utilisateurs ciblés recevront un email et verront la notification dans leur tableau de bord.
+              Remplissez le formulaire ci-dessous pour envoyer une notification groupée. Les
+              utilisateurs ciblés recevront un email et verront la notification dans leur tableau de
+              bord.
             </DialogDescription>
           </DialogHeader>
 
@@ -345,6 +338,7 @@ const NotificationsAdminPanel: React.FC = () => {
                   <SelectValue placeholder="Sélectionner une cible" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="_all">Tous les utilisateurs</SelectItem>
                   {ROLES.map((role) => (
                     <SelectItem key={role.value} value={role.value}>
                       {role.label}
@@ -353,7 +347,8 @@ const NotificationsAdminPanel: React.FC = () => {
                 </SelectContent>
               </Select>
               <p className="text-xs text-muted-foreground mt-1">
-                Si aucun rôle n'est sélectionné, la notification sera visible par tous les utilisateurs connectés.
+                Si aucun rôle n'est sélectionné, la notification sera visible par tous les
+                utilisateurs connectés.
               </p>
             </div>
           </div>
@@ -382,8 +377,8 @@ const NotificationsAdminPanel: React.FC = () => {
           <DialogHeader>
             <DialogTitle>Confirmer la suppression</DialogTitle>
             <DialogDescription>
-              Êtes-vous sûr de vouloir supprimer la notification "{deleteTarget?.title}" ?
-              Cette action est irréversible.
+              Êtes-vous sûr de vouloir supprimer la notification "{deleteTarget?.title}" ? Cette
+              action est irréversible.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
