@@ -2408,8 +2408,8 @@ app.get('/api/admin/subscriptions', authenticateToken, requireAdmin, async (req,
 });
 
 // == MEDIA ROUTES ==
-const mediaRoutes = require('./modules/media/media.routes');
-app.use(mediaRoutes.basePath || '/api', mediaRoutes.router || mediaRoutes);
+const { router: mediaRouter } = require('./modules/media/media.routes');
+app.use('/api', mediaRouter);
 
 // == DATA ENDPOINTS ==
 
