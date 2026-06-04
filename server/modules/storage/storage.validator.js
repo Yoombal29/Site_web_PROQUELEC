@@ -17,4 +17,13 @@ const createMediaFileSchema = z.object({
     metadata: z.any().optional(),
 });
 
-module.exports = { renameFileSchema, createMediaFileSchema };
+const updateMediaFileSchema = z.object({
+    file_name: z.string().min(1, 'Nom requis').trim().optional(),
+    file_type: z.string().trim().optional(),
+    alt_text: z.string().nullable().optional(),
+    folder_path: z.string().trim().optional(),
+    status: z.string().trim().optional(),
+    metadata: z.any().optional(),
+});
+
+module.exports = { renameFileSchema, createMediaFileSchema, updateMediaFileSchema };

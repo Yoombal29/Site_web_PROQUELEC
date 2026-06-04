@@ -3,8 +3,8 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { authenticateToken, requireAdmin, validate } = require('../../core/middleware');
-const { renameFileSchema, createMediaFileSchema } = require('./storage.validator');
+const { authenticateToken, validate } = require('../../core/middleware');
+const { renameFileSchema, createMediaFileSchema, updateMediaFileSchema } = require('./storage.validator');
 const ctrl = require('./storage.controller');
 
 const uploadDir = path.join(__dirname, '../../uploads');
@@ -22,7 +22,8 @@ const upload = multer({ storage, limits: { fileSize: 500 * 1024 * 1024 } });
 
 router.post('/storage/upload', authenticateToken, ctrl.uploadFile);
 router.get('/storage/files', authenticateToken, ctrl.listFiles);
-router.delete('/storage/files/:id', authenticateToken, requireAdmin, ctrl.deleteFile);
+router.put('/storage/files/:id', authenticateToken, validate(updateMediaFileSchema), ctrl.updateMediaFile);
+router.put('/storage/files/:id/replace', authenticateToken, ctrl.replaceMediaFile);
 router.put('/storage/files/:id/rename', authenticateToken, validate(renameFileSchema), ctrl.renameFile);
 router.delete('/storage/files/:id', authenticateToken, ctrl.deleteFileV2);
 
