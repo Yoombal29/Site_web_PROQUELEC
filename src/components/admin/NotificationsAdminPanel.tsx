@@ -48,8 +48,8 @@ interface Notification {
 
 type Role = 'admin' | 'electricien' | 'entreprise' | 'membre' | 'partner';
 
-const ROLES: { value: Role | ''; label: string }[] = [
-  { value: '', label: 'Tous les utilisateurs' },
+const ROLES: { value: Role; label: string }[] = [
+  { value: 'admin', label: 'Administrateurs' },
   { value: 'electricien', label: 'Électriciens' },
   { value: 'entreprise', label: 'Entreprises' },
   { value: 'membre', label: 'Membres' },

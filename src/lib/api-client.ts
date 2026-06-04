@@ -20,8 +20,15 @@ const DEFAULT_ERRORS: Record<string, string> = {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+type ApiError = Error & {
+  code?: string;
+  status?: number;
+  icon?: string;
+};
+
 export async function apiFetch<T>(url: string, options: RequestInit = {}, retries = 2): Promise<T> {
   const token = localStorage.getItem('token');
+  const method = (options.method || 'GET').toUpperCase();
   const headers = new Headers({
     'Content-Type': 'application/json',
     ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
@@ -51,40 +58,47 @@ export async function apiFetch<T>(url: string, options: RequestInit = {}, retrie
       if (isJson) {
         const errorData = data as any;
         console.error("API ERROR", {
+          method,
+          url,
           status: response.status,
+          statusText: response.statusText,
           data: errorData,
         });
         const message = errorData?.message || errorData?.error || DEFAULT_ERRORS[errorData?.code] || DEFAULT_ERRORS['UNKNOWN'];
-        const error = new Error(message);
-        (error as unknown).code = errorData?.code;
-        (error as unknown).status = response.status;
-        (error as unknown).icon = errorData?.icon;
+        const error = new Error(message) as ApiError;
+        error.code = errorData?.code;
+        error.status = response.status;
+        error.icon = errorData?.icon;
         throw error;
       }
 
       console.error("API ERROR", {
+        method,
+        url,
         status: response.status,
+        statusText: response.statusText,
         text: data,
       });
       const message = typeof data === 'string' && data.trim().length > 0
         ? data
         : DEFAULT_ERRORS['UNKNOWN'];
-      const error = new Error(message);
-      (error as unknown).status = response.status;
+      const error = new Error(message) as ApiError;
+      error.status = response.status;
       throw error;
     }
 
     return data as T;
   } catch (err: unknown) {
-    const isGet = !options.method || options.method.toUpperCase() === 'GET';
-    if (retries > 0 && isGet && (err.name === 'TypeError' || err.code === 'NETWORK_FAIL')) {
+    const errorLike = err as Partial<ApiError>;
+    const isGet = method === 'GET';
+    if (retries > 0 && isGet && (errorLike.name === 'TypeError' || errorLike.code === 'NETWORK_FAIL')) {
       await sleep(1000 * (3 - retries));
       return apiFetch<T>(url, options, retries - 1);
     }
 
-    if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
-      const networkError = new Error(DEFAULT_ERRORS['NETWORK_FAIL']);
-      (networkError as unknown).code = 'NETWORK_FAIL';
+    if (errorLike.name === 'TypeError' && errorLike.message === 'Failed to fetch') {
+      const networkError = new Error(DEFAULT_ERRORS['NETWORK_FAIL']) as ApiError;
+      networkError.code = 'NETWORK_FAIL';
       throw networkError;
     }
     throw err;

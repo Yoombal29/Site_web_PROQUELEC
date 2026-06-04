@@ -2408,9 +2408,8 @@ app.get('/api/admin/subscriptions', authenticateToken, requireAdmin, async (req,
 });
 
 // == MEDIA ROUTES ==
-const mediaService = require('./modules/media/media.service');
 const mediaRoutes = require('./modules/media/media.routes');
-app.use('/api', mediaRoutes);
+app.use(mediaRoutes.basePath || '/api', mediaRoutes.router || mediaRoutes);
 
 // == DATA ENDPOINTS ==
 
@@ -6006,11 +6005,82 @@ app.delete('/api/tech-tools/:id', authenticateToken, async (req, res) => {
 // NOTIFICATIONS API
 // ─────────────────────────────────────────────────────────────────────────────
 
+async function ensureNotificationTables() {
+  await pool.query('CREATE EXTENSION IF NOT EXISTS pgcrypto');
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS public.notifications (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      type TEXT NOT NULL DEFAULT 'info',
+      title TEXT NOT NULL,
+      message TEXT,
+      recipient_id UUID,
+      target_role TEXT,
+      is_read BOOLEAN DEFAULT false,
+      created_by UUID,
+      sent_at TIMESTAMPTZ DEFAULT NOW(),
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      expires_at TIMESTAMPTZ
+    )
+  `);
+
+  await pool.query(`
+    ALTER TABLE public.notifications
+      ADD COLUMN IF NOT EXISTS type TEXT DEFAULT 'info',
+      ADD COLUMN IF NOT EXISTS title TEXT,
+      ADD COLUMN IF NOT EXISTS message TEXT,
+      ADD COLUMN IF NOT EXISTS recipient_id UUID,
+      ADD COLUMN IF NOT EXISTS target_role TEXT,
+      ADD COLUMN IF NOT EXISTS is_read BOOLEAN DEFAULT false,
+      ADD COLUMN IF NOT EXISTS created_by UUID,
+      ADD COLUMN IF NOT EXISTS sent_at TIMESTAMPTZ DEFAULT NOW(),
+      ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT NOW(),
+      ADD COLUMN IF NOT EXISTS expires_at TIMESTAMPTZ
+  `);
+
+  await pool.query(`
+    ALTER TABLE public.notifications
+      ALTER COLUMN type SET DEFAULT 'info',
+      ALTER COLUMN is_read SET DEFAULT false,
+      ALTER COLUMN sent_at SET DEFAULT NOW(),
+      ALTER COLUMN created_at SET DEFAULT NOW()
+  `);
+
+  await pool.query(`
+    UPDATE public.notifications
+    SET
+      type = COALESCE(type, 'info'),
+      sent_at = COALESCE(sent_at, created_at, NOW())
+    WHERE type IS NULL OR sent_at IS NULL
+  `);
+
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS public.notification_reads (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      notification_id UUID NOT NULL REFERENCES public.notifications(id) ON DELETE CASCADE,
+      user_id UUID NOT NULL,
+      read_at TIMESTAMP DEFAULT NOW(),
+      UNIQUE(notification_id, user_id)
+    )
+  `);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_notifications_target_role
+    ON public.notifications(target_role)
+  `);
+
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_notification_reads_user
+    ON public.notification_reads(user_id)
+  `);
+}
+
 // GET /api/admin/notifications — Liste toutes les notifications (admin only)
 app.get('/api/admin/notifications', authenticateToken, requireAdmin, async (req, res) => {
   try {
+    await ensureNotificationTables();
     const { rows } = await pool.query(
-      'SELECT * FROM notifications ORDER BY created_at DESC LIMIT 100',
+      'SELECT * FROM public.notifications ORDER BY created_at DESC LIMIT 100',
     );
     res.json(rows);
   } catch (error) {
@@ -6021,11 +6091,12 @@ app.get('/api/admin/notifications', authenticateToken, requireAdmin, async (req,
 // POST /api/admin/notifications — Créer une notification groupée (admin only)
 app.post('/api/admin/notifications', authenticateToken, requireAdmin, async (req, res) => {
   try {
+    await ensureNotificationTables();
     const { title, message, target_role } = req.body;
     if (!title || !message) return res.status(400).json({ error: 'Titre et message requis' });
 
     const { rows } = await pool.query(
-      'INSERT INTO notifications (title, message, target_role, created_by) VALUES ($1, $2, $3, $4) RETURNING *',
+      "INSERT INTO public.notifications (type, title, message, target_role, created_by, sent_at) VALUES ('info', $1, $2, $3, $4, NOW()) RETURNING *",
       [title, message, target_role || null, req.user.id],
     );
 
@@ -6058,11 +6129,12 @@ app.post('/api/admin/notifications', authenticateToken, requireAdmin, async (req
 // GET /api/notifications — Notifications pour l'utilisateur connecté
 app.get('/api/notifications', authenticateToken, async (req, res) => {
   try {
+    await ensureNotificationTables();
     const { rows } = await pool.query(
       `
       SELECT n.*, nr.id IS NOT NULL as read
-      FROM notifications n
-      LEFT JOIN notification_reads nr ON nr.notification_id = n.id AND nr.user_id = $1
+      FROM public.notifications n
+      LEFT JOIN public.notification_reads nr ON nr.notification_id = n.id AND nr.user_id = $1
       WHERE n.target_role IS NULL OR n.target_role = $2
       ORDER BY n.created_at DESC
       LIMIT 50
@@ -6078,10 +6150,11 @@ app.get('/api/notifications', authenticateToken, async (req, res) => {
 // GET /api/notifications/unread-count — Nombre de notifications non lues
 app.get('/api/notifications/unread-count', authenticateToken, async (req, res) => {
   try {
+    await ensureNotificationTables();
     const { rows } = await pool.query(
       `
-      SELECT COUNT(*) as count FROM notifications n
-      LEFT JOIN notification_reads nr ON nr.notification_id = n.id AND nr.user_id = $1
+      SELECT COUNT(*) as count FROM public.notifications n
+      LEFT JOIN public.notification_reads nr ON nr.notification_id = n.id AND nr.user_id = $1
       WHERE (n.target_role IS NULL OR n.target_role = $2)
       AND nr.id IS NULL
     `,
@@ -6096,8 +6169,9 @@ app.get('/api/notifications/unread-count', authenticateToken, async (req, res) =
 // PUT /api/notifications/:id/read — Marquer une notification comme lue
 app.put('/api/notifications/:id/read', authenticateToken, async (req, res) => {
   try {
+    await ensureNotificationTables();
     await pool.query(
-      'INSERT INTO notification_reads (notification_id, user_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+      'INSERT INTO public.notification_reads (notification_id, user_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
       [req.params.id, req.user.id],
     );
     res.json({ success: true });
@@ -6109,8 +6183,11 @@ app.put('/api/notifications/:id/read', authenticateToken, async (req, res) => {
 // DELETE /api/admin/notifications/:id — Supprimer une notification (admin only)
 app.delete('/api/admin/notifications/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
-    await pool.query('DELETE FROM notification_reads WHERE notification_id = $1', [req.params.id]);
-    await pool.query('DELETE FROM notifications WHERE id = $1', [req.params.id]);
+    await ensureNotificationTables();
+    await pool.query('DELETE FROM public.notification_reads WHERE notification_id = $1', [
+      req.params.id,
+    ]);
+    await pool.query('DELETE FROM public.notifications WHERE id = $1', [req.params.id]);
     res.json({ success: true });
   } catch (error) {
     handleAppError(error, res);
