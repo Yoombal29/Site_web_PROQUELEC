@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { Frame, Element, useEditor } from '@craftjs/core';
+import type { NodeTree } from '@craftjs/core';
 import {
   ContainerBlock, HeroBlock, TextBlock, StatsBlock, SpacerBlock
 } from '../blocks/ProquelecBlocks';
@@ -17,7 +18,20 @@ import { cloneNodeTreeWithNewIds } from './cloneNodeTree.ts';
 import { useGodEditor } from './GodEditorContext';
 import { buildAnimationRuntimeCss } from '@/components/blocks/animationPresets';
 
-const VIEWPORT_WIDTHS: Record<string, string> = {
+type BuilderDevice = 'desktop' | 'tablet' | 'mobile';
+type SpacingStyles = {
+  top: string;
+  right: string;
+  bottom: string;
+  left: string;
+};
+type CraftComponentWithDefaults = {
+  craft?: {
+    props?: Record<string, unknown>;
+  };
+};
+
+const VIEWPORT_WIDTHS: Record<BuilderDevice, string> = {
   desktop: '100%',
   tablet: '768px',
   mobile: '390px',
@@ -38,6 +52,34 @@ const PADDING_TOP_CLASS = 'builder-padding-top';
 const PADDING_BOTTOM_CLASS = 'builder-padding-bottom';
 const PADDING_LEFT_CLASS = 'builder-padding-left';
 const PADDING_RIGHT_CLASS = 'builder-padding-right';
+const BUILDER_CLIPBOARD_KEY = 'proquelec_builder_clipboard';
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+const isCraftNodeTree = (value: unknown): value is NodeTree => {
+  if (!isRecord(value)) return false;
+
+  const rootNodeId = value.rootNodeId;
+  const nodes = value.nodes;
+
+  if (typeof rootNodeId !== 'string' || !isRecord(nodes)) return false;
+
+  const rootNode = nodes[rootNodeId];
+  return isRecord(rootNode) && isRecord(rootNode.data);
+};
+
+const parseBuilderClipboard = (raw: string | null): NodeTree | null => {
+  const text = raw?.trim();
+  if (!text || !text.startsWith('{')) return null;
+
+  try {
+    const parsed = JSON.parse(text) as unknown;
+    return isCraftNodeTree(parsed) ? parsed : null;
+  } catch {
+    return null;
+  }
+};
 
 // ─────────────────────────────────────────────────────────
 // FLOATING ACTION BAR (appears above selected block)
@@ -179,8 +221,8 @@ export const CanvasOverlays = () => {
   const [selectedRect, setSelectedRect] = useState<DOMRect | null>(null);
   const [hoverName, setHoverName] = useState('');
   const [selectedName, setSelectedName] = useState('');
-  const [paddingStyles, setPaddingStyles] = useState<any>(null);
-  const [marginStyles, setMarginStyles] = useState<any>(null);
+  const [paddingStyles, setPaddingStyles] = useState<SpacingStyles | null>(null);
+  const [marginStyles, setMarginStyles] = useState<SpacingStyles | null>(null);
 
   const updateRects = useCallback(() => {
     if (!isEnabled) {
@@ -318,7 +360,7 @@ export const CanvasOverlays = () => {
 // MAIN CANVAS
 // ─────────────────────────────────────────────────────────
 export const GodCanvas = () => {
-  const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
+  const [device, setDevice] = useState<BuilderDevice>('desktop');
   const [zoom, setZoom] = useState(100);
   const [contextMenu, setContextMenu] = useState<{
     x: number;
@@ -375,9 +417,14 @@ export const GodCanvas = () => {
   };
 
   useEffect(() => {
-    const handler = (e: CustomEvent) => setDevice(e.detail as any);
-    window.addEventListener('god-viewport-change', handler as any);
-    return () => window.removeEventListener('god-viewport-change', handler as any);
+    const handler = (event: Event) => {
+      const nextDevice = (event as CustomEvent<BuilderDevice>).detail;
+      if (nextDevice in VIEWPORT_WIDTHS) {
+        setDevice(nextDevice);
+      }
+    };
+    window.addEventListener('god-viewport-change', handler);
+    return () => window.removeEventListener('god-viewport-change', handler);
   }, []);
 
   // Close context menu on left click anywhere
@@ -386,16 +433,6 @@ export const GodCanvas = () => {
     window.addEventListener('click', handleClose);
     return () => window.removeEventListener('click', handleClose);
   }, []);
-
-  // Duplicate custom event listener
-  useEffect(() => {
-    const handleDuplicateCustom = (e: CustomEvent) => {
-      const nodeId = e.detail;
-      if (nodeId) handleDuplicate(nodeId);
-    };
-    window.addEventListener('god-duplicate-node', handleDuplicateCustom as any);
-    return () => window.removeEventListener('god-duplicate-node', handleDuplicateCustom as any);
-  }, [query]);
 
   // Synchronize lockedNodes & hiddenNodes from Zustand to canvas DOM attributes
   const { lockedNodes, hiddenNodes } = useBuilderUiStore();
@@ -409,7 +446,9 @@ export const GodCanvas = () => {
           dom.setAttribute('data-locked', lockedNodes[id] ? 'true' : 'false');
           dom.setAttribute('data-hidden', hiddenNodes[id] ? 'true' : 'false');
         }
-      } catch (e) {}
+      } catch {
+        // Node may disappear while Craft is reconciling the canvas tree.
+      }
     });
   }, [lockedNodes, hiddenNodes, query, isEnabled]);
 
@@ -478,7 +517,7 @@ export const GodCanvas = () => {
     try {
       const tree = query.node(id).toNodeTree();
       const json = JSON.stringify(tree);
-      localStorage.setItem('proquelec_builder_clipboard', json);
+      localStorage.setItem(BUILDER_CLIPBOARD_KEY, json);
       // Also copy to system clipboard for external use
       try {
         await navigator.clipboard.writeText(json);
@@ -495,12 +534,22 @@ export const GodCanvas = () => {
       return;
     }
 
-    let clipboard = localStorage.getItem('proquelec_builder_clipboard');
+    let clipboard = localStorage.getItem(BUILDER_CLIPBOARD_KEY);
+    let tree = parseBuilderClipboard(clipboard);
+
+    if (clipboard && !tree) {
+      localStorage.removeItem(BUILDER_CLIPBOARD_KEY);
+      clipboard = null;
+    }
 
     // Fallback: try reading from system clipboard
-    if (!clipboard) {
+    if (!tree) {
       try {
         clipboard = await navigator.clipboard.readText();
+        tree = parseBuilderClipboard(clipboard);
+        if (tree && clipboard) {
+          localStorage.setItem(BUILDER_CLIPBOARD_KEY, clipboard);
+        }
       } catch (_) { /* Permission denied or empty */ }
     }
 
@@ -509,8 +558,12 @@ export const GodCanvas = () => {
       return;
     }
 
+    if (!tree) {
+      toast.error('Le presse-papier ne contient pas un bloc Builder valide');
+      return;
+    }
+
     try {
-      const tree = JSON.parse(clipboard) as import('@craftjs/core').NodeTree;
       const newTree = cloneNodeTreeWithNewIds(tree, 'paste');
 
       const targetNode = query.node(parentId).get();
@@ -541,14 +594,19 @@ export const GodCanvas = () => {
       toast.error('Bloc verrouillé : action impossible');
       return;
     }
-    const clipboard = localStorage.getItem('proquelec_builder_clipboard');
+    const clipboard = localStorage.getItem(BUILDER_CLIPBOARD_KEY);
     if (!clipboard) {
       toast.error('Presse-papier vide');
       return;
     }
+    const tree = parseBuilderClipboard(clipboard);
+    if (!tree) {
+      localStorage.removeItem(BUILDER_CLIPBOARD_KEY);
+      toast.error('Le presse-papier ne contient pas un bloc Builder valide');
+      return;
+    }
     try {
-      const tree = JSON.parse(clipboard);
-      const sourceProps = tree.rootNode.data.props;
+      const sourceProps = tree.nodes[tree.rootNodeId].data.props ?? {};
       const styleKeys = [
         'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
         'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
@@ -556,7 +614,7 @@ export const GodCanvas = () => {
         'opacity', 'boxShadow', 'zIndex', 'customInlineCss', 'extraClasses'
       ];
 
-      actions.setProp(targetId, (props: any) => {
+      actions.setProp(targetId, (props: Record<string, unknown>) => {
         styleKeys.forEach(key => {
           if (sourceProps[key] !== undefined) {
             props[key] = JSON.parse(JSON.stringify(sourceProps[key]));
@@ -569,7 +627,7 @@ export const GodCanvas = () => {
     }
   };
 
-  const handleDuplicate = (id: string) => {
+  const handleDuplicate = useCallback((id: string) => {
     if (id === 'ROOT') return;
     if (isNodeLocked(id)) {
       toast.error('Bloc verrouillé : action impossible');
@@ -595,7 +653,17 @@ export const GodCanvas = () => {
       console.error('Duplicate error:', err);
       toast.error('Erreur lors de la duplication');
     }
-  };
+  }, [actions, isNodeLocked, query]);
+
+  // Duplicate custom event listener
+  useEffect(() => {
+    const handleDuplicateCustom = (event: Event) => {
+      const nodeId = (event as CustomEvent<string>).detail;
+      if (nodeId) handleDuplicate(nodeId);
+    };
+    window.addEventListener('god-duplicate-node', handleDuplicateCustom);
+    return () => window.removeEventListener('god-duplicate-node', handleDuplicateCustom);
+  }, [handleDuplicate]);
 
   const handleResetStyle = (id: string) => {
     if (isNodeLocked(id)) {
@@ -610,7 +678,7 @@ export const GodCanvas = () => {
         'opacity', 'boxShadow', 'zIndex', 'customInlineCss', 'extraClasses'
       ];
 
-      actions.setProp(id, (props: any) => {
+      actions.setProp(id, (props: Record<string, unknown>) => {
         styleKeys.forEach(key => {
           delete props[key];
         });
@@ -628,10 +696,10 @@ export const GodCanvas = () => {
     }
     try {
       const node = query.node(id).get();
-      const ComponentType = node.data.type as any;
-      const defaultProps: Record<string, any> = ComponentType?.craft?.props || {};
+      const ComponentType = node.data.type as CraftComponentWithDefaults | undefined;
+      const defaultProps: Record<string, unknown> = ComponentType?.craft?.props || {};
 
-      actions.setProp(id, (props: any) => {
+      actions.setProp(id, (props: Record<string, unknown>) => {
         // Remet chaque prop à sa valeur par défaut
         Object.entries(defaultProps).forEach(([key, value]) => {
           props[key] = JSON.parse(JSON.stringify(value));
@@ -796,7 +864,7 @@ export const GodCanvas = () => {
             <BuilderErrorBoundary>
               <Frame
                 key={initialStructure ? 'loaded-page-structure' : 'fallback-default-structure'}
-                {...(initialStructure ? ({ data: initialStructure } as any) : {})}
+                data={initialStructure || undefined}
               >
                 {!initialStructure && (
                   <Element is={ContainerBlock} canvas padding={0} backgroundColor="#ffffff" maxWidth="100%">
