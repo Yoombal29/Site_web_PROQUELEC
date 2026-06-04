@@ -923,6 +923,8 @@ export const ImageCarouselBlock = (props: any) => {
       {showArrows && (
         <>
           <button
+            type="button"
+            aria-label="Image précédente"
             onClick={() => setCurrent((c) => (c - 1 + images.length) % images.length)}
             style={{
               position: 'absolute',
@@ -947,6 +949,8 @@ export const ImageCarouselBlock = (props: any) => {
             ‹
           </button>
           <button
+            type="button"
+            aria-label="Image suivante"
             onClick={() => setCurrent((c) => (c + 1) % images.length)}
             style={{
               position: 'absolute',
@@ -986,6 +990,8 @@ export const ImageCarouselBlock = (props: any) => {
           {images.map((_: string, i: number) => (
             <button
               key={i}
+              type="button"
+              aria-label={`Afficher l'image ${i + 1}`}
               onClick={() => setCurrent(i)}
               style={{
                 width: 8,
@@ -1925,6 +1931,8 @@ export const TestimonialCarouselBlock = (props: any) => {
           {items.map((_: any, i: number) => (
             <button
               key={i}
+              type="button"
+              aria-label={`Afficher le témoignage ${i + 1}`}
               onClick={() => setCurrent(i)}
               style={{
                 width: 8,
@@ -2403,6 +2411,8 @@ const TeamMembersSettings = () => {
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold text-slate-400">{m.name || 'Membre'}</span>
                 <button
+                  type="button"
+                  aria-label={`Supprimer ${m.name || 'ce membre'}`}
                   onClick={() => sync(local.filter((_: any, j: number) => j !== i))}
                   className="text-[10px] text-red-400"
                 >

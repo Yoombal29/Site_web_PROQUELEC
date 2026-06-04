@@ -137,6 +137,7 @@ import {
   WhyProquelecPremiumBlock,
 } from '../blocks/ProquelecBlocksPlus';
 import { FunctionalPageBlock, getFunctionalPageToolboxItems } from '../blocks/FunctionalPageBlock';
+import { PdfViewerBlock, WordViewerBlock, ExcelViewerBlock } from '../blocks/DocumentViewerBlocks';
 import {
   FormBuilderBlock,
   TextFieldBlock,
@@ -557,6 +558,27 @@ const BLOCK_GROUPS = [
         color: 'text-sky-400',
         tags: ['accordion', 'image', 'gallery', 'interactive'],
         factory: () => <ImageAccordionBlock />,
+      },
+      {
+        icon: FileText,
+        label: 'Visualiseur PDF',
+        color: 'text-red-400',
+        tags: ['pdf', 'document', 'viewer', 'file'],
+        factory: () => <PdfViewerBlock />,
+      },
+      {
+        icon: FileText,
+        label: 'Visualiseur Word',
+        color: 'text-blue-400',
+        tags: ['word', 'document', 'viewer', 'file'],
+        factory: () => <WordViewerBlock />,
+      },
+      {
+        icon: FileText,
+        label: 'Visualiseur Excel',
+        color: 'text-green-400',
+        tags: ['excel', 'spreadsheet', 'viewer', 'file'],
+        factory: () => <ExcelViewerBlock />,
       },
     ],
   },
@@ -1244,6 +1266,7 @@ export const GodToolbox = () => {
         <button
           onClick={() => setExpanded((v) => !v)}
           className="p-1.5 rounded-lg text-slate-500 hover:text-white hover:bg-[#252538] transition-colors shrink-0"
+          aria-label={expanded ? 'Réduire le panneau des blocs' : 'Agrandir le panneau des blocs'}
           title={expanded ? 'Réduire' : 'Agrandir'}
         >
           {expanded ? '◀' : '▶'}
@@ -1339,8 +1362,7 @@ export const GodToolbox = () => {
                     <div className="px-1.5 space-y-0.5 pb-1">
                       {group.items.map((item, index) => {
                         const Icon = item.icon;
-                        const itemKey =
-                          (item as any).id || `${group.label}-${item.label}-${index}`;
+                        const itemKey = (item as any).id || `${group.label}-${item.label}-${index}`;
                         return (
                           <button
                             key={itemKey}
@@ -1413,6 +1435,7 @@ export const GodToolbox = () => {
                       <button
                         onClick={(e) => handleDeleteTemplate(e, tmpl.id)}
                         className="p-1 rounded text-slate-600 hover:text-rose-400 hover:bg-rose-500/10 transition-colors shrink-0"
+                        aria-label={`Supprimer le modèle ${tmpl.name}`}
                         title="Supprimer ce modèle"
                       >
                         <Trash2 size={11} />

@@ -109,6 +109,8 @@ import {
 import { RichTextBlock } from './RichTextEditorBlock';
 import { PopupBlock } from './PopupBuilderBlock';
 
+import { PdfViewerBlock, WordViewerBlock, ExcelViewerBlock } from './DocumentViewerBlocks';
+
 import { FunctionalPageBlock } from './FunctionalPageBlock';
 
 import {
@@ -255,6 +257,11 @@ export const CRAFT_RESOLVER = {
   // Rich text & popup
   RichTextBlock,
   PopupBlock,
+
+  // Document viewers
+  PdfViewerBlock,
+  WordViewerBlock,
+  ExcelViewerBlock,
 
   // Functional page blocks (design-locked)
   FunctionalPageBlock,

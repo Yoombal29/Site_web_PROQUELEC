@@ -196,6 +196,7 @@ const PageSelectorScreen = () => {
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 className="p-2 hover:bg-[#252538] rounded-lg transition text-slate-300"
+                aria-label={sidebarOpen ? 'Masquer le menu des pages' : 'Afficher le menu des pages'}
                 title="Basculer le menu"
               >
                 <Menu size={20} />
@@ -324,6 +325,7 @@ const PageSelectorScreen = () => {
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
                             className="p-1.5 rounded text-slate-500 hover:text-white hover:bg-[#252538] transition"
+                            aria-label={`Voir la page ${page.title || page.slug} dans un nouvel onglet`}
                             title="Voir la page (nouvel onglet)"
                           >
                             <ExternalLink size={12} />
@@ -331,6 +333,7 @@ const PageSelectorScreen = () => {
                           <button
                             onClick={(e) => duplicatePage(page, e)}
                             className="p-1.5 rounded text-slate-500 hover:text-emerald-400 hover:bg-[#252538] transition"
+                            aria-label={`Dupliquer la page ${page.title || page.slug}`}
                             title="Dupliquer cette page"
                           >
                             <Copy size={12} />
