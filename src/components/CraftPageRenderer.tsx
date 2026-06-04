@@ -87,6 +87,35 @@ const normalizePageShellWidth = (nodes: MutableSerializedNodes) => {
   }
 };
 
+const hasRootHtmlSection = (data: string | SerializedNodes | null | undefined) => {
+  if (!isRecord(data) || !isRecord(data.ROOT)) return false;
+  const rootNodes = Array.isArray(data.ROOT.nodes) ? data.ROOT.nodes : [];
+
+  return rootNodes.some((nodeId) => {
+    if (typeof nodeId !== 'string') return false;
+    const node = data[nodeId];
+    if (!isRecord(node) || !isRecord(node.props)) return false;
+
+    const typeName = getResolvedName(node.type);
+    const html = node.props.html;
+
+    return typeName === 'HtmlBlock' && typeof html === 'string' && html.trimStart().startsWith('<section');
+  });
+};
+
+const ROOT_HTML_SECTION_CSS = `
+.craft-public-page--root-html-section > [data-htmlblock],
+.craft-public-page--root-html-section > div > [data-htmlblock] {
+  width: 100%;
+  max-width: none;
+}
+
+.craft-public-page--root-html-section > [data-htmlblock] > div:last-child,
+.craft-public-page--root-html-section > div > [data-htmlblock] > div:last-child {
+  padding: 0 !important;
+}
+`;
+
 // Normaliser la structure : convertir type: 'BlockName' en type: { resolvedName: 'BlockName' }
 const normalizeStructure = (
   data: CraftPageRendererProps['structureJson'],
@@ -130,11 +159,21 @@ export const CraftPageRenderer: React.FC<CraftPageRendererProps> = ({
   useAnimateOnScroll(containerRef, { threshold: 0.1, once: true });
 
   const normalizedStructure = normalizeStructure(structureJson);
+  const hasFullBleedRootHtmlSection = hasRootHtmlSection(normalizedStructure);
 
   return (
     <CraftErrorBoundary fallback={fallback}>
-      <div ref={containerRef} className="w-full max-w-none overflow-x-hidden">
-        <style>{buildAnimationRuntimeCss()}</style>
+      <div
+        ref={containerRef}
+        className={`craft-public-page w-full max-w-none overflow-x-hidden ${
+          hasFullBleedRootHtmlSection ? 'craft-public-page--root-html-section' : ''
+        }`}
+      >
+        <style>
+          {`${buildAnimationRuntimeCss()}${
+            hasFullBleedRootHtmlSection ? `\n${ROOT_HTML_SECTION_CSS}` : ''
+          }`}
+        </style>
         <Editor resolver={CRAFT_RESOLVER} enabled={false}>
           <Frame data={normalizedStructure ?? undefined} />
         </Editor>
