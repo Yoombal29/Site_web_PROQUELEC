@@ -403,7 +403,13 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
   // Restore/discard local backups
   const restoreLocalBackup = useCallback(() => {
     if (localBackupData && localBackupData.structure_json) {
-      actionsRef.current.deserialize(localBackupData.structure_json);
+      const backupStructure = parseBuilderStructure(localBackupData.structure_json);
+      const normalizedBackup = normalizeCraftStructureForBuilder(
+        backupStructure,
+        localBackupData.pageData?.title || pageData?.title || 'Page',
+      );
+
+      actionsRef.current.deserialize(normalizedBackup || localBackupData.structure_json);
       if (localBackupData.pageData) {
         setPageData(localBackupData.pageData);
       }
@@ -411,7 +417,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
     }
     setHasLocalBackup(false);
     localStorage.removeItem(`proquelec_builder_backup_${pageId}`);
-  }, [localBackupData, pageId]);
+  }, [localBackupData, pageData?.title, pageId]);
 
   const discardLocalBackup = useCallback(() => {
     setHasLocalBackup(false);
