@@ -16,6 +16,19 @@ initializeBuilderEngine();
 // Register PWA Service Worker
 registerServiceWorker();
 
+const isMediaPlaybackAbort = (reason: unknown) => {
+  if (!reason || typeof reason !== 'object') return false;
+
+  const errorLike = reason as { name?: unknown; message?: unknown };
+  const name = typeof errorLike.name === 'string' ? errorLike.name : '';
+  const message = typeof errorLike.message === 'string' ? errorLike.message : '';
+
+  return (
+    name === 'AbortError' &&
+    /play\(\) request was interrupted|call to pause\(\)|new load request/i.test(message)
+  );
+};
+
 // Global Error Catching for robustness
 window.onerror = (message, source, lineno, colno, error) => {
   console.error("[Global Error]", { message, source, lineno, colno, error });
@@ -24,6 +37,11 @@ window.onerror = (message, source, lineno, colno, error) => {
 };
 
 window.onunhandledrejection = (event) => {
+  if (isMediaPlaybackAbort(event.reason)) {
+    event.preventDefault();
+    return;
+  }
+
   console.error("[Unhandled Promise Rejection]", event.reason);
 };
 
