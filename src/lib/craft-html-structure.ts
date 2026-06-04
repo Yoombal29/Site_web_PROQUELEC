@@ -1,6 +1,12 @@
 export function createHtmlCraftStructure(html: string | null | undefined) {
   return {
-    ROOT: { type: 'div', nodes: ['html_wrapper'], props: { style: {} }, linkedNodes: {} },
+    ROOT: {
+      type: 'div',
+      nodes: ['html_wrapper'],
+      props: { style: {} },
+      linkedNodes: {},
+      isCanvas: true,
+    },
     html_wrapper: {
       type: { resolvedName: 'ContainerBlock' },
       nodes: ['html_block'],

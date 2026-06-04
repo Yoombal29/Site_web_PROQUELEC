@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { useEditor } from '@craftjs/core';
+import type { SerializedNodes } from '@craftjs/core';
 import { apiFetch } from '@/lib/api-client';
 import { toast } from 'sonner';
 import { useBuilderThemeStore, DEFAULT_THEME } from '@/stores/builder-theme.store';
+import type { ThemeConfig } from '@/stores/builder-theme.store';
 import { useBuilderHistoryStore } from '@/stores/builder-history.store';
 import { validateBuilderStructure, validateThemeConfig } from '@/validation/builderSchema';
 import convertLegacyBlocksToCraftGraph from '@/utils/legacyToCraft';
@@ -16,8 +18,137 @@ export type PageDesignOptions = {
   theme?: string;
   layout?: string;
   customPalette?: string[];
-  [key: string]: any;
+  page_type?: unknown;
+  [key: string]: unknown;
 };
+
+type BuilderStructure = SerializedNodes;
+
+type WorkflowStatus = PageDataState['workflowStatus'];
+
+type PageApiResponse = {
+  title?: string;
+  slug?: string;
+  meta_description?: string;
+  meta_keywords?: string;
+  meta_robots?: string;
+  custom_css?: string;
+  custom_js?: string;
+  design_options?: string | PageDesignOptions | null;
+  is_published?: boolean;
+  workflow_status?: WorkflowStatus;
+  status?: WorkflowStatus;
+  immutable?: boolean;
+  theme_config?: string | Record<string, unknown> | null;
+  structure_json?: unknown;
+  draft_json?: unknown;
+  content_raw?: string | null;
+  content?: string | null;
+  updated_at?: string | null;
+};
+
+type LocalBackupData = {
+  timestamp?: number;
+  structure_json?: BuilderStructure | string;
+  pageData?: PageDataState;
+};
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const normalizeNodeType = (type: unknown) => {
+  if (typeof type !== 'string') return type;
+  return type === 'div' ? type : { resolvedName: type };
+};
+
+const resolveDisplayName = (node: Record<string, unknown>, fallback: string) => {
+  if (typeof node.displayName === 'string') return node.displayName;
+
+  const type = node.type;
+  if (isRecord(type) && typeof type.resolvedName === 'string') return type.resolvedName;
+  if (typeof type === 'string') return type;
+
+  return fallback;
+};
+
+const isCraftJsFormat = (jsonObj: unknown): jsonObj is Record<string, unknown> => {
+  return isRecord(jsonObj) && 'ROOT' in jsonObj;
+};
+
+const parseBuilderStructure = (json: string | unknown): unknown => {
+  if (typeof json === 'string') {
+    try {
+      return JSON.parse(json) as unknown;
+    } catch (error) {
+      console.warn('[GodEditor] Impossible de parser la structure JSON:', error);
+      return undefined;
+    }
+  }
+  return json;
+};
+
+const ensureValidBuilderStructure = (json: string | unknown) => {
+  const parsed = parseBuilderStructure(json);
+  const validation = validateBuilderStructure(parsed);
+  if (!validation.success) {
+    console.warn('[GodEditor] Validation structure builder échouée', validation.error.format());
+    return undefined;
+  }
+  return validation.data;
+};
+
+const normalizeCraftStructureForBuilder = (
+  structure: unknown,
+  pageTitle = 'Page',
+): BuilderStructure | null => {
+  if (!isCraftJsFormat(structure)) return null;
+
+  const normalized: Record<string, Record<string, unknown>> = {};
+
+  Object.entries(structure).forEach(([id, rawNode]) => {
+    if (!isRecord(rawNode)) return;
+
+    const nodes = Array.isArray(rawNode.nodes)
+      ? rawNode.nodes.filter((nodeId): nodeId is string => typeof nodeId === 'string')
+      : [];
+
+    const linkedNodes = isRecord(rawNode.linkedNodes)
+      ? Object.fromEntries(
+          Object.entries(rawNode.linkedNodes).filter(
+            (entry): entry is [string, string] => typeof entry[1] === 'string',
+          ),
+        )
+      : {};
+
+    normalized[id] = {
+      ...rawNode,
+      type: normalizeNodeType(rawNode.type),
+      nodes,
+      props: isRecord(rawNode.props) ? rawNode.props : {},
+      custom: isRecord(rawNode.custom) ? rawNode.custom : {},
+      hidden: typeof rawNode.hidden === 'boolean' ? rawNode.hidden : false,
+      linkedNodes,
+      isCanvas:
+        id === 'ROOT'
+          ? true
+          : typeof rawNode.isCanvas === 'boolean'
+            ? rawNode.isCanvas
+            : nodes.length > 0,
+      displayName:
+        id === 'ROOT'
+          ? resolveDisplayName(rawNode, `Page: ${pageTitle}`)
+          : resolveDisplayName(rawNode, id),
+      ...(id === 'ROOT'
+        ? { parent: null }
+        : { parent: typeof rawNode.parent === 'string' ? rawNode.parent : 'ROOT' }),
+    };
+  });
+
+  return normalized.ROOT ? (normalized as unknown as BuilderStructure) : null;
+};
+
+const getErrorMessage = (error: unknown, fallback = 'Erreur inconnue') =>
+  error instanceof Error ? error.message : fallback;
 
 export type PageDataState = {
   title: string;
@@ -38,7 +169,7 @@ interface GodEditorContextType {
   pageId: string | undefined;
   pageData: PageDataState | null;
   setPageData: React.Dispatch<React.SetStateAction<PageDataState | null>>;
-  initialStructure: any | null;
+  initialStructure: BuilderStructure | null;
   isLoading: boolean;
   isSaving: boolean;
   error: string | null;
@@ -74,44 +205,18 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
   });
 
   const [pageData, setPageData] = useState<PageDataState | null>(null);
-  const [initialStructure, setInitialStructure] = useState<any | null>(null);
+  const [initialStructure, setInitialStructure] = useState<BuilderStructure | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Local backup states
   const [hasLocalBackup, setHasLocalBackup] = useState(false);
-  const [localBackupData, setLocalBackupData] = useState<any>(null);
+  const [localBackupData, setLocalBackupData] = useState<LocalBackupData | null>(null);
 
   // Ref to prevent autosave loops
   const lastSerializedRef = useRef<string>('');
   const hydrationReadyRef = useRef(false);
-
-  const isCraftJsFormat = (jsonObj: any): boolean => {
-    return jsonObj && typeof jsonObj === 'object' && !Array.isArray(jsonObj) && 'ROOT' in jsonObj;
-  };
-
-  const parseBuilderStructure = (json: string | unknown): unknown => {
-    if (typeof json === 'string') {
-      try {
-        return JSON.parse(json);
-      } catch (error) {
-        console.warn('[GodEditor] Impossible de parser la structure JSON:', error);
-        return undefined;
-      }
-    }
-    return json;
-  };
-
-  const ensureValidBuilderStructure = (json: string | unknown) => {
-    const parsed = parseBuilderStructure(json);
-    const validation = validateBuilderStructure(parsed);
-    if (!validation.success) {
-      console.warn('[GodEditor] Validation structure builder échouée', validation.error.format());
-      return undefined;
-    }
-    return validation.data;
-  };
 
   // Load page data
   useEffect(() => {
@@ -146,7 +251,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
       setInitialStructure(null);
       hydrationReadyRef.current = false;
       try {
-        const page = await apiFetch<any>(`/api/admin/pages/${pageId}`);
+        const page = await apiFetch<PageApiResponse>(`/api/admin/pages/${pageId}`);
         const designOptions =
           typeof page.design_options === 'string'
             ? JSON.parse(page.design_options)
@@ -184,7 +289,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
             // Fusion avec le thème par défaut pour garantir tous les champs obligatoires
             useBuilderThemeStore
               .getState()
-              .loadTheme({ ...DEFAULT_THEME, ...themeValidation.data } as any);
+              .loadTheme({ ...DEFAULT_THEME, ...themeValidation.data } as ThemeConfig);
           } else {
             console.warn(
               '[GodEditor] Theme config invalide, chargement du thème par défaut.',
@@ -202,7 +307,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
 
         const isFunctional = pageType === 'functional';
         const parsedDbStructure = parseBuilderStructure(dbStructure);
-        let structureToLoad: any | null = null;
+        let structureToLoad: BuilderStructure | null = null;
 
         if (isFunctional && !isFunctionalPageStructure(parsedDbStructure)) {
           const functionalStructure = getFunctionalStructureForPage(
@@ -210,20 +315,27 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
             page.slug || 'dashboard',
             page.title || 'Page fonctionnelle',
           ).structure;
-          structureToLoad = functionalStructure;
+          structureToLoad = normalizeCraftStructureForBuilder(
+            functionalStructure,
+            page.title || page.slug || 'Page fonctionnelle',
+          );
           console.info('[GodEditor] Structure fonctionnelle créée pour:', page.slug);
         } else if (parsedDbStructure) {
-          const parsed: any = parsedDbStructure;
-
-          if (isCraftJsFormat(parsed)) {
-            structureToLoad = parsed;
-          } else if (Array.isArray(parsed)) {
+          if (isCraftJsFormat(parsedDbStructure)) {
+            structureToLoad = normalizeCraftStructureForBuilder(
+              parsedDbStructure,
+              page.title || page.slug || 'Page',
+            );
+          } else if (Array.isArray(parsedDbStructure)) {
             try {
               const craftGraph = convertLegacyBlocksToCraftGraph(
-                parsed,
+                parsedDbStructure,
                 page.title || page.slug || 'Page',
               );
-              structureToLoad = craftGraph;
+              structureToLoad = normalizeCraftStructureForBuilder(
+                craftGraph,
+                page.title || page.slug || 'Page',
+              );
               console.info('[GodEditor] Page legacy convertie en format Craft et désérialisée.');
             } catch (e) {
               console.error('[GodEditor] Conversion legacy→Craft échouée:', e);
@@ -239,13 +351,23 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
         } else {
           const htmlContent = page.content_raw || page.content || '';
           const htmlStructure = createHtmlCraftStructure(htmlContent);
-          structureToLoad = htmlStructure;
+          structureToLoad = normalizeCraftStructureForBuilder(
+            htmlStructure,
+            page.title || page.slug || 'Page',
+          );
           console.info('[GodEditor] Page sans structure Builder ouverte via HtmlBlock.');
         }
 
         if (!structureToLoad) {
           const htmlContent = page.content_raw || page.content || '';
-          structureToLoad = createHtmlCraftStructure(htmlContent);
+          structureToLoad = normalizeCraftStructureForBuilder(
+            createHtmlCraftStructure(htmlContent),
+            page.title || page.slug || 'Page',
+          );
+        }
+
+        if (!structureToLoad) {
+          throw new Error('Structure Builder impossible à normaliser');
         }
 
         setInitialStructure(structureToLoad);
@@ -255,7 +377,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
         const localBackupStr = localStorage.getItem(`proquelec_builder_backup_${pageId}`);
         if (localBackupStr) {
           try {
-            const backupObj = JSON.parse(localBackupStr);
+            const backupObj = JSON.parse(localBackupStr) as LocalBackupData;
             const pageUpdatedAt = new Date(page.updated_at || 0).getTime();
             if (backupObj && backupObj.timestamp > pageUpdatedAt && backupObj.structure_json) {
               setHasLocalBackup(true);
@@ -265,8 +387,8 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
             console.error('Error checking local backup:', e);
           }
         }
-      } catch (error: any) {
-        const errorMsg = error.message || 'Erreur inconnue';
+      } catch (error: unknown) {
+        const errorMsg = getErrorMessage(error);
         console.error('Erreur chargement page:', error);
         setError(errorMsg);
         toast.error('Impossible de charger la page : ' + errorMsg);
@@ -314,84 +436,86 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
   useEffect(() => {
     if (!pageId || !store) return;
 
-    let localSaveTimer: any;
-    let dbSaveTimer: any;
+    let localSaveTimer: ReturnType<typeof window.setTimeout> | undefined;
+    let dbSaveTimer: ReturnType<typeof window.setTimeout> | undefined;
 
-    const unsubscribe = (store as any).subscribe(() => {
-      if (!hydrationReadyRef.current || isLoading) return;
+    const unsubscribe = (store as { subscribe: (listener: () => void) => () => void }).subscribe(
+      () => {
+        if (!hydrationReadyRef.current || isLoading) return;
 
-      // Mark as dirty
-      const historyStore = useBuilderHistoryStore.getState();
-      if (historyStore.autosaveStatus === 'saved') {
-        historyStore.setAutosaveStatus('dirty');
-      }
+        // Mark as dirty
+        const historyStore = useBuilderHistoryStore.getState();
+        if (historyStore.autosaveStatus === 'saved') {
+          historyStore.setAutosaveStatus('dirty');
+        }
 
-      // 1. Local backup save (1s)
-      clearTimeout(localSaveTimer);
-      localSaveTimer = setTimeout(() => {
-        try {
-          const structureJson = query.serialize();
-          const validStructure = ensureValidBuilderStructure(structureJson);
-          if (!validStructure) return;
+        // 1. Local backup save (1s)
+        if (localSaveTimer) window.clearTimeout(localSaveTimer);
+        localSaveTimer = window.setTimeout(() => {
+          try {
+            const structureJson = query.serialize();
+            const validStructure = ensureValidBuilderStructure(structureJson);
+            if (!validStructure) return;
 
-          const jsonStr =
-            typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
+            const jsonStr =
+              typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
 
-          if (jsonStr !== lastSerializedRef.current) {
-            localStorage.setItem(
-              `proquelec_builder_backup_${pageId}`,
-              JSON.stringify({
-                timestamp: Date.now(),
-                structure_json: validStructure,
-                pageData,
-              }),
-            );
-            useBuilderHistoryStore.getState().setAutosaveStatus('local_draft');
+            if (jsonStr !== lastSerializedRef.current) {
+              localStorage.setItem(
+                `proquelec_builder_backup_${pageId}`,
+                JSON.stringify({
+                  timestamp: Date.now(),
+                  structure_json: validStructure,
+                  pageData,
+                }),
+              );
+              useBuilderHistoryStore.getState().setAutosaveStatus('local_draft');
+            }
+          } catch (e) {
+            console.error('Error saving local backup:', e);
           }
-        } catch (e) {
-          console.error('Error saving local backup:', e);
-        }
-      }, 1000);
+        }, 1000);
 
-      // 2. Database draft autosave (3s)
-      clearTimeout(dbSaveTimer);
-      dbSaveTimer = setTimeout(async () => {
-        if (pageData?.pageType === 'functional') {
-          useBuilderHistoryStore.getState().setAutosaveStatus('saved');
-          return;
-        }
-
-        try {
-          const structureJson = query.serialize();
-          const validStructure = ensureValidBuilderStructure(structureJson);
-          if (!validStructure) return;
-
-          const jsonStr =
-            typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
-
-          if (jsonStr !== lastSerializedRef.current) {
-            useBuilderHistoryStore.getState().setAutosaveStatus('saving');
-
-            await apiFetch(`/api/admin/pages/${pageId}/draft`, {
-              method: 'PUT',
-              body: JSON.stringify({ draft_json: validStructure }),
-            });
-
-            lastSerializedRef.current = jsonStr;
+        // 2. Database draft autosave (3s)
+        if (dbSaveTimer) window.clearTimeout(dbSaveTimer);
+        dbSaveTimer = window.setTimeout(async () => {
+          if (pageData?.pageType === 'functional') {
             useBuilderHistoryStore.getState().setAutosaveStatus('saved');
+            return;
           }
-        } catch (e) {
-          console.error('Database autosave failed:', e);
-          // Keep dirty status so user knows it failed
-          useBuilderHistoryStore.getState().setAutosaveStatus('dirty');
-        }
-      }, 3000);
-    });
+
+          try {
+            const structureJson = query.serialize();
+            const validStructure = ensureValidBuilderStructure(structureJson);
+            if (!validStructure) return;
+
+            const jsonStr =
+              typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
+
+            if (jsonStr !== lastSerializedRef.current) {
+              useBuilderHistoryStore.getState().setAutosaveStatus('saving');
+
+              await apiFetch(`/api/admin/pages/${pageId}/draft`, {
+                method: 'PUT',
+                body: JSON.stringify({ draft_json: validStructure }),
+              });
+
+              lastSerializedRef.current = jsonStr;
+              useBuilderHistoryStore.getState().setAutosaveStatus('saved');
+            }
+          } catch (e) {
+            console.error('Database autosave failed:', e);
+            // Keep dirty status so user knows it failed
+            useBuilderHistoryStore.getState().setAutosaveStatus('dirty');
+          }
+        }, 3000);
+      },
+    );
 
     return () => {
       unsubscribe();
-      clearTimeout(localSaveTimer);
-      clearTimeout(dbSaveTimer);
+      if (localSaveTimer) window.clearTimeout(localSaveTimer);
+      if (dbSaveTimer) window.clearTimeout(dbSaveTimer);
     };
   }, [store, pageId, pageData, query, isLoading]);
 
