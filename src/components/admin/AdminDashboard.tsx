@@ -37,6 +37,7 @@ import {
   MessageSquare,
   FileText,
   Menu,
+  ImageIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -51,6 +52,7 @@ import { getDashboardPath } from '@/utils/navigation';
 import AdminUsersPanel from './AdminUsersPanel';
 import TechToolsPanel from './TechToolsPanel';
 import NewsletterAdminPanel from './NewsletterAdminPanel';
+import MediaLibrary from '@/components/admin/MediaLibrary';
 import NotificationsAdminPanel from './NotificationsAdminPanel';
 
 interface TabConfig {
@@ -759,6 +761,12 @@ const AdminDashboard: React.FC = () => {
       icon: <MessageSquare className="w-5 h-5" />,
       color: 'text-orange-600',
     },
+    {
+      id: 'media',
+      label: 'Médiathèque',
+      icon: <ImageIcon className="w-5 h-5" />,
+      color: 'text-sky-600',
+    },
   ];
 
   return (
@@ -1325,7 +1333,18 @@ const AdminDashboard: React.FC = () => {
               </div>
             )}
 
-            {/* SECTION : NEWSLETTER */}
+            {activeTab === 'media' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground mb-2">Médiathèque</h2>
+                  <p className="text-muted-foreground">Gérez vos images, vidéos et documents</p>
+                </div>
+                <div className="bg-card border border-border rounded-xl p-6">
+                  <MediaLibrary />
+                </div>
+              </div>
+            )}
+
             {activeTab === 'newsletter' && (
               <div className="animate-fade-in">
                 <div className="mb-6">
