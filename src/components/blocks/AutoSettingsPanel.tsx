@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNode } from '@craftjs/core';
 import {
   SettingsLabel,
@@ -25,6 +25,78 @@ const isLongTextKey = (key: string, value: string) =>
   value.length > 80 || /html|code|content|description|text|message|bio|caption/i.test(key);
 
 const stringifyValue = (value: any) => JSON.stringify(value ?? null, null, 2);
+
+const JsonSettingsField = ({
+  propKey,
+  label,
+  value,
+  expected,
+  setProp,
+}: {
+  propKey: string;
+  label: string;
+  value: any;
+  expected: 'array' | 'object';
+  setProp: (cb: (props: any) => void) => void;
+}) => {
+  const serialized = useMemo(() => stringifyValue(value), [value]);
+  const [draft, setDraft] = useState(serialized);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    setDraft(serialized);
+    setError('');
+  }, [propKey, serialized]);
+
+  const applyDraft = () => {
+    try {
+      const parsed = JSON.parse(draft || (expected === 'array' ? '[]' : '{}'));
+      const isValid =
+        expected === 'array'
+          ? Array.isArray(parsed)
+          : parsed && typeof parsed === 'object' && !Array.isArray(parsed);
+
+      if (!isValid) {
+        setError(expected === 'array' ? 'Le JSON doit être un tableau.' : 'Le JSON doit être un objet.');
+        return;
+      }
+
+      setProp((props: any) => {
+        props[propKey] = parsed;
+      });
+      setError('');
+    } catch {
+      setError('JSON invalide. Corrigez la syntaxe puis appliquez.');
+    }
+  };
+
+  return (
+    <SettingsRow>
+      <div className="flex items-center justify-between gap-2">
+        <SettingsLabel label={label + ' (JSON)'} />
+        <button
+          type="button"
+          onClick={applyDraft}
+          className="rounded border border-indigo-500/40 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-indigo-200 hover:bg-indigo-500/15"
+        >
+          Appliquer
+        </button>
+      </div>
+      <SettingsTextarea
+        rows={expected === 'array' ? 10 : 8}
+        value={draft}
+        onBlur={applyDraft}
+        onChange={(e: any) => {
+          setDraft(e.target.value);
+          if (error) setError('');
+        }}
+        className="font-mono text-[11px]"
+        spellCheck={false}
+      />
+      {error && <p className="text-[11px] leading-snug text-red-300">{error}</p>}
+    </SettingsRow>
+  );
+};
 
 export const AutoSettingsPanel = () => {
   const nodeData: any = useNode((n: any) => ({ ...n.data.props }));
@@ -72,51 +144,27 @@ export const AutoSettingsPanel = () => {
           }
 
           return (
-            <SettingsRow key={key}>
-              <SettingsLabel label={label + ' (JSON)'} />
-              <SettingsTextarea
-                rows={10}
-                value={stringifyValue(value)}
-                onChange={(e: any) => {
-                  try {
-                    const next = JSON.parse(e.target.value || '[]');
-                    if (Array.isArray(next)) {
-                      setProp((p: any) => {
-                        p[key] = next;
-                      });
-                    }
-                  } catch {
-                    // Keep the current value until the JSON becomes valid.
-                  }
-                }}
-                className="font-mono text-[11px]"
-              />
-            </SettingsRow>
+            <JsonSettingsField
+              key={key}
+              propKey={key}
+              label={label}
+              value={value}
+              expected="array"
+              setProp={setProp}
+            />
           );
         }
 
         if (value && typeof value === 'object') {
           return (
-            <SettingsRow key={key}>
-              <SettingsLabel label={label + ' (JSON)'} />
-              <SettingsTextarea
-                rows={8}
-                value={stringifyValue(value)}
-                onChange={(e: any) => {
-                  try {
-                    const next = JSON.parse(e.target.value || '{}');
-                    if (next && typeof next === 'object' && !Array.isArray(next)) {
-                      setProp((p: any) => {
-                        p[key] = next;
-                      });
-                    }
-                  } catch {
-                    // Keep the current value until the JSON becomes valid.
-                  }
-                }}
-                className="font-mono text-[11px]"
-              />
-            </SettingsRow>
+            <JsonSettingsField
+              key={key}
+              propKey={key}
+              label={label}
+              value={value}
+              expected="object"
+              setProp={setProp}
+            />
           );
         }
 

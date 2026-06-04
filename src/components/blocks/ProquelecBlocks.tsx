@@ -16,7 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Code2, Sparkles, Download, Upload, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
-import { MediaPickerButton } from '@/components/admin/MediaPickerDialog';
+import { MediaPickerButton } from '@/components/admin/MediaLibrary';
 import { getUniversalStyles } from './universalStyles';
 import { useBuilderUiStore } from '@/stores/builder-ui.store';
 import { resolveDynamicContent } from '@/lib/dynamic-data/resolver';

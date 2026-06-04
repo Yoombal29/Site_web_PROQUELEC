@@ -7,6 +7,7 @@ const blockFiles = [
   'src/components/blocks/ProquelecBlocksPlus.tsx',
 ];
 const templatesFile = 'src/components/god-builder/builderTemplates.tsx';
+const resolverFile = 'src/components/blocks/craftResolver.ts';
 
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
 
@@ -31,6 +32,8 @@ for (const file of blockFiles) {
 }
 
 const templatesSource = read(templatesFile);
+const resolverSource = read(resolverFile);
+const resolverBody = resolverSource.slice(resolverSource.indexOf('export const CRAFT_RESOLVER = {'));
 const templateLabels = [];
 const templateLines = templatesSource.split(/\r?\n/);
 
@@ -44,6 +47,12 @@ for (let index = 0; index < templateLines.length; index += 1) {
   }
 }
 
+const declaredBlockNames = blocks.map((block) => block.name);
+const templateBlockNames = Array.from(
+  new Set(Array.from(templatesSource.matchAll(/<([A-Z]\w+Block)\b/g)).map((match) => match[1])),
+).sort();
+const resolverHas = (name) => new RegExp(`\\b${name}\\b`).test(resolverBody);
+
 const report = {
   totalBlocks: blocks.length,
   totalTemplates: templateLabels.length,
@@ -51,7 +60,10 @@ const report = {
   missingDisplayName: blocks.filter((block) => !block.hasDisplayName).map((block) => block.name),
   missingProps: blocks.filter((block) => !block.hasProps).map((block) => block.name),
   missingSettings: blocks.filter((block) => !block.hasSettings).map((block) => block.name),
+  blocksMissingResolver: declaredBlockNames.filter((name) => !resolverHas(name)),
+  templateBlocksMissingResolver: templateBlockNames.filter((name) => !resolverHas(name)),
   templates: templateLabels,
+  templateBlocks: templateBlockNames,
 };
 
 console.log(JSON.stringify(report, null, 2));
@@ -59,7 +71,9 @@ console.log(JSON.stringify(report, null, 2));
 if (
   report.missingDisplayName.length ||
   report.missingProps.length ||
-  report.missingSettings.length
+  report.missingSettings.length ||
+  report.blocksMissingResolver.length ||
+  report.templateBlocksMissingResolver.length
 ) {
   process.exitCode = 1;
 }
