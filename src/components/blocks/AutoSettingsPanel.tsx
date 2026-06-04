@@ -7,6 +7,7 @@ import {
   SettingsRow,
   SettingsTextarea,
 } from './ProquelecBlocks';
+import { MediaPickerButton } from '@/components/admin/MediaLibrary';
 
 const INTERNAL_KEYS = ['actions', 'connectors', 'id', 'events', 'data', 'dragged', 'selected'];
 
@@ -57,7 +58,9 @@ const JsonSettingsField = ({
           : parsed && typeof parsed === 'object' && !Array.isArray(parsed);
 
       if (!isValid) {
-        setError(expected === 'array' ? 'Le JSON doit être un tableau.' : 'Le JSON doit être un objet.');
+        setError(
+          expected === 'array' ? 'Le JSON doit être un tableau.' : 'Le JSON doit être un objet.',
+        );
         return;
       }
 
@@ -100,9 +103,11 @@ const JsonSettingsField = ({
 
 export const AutoSettingsPanel = () => {
   const nodeData: any = useNode((n: any) => ({ ...n.data.props }));
-  const { actions: { setProp } } = nodeData;
+  const {
+    actions: { setProp },
+  } = nodeData;
 
-  const propKeys = Object.keys(nodeData).filter(key => {
+  const propKeys = Object.keys(nodeData).filter((key) => {
     if (key === 'children' || INTERNAL_KEYS.includes(key)) return false;
     return true;
   });
@@ -113,13 +118,13 @@ export const AutoSettingsPanel = () => {
 
   return (
     <div className="space-y-3">
-      {propKeys.map(key => {
+      {propKeys.map((key) => {
         const label = labelize(key);
         const value = nodeData[key];
 
         if (Array.isArray(value)) {
-          const isPrimitiveList = value.every(
-            (item) => ['string', 'number', 'boolean'].includes(typeof item),
+          const isPrimitiveList = value.every((item) =>
+            ['string', 'number', 'boolean'].includes(typeof item),
           );
 
           if (isPrimitiveList) {
@@ -172,7 +177,10 @@ export const AutoSettingsPanel = () => {
           return (
             <SettingsRow key={key}>
               <SettingsLabel label={label} />
-              <SettingsColor value={value} onChange={(e: any) => setProp((p: any) => p[key] = e.target.value)} />
+              <SettingsColor
+                value={value}
+                onChange={(e: any) => setProp((p: any) => (p[key] = e.target.value))}
+              />
             </SettingsRow>
           );
         }
@@ -181,7 +189,19 @@ export const AutoSettingsPanel = () => {
           return (
             <SettingsRow key={key}>
               <SettingsLabel label={label} />
-              <SettingsInput value={value} onChange={(e: any) => setProp((p: any) => p[key] = e.target.value)} placeholder="URL" />
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <SettingsInput
+                    value={value}
+                    onChange={(e: any) => setProp((p: any) => (p[key] = e.target.value))}
+                    placeholder="URL"
+                  />
+                </div>
+                <MediaPickerButton
+                  onSelect={(url: string) => setProp((p: any) => (p[key] = url))}
+                  label="..."
+                />
+              </div>
             </SettingsRow>
           );
         }
@@ -190,7 +210,12 @@ export const AutoSettingsPanel = () => {
           return (
             <SettingsRow key={key}>
               <label className="flex items-center gap-2 text-xs text-slate-400 cursor-pointer">
-                <input type="checkbox" checked={value} onChange={(e: any) => setProp((p: any) => p[key] = e.target.checked)} className="rounded" />
+                <input
+                  type="checkbox"
+                  checked={value}
+                  onChange={(e: any) => setProp((p: any) => (p[key] = e.target.checked))}
+                  className="rounded"
+                />
                 {label}
               </label>
             </SettingsRow>
@@ -201,7 +226,13 @@ export const AutoSettingsPanel = () => {
           return (
             <SettingsRow key={key}>
               <SettingsLabel label={label} />
-              <SettingsInput type="number" value={value} onChange={(e: any) => setProp((p: any) => p[key] = parseFloat(e.target.value) || 0)} />
+              <SettingsInput
+                type="number"
+                value={value}
+                onChange={(e: any) =>
+                  setProp((p: any) => (p[key] = parseFloat(e.target.value) || 0))
+                }
+              />
             </SettingsRow>
           );
         }
@@ -213,7 +244,7 @@ export const AutoSettingsPanel = () => {
               <SettingsTextarea
                 rows={Math.min(10, Math.max(3, value.split('\n').length + 1))}
                 value={value ?? ''}
-                onChange={(e: any) => setProp((p: any) => p[key] = e.target.value)}
+                onChange={(e: any) => setProp((p: any) => (p[key] = e.target.value))}
               />
             </SettingsRow>
           );
@@ -222,7 +253,10 @@ export const AutoSettingsPanel = () => {
         return (
           <SettingsRow key={key}>
             <SettingsLabel label={label} />
-            <SettingsInput value={value ?? ''} onChange={(e: any) => setProp((p: any) => p[key] = e.target.value)} />
+            <SettingsInput
+              value={value ?? ''}
+              onChange={(e: any) => setProp((p: any) => (p[key] = e.target.value))}
+            />
           </SettingsRow>
         );
       })}
