@@ -16,7 +16,7 @@ import {
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import "@google/model-viewer";
+import "@google/model-viewer/dist/model-viewer.min.js";
 import { QuickPrompts } from "@/expert-lab/components/quick-prompts";
 import { ReportExport } from "@/expert-lab/components/report-export";
 

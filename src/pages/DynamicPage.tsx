@@ -15,6 +15,7 @@ import {
   getFunctionalStructureForPage,
   isDesignLockedFunctionalPage,
 } from '@/lib/functional-page-structure';
+import { createHtmlCraftStructure } from '@/lib/craft-html-structure';
 import ToolsPlatform from './ToolsPlatform';
 import Showroom from './Showroom';
 import Documents from './Documents';
@@ -46,7 +47,6 @@ const PAGE_ALIASES: Record<string, string> = {
   actualites: 'actualites_evenements',
   'actualites-evenements': 'actualites_evenements',
   'contact-premium': 'contact_premium',
-  formations: 'trainings',
   'formations-proquelec': 'formations_proquelec',
   'expertises-techniques': 'expertises_techniques',
   'expert-lab': 'expert_lab',
@@ -168,19 +168,20 @@ const DynamicPageComponent: React.FC = () => {
         if (!response.ok) throw new Error('Failed to fetch pages');
         const allPages = await response.json();
 
-        const data = allPages.find((p: any) => {
-          const pageSlug = (p.slug || '').replace(/^\//, '');
-          const matchSlugs =
-            effectiveSlug === 'home'
-              ? ['home', 'home_page', '']
-              : [
-                  effectiveSlug,
-                  ...(PAGE_ALIASES[effectiveSlug] ? [PAGE_ALIASES[effectiveSlug]] : []),
-                ];
-          return (
-            matchSlugs.includes(pageSlug) && (p.is_published === true || p.status === 'published')
-          );
-        });
+        const findPublishedPageBySlug = (slugToFind: string) =>
+          allPages.find((p: any) => {
+            const pageSlug = (p.slug || '').replace(/^\//, '');
+            return (
+              pageSlug === slugToFind &&
+              (p.is_published === true || p.status === 'published')
+            );
+          });
+
+        const data =
+          findPublishedPageBySlug(effectiveSlug) ||
+          (PAGE_ALIASES[effectiveSlug]
+            ? findPublishedPageBySlug(PAGE_ALIASES[effectiveSlug])
+            : null);
 
         if (!data) {
           // FALLBACK 1: site_settings.page_sections (Database settings)
@@ -363,7 +364,7 @@ const DynamicPageComponent: React.FC = () => {
 
       // Strategy 3: HTML ou contenu brut
       const htmlContent = (page as any).content_raw || (page as any).content || '';
-      const wrappedStructure = buildHtmlStructure(htmlContent);
+      const wrappedStructure = createHtmlCraftStructure(htmlContent);
       return (
         <Suspense fallback={<PageLoading />}>
           <CraftPageRenderer
@@ -400,33 +401,6 @@ const DynamicPageComponent: React.FC = () => {
       </div>
     );
   };
-
-  // Construit une structure Craft.js à partir de HTML
-  const buildHtmlStructure = (html: string) => ({
-    ROOT: { type: 'div', nodes: ['html_wrapper'], props: { style: {} }, linkedNodes: {} },
-    html_wrapper: {
-      type: { resolvedName: 'ContainerBlock' },
-      nodes: ['html_block'],
-      props: { padding: 48, paddingY: 32, backgroundColor: '#ffffff', maxWidth: '1200px' },
-      parent: 'ROOT',
-      linkedNodes: {},
-      isCanvas: true,
-      displayName: 'ContainerBlock',
-    },
-    html_block: {
-      type: { resolvedName: 'HtmlBlock' },
-      nodes: [],
-      props: {
-        html: html || '<p>Contenu en cours de création...</p>',
-        padding: 0,
-        hideLabel: true,
-      },
-      parent: 'html_wrapper',
-      linkedNodes: {},
-      isCanvas: false,
-      displayName: 'HtmlBlock',
-    },
-  });
 
   return (
     <div className="min-h-screen bg-white flex flex-col">

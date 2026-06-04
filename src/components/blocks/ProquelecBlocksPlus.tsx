@@ -19,6 +19,15 @@ const Label = (p: any) => <SettingsLabel {...p} />;
 const Flex = ({ children, className }: any) => <div className={'flex items-center gap-2 ' + (className||'')}>{children}</div>;
 const Grid2 = ({ children }: any) => <div className="grid grid-cols-2 gap-2">{children}</div>;
 
+const splitLines = (value: string) =>
+  String(value || '')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+const parsePipeItems = <T,>(value: string, mapper: (parts: string[], raw: string) => T) =>
+  splitLines(value).map((line) => mapper(line.split('|').map((part) => part.trim()), line));
+
 // ── 1. HeadingBlock ──
 export const HeadingBlock = (props: any) => {
   const { text='Titre de la section', level='h2', fontSize=32, textAlign='left', color='#0f172a', fontWeight='700', lineHeight='1.3', letterSpacing } = props;
@@ -744,10 +753,284 @@ export const FeatureListBlock = (props:any) => {
 const FeatureListSettings = () => {
   const {actions:{setProp},items}=useNode((n:any)=>({...n.data.props}));
   return (<div className='space-y-3'>
-    <Row><Label label='Éléments (icône|texte par ligne)' /><Textarea rows={5} value={items.map((i:any)=>i.icon+'|'+i.text).join('\\n')} onChange={(e:any)=>setProp((p:any)=>p.items=e.targetValue.split('\\n').map((s:string)=>{const[m,...t]=s.split('|');return{icon:m?.trim()||'⚡',text:t.join('|').trim()||s}}))} /></Row>
+    <Row><Label label='Éléments (icône|texte par ligne)' /><Textarea rows={5} value={items.map((i:any)=>i.icon+'|'+i.text).join('\n')} onChange={(e:any)=>setProp((p:any)=>{ p.items=parsePipeItems(e.target.value, ([icon, ...textParts], raw) => ({icon:icon?.trim()||'⚡',text:textParts.join('|').trim()||raw})); })} /></Row>
   </div>);
 };
 FeatureListBlock.craft = { displayName:'Liste fonctionnalités', props:{items:[{icon:'⚡',text:'Haute performance'},{icon:'🔒',text:'Sécurisé'},{icon:'🚀',text:'Rapide'}],iconColor:'#2563eb',gap:12,iconSize:20}, related:{settings:FeatureListSettings} };
+
+// ── 47. ComplianceChecklistBlock ──
+export const ComplianceChecklistBlock = (props: any) => {
+  const {
+    title = 'Checklist conformité',
+    subtitle = 'Les points essentiels à vérifier avant validation du dossier.',
+    items = [
+      { status: 'conforme', label: 'Tableau électrique identifié', detail: 'Repérage clair des départs et protections.' },
+      { status: 'a verifier', label: 'Liaisons équipotentielles', detail: 'Contrôle visuel et continuité à confirmer.' },
+      { status: 'critique', label: 'Protection différentielle', detail: 'Point prioritaire avant mise en service.' },
+    ],
+    accentColor = '#2563eb',
+    backgroundColor = '#f8fafc',
+    cardColor = '#ffffff',
+  } = props;
+  const { connectors: { connect, drag } } = useNode();
+  const u = getUniversalStyles(props);
+
+  const statusConfig: Record<string, { label: string; bg: string; color: string; dot: string }> = {
+    conforme: { label: 'Conforme', bg: '#dcfce7', color: '#166534', dot: '#22c55e' },
+    'a verifier': { label: 'À vérifier', bg: '#fef3c7', color: '#92400e', dot: '#f59e0b' },
+    critique: { label: 'Critique', bg: '#fee2e2', color: '#991b1b', dot: '#ef4444' },
+  };
+
+  return (
+    <section
+      ref={(r: any) => { if (r) connect(drag(r)); }}
+      style={{ background: backgroundColor, borderRadius: 16, padding: 32, ...u.style }}
+      className={'proquelec-builder-node ' + u.className}
+    >
+      <div style={{ maxWidth: 720, marginBottom: 24 }}>
+        <p style={{ margin: '0 0 8px', color: accentColor, fontSize: 12, fontWeight: 800, letterSpacing: 1.5, textTransform: 'uppercase' }}>
+          Contrôle technique
+        </p>
+        <h3 style={{ margin: 0, color: '#0f172a', fontSize: 30, lineHeight: 1.15, fontWeight: 900 }}>
+          {resolveDynamicContent(title)}
+        </h3>
+        <p style={{ margin: '10px 0 0', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>
+          {resolveDynamicContent(subtitle)}
+        </p>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 14 }}>
+        {items.map((item: any, index: number) => {
+          const key = String(item.status || 'conforme').toLowerCase();
+          const status = statusConfig[key] || statusConfig.conforme;
+          return (
+            <article
+              key={index}
+              style={{ background: cardColor, border: '1px solid #e2e8f0', borderRadius: 12, padding: 18, boxShadow: '0 16px 40px rgba(15,23,42,0.06)' }}
+            >
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: status.bg, color: status.color, borderRadius: 999, padding: '5px 9px', fontSize: 11, fontWeight: 800, marginBottom: 12 }}>
+                <span style={{ width: 7, height: 7, borderRadius: 999, background: status.dot }} />
+                {status.label}
+              </span>
+              <h4 style={{ margin: 0, color: '#0f172a', fontSize: 16, fontWeight: 800 }}>
+                {resolveDynamicContent(item.label)}
+              </h4>
+              <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: 13, lineHeight: 1.6 }}>
+                {resolveDynamicContent(item.detail)}
+              </p>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
+const ComplianceChecklistSettings = () => {
+  const { actions: { setProp }, title, subtitle, items, accentColor, backgroundColor, cardColor } = useNode((n: any) => ({ ...n.data.props }));
+  return (
+    <div className="space-y-3">
+      <Row><Label label="Titre" /><Input value={title} onChange={(e: any) => setProp((p: any) => p.title = e.target.value)} /></Row>
+      <Row><Label label="Sous-titre" /><Textarea rows={2} value={subtitle} onChange={(e: any) => setProp((p: any) => p.subtitle = e.target.value)} /></Row>
+      <Row><Label label="Points (statut|titre|détail)" /><Textarea rows={6} value={(items || []).map((item: any) => `${item.status}|${item.label}|${item.detail}`).join('\n')} onChange={(e: any) => setProp((p: any) => p.items = parsePipeItems(e.target.value, ([status, label, ...detail], raw) => ({ status: status || 'conforme', label: label || raw, detail: detail.join('|') || '' })))} /></Row>
+      <Grid2>
+        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => p.accentColor = e.target.value)} /></Row>
+        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => p.backgroundColor = e.target.value)} /></Row>
+      </Grid2>
+      <Row><Label label="Fond cartes" /><Color value={cardColor} onChange={(e: any) => setProp((p: any) => p.cardColor = e.target.value)} /></Row>
+    </div>
+  );
+};
+ComplianceChecklistBlock.craft = {
+  displayName: 'Checklist conformité',
+  props: {
+    title: 'Checklist conformité',
+    subtitle: 'Les points essentiels à vérifier avant validation du dossier.',
+    items: [
+      { status: 'conforme', label: 'Tableau électrique identifié', detail: 'Repérage clair des départs et protections.' },
+      { status: 'a verifier', label: 'Liaisons équipotentielles', detail: 'Contrôle visuel et continuité à confirmer.' },
+      { status: 'critique', label: 'Protection différentielle', detail: 'Point prioritaire avant mise en service.' },
+    ],
+    accentColor: '#2563eb',
+    backgroundColor: '#f8fafc',
+    cardColor: '#ffffff',
+  },
+  related: { settings: ComplianceChecklistSettings },
+};
+
+// ── 48. AuditProcessBlock ──
+export const AuditProcessBlock = (props: any) => {
+  const {
+    title = 'Processus d’audit',
+    subtitle = 'Un parcours lisible pour cadrer, contrôler et suivre chaque intervention.',
+    steps = [
+      { phase: '01', title: 'Cadrage', description: 'Collecte des informations et analyse du besoin.', meta: '24 h' },
+      { phase: '02', title: 'Contrôle terrain', description: 'Inspection technique, relevés et constats.', meta: 'Sur site' },
+      { phase: '03', title: 'Rapport', description: 'Synthèse, réserves et recommandations priorisées.', meta: 'Livrable' },
+      { phase: '04', title: 'Suivi', description: 'Accompagnement jusqu’à la levée des réserves.', meta: 'Continu' },
+    ],
+    accentColor = '#f59e0b',
+    backgroundColor = '#0f172a',
+    textColor = '#ffffff',
+  } = props;
+  const { connectors: { connect, drag } } = useNode();
+  const u = getUniversalStyles(props);
+
+  return (
+    <section
+      ref={(r: any) => { if (r) connect(drag(r)); }}
+      style={{ background: backgroundColor, color: textColor, borderRadius: 16, padding: 34, ...u.style }}
+      className={'proquelec-builder-node ' + u.className}
+    >
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(220px,0.9fr) minmax(0,1.6fr)', gap: 28, alignItems: 'start' }}>
+        <div>
+          <p style={{ margin: '0 0 10px', color: accentColor, fontSize: 12, fontWeight: 900, letterSpacing: 1.6, textTransform: 'uppercase' }}>
+            Méthode
+          </p>
+          <h3 style={{ margin: 0, fontSize: 32, lineHeight: 1.1, fontWeight: 900 }}>
+            {resolveDynamicContent(title)}
+          </h3>
+          <p style={{ margin: '12px 0 0', color: 'rgba(255,255,255,0.72)', fontSize: 15, lineHeight: 1.7 }}>
+            {resolveDynamicContent(subtitle)}
+          </p>
+        </div>
+        <div style={{ display: 'grid', gap: 12 }}>
+          {steps.map((step: any, index: number) => (
+            <article
+              key={index}
+              style={{ display: 'grid', gridTemplateColumns: '52px 1fr auto', gap: 14, alignItems: 'center', padding: 16, border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, background: 'rgba(255,255,255,0.06)' }}
+            >
+              <span style={{ width: 42, height: 42, display: 'grid', placeItems: 'center', borderRadius: 10, background: accentColor, color: '#111827', fontWeight: 900, fontSize: 14 }}>
+                {resolveDynamicContent(step.phase)}
+              </span>
+              <div>
+                <h4 style={{ margin: 0, fontSize: 16, fontWeight: 850 }}>{resolveDynamicContent(step.title)}</h4>
+                <p style={{ margin: '5px 0 0', color: 'rgba(255,255,255,0.68)', fontSize: 13, lineHeight: 1.55 }}>
+                  {resolveDynamicContent(step.description)}
+                </p>
+              </div>
+              <span style={{ color: accentColor, fontSize: 12, fontWeight: 800, whiteSpace: 'nowrap' }}>
+                {resolveDynamicContent(step.meta)}
+              </span>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+const AuditProcessSettings = () => {
+  const { actions: { setProp }, title, subtitle, steps, accentColor, backgroundColor, textColor } = useNode((n: any) => ({ ...n.data.props }));
+  return (
+    <div className="space-y-3">
+      <Row><Label label="Titre" /><Input value={title} onChange={(e: any) => setProp((p: any) => p.title = e.target.value)} /></Row>
+      <Row><Label label="Sous-titre" /><Textarea rows={2} value={subtitle} onChange={(e: any) => setProp((p: any) => p.subtitle = e.target.value)} /></Row>
+      <Row><Label label="Étapes (phase|titre|description|meta)" /><Textarea rows={7} value={(steps || []).map((step: any) => `${step.phase}|${step.title}|${step.description}|${step.meta}`).join('\n')} onChange={(e: any) => setProp((p: any) => p.steps = parsePipeItems(e.target.value, ([phase, title, description, meta], raw) => ({ phase: phase || '01', title: title || raw, description: description || '', meta: meta || '' })))} /></Row>
+      <Grid2>
+        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => p.accentColor = e.target.value)} /></Row>
+        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => p.backgroundColor = e.target.value)} /></Row>
+      </Grid2>
+      <Row><Label label="Texte" /><Color value={textColor} onChange={(e: any) => setProp((p: any) => p.textColor = e.target.value)} /></Row>
+    </div>
+  );
+};
+AuditProcessBlock.craft = {
+  displayName: 'Processus audit',
+  props: {
+    title: 'Processus d’audit',
+    subtitle: 'Un parcours lisible pour cadrer, contrôler et suivre chaque intervention.',
+    steps: [
+      { phase: '01', title: 'Cadrage', description: 'Collecte des informations et analyse du besoin.', meta: '24 h' },
+      { phase: '02', title: 'Contrôle terrain', description: 'Inspection technique, relevés et constats.', meta: 'Sur site' },
+      { phase: '03', title: 'Rapport', description: 'Synthèse, réserves et recommandations priorisées.', meta: 'Livrable' },
+      { phase: '04', title: 'Suivi', description: 'Accompagnement jusqu’à la levée des réserves.', meta: 'Continu' },
+    ],
+    accentColor: '#f59e0b',
+    backgroundColor: '#0f172a',
+    textColor: '#ffffff',
+  },
+  related: { settings: AuditProcessSettings },
+};
+
+// ── 49. ResourceCardsBlock ──
+export const ResourceCardsBlock = (props: any) => {
+  const {
+    title = 'Ressources utiles',
+    subtitle = 'Documents, guides et formulaires pour accélérer vos démarches.',
+    resources = [
+      { type: 'Guide', title: 'Préparer un contrôle', description: 'Liste des pièces et informations à réunir.', href: '/documents', label: 'Consulter' },
+      { type: 'Formulaire', title: 'Demande d’intervention', description: 'Transmettre une demande à l’équipe PROQUELEC.', href: '/contact', label: 'Démarrer' },
+      { type: 'Norme', title: 'Référentiel technique', description: 'Accéder aux ressources réglementaires.', href: '/normes-ressources', label: 'Explorer' },
+    ],
+    accentColor = '#2563eb',
+    backgroundColor = '#ffffff',
+  } = props;
+  const { connectors: { connect, drag } } = useNode();
+  const u = getUniversalStyles(props);
+
+  return (
+    <section
+      ref={(r: any) => { if (r) connect(drag(r)); }}
+      style={{ background: backgroundColor, borderRadius: 16, padding: 32, ...u.style }}
+      className={'proquelec-builder-node ' + u.className}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 24, alignItems: 'end', flexWrap: 'wrap', marginBottom: 22 }}>
+        <div style={{ maxWidth: 640 }}>
+          <p style={{ margin: '0 0 8px', color: accentColor, fontSize: 12, fontWeight: 900, letterSpacing: 1.5, textTransform: 'uppercase' }}>
+            Bibliothèque
+          </p>
+          <h3 style={{ margin: 0, color: '#0f172a', fontSize: 30, lineHeight: 1.15, fontWeight: 900 }}>
+            {resolveDynamicContent(title)}
+          </h3>
+          <p style={{ margin: '10px 0 0', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>
+            {resolveDynamicContent(subtitle)}
+          </p>
+        </div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: 14 }}>
+        {resources.map((resource: any, index: number) => (
+          <article key={index} style={{ border: '1px solid #e2e8f0', borderRadius: 14, padding: 18, background: '#ffffff', boxShadow: '0 18px 45px rgba(15,23,42,0.06)' }}>
+            <span style={{ display: 'inline-block', color: accentColor, background: '#eff6ff', borderRadius: 999, padding: '4px 9px', fontSize: 11, fontWeight: 850, marginBottom: 12 }}>
+              {resolveDynamicContent(resource.type)}
+            </span>
+            <h4 style={{ margin: 0, color: '#0f172a', fontSize: 17, fontWeight: 850 }}>{resolveDynamicContent(resource.title)}</h4>
+            <p style={{ margin: '8px 0 16px', color: '#64748b', fontSize: 13, lineHeight: 1.6 }}>{resolveDynamicContent(resource.description)}</p>
+            <a href={resource.href || '#'} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: accentColor, fontSize: 13, fontWeight: 850, textDecoration: 'none' }}>
+              {resolveDynamicContent(resource.label || 'Ouvrir')} <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+};
+const ResourceCardsSettings = () => {
+  const { actions: { setProp }, title, subtitle, resources, accentColor, backgroundColor } = useNode((n: any) => ({ ...n.data.props }));
+  return (
+    <div className="space-y-3">
+      <Row><Label label="Titre" /><Input value={title} onChange={(e: any) => setProp((p: any) => p.title = e.target.value)} /></Row>
+      <Row><Label label="Sous-titre" /><Textarea rows={2} value={subtitle} onChange={(e: any) => setProp((p: any) => p.subtitle = e.target.value)} /></Row>
+      <Row><Label label="Ressources (type|titre|description|lien|label)" /><Textarea rows={7} value={(resources || []).map((resource: any) => `${resource.type}|${resource.title}|${resource.description}|${resource.href}|${resource.label}`).join('\n')} onChange={(e: any) => setProp((p: any) => p.resources = parsePipeItems(e.target.value, ([type, title, description, href, label], raw) => ({ type: type || 'Document', title: title || raw, description: description || '', href: href || '#', label: label || 'Ouvrir' })))} /></Row>
+      <Grid2>
+        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => p.accentColor = e.target.value)} /></Row>
+        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => p.backgroundColor = e.target.value)} /></Row>
+      </Grid2>
+    </div>
+  );
+};
+ResourceCardsBlock.craft = {
+  displayName: 'Cartes ressources',
+  props: {
+    title: 'Ressources utiles',
+    subtitle: 'Documents, guides et formulaires pour accélérer vos démarches.',
+    resources: [
+      { type: 'Guide', title: 'Préparer un contrôle', description: 'Liste des pièces et informations à réunir.', href: '/documents', label: 'Consulter' },
+      { type: 'Formulaire', title: 'Demande d’intervention', description: 'Transmettre une demande à l’équipe PROQUELEC.', href: '/contact', label: 'Démarrer' },
+      { type: 'Norme', title: 'Référentiel technique', description: 'Accéder aux ressources réglementaires.', href: '/normes-ressources', label: 'Explorer' },
+    ],
+    accentColor: '#2563eb',
+    backgroundColor: '#ffffff',
+  },
+  related: { settings: ResourceCardsSettings },
+};
 
 // ── 47. ParallaxContainerBlock ──
 export const ParallaxContainerBlock = (props:any) => {

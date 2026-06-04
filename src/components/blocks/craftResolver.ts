@@ -93,6 +93,9 @@ import {
   StickyContainerBlock,
   ParticlesBlock,
   TableOfContentsBlock,
+  ComplianceChecklistBlock,
+  AuditProcessBlock,
+  ResourceCardsBlock,
 } from './ProquelecBlocksPlus';
 
 import { RichTextBlock } from './RichTextEditorBlock';
@@ -229,6 +232,9 @@ export const CRAFT_RESOLVER = {
   StickyContainerBlock,
   ParticlesBlock,
   TableOfContentsBlock,
+  ComplianceChecklistBlock,
+  AuditProcessBlock,
+  ResourceCardsBlock,
 
   // Rich text & popup
   RichTextBlock,

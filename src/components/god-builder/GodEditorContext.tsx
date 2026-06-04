@@ -10,6 +10,7 @@ import {
   getFunctionalStructureForPage,
   isFunctionalPageStructure,
 } from '@/lib/functional-page-structure';
+import { createHtmlCraftStructure } from '@/lib/craft-html-structure';
 
 export type PageDesignOptions = {
   theme?: string;
@@ -29,6 +30,8 @@ export type PageDataState = {
   designOptions: PageDesignOptions;
   isPublished: boolean;
   workflowStatus: 'draft' | 'review' | 'approved' | 'published' | 'archived';
+  immutable: boolean;
+  pageType: 'content' | 'functional' | 'hybrid';
 };
 
 interface GodEditorContextType {
@@ -121,6 +124,8 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
           designOptions: {},
           isPublished: false,
           workflowStatus: 'draft',
+          immutable: false,
+          pageType: 'content',
         });
         setIsLoading(false);
         return;
@@ -136,6 +141,16 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
       setIsLoading(true);
       try {
         const page = await apiFetch<any>(`/api/admin/pages/${pageId}`);
+        const designOptions =
+          typeof page.design_options === 'string'
+            ? JSON.parse(page.design_options)
+            : page.design_options || {};
+        const pageType: PageDataState['pageType'] =
+          page.immutable === true && designOptions?.page_type === 'hybrid'
+            ? 'hybrid'
+            : page.immutable === true
+              ? 'functional'
+              : 'content';
 
         setPageData({
           title: page.title || 'Nouvelle page',
@@ -145,12 +160,11 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
           metaRobots: page.meta_robots || 'index,follow',
           customCss: page.custom_css || '',
           customJs: page.custom_js || '',
-          designOptions:
-            typeof page.design_options === 'string'
-              ? JSON.parse(page.design_options)
-              : page.design_options || {},
+          designOptions,
           isPublished: page.is_published || false,
           workflowStatus: page.workflow_status || page.status || 'draft',
+          immutable: page.immutable === true,
+          pageType,
         });
 
         // Load theme configuration
@@ -176,11 +190,12 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
           useBuilderThemeStore.getState().resetThemeState();
         }
 
-        // Check structure: prioritize draft_json over structure_json
-        const dbStructure = page.draft_json || page.structure_json;
+        // Public pages render structure_json. The Builder must open the same published
+        // structure by default, otherwise the editor and public page drift silently.
+        const dbStructure = page.structure_json || page.draft_json;
 
-        const isHybrid = page.design_options?.page_type === 'hybrid';
-        const isFunctional = page.immutable === true && !isHybrid;
+        const isHybrid = pageType === 'hybrid';
+        const isFunctional = pageType === 'functional';
         const parsedDbStructure = parseBuilderStructure(dbStructure);
 
         if (isFunctional && !isFunctionalPageStructure(parsedDbStructure)) {
@@ -220,6 +235,12 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
               'Structure JSON détectée au format legacy. Le canvas par défaut sera utilisé.',
             );
           }
+        } else {
+          const htmlContent = page.content_raw || page.content || '';
+          const htmlStructure = createHtmlCraftStructure(htmlContent);
+          actionsRef.current.deserialize(htmlStructure);
+          lastSerializedRef.current = JSON.stringify(htmlStructure);
+          console.info('[GodEditor] Page sans structure Builder ouverte via HtmlBlock.');
         }
 
         // Check local storage backup
@@ -312,6 +333,11 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
       // 2. Database draft autosave (3s)
       clearTimeout(dbSaveTimer);
       dbSaveTimer = setTimeout(async () => {
+        if (pageData?.pageType === 'functional') {
+          useBuilderHistoryStore.getState().setAutosaveStatus('saved');
+          return;
+        }
+
         try {
           const structureJson = query.serialize();
           const validStructure = ensureValidBuilderStructure(structureJson);
@@ -362,6 +388,14 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
 
       setIsSaving(true);
       try {
+        if (pageData?.pageType === 'functional') {
+          useBuilderHistoryStore.getState().setAutosaveStatus('saved');
+          toast.info(
+            'Page fonctionnelle verrouillée : la logique React reste protégée. Modifiez une page CONTENT ou HYBRIDE pour publier du design.',
+          );
+          return;
+        }
+
         const structureJson = query.serialize();
         const validStructure = ensureValidBuilderStructure(structureJson);
         if (!validStructure) {

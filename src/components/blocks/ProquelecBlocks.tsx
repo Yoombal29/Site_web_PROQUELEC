@@ -272,6 +272,7 @@ const TextSettings = () => {
     textAlign,
     color,
     fontWeight,
+    lineHeight,
   } = useNode((n) => ({ ...n.data.props }));
   return (
     <div className="space-y-3">
@@ -317,6 +318,17 @@ const TextSettings = () => {
             { value: '700', label: 'Bold' },
             { value: '900', label: 'Black' },
           ]}
+        />
+      </SettingsRow>
+      <SettingsRow>
+        <SettingsLabel label="Interligne" />
+        <SettingsInput
+          type="number"
+          min={0.5}
+          max={3}
+          step={0.1}
+          value={lineHeight}
+          onChange={(e: any) => setProp((p: any) => (p.lineHeight = parseFloat(e.target.value)))}
         />
       </SettingsRow>
     </div>
@@ -803,6 +815,20 @@ const ButtonSettings = () => {
             { value: 'full', label: 'Pilule' },
           ]}
         />
+      </SettingsRow>
+      <SettingsRow>
+        <SettingsLabel label="Pleine largeur" />
+        <button
+          onClick={(e: any) => setProp((p: any) => (p.fullWidth = !fullWidth))}
+          className={
+            'px-3 py-1.5 rounded-lg text-xs font-bold transition ' +
+            (fullWidth
+              ? 'bg-blue-100 text-blue-700 border border-blue-200'
+              : 'bg-slate-100 text-slate-600 border border-slate-200')
+          }
+        >
+          {fullWidth ? '✅ Oui' : '❌ Non'}
+        </button>
       </SettingsRow>
     </div>
   );
@@ -1364,6 +1390,13 @@ const CardSettings = () => {
         <SettingsColor
           value={accentColor}
           onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))}
+        />
+      </SettingsRow>
+      <SettingsRow>
+        <SettingsLabel label="Bordure" />
+        <SettingsColor
+          value={borderColor}
+          onChange={(e: any) => setProp((p: any) => (p.borderColor = e.target.value))}
         />
       </SettingsRow>
     </div>
@@ -2189,6 +2222,7 @@ const IconBoxSettings = () => {
     layout,
     accentColor,
     backgroundColor,
+    textColor,
   } = useNode((n) => ({ ...n.data.props }));
   return (
     <div className="space-y-3">
@@ -2258,6 +2292,17 @@ const IconBoxSettings = () => {
           onChange={(e: any) =>
             setProp((p: any) => {
               p.backgroundColor = e.target.value;
+            })
+          }
+        />
+      </SettingsRow>
+      <SettingsRow>
+        <SettingsLabel label="Couleur texte" />
+        <SettingsColor
+          value={textColor}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.textColor = e.target.value;
             })
           }
         />

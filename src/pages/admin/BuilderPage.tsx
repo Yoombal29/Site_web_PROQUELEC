@@ -293,11 +293,19 @@ const PageSelectorScreen = () => {
 
                 {!loading &&
                   filtered.map((page) => (
-                    <button
+                    <div
                       key={page.id}
+                      role="button"
+                      tabIndex={0}
                       onClick={() => {
                         // Pages fonctionnelles et hybrides : ouvrir dans le Builder
                         navigate(`/admin/builder/${page.id}`);
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault();
+                          navigate(`/admin/builder/${page.id}`);
+                        }
                       }}
                       className="w-full text-left px-4 py-3 border-b border-[#252538] hover:bg-[#16161f] transition flex items-center justify-between group"
                     >
@@ -346,7 +354,7 @@ const PageSelectorScreen = () => {
                           </span>
                         )}
                       </div>
-                    </button>
+                    </div>
                   ))}
               </div>
 
@@ -401,8 +409,11 @@ const PageSelectorScreen = () => {
                 </p>
               </div>
               <button
+                type="button"
                 onClick={() => setShowNewDialog(false)}
                 className="p-2 hover:bg-[#252538] rounded-lg text-slate-500 hover:text-white transition"
+                aria-label="Fermer la fenêtre de création de page"
+                title="Fermer"
               >
                 <X size={18} />
               </button>

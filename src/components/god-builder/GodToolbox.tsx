@@ -32,6 +32,8 @@ import {
   Database,
   Save,
   Lock,
+  ClipboardCheck,
+  ShieldCheck,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
@@ -122,6 +124,9 @@ import {
   StickyContainerBlock,
   ParticlesBlock,
   TableOfContentsBlock,
+  ComplianceChecklistBlock,
+  AuditProcessBlock,
+  ResourceCardsBlock,
 } from '../blocks/ProquelecBlocksPlus';
 import { FunctionalPageBlock, getFunctionalPageToolboxItems } from '../blocks/FunctionalPageBlock';
 import {
@@ -611,6 +616,34 @@ const BLOCK_GROUPS = [
     ],
   },
   {
+    label: 'Métier PROQUELEC',
+    color: 'text-blue-400',
+    icon: ShieldCheck,
+    items: [
+      {
+        icon: ClipboardCheck,
+        label: 'Checklist conformité',
+        color: 'text-emerald-400',
+        tags: ['conformite', 'controle', 'audit', 'checklist', 'inspection'],
+        factory: () => <ComplianceChecklistBlock />,
+      },
+      {
+        icon: ShieldCheck,
+        label: 'Processus audit',
+        color: 'text-amber-400',
+        tags: ['audit', 'processus', 'etapes', 'controle', 'methodologie'],
+        factory: () => <AuditProcessBlock />,
+      },
+      {
+        icon: BookOpen,
+        label: 'Cartes ressources',
+        color: 'text-sky-400',
+        tags: ['ressources', 'documents', 'guides', 'normes', 'telechargement'],
+        factory: () => <ResourceCardsBlock />,
+      },
+    ],
+  },
+  {
     label: 'Interactif',
     color: 'text-orange-400',
     icon: Sparkles,
@@ -994,6 +1027,7 @@ const BLOCK_GROUPS = [
     icon: Lock,
     items: [
       ...getFunctionalPageToolboxItems().map((item) => ({
+        id: `functional-${item.slug}`,
         icon: Lock,
         label: item.label,
         color: 'text-amber-400',
@@ -1006,7 +1040,9 @@ const BLOCK_GROUPS = [
 
 const TEMPLATE_CATEGORY_ORDER: TemplateCategory[] = [
   'hero',
+  'pages',
   'content',
+  'operations',
   'conversion',
   'media',
   'trust',
@@ -1237,11 +1273,13 @@ export const GodToolbox = () => {
 
                   {!isCollapsed && (
                     <div className="px-1.5 space-y-0.5 pb-1">
-                      {group.items.map((item) => {
+                      {group.items.map((item, index) => {
                         const Icon = item.icon;
+                        const itemKey =
+                          (item as any).id || `${group.label}-${item.label}-${index}`;
                         return (
                           <button
-                            key={item.label}
+                            key={itemKey}
                             ref={(ref) => {
                               if (ref) connectors.create(ref, item.factory());
                             }}
