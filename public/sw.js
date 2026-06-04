@@ -1,5 +1,7 @@
 const CACHE_NAME = 'proquelec-app-v3';
 const DATA_CACHE_NAME = 'proquelec-data-v3';
+const IS_LOCAL_DEV = ['localhost', '127.0.0.1', '[::1]'].includes(self.location.hostname)
+  || ['5173', '5175'].includes(self.location.port);
 
 const APP_SHELL = [
   '/',
@@ -21,6 +23,16 @@ const CRITICAL_DATA = [
 
 self.addEventListener('install', (event) => {
   console.log('[ServiceWorker] Install');
+
+  if (IS_LOCAL_DEV) {
+    event.waitUntil(
+      caches.keys()
+        .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+        .then(() => self.skipWaiting()),
+    );
+    return;
+  }
+
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[ServiceWorker] Caching app shell');
@@ -33,6 +45,18 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   console.log('[ServiceWorker] Activate');
+
+  if (IS_LOCAL_DEV) {
+    event.waitUntil(
+      caches.keys()
+        .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+        .then(() => self.registration.unregister())
+        .then(() => self.clients.matchAll())
+        .then((clients) => clients.forEach((client) => client.navigate(client.url))),
+    );
+    return;
+  }
+
   event.waitUntil(
     caches.keys().then((keyList) => {
       return Promise.all(
@@ -49,6 +73,10 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  if (IS_LOCAL_DEV) {
+    return;
+  }
+
   const url = new URL(event.request.url);
 
   // NE PAS intercepter :

@@ -26,42 +26,117 @@ export interface DynamicRoute {
   updated_at: string;
 }
 
+interface PageRecord {
+  path?: string;
+  slug: string;
+  title: string;
+  content?: string;
+  status?: string;
+  is_published?: boolean;
+  meta_description?: string;
+  meta_keywords?: string;
+  featured_image?: string;
+  template?: string;
+  show_hero?: boolean;
+  show_footer?: boolean;
+  custom_css?: string;
+  custom_js?: string;
+  hero_title?: string;
+  hero_subtitle?: string;
+  hero_background_image?: string;
+  hero_cta_text?: string;
+  hero_cta_link?: string;
+  author?: string;
+  reading_time?: number;
+  categories?: string[];
+  tags?: string[];
+  menu_order?: number;
+  created_at: string;
+  updated_at: string;
+}
+
+const isLocalHost = () => (
+  typeof window !== 'undefined' &&
+  ['localhost', '127.0.0.1', '[::1]'].includes(window.location.hostname)
+);
+
+const normalizePagesResponse = (responseData: unknown): PageRecord[] => {
+  const rows = Array.isArray(responseData)
+    ? responseData
+    : (responseData as { rows?: unknown[]; data?: unknown[] })?.rows
+      || (responseData as { rows?: unknown[]; data?: unknown[] })?.data
+      || [];
+
+  return rows.filter((page): page is PageRecord => {
+    if (!page || typeof page !== 'object') return false;
+    const candidate = page as Partial<PageRecord>;
+    return typeof candidate.slug === 'string' && typeof candidate.title === 'string';
+  });
+};
+
+const fetchPagesFrom = async (url: string): Promise<PageRecord[]> => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    const body = await response.text().catch(() => '');
+    throw new Error(`Failed to fetch pages from ${url}: ${response.status} ${body.slice(0, 180)}`);
+  }
+
+  return normalizePagesResponse(await response.json());
+};
+
+const fetchPages = async (): Promise<PageRecord[]> => {
+  try {
+    return await fetchPagesFrom('/api/pages');
+  } catch (error) {
+    if (!isLocalHost()) throw error;
+
+    console.warn('[DynamicRoutes] /api/pages failed through current origin, trying local API:', error);
+    return fetchPagesFrom('http://127.0.0.1:3010/api/pages');
+  }
+};
+
+const isPublished = (page: PageRecord) => {
+  if (page.status) return page.status === 'published';
+  return page.is_published !== false;
+};
+
+const toDynamicRoute = (page: PageRecord): DynamicRoute => ({
+  path: `/${page.slug}`,
+  slug: page.slug,
+  title: page.title,
+  content: page.content || '',
+  meta_description: page.meta_description,
+  meta_keywords: page.meta_keywords,
+  featured_image: page.featured_image,
+  template: page.template || 'default',
+  show_hero: page.show_hero ?? true,
+  show_footer: page.show_footer ?? true,
+  custom_css: page.custom_css,
+  custom_js: page.custom_js,
+  hero_title: page.hero_title,
+  hero_subtitle: page.hero_subtitle,
+  hero_background_image: page.hero_background_image,
+  hero_cta_text: page.hero_cta_text,
+  hero_cta_link: page.hero_cta_link,
+  author: page.author,
+  reading_time: page.reading_time || 0,
+  categories: page.categories || [],
+  tags: page.tags || [],
+  created_at: page.created_at,
+  updated_at: page.updated_at
+});
+
 export function useDynamicRoutes() {
   return useQuery({
     queryKey: ["dynamic-routes"],
     queryFn: async (): Promise<DynamicRoute[]> => {
       try {
-        const res = await fetch("/api/pages");
-        if (!res.ok) throw new Error("Failed to fetch pages");
+        const data = await fetchPages();
 
-        const responseData = await res.json();
-        const data = Array.isArray(responseData) ? responseData : responseData?.rows || [];
-
-        return data.filter((page: unknown) => page.status === 'published').map((page: unknown) => ({
-          path: `/${page.slug}`,
-          slug: page.slug,
-          title: page.title,
-          content: page.content || '',
-          meta_description: page.meta_description,
-          meta_keywords: page.meta_keywords,
-          featured_image: page.featured_image,
-          template: page.template || 'default',
-          show_hero: page.show_hero ?? true,
-          show_footer: page.show_footer ?? true,
-          custom_css: page.custom_css,
-          custom_js: page.custom_js,
-          hero_title: page.hero_title,
-          hero_subtitle: page.hero_subtitle,
-          hero_background_image: page.hero_background_image,
-          hero_cta_text: page.hero_cta_text,
-          hero_cta_link: page.hero_cta_link,
-          author: page.author,
-          reading_time: page.reading_time || 0,
-          categories: page.categories || [],
-          tags: page.tags || [],
-          created_at: page.created_at,
-          updated_at: page.updated_at
-        })).sort((a: unknown, b: unknown) => (a.menu_order || 0) - (b.menu_order || 0));
+        return data
+          .filter(isPublished)
+          .sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0))
+          .map(toDynamicRoute);
       } catch (error) {
         console.warn('Error in useDynamicRoutes:', error);
         return [];
@@ -80,51 +155,14 @@ export function useDynamicPage(slug: string) {
     queryKey: ["dynamic-page", slug],
     queryFn: async (): Promise<DynamicRoute | null> => {
       try {
-        // We fetch all pages and find the one because we don't have a specific slug endpoint on server yet? 
-        // Wait, server/index.js has app.get('/api/pages').
-        // But app.get('/api/pages') returns ALL pages.
-        // It's efficient enough for now (small site).
-        // Or I should add a slug endpoint.
-        // Actually, let's just fetch all and filter client side for safety first, OR add endpoint.
-        // Adding endpoint is cleaner but requires server restart.
-        // Let's rely on fetching all for now to avoid server restart risk, 
-        // unless list is huge.
-
-        const res = await fetch("/api/pages");
-        if (!res.ok) throw new Error("Failed to fetch pages");
-        const allPages = await res.json();
-
-        const data = allPages.find((p: unknown) => p.slug === slug && p.status === 'published');
+        const allPages = await fetchPages();
+        const data = allPages.find((page) => page.slug === slug && isPublished(page));
 
         if (!data) {
           return null;
         }
 
-        return {
-          path: `/${data.slug}`,
-          slug: data.slug,
-          title: data.title,
-          content: data.content || '',
-          meta_description: data.meta_description,
-          meta_keywords: data.meta_keywords,
-          featured_image: data.featured_image,
-          template: data.template || 'default',
-          show_hero: data.show_hero ?? true,
-          show_footer: data.show_footer ?? true,
-          custom_css: data.custom_css,
-          custom_js: data.custom_js,
-          hero_title: data.hero_title,
-          hero_subtitle: data.hero_subtitle,
-          hero_background_image: data.hero_background_image,
-          hero_cta_text: data.hero_cta_text,
-          hero_cta_link: data.hero_cta_link,
-          author: data.author,
-          reading_time: data.reading_time || 0,
-          categories: data.categories || [],
-          tags: data.tags || [],
-          created_at: data.created_at,
-          updated_at: data.updated_at
-        };
+        return toDynamicRoute(data);
       } catch (error) {
         console.warn('Error in useDynamicPage:', error);
         return null;
