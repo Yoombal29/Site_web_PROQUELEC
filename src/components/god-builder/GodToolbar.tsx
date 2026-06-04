@@ -74,6 +74,8 @@ export const GodToolbar = () => {
   const [htmlDialogOpen, setHtmlDialogOpen] = useState(false);
   const [globalHtml, setGlobalHtml] = useState(htmlValue);
   const globalEditorRef = useRef<any>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
 
   // Sync state when dialog opens
   useEffect(() => {
@@ -230,6 +232,29 @@ export const GodToolbar = () => {
       </div>,
       { duration: 5000 },
     );
+  };
+
+  // Quick upload file
+  const handleQuickUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    const formData = new FormData();
+    for (const f of Array.from(files)) formData.append('file', f);
+    try {
+      const token = localStorage.getItem('token');
+      await fetch('/api/storage/upload', {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body: formData,
+      });
+      toast.success(`${files.length} fichier(s) uploadé(s)`);
+    } catch {
+      toast.error('Erreur upload');
+    } finally {
+      setUploading(false);
+      if (e.target) e.target.value = '';
+    }
   };
 
   const togglePreview = () => {
@@ -587,6 +612,25 @@ export const GodToolbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Quick upload button */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        multiple
+        className="hidden"
+        onChange={handleQuickUpload}
+      />
+      <button
+        onClick={() => fileInputRef.current?.click()}
+        disabled={uploading}
+        className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold bg-emerald-600/20 text-emerald-400 border border-emerald-600/30 hover:bg-emerald-600/30 transition-all disabled:opacity-50"
+        title="Uploader un fichier"
+      >
+        {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+        <span className="hidden md:inline">{uploading ? 'Upload...' : 'Upload'}</span>
+      </button>
+
       <TemplateManagerDialog open={templateDialogOpen} onOpenChange={setTemplateDialogOpen} />
     </div>
   );
