@@ -28,6 +28,7 @@ import AdminGalleryPanel from '@/components/admin/AdminGalleryPanel';
 import { EventCalendar } from '@/components/EventCalendar';
 import { AdminSidebar } from '@/components/AdminSidebar';
 import { LiveChat } from '@/components/LiveChat';
+import MediaLibrary from '@/components/admin/MediaLibrary';
 
 import { AdminAutoRepair } from '@/components/admin/AdminAutoRepair';
 import DashboardHome from '@/components/admin/DashboardHome';
@@ -267,8 +268,14 @@ export default function Dashboard() {
 
       case 'media':
         return (
-          <section className="space-y-6 animate-fade-in">
-            <MediaGallery />
+          <section className="animate-fade-in">
+            <div className="mb-4">
+              <h2 className="text-2xl font-bold text-foreground">Médiathèque</h2>
+              <p className="text-sm text-muted-foreground mt-1">
+                Gérez vos images, vidéos et documents
+              </p>
+            </div>
+            <MediaLibrary />
           </section>
         );
 

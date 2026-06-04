@@ -38,6 +38,7 @@ export const SettingsInput = ({
   min,
   max,
   step,
+  className = '',
   ...props
 }: any) => (
   <input
@@ -48,16 +49,22 @@ export const SettingsInput = ({
     step={step}
     onChange={onChange}
     {...props}
-    className="w-full bg-[#252538] border border-[#3a3a5a] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500"
+    className={
+      'w-full bg-[#252538] border border-[#3a3a5a] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500 ' +
+      className
+    }
   />
 );
-export const SettingsTextarea = ({ value, onChange, rows = 3, ...props }: any) => (
+export const SettingsTextarea = ({ value, onChange, rows = 3, className = '', ...props }: any) => (
   <textarea
     rows={rows}
     value={value ?? ''}
     onChange={onChange}
     {...props}
-    className="w-full bg-[#252538] border border-[#3a3a5a] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500 resize-y"
+    className={
+      'w-full bg-[#252538] border border-[#3a3a5a] text-slate-200 rounded px-2 py-1.5 text-sm focus:outline-none focus:border-indigo-500 resize-y ' +
+      className
+    }
   />
 );
 export const SettingsSelect = ({
@@ -84,18 +91,23 @@ export const SettingsSelect = ({
     ))}
   </select>
 );
-export const SettingsColor = ({ value, onChange, ...props }: any) => (
-  <div className="flex gap-2 items-center">
-    <input
-      type="color"
-      value={value ?? '#ffffff'}
-      onChange={onChange}
-      aria-label={props['aria-label'] ?? 'Couleur'}
-      className="w-10 h-8 rounded cursor-pointer bg-transparent border-0"
-    />
-    <SettingsInput value={value} onChange={onChange} {...props} />
-  </div>
-);
+export const SettingsColor = ({ value, onChange, ...props }: any) => {
+  const pickerValue =
+    typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value) ? value : '#ffffff';
+
+  return (
+    <div className="flex gap-2 items-center">
+      <input
+        type="color"
+        value={pickerValue}
+        onChange={onChange}
+        aria-label={props['aria-label'] ?? 'Couleur'}
+        className="w-10 h-8 rounded cursor-pointer bg-transparent border-0"
+      />
+      <SettingsInput value={value} onChange={onChange} {...props} />
+    </div>
+  );
+};
 export const SettingsRow = ({ children }: { children: React.ReactNode }) => (
   <div className="space-y-1 mt-3">{children}</div>
 );

@@ -2,8 +2,8 @@ import React from 'react';
 import { Element } from '@craftjs/core';
 import {
   ContainerBlock, TextBlock, HeroBlock, ButtonBlock, StatsBlock, CardBlock,
-  ColumnsBlock, SpacerBlock, TestimonialsBlock, PricingBlock,
-  AccordionBlock, GalleryBlock, HtmlBlock,
+  ColumnsBlock, SpacerBlock, ImageBlock,
+  AccordionBlock, GalleryBlock,
 } from '../blocks/ProquelecBlocks';
 import {
   HeadingBlock, NewsletterBlock, LogoGridBlock, TimelineBlock, StepsBlock,
@@ -14,23 +14,6 @@ import {
   ContactPremiumBlock, CertificationRequirementsPremiumBlock, FAQPremiumBlock,
   TestimonialsPremiumBlock, WhyProquelecPremiumBlock,
 } from '../blocks/ProquelecBlocksPlus';
-
-/** Hero gradient PROQUELEC — modifiable via bloc HTML (panneau « Modifier le code HTML »). */
-export const PROQUELEC_HERO_PREMIUM_HTML = `<section class="relative text-white overflow-hidden" style="background:linear-gradient(to bottom right,var(--theme-primary,#1e3a5f),var(--theme-secondary,#2563eb))">
-<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
-<div class="relative max-w-7xl mx-auto px-4 sm:px-5 py-20 sm:py-24 md:py-28 lg:py-32">
-<div class="max-w-4xl">
-<span class="inline-block px-3 sm:px-4 py-1 bg-white/15 backdrop-blur-sm rounded-full text-[11px] sm:text-sm font-semibold mb-4 sm:mb-6 border border-white/20">PROQUELEC — SÉNÉGAL · DEPUIS 1995</span>
-<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-4 sm:mb-6 tracking-tight">Promotion de la Qualité des <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-400">Installations Électriques</span></h1>
-<p class="text-base sm:text-lg md:text-xl lg:text-2xl text-white/85 max-w-3xl mb-6 sm:mb-8">Sécurité · Qualité · Formation — L'organisme national de référence pour la conformité des installations électriques intérieures au Sénégal.</p>
-<div class="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-5">
-<a href="/contact" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 bg-white rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-2xl shadow-white/20 hover:bg-blue-50 transition-colors" style="color:var(--theme-primary,#1e3a5f)">Demander un contrôle →</a>
-<a href="/formations" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 md:px-8 py-3 sm:py-3.5 md:py-4 border-2 border-white/40 text-white rounded-xl font-bold text-sm sm:text-base md:text-lg hover:bg-white/10 transition-colors">Découvrir nos formations</a>
-</div>
-</div>
-</div>
-<div class="absolute bottom-0 left-0 right-0 h-16 sm:h-20 md:h-28 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
-</section>`;
 
 export type TemplateCategory = 'hero' | 'pages' | 'content' | 'operations' | 'conversion' | 'media' | 'trust';
 
@@ -81,7 +64,32 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     emoji: '⚡',
     category: 'hero',
     previewGradient: 'linear-gradient(135deg, #1e3a5f 0%, #2563eb 55%, #1d4ed8 100%)',
-    factory: () => <HtmlBlock html={PROQUELEC_HERO_PREMIUM_HTML} padding={0} hideLabel={false} />,
+    factory: () => (
+      <HeroBlock
+        badgeText="PROQUELEC — SÉNÉGAL · DEPUIS 1995"
+        headline="Promotion de la Qualité des Installations Électriques"
+        subheadline="Sécurité · Qualité · Formation — L'organisme national de référence pour la conformité des installations électriques intérieures au Sénégal."
+        ctaLabel="Demander un contrôle"
+        ctaHref="/contact"
+        secondaryCtaLabel="Découvrir nos formations"
+        secondaryCtaHref="/formations"
+        accentColor="#fbbf24"
+        showStats
+        slidesJson={JSON.stringify([
+          {
+            id: 'proquelec-premium',
+            title: 'Promotion de la Qualité des Installations Électriques',
+            subtitle: "Sécurité · Qualité · Formation — L'organisme national de référence pour la conformité des installations électriques intérieures au Sénégal.",
+            badge: 'PROQUELEC — SÉNÉGAL · DEPUIS 1995',
+            background_url: 'https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?q=80&w=2000&auto=format&fit=crop',
+            cta_text: 'Demander un contrôle',
+            cta_link: '/contact',
+            secondary_cta_text: 'Découvrir nos formations',
+            secondary_cta_link: '/formations',
+          },
+        ])}
+      />
+    ),
   },
   {
     label: 'Hero PROQUELEC (éditable)',
@@ -155,7 +163,14 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
             <SpacerBlock height={28} />
             <ButtonBlock label="En savoir plus" href="/a-propos" backgroundColor="#2563eb" size="lg" rounded="lg" />
           </Element>
-          <Element is={ContainerBlock} canvas padding={0} backgroundColor="#1e3a5f" />
+          <Element is={ContainerBlock} canvas padding={24} backgroundColor="#1e3a5f">
+            <ImageBlock
+              src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=1600&auto=format&fit=crop"
+              alt="Technicien électricien en intervention"
+              height={460}
+              rounded="lg"
+            />
+          </Element>
         </Element>
       </Element>
     ),
@@ -437,7 +452,12 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
             <TextBlock text="• Organisme de référence depuis 1995\n• Réseau national d'experts\n• Alignement sur les normes sénégalaises" fontSize={16} color="#475569" lineHeight="1.8" />
           </Element>
           <Element is={ContainerBlock} canvas padding={32} backgroundColor="#f1f5f9">
-            <TextBlock text="Zone image / vidéo" fontSize={14} textAlign="center" color="#94a3b8" />
+            <ImageBlock
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1600&auto=format&fit=crop"
+              alt="Tableau électrique et câblage"
+              height={360}
+              rounded="lg"
+            />
           </Element>
         </Element>
       </Element>
@@ -596,10 +616,12 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     category: 'conversion',
     previewGradient: 'linear-gradient(135deg, #ecfdf5, #f0fdf4)',
     factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={72} backgroundColor="#f8fafc" maxWidth="100%">
-        {sectionHeader('Offres', 'Tarifs transparents', 'Choisissez la formule adaptée à votre structure.')}
-        <PricingBlock />
-      </Element>
+      <PricingComparisonPremiumBlock
+        title="Tarifs transparents"
+        subtitle="Choisissez la formule adaptée à votre structure."
+        accentColor="#059669"
+        backgroundColor="#ecfdf5"
+      />
     ),
   },
   {
@@ -749,13 +771,11 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     category: 'trust',
     previewGradient: 'linear-gradient(135deg, #0f172a, #1e293b)',
     factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={72} backgroundColor="#0f172a" maxWidth="100%">
-        <TextBlock text="Témoignages" fontSize={14} textAlign="center" fontWeight="700" color="#818cf8" extraClasses="uppercase tracking-widest" />
-        <SpacerBlock height={12} />
-        <TextBlock text="Ils nous font confiance" fontSize={34} textAlign="center" fontWeight="900" color="#ffffff" />
-        <SpacerBlock height={36} />
-        <TestimonialsBlock />
-      </Element>
+      <TestimonialsPremiumBlock
+        title="Ils nous font confiance"
+        subtitle="Avis clients et preuves de confiance sur fond institutionnel sombre."
+        accentColor="#818cf8"
+      />
     ),
   },
   {
