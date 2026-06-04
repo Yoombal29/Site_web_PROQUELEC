@@ -2,15 +2,17 @@ import React from 'react';
 import { Element } from '@craftjs/core';
 import {
   ContainerBlock, TextBlock, HeroBlock, ButtonBlock, StatsBlock, CardBlock,
-  ColumnsBlock, SpacerBlock, FormBlock, TestimonialsBlock, PricingBlock,
+  ColumnsBlock, SpacerBlock, TestimonialsBlock, PricingBlock,
   AccordionBlock, GalleryBlock, HtmlBlock,
 } from '../blocks/ProquelecBlocks';
 import {
   HeadingBlock, NewsletterBlock, LogoGridBlock, TimelineBlock, StepsBlock,
   TeamMembersGridBlock, CallToActionBlock, CountdownBlock,
   ComplianceChecklistBlock, AuditProcessBlock, ResourceCardsBlock,
-  PriceListBlock, FAQBlock, TestimonialCarouselBlock, StarRatingBlock,
-  FeatureListBlock, FileDownloadBlock, AddressBlock,
+  FileDownloadBlock,
+  TrainingHeroPremiumBlock, TrainingProgramPremiumBlock, PricingComparisonPremiumBlock,
+  ContactPremiumBlock, CertificationRequirementsPremiumBlock, FAQPremiumBlock,
+  TestimonialsPremiumBlock, WhyProquelecPremiumBlock,
 } from '../blocks/ProquelecBlocksPlus';
 
 /** Hero gradient PROQUELEC — modifiable via bloc HTML (panneau « Modifier le code HTML »). */
@@ -181,59 +183,7 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     emoji: '🎓',
     category: 'hero',
     previewGradient: 'linear-gradient(135deg, #06111f 0%, #1e3a5f 58%, #f59e0b 100%)',
-    factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={72} backgroundColor="#06111f" maxWidth="100%">
-        <Element is={ColumnsBlock} canvas columns={2} gap={36}>
-          <Element is={ContainerBlock} canvas padding={0} backgroundColor="transparent">
-            <TextBlock
-              text="FORMATION CERTIFIANTE"
-              fontSize={12}
-              fontWeight="800"
-              color="#fbbf24"
-              extraClasses="uppercase tracking-widest"
-            />
-            <SpacerBlock height={14} />
-            <HeadingBlock
-              text="Maîtriser la conformité des installations électriques"
-              level="h1"
-              fontSize={46}
-              color="#ffffff"
-              fontWeight="900"
-              lineHeight="1.08"
-            />
-            <SpacerBlock height={18} />
-            <TextBlock
-              text="Un parcours professionnel pour renforcer les compétences terrain, sécuriser les interventions et préparer les contrôles PROQUELEC."
-              fontSize={18}
-              color="#cbd5e1"
-              lineHeight="1.7"
-            />
-            <SpacerBlock height={28} />
-            <Element is={ColumnsBlock} canvas columns={3} gap={12}>
-              <CardBlock icon="🎯" title="Niveau" text="Débutant à avancé" />
-              <CardBlock icon="⏱️" title="Durée" text="3 à 5 jours" />
-              <CardBlock icon="🏅" title="Attestation" text="Certificat PROQUELEC" />
-            </Element>
-            <SpacerBlock height={30} />
-            <ButtonBlock label="Voir les dates disponibles" href="/formations" backgroundColor="#fbbf24" textColor="#111827" size="lg" rounded="lg" />
-          </Element>
-          <Element is={ContainerBlock} canvas padding={28} backgroundColor="#f8fafc">
-            <TextBlock text="Programme clé" fontSize={13} fontWeight="800" color="#1e3a5f" extraClasses="uppercase tracking-widest" />
-            <SpacerBlock height={16} />
-            <FeatureListBlock
-              iconColor="#fbbf24"
-              gap={14}
-              items={[
-                { icon: '⚡', text: 'Bases électriques et règles de sécurité' },
-                { icon: '📐', text: 'Lecture de schémas et repérage des circuits' },
-                { icon: '🛡️', text: 'Protection différentielle et mise à la terre' },
-                { icon: '✅', text: 'Préparation au contrôle de conformité' },
-              ]}
-            />
-          </Element>
-        </Element>
-      </Element>
-    ),
+    factory: () => <TrainingHeroPremiumBlock />,
   },
 
   // ── PAGES PREMIUM ──
@@ -245,15 +195,15 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     previewGradient: 'linear-gradient(180deg, #06111f 0%, #eff6ff 42%, #ffffff 100%)',
     factory: () => (
       <Element is={ContainerBlock} canvas padding={0} backgroundColor="#ffffff" maxWidth="100%">
-        <Element is={ContainerBlock} canvas padding={48} paddingY={72} backgroundColor="#06111f" maxWidth="100%">
-          <TextBlock text="ACADÉMIE PROQUELEC" fontSize={12} fontWeight="800" color="#fbbf24" textAlign="center" extraClasses="uppercase tracking-widest" />
-          <SpacerBlock height={14} />
-          <TextBlock text="Formation professionnelle en électricité" fontSize={44} textAlign="center" fontWeight="900" color="#ffffff" />
-          <SpacerBlock height={14} />
-          <TextBlock text="Un modèle premium pour présenter une formation, ses bénéfices, son programme et ses modalités d'inscription." fontSize={18} textAlign="center" color="#cbd5e1" lineHeight="1.7" />
-          <SpacerBlock height={28} />
-          <ButtonBlock label="Demander une inscription" href="/contact" backgroundColor="#fbbf24" textColor="#111827" size="lg" rounded="lg" />
-        </Element>
+        <TrainingHeroPremiumBlock
+          badge="ACADÉMIE PROQUELEC"
+          title="Formation professionnelle en électricité"
+          subtitle="Un modèle premium pour présenter une formation, ses bénéfices, son programme et ses modalités d'inscription."
+          primaryLabel="Demander une inscription"
+          primaryHref="/contact"
+          secondaryLabel="Voir le programme"
+          secondaryHref="/formations"
+        />
         <Element is={ContainerBlock} canvas padding={48} paddingY={64} backgroundColor="#f8fafc" maxWidth="100%">
           {sectionHeader('Objectifs', 'Compétences visées', 'Un parcours orienté pratique, sécurité et conformité.')}
           <Element is={ColumnsBlock} canvas columns={3} gap={24}>
@@ -262,55 +212,24 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
             <CardBlock icon="✅" title="Valider" text="Préparer les contrôles et documenter les corrections." />
           </Element>
         </Element>
-        <Element is={ContainerBlock} canvas padding={48} paddingY={64} backgroundColor="#ffffff" maxWidth="1120px">
-          <Element is={ColumnsBlock} canvas columns={2} gap={32}>
-            <Element is={ContainerBlock} canvas padding={28} backgroundColor="#f8fafc">
-              <HeadingBlock text="Programme détaillé" level="h2" fontSize={30} color="#0f172a" fontWeight="900" />
-              <SpacerBlock height={18} />
-              <StepsBlock
-                layout="vertical"
-                items={[
-                  { title: 'Jour 1', desc: 'Fondamentaux, sécurité et vocabulaire technique.' },
-                  { title: 'Jour 2', desc: 'Schémas, protections et mise à la terre.' },
-                  { title: 'Jour 3', desc: 'Cas pratiques et préparation du contrôle.' },
-                ]}
-              />
-            </Element>
-            <Element is={ContainerBlock} canvas padding={28} backgroundColor="#fff7ed">
-              <HeadingBlock text="Prérequis & livrables" level="h2" fontSize={30} color="#0f172a" fontWeight="900" />
-              <SpacerBlock height={18} />
-              <FeatureListBlock
-                iconColor="#f59e0b"
-                items={[
-                  { icon: '👷', text: 'Profil installateur, technicien ou responsable maintenance' },
-                  { icon: '📄', text: 'Support de cours et fiche synthèse' },
-                  { icon: '🏅', text: 'Attestation de participation' },
-                  { icon: '📞', text: 'Orientation vers le contrôle ou l’audit' },
-                ]}
-              />
-            </Element>
-          </Element>
-        </Element>
-        <Element is={ContainerBlock} canvas padding={48} paddingY={64} backgroundColor="#f8fafc" maxWidth="100%">
-          {sectionHeader('Modalités', 'Tarifs et prochaines sessions', 'Des offres adaptables aux particuliers, entreprises et groupes.')}
-          <PriceListBlock
-            items={[
-              { name: 'Individuel', price: 'Sur devis', desc: 'Inscription à une session programmée.', featured: false },
-              { name: 'Entreprise', price: 'Groupe', desc: 'Session dédiée pour équipes techniques.', featured: true },
-              { name: 'Sur site', price: 'Personnalisé', desc: 'Formation adaptée à vos installations.', featured: false },
-            ]}
-          />
-        </Element>
-        <CallToActionBlock
+        <TrainingProgramPremiumBlock
+          title="Programme détaillé"
+          subtitle="Modules, prérequis et livrables pour une session structurée autour de la sécurité et de la conformité."
+          backgroundColor="#ffffff"
+        />
+        <PricingComparisonPremiumBlock
+          title="Tarifs et prochaines sessions"
+          subtitle="Des offres adaptables aux particuliers, entreprises et groupes."
+          plans={[
+            { name: 'Individuel', price: 'Sur devis', description: 'Inscription à une session programmée.', features: ['Programme complet', 'Support de cours', 'Attestation'], buttonText: 'Demander une date', href: '/contact', featured: false },
+            { name: 'Entreprise', price: 'Groupe', description: 'Session dédiée pour équipes techniques.', features: ['Session dédiée', 'Cas pratiques métier', 'Planning adapté'], buttonText: 'Demander un devis', href: '/contact', featured: true },
+            { name: 'Sur site', price: 'Personnalisé', description: 'Formation adaptée à vos installations.', features: ['Audit du besoin', 'Contenu ajusté', 'Accompagnement terrain'], buttonText: 'Planifier', href: '/contact', featured: false },
+          ]}
+        />
+        <ContactPremiumBlock
           title="Construisons votre parcours de formation"
-          description="L’équipe PROQUELEC vous aide à choisir le niveau et les dates adaptés à votre besoin."
+          subtitle="L’équipe PROQUELEC vous aide à choisir le niveau, le format et les dates adaptés à votre besoin."
           buttonText="Contacter le pôle formation"
-          buttonUrl="/contact"
-          bgColor="#1e3a5f"
-          textColor="#ffffff"
-          buttonBg="#fbbf24"
-          buttonTextColor="#111827"
-          padding={56}
         />
       </Element>
     ),
@@ -377,42 +296,10 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     previewGradient: 'linear-gradient(180deg, #1e3a5f 0%, #fef3c7 48%, #ffffff 100%)',
     factory: () => (
       <Element is={ContainerBlock} canvas padding={0} backgroundColor="#ffffff" maxWidth="100%">
-        <Element is={ContainerBlock} canvas padding={48} paddingY={72} backgroundColor="#1e3a5f" maxWidth="100%">
-          <TextBlock text="CERTIFICATION & AGRÉMENT" fontSize={12} textAlign="center" fontWeight="800" color="#fbbf24" extraClasses="uppercase tracking-widest" />
-          <SpacerBlock height={14} />
-          <TextBlock text="Structurer un dossier clair et recevable" fontSize={44} textAlign="center" fontWeight="900" color="#ffffff" />
-          <SpacerBlock height={12} />
-          <TextBlock text="Un template conçu pour expliquer les critères, les pièces à fournir et le processus de validation." fontSize={18} textAlign="center" color="#dbeafe" lineHeight="1.7" />
-        </Element>
-        <Element is={ContainerBlock} canvas padding={48} paddingY={64} backgroundColor="#fffbeb" maxWidth="1120px">
-          <Element is={ColumnsBlock} canvas columns={2} gap={30}>
-            <Element is={ContainerBlock} canvas padding={28} backgroundColor="#ffffff">
-              <HeadingBlock text="Documents requis" level="h2" fontSize={30} color="#0f172a" fontWeight="900" />
-              <SpacerBlock height={18} />
-              <FeatureListBlock
-                iconColor="#f59e0b"
-                items={[
-                  { icon: '📄', text: 'Formulaire de demande renseigné' },
-                  { icon: '🧾', text: 'Pièces administratives de l’entreprise' },
-                  { icon: '👷', text: 'Références techniques ou expériences' },
-                  { icon: '✅', text: 'Engagement qualité et conformité' },
-                ]}
-              />
-            </Element>
-            <Element is={ContainerBlock} canvas padding={28} backgroundColor="#ffffff">
-              <HeadingBlock text="Parcours de validation" level="h2" fontSize={30} color="#0f172a" fontWeight="900" />
-              <SpacerBlock height={18} />
-              <StepsBlock
-                layout="vertical"
-                items={[
-                  { title: 'Dépôt', desc: 'Réception et contrôle de complétude du dossier.' },
-                  { title: 'Instruction', desc: 'Analyse des critères et demande de compléments si besoin.' },
-                  { title: 'Décision', desc: 'Notification, suivi et recommandations opérationnelles.' },
-                ]}
-              />
-            </Element>
-          </Element>
-        </Element>
+        <CertificationRequirementsPremiumBlock
+          title="Structurer un dossier clair et recevable"
+          subtitle="Un template conçu pour expliquer les critères, les pièces à fournir et le processus de validation."
+        />
         <Element is={ContainerBlock} canvas padding={48} paddingY={64} backgroundColor="#ffffff" maxWidth="100%">
           <ResourceCardsBlock
             title="Ressources certification"
@@ -447,45 +334,10 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     category: 'pages',
     previewGradient: 'linear-gradient(180deg, #f8fafc 0%, #dbeafe 55%, #ffffff 100%)',
     factory: () => (
-      <Element is={ContainerBlock} canvas padding={0} backgroundColor="#ffffff" maxWidth="100%">
-        <Element is={ContainerBlock} canvas padding={48} paddingY={64} backgroundColor="#f8fafc" maxWidth="100%">
-          <TextBlock text="CONTACT PROQUELEC" fontSize={12} textAlign="center" fontWeight="800" color="#2563eb" extraClasses="uppercase tracking-widest" />
-          <SpacerBlock height={14} />
-          <TextBlock text="Une demande claire, une réponse orientée action" fontSize={40} textAlign="center" fontWeight="900" color="#0f172a" />
-          <SpacerBlock height={12} />
-          <TextBlock text="Centralisez les demandes de contrôle, formation, audit, certification ou assistance technique." fontSize={18} textAlign="center" color="#64748b" lineHeight="1.7" />
-        </Element>
-        <Element is={ContainerBlock} canvas padding={48} paddingY={64} backgroundColor="#ffffff" maxWidth="1120px">
-          <Element is={ColumnsBlock} canvas columns={2} gap={32}>
-            <Element is={ContainerBlock} canvas padding={28} backgroundColor="#eff6ff">
-              <HeadingBlock text="Envoyer une demande" level="h2" fontSize={30} color="#0f172a" fontWeight="900" />
-              <SpacerBlock height={18} />
-              <FormBlock />
-            </Element>
-            <Element is={ContainerBlock} canvas padding={28} backgroundColor="#f8fafc">
-              <TextBlock text="Informations utiles" fontSize={13} fontWeight="800" color="#1e3a5f" extraClasses="uppercase tracking-widest" />
-              <SpacerBlock height={18} />
-              <AddressBlock />
-              <SpacerBlock height={24} />
-              <FeatureListBlock
-                iconColor="#fbbf24"
-                items={[
-                  { icon: '⏱️', text: 'Réponse sous 24 h ouvrées' },
-                  { icon: '📍', text: 'Contrôles et formations au Sénégal' },
-                  { icon: '📄', text: 'Dossier orienté vers le bon service' },
-                ]}
-              />
-            </Element>
-          </Element>
-        </Element>
-        <Element is={ContainerBlock} canvas padding={48} paddingY={56} backgroundColor="#f8fafc" maxWidth="100%">
-          <Element is={ColumnsBlock} canvas columns={3} gap={20}>
-            <CardBlock icon="⚡" title="Contrôle" text="Demande de visite, réception ou levée de réserves." />
-            <CardBlock icon="🎓" title="Formation" text="Inscription individuelle, groupe ou session sur site." />
-            <CardBlock icon="🏅" title="Certification" text="Orientation sur les documents et le parcours." />
-          </Element>
-        </Element>
-      </Element>
+      <ContactPremiumBlock
+        title="Une demande claire, une réponse orientée action"
+        subtitle="Centralisez les demandes de contrôle, formation, audit, certification ou assistance technique."
+      />
     ),
   },
   {
@@ -565,38 +417,9 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     category: 'content',
     previewGradient: 'linear-gradient(135deg, #ffffff 0%, #eff6ff 55%, #fef3c7 100%)',
     factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={72} backgroundColor="#ffffff" maxWidth="100%">
-        {sectionHeader(
-          'Pourquoi PROQUELEC',
-          'Un tiers de confiance pour la qualité électrique',
-          'Une section prête pour expliquer la valeur de l’organisme sur les pages institutionnelles et services.'
-        )}
-        <Element is={ColumnsBlock} canvas columns={2} gap={32}>
-          <Element is={ContainerBlock} canvas padding={32} backgroundColor="#f8fafc">
-            <HeadingBlock text="Ce qui fait la différence" level="h3" fontSize={28} color="#0f172a" fontWeight="900" />
-            <SpacerBlock height={18} />
-            <FeatureListBlock
-              iconColor="#2563eb"
-              gap={14}
-              items={[
-                { icon: '🛡️', text: 'Approche centrée sur la sécurité des usagers' },
-                { icon: '📐', text: 'Lecture technique des installations et des risques' },
-                { icon: '✅', text: 'Méthode structurée pour contrôler et documenter' },
-                { icon: '🤝', text: 'Accompagnement des professionnels et collectivités' },
-              ]}
-            />
-          </Element>
-          <Element is={ContainerBlock} canvas padding={32} backgroundColor="#1e3a5f">
-            <TextBlock text="PROMESSE" fontSize={12} fontWeight="800" color="#fbbf24" extraClasses="uppercase tracking-widest" />
-            <SpacerBlock height={12} />
-            <TextBlock text="Faire progresser la qualité des installations électriques au Sénégal." fontSize={30} fontWeight="900" color="#ffffff" lineHeight="1.22" />
-            <SpacerBlock height={18} />
-            <TextBlock text="Ce template met en avant le positionnement de PROQUELEC avec un rendu premium, sobre et réutilisable." fontSize={16} color="#dbeafe" lineHeight="1.7" />
-            <SpacerBlock height={24} />
-            <ButtonBlock label="Découvrir nos missions" href="/a-propos" backgroundColor="#fbbf24" textColor="#111827" size="lg" rounded="lg" />
-          </Element>
-        </Element>
-      </Element>
+      <WhyProquelecPremiumBlock
+        subtitle="Une section prête pour expliquer la valeur de l’organisme sur les pages institutionnelles et services."
+      />
     ),
   },
   {
@@ -627,35 +450,10 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     category: 'content',
     previewGradient: 'linear-gradient(180deg, #ffffff 0%, #eff6ff 100%)',
     factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={72} backgroundColor="#ffffff" maxWidth="100%">
-        {sectionHeader('FAQ', 'Réponses aux questions fréquentes', 'Une section premium pour réduire les frictions avant contact ou inscription.')}
-        <Element is={ColumnsBlock} canvas columns={2} gap={32}>
-          <Element is={ContainerBlock} canvas padding={28} backgroundColor="#f8fafc">
-            <TextBlock text="Catégories utiles" fontSize={13} fontWeight="800" color="#2563eb" extraClasses="uppercase tracking-widest" />
-            <SpacerBlock height={16} />
-            <FeatureListBlock
-              iconColor="#2563eb"
-              items={[
-                { icon: '⚡', text: 'Contrôles et conformité' },
-                { icon: '🎓', text: 'Formations professionnelles' },
-                { icon: '📄', text: 'Documents et dossiers' },
-                { icon: '💬', text: 'Délais et accompagnement' },
-              ]}
-            />
-          </Element>
-          <Element is={ContainerBlock} canvas padding={0} backgroundColor="#ffffff">
-            <FAQBlock
-              activeColor="#2563eb"
-              items={[
-                { q: 'Comment préparer une demande de contrôle ?', a: 'Rassemblez les informations sur l’installation, les plans disponibles et les coordonnées du responsable technique.' },
-                { q: 'Les formations sont-elles adaptées aux entreprises ?', a: 'Oui, les parcours peuvent être proposés en session dédiée ou adaptés au niveau des équipes.' },
-                { q: 'Puis-je demander une assistance avant le dépôt d’un dossier ?', a: 'Oui, PROQUELEC peut orienter vers les documents utiles et les points de vigilance.' },
-                { q: 'Comment connaître les prochaines dates ?', a: 'La page formations ou le formulaire de contact permettent de demander les sessions disponibles.' },
-              ]}
-            />
-          </Element>
-        </Element>
-      </Element>
+      <FAQPremiumBlock
+        title="Réponses aux questions fréquentes"
+        subtitle="Une section premium pour réduire les frictions avant contact ou inscription."
+      />
     ),
   },
   {
@@ -784,10 +582,11 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     category: 'conversion',
     previewGradient: 'linear-gradient(180deg, #eff6ff, #ffffff)',
     factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={72} backgroundColor="#eff6ff" maxWidth="960px">
-        {sectionHeader('Contact', 'Échangeons sur votre projet', 'Réponse sous 24 h ouvrées.')}
-        <FormBlock />
-      </Element>
+      <ContactPremiumBlock
+        title="Échangeons sur votre projet"
+        subtitle="Réponse sous 24 h ouvrées pour orienter votre demande vers le bon service."
+        backgroundColor="#eff6ff"
+      />
     ),
   },
   {
@@ -810,23 +609,16 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     category: 'conversion',
     previewGradient: 'linear-gradient(135deg, #f8fafc 0%, #dbeafe 50%, #fff7ed 100%)',
     factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={72} backgroundColor="#f8fafc" maxWidth="100%">
-        {sectionHeader('Offres', 'Choisir le bon accompagnement', 'Un modèle clair pour comparer les niveaux, les prix et les usages.')}
-        <PriceListBlock
-          items={[
-            { name: 'Débutant', price: 'Essentiel', desc: 'Découverte, bases de sécurité et première orientation.', featured: false },
-            { name: 'Intermédiaire', price: 'Standard', desc: 'Programme structuré avec cas pratiques et support.', featured: true },
-            { name: 'Avancé', price: 'Expert', desc: 'Approfondissement technique, conformité et audit.', featured: false },
-            { name: 'Entreprise', price: 'Sur devis', desc: 'Parcours groupe, session dédiée et adaptation métier.', featured: false },
-          ]}
-        />
-        <SpacerBlock height={28} />
-        <Element is={ColumnsBlock} canvas columns={3} gap={20}>
-          <CardBlock icon="📄" title="Devis clair" text="Chaque offre peut être reliée à une demande de prix ou d’inscription." />
-          <CardBlock icon="🧩" title="Modules adaptables" text="Les contenus peuvent évoluer selon le niveau et le public." />
-          <CardBlock icon="📞" title="Orientation rapide" text="Un CTA final dirige vers le bon interlocuteur." />
-        </Element>
-      </Element>
+      <PricingComparisonPremiumBlock
+        title="Choisir le bon accompagnement"
+        subtitle="Un modèle clair pour comparer les niveaux, les prix et les usages."
+        plans={[
+          { name: 'Débutant', price: 'Essentiel', description: 'Découverte, bases de sécurité et première orientation.', features: ['Bases électriques', 'Support synthèse', 'Attestation'], buttonText: 'Choisir', href: '/contact', featured: false },
+          { name: 'Intermédiaire', price: 'Standard', description: 'Programme structuré avec cas pratiques et support.', features: ['Modules complets', 'Cas pratiques', 'Suivi pédagogique'], buttonText: 'Demander un devis', href: '/contact', featured: true },
+          { name: 'Avancé', price: 'Expert', description: 'Approfondissement technique, conformité et audit.', features: ['Contrôle avancé', 'Études de cas', 'Plan d’action'], buttonText: 'Être orienté', href: '/contact', featured: false },
+          { name: 'Entreprise', price: 'Sur devis', description: 'Parcours groupe, session dédiée et adaptation métier.', features: ['Session dédiée', 'Planning flexible', 'Reporting équipe'], buttonText: 'Planifier', href: '/contact', featured: false },
+        ]}
+      />
     ),
   },
   {
@@ -944,37 +736,10 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     category: 'trust',
     previewGradient: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 62%, #fbbf24 100%)',
     factory: () => (
-      <Element is={ContainerBlock} canvas padding={48} paddingY={72} backgroundColor="#0f172a" maxWidth="100%">
-        <Element is={ColumnsBlock} canvas columns={2} gap={32}>
-          <Element is={ContainerBlock} canvas padding={0} backgroundColor="transparent">
-            <TextBlock text="CONFIANCE" fontSize={12} fontWeight="800" color="#fbbf24" extraClasses="uppercase tracking-widest" />
-            <SpacerBlock height={14} />
-            <TextBlock text="Des professionnels accompagnés avec méthode" fontSize={38} fontWeight="900" color="#ffffff" lineHeight="1.14" />
-            <SpacerBlock height={16} />
-            <TextBlock text="Un template premium pour valoriser les retours d’expérience, les notes et les preuves institutionnelles." fontSize={17} color="#cbd5e1" lineHeight="1.7" />
-            <SpacerBlock height={24} />
-            <StarRatingBlock rating={4.8} maxStars={5} size={26} color="#fbbf24" showValue />
-            <SpacerBlock height={24} />
-            <Element is={ColumnsBlock} canvas columns={3} gap={14}>
-              <CardBlock icon="500+" title="Dossiers" text="Installations auditées" />
-              <CardBlock icon="95%" title="Satisfaction" text="Retours positifs" />
-              <CardBlock icon="24/7" title="Support" text="Orientation technique" />
-            </Element>
-          </Element>
-          <Element is={ContainerBlock} canvas padding={0} backgroundColor="transparent">
-            <TestimonialCarouselBlock
-              bgColor="#ffffff"
-              textColor="#0f172a"
-              accentColor="#2563eb"
-              items={[
-                { text: 'PROQUELEC nous a aidés à clarifier les priorités avant réception du chantier.', author: 'Responsable technique', role: 'Entreprise partenaire' },
-                { text: 'La formation a rendu les exigences de conformité plus concrètes pour notre équipe.', author: 'Chef d’équipe', role: 'Installateur électricien' },
-                { text: 'Le suivi documentaire a facilité la préparation du dossier et les échanges internes.', author: 'Gestionnaire projet', role: 'Collectivité' },
-              ]}
-            />
-          </Element>
-        </Element>
-      </Element>
+      <TestimonialsPremiumBlock
+        title="Des professionnels accompagnés avec méthode"
+        subtitle="Un template premium pour valoriser les retours d’expérience, les notes et les preuves institutionnelles."
+      />
     ),
   },
   {

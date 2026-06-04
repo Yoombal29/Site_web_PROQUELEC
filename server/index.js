@@ -2407,6 +2407,11 @@ app.get('/api/admin/subscriptions', authenticateToken, requireAdmin, async (req,
   }
 });
 
+// == MEDIA ROUTES ==
+const mediaService = require('./modules/media/media.service');
+const mediaRoutes = require('./modules/media/media.routes');
+app.use('/api', mediaRoutes);
+
 // == DATA ENDPOINTS ==
 
 // Site Settings

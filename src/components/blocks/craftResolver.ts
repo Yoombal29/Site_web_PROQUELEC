@@ -96,6 +96,14 @@ import {
   ComplianceChecklistBlock,
   AuditProcessBlock,
   ResourceCardsBlock,
+  TrainingHeroPremiumBlock,
+  TrainingProgramPremiumBlock,
+  PricingComparisonPremiumBlock,
+  ContactPremiumBlock,
+  CertificationRequirementsPremiumBlock,
+  FAQPremiumBlock,
+  TestimonialsPremiumBlock,
+  WhyProquelecPremiumBlock,
 } from './ProquelecBlocksPlus';
 
 import { RichTextBlock } from './RichTextEditorBlock';
@@ -235,6 +243,14 @@ export const CRAFT_RESOLVER = {
   ComplianceChecklistBlock,
   AuditProcessBlock,
   ResourceCardsBlock,
+  TrainingHeroPremiumBlock,
+  TrainingProgramPremiumBlock,
+  PricingComparisonPremiumBlock,
+  ContactPremiumBlock,
+  CertificationRequirementsPremiumBlock,
+  FAQPremiumBlock,
+  TestimonialsPremiumBlock,
+  WhyProquelecPremiumBlock,
 
   // Rich text & popup
   RichTextBlock,
