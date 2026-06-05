@@ -2,12 +2,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import getPort from "get-port";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ mode }) => {
-  const defaultPort = Number(process.env.VITE_PORT) || 5173;
+  const defaultPort = Number(process.env.VITE_PORT) || 5175;
   const apiTarget = process.env.VITE_API_URL || 'http://127.0.0.1:3010';
 
   return {
@@ -18,13 +17,9 @@ export default defineConfig(async ({ mode }) => {
     server: {
       port: defaultPort,
       host: true,
-      strictPort: true,
+      strictPort: false,
       // Redirige toutes les routes inconnues vers index.html (React Router SPA)
       historyApiFallback: true,
-      hmr: {
-        clientPort: defaultPort,
-        port: defaultPort,
-      },
       proxy: {
         '/api': {
           target: apiTarget,

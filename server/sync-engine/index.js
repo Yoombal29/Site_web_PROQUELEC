@@ -9,7 +9,6 @@
  */
 
 const adapter = require('./cossuel-adapter');
-const { Pool } = require('pg');
 
 let pool; // Sera injecté depuis server/index.js
 
@@ -18,6 +17,29 @@ const SYNC_INTERVAL_MS = 60 * 60 * 1000; // 1 heure
 async function tableExists(client, tableName) {
     const result = await client.query('SELECT to_regclass($1) AS exists', [tableName]);
     return !!(result.rows && result.rows[0] && result.rows[0].exists);
+}
+
+function normalizeDossier(dossier) {
+    const id = String(dossier.id || dossier.dossier_number || '').trim();
+    if (!id) return null;
+
+    return {
+        id,
+        region: dossier.region || null,
+        status: dossier.status || null,
+        type: dossier.type || dossier.installation_type || null,
+        date: dossier.date || dossier.submission_date || null,
+    };
+}
+
+function uniqueDossiers(dossiers) {
+    const byId = new Map();
+    for (const dossier of dossiers) {
+        const normalized = normalizeDossier(dossier);
+        if (!normalized) continue;
+        byId.set(normalized.id, normalized);
+    }
+    return Array.from(byId.values());
 }
 
 async function startSyncEngine(dbPool) {
@@ -44,8 +66,13 @@ async function runSyncCycle() {
         await adapter.authenticate();
 
         // 2. Récupérer les données
-        const dossiers = await adapter.fetchRecentDossiers(7);
-        console.log(`📦 [SYNC-ENGINE] ${dossiers.length} dossiers récupérés depuis COSSUEL.`);
+        const rawDossiers = await adapter.fetchRecentDossiers(7);
+        const dossiers = uniqueDossiers(rawDossiers);
+        const skippedCount = rawDossiers.length - dossiers.length;
+        console.log(`📦 [SYNC-ENGINE] ${rawDossiers.length} dossiers récupérés depuis COSSUEL.`);
+        if (skippedCount > 0) {
+            console.warn(`⚠️ [SYNC-ENGINE] ${skippedCount} dossier(s) sans ID ou doublon(s) ignoré(s).`);
+        }
 
         // 3. Sauvegarder dans Data Warehouse
         // Vérifier l'existence des tables attendues avant d'écrire
@@ -75,7 +102,10 @@ async function runSyncCycle() {
                             INSERT INTO public.cossuel_dossiers (id, region, status, installation_type, submission_date)
                             VALUES ($1, $2, $3, $4, $5)
                             ON CONFLICT (id) DO UPDATE 
-                            SET status = EXCLUDED.status, 
+                            SET region = EXCLUDED.region,
+                                status = EXCLUDED.status,
+                                installation_type = EXCLUDED.installation_type,
+                                submission_date = EXCLUDED.submission_date,
                                 last_sync_at = NOW();
                         `, [dossier.id, dossier.region, dossier.status, dossier.type, dossier.date]);
 
