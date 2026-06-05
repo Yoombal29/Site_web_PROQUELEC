@@ -40,7 +40,7 @@ async function updatePage(id, fields) {
              is_published = COALESCE($5, is_published),
              meta_description = COALESCE($6, meta_description),
              meta_keywords = COALESCE($7, meta_keywords),
-             builder_revision = COALESCE(builder_revision, version, version_number, 1) + 1,
+             builder_revision = COALESCE(builder_revision, 1) + 1,
              builder_content_hash = NULL,
              updated_at = NOW()
          WHERE id::text = $8 OR slug = $8 RETURNING *`,
@@ -103,7 +103,7 @@ async function adminUpdatePage(id, fields) {
              unpublish_date = COALESCE($33, unpublish_date),
              reading_time = COALESCE($34, reading_time),
              version = version + 1,
-             builder_revision = COALESCE(builder_revision, version, version_number, 1) + 1,
+             builder_revision = COALESCE(builder_revision, 1) + 1,
              builder_content_hash = NULL,
              updated_at = NOW()
          WHERE slug = $15 OR id::text = $15 RETURNING *`,

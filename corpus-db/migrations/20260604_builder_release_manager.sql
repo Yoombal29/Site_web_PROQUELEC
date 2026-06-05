@@ -16,7 +16,7 @@ ALTER TABLE public.pages
   ADD COLUMN IF NOT EXISTS builder_source_environment TEXT;
 
 UPDATE public.pages
-SET builder_revision = COALESCE(builder_revision, version, version_number, 1)
+SET builder_revision = COALESCE(builder_revision, 1)
 WHERE builder_revision IS NULL;
 
 CREATE TABLE IF NOT EXISTS public.builder_release_candidates (

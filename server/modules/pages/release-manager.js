@@ -240,7 +240,7 @@ async function updatePageFingerprint(pageId, contentHash) {
     `UPDATE public.pages
      SET builder_content_hash = $2,
          builder_base_content_hash = COALESCE(builder_base_content_hash, $2),
-         builder_base_revision = COALESCE(builder_base_revision, builder_revision, version, version_number, 1)
+         builder_base_revision = COALESCE(builder_base_revision, builder_revision, 1)
      WHERE id = $1`,
     [pageId, contentHash],
   );
@@ -594,10 +594,10 @@ async function updatePageFromRelease(client, currentPage, snapshot, contentHash,
   const result = await client.query(
     `UPDATE public.pages
      SET ${setClauses.join(', ')},
-         builder_revision = COALESCE(builder_revision, version, version_number, 1) + 1,
+         builder_revision = COALESCE(builder_revision, 1) + 1,
          builder_content_hash = $${hashParam},
          builder_base_content_hash = $${hashParam},
-         builder_base_revision = COALESCE(builder_revision, version, version_number, 1) + 1,
+         builder_base_revision = COALESCE(builder_revision, 1) + 1,
          builder_origin_page_id = $${originParam},
          builder_origin_slug = $${originSlugParam},
          builder_last_release_at = NOW(),
