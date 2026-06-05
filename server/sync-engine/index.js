@@ -15,6 +15,11 @@ let pool; // Sera injecté depuis server/index.js
 
 const SYNC_INTERVAL_MS = 60 * 60 * 1000; // 1 heure
 
+async function tableExists(client, tableName) {
+    const result = await client.query('SELECT to_regclass($1) AS exists', [tableName]);
+    return !!(result.rows && result.rows[0] && result.rows[0].exists);
+}
+
 async function startSyncEngine(dbPool) {
     console.log('🚀 [SYNC-ENGINE] Démarrage du moteur de synchronisation COSSUEL...');
     pool = dbPool;
@@ -46,14 +51,9 @@ async function runSyncCycle() {
         // Vérifier l'existence des tables attendues avant d'écrire
         const client = await pool.connect();
         try {
-            const check = async (tableName) => {
-                const r = await client.query("SELECT to_regclass($1) AS exists", [tableName]);
-                return !!(r.rows && r.rows[0] && r.rows[0].exists);
-            };
-
-            const hasDossiers = await check('public.cossuel_dossiers');
-            const hasLogs = await check('public.cossuel_sync_logs');
-            const hasStats = await check('public.cossuel_stats_daily');
+            const hasDossiers = await tableExists(client, 'public.cossuel_dossiers');
+            const hasLogs = await tableExists(client, 'public.cossuel_sync_logs');
+            const hasStats = await tableExists(client, 'public.cossuel_stats_daily');
 
             if (!hasDossiers) {
                 console.warn('⚠️ [SYNC-ENGINE] Table `public.cossuel_dossiers` manquante — écriture ignorée.');
@@ -118,14 +118,24 @@ async function runSyncCycle() {
         }
 
     } catch (error) {
-        console.error(`❌ [SYNC-ENGINE] Erreur critique:`, error.message);
+        const isConfigError = error && error.code === 'CONFIG_ERROR';
+        const level = isConfigError ? 'warn' : 'error';
+        console[level](`${isConfigError ? '⚠️' : '❌'} [SYNC-ENGINE] ${isConfigError ? 'Synchronisation ignorée' : 'Erreur critique'}:`, error.message);
         errorsCount++;
         // Log Error (si possible)
+        let client;
         try {
-            const client = await pool.connect();
-            await logSync(client, startTime, 'ERROR', recordsProcessed, errorsCount, error.message);
-            client.release();
-        } catch (e) { console.error('Impossible de logger l\'erreur sync', e); }
+            client = await pool.connect();
+            if (await tableExists(client, 'public.cossuel_sync_logs')) {
+                await logSync(client, startTime, isConfigError ? 'WARNING' : 'ERROR', recordsProcessed, errorsCount, error.message);
+            } else {
+                console.warn('⚠️ [SYNC-ENGINE] Table `public.cossuel_sync_logs` manquante — erreur non enregistrée.');
+            }
+        } catch (e) {
+            console.error('Impossible de logger l\'erreur sync', e.message || e);
+        } finally {
+            client?.release();
+        }
     }
 }
 
