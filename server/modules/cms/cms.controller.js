@@ -129,7 +129,15 @@ async function listContacts(req, res) {
 }
 async function createContact(req, res) {
     try { res.status(201).json(await service.createContact(req.body)); }
-    catch (err) { res.status(500).json({ error: err.message }); }
+    catch (err) {
+        res.status(err.statusCode || 500).json({
+            error: err.statusCode === 502 ? 'EMAIL_SEND_FAILED' : err.message,
+            message: err.message,
+            saved: Boolean(err.contact),
+            contact_request: err.contact,
+            email_notification: err.emailNotification,
+        });
+    }
 }
 async function deleteContact(req, res) {
     try { await service.deleteContact(req.params.id); res.json({ success: true }); }

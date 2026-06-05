@@ -35,6 +35,10 @@ try {
 const { orchestrate } = require('./orchestrator');
 const { spawn } = require('child_process');
 const { sendEmail, sendContactNotification, sendNewUserNotification } = require('./email-service');
+const {
+  validateContactRequestPayload,
+  buildEmailNotificationPayload,
+} = require('./contact-request-utils');
 const { startSyncEngine } = require('./sync-engine'); // Observatoire Sync
 
 // -- LOG BUFFER FOR REAL-TIME MONITORING --
@@ -6773,18 +6777,51 @@ app.get('/api/cms/themes', async (req, res) => {
 
 // --- CONTACT & EMAIL ---
 app.post('/api/contact-requests', async (req, res) => {
-  const { nom, email, telephone, sujet, message } = req.body;
+  const { payload, errors } = validateContactRequestPayload(req.body);
+
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({
+      error: 'Validation échouée',
+      details: errors,
+    });
+  }
+
+  const { nom, email, telephone, sujet, message } = payload;
+
   try {
     const result = await pool.query(
       'INSERT INTO public.contact_requests (nom, email, telephone, sujet, message, submitted_at, status) VALUES ($1, $2, $3, $4, $5, NOW(), $6) RETURNING *',
       [nom, email, telephone, sujet, message, 'nouveau'],
     );
-    // Envoi de la notification par email (non bloquant)
-    sendContactNotification({ nom, email, telephone, sujet, message }).then((r) => {
-      if (r.success) console.log('[CONTACT] Email notification sent');
-      else console.warn('[CONTACT] Email notification failed:', r.error);
+
+    const emailResult = await sendContactNotification({ nom, email, telephone, sujet, message });
+    const emailNotification = buildEmailNotificationPayload(emailResult);
+
+    if (!emailResult.success) {
+      console.warn('[CONTACT] Email notification failed:', emailResult.error);
+      return res.status(502).json({
+        error: 'EMAIL_SEND_FAILED',
+        message:
+          'Votre demande a été enregistrée, mais la notification email PROQUELEC n’a pas pu être envoyée.',
+        saved: true,
+        contact_request: result.rows[0],
+        email_notification: {
+          ...emailNotification,
+          error: emailResult.error || 'Erreur SMTP inconnue',
+        },
+      });
+    }
+
+    if (emailResult.simulated) {
+      console.warn('[CONTACT] Email notification simulated:', emailResult.reason);
+    } else {
+      console.log('[CONTACT] Email notification sent:', emailResult.messageId);
+    }
+
+    res.status(201).json({
+      ...result.rows[0],
+      email_notification: emailNotification,
     });
-    res.status(201).json(result.rows[0]);
   } catch (error) {
     handleAppError(error, res);
   }

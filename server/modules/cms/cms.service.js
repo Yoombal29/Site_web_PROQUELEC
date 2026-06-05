@@ -1,5 +1,10 @@
 const repo = require('./cms.repository');
 const { sendSseEvent } = require('../../core/sse');
+const { sendContactNotification } = require('../../email-service');
+const {
+    normalizeContactRequestPayload,
+    buildEmailNotificationPayload,
+} = require('../../contact-request-utils');
 
 async function listEvents() { return repo.findAllEvents(); }
 async function createEvent(data) { return repo.createEvent(data); }
@@ -35,7 +40,27 @@ async function listSubscribers() { return repo.findAllSubscribers(); }
 async function subscribe(data) { return repo.subscribe(data); }
 
 async function listContacts() { return repo.findAllContacts(); }
-async function createContact(data) { return repo.createContact(data); }
+async function createContact(data) {
+    const payload = normalizeContactRequestPayload(data);
+    const contact = await repo.createContact(payload);
+    const emailResult = await sendContactNotification(payload);
+    const emailNotification = buildEmailNotificationPayload(emailResult);
+
+    if (!emailResult.success) {
+        const error = new Error(
+            'Votre demande a été enregistrée, mais la notification email PROQUELEC n’a pas pu être envoyée.'
+        );
+        error.statusCode = 502;
+        error.contact = contact;
+        error.emailNotification = {
+            ...emailNotification,
+            error: emailResult.error || 'Erreur SMTP inconnue',
+        };
+        throw error;
+    }
+
+    return { ...contact, email_notification: emailNotification };
+}
 async function deleteContact(id) { await repo.deleteContact(id); }
 
 async function listRegistrations() { return repo.findAllRegistrations(); }

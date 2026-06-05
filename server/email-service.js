@@ -1,38 +1,119 @@
 const nodemailer = require('nodemailer');
 
 let transporter = null;
+let transporterKey = null;
 
-function getTransporter() {
-  if (transporter) return transporter;
+function isFalseFlag(value) {
+  return ['0', 'false', 'no', 'off'].includes(
+    String(value || '')
+      .trim()
+      .toLowerCase(),
+  );
+}
 
+function getEmailConfig() {
+  const enableFlag = process.env.ENABLE_EMAIL;
+  const disabled = isFalseFlag(enableFlag);
   const host = process.env.SMTP_HOST || 'mail.proquelec.sn';
-  const port = parseInt(process.env.SMTP_PORT || '465');
+  const port = parseInt(process.env.SMTP_PORT || '465', 10);
   const user = process.env.SMTP_USER || 'proquelec@proquelec.sn';
   const pass = process.env.SMTP_PASS || '';
-  const from = process.env.SMTP_FROM || user;
+  const from = process.env.SMTP_FROM || process.env.EMAIL_FROM || user;
   const to = process.env.SMTP_TO || user;
+  const configured = !disabled && Boolean(host && user && pass);
 
-  transporter = nodemailer.createTransport({
+  return {
     host,
     port,
+    user,
+    pass,
+    from,
+    to,
     secure: port === 465,
-    auth: { user, pass },
+    configured,
+    disabled,
+    reason: disabled ? 'EMAIL_DISABLED' : !pass ? 'SMTP_PASSWORD_MISSING' : null,
+    cacheKey: `${host}:${port}:${user}:${from}:${to}:${configured}`,
+  };
+}
+
+function getPublicEmailConfig() {
+  const config = getEmailConfig();
+  return {
+    host: config.host,
+    port: config.port,
+    user: config.user,
+    from: config.from,
+    to: config.to,
+    secure: config.secure,
+    configured: config.configured,
+    disabled: config.disabled,
+    reason: config.reason,
+  };
+}
+
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function sanitizeEmailHeader(value, fallback = 'Notification PROQUELEC') {
+  const safeValue = String(value || fallback)
+    .replace(/[\r\n]+/g, ' ')
+    .trim();
+  return safeValue || fallback;
+}
+
+function sanitizeReplyTo(value) {
+  const replyTo = String(value || '').trim();
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(replyTo) ? replyTo : undefined;
+}
+
+function getTransporter() {
+  const config = getEmailConfig();
+  if (!config.configured) return { ...config, transporter: null };
+  if (transporter && transporterKey === config.cacheKey) return { ...config, transporter };
+
+  transporter = nodemailer.createTransport({
+    host: config.host,
+    port: config.port,
+    secure: config.secure,
+    auth: { user: config.user, pass: config.pass },
     tls: { rejectUnauthorized: false },
   });
+  transporterKey = config.cacheKey;
 
-  return { transporter, from, to };
+  return { ...config, transporter };
 }
 
 async function sendEmail({ subject, html, text, replyTo, to: recipient }) {
   try {
-    const { transporter, from, to: defaultTo } = getTransporter();
+    const { transporter, from, to: defaultTo, configured, reason } = getTransporter();
+    const target = recipient || defaultTo;
+
+    if (!configured || !transporter) {
+      console.warn(
+        `[EMAIL] Envoi simulé: SMTP non actif (${reason || 'SMTP_NOT_CONFIGURED'}) vers ${target}`,
+      );
+      return {
+        success: true,
+        simulated: true,
+        reason: reason || 'SMTP_NOT_CONFIGURED',
+        to: target,
+      };
+    }
+
     const info = await transporter.sendMail({
       from: `"PROQUELEC" <${from}>`,
-      to: recipient || defaultTo,
-      subject,
+      to: target,
+      subject: sanitizeEmailHeader(subject),
       html,
       text,
-      replyTo: replyTo || from,
+      replyTo: sanitizeReplyTo(replyTo) || from,
     });
     console.log('[EMAIL] Envoyé:', info.messageId);
     return { success: true, messageId: info.messageId };
@@ -43,6 +124,7 @@ async function sendEmail({ subject, html, text, replyTo, to: recipient }) {
 }
 
 function emailLayout(title, content) {
+  const safeTitle = escapeHtml(title);
   return `
     <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(30,58,95,0.08),0 1px 4px rgba(30,58,95,0.04)">
       <!-- Header avec logo PROQUELEC -->
@@ -56,7 +138,7 @@ function emailLayout(title, content) {
       <!-- Corps du message -->
       <div style="padding:36px 28px">
         <div style="width:40px;height:4px;background:linear-gradient(to right,#2563eb,#f59e0b);border-radius:2px;margin-bottom:20px"></div>
-        <h2 style="color:#0f2a4a;font-size:20px;font-weight:700;margin:0 0 4px;line-height:1.3">${title}</h2>
+        <h2 style="color:#0f2a4a;font-size:20px;font-weight:700;margin:0 0 4px;line-height:1.3">${safeTitle}</h2>
         <p style="color:#6b7280;font-size:13px;margin:0 0 24px;padding-bottom:16px;border-bottom:1px solid #e5e7eb">Notification du site proquelec.sn</p>
         ${content}
       </div>
@@ -71,7 +153,7 @@ function emailLayout(title, content) {
           Route de l'Aéroport, Lotissement Mermoz &bull; BP 1234 Dakar<br>
           <a href="tel:+221330000000" style="color:#2563eb;text-decoration:none">+221 33 000 00 00</a>
           &nbsp;&bull;&nbsp;
-          <a href="mailto:contact@proquelec.sn" style="color:#2563eb;text-decoration:none">contact@proquelec.sn</a>
+          <a href="mailto:proquelec@proquelec.sn" style="color:#2563eb;text-decoration:none">proquelec@proquelec.sn</a>
         </p>
         <p style="color:#e2e8f0;font-size:9px;margin:12px 0 0;padding-top:12px;border-top:1px solid #e2e8f0">&copy; ${new Date().getFullYear()} PROQUELEC &mdash; Tous droits réservés</p>
       </div>
@@ -80,7 +162,9 @@ function emailLayout(title, content) {
 }
 
 function fieldRow(label, value) {
-  return `<tr><td style="padding:10px 12px;font-weight:600;color:#374151;font-size:13px;width:100px;vertical-align:top;white-space:nowrap">${label}</td><td style="padding:10px 12px;color:#111827;font-size:14px;word-break:break-word">${value || '<span style="color:#9ca3af">Non renseigné</span>'}</td></tr>`;
+  const safeLabel = escapeHtml(label);
+  const safeValue = value ? escapeHtml(value) : '<span style="color:#9ca3af">Non renseigné</span>';
+  return `<tr><td style="padding:10px 12px;font-weight:600;color:#374151;font-size:13px;width:100px;vertical-align:top;white-space:nowrap">${safeLabel}</td><td style="padding:10px 12px;color:#111827;font-size:14px;word-break:break-word">${safeValue}</td></tr>`;
 }
 
 // Envoyer une notification pour un nouveau contact
@@ -121,7 +205,7 @@ async function sendNewUserNotification({ email, nom, telephone, role }) {
 
 // Notification email groupée (utilisé par le système de notifications)
 async function sendGroupNotification({ to, title, message }) {
-  const content = `<div style="background:#f9fafb;border-radius:12px;padding:16px;font-size:14px;color:#374151;line-height:1.6">${message}</div>`;
+  const content = `<div style="background:#f9fafb;border-radius:12px;padding:16px;font-size:14px;color:#374151;line-height:1.6">${escapeHtml(message)}</div>`;
   return sendEmail({
     to,
     subject: `[PROQUELEC] ${title}`,
@@ -130,50 +214,36 @@ async function sendGroupNotification({ to, title, message }) {
   });
 }
 
-// Notification pour un nouvel utilisateur inscrit
-async function sendNewUserNotification({ email, nom, telephone, role }) {
-  const html = `
-    <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">
-      <div style="background:linear-gradient(to right,#1e3a5f,#2563eb);padding:24px;text-align:center">
-        <h1 style="color:white;margin:0;font-size:20px">Nouvel utilisateur inscrit</h1>
-      </div>
-      <div style="padding:24px">
-        <table style="width:100%;border-collapse:collapse">
-          <tr><td style="padding:8px;font-weight:bold;color:#374151;width:120px">Nom</td><td style="padding:8px;color:#374151">${nom || 'Non renseigné'}</td></tr>
-          <tr><td style="padding:8px;font-weight:bold;color:#374151">Email</td><td style="padding:8px;color:#374151">${email}</td></tr>
-          <tr><td style="padding:8px;font-weight:bold;color:#374151">Téléphone</td><td style="padding:8px;color:#374151">${telephone || 'Non renseigné'}</td></tr>
-          <tr><td style="padding:8px;font-weight:bold;color:#374151">Rôle</td><td style="padding:8px;color:#374151"><strong>${role || 'membre'}</strong></td></tr>
-        </table>
-        <p style="margin-top:24px;padding-top:16px;border-top:1px solid #e5e7eb;color:#9ca3af;font-size:12px">
-          Inscription depuis le site proquelec.sn
-        </p>
-      </div>
-    </div>
-  `;
-  return sendEmail({
-    subject: `[PROQUELEC] Nouvel utilisateur inscrit : ${email}`,
-    html,
-    text: `Nouvel utilisateur: ${nom}\nEmail: ${email}\nTéléphone: ${telephone}\nRôle: ${role}`,
-  });
-}
-
 function welcomeTemplate(name) {
   const subject = `Bienvenue sur PROQUELEC, ${name}`;
-  const html = emailLayout(`Bienvenue ${name}`, `<p>Merci de vous être inscrit sur PROQUELEC. Nous sommes ravis de vous compter parmi nos membres engagés pour la sécurité électrique.</p>`);
+  const html = emailLayout(
+    `Bienvenue ${name}`,
+    `<p>Merci de vous être inscrit sur PROQUELEC. Nous sommes ravis de vous compter parmi nos membres engagés pour la sécurité électrique.</p>`,
+  );
   const text = `Bienvenue ${name} !\nMerci de vous être inscrit sur PROQUELEC.`;
   return { subject, html, text };
 }
 
 function formationConfirmationTemplate(formationName, name) {
+  const safeName = escapeHtml(name);
+  const safeFormationName = escapeHtml(formationName);
   const subject = `Confirmation d'inscription à ${formationName}`;
-  const html = emailLayout(`Confirmation de formation`, `<p>Bonjour ${name},</p><p>Votre inscription à la formation <strong>${formationName}</strong> a bien été prise en compte.</p>`);
+  const html = emailLayout(
+    `Confirmation de formation`,
+    `<p>Bonjour ${safeName},</p><p>Votre inscription à la formation <strong>${safeFormationName}</strong> a bien été prise en compte.</p>`,
+  );
   const text = `Bonjour ${name},\nVotre inscription à la formation ${formationName} a bien été prise en compte.`;
   return { subject, html, text };
 }
 
 function certificationNotificationTemplate(certificationName, name) {
+  const safeName = escapeHtml(name);
+  const safeCertificationName = escapeHtml(certificationName);
   const subject = `Notification de certification : ${certificationName}`;
-  const html = emailLayout(`Certification enregistrée`, `<p>Bonjour ${name},</p><p>Votre certification <strong>${certificationName}</strong> a été enregistrée avec succès.</p>`);
+  const html = emailLayout(
+    `Certification enregistrée`,
+    `<p>Bonjour ${safeName},</p><p>Votre certification <strong>${safeCertificationName}</strong> a été enregistrée avec succès.</p>`,
+  );
   const text = `Bonjour ${name},\nVotre certification ${certificationName} a été enregistrée avec succès.`;
   return { subject, html, text };
 }
@@ -205,5 +275,6 @@ module.exports = {
   sendContactNotification,
   sendNewUserNotification,
   sendGroupNotification,
+  getEmailConfig: getPublicEmailConfig,
   emailTemplates,
 };

@@ -1,4 +1,5 @@
 const z = require('zod');
+const { CONTACT_FIELD_LIMITS } = require('../../contact-request-utils');
 
 const eventSchema = z.object({
     title: z.string().min(1, 'Titre requis'),
@@ -72,11 +73,11 @@ const newsletterSchema = z.object({
 });
 
 const contactRequestSchema = z.object({
-    nom: z.string().min(1, 'Nom requis'),
-    email: z.string().email('Email invalide'),
-    telephone: z.string().optional(),
-    sujet: z.string().optional(),
-    message: z.string().min(1, 'Message requis'),
+    nom: z.string().trim().min(1, 'Nom requis').max(CONTACT_FIELD_LIMITS.nom),
+    email: z.string().trim().toLowerCase().email('Email invalide').max(CONTACT_FIELD_LIMITS.email),
+    telephone: z.string().trim().max(CONTACT_FIELD_LIMITS.telephone).optional(),
+    sujet: z.string().trim().max(CONTACT_FIELD_LIMITS.sujet).optional(),
+    message: z.string().trim().min(1, 'Message requis').max(CONTACT_FIELD_LIMITS.message),
 });
 
 const trainingRegistrationSchema = z.object({
