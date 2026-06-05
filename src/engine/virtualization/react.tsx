@@ -1,4 +1,5 @@
 import { useRef, useState, useCallback, useMemo, useEffect } from 'react';
+import type { CSSProperties, ReactElement, ReactNode, RefObject } from 'react';
 import type { ComputedNode } from '@/engine/layout/types';
 import type { ViewportState, RenderItem, VirtualizationConfig, ViewportRect } from './types';
 import { DEFAULT_VIRTUALIZATION_CONFIG } from './types';
@@ -17,7 +18,7 @@ export function useViewportState(initialZoom: number = 1): {
   scrollTo: (x: number, y: number, smooth?: boolean) => void;
   scrollBy: (dx: number, dy: number, smooth?: boolean) => void;
   resetView: () => void;
-  containerRef: React.RefObject<HTMLDivElement | null>;
+  containerRef: RefObject<HTMLDivElement | null>;
 } {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [viewport, setViewport] = useState<ViewportState>({
@@ -90,7 +91,7 @@ export function useVirtualizedRender(
   viewport: ViewportState,
   config: VirtualizationConfig = DEFAULT_VIRTUALIZATION_CONFIG,
 ) {
-  const memoized = useMemo(() => createMemoizedVirtualization(config), [config.overscan, config.useSpatialIndex]);
+  const memoized = useMemo(() => createMemoizedVirtualization(config), [config]);
 
   return useMemo(() => {
     if (!computedNodes.length) {
@@ -131,11 +132,11 @@ export interface VirtualizedCanvasProps {
   computedNodes: ComputedNode[];
   config?: Partial<VirtualizationConfig>;
   className?: string;
-  style?: React.CSSProperties;
-  renderItem: (item: RenderItem) => React.ReactNode;
-  renderOverlay?: (viewport: ViewportState) => React.ReactNode;
+  style?: CSSProperties;
+  renderItem: (item: RenderItem) => ReactNode;
+  renderOverlay?: (viewport: ViewportState) => ReactNode;
   onViewportChange?: (viewport: ViewportState) => void;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 /**
@@ -153,10 +154,18 @@ export function VirtualizedCanvas({
   renderOverlay,
   onViewportChange,
   children,
-}: VirtualizedCanvasProps): React.ReactElement {
-  const config: VirtualizationConfig = { ...DEFAULT_VIRTUALIZATION_CONFIG, ...configPartial };
+}: VirtualizedCanvasProps): ReactElement {
+  const config: VirtualizationConfig = useMemo(
+    () => ({ ...DEFAULT_VIRTUALIZATION_CONFIG, ...configPartial }),
+    [configPartial],
+  );
   const { viewport, setScroll, setSize, containerRef } = useViewportState(1);
+  const viewportRef = useRef(viewport);
   const result = useVirtualizedRender(computedNodes, viewport, config);
+
+  useEffect(() => {
+    viewportRef.current = viewport;
+  }, [viewport]);
 
   // Sync container size
   useEffect(() => {
@@ -165,18 +174,18 @@ export function VirtualizedCanvas({
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
         setSize(width, height);
-        onViewportChange?.(viewport);
+        onViewportChange?.({ ...viewportRef.current, width, height });
       }
     });
     observer.observe(containerRef.current);
     return () => observer.disconnect();
-  }, [setSize, onViewportChange]);
+  }, [containerRef, setSize, onViewportChange]);
 
   // Sync scroll
   const handleScroll = useCallback(() => {
     if (!containerRef.current) return;
     setScroll(containerRef.current.scrollLeft, containerRef.current.scrollTop);
-  }, [setScroll]);
+  }, [containerRef, setScroll]);
 
   const canvasBounds = result.canvasBounds;
 
@@ -217,7 +226,7 @@ export function VirtualizedCanvas({
               width: item.bounds.width,
               height: item.bounds.height,
               zIndex: item.zIndex,
-              overflow: item.overflow as React.CSSProperties['overflow'],
+              overflow: item.overflow as CSSProperties['overflow'],
             }}
           >
             {renderItem(item)}

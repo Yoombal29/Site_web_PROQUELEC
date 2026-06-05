@@ -19,7 +19,7 @@ export type LayoutTemplate = {
   category: string;
   premium: boolean;
   tags: string[];
-  defaultDesign: PageDesignOptions;
+  defaultDesign: Partial<PageDesignOptions>;
   sections: LayoutSection[];
 };
 
