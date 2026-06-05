@@ -3,11 +3,23 @@ import { createPortal } from 'react-dom';
 import { Frame, Element, useEditor } from '@craftjs/core';
 import type { NodeTree } from '@craftjs/core';
 import {
-  ContainerBlock, HeroBlock, TextBlock, StatsBlock, SpacerBlock
+  ContainerBlock,
+  HeroBlock,
+  TextBlock,
+  StatsBlock,
+  SpacerBlock,
 } from '../blocks/ProquelecBlocks';
 import {
-  Trash2, Copy, ChevronUp, ChevronDown, Eye, Clipboard,
-  Paintbrush, RefreshCw, Layers, Save
+  Trash2,
+  Copy,
+  ChevronUp,
+  ChevronDown,
+  Eye,
+  Clipboard,
+  Paintbrush,
+  RefreshCw,
+  Layers,
+  Save,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { BuilderErrorBoundary } from './BuilderErrorBoundary';
@@ -87,13 +99,13 @@ const parseBuilderClipboard = (raw: string | null): NodeTree | null => {
 const FloatingActionBar = () => {
   const { actions, selected, isEnabled } = useEditor((state, query) => {
     const selectedSet = state.events.selected;
-    const id = selectedSet ? Array.from(selectedSet)[0] as string : null;
+    const id = selectedSet ? (Array.from(selectedSet)[0] as string) : null;
 
     if (!id || !state.nodes[id]) return { selected: null, isEnabled: state.options.enabled };
 
     const node = state.nodes[id];
     const parentId = node.data.parent;
-    const siblings = parentId && state.nodes[parentId]?.data?.nodes || [];
+    const siblings = (parentId && state.nodes[parentId]?.data?.nodes) || [];
     const myIndex = siblings.indexOf(id);
 
     return {
@@ -143,9 +155,10 @@ const FloatingActionBar = () => {
 const Breadcrumb = () => {
   const { ancestors, selectedName, isEnabled } = useEditor((state, query) => {
     const selectedSet = state.events.selected;
-    const id = selectedSet ? Array.from(selectedSet)[0] as string : null;
+    const id = selectedSet ? (Array.from(selectedSet)[0] as string) : null;
 
-    if (!id || !state.nodes[id]) return { ancestors: [], selectedName: null, isEnabled: state.options.enabled };
+    if (!id || !state.nodes[id])
+      return { ancestors: [], selectedName: null, isEnabled: state.options.enabled };
 
     const ancestors: { id: string; name: string }[] = [];
     let currentId: string | null = state.nodes[id]?.data?.parent || null;
@@ -167,7 +180,7 @@ const Breadcrumb = () => {
   return (
     <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1 bg-[#12121f]/95 backdrop-blur border border-[#252538] rounded-full px-3 py-1.5 text-[11px] shadow-xl">
       <span className="text-slate-500">Page</span>
-      {ancestors.map(a => (
+      {ancestors.map((a) => (
         <React.Fragment key={a.id}>
           <span className="text-slate-600">›</span>
           <span className="text-slate-400">{a.name}</span>
@@ -207,13 +220,13 @@ const EmptyCanvasHint = () => {
 };
 
 export const CanvasOverlays = () => {
-  const hoveredNodeId = useBuilderUiStore(s => s.hoveredNodeId);
+  const hoveredNodeId = useBuilderUiStore((s) => s.hoveredNodeId);
   const { selectedNodeId, query, isEnabled } = useEditor((state) => {
     const selectedSet = state.events.selected;
-    const id = selectedSet ? Array.from(selectedSet)[0] as string : null;
+    const id = selectedSet ? (Array.from(selectedSet)[0] as string) : null;
     return {
       selectedNodeId: id,
-      isEnabled: state.options.enabled
+      isEnabled: state.options.enabled,
     };
   });
 
@@ -256,13 +269,13 @@ export const CanvasOverlays = () => {
           top: style.paddingTop,
           right: style.paddingRight,
           bottom: style.paddingBottom,
-          left: style.paddingLeft
+          left: style.paddingLeft,
         });
         setMarginStyles({
           top: style.marginTop,
           right: style.marginRight,
           bottom: style.marginBottom,
-          left: style.marginLeft
+          left: style.marginLeft,
         });
       }
     }
@@ -322,37 +335,53 @@ export const CanvasOverlays = () => {
       <div className="pointer-events-none fixed inset-0 z-[999999]">
         {/* Hover Outline */}
         {hoverRect && hoveredNodeId !== selectedNodeId && (
-          <div className={`absolute border border-sky-400 bg-sky-400/5 transition-all duration-75 ${HOVER_OUTLINE_CLASS}`}>
+          <div
+            className={`absolute border border-sky-400 bg-sky-400/5 transition-all duration-75 ${HOVER_OUTLINE_CLASS}`}
+          >
             <div className="absolute -top-5 left-0 bg-sky-400 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow flex items-center gap-1">
               <span>{hoverName}</span>
-              <span className="opacity-75">{Math.round(hoverRect.width)} x {Math.round(hoverRect.height)}</span>
+              <span className="opacity-75">
+                {Math.round(hoverRect.width)} x {Math.round(hoverRect.height)}
+              </span>
             </div>
           </div>
         )}
 
         {/* Selected Outline & Spacing Guides */}
         {selectedRect && (
-          <div className={`absolute border-2 border-indigo-500 transition-all duration-75 ${SELECTED_OUTLINE_CLASS}`}>
+          <div
+            className={`absolute border-2 border-indigo-500 transition-all duration-75 ${SELECTED_OUTLINE_CLASS}`}
+          >
             <div className="absolute -top-5.5 left-0 bg-indigo-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow flex items-center gap-1.5">
               <span>{selectedName}</span>
-              <span className="opacity-75">{Math.round(selectedRect.width)} x {Math.round(selectedRect.height)}</span>
+              <span className="opacity-75">
+                {Math.round(selectedRect.width)} x {Math.round(selectedRect.height)}
+              </span>
             </div>
 
             {/* Padding Visualizer (Inside) */}
             {paddingStyles && (
               <div className="absolute inset-0 border border-emerald-400/30 bg-emerald-400/5 pointer-events-none">
                 {/* Padding Indicators */}
-                <div className={`absolute top-0 left-0 right-0 bg-emerald-400/10 ${PADDING_TOP_CLASS}`} />
-                <div className={`absolute bottom-0 left-0 right-0 bg-emerald-400/10 ${PADDING_BOTTOM_CLASS}`} />
-                <div className={`absolute top-0 bottom-0 left-0 bg-emerald-400/10 ${PADDING_LEFT_CLASS}`} />
-                <div className={`absolute top-0 bottom-0 right-0 bg-emerald-400/10 ${PADDING_RIGHT_CLASS}`} />
+                <div
+                  className={`absolute top-0 left-0 right-0 bg-emerald-400/10 ${PADDING_TOP_CLASS}`}
+                />
+                <div
+                  className={`absolute bottom-0 left-0 right-0 bg-emerald-400/10 ${PADDING_BOTTOM_CLASS}`}
+                />
+                <div
+                  className={`absolute top-0 bottom-0 left-0 bg-emerald-400/10 ${PADDING_LEFT_CLASS}`}
+                />
+                <div
+                  className={`absolute top-0 bottom-0 right-0 bg-emerald-400/10 ${PADDING_RIGHT_CLASS}`}
+                />
               </div>
             )}
           </div>
         )}
       </div>
     </>,
-    document.body
+    document.body,
   );
 };
 
@@ -369,8 +398,8 @@ export const GodCanvas = () => {
     nodeName: string;
   } | null>(null);
 
-  const { isEnabled, actions, query } = useEditor(state => ({
-    isEnabled: state.options.enabled
+  const { isEnabled, actions, query } = useEditor((state) => ({
+    isEnabled: state.options.enabled,
   }));
 
   const { initialStructure, markCanvasHydrated } = useGodEditor();
@@ -439,7 +468,7 @@ export const GodCanvas = () => {
   useEffect(() => {
     if (!isEnabled) return;
     const allNodeIds = Object.keys(query.getSerializedNodes());
-    allNodeIds.forEach(id => {
+    allNodeIds.forEach((id) => {
       try {
         const dom = query.node(id).get().dom;
         if (dom) {
@@ -489,7 +518,8 @@ export const GodCanvas = () => {
     // Select the clicked node
     actions.selectNode(clickedNodeId);
 
-    const nodeName = query.node(clickedNodeId).get().data.displayName || query.node(clickedNodeId).get().data.name;
+    const nodeName =
+      query.node(clickedNodeId).get().data.displayName || query.node(clickedNodeId).get().data.name;
 
     setContextMenu({
       x: e.clientX,
@@ -499,19 +529,22 @@ export const GodCanvas = () => {
     });
   };
 
-  const isNodeLocked = useCallback((id: string): boolean => {
-    let currentId: string | null = id;
-    while (currentId) {
-      if (useBuilderUiStore.getState().lockedNodes[currentId]) return true;
-      try {
-        const node = query.node(currentId).get();
-        currentId = node?.data?.parent || null;
-      } catch (e) {
-        break;
+  const isNodeLocked = useCallback(
+    (id: string): boolean => {
+      let currentId: string | null = id;
+      while (currentId) {
+        if (useBuilderUiStore.getState().lockedNodes[currentId]) return true;
+        try {
+          const node = query.node(currentId).get();
+          currentId = node?.data?.parent || null;
+        } catch (e) {
+          break;
+        }
       }
-    }
-    return false;
-  }, [query]);
+      return false;
+    },
+    [query],
+  );
 
   const handleCopy = async (id: string) => {
     try {
@@ -521,8 +554,12 @@ export const GodCanvas = () => {
       // Also copy to system clipboard for external use
       try {
         await navigator.clipboard.writeText(json);
-      } catch (_) { /* Permission denied — ignore */ }
-      toast.success(`Bloc "${query.node(id).get().data.displayName || query.node(id).get().data.name}" copié`);
+      } catch (_) {
+        /* Permission denied — ignore */
+      }
+      toast.success(
+        `Bloc "${query.node(id).get().data.displayName || query.node(id).get().data.name}" copié`,
+      );
     } catch (err) {
       toast.error('Erreur lors de la copie du bloc');
     }
@@ -550,7 +587,9 @@ export const GodCanvas = () => {
         if (tree && clipboard) {
           localStorage.setItem(BUILDER_CLIPBOARD_KEY, clipboard);
         }
-      } catch (_) { /* Permission denied or empty */ }
+      } catch (_) {
+        /* Permission denied or empty */
+      }
     }
 
     if (!clipboard) {
@@ -571,7 +610,11 @@ export const GodCanvas = () => {
       let resolvedIndex = undefined;
 
       // If pasting on a leaf block, paste as sibling
-      if (parentId !== 'ROOT' && targetNode.data.name !== 'ContainerBlock' && targetNode.data.name !== 'ColumnsBlock') {
+      if (
+        parentId !== 'ROOT' &&
+        targetNode.data.name !== 'ContainerBlock' &&
+        targetNode.data.name !== 'ColumnsBlock'
+      ) {
         resolvedParentId = targetNode.data.parent || 'ROOT';
         if (isNodeLocked(resolvedParentId)) {
           toast.error('Conteneur parent verrouillé : action impossible');
@@ -608,14 +651,27 @@ export const GodCanvas = () => {
     try {
       const sourceProps = tree.nodes[tree.rootNodeId].data.props ?? {};
       const styleKeys = [
-        'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
-        'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
-        'borderWidth', 'borderColor', 'borderStyle', 'borderRadius',
-        'opacity', 'boxShadow', 'zIndex', 'customInlineCss', 'extraClasses'
+        'marginTop',
+        'marginRight',
+        'marginBottom',
+        'marginLeft',
+        'paddingTop',
+        'paddingRight',
+        'paddingBottom',
+        'paddingLeft',
+        'borderWidth',
+        'borderColor',
+        'borderStyle',
+        'borderRadius',
+        'opacity',
+        'boxShadow',
+        'zIndex',
+        'customInlineCss',
+        'extraClasses',
       ];
 
       actions.setProp(targetId, (props: Record<string, unknown>) => {
-        styleKeys.forEach(key => {
+        styleKeys.forEach((key) => {
           if (sourceProps[key] !== undefined) {
             props[key] = JSON.parse(JSON.stringify(sourceProps[key]));
           }
@@ -627,33 +683,36 @@ export const GodCanvas = () => {
     }
   };
 
-  const handleDuplicate = useCallback((id: string) => {
-    if (id === 'ROOT') return;
-    if (isNodeLocked(id)) {
-      toast.error('Bloc verrouillé : action impossible');
-      return;
-    }
-    try {
-      const node = query.node(id).get();
-      const parentId = node.data.parent || 'ROOT';
-      if (isNodeLocked(parentId)) {
-        toast.error('Conteneur parent verrouillé : action impossible');
+  const handleDuplicate = useCallback(
+    (id: string) => {
+      if (id === 'ROOT') return;
+      if (isNodeLocked(id)) {
+        toast.error('Bloc verrouillé : action impossible');
         return;
       }
-      const siblings = query.node(parentId).childNodes();
-      const index = siblings.indexOf(id) + 1;
+      try {
+        const node = query.node(id).get();
+        const parentId = node.data.parent || 'ROOT';
+        if (isNodeLocked(parentId)) {
+          toast.error('Conteneur parent verrouillé : action impossible');
+          return;
+        }
+        const siblings = query.node(parentId).childNodes();
+        const index = siblings.indexOf(id) + 1;
 
-      const tree = query.node(id).toNodeTree();
-      const newTree = cloneNodeTreeWithNewIds(tree, 'dup');
-      actions.addNodeTree(newTree, parentId, index);
-      actions.selectNode(newTree.rootNodeId);
+        const tree = query.node(id).toNodeTree();
+        const newTree = cloneNodeTreeWithNewIds(tree, 'dup');
+        actions.addNodeTree(newTree, parentId, index);
+        actions.selectNode(newTree.rootNodeId);
 
-      toast.success('Bloc dupliqué avec succès');
-    } catch (err) {
-      console.error('Duplicate error:', err);
-      toast.error('Erreur lors de la duplication');
-    }
-  }, [actions, isNodeLocked, query]);
+        toast.success('Bloc dupliqué avec succès');
+      } catch (err) {
+        console.error('Duplicate error:', err);
+        toast.error('Erreur lors de la duplication');
+      }
+    },
+    [actions, isNodeLocked, query],
+  );
 
   // Duplicate custom event listener
   useEffect(() => {
@@ -672,14 +731,27 @@ export const GodCanvas = () => {
     }
     try {
       const styleKeys = [
-        'marginTop', 'marginRight', 'marginBottom', 'marginLeft',
-        'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
-        'borderWidth', 'borderColor', 'borderStyle', 'borderRadius',
-        'opacity', 'boxShadow', 'zIndex', 'customInlineCss', 'extraClasses'
+        'marginTop',
+        'marginRight',
+        'marginBottom',
+        'marginLeft',
+        'paddingTop',
+        'paddingRight',
+        'paddingBottom',
+        'paddingLeft',
+        'borderWidth',
+        'borderColor',
+        'borderStyle',
+        'borderRadius',
+        'opacity',
+        'boxShadow',
+        'zIndex',
+        'customInlineCss',
+        'extraClasses',
       ];
 
       actions.setProp(id, (props: Record<string, unknown>) => {
-        styleKeys.forEach(key => {
+        styleKeys.forEach((key) => {
           delete props[key];
         });
       });
@@ -705,7 +777,7 @@ export const GodCanvas = () => {
           props[key] = JSON.parse(JSON.stringify(value));
         });
         // Supprime les props qui ne sont pas dans les valeurs par défaut
-        Object.keys(props).forEach(key => {
+        Object.keys(props).forEach((key) => {
           if (!(key in defaultProps)) {
             delete props[key];
           }
@@ -760,7 +832,7 @@ export const GodCanvas = () => {
 
   const handleSaveAsTemplate = async (id: string) => {
     try {
-      const name = window.prompt("Nom du modèle :");
+      const name = window.prompt('Nom du modèle :');
       if (!name) return;
 
       const tree = query.node(id).toNodeTree();
@@ -770,15 +842,15 @@ export const GodCanvas = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token ? `Bearer ${token}` : ''
+          Authorization: token ? `Bearer ${token}` : '',
         },
         body: JSON.stringify({
           name,
           category: 'Mes Modèles',
           default_structure: JSON.stringify(tree),
           thumbnail_url: null,
-          is_global: false
-        })
+          is_global: false,
+        }),
       });
 
       if (!response.ok) {
@@ -790,13 +862,13 @@ export const GodCanvas = () => {
       window.dispatchEvent(new CustomEvent('god-templates-updated'));
     } catch (err) {
       console.error(err);
-      toast.error("Erreur lors de la sauvegarde du modèle");
+      toast.error('Erreur lors de la sauvegarde du modèle');
     }
   };
 
   const handleSaveAsGlobal = (id: string) => {
     try {
-      const name = window.prompt("Nom du bloc global :");
+      const name = window.prompt('Nom du bloc global :');
       if (!name) return;
 
       const tree = query.node(id).toNodeTree();
@@ -806,7 +878,7 @@ export const GodCanvas = () => {
       window.dispatchEvent(new CustomEvent('god-global-blocks-updated'));
     } catch (err) {
       console.error(err);
-      toast.error("Erreur lors de la sauvegarde du bloc global");
+      toast.error('Erreur lors de la sauvegarde du bloc global');
     }
   };
 
@@ -826,21 +898,30 @@ export const GodCanvas = () => {
           {/* Zoom controls */}
           <div className="flex items-center gap-1 bg-[#151521] border border-[#252538] rounded-lg px-2 py-1">
             <button
-              onClick={() => setZoom(z => Math.max(50, z - 25))}
+              onClick={() => setZoom((z) => Math.max(50, z - 25))}
               className="text-slate-400 hover:text-white text-xs w-4 text-center transition-colors"
+              aria-label="Réduire le zoom du canvas"
               title="Zoom out"
-            >−</button>
+            >
+              −
+            </button>
             <span className="text-[11px] text-slate-400 font-mono w-10 text-center">{zoom}%</span>
             <button
-              onClick={() => setZoom(z => Math.min(150, z + 25))}
+              onClick={() => setZoom((z) => Math.min(150, z + 25))}
               className="text-slate-400 hover:text-white text-xs w-4 text-center transition-colors"
+              aria-label="Augmenter le zoom du canvas"
               title="Zoom in"
-            >+</button>
+            >
+              +
+            </button>
             <button
               onClick={() => setZoom(100)}
               className="text-slate-500 hover:text-white text-[10px] ml-1 transition-colors"
+              aria-label="Réinitialiser le zoom du canvas"
               title="Reset zoom"
-            >↺</button>
+            >
+              ↺
+            </button>
           </div>
         </div>
       </div>
@@ -852,10 +933,7 @@ export const GodCanvas = () => {
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setHoveredNodeId(null)}
       >
-        <div
-          data-viewport={device}
-          className="canvas-viewport-wrapper"
-        >
+        <div data-viewport={device} className="canvas-viewport-wrapper">
           <div
             ref={canvasRef}
             data-builder-canvas
@@ -867,18 +945,34 @@ export const GodCanvas = () => {
                 data={initialStructure || undefined}
               >
                 {!initialStructure && (
-                  <Element is={ContainerBlock} canvas padding={0} backgroundColor="#ffffff" maxWidth="100%">
+                  <Element
+                    is={ContainerBlock}
+                    canvas
+                    padding={0}
+                    backgroundColor="#ffffff"
+                    maxWidth="100%"
+                  >
                     <Element is={HeroBlock} canvas />
-                    <Element is={ContainerBlock} canvas padding={60} paddingY={60} backgroundColor="#f8fafc">
+                    <Element
+                      is={ContainerBlock}
+                      canvas
+                      padding={60}
+                      paddingY={60}
+                      backgroundColor="#f8fafc"
+                    >
                       <TextBlock
                         text="🚀 GOD MODE — ÉDITEUR CENTRALISÉ"
-                        fontSize={28} textAlign="center"
-                        color="#0f172a" fontWeight="900"
+                        fontSize={28}
+                        textAlign="center"
+                        color="#0f172a"
+                        fontWeight="900"
                       />
                       <SpacerBlock height={16} />
                       <TextBlock
                         text="Glissez des blocs depuis la barre de gauche. Cliquez pour éditer leurs propriétés dans le panneau de droite."
-                        fontSize={16} textAlign="center" color="#64748b"
+                        fontSize={16}
+                        textAlign="center"
+                        color="#64748b"
                       />
                     </Element>
                     <Element is={StatsBlock} canvas />
@@ -906,119 +1000,149 @@ export const GodCanvas = () => {
           <style>{`.${CONTEXT_MENU_CLASS}{top:${contextMenu.y}px;left:${contextMenu.x}px;}`}</style>
           <div
             className={`fixed z-[99999] bg-[#0c0c14]/90 backdrop-blur-md border border-[#252538] rounded-xl p-1.5 shadow-2xl w-52 text-left animate-in fade-in zoom-in-95 duration-100 ${CONTEXT_MENU_CLASS}`}
-            onClick={e => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
           >
-          {/* Header */}
-          <div className="px-2.5 py-1.5 text-[9px] font-bold text-slate-500 uppercase tracking-wider border-b border-[#252538] mb-1 flex items-center justify-between gap-1.5">
-            <span className="flex items-center gap-1.5 truncate">
-              <Layers size={10} className="text-indigo-400 shrink-0" />
-              {contextMenu.nodeName}
-            </span>
-            {isNodeLocked(contextMenu.nodeId) && (
-              <span className="text-red-400 text-[8px] font-bold bg-red-500/10 px-1 py-0.5 rounded border border-red-500/25 uppercase shrink-0">
-                🔒 Verrouillé
+            {/* Header */}
+            <div className="px-2.5 py-1.5 text-[9px] font-bold text-slate-500 uppercase tracking-wider border-b border-[#252538] mb-1 flex items-center justify-between gap-1.5">
+              <span className="flex items-center gap-1.5 truncate">
+                <Layers size={10} className="text-indigo-400 shrink-0" />
+                {contextMenu.nodeName}
               </span>
-            )}
+              {isNodeLocked(contextMenu.nodeId) && (
+                <span className="text-red-400 text-[8px] font-bold bg-red-500/10 px-1 py-0.5 rounded border border-red-500/25 uppercase shrink-0">
+                  🔒 Verrouillé
+                </span>
+              )}
+            </div>
+
+            {/* Action List */}
+            <div className="space-y-0.5">
+              <button
+                onClick={() => {
+                  handleCopy(contextMenu.nodeId);
+                  setContextMenu(null);
+                }}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
+              >
+                <Copy size={13} className="text-indigo-400 shrink-0" />
+                Copier
+              </button>
+              <button
+                onClick={() => {
+                  handlePaste(contextMenu.nodeId);
+                  setContextMenu(null);
+                }}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
+              >
+                <Clipboard size={13} className="text-emerald-400 shrink-0" />
+                Coller
+              </button>
+              <button
+                onClick={() => {
+                  handlePasteStyle(contextMenu.nodeId);
+                  setContextMenu(null);
+                }}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
+              >
+                <Paintbrush size={13} className="text-amber-400 shrink-0" />
+                Coller le style uniquement
+              </button>
+
+              {contextMenu.nodeId !== 'ROOT' && (
+                <>
+                  <div className="h-px bg-[#252538] my-1" />
+                  <button
+                    onClick={() => {
+                      handleSaveAsTemplate(contextMenu.nodeId);
+                      setContextMenu(null);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
+                  >
+                    <Layers size={13} className="text-amber-400 shrink-0" />
+                    Enregistrer comme modèle
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleSaveAsGlobal(contextMenu.nodeId);
+                      setContextMenu(null);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
+                  >
+                    <Save size={13} className="text-emerald-400 shrink-0" />
+                    Enregistrer comme Global
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleDuplicate(contextMenu.nodeId);
+                      setContextMenu(null);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
+                  >
+                    <Copy size={13} className="text-sky-400 shrink-0" />
+                    Dupliquer
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleMoveUp(contextMenu.nodeId);
+                      setContextMenu(null);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
+                  >
+                    <ChevronUp size={13} className="text-slate-400 shrink-0" />
+                    Déplacer vers le haut
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleMoveDown(contextMenu.nodeId);
+                      setContextMenu(null);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
+                  >
+                    <ChevronDown size={13} className="text-slate-400 shrink-0" />
+                    Déplacer vers le bas
+                  </button>
+
+                  <div className="h-px bg-[#252538] my-1" />
+                  <button
+                    onClick={() => {
+                      handleResetStyle(contextMenu.nodeId);
+                      setContextMenu(null);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
+                  >
+                    <RefreshCw size={13} className="text-yellow-500 shrink-0" />
+                    Réinitialiser le style
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleResetBlock(contextMenu.nodeId);
+                      setContextMenu(null);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
+                  >
+                    <RefreshCw size={13} className="text-red-400 shrink-0" />
+                    Réinitialiser le bloc
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (isNodeLocked(contextMenu.nodeId)) {
+                        toast.error('Bloc verrouillé : action impossible');
+                        return;
+                      }
+                      actions.delete(contextMenu.nodeId);
+                      setContextMenu(null);
+                      toast.success('Bloc supprimé');
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-500/20 text-xs transition-colors font-semibold"
+                  >
+                    <Trash2 size={13} className="text-rose-500 shrink-0" />
+                    Supprimer
+                  </button>
+                </>
+              )}
+            </div>
           </div>
-
-          {/* Action List */}
-          <div className="space-y-0.5">
-            <button
-              onClick={() => { handleCopy(contextMenu.nodeId); setContextMenu(null); }}
-              className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
-            >
-              <Copy size={13} className="text-indigo-400 shrink-0" />
-              Copier
-            </button>
-            <button
-              onClick={() => { handlePaste(contextMenu.nodeId); setContextMenu(null); }}
-              className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
-            >
-              <Clipboard size={13} className="text-emerald-400 shrink-0" />
-              Coller
-            </button>
-            <button
-              onClick={() => { handlePasteStyle(contextMenu.nodeId); setContextMenu(null); }}
-              className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
-            >
-              <Paintbrush size={13} className="text-amber-400 shrink-0" />
-              Coller le style uniquement
-            </button>
-
-            {contextMenu.nodeId !== 'ROOT' && (
-              <>
-                <div className="h-px bg-[#252538] my-1" />
-                <button
-                  onClick={() => { handleSaveAsTemplate(contextMenu.nodeId); setContextMenu(null); }}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
-                >
-                  <Layers size={13} className="text-amber-400 shrink-0" />
-                  Enregistrer comme modèle
-                </button>
-                <button
-                  onClick={() => { handleSaveAsGlobal(contextMenu.nodeId); setContextMenu(null); }}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
-                >
-                  <Save size={13} className="text-emerald-400 shrink-0" />
-                  Enregistrer comme Global
-                </button>
-                <button
-                  onClick={() => { handleDuplicate(contextMenu.nodeId); setContextMenu(null); }}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
-                >
-                  <Copy size={13} className="text-sky-400 shrink-0" />
-                  Dupliquer
-                </button>
-                <button
-                  onClick={() => { handleMoveUp(contextMenu.nodeId); setContextMenu(null); }}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
-                >
-                  <ChevronUp size={13} className="text-slate-400 shrink-0" />
-                  Déplacer vers le haut
-                </button>
-                <button
-                  onClick={() => { handleMoveDown(contextMenu.nodeId); setContextMenu(null); }}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
-                >
-                  <ChevronDown size={13} className="text-slate-400 shrink-0" />
-                  Déplacer vers le bas
-                </button>
-
-                <div className="h-px bg-[#252538] my-1" />
-                <button
-                  onClick={() => { handleResetStyle(contextMenu.nodeId); setContextMenu(null); }}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
-                >
-                  <RefreshCw size={13} className="text-yellow-500 shrink-0" />
-                  Réinitialiser le style
-                </button>
-                <button
-                  onClick={() => { handleResetBlock(contextMenu.nodeId); setContextMenu(null); }}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-[#1f1f35] text-xs transition-colors"
-                >
-                  <RefreshCw size={13} className="text-red-400 shrink-0" />
-                  Réinitialiser le bloc
-                </button>
-                <button
-                  onClick={() => {
-                    if (isNodeLocked(contextMenu.nodeId)) {
-                      toast.error('Bloc verrouillé : action impossible');
-                      return;
-                    }
-                    actions.delete(contextMenu.nodeId);
-                    setContextMenu(null);
-                    toast.success('Bloc supprimé');
-                  }}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-rose-400 hover:text-white hover:bg-rose-500/20 text-xs transition-colors font-semibold"
-                >
-                  <Trash2 size={13} className="text-rose-500 shrink-0" />
-                  Supprimer
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      </>
+        </>
       )}
       {/* Visual Canvas Overlays (Hover Outlines & Spacing Guides) */}
       <CanvasOverlays />

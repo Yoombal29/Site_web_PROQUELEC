@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense, useCallback } from 'react';
+import type { OnMount } from '@monaco-editor/react';
 import { useEditor } from '@craftjs/core';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -40,6 +41,14 @@ import { Button } from '@/components/ui/button';
 
 const LazyMonacoEditor = lazy(() => import('@monaco-editor/react'));
 
+type CraftQueryLike = {
+  serialize: () => unknown;
+};
+
+type CraftNodeType = string | { resolvedName?: string };
+type HtmlBlockProps = Record<string, unknown> & { html?: string };
+type MonacoEditorInstance = Parameters<OnMount>[0];
+
 export const GodToolbar = () => {
   const { actions, query, canUndo, canRedo, isEnabled, htmlNodeId, htmlValue } = useEditor(
     (state, query) => {
@@ -47,7 +56,9 @@ export const GodToolbar = () => {
       let foundHtml = '';
 
       Object.entries(state.nodes).forEach(([id, node]) => {
-        const resolvedName = (node.data.type as any)?.resolvedName || '';
+        const nodeType = node.data.type as CraftNodeType | undefined;
+        const resolvedName =
+          typeof nodeType === 'object' && nodeType !== null ? nodeType.resolvedName || '' : '';
         if (resolvedName === 'HtmlBlock') {
           foundId = id;
           foundHtml = node.data.props.html || '';
@@ -73,7 +84,7 @@ export const GodToolbar = () => {
 
   const [htmlDialogOpen, setHtmlDialogOpen] = useState(false);
   const [globalHtml, setGlobalHtml] = useState(htmlValue);
-  const globalEditorRef = useRef<any>(null);
+  const globalEditorRef = useRef<MonacoEditorInstance | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
 
@@ -95,7 +106,7 @@ export const GodToolbar = () => {
   /**
    * Génère le HTML complet de la page à partir des blocs Craft.js
    */
-  const generateFullPageHtml = (q: any): string => {
+  const generateFullPageHtml = (q: CraftQueryLike): string => {
     try {
       const serialized = q.serialize();
       return `<div class="proquelec-page-content">
@@ -111,7 +122,7 @@ export const GodToolbar = () => {
   const handleSaveHtml = () => {
     // Si un bloc HtmlBlock existe déjà, le mettre à jour
     if (htmlNodeId) {
-      actions.setProp(htmlNodeId, (props: any) => {
+      actions.setProp(htmlNodeId, (props: HtmlBlockProps) => {
         props.html = globalHtml;
       });
       toast.success('Code HTML mis à jour.');
@@ -142,7 +153,7 @@ export const GodToolbar = () => {
     setHtmlDialogOpen(false);
   };
 
-  const handleGlobalEditorDidMount = (editor: any) => {
+  const handleGlobalEditorDidMount: OnMount = (editor) => {
     globalEditorRef.current = editor;
   };
 
@@ -164,6 +175,64 @@ export const GodToolbar = () => {
       toast.success('Code HTML importé localement. Cliquez sur Appliquer pour enregistrer.');
     }
   };
+
+  const handleSave = async () => {
+    const name = window.prompt(
+      'Nommer cette version historique (laisser vide pour publication simple) :',
+    );
+    if (name === null) return;
+    await savePage(name.trim() || undefined);
+  };
+
+  // Quick save (Ctrl+S) without version prompt
+  const handleQuickSave = useCallback(async () => {
+    await savePage(undefined);
+    const slug = pageData?.slug;
+    const pageUrl = slug ? `/${slug}?t=${Date.now()}` : '/';
+    toast.success(
+      <div className="flex items-center gap-3">
+        <span>Page sauvegardée !</span>
+        <a
+          href={pageUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs px-2 py-1 rounded bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 transition font-medium"
+        >
+          Voir la page →
+        </a>
+      </div>,
+      { duration: 5000 },
+    );
+  }, [pageData?.slug, savePage]);
+
+  // Quick upload file
+  const handleQuickUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    const formData = new FormData();
+    for (const f of Array.from(files)) formData.append('file', f);
+    try {
+      const token = localStorage.getItem('token');
+      await fetch('/api/storage/upload', {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body: formData,
+      });
+      toast.success(`${files.length} fichier(s) uploadé(s)`);
+    } catch {
+      toast.error('Erreur upload');
+    } finally {
+      setUploading(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
+  const togglePreview = useCallback(() => {
+    actions.setOptions((options) => {
+      options.enabled = !options.enabled;
+    });
+  }, [actions]);
 
   // Global keyboard shortcuts
   useEffect(() => {
@@ -198,70 +267,12 @@ export const GodToolbar = () => {
         setTimelineOpen(!timelineOpen);
       }
       if (e.key === 'Escape' && !isTyping) {
-        actions.selectNode(undefined as any);
+        actions.selectNode();
       }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [canUndo, canRedo, isEnabled, timelineOpen]);
-
-  const handleSave = async () => {
-    const name = window.prompt(
-      'Nommer cette version historique (laisser vide pour publication simple) :',
-    );
-    if (name === null) return;
-    await savePage(name.trim() || undefined);
-  };
-
-  // Quick save (Ctrl+S) without version prompt
-  const handleQuickSave = async () => {
-    await savePage(undefined);
-    const slug = pageData?.slug;
-    const pageUrl = slug ? `/${slug}?t=${Date.now()}` : '/';
-    toast.success(
-      <div className="flex items-center gap-3">
-        <span>Page sauvegardée !</span>
-        <a
-          href={pageUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs px-2 py-1 rounded bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 transition font-medium"
-        >
-          Voir la page →
-        </a>
-      </div>,
-      { duration: 5000 },
-    );
-  };
-
-  // Quick upload file
-  const handleQuickUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-    setUploading(true);
-    const formData = new FormData();
-    for (const f of Array.from(files)) formData.append('file', f);
-    try {
-      const token = localStorage.getItem('token');
-      await fetch('/api/storage/upload', {
-        method: 'POST',
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-        body: formData,
-      });
-      toast.success(`${files.length} fichier(s) uploadé(s)`);
-    } catch {
-      toast.error('Erreur upload');
-    } finally {
-      setUploading(false);
-      if (e.target) e.target.value = '';
-    }
-  };
-
-  const togglePreview = () => {
-    actions.setOptions((options) => {
-      options.enabled = !options.enabled;
-    });
-  };
+  }, [actions, canRedo, canUndo, handleQuickSave, setTimelineOpen, timelineOpen, togglePreview]);
 
   const handleExport = () => {
     const json = query.serialize();
@@ -323,6 +334,7 @@ export const GodToolbar = () => {
         <button
           onClick={() => navigate('/admin/builder')}
           className="p-2 hover:bg-[#252538] rounded-lg transition-colors text-slate-400 hover:text-white shrink-0"
+          aria-label="Retourner à la liste des pages"
           title="Retour aux pages"
         >
           <ChevronLeft size={18} />
@@ -362,6 +374,7 @@ export const GodToolbar = () => {
                   ? 'bg-[#252538] text-white shadow-inner'
                   : 'text-slate-500 hover:text-slate-300 hover:bg-[#1a1a2a]'
               }`}
+              aria-label={`Passer en vue ${key}`}
               title={label}
             >
               <Icon size={15} />
@@ -377,6 +390,7 @@ export const GodToolbar = () => {
               ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/30'
               : 'bg-[#0d0d1a] text-slate-400 border-[#252538] hover:bg-[#1a1a2a] hover:text-white'
           }`}
+          aria-label={isEnabled ? 'Passer en mode aperçu' : 'Revenir en mode édition'}
           title="Aperçu (Ctrl+P)"
         >
           {isEnabled ? <Eye size={13} /> : <EyeOff size={13} />}
@@ -392,6 +406,7 @@ export const GodToolbar = () => {
             disabled={!canUndo}
             onClick={() => actions.history.undo()}
             className="p-1.5 text-slate-400 hover:text-white rounded disabled:opacity-25 transition-colors"
+            aria-label="Annuler la dernière action"
             title="Annuler (Ctrl+Z)"
           >
             <Undo2 size={14} />
@@ -400,6 +415,7 @@ export const GodToolbar = () => {
             disabled={!canRedo}
             onClick={() => actions.history.redo()}
             className="p-1.5 text-slate-400 hover:text-white rounded disabled:opacity-25 transition-colors"
+            aria-label="Rétablir la dernière action annulée"
             title="Rétablir (Ctrl+Y)"
           >
             <Redo2 size={14} />
@@ -414,6 +430,9 @@ export const GodToolbar = () => {
               ? 'bg-amber-500/20 text-amber-400 border border-amber-500/20'
               : 'text-slate-500 hover:text-slate-300 hover:bg-[#252538] border border-transparent'
           }`}
+          aria-label={
+            timelineOpen ? 'Masquer la timeline des versions' : 'Afficher la timeline des versions'
+          }
           title="Timeline des versions historiques (Ctrl+H)"
         >
           <History size={14} />
@@ -422,6 +441,7 @@ export const GodToolbar = () => {
         {/* Keyboard shortcuts hint */}
         <button
           className="p-2 text-slate-500 hover:text-slate-300 hover:bg-[#252538] rounded-lg transition-colors"
+          aria-label="Afficher les raccourcis clavier du builder"
           title="Raccourcis: Ctrl+S Publier | Ctrl+H Timeline | Ctrl+Z Annuler | Ctrl+P Aperçu | Escape Désélectionner"
         >
           <Keyboard size={14} />
@@ -431,6 +451,7 @@ export const GodToolbar = () => {
         <button
           onClick={handleExport}
           className="p-2 text-slate-500 hover:text-slate-300 hover:bg-[#252538] rounded-lg transition-colors"
+          aria-label="Exporter la structure JSON de la page"
           title="Exporter JSON"
         >
           <Code2 size={14} />
@@ -440,6 +461,7 @@ export const GodToolbar = () => {
         <button
           onClick={() => setTemplateDialogOpen(true)}
           className="p-2 text-slate-500 hover:text-indigo-400 hover:bg-[#252538] rounded-lg transition-colors"
+          aria-label="Ouvrir le gestionnaire de templates"
           title="Gestionnaire de templates"
         >
           <FileJson size={14} className="text-indigo-400" />
@@ -449,6 +471,7 @@ export const GodToolbar = () => {
         <button
           onClick={() => navigate('/admin/builder/config')}
           className="p-2 text-slate-500 hover:text-slate-300 hover:bg-[#252538] rounded-lg transition-colors"
+          aria-label="Ouvrir la configuration du builder"
           title="Configuration Builder"
         >
           <FileJson size={14} className="text-emerald-400" />
@@ -459,6 +482,7 @@ export const GodToolbar = () => {
           <DialogTrigger asChild>
             <button
               className="p-2 text-slate-500 hover:text-indigo-400 hover:bg-[#252538] rounded-lg transition-colors"
+              aria-label="Éditer le HTML global de la page"
               title="Éditer le HTML de la page"
             >
               <Code2 size={14} className="text-indigo-400" />
@@ -582,6 +606,7 @@ export const GodToolbar = () => {
           <div className="relative group">
             <button
               className="px-2 py-2 rounded-lg text-sm font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border border-blue-400/20 transition-all"
+              aria-label="Ouvrir les options de sauvegarde"
               title="Options de sauvegarde"
             >
               ▾

@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { useEditor } from '@craftjs/core';
 import { useBuilderUiStore } from '@/stores/builder-ui.store';
-import { 
-  ChevronDown, ChevronRight, Eye, EyeOff, Lock, Unlock, 
-  Trash2, Copy, Layers, Folder, File 
+import {
+  ChevronDown,
+  ChevronRight,
+  Eye,
+  EyeOff,
+  Lock,
+  Unlock,
+  Trash2,
+  Copy,
+  Layers,
+  Folder,
+  File,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -17,14 +26,14 @@ export const GodLayers = () => {
     };
   });
 
-  const { 
-    lockedNodes, 
-    hiddenNodes, 
-    collapsedLayers, 
-    toggleLockNode, 
-    toggleHideNode, 
+  const {
+    lockedNodes,
+    hiddenNodes,
+    collapsedLayers,
+    toggleLockNode,
+    toggleHideNode,
     toggleCollapseLayer,
-    setHoveredNodeId 
+    setHoveredNodeId,
   } = useBuilderUiStore();
 
   // Helper to recursively check if an ancestor is locked
@@ -74,9 +83,10 @@ export const GodLayers = () => {
     const draggedNode = nodes[draggedId];
     if (!targetNode || !draggedNode) return;
 
-    const isContainer = targetNode.data.isCanvas || 
-                        targetNode.data.displayName === 'Conteneur' || 
-                        targetNode.data.name === 'ContainerBlock';
+    const isContainer =
+      targetNode.data.isCanvas ||
+      targetNode.data.displayName === 'Conteneur' ||
+      targetNode.data.name === 'ContainerBlock';
 
     if (isContainer) {
       // Move inside container
@@ -156,8 +166,8 @@ export const GodLayers = () => {
           onClick={handleSelect}
           style={{ paddingLeft: `${depth * 12 + 8}px` }}
           className={`h-9 flex items-center justify-between border-b border-[#1e1e2f] cursor-pointer group transition-colors ${
-            isSelected 
-              ? 'bg-indigo-500/20 text-white font-semibold border-l-2 border-indigo-500' 
+            isSelected
+              ? 'bg-indigo-500/20 text-white font-semibold border-l-2 border-indigo-500'
               : 'hover:bg-[#1a1a2e]/50'
           } ${isHidden ? 'opacity-40' : ''}`}
         >
@@ -170,6 +180,8 @@ export const GodLayers = () => {
                   toggleCollapseLayer(id);
                 }}
                 className="w-4 h-4 flex items-center justify-center text-slate-500 hover:text-slate-200 transition-colors"
+                aria-label={`${isCollapsed ? 'Déplier' : 'Replier'} le calque ${displayName}`}
+                title={isCollapsed ? 'Déplier le calque' : 'Replier le calque'}
               >
                 {isCollapsed ? <ChevronRight size={12} /> : <ChevronDown size={12} />}
               </button>
@@ -183,9 +195,7 @@ export const GodLayers = () => {
               <File size={12} className={isSelected ? 'text-indigo-400' : 'text-slate-600'} />
             )}
 
-            <span className="text-[11px] truncate font-mono tracking-tight">
-              {displayName}
-            </span>
+            <span className="text-[11px] truncate font-mono tracking-tight">{displayName}</span>
           </div>
 
           {/* Quick Actions (Vis on Hover / selection) */}
@@ -196,6 +206,7 @@ export const GodLayers = () => {
                 e.stopPropagation();
                 toggleHideNode(id);
               }}
+              aria-label={`${isHidden ? 'Afficher' : 'Masquer'} le calque ${displayName}`}
               title={isHidden ? 'Afficher' : 'Masquer'}
               className={`p-1 rounded hover:bg-[#252538] transition-colors ${isHidden ? 'text-amber-400' : 'text-slate-500 hover:text-slate-300'}`}
             >
@@ -208,6 +219,7 @@ export const GodLayers = () => {
                 e.stopPropagation();
                 toggleLockNode(id);
               }}
+              aria-label={`${isLocked ? 'Déverrouiller' : 'Verrouiller'} le calque ${displayName}`}
               title={isLocked ? 'Déverrouiller' : 'Verrouiller'}
               className={`p-1 rounded hover:bg-[#252538] transition-colors ${isLocked ? 'text-red-400' : 'text-slate-500 hover:text-slate-300'}`}
             >
@@ -222,6 +234,7 @@ export const GodLayers = () => {
                     e.stopPropagation();
                     handleDuplicate(id);
                   }}
+                  aria-label={`Dupliquer le calque ${displayName}`}
                   title="Dupliquer"
                   className="p-1 rounded hover:bg-[#252538] text-slate-500 hover:text-indigo-400 transition-colors"
                 >
@@ -234,6 +247,7 @@ export const GodLayers = () => {
                     e.stopPropagation();
                     handleDelete(id);
                   }}
+                  aria-label={`Supprimer le calque ${displayName}`}
                   title="Supprimer"
                   className="p-1 rounded hover:bg-[#252538] text-slate-500 hover:text-rose-400 transition-colors"
                 >

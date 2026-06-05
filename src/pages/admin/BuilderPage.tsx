@@ -37,29 +37,77 @@ import { CRAFT_RESOLVER as RESOLVER } from '@/components/blocks/craftResolver';
 import { GodEditorProvider, useGodEditor } from '@/components/god-builder/GodEditorContext';
 import { DynamicContextProvider } from '@/components/blocks/DynamicDataBlocks';
 
+type BuilderDesignOptions = Record<string, unknown> & {
+  page_type?: string;
+};
+
+type BuilderListPage = {
+  id: string;
+  title?: string;
+  slug?: string;
+  status?: string;
+  immutable?: boolean;
+  content?: string;
+  content_raw?: string;
+  content_blocks?: unknown;
+  structure_json?: unknown;
+  design_options?: BuilderDesignOptions | null;
+  theme_config?: unknown;
+};
+
+type BuilderTemplate = {
+  id: string;
+  name: string;
+  description?: string;
+  category?: string;
+  structure?: unknown;
+  theme_config?: unknown;
+};
+
+type CreatePagePayload = {
+  title: string;
+  slug: string;
+  content_raw: string;
+  is_published: boolean;
+  status: 'draft';
+  workflow_status: 'draft';
+  content_blocks?: unknown;
+  structure_json?: unknown;
+  design_options?: BuilderDesignOptions | null;
+  theme_config?: unknown;
+};
+
+const getErrorMessage = (error: unknown, fallback: string) =>
+  error instanceof Error ? error.message : fallback;
+
+const getPageType = (page: Pick<BuilderListPage, 'design_options'>) =>
+  page.design_options && typeof page.design_options === 'object'
+    ? page.design_options.page_type
+    : undefined;
+
 // ─────────────────────────────────────────────────────────
 // PAGE SELECTOR SCREEN (shown when no pageId in URL)
 // ─────────────────────────────────────────────────────────
 const PageSelectorScreen = () => {
   const navigate = useNavigate();
   const { config: brand } = useBrandingStore();
-  const [pages, setPages] = useState<any[]>([]);
+  const [pages, setPages] = useState<BuilderListPage[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
   const [showNewDialog, setShowNewDialog] = useState(false);
-  const [templates, setTemplates] = useState<any[]>([]);
+  const [templates, setTemplates] = useState<BuilderTemplate[]>([]);
   const [creating, setCreating] = useState(false);
   const [pageTypeFilter, setPageTypeFilter] = useState<string>('all');
 
   useEffect(() => {
     const load = async () => {
       try {
-        const data = await apiFetch<any[]>('/api/admin/pages');
+        const data = await apiFetch<BuilderListPage[]>('/api/admin/pages');
         setPages(Array.isArray(data) ? data : []);
-      } catch (e: any) {
-        setError(e.message || 'Impossible de charger les pages');
+      } catch (e: unknown) {
+        setError(getErrorMessage(e, 'Impossible de charger les pages'));
       } finally {
         setLoading(false);
       }
@@ -71,7 +119,7 @@ const PageSelectorScreen = () => {
   useEffect(() => {
     const loadTemplates = async () => {
       try {
-        const data = await apiFetch<any[]>('/api/builder/templates');
+        const data = await apiFetch<BuilderTemplate[]>('/api/builder/templates');
         setTemplates(Array.isArray(data) ? data : []);
       } catch {
         // Pas de templates disponibles
@@ -81,13 +129,13 @@ const PageSelectorScreen = () => {
   }, []);
 
   // Créer une nouvelle page
-  const createPage = async (template?: any) => {
+  const createPage = async (template?: BuilderTemplate) => {
     setCreating(true);
     try {
       const title = `Nouvelle page ${new Date().toLocaleDateString('fr-FR')}`;
       const slug = `nouvelle-page-${Date.now()}`;
 
-      const body: any = {
+      const body: CreatePagePayload = {
         title,
         slug,
         content_raw: '',
@@ -106,29 +154,29 @@ const PageSelectorScreen = () => {
         body.theme_config = template.theme_config;
       }
 
-      const newPage = await apiFetch<any>('/api/pages', {
+      const newPage = await apiFetch<{ id: string }>('/api/pages', {
         method: 'POST',
         body: JSON.stringify(body),
       });
 
       setShowNewDialog(false);
       navigate(`/admin/builder/${newPage.id}`);
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error('Erreur création page:', e);
-      setError(e.message || 'Erreur lors de la création');
+      setError(getErrorMessage(e, 'Erreur lors de la création'));
     } finally {
       setCreating(false);
     }
   };
 
   // Dupliquer une page
-  const duplicatePage = async (page: any, e: React.MouseEvent) => {
+  const duplicatePage = async (page: BuilderListPage, e: React.MouseEvent) => {
     e.stopPropagation();
     try {
       const newTitle = `${page.title || 'Sans titre'} (copie)`;
       const newSlug = `${page.slug || 'page'}-copie-${Date.now()}`;
 
-      await apiFetch<any>('/api/pages', {
+      await apiFetch<BuilderListPage>('/api/pages', {
         method: 'POST',
         body: JSON.stringify({
           title: newTitle,
@@ -145,7 +193,7 @@ const PageSelectorScreen = () => {
       });
 
       // Recharger la liste
-      const data = await apiFetch<any[]>('/api/admin/pages');
+      const data = await apiFetch<BuilderListPage[]>('/api/admin/pages');
       setPages(Array.isArray(data) ? data : []);
       toast.success(`Page dupliquée : ${newTitle}`);
     } catch (err) {
@@ -164,9 +212,8 @@ const PageSelectorScreen = () => {
     // Type filter
     if (pageTypeFilter === 'all') return true;
     if (pageTypeFilter === 'content') return !p.immutable;
-    if (pageTypeFilter === 'functional')
-      return p.immutable === true && p.design_options?.page_type !== 'hybrid';
-    if (pageTypeFilter === 'hybrid') return p.design_options?.page_type === 'hybrid';
+    if (pageTypeFilter === 'functional') return p.immutable === true && getPageType(p) !== 'hybrid';
+    if (pageTypeFilter === 'hybrid') return getPageType(p) === 'hybrid';
     return true;
   });
 
@@ -196,7 +243,9 @@ const PageSelectorScreen = () => {
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 className="p-2 hover:bg-[#252538] rounded-lg transition text-slate-300"
-                aria-label={sidebarOpen ? 'Masquer le menu des pages' : 'Afficher le menu des pages'}
+                aria-label={
+                  sidebarOpen ? 'Masquer le menu des pages' : 'Afficher le menu des pages'
+                }
                 title="Basculer le menu"
               >
                 <Menu size={20} />
@@ -248,12 +297,13 @@ const PageSelectorScreen = () => {
                   {
                     key: 'functional',
                     label: '🔒 Fonctionnel',
-                    check: (p) => p.immutable === true && p.design_options?.page_type !== 'hybrid',
+                    check: (p: BuilderListPage) =>
+                      p.immutable === true && getPageType(p) !== 'hybrid',
                   },
                   {
                     key: 'hybrid',
                     label: '🔵 Hybride',
-                    check: (p) => p.design_options?.page_type === 'hybrid',
+                    check: (p: BuilderListPage) => getPageType(p) === 'hybrid',
                   },
                 ].map(({ key, label }) => (
                   <button
@@ -339,12 +389,12 @@ const PageSelectorScreen = () => {
                             <Copy size={12} />
                           </button>
                         </div>
-                        {page.design_options?.page_type === 'hybrid' && (
+                        {getPageType(page) === 'hybrid' && (
                           <span className="text-xs px-2 py-1 rounded-full whitespace-nowrap bg-blue-500/15 text-blue-400 border border-blue-500/20">
                             🔵 Hybride
                           </span>
                         )}
-                        {page.immutable === true && page.design_options?.page_type !== 'hybrid' && (
+                        {page.immutable === true && getPageType(page) !== 'hybrid' && (
                           <span className="text-xs px-2 py-1 rounded-full whitespace-nowrap bg-amber-500/15 text-amber-400 border border-amber-500/20">
                             🔒 Fonctionnel
                           </span>
@@ -494,47 +544,28 @@ const PageSelectorScreen = () => {
 // BUILDER CONTENT (with loading state handling)
 // ─────────────────────────────────────────────────────────
 const BuilderPageContent = () => {
-  try {
-    const { isLoading, error } = useGodEditor();
+  const { isLoading, error } = useGodEditor();
 
-    if (isLoading) {
-      return (
-        <div className="h-screen w-screen flex items-center justify-center bg-[#0d0d1a]">
-          <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-slate-300 text-sm">Chargement de l'éditeur...</p>
-          </div>
-        </div>
-      );
-    }
-
-    if (error) {
-      return (
-        <div className="h-screen w-screen flex items-center justify-center bg-[#0d0d1a]">
-          <div className="max-w-md bg-red-900/30 border border-red-600 rounded-lg p-6 text-center">
-            <p className="text-red-200 font-semibold mb-2">Erreur de chargement</p>
-            <p className="text-red-100 text-sm mb-4">{error}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded transition"
-            >
-              Réessayer
-            </button>
-          </div>
-        </div>
-      );
-    }
-  } catch (err: any) {
+  if (isLoading) {
     return (
       <div className="h-screen w-screen flex items-center justify-center bg-[#0d0d1a]">
-        <div className="max-w-md bg-yellow-900/30 border border-yellow-600 rounded-lg p-6 text-center">
-          <p className="text-yellow-200 font-semibold mb-2">Erreur d'initialisation du builder</p>
-          <p className="text-yellow-100 text-sm mb-4 font-mono break-words">
-            {err?.message || 'Erreur inconnue'}
-          </p>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-300 text-sm">Chargement de l'éditeur...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-[#0d0d1a]">
+        <div className="max-w-md bg-red-900/30 border border-red-600 rounded-lg p-6 text-center">
+          <p className="text-red-200 font-semibold mb-2">Erreur de chargement</p>
+          <p className="text-red-100 text-sm mb-4">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded transition"
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded transition"
           >
             Réessayer
           </button>
@@ -587,7 +618,9 @@ const BuilderPage = () => {
       <Editor resolver={RESOLVER}>
         <GodEditorProvider pageId={pageId}>
           <DynamicContextProvider>
-            <BuilderPageContent />
+            <BuilderErrorBoundary>
+              <BuilderPageContent />
+            </BuilderErrorBoundary>
           </DynamicContextProvider>
         </GodEditorProvider>
       </Editor>
