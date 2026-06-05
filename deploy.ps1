@@ -1,63 +1,157 @@
-# PROQUELEC Deploy Script (PowerShell)
-# Usage: .\deploy.ps1
-# =============================================
+# PROQUELEC - Deploiement CODE vers le VPS
+# Usage:
+#   .\deploy.ps1
+#   .\deploy.ps1 -Message "Correction builder"
+#   .\deploy.ps1 -Message "Correction builder" -CommitAll
+#   .\deploy.ps1 -SkipCommit
+#
+# Fonction:
+#   Ce script deploie le CODE applicatif uniquement:
+#   1. commit/push GitHub depuis le poste local,
+#   2. pull Git sur le VPS,
+#   3. build Vite sur le VPS,
+#   4. redemarrage PM2 de l'API,
+#   5. verification HTTP rapide.
+#
+# Important:
+#   - Ne deploie pas les pages builder ni le contenu de la base.
+#   - Pour les pages builder, utiliser .\deploypage.ps1.
+#   - Le script refuse de pull si le VPS a des fichiers suivis modifies.
+#     Les fichiers non suivis du VPS, comme uploads/backups, sont ignores.
+#   - Par defaut, le script commit seulement les fichiers deja stages.
+#     Utiliser -CommitAll pour faire git add -A avant commit.
+
+param(
+    [string]$Message = "",
+    [string]$Branch = "chore/remove-unused-docker-services",
+    [switch]$SkipCommit,
+    [switch]$CommitAll,
+    [switch]$SkipBuild
+)
+
+$ErrorActionPreference = "Stop"
 
 $SSH_KEY = "$env:USERPROFILE\.ssh\gem_vps"
 $SSH_HOST = "root@proquelec.sn"
 $REMOTE_PATH = "/var/www/proquelec/www.proquelec.sn"
+$PM2_APP = "proquelec-api"
+$SITE_URL = "https://www.proquelec.sn"
+
+function Stop-Step {
+    param([string]$Message)
+    Write-Host ""
+    Write-Host "  ERREUR: $Message" -ForegroundColor Red
+    exit 1
+}
+
+function Invoke-Checked {
+    param(
+        [string]$Label,
+        [scriptblock]$Command
+    )
+
+    Write-Host ""
+    Write-Host "  $Label" -ForegroundColor Yellow
+    & $Command
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Step "$Label a echoue."
+    }
+}
+
+function Invoke-Remote {
+    param([string]$Command)
+    ssh -i $SSH_KEY $SSH_HOST $Command
+}
 
 Write-Host ""
-Write-Host "  === PROQUELEC DEPLOY ===" -ForegroundColor Cyan
+Write-Host "  === PROQUELEC DEPLOY CODE ===" -ForegroundColor Cyan
+Write-Host "  Branche: $Branch"
 Write-Host ""
 
-# 1. Message de commit
-$msg = Read-Host "  Message de commit"
-if (-not $msg) {
-    $msg = "Mise a jour $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+if (-not (Test-Path $SSH_KEY)) {
+    Stop-Step "Cle SSH introuvable: $SSH_KEY"
 }
 
-# 2. Commit + Push
-Write-Host "`n  [1/3] Push vers GitHub..." -ForegroundColor Yellow
-git add -A
-git commit -m "$msg"
-if ($LASTEXITCODE -ne 0 -and $LASTEXITCODE -ne 1) {
-    Write-Host "  ❌ Erreur git commit" -ForegroundColor Red
-    exit 1
-}
-git push origin chore/remove-unused-docker-services
-if ($LASTEXITCODE -ne 0 -and $LASTEXITCODE -ne 1) {
-    Write-Host "  ❌ Erreur git push" -ForegroundColor Red
-    exit 1
-}
-Write-Host "  ✅ Push GitHub reussi" -ForegroundColor Green
+if (-not $SkipCommit) {
+    if ($CommitAll) {
+        Write-Host "  CommitAll actif: git add -A sera execute." -ForegroundColor DarkYellow
+        git add -A
+        if ($LASTEXITCODE -ne 0) {
+            Stop-Step "git add -A a echoue."
+        }
+    }
+    else {
+        git diff --cached --quiet
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "  Aucun fichier stage pour le commit." -ForegroundColor DarkYellow
+            Write-Host "  Utiliser d'abord: git add <fichiers>" -ForegroundColor DarkYellow
+            Write-Host "  Ou lancer: .\deploy.ps1 -CommitAll" -ForegroundColor DarkYellow
+            Stop-Step "Commit local impossible sans fichiers stages."
+        }
+    }
 
-# 3. VPS pull + build
-Write-Host "`n  [2/3] Pull code sur le VPS..." -ForegroundColor Yellow
-ssh -i $SSH_KEY $SSH_HOST "cd $REMOTE_PATH && git stash && git pull origin chore/remove-unused-docker-services"
+    if (-not $Message) {
+        $Message = Read-Host "  Message de commit"
+    }
+    if (-not $Message) {
+        $Message = "Mise a jour $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+    }
+
+    Invoke-Checked "[1/5] Commit local" {
+        git commit -m "$Message"
+        if ($LASTEXITCODE -eq 1) {
+            Write-Host "  Aucun changement a committer, on continue." -ForegroundColor DarkYellow
+            $global:LASTEXITCODE = 0
+        }
+    }
+}
+else {
+    Write-Host "  [1/5] Commit local ignore (-SkipCommit)" -ForegroundColor DarkYellow
+}
+
+Invoke-Checked "[2/5] Push vers GitHub" {
+    git push origin $Branch
+}
+
+Write-Host ""
+Write-Host "  [3/5] Verification du workspace VPS" -ForegroundColor Yellow
+$remoteStatus = Invoke-Remote "cd $REMOTE_PATH && git status --porcelain --untracked-files=no"
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "  ❌ Erreur pull VPS" -ForegroundColor Red
-    exit 1
+    Stop-Step "Impossible de lire le statut Git du VPS."
 }
-Write-Host "  ✅ Code mis a jour sur le VPS" -ForegroundColor Green
+if ($remoteStatus) {
+    Write-Host $remoteStatus
+    Stop-Step "Le VPS contient des fichiers suivis modifies. Committer/nettoyer sur le VPS avant deploy."
+}
 
-# 4. Build on VPS
-Write-Host "`n  [3/3] Build sur le VPS (1-2 min)..." -ForegroundColor Yellow
-ssh -i $SSH_KEY $SSH_HOST "cd $REMOTE_PATH && NODE_OPTIONS='--max-old-space-size=4096' npm run build"
+Invoke-Checked "[3/5] Pull code sur le VPS" {
+    Invoke-Remote "cd $REMOTE_PATH && git pull origin $Branch"
+}
+
+if (-not $SkipBuild) {
+    Invoke-Checked "[4/5] Build production sur le VPS" {
+        Invoke-Remote "cd $REMOTE_PATH && env NODE_OPTIONS=--max-old-space-size=4096 npm run build"
+    }
+}
+else {
+    Write-Host "  [4/5] Build ignore (-SkipBuild)" -ForegroundColor DarkYellow
+}
+
+Invoke-Checked "[5/5] Redemarrage PM2" {
+    Invoke-Remote "pm2 restart $PM2_APP --update-env"
+}
+
+Write-Host ""
+Write-Host "  Verification HTTP..." -ForegroundColor Yellow
+Invoke-Remote "curl -s -o /dev/null -w 'site:%{http_code}\napi_pages:%{http_code}\n' $SITE_URL/ $SITE_URL/api/pages"
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "  ❌ Erreur build" -ForegroundColor Red
-    exit 1
+    Stop-Step "Verification HTTP echouee."
 }
-Write-Host "  ✅ Build reussi" -ForegroundColor Green
-
-# 5. Restart PM2
-Write-Host "`n  Redemarrage du serveur API..." -ForegroundColor Yellow
-ssh -i $SSH_KEY $SSH_HOST "pm2 restart proquelec-api"
 
 Write-Host ""
 Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "  ✅ DEPLOIEMENT TERMINE !" -ForegroundColor Green
+Write-Host "  DEPLOIEMENT CODE TERMINE" -ForegroundColor Green
 Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "  https://www.proquelec.sn"
-Write-Host "  https://github.com/Yoombal29/Site_web_PROQUELEC"
+Write-Host "  Site: $SITE_URL"
+Write-Host "  Admin release pages: $SITE_URL/admin/builder-release-manager"
 Write-Host ""
-pause
