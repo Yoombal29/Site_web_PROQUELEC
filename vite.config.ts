@@ -46,8 +46,7 @@ export default defineConfig(async ({ mode }) => {
         '@dnd-kit/core',
         '@dnd-kit/sortable',
         '@dnd-kit/utilities'
-      ],
-      force: true
+      ]
     },
     build: {
       // Keep reasonable warning threshold while we split heavy deps into chunks
