@@ -8,7 +8,7 @@ WITH ranked AS (
         ROW_NUMBER() OVER (
             PARTITION BY id
             ORDER BY
-                COALESCE(last_sync_at, updated_at, created_at, submission_date) DESC NULLS LAST,
+                COALESCE(last_sync_at, submission_date) DESC NULLS LAST,
                 ctid DESC
         ) AS row_rank
     FROM public.cossuel_dossiers
