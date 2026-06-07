@@ -1369,7 +1369,6 @@ const AdminDashboard: React.FC = () => {
                 <AdminRagDashboard />
               </div>
             )}
-            )}
 
             {/* SECTION : OUTILS TECHNIQUES */}
             {activeTab === 'tech-tools' && (
