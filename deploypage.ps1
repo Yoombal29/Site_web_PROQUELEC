@@ -54,7 +54,7 @@ function Get-AuthToken {
     Write-Host "  Login $Label..." -ForegroundColor Yellow
     $response = Invoke-Api -Method "POST" -Url "$BaseUrl/api/auth/login" -Body @{ email = $Email; password = $Password }
     if (-not $response.access_token) { Stop-Step "Aucun token recu pour $Label." }
-    if ($response.user.role -ne "admin") { Stop-Step "Le compte $Email n'est pas admin sur $Label." }
+    if ($response.user.role -ne "admin" -and $response.user.role -ne "superadmin") { Stop-Step "Le compte $Email n'est pas admin sur $Label." }
     return $response.access_token
 }
 
