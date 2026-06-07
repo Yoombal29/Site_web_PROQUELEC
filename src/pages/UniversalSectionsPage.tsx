@@ -12,15 +12,33 @@ import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { useLiveSettings } from '@/hooks/useLiveSettings';
 import { DEFAULT_PAGE_SECTIONS } from '@/data/defaultPageSections';
 
+interface SectionFeature {
+  title?: string;
+  description?: string;
+}
+
+interface SectionContent {
+  title?: string;
+  subtitle?: string;
+  features?: SectionFeature[];
+}
+
+interface PageSectionData {
+  hero_title?: string;
+  hero_subtitle?: string;
+  badge?: string;
+  content?: Record<string, SectionContent>;
+}
+
 interface Props {
   pageKey: string;
 }
 
 const UniversalSectionsPage: React.FC<Props> = ({ pageKey }) => {
   const { settings } = useLiveSettings();
-  const sectionData =
-    (settings as any)?.page_sections?.[pageKey] ||
-    (DEFAULT_PAGE_SECTIONS as any)?.[pageKey];
+  const sectionData: PageSectionData | undefined =
+    (settings as Record<string, unknown>)?.page_sections?.[pageKey] as PageSectionData ||
+    (DEFAULT_PAGE_SECTIONS as Record<string, PageSectionData>)?.[pageKey];
 
   if (!sectionData) {
     return (
@@ -70,7 +88,7 @@ const UniversalSectionsPage: React.FC<Props> = ({ pageKey }) => {
         {/* Sections list */}
         {sectionData.content && (
           <div className="max-w-7xl mx-auto px-4 py-16">
-            {Object.entries(sectionData.content).map(([key, section]: [string, any]) => (
+            {Object.entries(sectionData.content).map(([key, section]: [string, SectionContent]) => (
               <div key={key} className="mb-12">
                 {section.title && (
                   <h2 className="text-2xl font-bold text-slate-900 mb-4">{section.title}</h2>
@@ -80,7 +98,7 @@ const UniversalSectionsPage: React.FC<Props> = ({ pageKey }) => {
                 )}
                 {section.features && Array.isArray(section.features) && (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {section.features.map((feature: any, idx: number) => (
+                    {section.features.map((feature: SectionFeature, idx: number) => (
                       <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                         {feature.title && (
                           <h3 className="font-bold text-slate-900 mb-2">{feature.title}</h3>

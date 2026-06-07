@@ -27,8 +27,6 @@ export const Minimap: React.FC<MinimapProps> = ({
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);
 
-  if (!minimapConfig.visible) return null;
-
   const { width, height } = minimapConfig;
 
   // Compute the minimap's own zoom factor to fit the canvas content
@@ -60,6 +58,8 @@ export const Minimap: React.FC<MinimapProps> = ({
     const cy = my - (height - contentBounds.height * mapZoom) / (2 * mapZoom) + contentBounds.y;
     onNavigate(cx * canvasTransform.zoom, cy * canvasTransform.zoom);
   }, [onNavigate, contentBounds, mapZoom, canvasTransform.zoom, width, height]);
+
+  if (!minimapConfig.visible) return null;
 
   const positionClass = minimapConfig.position === 'bottom-right'
     ? 'bottom-3 right-3'

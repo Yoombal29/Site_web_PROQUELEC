@@ -10,9 +10,21 @@ function generateId() {
 type LegacyBlock = {
   id?: string;
   type: string;
-  content?: any;
-  props?: any;
+  content?: Record<string, unknown>;
+  props?: Record<string, unknown>;
   children?: LegacyBlock[];
+};
+
+type CraftNode = {
+  type: { resolvedName: string };
+  nodes: string[];
+  props: Record<string, unknown>;
+  custom: Record<string, never>;
+  hidden: boolean;
+  parent?: string;
+  isCanvas: boolean;
+  displayName: string;
+  linkedNodes: Record<string, never>;
 };
 
 const TYPE_MAP: Record<string, string> = {
@@ -51,7 +63,7 @@ function mapTypeToResolvedName(type: string) {
 
 export function convertLegacyBlocksToCraftGraph(blocks: LegacyBlock[], pageTitle = 'Page') {
   // craft minimal graph structure used across the app: ROOT + node entries
-  const result: Record<string, any> = {};
+  const result: Record<string, CraftNode> = {};
 
   const rootNodes: string[] = [];
 

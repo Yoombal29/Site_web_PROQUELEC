@@ -6,9 +6,9 @@ export interface PageTemplate {
   name: string;
   description: string;
   thumbnail?: string;
-  structure: any;
-  themeConfig?: any;
-  metadata?: Record<string, any>;
+  structure: unknown;
+  themeConfig?: unknown;
+  metadata?: Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
   category?: string;

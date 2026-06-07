@@ -1,7 +1,7 @@
-import { type FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useSession } from "@/hooks/useSession";
-import { toast } from "sonner";
+import { type FormEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSession } from '@/hooks/useSession';
+import { toast } from 'sonner';
 import {
   AlertCircle,
   ArrowLeft,
@@ -21,86 +21,85 @@ import {
   User,
   Users,
   Zap,
-} from "lucide-react";
+} from 'lucide-react';
 
-type StepType = "login" | "signup" | "forgot";
+type StepType = 'login' | 'signup' | 'forgot';
 
 const USER_ROLES = [
   {
-    value: "electricien",
-    label: "Électricien",
-    description: "Outils métier, calculateurs et certifications.",
+    value: 'electricien',
+    label: 'Électricien',
+    description: 'Outils métier, calculateurs et certifications.',
     icon: Zap,
-    color: "from-amber-500 to-orange-600",
-    bgLight: "bg-amber-50 border-amber-200",
-    textColor: "text-amber-700",
+    color: 'from-amber-500 to-orange-600',
+    bgLight: 'bg-amber-50 border-amber-200',
+    textColor: 'text-amber-700',
   },
   {
-    value: "entreprise",
-    label: "Entreprise",
+    value: 'entreprise',
+    label: 'Entreprise',
     description: "Gestion d'équipe, documents et conformité.",
     icon: Building2,
-    color: "from-blue-600 to-sky-600",
-    bgLight: "bg-blue-50 border-blue-200",
-    textColor: "text-blue-700",
+    color: 'from-blue-600 to-sky-600',
+    bgLight: 'bg-blue-50 border-blue-200',
+    textColor: 'text-blue-700',
   },
   {
-    value: "membre",
-    label: "Membre",
-    description: "Accès au réseau professionnel PROQUELEC.",
+    value: 'membre',
+    label: 'Membre',
+    description: 'Accès au réseau professionnel PROQUELEC.',
     icon: Users,
-    color: "from-emerald-500 to-teal-600",
-    bgLight: "bg-emerald-50 border-emerald-200",
-    textColor: "text-emerald-700",
+    color: 'from-emerald-500 to-teal-600',
+    bgLight: 'bg-emerald-50 border-emerald-200',
+    textColor: 'text-emerald-700',
   },
   {
-    value: "partner",
-    label: "Partenaire",
-    description: "Collaboration sur projets et programmes.",
+    value: 'partner',
+    label: 'Partenaire',
+    description: 'Collaboration sur projets et programmes.',
     icon: Handshake,
-    color: "from-slate-800 to-blue-700",
-    bgLight: "bg-slate-50 border-slate-300",
-    textColor: "text-slate-800",
+    color: 'from-slate-800 to-blue-700',
+    bgLight: 'bg-slate-50 border-slate-300',
+    textColor: 'text-slate-800',
   },
 ];
 
 const fieldClass =
-  "h-12 w-full rounded-lg border border-slate-200 bg-white px-11 text-sm font-medium text-slate-900 shadow-sm shadow-slate-200/40 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:opacity-60";
+  'h-12 w-full rounded-lg border border-slate-200 bg-white px-11 text-sm font-medium text-slate-900 shadow-sm shadow-slate-200/40 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 disabled:cursor-not-allowed disabled:opacity-60';
 
-const labelClass =
-  "mb-2 block text-[11px] font-bold uppercase text-slate-500";
+const labelClass = 'mb-2 block text-[11px] font-bold uppercase text-slate-500';
 
 const tabClass =
-  "h-10 flex-1 rounded-md text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2";
+  'h-10 flex-1 rounded-md text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2';
 
 /** Map role -> dashboard path after login */
 function getDashboardForRole(role: string): string {
   switch (role) {
-    case "admin":
-      return "/dashboard";
-    case "secondary_admin":
-      return "/admin-secondary";
-    case "electricien":
-      return "/dashboard/electricien";
-    case "entreprise":
-      return "/dashboard/entreprise";
-    case "membre":
-      return "/dashboard/membre";
-    case "partner":
-      return "/partner";
+    case 'admin':
+      return '/dashboard';
+    case 'secondary_admin':
+      return '/admin-secondary';
+    case 'electricien':
+      return '/dashboard/electricien';
+    case 'entreprise':
+      return '/dashboard/entreprise';
+    case 'membre':
+      return '/dashboard/membre';
+    case 'partner':
+      return '/partner';
     default:
-      return "/dashboard";
+      return '/dashboard';
   }
 }
 
 export default function Auth() {
-  const [step, setStep] = useState<StepType>("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [company, setCompany] = useState("");
-  const [selectedRole, setSelectedRole] = useState("membre");
+  const [step, setStep] = useState<StepType>('login');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [company, setCompany] = useState('');
+  const [selectedRole, setSelectedRole] = useState('membre');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -119,22 +118,24 @@ export default function Auth() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
       });
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "Identifiants invalides");
+        setError(data.error || 'Identifiants invalides');
       } else {
         login(data.access_token, data.user);
-        navigate(getDashboardForRole(data.user.role));
-        toast.success("Connexion réussie !");
+        const redirectTo = sessionStorage.getItem('redirectAfterLogin');
+        sessionStorage.removeItem('redirectAfterLogin');
+        navigate(redirectTo || getDashboardForRole(data.user.role));
+        toast.success('Connexion réussie !');
       }
     } catch {
-      setError("Impossible de joindre le serveur");
+      setError('Impossible de joindre le serveur');
     } finally {
       setLoading(false);
     }
@@ -146,9 +147,9 @@ export default function Auth() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: email.trim().toLowerCase(),
           password,
@@ -165,10 +166,10 @@ export default function Auth() {
       } else {
         login(data.access_token, data.user);
         navigate(getDashboardForRole(data.user.role));
-        toast.success("Compte créé avec succès !");
+        toast.success('Compte créé avec succès !');
       }
     } catch {
-      setError("Impossible de joindre le serveur");
+      setError('Impossible de joindre le serveur');
     } finally {
       setLoading(false);
     }
@@ -176,7 +177,7 @@ export default function Auth() {
 
   const handleForgot = (e: FormEvent) => {
     e.preventDefault();
-    toast.info("Un email de réinitialisation sera envoyé si ce compte existe.");
+    toast.info('Un email de réinitialisation sera envoyé si ce compte existe.');
   };
 
   const currentRole = USER_ROLES.find((role) => role.value === selectedRole);
@@ -196,7 +197,7 @@ export default function Auth() {
                   alt="PROQUELEC"
                   className="h-9 w-9 object-contain"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/favicon.ico";
+                    (e.target as HTMLImageElement).src = '/favicon.ico';
                   }}
                 />
               </span>
@@ -218,17 +219,20 @@ export default function Auth() {
               Un portail clair pour piloter votre conformité électrique.
             </h1>
             <p className="mt-5 max-w-md text-base leading-7 text-slate-200">
-              Connectez-vous à votre espace PROQUELEC pour suivre vos dossiers,
-              formations, documents et services professionnels.
+              Connectez-vous à votre espace PROQUELEC pour suivre vos dossiers, formations,
+              documents et services professionnels.
             </p>
 
             <div className="mt-10 grid max-w-md gap-4">
               {[
-                "Authentification professionnelle",
-                "Tableaux de bord par profil",
-                "Données protégées et centralisées",
+                'Authentification professionnelle',
+                'Tableaux de bord par profil',
+                'Données protégées et centralisées',
               ].map((item) => (
-                <div key={item} className="flex items-center gap-3 text-sm font-semibold text-slate-100">
+                <div
+                  key={item}
+                  className="flex items-center gap-3 text-sm font-semibold text-slate-100"
+                >
                   <span className="grid h-8 w-8 place-items-center rounded-lg border border-white/10 bg-white/10">
                     <CheckCircle2 className="h-4 w-4 text-amber-300" />
                   </span>
@@ -254,7 +258,7 @@ export default function Auth() {
                     alt="PROQUELEC"
                     className="h-8 w-8 object-contain"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/favicon.ico";
+                      (e.target as HTMLImageElement).src = '/favicon.ico';
                     }}
                   />
                 </span>
@@ -280,22 +284,22 @@ export default function Auth() {
                 <div className="flex gap-1">
                   <button
                     type="button"
-                    onClick={() => resetView("login")}
+                    onClick={() => resetView('login')}
                     className={`${tabClass} ${
-                      step === "login"
-                        ? "bg-white text-slate-950 shadow-sm ring-1 ring-slate-200"
-                        : "text-slate-500 hover:bg-white/70 hover:text-slate-800"
+                      step === 'login'
+                        ? 'bg-white text-slate-950 shadow-sm ring-1 ring-slate-200'
+                        : 'text-slate-500 hover:bg-white/70 hover:text-slate-800'
                     }`}
                   >
                     Connexion
                   </button>
                   <button
                     type="button"
-                    onClick={() => resetView("signup")}
+                    onClick={() => resetView('signup')}
                     className={`${tabClass} ${
-                      step === "signup"
-                        ? "bg-white text-slate-950 shadow-sm ring-1 ring-slate-200"
-                        : "text-slate-500 hover:bg-white/70 hover:text-slate-800"
+                      step === 'signup'
+                        ? 'bg-white text-slate-950 shadow-sm ring-1 ring-slate-200'
+                        : 'text-slate-500 hover:bg-white/70 hover:text-slate-800'
                     }`}
                   >
                     Inscription
@@ -306,31 +310,31 @@ export default function Auth() {
               <div className="px-4 pb-5 pt-7 sm:px-6">
                 <div className="mb-7">
                   <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-lg bg-blue-50 text-blue-700 ring-1 ring-blue-100">
-                    {step === "signup" ? (
+                    {step === 'signup' ? (
                       <BadgeCheck className="h-5 w-5" />
-                    ) : step === "forgot" ? (
+                    ) : step === 'forgot' ? (
                       <Mail className="h-5 w-5" />
                     ) : (
                       <ShieldCheck className="h-5 w-5" />
                     )}
                   </div>
                   <h2 className="text-2xl font-black text-slate-950">
-                    {step === "signup"
-                      ? "Créer un accès"
-                      : step === "forgot"
-                        ? "Réinitialisation"
-                        : "Accéder à votre espace"}
+                    {step === 'signup'
+                      ? 'Créer un accès'
+                      : step === 'forgot'
+                        ? 'Réinitialisation'
+                        : 'Accéder à votre espace'}
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-slate-500">
-                    {step === "signup"
-                      ? "Sélectionnez le profil adapté à votre activité."
-                      : step === "forgot"
-                        ? "Indiquez votre email pour lancer la procédure."
-                        : "Connectez-vous avec vos identifiants professionnels."}
+                    {step === 'signup'
+                      ? 'Sélectionnez le profil adapté à votre activité.'
+                      : step === 'forgot'
+                        ? 'Indiquez votre email pour lancer la procédure.'
+                        : 'Connectez-vous avec vos identifiants professionnels.'}
                   </p>
                 </div>
 
-                {step === "login" && (
+                {step === 'login' && (
                   <form onSubmit={handleLogin} className="space-y-5">
                     <div>
                       <label className={labelClass}>Email</label>
@@ -356,7 +360,7 @@ export default function Auth() {
                         </label>
                         <button
                           type="button"
-                          onClick={() => resetView("forgot")}
+                          onClick={() => resetView('forgot')}
                           className="text-xs font-bold text-slate-500 transition hover:text-blue-700"
                         >
                           Oublié ?
@@ -365,7 +369,7 @@ export default function Auth() {
                       <div className="relative">
                         <LockKeyhole className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                         <input
-                          type={showPassword ? "text" : "password"}
+                          type={showPassword ? 'text' : 'password'}
                           required
                           disabled={loading}
                           autoComplete="current-password"
@@ -379,9 +383,15 @@ export default function Auth() {
                           onMouseDown={(e) => e.preventDefault()}
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-1/2 z-10 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
-                          aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                          aria-label={
+                            showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'
+                          }
                         >
-                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          {showPassword ? (
+                            <EyeOff className="h-4 w-4" />
+                          ) : (
+                            <Eye className="h-4 w-4" />
+                          )}
                         </button>
                       </div>
                     </div>
@@ -413,7 +423,7 @@ export default function Auth() {
                   </form>
                 )}
 
-                {step === "signup" && (
+                {step === 'signup' && (
                   <form onSubmit={handleSignup} className="space-y-5">
                     <div>
                       <label className={labelClass}>Type de profil</label>
@@ -430,12 +440,16 @@ export default function Auth() {
                               className={`relative min-h-24 rounded-lg border p-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 ${
                                 isSelected
                                   ? `${role.bgLight} ${role.textColor} shadow-sm`
-                                  : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
+                                  : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50'
                               }`}
                               aria-pressed={isSelected}
                             >
-                              <Icon className={`mb-3 h-5 w-5 ${isSelected ? role.textColor : "text-slate-400"}`} />
-                              <span className="block text-sm font-black leading-none">{role.label}</span>
+                              <Icon
+                                className={`mb-3 h-5 w-5 ${isSelected ? role.textColor : 'text-slate-400'}`}
+                              />
+                              <span className="block text-sm font-black leading-none">
+                                {role.label}
+                              </span>
                               {isSelected && (
                                 <span className="absolute right-3 top-3 grid h-5 w-5 place-items-center rounded-full bg-white/80">
                                   <CheckCircle2 className="h-4 w-4" />
@@ -445,7 +459,11 @@ export default function Auth() {
                           );
                         })}
                       </div>
-                      {currentRole && <p className="mt-2 text-xs font-medium text-slate-500">{currentRole.description}</p>}
+                      {currentRole && (
+                        <p className="mt-2 text-xs font-medium text-slate-500">
+                          {currentRole.description}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -486,7 +504,7 @@ export default function Auth() {
                       <div className="relative">
                         <LockKeyhole className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                         <input
-                          type={showPassword ? "text" : "password"}
+                          type={showPassword ? 'text' : 'password'}
                           required
                           minLength={6}
                           disabled={loading}
@@ -501,9 +519,15 @@ export default function Auth() {
                           onMouseDown={(e) => e.preventDefault()}
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-1/2 z-10 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
-                          aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                          aria-label={
+                            showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'
+                          }
                         >
-                          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          {showPassword ? (
+                            <EyeOff className="h-4 w-4" />
+                          ) : (
+                            <Eye className="h-4 w-4" />
+                          )}
                         </button>
                       </div>
                     </div>
@@ -524,7 +548,7 @@ export default function Auth() {
                       </div>
                     </div>
 
-                    {(selectedRole === "entreprise" || selectedRole === "partner") && (
+                    {(selectedRole === 'entreprise' || selectedRole === 'partner') && (
                       <div>
                         <label className={labelClass}>Société / Organisation</label>
                         <div className="relative">
@@ -553,7 +577,7 @@ export default function Auth() {
                       type="submit"
                       disabled={loading}
                       className={`flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r ${
-                        currentRole?.color || "from-slate-950 to-blue-700"
+                        currentRole?.color || 'from-slate-950 to-blue-700'
                       } px-5 text-sm font-black text-white shadow-lg shadow-blue-900/15 transition hover:-translate-y-0.5 disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60`}
                     >
                       {loading ? (
@@ -571,7 +595,7 @@ export default function Auth() {
                   </form>
                 )}
 
-                {step === "forgot" && (
+                {step === 'forgot' && (
                   <form onSubmit={handleForgot} className="space-y-5">
                     <div>
                       <label className={labelClass}>Email</label>
@@ -607,7 +631,7 @@ export default function Auth() {
 
                     <button
                       type="button"
-                      onClick={() => resetView("login")}
+                      onClick={() => resetView('login')}
                       className="mx-auto flex items-center gap-2 text-sm font-bold text-slate-500 transition hover:text-blue-700"
                     >
                       <ArrowLeft className="h-4 w-4" />
@@ -619,10 +643,10 @@ export default function Auth() {
             </div>
 
             <p className="mt-5 text-center text-xs font-medium leading-5 text-slate-500">
-              En vous inscrivant, vous acceptez les{" "}
+              En vous inscrivant, vous acceptez les{' '}
               <Link to="/legal" className="font-bold text-blue-700 hover:underline">
                 conditions d'utilisation
-              </Link>{" "}
+              </Link>{' '}
               de PROQUELEC.
             </p>
           </div>

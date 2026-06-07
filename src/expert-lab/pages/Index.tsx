@@ -8,62 +8,61 @@ import {
   Users,
   ArrowRight,
   Calculator,
-  Camera
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
+  Camera,
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { Badge } from '@/components/ui/badge';
 
 export default function Index() {
   const navigate = useNavigate();
 
   const features = [
     {
-      title: "Chat IA Expert",
-      description: "Posez vos questions techniques, générez des schémas et analysez vos documents.",
+      title: 'Chat IA Expert',
+      description: 'Posez vos questions techniques, générez des schémas et analysez vos documents.',
       icon: MessageSquare,
-      color: "text-yeai-yellow",
-      bg: "bg-yeai-yellow/10",
-      path: "/chat"
+      color: 'text-yeai-yellow',
+      bg: 'bg-yeai-yellow/10',
+      path: '/expert/chat',
     },
     {
-      title: "Normes & Documents",
-      description: "Accès rapide aux fiches NF C 15-100, guides de calcul et abaques.",
+      title: 'Normes & Documents',
+      description: 'Accès rapide aux fiches NF C 15-100, guides de calcul et abaques.',
       icon: BookOpen,
-      color: "text-blue-500",
-      bg: "bg-blue-500/10",
-      path: "/docs" // Assurez-vous que cette route existe ou redirigez vers chat pour l'instant
+      color: 'text-blue-500',
+      bg: 'bg-blue-500/10',
+      path: '/expert/docs',
     },
     {
-      title: "Calculateurs",
+      title: 'Calculateurs',
       description: "Outils dédiés : Chute de tension, Section de câble, Loi d'Ohm.",
       icon: Calculator,
-      color: "text-green-500",
-      bg: "bg-green-500/10",
-      path: "/chat" // On peut rediriger vers le chat avec une promo "Je peux calculer pour vous"
+      color: 'text-green-500',
+      bg: 'bg-green-500/10',
+      path: '/expert/chat',
     },
     {
-      title: "Configuration IA",
-      description: "Gérez vos clés API (OpenAI, Anthropic) et le comportement de YEAI.",
+      title: 'Configuration IA',
+      description: 'Gérez vos clés API (OpenAI, Anthropic) et le comportement de YEAI.',
       icon: Settings,
-      color: "text-purple-500",
-      bg: "bg-purple-500/10",
-      path: "/providers"
+      color: 'text-purple-500',
+      bg: 'bg-purple-500/10',
+      path: '/expert/ai-providers',
     },
     {
-      title: "Scanner Photo",
-      description: "Audit visuel NF C 15-100 en temps réel depuis le terrain.",
+      title: 'Scanner Photo',
+      description: 'Audit visuel NF C 15-100 en temps réel depuis le terrain.',
       icon: Camera,
-      color: "text-orange-500",
-      bg: "bg-orange-500/10",
-      path: "/scanner"
-    }
+      color: 'text-orange-500',
+      bg: 'bg-orange-500/10',
+      path: '/expert/scanner',
+    },
   ];
 
   return (
     <div className="min-h-screen p-8 space-y-8 animate-in fade-in duration-500">
-
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
@@ -83,7 +82,10 @@ export default function Index() {
             </span>
             <span className="text-sm font-medium">Système Opérationnel</span>
           </div>
-          <Button onClick={() => navigate('/chat')} className="bg-gradient-electric hover:opacity-90 shadow-lg glow-electric transition-all">
+          <Button
+            onClick={() => navigate('/expert/chat')}
+            className="bg-gradient-electric hover:opacity-90 shadow-lg glow-electric transition-all"
+          >
             Démarrer une conversation <ArrowRight className="ml-2 w-4 h-4" />
           </Button>
         </div>
@@ -137,7 +139,9 @@ export default function Index() {
               onClick={() => navigate(feature.path)}
             >
               <CardHeader>
-                <div className={`w-12 h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300`}>
+                <div
+                  className={`w-12 h-12 rounded-xl ${feature.bg} flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300`}
+                >
                   <feature.icon className={`w-6 h-6 ${feature.color}`} />
                 </div>
                 <CardTitle className="text-lg">{feature.title}</CardTitle>
@@ -161,9 +165,15 @@ export default function Index() {
           </CardHeader>
           <CardContent>
             <p className="text-lg font-medium text-foreground/80">
-              "Dans une cuisine, vous devez installer au moins 6 socles de prise de courant dont 4 au-dessus du plan de travail. C'est une obligation pour le confort et la sécurité des usages multiples."
+              "Dans une cuisine, vous devez installer au moins 6 socles de prise de courant dont 4
+              au-dessus du plan de travail. C'est une obligation pour le confort et la sécurité des
+              usages multiples."
             </p>
-            <Button variant="link" className="mt-4 p-0 h-auto text-yeai-yellow hover:text-yeai-yellow/80" onClick={() => navigate('/chat')}>
+            <Button
+              variant="link"
+              className="mt-4 p-0 h-auto text-yeai-yellow hover:text-yeai-yellow/80"
+              onClick={() => navigate('/expert/chat')}
+            >
               En savoir plus avec YEAI &rarr;
             </Button>
           </CardContent>
@@ -189,7 +199,6 @@ export default function Index() {
           </CardContent>
         </Card>
       </div>
-
     </div>
   );
 }

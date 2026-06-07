@@ -42,7 +42,6 @@ export const FormBuilderBlock = (props: any) => {
     const opacity = submitting ? 0.7 : 1;
     return `.${submitButtonClass}{background:${buttonBg};color:${buttonColor};opacity:${opacity};}`;
   }, [buttonBg, buttonColor, submitting, submitButtonClass]);
-  if (!visible) return null;
 
   const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,14 +55,14 @@ export const FormBuilderBlock = (props: any) => {
       switch (submitAction) {
         case 'database':
           await apiFetch('/api/form-submissions', {
-            method: 'POST',
-            body: JSON.stringify({ form_name: formName, data, submitted_at: new Date().toISOString() })
+            body: JSON.stringify({ form_name: formName, data, submitted_at: new Date().toISOString() }),
+            method: 'POST'
           });
           break;
         case 'email':
           await apiFetch('/api/send-email', {
-            method: 'POST',
-            body: JSON.stringify({ to: recipientEmail, subject: 'Nouveau formulaire: ' + formName, data })
+            body: JSON.stringify({ to: recipientEmail, subject: 'Nouveau formulaire: ' + formName, data }),
+            method: 'POST'
           });
           break;
         default: break;
@@ -75,6 +74,8 @@ export const FormBuilderBlock = (props: any) => {
       setSubmitting(false);
     }
   }, [submitAction, recipientEmail, formName]);
+
+  if (!visible) return null;
 
   if (submitted) {
     return (

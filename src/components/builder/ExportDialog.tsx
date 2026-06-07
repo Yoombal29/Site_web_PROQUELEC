@@ -66,7 +66,9 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
       await navigator.clipboard.writeText(result.code);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch { }
+    } catch (err) {
+      // ignore clipboard write permission or support errors
+    }
   };
 
   const handleDownload = () => {

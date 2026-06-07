@@ -1,7 +1,6 @@
-
 /**
  * PROQUELEC Expert-RAG Service (V6+ Unified Client)
- * 
+ *
  * ARCHITECTURE :
  * 1. CLIENT LÉGER : Passerelle vers Backend Node (Port 3000 -> Python 8002).
  * 2. COMPATIBLE CHATGPT-LIKE : Utilise l'endpoint /api/ai/chat avec "intent routing".
@@ -9,6 +8,7 @@
 
 import { EXPERT_CONFIG } from './expert-rules.config';
 import { multiNormService } from '@/services/academy/multiNormService';
+import type { NormChunk } from '@/types/academy';
 
 export interface KnowledgeSource {
   id: string;
@@ -39,10 +39,35 @@ class ExpertRagService {
    * Unified query to the Sovereign Backend via Node Proxy
    * Enriched with local RAG from MultiNormService + GED Context
    */
-  async ask(query: string, extraContext?: string): Promise<{ answer: string; sources: KnowledgeSource[]; model: string; }> {
-    // 1. LOCAL RAG ENRICHMENT (Frontend)
-    const localChunks = multiNormService.searchChunks(query, undefined, 3);
-    const localContext = localChunks.map((c) => `[CONTEXTE ${c.metadata.normId}]: ${c.text}`).join('\n\n');
+  async ask(
+    query: string,
+    extraContext?: string,
+  ): Promise<{ answer: string; sources: KnowledgeSource[]; model: string }> {
+    // 1. RAG VECTORIEL (Backend) — utilise les embeddings + recherche hybride
+    let localChunks: NormChunk[] = [];
+    try {
+      const response = await fetch('/api/rag/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, limit: 5, deduplicate: true }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        localChunks = data.chunks || [];
+      }
+    } catch (e) {
+      // Fallback frontend si le serveur RAG est indisponible
+      localChunks = multiNormService.searchChunks(query, undefined, 3);
+    }
+
+    // Fallback si le RAG backend n'a rien donné
+    if (localChunks.length === 0) {
+      localChunks = multiNormService.searchChunks(query, undefined, 3);
+    }
+
+    const localContext = localChunks
+      .map((c) => `[CONTEXTE ${c.metadata?.normId || c.metadata?.source || 'RAG'}]: ${c.text}`)
+      .join('\n\n');
 
     // Combine Local (Code) + GED (Files)
     let fullContext = localChunks.length > 0 ? `[EXTRAITS NORMATIFS LOCAUX]\n${localContext}` : '';
@@ -52,21 +77,30 @@ class ExpertRagService {
 
     // 2. FAST PATH (Frontend Router) - Simple keyword matching for speed
     const staticAnswer = this.checkStaticRules(query);
-    if (staticAnswer && !extraContext) { // Skip static if we have specific docs context
+    if (staticAnswer && !extraContext) {
+      // Skip static if we have specific docs context
       // If extraContext is present, we prefer asking the AI to analyze it.
       return {
         answer: staticAnswer,
-        sources: [{ id: 'fast-path', title: 'Règlementation Directe', type: 'manual', content: staticAnswer, metadata: {} }],
-        model: 'PROQUELEC Instant Reflex (Frontend)'
+        sources: [
+          {
+            id: 'fast-path',
+            title: 'Règlementation Directe',
+            type: 'manual',
+            content: staticAnswer,
+            metadata: {},
+          },
+        ],
+        model: 'PROQUELEC Instant Reflex (Frontend)',
       };
     }
 
     // 3. BACKEND PATH (Sovereign V6 Engine via Proxy)
     try {
       // Enrich the query with combined context for the backend
-      const enrichedQuery = fullContext ?
-        `[CONTEXTE TECHNIQUE FOURNI]\n${fullContext}\n\n[REQUÊTE UTILISATEUR]\n${query}` :
-        query;
+      const enrichedQuery = fullContext
+        ? `[CONTEXTE TECHNIQUE FOURNI]\n${fullContext}\n\n[REQUÊTE UTILISATEUR]\n${query}`
+        : query;
 
       const token = localStorage.getItem('token');
       // Use Local Node Proxy (/api/ai/chat)
@@ -74,31 +108,31 @@ class ExpertRagService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Pass Frontend Auth
+          Authorization: `Bearer ${token}`, // Pass Frontend Auth
         },
         body: JSON.stringify({
           query: enrichedQuery,
-          // We pass the raw query separately if the backend supports "system" + "user" split, 
+          // We pass the raw query separately if the backend supports "system" + "user" split,
           // but keeping it simple with enriched query in 'query' field works for most Haystack pipelines.
           prompt: query,
           task: 'expert',
-          persona: "installateur"
-        })
+          persona: 'installateur',
+        }),
       });
 
       if (response.ok) {
         const data = await response.json();
         // Backend returns standard response format
         return {
-          answer: data.response || data.answer || "Réponse reçue (Format inconnu)",
+          answer: data.response || data.answer || 'Réponse reçue (Format inconnu)',
           sources: localChunks.map((c) => ({
             id: c.id,
             title: c.metadata.titre || 'Extrait Contextuel',
             type: 'norm',
             content: c.text,
-            metadata: { standard: c.metadata.normId }
+            metadata: { standard: c.metadata.normId },
           })),
-          model: `PROQUELEC V6+ (${data.intent || 'Expert'})`
+          model: `PROQUELEC V6+ (${data.intent || 'Expert'})`,
         };
       } else {
         // Fallback to local RAG if backend is down
@@ -107,10 +141,10 @@ class ExpertRagService {
           return {
             answer: `Le moteur expert est temporairement indisponible, mais j'ai trouvé ces extraits pertinents :\n\n${localContext}`,
             sources: [],
-            model: 'Local RAG Fallback'
+            model: 'Local RAG Fallback',
           };
         }
-        return this.offlineResponse("Le moteur souverain V6 est inaccessible (Proxy Error).");
+        return this.offlineResponse('Le moteur souverain V6 est inaccessible (Proxy Error).');
       }
     } catch (error) {
       // Fallback to local RAG on network error
@@ -118,7 +152,7 @@ class ExpertRagService {
         return {
           answer: `Erreur de connexion au serveur expert. Voici ce que j'ai trouvé localement :\n\n${localContext}`,
           sources: [],
-          model: 'Local RAG Fallback'
+          model: 'Local RAG Fallback',
         };
       }
       return this.offlineResponse(`Connexion échouée: ${error.message}`);
@@ -159,19 +193,25 @@ class ExpertRagService {
       return EXPERT_CONFIG.staticRules.volumes.SDB_VOL2;
     }
 
-    if (detectedRoom === 'CUI' && (q.includes('combien') || q.includes('nombre') || q.includes('prise'))) {
+    if (
+      detectedRoom === 'CUI' &&
+      (q.includes('combien') || q.includes('nombre') || q.includes('prise'))
+    ) {
       return EXPERT_CONFIG.staticRules.counts.CUI;
     }
 
     return null;
   }
 
-
-  private offlineResponse(reason: string = "Moteur déconnecté."): { answer: string; sources: KnowledgeSource[]; model: string; } {
+  private offlineResponse(reason: string = 'Moteur déconnecté.'): {
+    answer: string;
+    sources: KnowledgeSource[];
+    model: string;
+  } {
     return {
       answer: `### ⚠️ **Service Indisponible**\n\n${reason}\n\nAssurez-vous que le backend (Node + Python) est lancé.`,
       sources: [],
-      model: 'Offline Mode'
+      model: 'Offline Mode',
     };
   }
 }

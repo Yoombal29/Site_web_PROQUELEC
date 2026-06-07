@@ -12,5 +12,6 @@ router.get('/auth/me', authenticateToken, controller.me);
 router.get('/user/permissions', authenticateToken, controller.getUserPermissions);
 router.get('/admin/permissions', authenticateToken, requireAdmin, controller.getAllPermissions);
 router.get('/admin/role-permissions', authenticateToken, requireAdmin, controller.getRolePermissions);
+router.patch('/admin/role-permissions', authenticateToken, requireAdmin, controller.patchRolePermission);
 
 module.exports = { router, basePath: '/api' };

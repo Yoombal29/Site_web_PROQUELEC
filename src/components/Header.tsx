@@ -609,6 +609,9 @@ export const Header = ({ solid = false }: HeaderProps) => {
               </div>
 
               <div className="flex flex-col justify-center border-l border-white/20 pl-4 py-1">
+                {/* NOTE: Les replace() ci-dessous sont un workaround pour corriger des données
+                    corrompues en base (caractères accentués mal encodés).
+                    La vraie correction doit être faite dans la base de données. */}
                 <h1 className="text-lg sm:text-xl md:text-2xl font-black leading-none text-white uppercase tracking-tighter text-shadow-md">
                   {s?.site_name
                     ?.replace('S?N?GAL', 'SÉNÉGAL')
@@ -616,6 +619,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                     ?.replace(' SÉNÉGAL', '') || 'PROQUELEC'}
                 </h1>
                 <p className="text-[10px] sm:text-[11px] font-bold text-white/70 uppercase tracking-[0.1em] mt-1 text-shadow-sm">
+                  {/* NOTE: Même workaround que ci-dessus — corrompu en base. */}
                   {s?.slogan
                     ?.replace('S?curit?', 'Sécurité')
                     ?.replace('Qualit?', 'Qualité')

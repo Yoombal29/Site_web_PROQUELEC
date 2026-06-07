@@ -30,6 +30,7 @@ export const RoleProtectedRoute: React.FC<RoleProtectedRouteProps> = ({
   }
 
   if (!user) {
+    window.__LAST_REDIRECT_REASON = 'RoleProtectedRoute: utilisateur non connecte';
     return <Navigate to={redirectTo} replace />;
   }
 

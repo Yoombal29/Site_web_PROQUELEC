@@ -172,7 +172,7 @@ export function DocumentEditor({ documentId, initialContent = '', initialTitle =
           let content = server.content;
           if (server.title) setTitle(server.title);
           if (typeof content === 'string') {
-            try { content = JSON.parse(content); } catch (e) { }
+            try { content = JSON.parse(content); } catch (_e) { /* not valid JSON, keep as-is */ }
           }
           if (ydoc.getXmlFragment('default').length === 0 && content) {
             editor.commands.setContent(content);

@@ -172,7 +172,7 @@ export function DocumentManager() {
         file: selectedFile,
         bucket: 'documents',
         // Pass the metadata for the document upload
-        // @ts-ignore - Extending the request body in the hook logic implicitly
+        // @ts-expect-error - Extending the request body in the hook logic implicitly
         project_id: uploadForm.tags.split(',')[0] || 'general',
 
         status: 'pending_review',

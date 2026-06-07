@@ -95,9 +95,13 @@ export function DynamicStyle({ children, style: customStyle
     Object.entries(customStyle).forEach(([key, value]) => {
       if (typeof value === 'string' && value.startsWith('theme.')) {
         const themeKey = value.replace('theme.', '');
-        const themeValue = useThemeValue(themeKey);
-        if (themeValue) {
-          dynamicStyle[key] = themeValue;
+        const keys = themeKey.split('.');
+        let val = theme as any;
+        for (const k of keys) {
+          val = val?.[k];
+        }
+        if (val) {
+          dynamicStyle[key] = val;
         }
       }
     });

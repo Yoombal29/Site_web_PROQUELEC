@@ -20,7 +20,7 @@ const labelize = (key: string) =>
 const isColorKey = (key: string) =>
   !isUrlKey(key) && /color|background|bg|accent|border|track|fill|stroke/i.test(key);
 
-const isUrlKey = (key: string) => /url|src|href|link|file/i.test(key);
+const isUrlKey = (key: string) => /url|src|href|link|file|image|video|avatar|logo|poster|cover|icon|bgImage/i.test(key);
 
 const isLongTextKey = (key: string, value: string) =>
   value.length > 80 || /html|code|content|description|text|message|bio|caption/i.test(key);

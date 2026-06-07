@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * Bloc Craft.js design-locked pour pages fonctionnelles.
  *

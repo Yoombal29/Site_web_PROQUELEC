@@ -82,6 +82,7 @@ export default function Dashboard() {
 
     // 2. Token/Session validation
     if (!user) {
+      window.__LAST_REDIRECT_REASON = 'Dashboard: utilisateur non connecte';
       navigate('/connexion');
       return;
     }

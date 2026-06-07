@@ -62,4 +62,38 @@ async function getRolePermissions() {
     return result.rows;
 }
 
-module.exports = { findByEmail, findById, create, getUserPermissions, getAllPermissions, getRolePermissions };
+async function patchRolePermission(role, permissionName, granted) {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        
+        // Trouver l'ID de la permission
+        const permRes = await client.query('SELECT id FROM public.permissions WHERE name = $1', [permissionName]);
+        if (permRes.rows.length === 0) {
+            throw new Error(`Permission ${permissionName} introuvable`);
+        }
+        const permissionId = permRes.rows[0].id;
+
+        if (granted) {
+            await client.query(
+                `INSERT INTO public.role_permissions (role, permission_id) 
+                 VALUES ($1, $2) ON CONFLICT DO NOTHING`,
+                [role, permissionId]
+            );
+        } else {
+            await client.query(
+                `DELETE FROM public.role_permissions WHERE role = $1 AND permission_id = $2`,
+                [role, permissionId]
+            );
+        }
+
+        await client.query('COMMIT');
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+        client.release();
+    }
+}
+
+module.exports = { findByEmail, findById, create, getUserPermissions, getAllPermissions, getRolePermissions, patchRolePermission };

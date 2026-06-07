@@ -5,7 +5,7 @@ export interface ThemeTemplate {
   id: string;
   name: string;
   type: 'header' | 'footer' | 'single' | 'archive' | '404';
-  serializedTree: any;
+  serializedTree: unknown;
   conditions: { postType?: string; taxonomy?: string; term?: string };
   createdAt: string;
   updatedAt: string;

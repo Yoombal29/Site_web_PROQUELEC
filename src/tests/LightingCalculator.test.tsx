@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import LightingCalculator from '../LightingCalculator';
+import LightingCalculator from '../components/tools/LightingCalculator';
 
 describe('LightingCalculator', () => {
   beforeEach(() => {
@@ -9,24 +9,28 @@ describe('LightingCalculator', () => {
   });
 
   it('renders the component with title', () => {
-    expect(screen.getByText('Calculateur d\'éclairage (Lux / m²)')).toBeInTheDocument();
+    expect(screen.getByText("Calculateur d'éclairage (Lux / m²)")).toBeInTheDocument();
   });
 
   it('renders all input fields', () => {
-    expect(screen.getByLabelText(/Surface de la pièce/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Flux lumineux total/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Ex: 30')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Ex: 3000')).toBeInTheDocument();
   });
 
   it('renders buttons', () => {
-    expect(screen.getByRole('button', { name: /Calculer/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Réinitialiser/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Calculer l'éclairement en lux/ }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Réinitialiser le calculateur/ }),
+    ).toBeInTheDocument();
   });
 
   it('calculates lux correctly for standard case', async () => {
     const user = userEvent.setup();
-    const areaInput = screen.getByLabelText(/Surface de la pièce/i);
-    const lumensInput = screen.getByLabelText(/Flux lumineux total/i);
-    const button = screen.getByRole('button', { name: /Calculer/i });
+    const areaInput = screen.getByPlaceholderText('Ex: 30');
+    const lumensInput = screen.getByPlaceholderText('Ex: 3000');
+    const button = screen.getByRole('button', { name: /Calculer l'éclairement en lux/ });
 
     await user.type(areaInput, '30');
     await user.type(lumensInput, '3000');
@@ -34,52 +38,53 @@ describe('LightingCalculator', () => {
 
     await waitFor(() => {
       // 3000 / 30 = 100 lux
-      expect(screen.getByText('100 lux')).toBeInTheDocument();
+      expect(screen.getByText('100')).toBeInTheDocument();
+      expect(screen.getByText('lux')).toBeInTheDocument();
     });
   });
 
   it('shows "good" adequacy for moderate lux levels', async () => {
     const user = userEvent.setup();
-    const areaInput = screen.getByLabelText(/Surface de la pièce/i);
-    const lumensInput = screen.getByLabelText(/Flux lumineux total/i);
-    const button = screen.getByRole('button', { name: /Calculer/i });
+    const areaInput = screen.getByPlaceholderText('Ex: 30');
+    const lumensInput = screen.getByPlaceholderText('Ex: 3000');
+    const button = screen.getByRole('button', { name: /Calculer l'éclairement en lux/ });
 
     await user.type(areaInput, '20');
     await user.type(lumensInput, '5000');
     await user.click(button);
 
     await waitFor(() => {
-      expect(screen.getByText(/✅ Bon/i)).toBeInTheDocument();
+      expect(screen.getByText(/Bon/)).toBeInTheDocument();
     });
   });
 
   it('shows "excellent" adequacy for high lux levels', async () => {
     const user = userEvent.setup();
-    const areaInput = screen.getByLabelText(/Surface de la pièce/i);
-    const lumensInput = screen.getByLabelText(/Flux lumineux total/i);
-    const button = screen.getByRole('button', { name: /Calculer/i });
+    const areaInput = screen.getByPlaceholderText('Ex: 30');
+    const lumensInput = screen.getByPlaceholderText('Ex: 3000');
+    const button = screen.getByRole('button', { name: /Calculer l'éclairement en lux/ });
 
     await user.type(areaInput, '10');
     await user.type(lumensInput, '6000');
     await user.click(button);
 
     await waitFor(() => {
-      expect(screen.getByText(/⭐ Excellent/i)).toBeInTheDocument();
+      expect(screen.getByText(/Excellent/)).toBeInTheDocument();
     });
   });
 
   it('shows "poor" adequacy for low lux levels', async () => {
     const user = userEvent.setup();
-    const areaInput = screen.getByLabelText(/Surface de la pièce/i);
-    const lumensInput = screen.getByLabelText(/Flux lumineux total/i);
-    const button = screen.getByRole('button', { name: /Calculer/i });
+    const areaInput = screen.getByPlaceholderText('Ex: 30');
+    const lumensInput = screen.getByPlaceholderText('Ex: 3000');
+    const button = screen.getByRole('button', { name: /Calculer l'éclairement en lux/ });
 
     await user.type(areaInput, '100');
     await user.type(lumensInput, '100');
     await user.click(button);
 
     await waitFor(() => {
-      expect(screen.getByText(/❌ Insuffisant/i)).toBeInTheDocument();
+      expect(screen.getByText(/Insuffisant/)).toBeInTheDocument();
     });
   });
 
@@ -96,17 +101,18 @@ describe('LightingCalculator', () => {
 
   it('resets form correctly', async () => {
     const user = userEvent.setup();
-    const areaInput = screen.getByLabelText(/Surface de la pièce/i) as HTMLInputElement;
-    const lumensInput = screen.getByLabelText(/Flux lumineux total/i) as HTMLInputElement;
-    const button = screen.getByRole('button', { name: /Calculer/i });
-    const resetButton = screen.getByRole('button', { name: /Réinitialiser/i });
+    const areaInput = screen.getByPlaceholderText('Ex: 30') as HTMLInputElement;
+    const lumensInput = screen.getByPlaceholderText('Ex: 3000') as HTMLInputElement;
+    const button = screen.getByRole('button', { name: /Calculer l'éclairement en lux/ });
+    const resetButton = screen.getByRole('button', { name: /Réinitialiser le calculateur/ });
 
     await user.type(areaInput, '30');
     await user.type(lumensInput, '3000');
     await user.click(button);
 
     await waitFor(() => {
-      expect(screen.getByText('100 lux')).toBeInTheDocument();
+      expect(screen.getByText('100')).toBeInTheDocument();
+      expect(screen.getByText('lux')).toBeInTheDocument();
     });
 
     await user.click(resetButton);
@@ -119,7 +125,7 @@ describe('LightingCalculator', () => {
 
   it('alerts on invalid input', async () => {
     const user = userEvent.setup();
-    const button = screen.getByRole('button', { name: /Calculer/i });
+    const button = screen.getByRole('button', { name: /Calculer l'éclairement en lux/ });
     const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
     await user.click(button);
@@ -130,9 +136,9 @@ describe('LightingCalculator', () => {
 
   it('alerts on zero area', async () => {
     const user = userEvent.setup();
-    const areaInput = screen.getByLabelText(/Surface de la pièce/i);
-    const lumensInput = screen.getByLabelText(/Flux lumineux total/i);
-    const button = screen.getByRole('button', { name: /Calculer/i });
+    const areaInput = screen.getByPlaceholderText('Ex: 30');
+    const lumensInput = screen.getByPlaceholderText('Ex: 3000');
+    const button = screen.getByRole('button', { name: /Calculer l'éclairement en lux/ });
     const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => {});
 
     await user.type(areaInput, '0');
@@ -152,19 +158,19 @@ describe('LightingCalculator', () => {
       'Bureau / Espace de travail',
       'Atelier',
       'Entrepôt',
-      'Magasin'
+      'Magasin',
     ];
 
-    roomTypes.forEach(room => {
+    roomTypes.forEach((room) => {
       expect(screen.getByText(room)).toBeInTheDocument();
     });
   });
 
   it('handles decimal lux values correctly', async () => {
     const user = userEvent.setup();
-    const areaInput = screen.getByLabelText(/Surface de la pièce/i);
-    const lumensInput = screen.getByLabelText(/Flux lumineux total/i);
-    const button = screen.getByRole('button', { name: /Calculer/i });
+    const areaInput = screen.getByPlaceholderText('Ex: 30');
+    const lumensInput = screen.getByPlaceholderText('Ex: 3000');
+    const button = screen.getByRole('button', { name: /Calculer l'éclairement en lux/ });
 
     await user.type(areaInput, '7.5');
     await user.type(lumensInput, '1234');
@@ -172,8 +178,8 @@ describe('LightingCalculator', () => {
 
     await waitFor(() => {
       // 1234 / 7.5 = 164.5
-      const result = screen.getByText(/lux/);
-      expect(result.textContent).toContain('164.5');
+      expect(screen.getByText('164.5')).toBeInTheDocument();
+      expect(screen.getByText('lux')).toBeInTheDocument();
     });
   });
 });

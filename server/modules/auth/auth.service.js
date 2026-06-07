@@ -100,4 +100,8 @@ async function getRolePermissions() {
     return repository.getRolePermissions();
 }
 
-module.exports = { login, register, getProfile, getPermissions, getAllPermissions, getRolePermissions };
+async function patchRolePermission(role, permissionName, granted) {
+    return repository.patchRolePermission(role, permissionName, granted);
+}
+
+module.exports = { login, register, getProfile, getPermissions, getAllPermissions, getRolePermissions, patchRolePermission };

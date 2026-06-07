@@ -6,17 +6,24 @@ const express = require('express');
 const router = express.Router();
 const { Pool } = require('pg');
 const { createPaydunyaInvoice, confirmPaydunyaPayment } = require('./paydunya.service');
+const { authenticateToken } = require('../../middleware/auth');
+
+if (!process.env.DB_PASS) {
+  throw new Error(
+    '[PAYMENTS] CRITICAL: DB_PASS environment variable is not set. Payment operations require a database password.',
+  );
+}
 
 const pool = new Pool({
   host: process.env.DB_HOST || '127.0.0.1',
   port: parseInt(process.env.DB_PORT || '5437'),
   database: process.env.DB_NAME || 'proquelec',
   user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASS || 'proquelec_secure_db_pass',
+  password: process.env.DB_PASS,
 });
 
 // ── Créer un paiement pour un abonnement ──
-router.post('/api/payments/create', async (req, res) => {
+router.post('/api/payments/create', authenticateToken, async (req, res) => {
   try {
     const { planId, userId, email, name, phone } = req.body;
     if (!planId || !userId) return res.status(400).json({ error: 'Plan et utilisateur requis' });
@@ -98,7 +105,7 @@ router.post('/api/payments/webhook', async (req, res) => {
 });
 
 // ── Vérifier le statut d'un paiement ──
-router.get('/api/payments/status/:token', async (req, res) => {
+router.get('/api/payments/status/:token', authenticateToken, async (req, res) => {
   try {
     const result = await confirmPaydunyaPayment(req.params.token);
     res.json(result || { status: 'unknown' });

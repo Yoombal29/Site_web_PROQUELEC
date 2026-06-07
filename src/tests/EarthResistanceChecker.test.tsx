@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import EarthResistanceChecker from '../EarthResistanceChecker';
+import EarthResistanceChecker from '../components/tools/EarthResistanceChecker';
 
 describe('EarthResistanceChecker', () => {
   beforeEach(() => {
@@ -39,13 +39,15 @@ describe('EarthResistanceChecker', () => {
   it('calculates non-compliant result for high resistance', async () => {
     const user = userEvent.setup();
     const input = screen.getByPlaceholderText('Ex: 20');
+    const diffSelect = screen.getByLabelText(/Sensibilité du différentiel/i);
     const zoneSelect = screen.getByLabelText(/Zone d'installation/i);
     const button = screen.getByRole('button', { name: /Vérifier la conformité/i });
 
-    // Set wet zone (UL = 25V)
+    // Set wet zone (UL = 25V) and 500mA diff
     await user.selectOptions(zoneSelect, '25');
+    await user.selectOptions(diffSelect, '500');
 
-    // Set high resistance
+    // Uc = 100 Ω × 0.5 A = 50 V > 25 V → Non conforme
     await user.type(input, '100');
     await user.click(button);
 
@@ -113,16 +115,19 @@ describe('EarthResistanceChecker', () => {
   it('handles different installation zones', async () => {
     const user = userEvent.setup();
     const resistanceInput = screen.getByPlaceholderText('Ex: 20');
+    const diffSelect = screen.getByLabelText(/Sensibilité du différentiel/i);
     const zoneSelect = screen.getByLabelText(/Zone d'installation/i);
     const button = screen.getByRole('button', { name: /Vérifier la conformité/i });
 
-    // Test dry zone (50V)
+    // Test dry zone (50V) with 500mA diff
     await user.selectOptions(zoneSelect, '50');
-    await user.type(resistanceInput, '1000');
+    await user.selectOptions(diffSelect, '500');
+    // Uc = 200 Ω × 0.5 A = 100 V > 50 V → Non conforme
+    await user.type(resistanceInput, '200');
     await user.click(button);
 
     await waitFor(() => {
-      expect(screen.getByText(/Non conforme/i)).toBeInTheDocument();
+      expect(screen.getByText(/❌ Non conforme/i)).toBeInTheDocument();
     });
   });
 });

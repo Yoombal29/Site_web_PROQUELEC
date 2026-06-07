@@ -13,7 +13,7 @@ import { vi } from 'vitest';
 
 // Ensure a DOM is available when running under Node (vitest environment fallback)
 if (typeof document === 'undefined' || typeof window === 'undefined') {
-  const { JSDOM } = require('jsdom');
+  const { JSDOM } = await import('jsdom');
   const dom = new JSDOM('<!doctype html><html><body></body></html>');
   (global as unknown).window = dom.window;
   (global as unknown).document = dom.window.document;
@@ -88,7 +88,7 @@ global.IntersectionObserver = (global as unknown).vi ? (global as unknown).vi.fn
 
 // Mock Monaco Editor
 vi.mock('@monaco-editor/react', () => {
-  const React = require('react');
+  const React = await import('react');
   return {
     default: (props: unknown) => {
       return React.createElement('textarea', {
@@ -129,21 +129,25 @@ vi.mock('@/hooks/useLiveSettings', () => ({
 
 // Mock Radix Tooltip component globally to render inline for reliable testing in JSDOM
 vi.mock('@/components/ui/tooltip', () => {
-  const React = require('react');
+  const React = await import('react');
   return {
-    TooltipProvider: ({ children }: any) => children,
-    Tooltip: ({ children }: any) => children,
-    TooltipTrigger: ({ children }: any) => children,
-    TooltipContent: ({ children }: any) => React.createElement('div', {}, children),
+    TooltipProvider: ({ children }: { children: React.ReactNode }) => children,
+    Tooltip: ({ children }: { children: React.ReactNode }) => children,
+    TooltipTrigger: ({ children }: { children: React.ReactNode }) => children,
+    TooltipContent: ({ children }: { children: React.ReactNode }) => React.createElement('div', {}, children),
   };
 });
 
 // Mock Radix Select component globally to render inline with context for robust testing in JSDOM
 vi.mock('@radix-ui/react-select', () => {
-  const React = require('react');
-  const SelectContext = React.createContext(null);
+  const React = await import('react');
+  interface SelectContextProps {
+    value?: unknown;
+    onValueChange?: (val: unknown) => void;
+  }
+  const SelectContext = React.createContext<SelectContextProps | null>(null);
 
-  const Root = ({ children, value, onValueChange }: any) => {
+  const Root = ({ children, value, onValueChange }: { children: React.ReactNode; value?: unknown; onValueChange?: (val: unknown) => void }) => {
     return React.createElement(
       SelectContext.Provider,
       { value: { value, onValueChange } },
@@ -152,21 +156,21 @@ vi.mock('@radix-ui/react-select', () => {
   };
   Root.displayName = 'Select';
 
-  const Trigger = ({ children, id }: any) => {
+  const Trigger = ({ children, id }: { children: React.ReactNode; id?: string }) => {
     return React.createElement('button', { id, type: 'button' }, children);
   };
   Trigger.displayName = 'Trigger';
 
-  const Value = ({ placeholder, children }: any) => children || placeholder || null;
+  const Value = ({ placeholder, children }: { placeholder?: string; children?: React.ReactNode }) => children || placeholder || null;
   Value.displayName = 'Value';
 
-  const Content = ({ children }: any) => {
+  const Content = ({ children }: { children: React.ReactNode }) => {
     return React.createElement('div', {}, children);
   };
   Content.displayName = 'Content';
 
-  const Item = ({ children, value }: any) => {
-    const context = React.useContext(SelectContext) as any;
+  const Item = ({ children, value }: { children: React.ReactNode; value: string }) => {
+    const context = React.useContext(SelectContext);
     return React.createElement('button', {
       type: 'button',
       onClick: () => {
@@ -178,10 +182,10 @@ vi.mock('@radix-ui/react-select', () => {
   };
   Item.displayName = 'Item';
 
-  const Group = ({ children }: any) => children;
+  const Group = ({ children }: { children: React.ReactNode }) => children;
   Group.displayName = 'Group';
 
-  const Label = ({ children }: any) => children;
+  const Label = ({ children }: { children: React.ReactNode }) => children;
   Label.displayName = 'Label';
 
   const Separator = () => null;
@@ -193,19 +197,19 @@ vi.mock('@radix-ui/react-select', () => {
   const ScrollDownButton = () => null;
   ScrollDownButton.displayName = 'ScrollDownButton';
 
-  const Viewport = ({ children }: any) => children;
+  const Viewport = ({ children }: { children: React.ReactNode }) => children;
   Viewport.displayName = 'Viewport';
 
-  const Icon = ({ children }: any) => children || null;
+  const Icon = ({ children }: { children?: React.ReactNode }) => children || null;
   Icon.displayName = 'Icon';
 
-  const Portal = ({ children }: any) => children;
+  const Portal = ({ children }: { children: React.ReactNode }) => children;
   Portal.displayName = 'Portal';
 
-  const ItemIndicator = ({ children }: any) => children || null;
+  const ItemIndicator = ({ children }: { children?: React.ReactNode }) => children || null;
   ItemIndicator.displayName = 'ItemIndicator';
 
-  const ItemText = ({ children }: any) => children;
+  const ItemText = ({ children }: { children: React.ReactNode }) => children;
   ItemText.displayName = 'ItemText';
 
   return {
@@ -231,7 +235,7 @@ vi.mock('@radix-ui/react-select', () => {
 if (!(window as unknown).DOMParser) {
   class DOMParserPolyfill {
     parseFromString(str: string) {
-      const { JSDOM } = require('jsdom');
+  const { JSDOM } = await import('jsdom');
       return new JSDOM(str).window.document;
     }
   }
@@ -358,13 +362,13 @@ expect.extend({
 
 // Fonction utilitaire pour créer un GraphStore de test
 export const createTestGraphStore = () => {
-  const { GraphStore } = require('@/stores/GraphStore');
+  const { GraphStore } = await import('@/stores/GraphStore');
   return new GraphStore();
 };
 
 // Fonction utilitaire pour créer un EditorManager de test
 export const createTestEditorManager = (graphStore?: unknown) => {
-  const { EditorManager } = require('@/managers/EditorManager');
+  const { EditorManager } = await import('@/managers/EditorManager');
   return new EditorManager(graphStore || createTestGraphStore());
 };
 

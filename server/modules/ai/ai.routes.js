@@ -1,60 +1,57 @@
-const express = require('express');
-const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const { authenticateToken, requireAdmin, validate } = require('../../core/middleware');
-const {
-    codeAssistantSchema, aiGenerateSchema, contentGenerationSchema,
-    pingProviderSchema, diagnosticSchema, complianceScanSchema,
-    seoAnalyzeSchema, createChatSchema, updateChatSchema,
-    createMessageSchema, layoutGenerateSchema, exportSchema,
-} = require('./ai.validator');
-const ctrl = require('./ai.controller');
+import { Router } from 'express';
+import { authenticateToken, requireAdmin } from '../../core/middleware.js';
+import { masterRoute, masterStatusRoute } from './master.agent.js';
+import ragService from './rag.service.js';
 
-const uploadDir = path.join(__dirname, '../../uploads');
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+const router = Router();
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, uploadDir),
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        cb(null, uniqueSuffix + '-' + file.originalname.replace(/\s+/g, '_'));
-    }
+// Routes IA existantes
+router.post('/ai/chat', masterRoute);
+router.post('/ai/vision', masterRoute);
+router.post('/ai/image', masterRoute);
+router.post('/ai/content-generation', masterRoute);
+router.post('/ai-code-assistant', masterRoute);
+router.post('/ai-generate', masterRoute);
+
+// Diagnostic / Status du Master Agent
+router.get('/ai/status', masterStatusRoute);
+
+// Route de diagnostic complète
+router.get('/ai/diagnostic', masterStatusRoute);
+
+// Routes RAG
+router.get('/rag/status', (req, res) => {
+  const stats = ragService.getStats();
+  res.json({ success: true, ...stats });
 });
 
-const upload = multer({ storage, limits: { fileSize: 500 * 1024 * 1024 } });
+router.post('/rag/search', (req, res) => {
+  try {
+    const { query, limit, deduplicate = true } = req.body;
+    if (!query || typeof query !== 'string' || query.trim().length === 0) {
+      return res.status(400).json({ success: false, error: 'Parametre "query" requis' });
+    }
+    const chunks = deduplicate
+      ? ragService.searchChunksSmart(query, limit || 8)
+      : ragService.searchChunks(query, limit || 10);
+    res.json({ success: true, query, count: chunks.length, chunks });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
-router.post('/ai/chat', ctrl.chat);
-router.post('/ai/vision', upload.single('image'), ctrl.vision);
-router.post('/ai/image', ctrl.image);
-router.get('/ai/status', ctrl.status);
-router.post('/ai/generate-visual', ctrl.generateVisual);
-router.post('/ai/content-generation', validate(contentGenerationSchema), ctrl.contentGeneration);
-router.post('/ai-code-assistant', authenticateToken, validate(codeAssistantSchema), ctrl.codeAssistant);
-router.post('/ai-generate', authenticateToken, validate(aiGenerateSchema), ctrl.aiGenerate);
-router.post('/ai/orchestrate', authenticateToken, requireAdmin, ctrl.orchestrateHandler);
-router.post('/ai/ping-provider', authenticateToken, requireAdmin, validate(pingProviderSchema), ctrl.pingProvider);
-router.post('/ai/diagnostic', authenticateToken, requireAdmin, validate(diagnosticSchema), ctrl.diagnostic);
-router.post('/ai/scan-compliance', authenticateToken, requireAdmin, validate(complianceScanSchema), ctrl.scanCompliance);
-router.get('/ai/logs', authenticateToken, requireAdmin, ctrl.getLogs);
-router.post('/ai/seo-analyze', authenticateToken, requireAdmin, validate(seoAnalyzeSchema), ctrl.seoAnalyze);
-router.post('/admin/ai/start', authenticateToken, requireAdmin, ctrl.adminStart);
-router.post('/admin/ai/stop', authenticateToken, requireAdmin, ctrl.adminStop);
+router.post('/rag/reload', async (req, res) => {
+  try {
+    await ragService.reload();
+    res.json({ success: true, message: 'Base de connaissances rechargée', ...ragService.getStats() });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
-router.get('/chats', authenticateToken, ctrl.listChats);
-router.post('/chats', authenticateToken, validate(createChatSchema), ctrl.createChatHandler);
-router.delete('/chats/:sessionId', authenticateToken, ctrl.deleteChatHandler);
-router.put('/chats/:sessionId', authenticateToken, validate(updateChatSchema), ctrl.updateChatHandler);
-router.get('/chats/:sessionId/messages', authenticateToken, ctrl.listMessages);
-router.post('/chats/:sessionId/messages', authenticateToken, validate(createMessageSchema), ctrl.createMessageHandler);
+// Initialiser le service RAG au démarrage (les routes RAG sont montées depuis rag.routes.js)
+ragService.initialize().catch(err => {
+  console.warn('[RAG] Échec de l\'initialisation:', err.message);
+});
 
-router.get('/engine/memory', authenticateToken, requireAdmin, ctrl.getEngineMemory);
-router.post('/engine/scan', authenticateToken, requireAdmin, ctrl.scanEngine);
-router.post('/engine/repair', authenticateToken, requireAdmin, ctrl.repairEngine);
-
-router.post('/ai/layout-generate', authenticateToken, validate(layoutGenerateSchema), ctrl.generateLayoutHandler);
-
-router.post('/ai/export', authenticateToken, validate(exportSchema), ctrl.exportPage);
-
-module.exports = { router, basePath: '/api' };
+export { router, basePath: '/api' };

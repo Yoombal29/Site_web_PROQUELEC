@@ -881,28 +881,57 @@ async function callRemoteVision(filePath, prompt) {
   return response.data;
 }
 
-// 1. Brain (LLM) Proxy
+// 1. Brain (LLM) Proxy — avec fallback Master Agent (RAG + multi-providers)
 app.post('/api/ai/chat', async (req, res) => {
   try {
     if (REMOTE_AI_ENABLED) {
       const data = await callRemoteAI(req.body);
       return res.json(data);
     }
-    if (!AI_SERVICES.BRAIN) {
-      throw new Error(LOCAL_AI_REMOVED_MESSAGE);
-    }
-    const targetUrl = `${AI_SERVICES.BRAIN}/api/v1/chat`;
-    console.log(`[AI-GATEWAY] Tunneling to: ${targetUrl}`);
-    const response = await axios.post(targetUrl, req.body, {
-      timeout: 90000, // 90s timeout for long normative analysis
-    });
-    res.json(response.data);
+
+    // Essayer le Master Agent (supporte Groq, Together, OpenRouter, etc.)
+    const { masterRoute } = await import('./modules/ai/master.agent.js');
+
+    // Adapter le format de requête si nécessaire
+    const adaptedReq = {
+      ...req,
+      body: {
+        task: req.body.task || 'expert',
+        prompt:
+          req.body.prompt ||
+          req.body.query ||
+          req.body.messages?.[req.body.messages.length - 1]?.content ||
+          '',
+        context: req.body.context || {},
+        sessionId: req.body.session_id,
+        useRag: req.body.useRag !== false,
+      },
+    };
+
+    await masterRoute(adaptedReq, res);
   } catch (error) {
-    console.error('[AI-GATEWAY] Brain Error:', error.message);
+    console.error('[AI-GATEWAY] Master Agent Error:', error.message);
+
+    // Fallback : ancien tunnel si le Master Agent échoue
+    try {
+      if (AI_SERVICES.BRAIN) {
+        const targetUrl = `${AI_SERVICES.BRAIN}/api/v1/chat`;
+        console.log('[AI-GATEWAY] Fallback to:', targetUrl);
+        const response = await axios.post(targetUrl, req.body, { timeout: 90000 });
+        return res.json(response.data);
+      }
+    } catch (fallbackErr) {
+      console.error('[AI-GATEWAY] Fallback aussi indisponible:', fallbackErr.message);
+    }
+
     if (REMOTE_AI_ENABLED) {
       return res.status(502).json({ error: 'Remote AI indisponible', details: error.message });
     }
-    res.status(502).json({ error: 'Cerveau IA indisponible', details: error.message });
+    res.status(502).json({
+      error: 'Cerveau IA indisponible',
+      details: error.message,
+      hint: 'Configurez PROQUELEC_API_KEY dans .env pour utiliser le Master Agent (Groq, Together, etc.)',
+    });
   }
 });
 
@@ -1209,6 +1238,35 @@ app.delete('/api/storage/files/:id', authenticateToken, requireAdmin, async (req
 });
 
 // -- HEALTH CHECK --
+/**
+ * @swagger
+ * /api/health:
+ *   get:
+ *     summary: Vérification de l'état du serveur et de la base de données
+ *     tags: [Santé]
+ *     responses:
+ *       200:
+ *         description: Serveur opérationnel
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: ok
+ *                 database:
+ *                   type: string
+ *                   example: connected
+ *                 version:
+ *                   type: string
+ *                   example: "1.2.0"
+ *                 timestamp:
+ *                   type: string
+ *                   format: date-time
+ *       500:
+ *         description: Base de données déconnectée
+ */
 app.get('/api/health', async (req, res) => {
   try {
     await pool.query('SELECT 1');
@@ -1945,7 +2003,7 @@ app.get('/', (req, res) => {
  * /api/auth/login:
  *   post:
  *     summary: Connexion utilisateur
- *     tags: [Auth]
+ *     tags: [Authentification]
  *     requestBody:
  *       required: true
  *       content:
@@ -1959,6 +2017,8 @@ app.get('/', (req, res) => {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/LoginResponse'
+ *       400:
+ *         description: Validation échouée
  *       401:
  *         description: Identifiants invalides
  *       403:
@@ -2015,6 +2075,37 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 // --- INSCRIPTION UTILISATEUR ---
+/**
+ * @swagger
+ * /api/auth/register:
+ *   post:
+ *     summary: Inscription d'un nouvel utilisateur
+ *     tags: [Authentification]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/RegisterRequest'
+ *     responses:
+ *       201:
+ *         description: Compte créé avec succès (en attente de validation)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 access_token:
+ *                   type: string
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *                 message:
+ *                   type: string
+ *       400:
+ *         description: Erreur de validation
+ *       409:
+ *         description: Email déjà utilisé
+ */
 const ALLOWED_ROLES = ['electricien', 'entreprise', 'membre', 'partner'];
 
 app.post('/api/auth/register', async (req, res) => {
@@ -2096,17 +2187,19 @@ app.post('/api/auth/register', async (req, res) => {
  *   get:
  *     summary: Récupérer le profil utilisateur actuel
  *     security:
- *       - bearerAuth: []
- *     tags: [Auth]
+ *       - BearerAuth: []
+ *     tags: [Authentification]
  *     responses:
  *       200:
- *         description: Profil récupéré
+ *         description: Profil récupéré avec succès
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/User'
  *       401:
- *         description: Non autorisé
+ *         description: Non authentifié
+ *       404:
+ *         description: Utilisateur non trouvé
  */
 app.get('/api/auth/me', authenticateToken, async (req, res) => {
   try {
@@ -2347,6 +2440,22 @@ app.get('/api/admin/permissions-list', authenticateToken, requireAdmin, async (r
 // == ABONNEMENTS ==
 
 // Plans d'abonnement
+/**
+ * @swagger
+ * /api/subscription-plans:
+ *   get:
+ *     summary: Liste des plans d'abonnement disponibles
+ *     tags: [Paiements]
+ *     responses:
+ *       200:
+ *         description: Liste des plans d'abonnement actifs
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/SubscriptionPlan'
+ */
 app.get('/api/subscription-plans', async (req, res) => {
   try {
     const result = await pool.query(
@@ -2359,6 +2468,38 @@ app.get('/api/subscription-plans', async (req, res) => {
 });
 
 // Souscrire à un plan
+/**
+ * @swagger
+ * /api/subscriptions:
+ *   post:
+ *     summary: Souscrire à un plan d'abonnement
+ *     tags: [Paiements]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [plan_id]
+ *             properties:
+ *               plan_id:
+ *                 type: string
+ *                 format: uuid
+ *                 description: ID du plan d'abonnement
+ *     responses:
+ *       200:
+ *         description: Abonnement souscrit
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserSubscription'
+ *       400:
+ *         description: Plan requis
+ *       404:
+ *         description: Plan non trouvé
+ */
 app.post('/api/subscriptions', authenticateToken, async (req, res) => {
   try {
     const { plan_id } = req.body;
@@ -2387,6 +2528,22 @@ app.post('/api/subscriptions', authenticateToken, async (req, res) => {
 });
 
 // Mon abonnement
+/**
+ * @swagger
+ * /api/my-subscription:
+ *   get:
+ *     summary: Récupère l'abonnement actif de l'utilisateur connecté
+ *     tags: [Paiements]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Abonnement actif (ou null si aucun)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserSubscription'
+ */
 app.get('/api/my-subscription', authenticateToken, async (req, res) => {
   try {
     const result = await pool.query(
@@ -2411,9 +2568,119 @@ app.get('/api/admin/subscriptions', authenticateToken, requireAdmin, async (req,
   }
 });
 
+// Admin: Manual subscription activation (for manual payment, cash, etc.)
+app.post(
+  '/api/admin/subscriptions/manual-activate',
+  authenticateToken,
+  requireAdmin,
+  async (req, res) => {
+    try {
+      const { user_id, plan_id, duration_days, notes } = req.body;
+      if (!user_id || !plan_id) {
+        return res.status(400).json({ error: 'user_id et plan_id requis' });
+      }
+
+      // Verify plan exists
+      const plan = await pool.query('SELECT * FROM public.subscription_plans WHERE id = $1', [
+        plan_id,
+      ]);
+      if (plan.rows.length === 0) {
+        return res.status(404).json({ error: 'Plan non trouvé' });
+      }
+
+      const endDate = new Date();
+      endDate.setDate(endDate.getDate() + (duration_days || plan.rows[0].duration_days || 30));
+
+      const result = await pool.query(
+        `INSERT INTO public.user_subscriptions
+       (user_id, plan_id, end_date, payment_status, is_active, manually_activated, activated_by)
+       VALUES ($1, $2, $3, 'active', true, true, $4) RETURNING *`,
+        [user_id, plan_id, endDate, req.user.id],
+      );
+
+      res.json({ success: true, subscription: result.rows[0] });
+    } catch (err) {
+      console.error('[SUBSCRIPTION] Manual activation error:', err.message);
+      res.status(500).json({ error: err.message });
+    }
+  },
+);
+
+// Admin: List all users for manual activation
+app.get('/api/admin/subscriptions/users', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT id, name, email, role, created_at FROM public.users ORDER BY created_at DESC',
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Check current user's premium access (for frontend UI)
+/**
+ * @swagger
+ * /api/premium-check:
+ *   get:
+ *     summary: Vérifie si l'utilisateur connecté a un accès premium
+ *     tags: [Paiements]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Statut premium de l'utilisateur
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 hasPremium:
+ *                   type: boolean
+ *                 subscription:
+ *                   $ref: '#/components/schemas/UserSubscription'
+ */
+app.get('/api/premium-check', authenticateToken, async (req, res) => {
+  const { checkPremiumAccess } = require('./middleware/premium');
+  const subscription = await checkPremiumAccess(req.user.id);
+  res.json({
+    hasPremium: !!subscription,
+    subscription: subscription
+      ? {
+          planName: subscription.plan_name,
+          endDate: subscription.end_date,
+          isPremium: subscription.is_premium,
+          manuallyActivated: subscription.manually_activated,
+        }
+      : null,
+  });
+});
+
 // == MEDIA ROUTES ==
 const { router: mediaRouter } = require('./modules/media/media.routes');
 app.use('/api', mediaRouter);
+
+// == RAG (Retrieval-Augmented Generation) ROUTES ==
+(async () => {
+  try {
+    const { router: ragRouter, basePath: ragBasePath } = await import('./modules/ai/rag.routes.js');
+    app.use(ragBasePath || '/api', ragRouter);
+    console.log('[RAG] Routes RAG montées sur', ragBasePath || '/api');
+  } catch (err) {
+    console.warn('[RAG] Impossible de monter les routes RAG:', err.message);
+  }
+})();
+
+// == AI CONFIGURATION ROUTES (Base de données) ==
+(async () => {
+  try {
+    const { router: configRouter, basePath: configBasePath } = await import('./routes/ai-config.js');
+    app.use(configBasePath || '/api', configRouter);
+    console.log('[AI-CONFIG] Routes montées');
+  } catch (err) {
+    console.warn('[AI-CONFIG] Impossible de monter les routes:', err.message);
+  }
+})();
 
 // == DATA ENDPOINTS ==
 
@@ -2600,6 +2867,29 @@ app.post('/api/cache/purge', authenticateToken, async (req, res) => {
 
 // All Pages — MOVED to PAGE MANAGEMENT ENDPOINTS section (~L3260) with better ORDER BY
 
+/**
+ * @swagger
+ * /api/pages/slug/{slug}:
+ *   get:
+ *     summary: Récupère une page CMS par son slug
+ *     tags: [Pages]
+ *     parameters:
+ *       - in: path
+ *         name: slug
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Slug de la page (ex: accueil, a-propos, contact)
+ *     responses:
+ *       200:
+ *         description: Page trouvée
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Page'
+ *       404:
+ *         description: Page non trouvée
+ */
 // Single Page (by slug)
 app.get('/api/pages/slug/:slug', async (req, res) => {
   const { slug } = req.params;
@@ -2629,6 +2919,22 @@ app.get('/api/pages/slug/:slug', async (req, res) => {
 });
 
 // Menu Items
+/**
+ * @swagger
+ * /api/menu-items:
+ *   get:
+ *     summary: Liste des éléments du menu de navigation
+ *     tags: [Menu]
+ *     responses:
+ *       200:
+ *         description: Liste des éléments du menu
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/MenuItem'
+ */
 app.get('/api/menu-items', async (req, res) => {
   await getTable(req, res, 'menu_items', 'menu_order ASC');
 });
@@ -2705,6 +3011,53 @@ const executeQuery = async (res, text, params) => {
 
 // -- Menu Items Mutations --
 
+/**
+ * @swagger
+ * /api/menu-items:
+ *   post:
+ *     summary: Crée un nouvel élément de menu
+ *     tags: [Menu]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [title, url, menu_type]
+ *             properties:
+ *               title:
+ *                 type: string
+ *               url:
+ *                 type: string
+ *               menu_type:
+ *                 type: string
+ *                 enum: [main, footer]
+ *               menu_order:
+ *                 type: integer
+ *               parent_id:
+ *                 type: string
+ *                 format: uuid
+ *               is_active:
+ *                 type: boolean
+ *               target:
+ *                 type: string
+ *               icon:
+ *                 type: string
+ *               label:
+ *                 type: string
+ *               linked_page_id:
+ *                 type: string
+ *                 format: uuid
+ *     responses:
+ *       201:
+ *         description: Élément de menu créé
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/MenuItem'
+ */
 app.post('/api/menu-items', authenticateToken, async (req, res) => {
   const {
     title,
@@ -2740,6 +3093,52 @@ app.post('/api/menu-items', authenticateToken, async (req, res) => {
   );
 });
 
+/**
+ * @swagger
+ * /api/menu-items/{id}:
+ *   put:
+ *     summary: Met à jour un élément de menu
+ *     tags: [Menu]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID de l'élément de menu
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               url:
+ *                 type: string
+ *               menu_type:
+ *                 type: string
+ *               menu_order:
+ *                 type: integer
+ *               parent_id:
+ *                 type: string
+ *                 format: uuid
+ *               is_active:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Élément de menu mis à jour
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/MenuItem'
+ *       404:
+ *         description: Élément non trouvé
+ */
 app.put('/api/menu-items/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
   const {
@@ -2791,6 +3190,28 @@ app.put('/api/menu-items/:id', authenticateToken, async (req, res) => {
   await executeQuery(res, sql, values);
 });
 
+/**
+ * @swagger
+ * /api/menu-items/{id}:
+ *   delete:
+ *     summary: Supprime un élément de menu
+ *     tags: [Menu]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID de l'élément de menu
+ *     responses:
+ *       200:
+ *         description: Élément de menu supprimé
+ *       404:
+ *         description: Élément non trouvé
+ */
 app.delete('/api/menu-items/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
   await executeQuery(res, 'DELETE FROM public.menu_items WHERE id=$1', [id]);
@@ -2885,6 +3306,22 @@ app.get('/api/analytics/summary', authenticateToken, async (req, res) => {
 // -- Blog Endpoints --
 
 // Public Blog Posts
+/**
+ * @swagger
+ * /api/blog-posts:
+ *   get:
+ *     summary: Liste des articles de blog publiés
+ *     tags: [Blog]
+ *     responses:
+ *       200:
+ *         description: Liste des articles publiés
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/BlogPost'
+ */
 app.get('/api/blog-posts', async (req, res) => {
   try {
     const result = await pool.query(`
@@ -4465,6 +4902,36 @@ const initDB = async () => {
             learning_objectives TEXT[],
             created_at TIMESTAMP DEFAULT NOW()
         );
+        CREATE TABLE IF NOT EXISTS public.subscription_plans(
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            name TEXT NOT NULL,
+            description TEXT,
+            price DECIMAL(10,2) DEFAULT 0,
+            duration_days INTEGER DEFAULT 30,
+            features TEXT[] DEFAULT '{}',
+            is_active BOOLEAN DEFAULT true,
+            is_premium BOOLEAN DEFAULT false,
+            created_at TIMESTAMP DEFAULT NOW(),
+            updated_at TIMESTAMP DEFAULT NOW()
+        );
+
+        -- Ajout de la colonne is_premium si elle n'existe pas (migration)
+        ALTER TABLE public.subscription_plans ADD COLUMN IF NOT EXISTS is_premium BOOLEAN DEFAULT false;
+        CREATE TABLE IF NOT EXISTS public.user_subscriptions(
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
+            plan_id UUID REFERENCES public.subscription_plans(id),
+            start_date TIMESTAMP DEFAULT NOW(),
+            end_date TIMESTAMP NOT NULL,
+            payment_status TEXT DEFAULT 'pending' CHECK (payment_status IN ('pending', 'active', 'expired', 'cancelled')),
+            payment_provider TEXT,
+            payment_ref TEXT,
+            is_active BOOLEAN DEFAULT false,
+            manually_activated BOOLEAN DEFAULT false,
+            activated_by UUID REFERENCES public.users(id),
+            created_at TIMESTAMP DEFAULT NOW(),
+            updated_at TIMESTAMP DEFAULT NOW()
+        );
         CREATE TABLE IF NOT EXISTS public.newsletter_subscribers(
             id SERIAL PRIMARY KEY,
             email TEXT NOT NULL UNIQUE,
@@ -4563,6 +5030,21 @@ const initDB = async () => {
             is_active BOOLEAN DEFAULT true,
             created_at TIMESTAMP DEFAULT NOW()
         );
+    `);
+
+    // Seed default subscription plans
+    await pool.query(`
+        INSERT INTO public.subscription_plans (name, description, price, duration_days, features, is_active, is_premium)
+        SELECT 'Gratuit', 'Accès aux fonctionnalités de base', 0, 365, ARRAY['Normes gratuites', 'Calculateur de base', 'Consultation blog'], true, false
+        WHERE NOT EXISTS (SELECT 1 FROM public.subscription_plans WHERE name = 'Gratuit');
+
+        INSERT INTO public.subscription_plans (name, description, price, duration_days, features, is_active, is_premium)
+        SELECT 'Premium', 'Accès complet aux outils avancés', 15000, 30, ARRAY['Normes complètes', 'Calculateurs avancés', 'Chute de tension', 'Diagnostic IA', 'Certification'], true, true
+        WHERE NOT EXISTS (SELECT 1 FROM public.subscription_plans WHERE name = 'Premium');
+
+        INSERT INTO public.subscription_plans (name, description, price, duration_days, features, is_active, is_premium)
+        SELECT 'Expert', 'Accès illimité à toutes les fonctionnalités', 50000, 30, ARRAY['Accès illimité', 'Accès API', 'Support prioritaire', 'Formation', 'Audit complet'], true, true
+        WHERE NOT EXISTS (SELECT 1 FROM public.subscription_plans WHERE name = 'Expert');
     `);
 
     // Migration logic for missing columns in existing tables
@@ -5722,11 +6204,65 @@ app.post('/api/admin/search/reindex', authenticateToken, requireAdmin, async (re
 
 // --- PAGE MANAGEMENT ENDPOINTS ---
 
+/**
+ * @swagger
+ * /api/pages:
+ *   get:
+ *     summary: Liste toutes les pages CMS publiées
+ *     tags: [Pages]
+ *     responses:
+ *       200:
+ *         description: Liste des pages
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Page'
+ */
 app.get('/api/pages', async (req, res) => {
   await getTable(req, res, 'pages', 'menu_order ASC, updated_at DESC');
 });
 // ^ This is the PRIMARY /api/pages route (old duplicate at ~L1017 was removed)
 
+/**
+ * @swagger
+ * /api/pages:
+ *   post:
+ *     summary: Crée une nouvelle page CMS
+ *     tags: [Pages]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [title, slug]
+ *             properties:
+ *               title:
+ *                 type: string
+ *               slug:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               is_published:
+ *                 type: boolean
+ *               meta_description:
+ *                 type: string
+ *               meta_keywords:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Page créée
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Page'
+ *       400:
+ *         description: Erreur de validation
+ */
 app.post('/api/pages', authenticateToken, async (req, res) => {
   const { title, slug, content, is_published, meta_description, meta_keywords } = req.body;
   try {
@@ -5751,6 +6287,52 @@ app.get('/api/pages/:id', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /api/pages/{id}:
+ *   put:
+ *     summary: Met à jour une page CMS
+ *     tags: [Pages]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID ou slug de la page
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               slug:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               structure_json:
+ *                 type: object
+ *               is_published:
+ *                 type: boolean
+ *               meta_description:
+ *                 type: string
+ *               meta_keywords:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Page mise à jour
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Page'
+ *       404:
+ *         description: Page non trouvée
+ */
 app.put('/api/pages/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
   const {
@@ -5771,7 +6353,7 @@ app.put('/api/pages/:id', authenticateToken, async (req, res) => {
                  slug = COALESCE($2, slug),
                  content = COALESCE($3, content),
                  content_blocks = COALESCE($4, content_blocks),
-                 structure_json = COALESCE($4, structure_json),
+                  structure_json = COALESCE($5, structure_json),
                  is_published = COALESCE($5, is_published),
                  meta_description = COALESCE($6, meta_description),
                  meta_keywords = COALESCE($7, meta_keywords),
@@ -6776,6 +7358,42 @@ app.get('/api/cms/themes', async (req, res) => {
 });
 
 // --- CONTACT & EMAIL ---
+/**
+ * @swagger
+ * /api/contact-requests:
+ *   post:
+ *     summary: Envoie une demande de contact
+ *     tags: [Contact]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [nom, email, message]
+ *             properties:
+ *               nom:
+ *                 type: string
+ *                 description: Nom complet
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               telephone:
+ *                 type: string
+ *               sujet:
+ *                 type: string
+ *               message:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Demande de contact envoyée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ContactRequest'
+ *       400:
+ *         description: Erreur de validation
+ */
 app.post('/api/contact-requests', async (req, res) => {
   const { payload, errors } = validateContactRequestPayload(req.body);
 

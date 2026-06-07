@@ -171,7 +171,13 @@ export const useEcommerceStore = create<EcommerceState>()(
               ? '/api/payments/paydunya/checkout'
               : '/api/payments/checkout';
 
-            const session = await apiFetch<any>(endpoint, {
+            interface CheckoutSession {
+              url?: string;
+              token?: string;
+              id?: string;
+            }
+
+            const session = await apiFetch<CheckoutSession>(endpoint, {
               method: 'POST',
               body: JSON.stringify({
                 amount: Math.round(total * 100), // cents / FCFA
@@ -199,9 +205,10 @@ export const useEcommerceStore = create<EcommerceState>()(
               });
               return session.url;
             }
-          } catch (err: any) {
-            console.warn('[CHECKOUT] Server payment failed, falling back to local:', err.message);
-            set({ checkoutError: err.message });
+          } catch (err: unknown) {
+            const errMsg = err instanceof Error ? err.message : 'Unknown checkout error';
+            console.warn('[CHECKOUT] Server payment failed, falling back to local:', errMsg);
+            set({ checkoutError: errMsg });
           }
         }
 

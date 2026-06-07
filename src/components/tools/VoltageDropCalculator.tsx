@@ -902,7 +902,7 @@ export default function VoltageDropCalculator({
       const deltaUPercent = 100 * u / U0;
 
       // Limites admissibles selon Tableau 52V
-      let baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
+      const baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
       let maxAllowedDrop = baseLimit;
 
       // Correction pour L > 100 m
@@ -1070,7 +1070,7 @@ export default function VoltageDropCalculator({
         const deltaUPercent = 100 * u / U0;
 
         // Limites admissibles
-        let baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
+        const baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
         let maxAllowedDrop = baseLimit;
 
         if (L > 100) {

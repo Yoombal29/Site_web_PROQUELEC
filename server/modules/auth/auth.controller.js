@@ -62,4 +62,24 @@ async function getRolePermissions(req, res) {
     }
 }
 
-module.exports = { login, register, me, getUserPermissions, getAllPermissions, getRolePermissions };
+async function patchRolePermission(req, res) {
+    try {
+        // Seul oumarkebe@proquelec.sn est autorisé à modifier la matrice globale
+        if (req.user.email !== 'oumarkebe@proquelec.sn') {
+            return res.status(403).json({ error: 'Seul le Super Admin principal peut modifier la matrice globale' });
+        }
+
+        const { role, permission, granted } = req.body;
+        if (!role || !permission || granted === undefined) {
+            return res.status(400).json({ error: 'Paramètres manquants (role, permission, granted)' });
+        }
+
+        await service.patchRolePermission(role, permission, granted);
+        res.json({ success: true, message: 'Permission mise à jour' });
+    } catch (err) {
+        console.error('[ADMIN] Erreur modification permission:', err);
+        res.status(500).json({ error: 'Impossible de modifier la permission' });
+    }
+}
+
+module.exports = { login, register, me, getUserPermissions, getAllPermissions, getRolePermissions, patchRolePermission };

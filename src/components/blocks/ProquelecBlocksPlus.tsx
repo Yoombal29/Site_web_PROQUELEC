@@ -5313,7 +5313,7 @@ export const WhyProquelecPremiumBlock = (props: any) => {
       { value: '4', label: 'Pôles métier' },
     ],
     ctaLabel = 'Découvrir nos missions',
-    ctaHref = '/a-propos',
+    ctaHref = '/about',
     accentColor = '#2563eb',
     backgroundColor = '#ffffff',
   } = props;
@@ -5386,7 +5386,7 @@ WhyProquelecPremiumBlock.craft = {
       { value: '4', label: 'Pôles métier' },
     ],
     ctaLabel: 'Découvrir nos missions',
-    ctaHref: '/a-propos',
+    ctaHref: '/about',
     accentColor: '#2563eb',
     backgroundColor: '#ffffff',
   },

@@ -65,7 +65,7 @@ export class DeterministicCourseGenerator {
     // Patterns de détection
     const titlePatterns = [
     /^#{1,3}\s+(.+)$/, // Markdown headers
-    /^(CHAPITRE|PARTIE|SECTION|MODULE)\s+\d*\s*[:.\-]?\s*(.+)/i,
+    /^(CHAPITRE|PARTIE|SECTION|MODULE)\s+\d*\s*[:.-]?\s*(.+)/i,
     /^(\d+\.)+\s+(.+)/, // Numbered sections
     /^[A-Z][A-Z\s]{5,}$/, // ALL CAPS titles
     /^[IVX]+\.\s+(.+)/i // Roman numerals
@@ -90,7 +90,7 @@ export class DeterministicCourseGenerator {
     /désigne\s*[:]/i];
 
 
-    const bulletPattern = /^[\-•*]\s+(.+)/;
+    const bulletPattern = /^[-•*]\s+(.+)/;
 
     lines.forEach((line) => {
       const trimmed = line.trim();
@@ -636,7 +636,7 @@ export class DeterministicCourseGenerator {
     filter((s) => s.trim().length > 20 && s.trim().length < 100).
     slice(0, 4);
 
-    let options = [
+    const options = [
     `Comprendre et appliquer les principes de ${title.toLowerCase()}`,
     `Ignorer les règles de ${title.toLowerCase()}`,
     `Appliquer partiellement les concepts`,

@@ -8,7 +8,7 @@ import { Footer } from '@/components/Footer';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { DEFAULT_PAGE_SECTIONS } from '@/data/defaultPageSections';
 import UniversalSectionsPage from '@/pages/UniversalSectionsPage';
-// @ts-ignore
+// @ts-expect-error - BuilderPageRenderer may not have full type definitions in build step
 import BuilderPageRenderer from '@/components/builder/BuilderPageRenderer';
 import { Block } from '@/types/builder';
 import {

@@ -14,7 +14,7 @@ export const tokenizeExpression = (text: string): DynamicToken[] => {
   const tokens: DynamicToken[] = [];
   let startIndex = 0;
 
-  while (true) {
+  for (;;) {
     const openIndex = text.indexOf('{{', startIndex);
     if (openIndex === -1) break;
 

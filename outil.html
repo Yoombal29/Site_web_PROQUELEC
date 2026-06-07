@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PROQUELEC - Label et Outils Techniques</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -703,7 +704,7 @@ input::placeholder, textarea::placeholder {
         .bg-gradient-to-r { color: white !important; }
         [data-theme="dark"] .fas, [data-theme="dark"] .fab { color: var(--text-primary); }
 
-    
+
     </style>
 </head>
 <body class="min-h-screen">
@@ -789,7 +790,7 @@ input::placeholder, textarea::placeholder {
                 </div>
                 <span data-translate="safety" class="font-bold tracking-wide">Sécurité</span>
             </button>
-            
+
             <!-- Diagnostic -->
             <button id="tab-btn-diagnostic" aria-controls="diagnostic-tab" onclick="showTab('diagnostic')" class="tab-btn flex flex-col items-center justify-center gap-2 px-4 py-3 rounded-xl text-base font-bold transition-all duration-300 bg-white text-blue-900 border-2 border-gray-200 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 hover:shadow-xl focus:ring-2 focus:ring-blue-300 min-w-[110px] group snap-center" role="tab" aria-selected="false" tabindex="-1">
                 <div class="p-2 rounded-lg bg-white/60 group-hover:bg-blue-100 group-hover:scale-110 transition-all duration-300">
@@ -797,7 +798,7 @@ input::placeholder, textarea::placeholder {
                 </div>
                 <span data-translate="diagnostic" class="font-bold tracking-wide">Diagnostic</span>
             </button>
-            
+
             <!-- Réglementation -->
             <button id="tab-btn-regulations" aria-controls="regulations-tab" onclick="showTab('regulations')" class="tab-btn flex flex-col items-center justify-center gap-2 px-4 py-3 rounded-xl text-base font-bold transition-all duration-300 bg-white text-blue-900 border-2 border-gray-200 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 hover:shadow-xl focus:ring-2 focus:ring-blue-300 min-w-[110px] group snap-center" role="tab" aria-selected="false" tabindex="-1">
                 <div class="p-2 rounded-lg bg-white/60 group-hover:bg-blue-100 group-hover:scale-110 transition-all duration-300">
@@ -1221,13 +1222,13 @@ input::placeholder, textarea::placeholder {
                                 <li>P = U × I (puissance en W = tension en V × courant en A)</li>
                             </ul>
                         </div>
-                        
+
                     </section>
                 </div>
             </div>
         </div>
-     
-                
+
+
             </div>
         </div>
         <script>
@@ -1633,6 +1634,74 @@ window.showDiagnosticResult = function(key, desc) {
             </div>
         </div>
 
+        <!-- SECTION : Formulaire de demande de Label Qualité -->
+        <div class="bg-white rounded-xl shadow-md border p-6 mb-6 theme-transition">
+            <h3 class="text-xl font-bold text-proqblue mb-3">Démarches pour obtenir le Label Qualité</h3>
+            <ol class="list-decimal list-inside text-left mb-4 text-gray-700">
+                <li>Prendre connaissance du référentiel PROQUELEC et des critères d'éligibilité.</li>
+                <li>Préparer les documents justificatifs (plans, attestations, certificats de conformité, photos des installations).</li>
+                <li>Remplir le formulaire de demande ci-dessous.</li>
+                <li>Envoyer la demande pour analyse par le comité PROQUELEC.</li>
+                <li>Recevoir la visite d'un expert pour audit et vérification sur site.</li>
+                <li>Obtenir le label et le certificat officiel si la conformité est validée.</li>
+            </ol>
+            <h4 class="text-lg font-semibold text-proqblue mb-2">Formulaire de demande de Label Qualité</h4>
+            <form id="label-request-form" class="space-y-4 text-left max-w-xl mx-auto">
+                <div>
+                    <label for="applicant-name" class="block font-medium mb-1">Nom du demandeur / entreprise</label>
+                    <input type="text" id="applicant-name" name="applicant-name" required class="w-full p-2 border rounded-lg">
+                </div>
+                <div>
+                    <label for="applicant-email" class="block font-medium mb-1">Email</label>
+                    <input type="email" id="applicant-email" name="applicant-email" required class="w-full p-2 border rounded-lg">
+                </div>
+                <div>
+                    <label for="applicant-phone" class="block font-medium mb-1">Téléphone</label>
+                    <input type="tel" id="applicant-phone" name="applicant-phone" required class="w-full p-2 border rounded-lg">
+                </div>
+                <div>
+                    <label for="installation-address" class="block font-medium mb-1">Adresse de l'installation</label>
+                    <input type="text" id="installation-address" name="installation-address" required class="w-full p-2 border rounded-lg">
+                </div>
+                <div>
+                    <label for="documents" class="block font-medium mb-1">Documents justificatifs (PDF, JPG, PNG)</label>
+                    <input type="file" id="documents" name="documents" multiple accept=".pdf,.jpg,.jpeg,.png" class="w-full p-2 border rounded-lg">
+                </div>
+                <button type="submit" class="btn-calc w-full mt-2">Envoyer la demande</button>
+            </form>
+            <div id="label-form-success" class="hidden mt-4 p-3 rounded-lg bg-green-100 text-green-800 font-semibold text-center">Votre demande a été envoyée avec succès !</div>
+            <script>
+            // Formulaire Label Qualité : envoi par email via mailto
+            (function() {
+                var form = document.getElementById('label-request-form');
+                if (form) {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        var name = document.getElementById('applicant-name').value;
+                        var email = document.getElementById('applicant-email').value;
+                        var phone = document.getElementById('applicant-phone').value;
+                        var address = document.getElementById('installation-address').value;
+                        var subject = encodeURIComponent('Demande de Label Qualité PROQUELEC');
+                        var body = encodeURIComponent(
+                            'Nom/Entreprise : ' + name + '\n' +
+                                                        'Email : ' + email + '\n' +
+                                                        'Téléphone : ' + phone + '\n' +
+                                                        'Adresse de l\'installation : ' + address + '\n' +
+                            'Documents justificatifs : (voir pièces jointes ou à transmettre séparément)'
+                        );
+                        window.location.href = 'mailto:proquelec@proquelec.sn?subject=' + subject + '&body=' + body;
+                        var successMsg = document.getElementById('label-form-success');
+                        if (successMsg) {
+                            successMsg.classList.remove('hidden');
+                            setTimeout(function() { successMsg.classList.add('hidden'); }, 6000);
+                        }
+                        form.reset();
+                    });
+                }
+            })();
+            </script>
+        </div>
+
         <!-- Energy Simulators Tab -->
     <div id="energy-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-btn-energy" aria-hidden="true" tabindex="-1">
             <div class="rounded-xl shadow-lg p-6 mb-8 theme-transition fade-in bg-primary">
@@ -1878,7 +1947,7 @@ window.showDiagnosticResult = function(key, desc) {
                 </button>
             </div>
             </div>
-            
+
         </div>
 
         <!-- Guides Tab -->
@@ -2962,9 +3031,9 @@ function downloadQuoteModel(type) {
                             </button>
                         </div>
 
-                                                    
+
                     </div>
-                       
+
                         </script>
                         <!-- Hidden detailed steps remain available for step navigation but are rendered from JS when needed -->
                         <div id="diagnostic-steps-hidden" class="hidden">
@@ -3176,7 +3245,7 @@ function downloadQuoteModel(type) {
                                 </script>
                         </div>
                     </div>
-                    
+
                             <div class="diagnostic-step hidden" data-step="2">
                                 <h4 class="font-medium mb-3">Vérifions la source du problème</h4>
                                 <div class="space-y-2">
@@ -3281,7 +3350,7 @@ function downloadQuoteModel(type) {
                                     </button>
                                 </div>
                             </div>
-                     
+
                 </div>
             </div>
         </div>
@@ -3289,13 +3358,13 @@ function downloadQuoteModel(type) {
     <!-- Section: Regulations & Standards Tab (Database & Search Guide) -->
     <div id="regulations-tab" class="tab-content hidden" role="tabpanel" aria-labelledby="tab-btn-regulations" aria-hidden="true" tabindex="-1">
         <div class="rounded-xl shadow-lg p-6 theme-transition fade-in bg-primary">
-            
+
             <div class="flex items-center mb-6">
                 <div class="w-12 h-12 bg-proqorange rounded-lg flex items-center justify-center mr-3">
                     <i class="fas fa-gavel text-white text-xl"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-proqblue">Base de données des normes et réglementations électrotechniques au Sénégal</h2>
-                         
+
                 <!-- Guide de recherche de norme au Sénégal -->
                 <div class="mb-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded" id="guide-normes-sn" aria-labelledby="guide-normes-sn-title">
                     <h3 class="font-semibold text-blue-700 mb-2" id="guide-normes-sn-title"><i class="fas fa-search mr-2"></i>Guide pratique : Rechercher et utiliser une norme au Sénégal</h3>
@@ -3309,7 +3378,7 @@ function downloadQuoteModel(type) {
                     </ul>
                 </div>
             </div>
-            
+
             <div class="mb-4">
                 <h4 class="text-base font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="fas fa-search"></i> Recherche dans les normes et réglementations</h4>
                 <input id="norme-search" type="search" class="w-full md:w-1/2 p-3 rounded-lg border border-green-200 focus:outline-none focus:ring-2 focus:ring-green-300 text-gray-800 placeholder-gray-400 shadow-sm transition-all duration-150 mb-2" placeholder="Ex : Règle, Éclairage, Conducteur, Appareil…" aria-label="Rechercher une norme ou une réglementation" />
@@ -3858,7 +3927,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else txt = '';
         progressDiv.textContent = txt;
     }
-       
+
     // 9. Message d'alerte persistant si symptôme critique
     // (handled by unified showDiagnosticResult implementation below)
 

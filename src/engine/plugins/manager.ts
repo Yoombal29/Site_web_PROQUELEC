@@ -186,8 +186,6 @@ export class PluginManager {
   // ── Build plugin context ─────────────────────────────────
 
   private buildContext(plugin: Plugin): PluginContext {
-    const self = this;
-
     return {
       manifest: plugin.manifest,
 
@@ -202,20 +200,20 @@ export class PluginManager {
           execute: handler.execute,
           undo: handler.undo,
         });
-        self.commandTypes.set(handler.type, plugin.manifest.id);
+        this.commandTypes.set(handler.type, plugin.manifest.id);
       },
 
       unregisterCommand: (type) => {
         commandRegistry.unregister(type);
-        self.commandTypes.delete(type);
+        this.commandTypes.delete(type);
       },
 
-      getBuilderStore: () => require('@/stores/useBuilderStore').useBuilderStore,
-      getHistoryStore: () => require('@/stores/useHistoryStore').useHistoryStore,
-      getDataStore: () => require('@/engine/data/store').useDataStore,
+      getBuilderStore: () => import('@/stores/useBuilderStore').then(m => m.useBuilderStore),
+      getHistoryStore: () => import('@/stores/useHistoryStore').then(m => m.useHistoryStore),
+      getDataStore: () => import('@/engine/data/store').then(m => m.useDataStore),
 
-      getPluginState: (pid) => self.registry.getState(pid),
-      listPlugins: () => self.registry.getAllStates(),
+      getPluginState: (pid) => this.registry.getState(pid),
+      listPlugins: () => this.registry.getAllStates(),
 
       logger: createLogger(plugin.manifest),
     };

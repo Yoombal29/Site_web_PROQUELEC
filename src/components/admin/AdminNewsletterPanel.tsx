@@ -44,7 +44,9 @@ export default function AdminNewsletterPanel() {
       ]);
       setSubscribers(Array.isArray(subs) ? subs : []);
       setCampaigns(Array.isArray(camps) ? camps : []);
-    } catch {}
+    } catch (err) {
+      // ignore data load errors, fallbacks handled by state defaults
+    }
     setLoading(false);
   };
 

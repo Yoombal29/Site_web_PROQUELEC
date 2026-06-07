@@ -92,9 +92,7 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
                             {subtitle}
                         </p>
                     </div>);
-
-
-      case 'text-image':
+      case 'text-image': {
         const isReversed = layout === 'right-left';
         return (
           <div className={cn(
@@ -108,51 +106,51 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
                                 <p className="text-xl text-slate-600 font-light leading-relaxed">{subtitle}</p>
                             </div>
                             {description && <p className="text-slate-500 leading-relaxed">{description}</p>}
-
                             {features && features.length > 0 &&
-              <ul className="grid sm:grid-cols-1 gap-4 mt-8">
+                              <ul className="grid sm:grid-cols-1 gap-4 mt-8">
                                     {features.map((f: unknown, fIdx: number) => {
-                  const isObj = typeof f === 'object' && f !== null;
-                  const fTitle = isObj ? f.title || f.label : f;
-                  const fDesc = isObj ? f.description : null;
-                  const fIcon = isObj ? f.icon : 'CheckCircle2';
+                                      const isObj = typeof f === 'object' && f !== null;
+                                      const fTitle = isObj ? (f as { title?: string; label?: string }).title || (f as { title?: string; label?: string }).label : f;
+                                      const fDesc = isObj ? (f as { description?: string }).description : null;
+                                      const fIcon = isObj ? (f as { icon?: string }).icon : 'CheckCircle2';
 
-                  return (
-                    <li key={fIdx} className="list-none">
-                                                <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: fIdx * 0.1 }}
-                        className="flex items-start gap-4">
-                        
-                                                    <div className={cn("w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-blue-50 text-blue-600")}>
-                                                        {renderIcon(fIcon, "w-3.5 h-3.5")}
-                                                    </div>
-                                                    <div>
-                                                        <span className="text-slate-800 font-bold block">{fTitle}</span>
-                                                        {fDesc && <span className="text-slate-500 text-sm">{fDesc}</span>}
-                                                    </div>
-                                                </motion.div>
-                                            </li>);
-
-                })}
+                                      return (
+                                        <li key={fIdx} className="list-none">
+                                            <motion.div
+                                                initial={{ opacity: 0, x: -10 }}
+                                                whileInView={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: fIdx * 0.1 }}
+                                                className="flex items-start gap-4"
+                                            >
+                                                <div className={cn("w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-blue-50 text-blue-600")}>
+                                                    {renderIcon(fIcon || 'CheckCircle2', "w-3.5 h-3.5")}
+                                                </div>
+                                                <div>
+                                                    <span className="text-slate-800 font-bold block">{fTitle as string}</span>
+                                                    {fDesc && <span className="text-slate-500 text-sm">{fDesc}</span>}
+                                                </div>
+                                            </motion.div>
+                                        </li>
+                                      );
+                                    })}
                                 </ul>
-              }
+                            }
                         </div>
                         <div className={cn("relative", isReversed ? "lg:order-1" : "")}>
                             <div className="aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white group relative">
                                 <img
-                  src={media?.url || (section as unknown).image || "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"}
+                  src={media?.url || (section as unknown as { image?: string }).image || "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"}
                   alt={title}
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" loading="lazy" />
-                
                                 <div className={cn("absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity")} />
                             </div>
                         </div>
-                    </div>);
+                    </div>
+        );
+            }
 
 
-      case 'features-list':
+      case 'features-list': {
         const cols = layout === 'grid-4' ? 'lg:grid-cols-4' : layout === 'grid-2' ? 'lg:grid-cols-2' : 'lg:grid-cols-3';
         return (
           <div className="space-y-16">
@@ -163,29 +161,31 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
                         </div>
                         <div className={cn("grid gap-8", cols)}>
                             {features?.map((f: unknown, fIdx: number) => {
-                const isObj = typeof f === 'object' && f !== null;
-                const fTitle = isObj ? f.title || f.label : f;
-                const fDesc = isObj ? f.description : null;
-                const fIcon = isObj ? f.icon : 'Zap';
+                              const isObj = typeof f === 'object' && f !== null;
+                              const fTitle = isObj ? (f as { title?: string; label?: string }).title || (f as { title?: string; label?: string }).label : f;
+                              const fDesc = isObj ? (f as { description?: string }).description : null;
+                              const fIcon = isObj ? (f as { icon?: string }).icon : 'Zap';
 
-                return (
-                  <motion.div
-                    key={fIdx}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: fIdx * 0.1 }}
-                    className="p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
-                    
-                                        <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 group-hover:rotate-3 bg-blue-50 text-blue-600")}>
-                                            {renderIcon(fIcon, "w-7 h-7")}
-                                        </div>
-                                        <h3 className="text-xl font-bold text-slate-900 mb-3">{fTitle}</h3>
-                                        <p className="text-slate-500 leading-relaxed text-sm">{fDesc || subtitle}</p>
-                                    </motion.div>);
-
-              })}
+                              return (
+                                <motion.div
+                                  key={fIdx}
+                                  initial={{ opacity: 0, y: 20 }}
+                                  whileInView={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: fIdx * 0.1 }}
+                                  className="p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group"
+                                >
+                                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 group-hover:rotate-3 bg-blue-50 text-blue-600")}>
+                                        {renderIcon(fIcon || 'Zap', "w-7 h-7")}
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3">{fTitle as string}</h3>
+                                    <p className="text-slate-500 leading-relaxed text-sm">{fDesc || subtitle}</p>
+                                </motion.div>
+                              );
+                            })}
                         </div>
-                    </div>);
+                    </div>
+        );
+      }
 
 
       case 'testimonials':

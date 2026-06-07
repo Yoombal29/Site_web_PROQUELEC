@@ -22,6 +22,7 @@ import { useBuilderThemeStore } from '@/stores/builder-theme.store';
 import { useBuilderUiStore } from '@/stores/builder-ui.store';
 import { useFontsStore } from '@/stores/fonts.store';
 import { toast } from 'sonner';
+import { useBuilderPermissions } from '@/hooks/useBuilderPermissions';
 import {
   BUILDER_ANIMATION_EASING_OPTIONS,
   BUILDER_FILTER_EFFECT_OPTIONS,
@@ -1358,6 +1359,9 @@ export const GodSettings = () => {
   const lockedNodes = useBuilderUiStore((state) => state.lockedNodes);
   const isLocked = selected ? lockedNodes[selected.id] : false;
 
+  // ── Permissions RBAC builder ──
+  const { canEditStyles, canDeleteBlocks, canEditContent } = useBuilderPermissions();
+
   if (!isEnabled) return null;
 
   return (
@@ -1397,18 +1401,24 @@ export const GodSettings = () => {
             active={tab === 'content'}
             onClick={() => setTab('content')}
           />
-          <TabBtn
-            label="Style"
-            icon={Palette}
-            active={tab === 'style'}
-            onClick={() => setTab('style')}
-          />
-          <TabBtn
-            label="Avancé"
-            icon={Code2}
-            active={tab === 'advanced'}
-            onClick={() => setTab('advanced')}
-          />
+          {/* Onglet Style — masqué si pas de droit edit_styles */}
+          {canEditStyles && (
+            <TabBtn
+              label="Style"
+              icon={Palette}
+              active={tab === 'style'}
+              onClick={() => setTab('style')}
+            />
+          )}
+          {/* Onglet Avancé — masqué si pas de droit edit_styles */}
+          {canEditStyles && (
+            <TabBtn
+              label="Avancé"
+              icon={Code2}
+              active={tab === 'advanced'}
+              onClick={() => setTab('advanced')}
+            />
+          )}
         </div>
       ) : (
         <div className="flex border-b border-[#252538] shrink-0 bg-[#0d0d1a]">
@@ -1464,8 +1474,8 @@ export const GodSettings = () => {
               )}
             </div>
 
-            {/* Delete/Duplicate controls */}
-            {selected.isDeletable && (
+            {/* Delete/Duplicate controls — visibles seulement si canDeleteBlocks */}
+            {selected.isDeletable && canDeleteBlocks && (
               <div className="pt-3 border-t border-[#252538] mt-2">
                 <div className="flex gap-2">
                   <button
@@ -1492,6 +1502,14 @@ export const GodSettings = () => {
                     Supprimer
                   </button>
                 </div>
+              </div>
+            )}
+
+            {/* Message si accès lecture seule */}
+            {!canEditContent && (
+              <div className="mt-3 p-2.5 rounded bg-slate-700/20 border border-slate-600/30 text-slate-400 text-[10px] flex items-start gap-1.5">
+                <span className="shrink-0">👁️</span>
+                <span>Vous êtes en mode lecture seule. Contactez l'administrateur pour obtenir les droits d'édition.</span>
               </div>
             )}
           </div>

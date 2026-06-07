@@ -106,6 +106,15 @@ import {
   WhyProquelecPremiumBlock,
 } from './ProquelecBlocksPlus';
 
+import {
+  HabilitationCardsBlock,
+  TrainingPricingTableBlock,
+  ProquelecActivitiesGridBlock,
+  TargetAudienceTabsBlock,
+  OrganizationStructureBlock,
+  ReferenceStatsBlock,
+} from './ProquelecBlocksExtra';
+
 import { RichTextBlock } from './RichTextEditorBlock';
 import { PopupBlock } from './PopupBuilderBlock';
 
@@ -123,6 +132,9 @@ import {
   RadioFieldBlock,
   FileUploadFieldBlock,
   HiddenFieldBlock,
+  DateFieldBlock,
+  TelFieldBlock,
+  ColorFieldBlock,
 } from './FormBuilderBlocks';
 
 import {
@@ -144,6 +156,7 @@ import {
 
 import { NavMenuBlock, MenuItemBlock, MegaMenuContainerBlock } from './MegaMenuBlock';
 import { OffCanvasPanelBlock, OffCanvasToggleBlock } from './OffCanvasBlock';
+import { HeaderBuilderBlock, FooterBuilderBlock } from './HeaderFooterBlocks';
 
 /**
  * Fallback component for missing/unknown block types
@@ -254,6 +267,14 @@ export const CRAFT_RESOLVER = {
   TestimonialsPremiumBlock,
   WhyProquelecPremiumBlock,
 
+  // Extra PROQUELEC blocks
+  HabilitationCardsBlock,
+  TrainingPricingTableBlock,
+  ProquelecActivitiesGridBlock,
+  TargetAudienceTabsBlock,
+  OrganizationStructureBlock,
+  ReferenceStatsBlock,
+
   // Rich text & popup
   RichTextBlock,
   PopupBlock,
@@ -276,6 +297,9 @@ export const CRAFT_RESOLVER = {
   RadioFieldBlock,
   FileUploadFieldBlock,
   HiddenFieldBlock,
+  DateFieldBlock,
+  TelFieldBlock,
+  ColorFieldBlock,
 
   // Dynamic data
   DynamicTextBlock,
@@ -298,6 +322,10 @@ export const CRAFT_RESOLVER = {
   MegaMenuContainerBlock,
   OffCanvasPanelBlock,
   OffCanvasToggleBlock,
+
+  // Header & Footer Builder
+  HeaderBuilderBlock,
+  FooterBuilderBlock,
 
   // Legacy / homepage-specific aliases
   cardBlock: CardBlock,

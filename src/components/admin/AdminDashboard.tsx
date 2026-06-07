@@ -38,6 +38,7 @@ import {
   FileText,
   Menu,
   ImageIcon,
+  CreditCard,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -50,10 +51,14 @@ import { useAnalytics } from '@/hooks/useAnalytics';
 import { useRealAnalytics } from '@/hooks/useRealAnalytics';
 import { getDashboardPath } from '@/utils/navigation';
 import AdminUsersPanel from './AdminUsersPanel';
+import AdminPermissionsPanel from './AdminPermissionsPanel';
+import AdminPlansPanel from './AdminPlansPanel';
+import AdminRagDashboard from './AdminRagDashboard';
 import TechToolsPanel from './TechToolsPanel';
 import NewsletterAdminPanel from './NewsletterAdminPanel';
 import MediaLibrary from '@/components/admin/MediaLibrary';
 import NotificationsAdminPanel from './NotificationsAdminPanel';
+import AdminPaymentPanel from './AdminPaymentPanel';
 
 interface TabConfig {
   id: string;
@@ -593,14 +598,12 @@ const AdminDashboard: React.FC = () => {
 
     setAiLoading(true);
     try {
-      const data: any = await apiFetch('/api/ai-code-assistant', {
+      const data: any = await apiFetch('/api/ai/chat', {
         method: 'POST',
         body: JSON.stringify({
           prompt: aiPrompt,
-          context: 'general_content_generation',
-          currentCode: '',
-          pageId: 'dashboard',
-          userId: 'admin',
+          task: 'text', // Spécifiez la tâche pour le Master Agent
+          context: { type: 'general_content_generation' },
         }),
       });
 
@@ -691,6 +694,18 @@ const AdminDashboard: React.FC = () => {
       icon: <Shield className="w-4 h-4" />,
       route: '/admin/permissions',
     },
+    {
+      id: 'tools-manager',
+      label: 'Gestion outils',
+      icon: <Cpu className="w-4 h-4" />,
+      route: '/admin/tools-manager',
+    },
+    {
+      id: 'tools-stats',
+      label: 'Stats outils',
+      icon: <BarChart3 className="w-4 h-4" />,
+      route: '/admin/tools-stats',
+    },
   ];
 
   const CATEGORY_LABELS: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
@@ -738,6 +753,12 @@ const AdminDashboard: React.FC = () => {
       color: 'text-orange-600',
     },
     {
+      id: 'expert-lab',
+      label: 'Lab Expert IA',
+      icon: <Cpu className="w-5 h-5" />,
+      color: 'text-rose-600',
+    },
+    {
       id: 'users',
       label: 'Utilisateurs',
       icon: <Users className="w-5 h-5" />,
@@ -766,6 +787,12 @@ const AdminDashboard: React.FC = () => {
       label: 'Médiathèque',
       icon: <ImageIcon className="w-5 h-5" />,
       color: 'text-sky-600',
+    },
+    {
+      id: 'paiements',
+      label: 'Paiements',
+      icon: <CreditCard className="w-5 h-5" />,
+      color: 'text-emerald-600',
     },
   ];
 
@@ -862,7 +889,13 @@ const AdminDashboard: React.FC = () => {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => {
+                  if (tab.id === 'expert-lab') {
+                    navigate('/expert/chat');
+                  } else {
+                    setActiveTab(tab.id);
+                  }
+                }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${
                   activeTab === tab.id
                     ? 'bg-blue-600/20 text-blue-600 border border-blue-600/30'
@@ -1321,6 +1354,22 @@ const AdminDashboard: React.FC = () => {
                 <AdminUsersPanel />
               </div>
             )}
+            {activeTab === 'permissions' && (
+              <div className="animate-fade-in">
+                <AdminPermissionsPanel />
+              </div>
+            )}
+            {activeTab === 'plans' && (
+              <div className="animate-fade-in">
+                <AdminPlansPanel />
+              </div>
+            )}
+            {activeTab === 'rag' && (
+              <div className="animate-fade-in">
+                <AdminRagDashboard />
+              </div>
+            )}
+            )}
 
             {/* SECTION : OUTILS TECHNIQUES */}
             {activeTab === 'tech-tools' && (
@@ -1356,6 +1405,12 @@ const AdminDashboard: React.FC = () => {
             )}
 
             {/* SECTION : NOTIFICATIONS */}
+            {activeTab === 'paiements' && (
+              <div className="animate-fade-in">
+                <AdminPaymentPanel />
+              </div>
+            )}
+
             {activeTab === 'notifications' && (
               <div className="animate-fade-in">
                 <div className="mb-6">

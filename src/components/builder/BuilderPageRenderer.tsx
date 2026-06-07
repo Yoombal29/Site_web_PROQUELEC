@@ -79,7 +79,7 @@ const SortableBlockWrapper = React.memo<{
 });
 
 const getUsedFonts = (blocks: Block[]): Set<string> => {
-  let fonts = new Set<string>();
+  const fonts = new Set<string>();
   if (!blocks) return fonts;
 
   blocks.forEach((block) => {
@@ -168,7 +168,6 @@ const BlockRenderer = React.memo<{
         id={block.id}
         {...blockProps}
         content={block.content ?? {}}
-        // eslint-disable-next-line no-inline-styles
         style={(baseStyle ?? {}) as BlockStyle}
         className={baseStyle?.className}
         children={

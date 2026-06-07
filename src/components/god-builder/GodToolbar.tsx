@@ -29,6 +29,7 @@ import { useGodEditor } from './GodEditorContext';
 import { useBrandingStore } from '@/stores/branding.store';
 import { TemplateManagerDialog } from './TemplateManagerDialog';
 import { useBuilderHistoryStore } from '@/stores/builder-history.store';
+import { useBuilderPermissions } from '@/hooks/useBuilderPermissions';
 import { HtmlBlock } from '@/components/blocks/ProquelecBlocks';
 import {
   Dialog,
@@ -81,6 +82,15 @@ export const GodToolbar = () => {
   const navigate = useNavigate();
   const [device, setDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [templateDialogOpen, setTemplateDialogOpen] = useState(false);
+
+  // ── Permissions builder ──
+  const {
+    canPublish,
+    canManageTemplates,
+    isGodMode,
+    canEditContent,
+    isLoading: permsLoading,
+  } = useBuilderPermissions();
 
   const [htmlDialogOpen, setHtmlDialogOpen] = useState(false);
   const [globalHtml, setGlobalHtml] = useState(htmlValue);
@@ -447,35 +457,41 @@ export const GodToolbar = () => {
           <Keyboard size={14} />
         </button>
 
-        {/* Export JSON */}
-        <button
-          onClick={handleExport}
-          className="p-2 text-slate-500 hover:text-slate-300 hover:bg-[#252538] rounded-lg transition-colors"
-          aria-label="Exporter la structure JSON de la page"
-          title="Exporter JSON"
-        >
-          <Code2 size={14} />
-        </button>
+        {/* Export JSON — God Mode seulement */}
+        {isGodMode && (
+          <button
+            onClick={handleExport}
+            className="p-2 text-slate-500 hover:text-slate-300 hover:bg-[#252538] rounded-lg transition-colors"
+            aria-label="Exporter la structure JSON de la page"
+            title="Exporter JSON (God Mode)"
+          >
+            <Code2 size={14} />
+          </button>
+        )}
 
-        {/* Template Manager */}
-        <button
-          onClick={() => setTemplateDialogOpen(true)}
-          className="p-2 text-slate-500 hover:text-indigo-400 hover:bg-[#252538] rounded-lg transition-colors"
-          aria-label="Ouvrir le gestionnaire de templates"
-          title="Gestionnaire de templates"
-        >
-          <FileJson size={14} className="text-indigo-400" />
-        </button>
+        {/* Template Manager — canManageTemplates seulement */}
+        {canManageTemplates && (
+          <button
+            onClick={() => setTemplateDialogOpen(true)}
+            className="p-2 text-slate-500 hover:text-indigo-400 hover:bg-[#252538] rounded-lg transition-colors"
+            aria-label="Ouvrir le gestionnaire de templates"
+            title="Gestionnaire de templates"
+          >
+            <FileJson size={14} className="text-indigo-400" />
+          </button>
+        )}
 
-        {/* Quick access to Builder config */}
-        <button
-          onClick={() => navigate('/admin/builder/config')}
-          className="p-2 text-slate-500 hover:text-slate-300 hover:bg-[#252538] rounded-lg transition-colors"
-          aria-label="Ouvrir la configuration du builder"
-          title="Configuration Builder"
-        >
-          <FileJson size={14} className="text-emerald-400" />
-        </button>
+        {/* Quick access to Builder config — God Mode seulement */}
+        {isGodMode && (
+          <button
+            onClick={() => navigate('/admin/builder/config')}
+            className="p-2 text-slate-500 hover:text-slate-300 hover:bg-[#252538] rounded-lg transition-colors"
+            aria-label="Ouvrir la configuration du builder"
+            title="Configuration Builder (God Mode)"
+          >
+            <FileJson size={14} className="text-emerald-400" />
+          </button>
+        )}
 
         {/* HTML Editor Dialog (Global) */}
         <Dialog open={htmlDialogOpen} onOpenChange={setHtmlDialogOpen}>
@@ -592,50 +608,61 @@ export const GodToolbar = () => {
 
         <div className="w-px h-5 bg-[#252538] mx-1" />
 
-        {/* Manual Publish/Save version button */}
-        <div className="flex items-center gap-1">
-          <button
-            onClick={handleQuickSave}
-            disabled={isSaving}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold shadow-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border border-blue-400/20 shadow-blue-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-            title="Sauvegarder (Ctrl+S)"
-          >
-            {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
-            <span>{isSaving ? 'Sauvegarde...' : 'Sauvegarder'}</span>
-          </button>
-          <div className="relative group">
+        {/* Bouton Sauvegarder — canPublish requis */}
+        {canPublish ? (
+          <div className="flex items-center gap-1">
             <button
-              className="px-2 py-2 rounded-lg text-sm font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border border-blue-400/20 transition-all"
-              aria-label="Ouvrir les options de sauvegarde"
-              title="Options de sauvegarde"
+              onClick={handleQuickSave}
+              disabled={isSaving}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold shadow-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border border-blue-400/20 shadow-blue-900/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              title="Sauvegarder (Ctrl+S)"
             >
-              ▾
+              {isSaving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+              <span>{isSaving ? 'Sauvegarde...' : 'Sauvegarder'}</span>
             </button>
-            <div className="absolute right-0 top-full mt-1 bg-[#12121f] border border-[#252538] rounded-xl shadow-2xl py-2 min-w-[220px] hidden group-hover:block z-50">
+            <div className="relative group">
               <button
-                onClick={handleSave}
-                className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-[#1a1a2a] hover:text-white transition flex items-center gap-2"
+                className="px-2 py-2 rounded-lg text-sm font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border border-blue-400/20 transition-all"
+                aria-label="Ouvrir les options de sauvegarde"
+                title="Options de sauvegarde"
               >
-                <Save size={12} className="text-indigo-400" />
-                Sauvegarder comme version...
+                ▾
               </button>
-              <button
-                onClick={togglePreview}
-                className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-[#1a1a2a] hover:text-white transition flex items-center gap-2"
-              >
-                <Eye size={12} className="text-emerald-400" />
-                {isEnabled ? 'Mode aperçu' : 'Mode édition'}
-              </button>
-              <button
-                onClick={() => setTimelineOpen(!timelineOpen)}
-                className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-[#1a1a2a] hover:text-white transition flex items-center gap-2"
-              >
-                <History size={12} className="text-amber-400" />
-                {timelineOpen ? 'Masquer la timeline' : 'Afficher la timeline'}
-              </button>
+              <div className="absolute right-0 top-full mt-1 bg-[#12121f] border border-[#252538] rounded-xl shadow-2xl py-2 min-w-[220px] hidden group-hover:block z-50">
+                <button
+                  onClick={handleSave}
+                  className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-[#1a1a2a] hover:text-white transition flex items-center gap-2"
+                >
+                  <Save size={12} className="text-indigo-400" />
+                  Sauvegarder comme version...
+                </button>
+                <button
+                  onClick={togglePreview}
+                  className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-[#1a1a2a] hover:text-white transition flex items-center gap-2"
+                >
+                  <Eye size={12} className="text-emerald-400" />
+                  {isEnabled ? 'Mode aperçu' : 'Mode édition'}
+                </button>
+                <button
+                  onClick={() => setTimelineOpen(!timelineOpen)}
+                  className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:bg-[#1a1a2a] hover:text-white transition flex items-center gap-2"
+                >
+                  <History size={12} className="text-amber-400" />
+                  {timelineOpen ? 'Masquer la timeline' : 'Afficher la timeline'}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          /* Badge lecture seule si pas de droit de publication */
+          <span
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-700/40 text-slate-400 border border-slate-600/30 cursor-not-allowed"
+            title="Vous n'avez pas le droit de publier cette page. Contactez l'administrateur."
+          >
+            <Eye size={13} />
+            Lecture seule
+          </span>
+        )}
       </div>
 
       {/* Quick upload button */}

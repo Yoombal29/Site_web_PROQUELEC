@@ -8,19 +8,19 @@ export interface DataSourceConfig {
   endpoint?: string;
   headers?: Record<string, string>;
   refreshInterval?: number;
-  data?: any;
+  data?: unknown;
   transform?: string;
 }
 
 interface DynamicDataState {
   sources: DataSourceConfig[];
-  cache: Record<string, { data: any; expiresAt: number }>;
+  cache: Record<string, { data: unknown; expiresAt: number }>;
   addSource: (source: Omit<DataSourceConfig, 'id'>) => void;
   removeSource: (id: string) => void;
   updateSource: (id: string, updates: Partial<DataSourceConfig>) => void;
-  setCache: (sourceId: string, data: any) => void;
-  getCached: (sourceId: string) => any;
-  fetchSource: (sourceId: string) => Promise<any>;
+  setCache: (sourceId: string, data: unknown) => void;
+  getCached: (sourceId: string) => unknown;
+  fetchSource: (sourceId: string) => Promise<unknown>;
   clearCache: () => void;
 }
 
@@ -63,8 +63,8 @@ export const useDynamicDataStore = create<DynamicDataState>()(
           const data = await res.json();
           get().setCache(sourceId, data);
           return data;
-        } catch (err: any) {
-          console.error(`[DynamicData] fetch error for ${source.name}:`, err);
+        } catch (err: unknown) {
+          console.error(`[DynamicData] fetch error for ${source.name}:`, err instanceof Error ? err.message : err);
           return null;
         }
       },

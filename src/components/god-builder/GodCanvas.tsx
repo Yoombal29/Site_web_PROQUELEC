@@ -20,6 +20,7 @@ import {
   RefreshCw,
   Layers,
   Save,
+  GripVertical,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { BuilderErrorBoundary } from './BuilderErrorBoundary';
@@ -895,6 +896,61 @@ export const GodCanvas = () => {
             </span>
           )}
 
+          {/* Device presets */}
+          <div className="flex items-center gap-1 border-r border-[#1a1a2a] pr-2">
+            <button
+              onClick={() => {
+                setDevice('desktop');
+                document.documentElement.style.removeProperty('--builder-viewport-width');
+              }}
+              className={`px-2 py-1 rounded text-[10px] font-medium transition ${device === 'desktop' ? 'bg-blue-600 text-white' : 'bg-[#1a1a2a] text-slate-400 hover:text-white'}`}
+              title="Desktop (100%)"
+            >
+              🖥
+            </button>
+            <button
+              onClick={() => setDevice('tablet')}
+              className={`px-2 py-1 rounded text-[10px] font-medium transition ${device === 'tablet' ? 'bg-blue-600 text-white' : 'bg-[#1a1a2a] text-slate-400 hover:text-white'}`}
+              title="Tablette (768px)"
+            >
+              📱
+            </button>
+            <button
+              onClick={() => setDevice('mobile')}
+              className={`px-2 py-1 rounded text-[10px] font-medium transition ${device === 'mobile' ? 'bg-blue-600 text-white' : 'bg-[#1a1a2a] text-slate-400 hover:text-white'}`}
+              title="Mobile (390px)"
+            >
+              📲
+            </button>
+          </div>
+
+          {/* Custom width input */}
+          <div className="flex items-center gap-1 border-r border-[#1a1a2a] pr-2">
+            <GripVertical size={12} className="text-slate-600 shrink-0" />
+            <input
+              type="number"
+              value={
+                device === 'desktop'
+                  ? ''
+                  : parseInt(String(VIEWPORT_WIDTHS[device] || '390').replace('px', ''))
+              }
+              onChange={(e) => {
+                const val = e.target.value;
+                if (val) {
+                  setDevice(device === 'mobile' || device === 'tablet' ? device : 'mobile');
+                  document.documentElement.style.setProperty(
+                    '--builder-viewport-width',
+                    val + 'px',
+                  );
+                }
+              }}
+              disabled={device === 'desktop'}
+              className="w-14 h-6 bg-[#1a1a2a] border border-[#252538] rounded text-[10px] text-slate-300 text-center px-1 outline-none focus:border-blue-500"
+              placeholder="px"
+            />
+            <span className="text-[9px] text-slate-600">px</span>
+          </div>
+
           {/* Zoom controls */}
           <div className="flex items-center gap-1 bg-[#151521] border border-[#252538] rounded-lg px-2 py-1">
             <button
@@ -1148,22 +1204,90 @@ export const GodCanvas = () => {
       <CanvasOverlays />
 
       <style>{`
-        /* Responsive viewport simulation */
+        /* Responsive viewport simulation - maps data-viewport to override real @media queries */
         .canvas-viewport-wrapper {
-          transition: width 0.3s ease-out;
+          transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .canvas-viewport-wrapper[data-viewport="mobile"] {
-          width: 390px;
-          --responsive-breakpoint: 390px;
+          width: var(--builder-viewport-width, 390px);
         }
         .canvas-viewport-wrapper[data-viewport="tablet"] {
-          width: 768px;
-          --responsive-breakpoint: 768px;
+          width: var(--builder-viewport-width, 768px);
         }
         .canvas-viewport-wrapper[data-viewport="desktop"] {
           width: 100%;
-          --responsive-breakpoint: 100%;
         }
+
+        /* Responsive breakpoint simulation - these override the real @media queries */
+        /* Mobile viewport: force mobile CSS vars */
+        .canvas-viewport-wrapper[data-viewport="mobile"] .proquelec-builder-node {
+          margin-top: var(--mobile-margin-top, var(--desktop-margin-top, 0px)) !important;
+          margin-right: var(--mobile-margin-right, var(--desktop-margin-right, 0px)) !important;
+          margin-bottom: var(--mobile-margin-bottom, var(--desktop-margin-bottom, 0px)) !important;
+          margin-left: var(--mobile-margin-left, var(--desktop-margin-left, 0px)) !important;
+          padding-top: var(--mobile-padding-top, var(--desktop-padding-top, 0px)) !important;
+          padding-right: var(--mobile-padding-right, var(--desktop-padding-right, 0px)) !important;
+          padding-bottom: var(--mobile-padding-bottom, var(--desktop-padding-bottom, 0px)) !important;
+          padding-left: var(--mobile-padding-left, var(--desktop-padding-left, 0px)) !important;
+          font-size: var(--mobile-font-size, var(--desktop-font-size, inherit)) !important;
+          text-align: var(--mobile-text-align, var(--desktop-text-align, inherit)) !important;
+          display: var(--mobile-display, var(--desktop-display, block)) !important;
+          flex-direction: var(--mobile-flex-direction, var(--desktop-flex-direction, row)) !important;
+          flex-wrap: var(--mobile-flex-wrap, var(--desktop-flex-wrap, nowrap)) !important;
+          justify-content: var(--mobile-justify-content, var(--desktop-justify-content, flex-start)) !important;
+          align-items: var(--mobile-align-items, var(--desktop-align-items, stretch)) !important;
+          gap: var(--mobile-gap, var(--desktop-gap, 0px)) !important;
+          flex-grow: var(--mobile-flex-grow, var(--desktop-flex-grow, 0)) !important;
+          flex-shrink: var(--mobile-flex-shrink, var(--desktop-flex-shrink, 1)) !important;
+          flex-basis: var(--mobile-flex-basis, var(--desktop-flex-basis, auto)) !important;
+          order: var(--mobile-order, var(--desktop-order, 0)) !important;
+          align-self: var(--mobile-align-self, var(--desktop-align-self, auto)) !important;
+          grid-template-columns: var(--mobile-grid-template-columns, var(--desktop-grid-template-columns, none)) !important;
+          grid-template-rows: var(--mobile-grid-template-rows, var(--desktop-grid-template-rows, none)) !important;
+          place-items: var(--mobile-place-items, var(--desktop-place-items, stretch)) !important;
+        }
+
+        /* Tablet viewport: force tablet CSS vars */
+        .canvas-viewport-wrapper[data-viewport="tablet"] .proquelec-builder-node {
+          margin-top: var(--tablet-margin-top, var(--desktop-margin-top, 0px)) !important;
+          margin-right: var(--tablet-margin-right, var(--desktop-margin-right, 0px)) !important;
+          margin-bottom: var(--tablet-margin-bottom, var(--desktop-margin-bottom, 0px)) !important;
+          margin-left: var(--tablet-margin-left, var(--desktop-margin-left, 0px)) !important;
+          padding-top: var(--tablet-padding-top, var(--desktop-padding-top, 0px)) !important;
+          padding-right: var(--tablet-padding-right, var(--desktop-padding-right, 0px)) !important;
+          padding-bottom: var(--tablet-padding-bottom, var(--desktop-padding-bottom, 0px)) !important;
+          padding-left: var(--tablet-padding-left, var(--desktop-padding-left, 0px)) !important;
+          font-size: var(--tablet-font-size, var(--desktop-font-size, inherit)) !important;
+          text-align: var(--tablet-text-align, var(--desktop-text-align, inherit)) !important;
+          display: var(--tablet-display, var(--desktop-display, block)) !important;
+          flex-direction: var(--tablet-flex-direction, var(--desktop-flex-direction, row)) !important;
+          flex-wrap: var(--tablet-flex-wrap, var(--desktop-flex-wrap, nowrap)) !important;
+          justify-content: var(--tablet-justify-content, var(--desktop-justify-content, flex-start)) !important;
+          align-items: var(--tablet-align-items, var(--desktop-align-items, stretch)) !important;
+          gap: var(--tablet-gap, var(--desktop-gap, 0px)) !important;
+          flex-grow: var(--tablet-flex-grow, var(--desktop-flex-grow, 0)) !important;
+          flex-shrink: var(--tablet-flex-shrink, var(--desktop-flex-shrink, 1)) !important;
+          flex-basis: var(--tablet-flex-basis, var(--desktop-flex-basis, auto)) !important;
+          order: var(--tablet-order, var(--desktop-order, 0)) !important;
+          align-self: var(--tablet-align-self, var(--desktop-align-self, auto)) !important;
+          grid-template-columns: var(--tablet-grid-template-columns, var(--desktop-grid-template-columns, none)) !important;
+          grid-template-rows: var(--tablet-grid-template-rows, var(--desktop-grid-template-rows, none)) !important;
+          place-items: var(--tablet-place-items, var(--desktop-place-items, stretch)) !important;
+        }
+
+        /* Hide responsive-only elements based on viewport mode */
+        .canvas-viewport-wrapper[data-viewport="desktop"] .responsive-only-mobile,
+        .canvas-viewport-wrapper[data-viewport="desktop"] .responsive-only-tablet { display: none !important; }
+        .canvas-viewport-wrapper[data-viewport="tablet"] .responsive-only-desktop,
+        .canvas-viewport-wrapper[data-viewport="tablet"] .responsive-only-mobile { display: none !important; }
+        .canvas-viewport-wrapper[data-viewport="mobile"] .responsive-only-desktop,
+        .canvas-viewport-wrapper[data-viewport="mobile"] .responsive-only-tablet { display: none !important; }
+
+        /* Visibility classes work in builder too */
+        .canvas-viewport-wrapper[data-viewport="desktop"] .hide-desktop { display: none !important; }
+        .canvas-viewport-wrapper[data-viewport="tablet"] .hide-tablet { display: none !important; }
+        .canvas-viewport-wrapper[data-viewport="mobile"] .hide-mobile { display: none !important; }
+        .canvas-viewport-wrapper[data-viewport="mobile"] .reverse-mobile { flex-direction: column-reverse !important; }
 
         .build-canvas-wrapper {
           width: 100%;
@@ -1181,22 +1305,6 @@ export const GodCanvas = () => {
         .builder-canvas-scale-100 { transform: scale(1); margin-bottom: 0; }
         .builder-canvas-scale-125 { transform: scale(1.25); margin-bottom: 0; }
         .builder-canvas-scale-150 { transform: scale(1.5); margin-bottom: 0; }
-
-        /* Simulate media queries based on data-viewport attribute */
-        .canvas-viewport-wrapper[data-viewport="mobile"] [data-builder-canvas] .container-block {
-          --viewport-width: 390px;
-        }
-        .canvas-viewport-wrapper[data-viewport="tablet"] [data-builder-canvas] .container-block {
-          --viewport-width: 768px;
-        }
-
-        /* Hide mobile/tablet-only indicators when not in that viewport */
-        .canvas-viewport-wrapper[data-viewport="desktop"] .responsive-only-mobile,
-        .canvas-viewport-wrapper[data-viewport="desktop"] .responsive-only-tablet { display: none; }
-        .canvas-viewport-wrapper[data-viewport="tablet"] .responsive-only-desktop,
-        .canvas-viewport-wrapper[data-viewport="tablet"] .responsive-only-mobile { display: none; }
-        .canvas-viewport-wrapper[data-viewport="mobile"] .responsive-only-desktop,
-        .canvas-viewport-wrapper[data-viewport="mobile"] .responsive-only-tablet { display: none; }
 
         /* Style for hidden nodes inside builder canvas */
         .proquelec-builder-node[data-hidden="true"] {

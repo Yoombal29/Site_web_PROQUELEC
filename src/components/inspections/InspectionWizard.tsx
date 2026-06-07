@@ -305,7 +305,7 @@ export function InspectionWizard({ projectId, onClose, forceType }: InspectionWi
                         </div>
                     </div>
                 );
-            case 4:
+            case 4: {
                 const verdictColor = liveScore >= 90 ? 'text-emerald-600' : liveScore >= 70 ? 'text-amber-600' : 'text-red-600';
                 const verdictBg = liveScore >= 90 ? 'bg-emerald-500' : liveScore >= 70 ? 'bg-amber-500' : 'bg-red-500';
                 return (
@@ -336,6 +336,7 @@ export function InspectionWizard({ projectId, onClose, forceType }: InspectionWi
                         )}
                     </div>
                 );
+            }
             default: return null;
         }
     };

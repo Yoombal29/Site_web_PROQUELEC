@@ -38,7 +38,9 @@ export default function NewsletterAdminPanel() {
           const data = await res.json();
           setSubscribers(Array.isArray(data) ? data : []);
         }
-      } catch {}
+      } catch (err) {
+        // ignore secondary fallback endpoint errors
+      }
     } finally {
       setLoading(false);
     }

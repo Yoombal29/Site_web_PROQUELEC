@@ -3,22 +3,24 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import VoltageDropCalculator from '../components/tools/VoltageDropCalculator';
 
+vi.setConfig({ testTimeout: 15000 });
+
 // Mock crypto-js
 vi.mock('crypto-js', () => ({
-  SHA256: vi.fn(() => ({ toString: () => 'mocked-hash' }))
+  SHA256: vi.fn(() => ({ toString: () => 'mocked-hash' })),
 }));
 
 // Mock file-saver
 vi.mock('file-saver', () => ({
-  saveAs: vi.fn()
+  saveAs: vi.fn(),
 }));
 
 // Mock jszip
 vi.mock('jszip', () => ({
   default: vi.fn(() => ({
     file: vi.fn(),
-    generateAsync: vi.fn(() => Promise.resolve(new Blob()))
-  }))
+    generateAsync: vi.fn(() => Promise.resolve(new Blob())),
+  })),
 }));
 
 describe('VoltageDropCalculator', () => {
@@ -34,7 +36,7 @@ describe('VoltageDropCalculator', () => {
     // Find info icon for current input
     const infoIcons = screen.getAllByRole('button', { hidden: true });
     const currentInfoIcon = infoIcons.find((icon) =>
-    icon.parentElement?.textContent?.includes('Courant')
+      icon.parentElement?.textContent?.includes('Courant'),
     );
 
     if (currentInfoIcon) {

@@ -58,7 +58,6 @@ export const useFontsStore = create<FontsState>()(
 );
 
 // Inject active fonts into document head
-let injected = false;
 export function injectActiveFonts(fonts: CustomFont[]) {
   const active = fonts.filter((f) => f.active);
   if (active.length === 0) return;

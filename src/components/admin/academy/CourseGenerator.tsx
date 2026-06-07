@@ -187,7 +187,7 @@ export const CourseGenerator: React.FC = () => {
 
       const result = await generateCourseInWorker(documents, settings, customInstructions);
 
-      let finalCourse = result.course;
+      const finalCourse = result.course;
 
       // Étape 3: Finalisation
       setGenerationProgress(100);

@@ -39,6 +39,7 @@ import {
 import { toast } from 'sonner';
 import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
 import { cloneNodeTreeWithNewIds } from './cloneNodeTree';
+import { useBuilderPermissions } from '@/hooks/useBuilderPermissions';
 import {
   SECTION_TEMPLATES,
   TEMPLATE_CATEGORY_LABELS,
@@ -137,7 +138,16 @@ import {
   TestimonialsPremiumBlock,
   WhyProquelecPremiumBlock,
 } from '../blocks/ProquelecBlocksPlus';
+import {
+  HabilitationCardsBlock,
+  TrainingPricingTableBlock,
+  ProquelecActivitiesGridBlock,
+  TargetAudienceTabsBlock,
+  OrganizationStructureBlock,
+  ReferenceStatsBlock,
+} from '../blocks/ProquelecBlocksExtra';
 import { FunctionalPageBlock, getFunctionalPageToolboxItems } from '../blocks/FunctionalPageBlock';
+import { HeaderBuilderBlock, FooterBuilderBlock } from '../blocks/HeaderFooterBlocks';
 import { PdfViewerBlock, WordViewerBlock, ExcelViewerBlock } from '../blocks/DocumentViewerBlocks';
 import {
   FormBuilderBlock,
@@ -216,6 +226,20 @@ const BLOCK_GROUPS = [
         color: 'text-indigo-400',
         tags: ['sticky', 'fixed', 'header'],
         factory: () => <StickyContainerBlock />,
+      },
+      {
+        icon: LayoutTemplate,
+        label: 'Header Builder',
+        color: 'text-indigo-400',
+        tags: ['header', 'navigation', 'menu', 'topbar', 'nav'],
+        factory: () => <HeaderBuilderBlock />,
+      },
+      {
+        icon: BookOpen,
+        label: 'Footer Builder',
+        color: 'text-indigo-400',
+        tags: ['footer', 'bottom', 'navigation', 'links'],
+        factory: () => <FooterBuilderBlock />,
       },
       {
         icon: LayoutTemplate,
@@ -728,6 +752,48 @@ const BLOCK_GROUPS = [
         tags: ['proquelec', 'valeur', 'mission', 'institution', 'confiance'],
         factory: () => <WhyProquelecPremiumBlock />,
       },
+      {
+        icon: ShieldCheck,
+        label: 'Cartes Habilitation',
+        color: 'text-amber-400',
+        tags: ['habilitation', 'cartes', 'roles', 'niveaux'],
+        factory: () => <HabilitationCardsBlock />,
+      },
+      {
+        icon: DollarSign,
+        label: 'Tarifs Modules',
+        color: 'text-green-400',
+        tags: ['tarifs', 'modules', 'prix', 'tableau'],
+        factory: () => <TrainingPricingTableBlock />,
+      },
+      {
+        icon: LayoutTemplate,
+        label: 'Grille Activités',
+        color: 'text-sky-400',
+        tags: ['activites', 'domaines', 'grille', 'proquelec'],
+        factory: () => <ProquelecActivitiesGridBlock />,
+      },
+      {
+        icon: Layers,
+        label: 'Onglets Publics',
+        color: 'text-indigo-400',
+        tags: ['public', 'cibles', 'onglets', 'tabs'],
+        factory: () => <TargetAudienceTabsBlock />,
+      },
+      {
+        icon: List,
+        label: 'Structure Org.',
+        color: 'text-violet-400',
+        tags: ['organisation', 'structure', 'membres'],
+        factory: () => <OrganizationStructureBlock />,
+      },
+      {
+        icon: BarChart3,
+        label: 'Stats Références',
+        color: 'text-rose-400',
+        tags: ['stats', 'references', 'impact', 'chiffres'],
+        factory: () => <ReferenceStatsBlock />,
+      },
     ],
   },
   {
@@ -1154,6 +1220,9 @@ export const GodToolbox = () => {
   const [dbTemplates, setDbTemplates] = useState<DbTemplate[]>([]);
   const [loadingTemplates, setLoadingTemplates] = useState(false);
 
+  // ── Permissions builder ──
+  const { canAddBlocks, canManageTemplates } = useBuilderPermissions();
+
   const fetchTemplates = async () => {
     setLoadingTemplates(true);
     try {
@@ -1261,6 +1330,10 @@ export const GodToolbox = () => {
   };
 
   const handleInsertBlock = (factory: () => React.ReactElement, label: string) => {
+    if (!canAddBlocks) {
+      toast.error('Vous n\'avez pas le droit d\'ajouter des blocs. Contactez l\'administrateur.');
+      return;
+    }
     try {
       const element = factory();
       if (!element?.type) {
@@ -1302,14 +1375,16 @@ export const GodToolbox = () => {
           <div className="flex border-b border-[#252538] shrink-0">
             <button
               onClick={() => setActiveTab('blocks')}
-              className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'blocks' ? 'text-white border-b-2 border-indigo-500' : 'text-slate-500 hover:text-slate-300'}`}
+              className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'blocks' ? 'text-white border-b-2 border-indigo-500' : 'text-slate-500 hover:text-slate-300'} ${!canAddBlocks ? 'opacity-50' : ''}`}
+              title={!canAddBlocks ? 'Accès restreint — vous ne pouvez pas ajouter de blocs' : 'Blocs'}
             >
               <Layers size={10} className="inline mr-1" />
               Blocs
             </button>
             <button
-              onClick={() => setActiveTab('templates')}
-              className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'templates' ? 'text-white border-b-2 border-amber-500' : 'text-slate-500 hover:text-slate-300'}`}
+              onClick={() => canManageTemplates && setActiveTab('templates')}
+              className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'templates' ? 'text-white border-b-2 border-amber-500' : 'text-slate-500 hover:text-slate-300'} ${!canManageTemplates ? 'opacity-50 cursor-not-allowed' : ''}`}
+              title={!canManageTemplates ? 'Accès restreint — droits templates requis' : 'Templates'}
             >
               <BookOpen size={10} className="inline mr-1" />
               Templates

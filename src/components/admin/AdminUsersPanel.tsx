@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Plus,
-  Search,
-  Pencil,
-  Trash2,
-  Loader2,
-  Users as UsersIcon,
-} from 'lucide-react';
+import { Plus, Search, Pencil, Trash2, Loader2, Users as UsersIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { apiFetch } from '@/lib/api-client';
 
@@ -45,7 +38,7 @@ import {
 interface User {
   id: string;
   email: string;
-  role: 'admin' | 'electricien' | 'entreprise' | 'membre' | 'partner';
+  role: 'admin' | 'secondary_admin' | 'electricien' | 'entreprise' | 'membre' | 'partner';
   status: boolean;
   createdAt: string;
 }
@@ -62,6 +55,7 @@ const ROLES: { value: Role; label: string }[] = [
 
 const ROLE_BADGE_VARIANTS: Record<Role, string> = {
   admin: 'destructive',
+  secondary_admin: 'warning',
   electricien: 'default',
   entreprise: 'secondary',
   membre: 'outline',
@@ -70,6 +64,7 @@ const ROLE_BADGE_VARIANTS: Record<Role, string> = {
 
 const ROLE_BADGE_STYLES: Record<Role, string> = {
   admin: 'bg-red-100 text-red-800 border-red-200 hover:bg-red-100',
+  secondary_admin: 'bg-amber-100 text-amber-800 border-amber-200 hover:bg-amber-100',
   electricien: 'bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-100',
   entreprise: 'bg-green-100 text-green-800 border-green-200 hover:bg-green-100',
   membre: 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-100',
@@ -143,9 +138,7 @@ const AdminUsersPanel: React.FC = () => {
   // Filtered list
   // -----------------------------------------------------------------------
 
-  const filteredUsers = users.filter((u) =>
-    u.email.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filteredUsers = users.filter((u) => u.email.toLowerCase().includes(search.toLowerCase()));
 
   // -----------------------------------------------------------------------
   // Modal helpers
@@ -180,7 +173,7 @@ const AdminUsersPanel: React.FC = () => {
 
   const handleSave = async () => {
     if (!formEmail.trim()) {
-      toast.error('L\'email est requis');
+      toast.error("L'email est requis");
       return;
     }
     if (!editingUser && !formPassword.trim()) {
@@ -221,7 +214,7 @@ const AdminUsersPanel: React.FC = () => {
       closeModal();
       fetchUsers();
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Erreur lors de l\'enregistrement';
+      const msg = err instanceof Error ? err.message : "Erreur lors de l'enregistrement";
       toast.error(msg);
     } finally {
       setSaving(false);
@@ -282,7 +275,8 @@ const AdminUsersPanel: React.FC = () => {
           <div>
             <h2 className="text-xl font-bold text-foreground">Gestion des utilisateurs</h2>
             <p className="text-sm text-muted-foreground">
-              {users.length} utilisateur{users.length > 1 ? 's' : ''} enregistré{users.length > 1 ? 's' : ''}
+              {users.length} utilisateur{users.length > 1 ? 's' : ''} enregistré
+              {users.length > 1 ? 's' : ''}
             </p>
           </div>
         </div>
@@ -333,7 +327,14 @@ const AdminUsersPanel: React.FC = () => {
                   <TableCell className="font-medium">{user.email}</TableCell>
                   <TableCell>
                     <Badge
-                      variant={ROLE_BADGE_VARIANTS[user.role] as 'destructive' | 'default' | 'secondary' | 'outline'}
+                      variant={
+                        ROLE_BADGE_VARIANTS[user.role] as
+                          | 'destructive'
+                          | 'warning'
+                          | 'default'
+                          | 'secondary'
+                          | 'outline'
+                      }
                       className={ROLE_BADGE_STYLES[user.role]}
                     >
                       {ROLES.find((r) => r.value === user.role)?.label ?? user.role}
@@ -345,7 +346,9 @@ const AdminUsersPanel: React.FC = () => {
                         checked={user.status}
                         onCheckedChange={() => handleToggleStatus(user)}
                       />
-                      <span className={`text-xs font-medium ${user.status ? 'text-green-600' : 'text-red-500'}`}>
+                      <span
+                        className={`text-xs font-medium ${user.status ? 'text-green-600' : 'text-red-500'}`}
+                      >
                         {user.status ? 'Actif' : 'Inactif'}
                       </span>
                     </div>
@@ -369,9 +372,7 @@ const AdminUsersPanel: React.FC = () => {
                         onClick={() => handleToggleStatus(user)}
                         title={user.status ? 'Désactiver' : 'Activer'}
                       >
-                        <span className="text-base leading-none">
-                          {user.status ? '🔄' : '🔄'}
-                        </span>
+                        <span className="text-base leading-none">{user.status ? '🔄' : '🔄'}</span>
                       </Button>
                       <Button
                         variant="ghost"
@@ -398,11 +399,11 @@ const AdminUsersPanel: React.FC = () => {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>
-              {editingUser ? 'Modifier l\'utilisateur' : 'Créer un nouvel utilisateur'}
+              {editingUser ? "Modifier l'utilisateur" : 'Créer un nouvel utilisateur'}
             </DialogTitle>
             <DialogDescription>
               {editingUser
-                ? 'Modifiez les informations de l\'utilisateur ci-dessous.'
+                ? "Modifiez les informations de l'utilisateur ci-dessous."
                 : 'Remplissez les informations pour créer un nouvel utilisateur.'}
             </DialogDescription>
           </DialogHeader>
@@ -422,7 +423,12 @@ const AdminUsersPanel: React.FC = () => {
             {/* Password */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-foreground">
-                Mot de passe {editingUser && <span className="text-muted-foreground font-normal">(laisser vide pour conserver l'actuel)</span>}
+                Mot de passe{' '}
+                {editingUser && (
+                  <span className="text-muted-foreground font-normal">
+                    (laisser vide pour conserver l'actuel)
+                  </span>
+                )}
               </label>
               <Input
                 type="password"
@@ -451,12 +457,11 @@ const AdminUsersPanel: React.FC = () => {
 
             {/* Status */}
             <div className="flex items-center gap-3 pt-2">
-              <Switch
-                id="user-status"
-                checked={formStatus}
-                onCheckedChange={setFormStatus}
-              />
-              <label htmlFor="user-status" className="text-sm font-medium text-foreground cursor-pointer">
+              <Switch id="user-status" checked={formStatus} onCheckedChange={setFormStatus} />
+              <label
+                htmlFor="user-status"
+                className="text-sm font-medium text-foreground cursor-pointer"
+              >
                 {formStatus ? 'Actif' : 'Inactif'}
               </label>
             </div>
@@ -477,7 +482,12 @@ const AdminUsersPanel: React.FC = () => {
       {/* ================================================================ */}
       {/* Delete confirmation                                              */}
       {/* ================================================================ */}
-      <Dialog open={!!deleteTarget} onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}>
+      <Dialog
+        open={!!deleteTarget}
+        onOpenChange={(open) => {
+          if (!open) setDeleteTarget(null);
+        }}
+      >
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
             <DialogTitle>Confirmer la suppression</DialogTitle>

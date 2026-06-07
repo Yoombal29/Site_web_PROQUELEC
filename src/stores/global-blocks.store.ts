@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 export interface GlobalBlock {
   id: string;
   name: string;
-  serializedNode: any;
+  serializedNode: unknown;
   category: string;
   createdAt: string;
   updatedAt: string;

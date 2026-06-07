@@ -156,7 +156,7 @@ export const sanitizeCSSSelector = (selector: string | null | undefined): string
   if (!selector || typeof selector !== 'string') return '';
 
   // Only allow alphanumeric, hyphens, underscores, and some special chars
-  const validSelector = /^[a-zA-Z0-9_-][a-zA-Z0-9_\-\[\]="#.:]*$/;
+  const validSelector = /^[a-zA-Z0-9_-][a-zA-Z0-9_\-[\]="#.:]*$/;
   if (!validSelector.test(selector)) {
     console.warn('[Sanitization] Blocked invalid CSS selector');
     return '';

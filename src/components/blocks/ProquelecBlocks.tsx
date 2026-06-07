@@ -669,11 +669,11 @@ const HeroSettings = () => {
           <div className="mt-2 text-[10px] text-slate-500">
             💡 Pour éditer les slides de manière permanente, allez dans&nbsp;
             <a
-              href="/admin/home-slides"
+              href="/dashboard?tab=home_management"
               target="_blank"
               className="text-indigo-400 hover:underline"
             >
-              Admin → Slides
+              Dashboard → Accueil → Bannières
             </a>
             .
           </div>

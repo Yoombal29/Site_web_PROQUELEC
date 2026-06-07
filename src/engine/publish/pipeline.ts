@@ -56,7 +56,7 @@ export class PublishPipeline {
     }
 
     // 2. Incremental checks (if previous snapshot exists)
-    let changedBlockIds: string[] | undefined = undefined;
+    const changedBlockIds: string[] | undefined = undefined;
     const currentHash = JSON.stringify(hashTree(draftBlocks)); // In reality, we'd use the full tree hash
 
     if (previousSnapshot && previousSnapshot.draftHash === currentHash) {

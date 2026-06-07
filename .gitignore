@@ -51,3 +51,7 @@ tmp_*.py
 tmp_*.sql
 tmp_page_response.txt
 tmp_pages_schema.txt
+
+# Ignored premium model pages
+model-page/
+

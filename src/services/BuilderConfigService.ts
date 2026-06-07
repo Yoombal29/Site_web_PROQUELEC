@@ -4,7 +4,12 @@
  * pour plusieurs sites/tenants sans toucher au coeur du renderer.
  */
 
-type SiteConfig = Record<string, any>;
+type SiteConfig = Record<string, unknown>;
+
+/** Window augmentation to support server-injected __SITE_CONFIG__ */
+interface SiteConfigWindow extends Window {
+  __SITE_CONFIG__?: SiteConfig;
+}
 
 const siteConfigs: Map<string, SiteConfig> = new Map();
 
@@ -25,10 +30,9 @@ export async function loadSiteConfig(siteId = DEFAULT_SITE_ID): Promise<SiteConf
 
   // Try to read a global bootstrap config injected by server-side (window.__SITE_CONFIG__)
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const anyWin: any = (typeof window !== 'undefined') ? window : undefined;
-    if (anyWin && anyWin.__SITE_CONFIG__) {
-      registerSiteConfig(siteId, anyWin.__SITE_CONFIG__);
+    const siteWin = (typeof window !== 'undefined') ? window as SiteConfigWindow : undefined;
+    if (siteWin?.__SITE_CONFIG__) {
+      registerSiteConfig(siteId, siteWin.__SITE_CONFIG__);
       return getSiteConfig(siteId);
     }
   } catch (e) {
@@ -52,10 +56,9 @@ export async function loadSiteConfig(siteId = DEFAULT_SITE_ID): Promise<SiteConf
 
 // Auto-register global config if present at module load time
 try {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const anyWin: any = (typeof window !== 'undefined') ? window : undefined;
-  if (anyWin && anyWin.__SITE_CONFIG__) {
-    registerSiteConfig(DEFAULT_SITE_ID, anyWin.__SITE_CONFIG__);
+  const siteWin = (typeof window !== 'undefined') ? window as SiteConfigWindow : undefined;
+  if (siteWin?.__SITE_CONFIG__) {
+    registerSiteConfig(DEFAULT_SITE_ID, siteWin.__SITE_CONFIG__);
   }
 } catch (e) {
   // noop

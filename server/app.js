@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
+const fs = require('fs');
 const { AppError, handleAppError } = require('./core/errors');
 const { getLogs, httpLogger } = require('./core/logger');
 const { sendSseEvent, addSseClient, removeSseClient, getSseStats } = require('./core/sse');
@@ -35,7 +36,17 @@ function createApp() {
   });
   app.use('/api/auth/', authLimiter);
 
-  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+  // Serve uploaded files - in production, these should be behind authentication
+  if (process.env.NODE_ENV !== 'production') {
+    app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+  } else {
+    // In production, serve uploads through the media API with auth
+    app.use('/uploads', (req, res) => {
+      res
+        .status(403)
+        .json({ error: 'Direct file access is disabled in production. Use /api/media endpoint.' });
+    });
+  }
 
   // --- SSE Endpoint ---
   app.get('/api/events', (req, res) => {
@@ -153,6 +164,7 @@ function createApp() {
   // Mount existing legacy route files
   try {
     app.use('/api/permissions', require('./routes/permissions'));
+    app.use('/api/admin/builder-permissions', require('./routes/builder-permissions'));
     app.use('/api/versions', require('./routes/versions'));
     app.use('/api/audit', require('./routes/audit'));
     app.use('/api/office', require('./routes/office'));
@@ -194,10 +206,46 @@ function createApp() {
     }
   });
 
+  // ---- Payment Admin Routes ----
+  try {
+    const paymentAdminRoutes = require('./modules/payments/payments.admin.routes');
+    app.use('/api', paymentAdminRoutes.router);
+    console.log('[MODULE] Mounted: payment-admin');
+  } catch (err) {
+    console.warn('[MODULE] Payment admin routes not available:', err.message);
+  }
+
   // ---- System Logs ----
   app.get('/api/admin/system/logs', (req, res) => {
     res.json({ logs: getLogs() });
   });
+
+  // ---- Serve built SPA (production) ----
+  const distPath = path.join(__dirname, '..', 'dist');
+  if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath));
+    console.log('[SPA] Serving static files from', distPath);
+
+    // Catch-all for client-side routing — serve index.html for any non-API, non-file route
+    app.get('/{*path}', (req, res, next) => {
+      // Skip API routes
+      if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+        return next();
+      }
+      // Skip extension-based static files (already handled by express.static above)
+      if (path.extname(req.path)) {
+        return next();
+      }
+      const indexPath = path.join(distPath, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        next();
+      }
+    });
+  } else {
+    console.warn('[SPA] dist directory not found at', distPath, '— SPA fallback disabled.');
+  }
 
   // ---- Catch-all 404 for API ----
   app.use('/api', (req, res) => {

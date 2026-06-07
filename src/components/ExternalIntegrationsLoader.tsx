@@ -208,20 +208,12 @@ export function useIntegration(type: string, provider?: string) {
 
 // Fonction utilitaire pour tracker des événements
 export function trackEvent(event: string, properties?: Record<string, unknown>) {
-  const analyticsIntegrations = useExternalIntegrations('analytics');
-
-  analyticsIntegrations?.data?.forEach((integration) => {
-    switch (integration.provider) {
-      case 'google-analytics':
-        if (window.gtag) {
-          window.gtag('event', event, properties);
-        }
-        break;
-      case 'matomo':
-        if (window._paq) {
-          window._paq.push(['trackEvent', properties?.category || 'General', event, properties?.name, properties?.value]);
-        }
-        break;
+  if (typeof window !== 'undefined') {
+    if (window.gtag) {
+      window.gtag('event', event, properties);
     }
-  });
+    if (window._paq) {
+      window._paq.push(['trackEvent', properties?.category || 'General', event, properties?.name, properties?.value]);
+    }
+  }
 }

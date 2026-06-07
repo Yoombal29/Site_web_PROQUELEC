@@ -7,7 +7,19 @@ import { Badge } from '@/components/ui/badge';
 
 import { Separator } from '@/components/ui/separator';
 
-const SitemapCategory = ({ title, icon: Icon, description, items }: any) => (
+interface SitemapItem {
+  label: string;
+  href: string;
+}
+
+interface SitemapCategoryProps {
+  title: string;
+  icon: React.ElementType;
+  description: string;
+  items: SitemapItem[];
+}
+
+const SitemapCategory = ({ title, icon: Icon, description, items }: SitemapCategoryProps) => (
   <Card className="border-slate-800 bg-slate-900/50 backdrop-blur-sm hover:border-proqblue/50 transition-all duration-300 group overflow-hidden">
     <CardHeader className="pb-4">
       <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center mb-4 group-hover:bg-proqblue/20 transition-colors">
@@ -21,7 +33,7 @@ const SitemapCategory = ({ title, icon: Icon, description, items }: any) => (
       </CardDescription>
     </CardHeader>
     <CardContent className="space-y-1">
-      {items.map((item: any, index: number) => (
+      {items.map((item: SitemapItem, index: number) => (
         <Link
           key={index}
           to={item.href}
@@ -139,12 +151,12 @@ const Sitemap = () => {
   ];
 
   // Add Dynamic Pages if they exist
-  if (dynamicRoutes && (dynamicRoutes as any[]).length > 0) {
+  if (dynamicRoutes && Array.isArray(dynamicRoutes) && dynamicRoutes.length > 0) {
     categories.push({
       title: 'Pages Dynamiques',
       icon: FileCode,
       description: 'Contenus additionnels générés dynamiquement par notre équipe.',
-      items: (dynamicRoutes as any[]).map((route: any) => ({
+      items: (dynamicRoutes as Array<{ title?: string; path: string }>).map((route) => ({
         label: route.title || route.path.replace('/', ''),
         href: route.path,
       })),

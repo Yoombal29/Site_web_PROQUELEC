@@ -200,7 +200,7 @@ export const PageRenderer: React.FC<PageRendererProps> = ({ page, className = ''
             <div key={blockKey} id={block?.id || undefined} className="scroll-mt-32">
               {(() => {
                 switch (block.type) {
-                  case 'section':
+                  case 'section': {
                     const isAlt = index % 2 === 1;
                     if (!isHome) {
                       return (
@@ -227,6 +227,7 @@ export const PageRenderer: React.FC<PageRendererProps> = ({ page, className = ''
                           <div className="prose prose-slate prose-lg max-w-none" dangerouslySetInnerHTML={sanitizeHtml(blockData?.content || '')} />
                         </div>
                       </section>);
+                  }
 
                   case 'hero':
                     return <HeroBlock {...blockData} />;

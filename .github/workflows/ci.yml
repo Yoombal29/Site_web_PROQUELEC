@@ -2,20 +2,150 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '20.x'
+  PLAYWRIGHT_VERSION: '1.60.0'
+
 jobs:
-  build:
+  lint:
+    name: 🔍 Lint & Format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
       - run: npm ci
       - run: npm run lint
-      - run: npm run test --if-present
-      - run: npm run build
+      - name: TypeScript Check
+        run: npx tsc --noEmit
+        continue-on-error: true
+
+  test:
+    name: 🧪 Unit & Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Run Vitest
+        run: npx vitest run --reporter=verbose
+      - name: Test Report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Vitest Results
+          path: reports/*.xml
+          reporter: jest-junit
+          fail-on-error: false
+        continue-on-error: true
+
+  build:
+    name: 📦 Build
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  e2e:
+    name: 🎭 Playwright E2E Tests
+    runs-on: ubuntu-latest
+    needs: [build]
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: proquelec_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Cache Playwright Browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ env.PLAYWRIGHT_VERSION }}-${{ hashFiles('package-lock.json') }}
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      - name: Setup Database
+        run: |
+          node scripts/auto-migrate.js
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/proquelec_test
+          NODE_ENV: test
+      - name: Start Server
+        run: |
+          node server/index.js &
+          sleep 3
+          echo "Server started"
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/proquelec_test
+          NODE_ENV: test
+          PORT: 5175
+      - name: Run Playwright Tests
+        run: npx playwright test
+        env:
+          BASE_URL: http://localhost:5175
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/proquelec_test
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  security:
+    name: 🛡️ Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm ci
+      - name: Run npm Audit
+        run: npm audit --audit-level=high
+        continue-on-error: true
+      - name: Check for Secrets
+        uses: zricethezav/gitleaks-action@v2
+        continue-on-error: true

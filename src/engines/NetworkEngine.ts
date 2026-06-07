@@ -589,7 +589,7 @@ export class NetworkEngine {
         }
       }
 
-      const chuteTotalePercent = 230 > 0 ? chuteTotale / 230 * 100 : 0; // Tension de référence 230V
+      const chuteTotalePercent = (chuteTotale / 230) * 100; // Tension de référence 230V
       const courant = courants.get(chemin.nodes[chemin.nodes.length - 1]) || 0;
 
       return {

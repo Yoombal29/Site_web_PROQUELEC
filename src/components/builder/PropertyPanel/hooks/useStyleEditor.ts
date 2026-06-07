@@ -32,7 +32,7 @@ const sanitizeClassName = (input?: string) => {
     // Reject characters that are obviously unsafe
     if (/[<>;`{}]/.test(t)) return false;
     // Allow common Tailwind tokens (letters, numbers, '-', ':', '/', '_', '[', ']', '(', ')', '%', '#', ',')
-    return /^[A-Za-z0-9\-:\[\]\/_%#(),@!]+$/.test(t);
+    return /^[A-Za-z0-9\-:[\]/_%#(),@!]+$/.test(t);
   });
   return Array.from(new Set(safe)).join(' ');
 };

@@ -72,7 +72,7 @@ export const createCalculationDebounce = (delayMs: number = 300) => {
  * Batch multiple parameter changes to reduce recalculations
  */
 export const createBatchCalculation = () => {
-  let pending: Map<string, any> = new Map();
+  const pending: Map<string, any> = new Map();
   let timeoutId: NodeJS.Timeout | null = null;
 
   return {

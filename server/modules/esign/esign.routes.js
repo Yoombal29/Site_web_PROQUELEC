@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const esign = require('./esign.service');
+const { authenticateToken } = require('../../core/middleware');
 
 const router = Router();
 
-router.post('/sign', async (req, res) => {
+router.post('/sign', authenticateToken, async (req, res) => {
   try {
     const { data } = req.body;
     if (!data) return res.status(400).json({ error: 'Données à signer requises' });
@@ -15,10 +16,11 @@ router.post('/sign', async (req, res) => {
   }
 });
 
-router.post('/verify', (req, res) => {
+router.post('/verify', authenticateToken, (req, res) => {
   try {
     const { data, signature } = req.body;
-    if (!data || !signature) return res.status(400).json({ error: 'Données et signature requises' });
+    if (!data || !signature)
+      return res.status(400).json({ error: 'Données et signature requises' });
     const valid = esign.verify(data, signature);
     res.json({ valid });
   } catch (err) {

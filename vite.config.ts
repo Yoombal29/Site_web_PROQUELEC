@@ -1,8 +1,7 @@
-
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
-import path from "path";
-import { componentTagger } from "lovable-tagger";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import path from 'path';
+import { componentTagger } from 'lovable-tagger';
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ mode }) => {
@@ -10,16 +9,12 @@ export default defineConfig(async ({ mode }) => {
   const apiTarget = process.env.VITE_API_URL || 'http://127.0.0.1:3010';
 
   return {
-    plugins: [
-      react(),
-      mode === 'development' && componentTagger(),
-    ].filter(Boolean),
+    plugins: [react(), mode === 'development' && componentTagger()].filter(Boolean),
     server: {
       port: defaultPort,
       host: true,
       strictPort: false,
-      // Redirige toutes les routes inconnues vers index.html (React Router SPA)
-      historyApiFallback: true,
+      // NOTE: historyApiFallback est activé par défaut dans Vite 7 (SPA fallback automatique)
       proxy: {
         '/api': {
           target: apiTarget,
@@ -30,12 +25,12 @@ export default defineConfig(async ({ mode }) => {
           target: apiTarget,
           changeOrigin: true,
           secure: false,
-        }
-      }
+        },
+      },
     },
     resolve: {
       alias: {
-        "@": path.resolve(__dirname, "./src"),
+        '@': path.resolve(__dirname, './src'),
       },
     },
     optimizeDeps: {
@@ -45,8 +40,8 @@ export default defineConfig(async ({ mode }) => {
         'dompurify',
         '@dnd-kit/core',
         '@dnd-kit/sortable',
-        '@dnd-kit/utilities'
-      ]
+        '@dnd-kit/utilities',
+      ],
     },
     build: {
       // Keep reasonable warning threshold while we split heavy deps into chunks
@@ -71,7 +66,8 @@ export default defineConfig(async ({ mode }) => {
               // Radix UI must be in vendor chunk with React to avoid forwardRef issues
               if (id.includes('node_modules/@radix-ui')) return 'vendor';
               // Fallback for react and react-dom specifically to avoid undefined forwardRef
-              if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) return 'vendor';
+              if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/'))
+                return 'vendor';
 
               return 'vendor';
             }

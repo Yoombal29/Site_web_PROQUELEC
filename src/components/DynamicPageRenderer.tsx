@@ -84,14 +84,13 @@ const ComponentRegistry: Record<string, React.FC<unknown>> = {
   'LatestNews': LatestNews,
   'StatsSection': () => <div className="p-20 bg-slate-100 text-center font-bold">SECTION STATISTIQUES (GÉNÉRÉE)</div>,
   'ServicesGrid': () => <div className="p-20 bg-white text-center font-bold">GRILLE DE SERVICES (GÉNÉRÉE)</div>,
-  'NewSection': (props: unknown) =>
-  <div
-  // eslint-disable-next-line react/forbid-dom-props
-  style={props.styles}
-  className="border-2 border-dashed border-slate-200 flex items-center justify-center min-h-[200px] text-slate-400 font-mono text-sm">
-    
-            {props.settings?.title || 'Conteneur Vide'}
-        </div>,
+  'NewSection': (props: { styles?: React.CSSProperties; settings?: { title?: string } }) =>
+    <div
+      style={props.styles}
+      className="border-2 border-dashed border-slate-200 flex items-center justify-center min-h-[200px] text-slate-400 font-mono text-sm"
+    >
+      {props.settings?.title || 'Conteneur Vide'}
+    </div>,
 
   'Form': FormBlock,
   'Bento': BentoGridBlock,
