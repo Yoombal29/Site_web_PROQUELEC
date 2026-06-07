@@ -137,6 +137,18 @@ else {
     Write-Host "  [4/5] Build ignore (-SkipBuild)" -ForegroundColor DarkYellow
 }
 
+# RAG: Regenerer le cache des embeddings sur le VPS
+Write-Host ""
+Write-Host "  [RAG] Generation du cache vectoriel..." -ForegroundColor Yellow
+$ragResult = Invoke-Remote "cd $REMOTE_PATH && node scripts/generate-embeddings.mjs 2>&1 | tail -3"
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "  RAG: $ragResult" -ForegroundColor Green
+}
+else {
+    Write-Host "  RAG: $ragResult" -ForegroundColor DarkYellow
+    Write-Host "  (le RAG sera genere au premier demarrage du serveur)" -ForegroundColor DarkYellow
+}
+
 Invoke-Checked "[5/5] Redemarrage PM2" {
     Invoke-Remote "pm2 restart $PM2_APP --update-env"
 }
