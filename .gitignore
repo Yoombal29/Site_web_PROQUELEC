@@ -55,3 +55,6 @@ tmp_pages_schema.txt
 # Ignored premium model pages
 model-page/
 
+
+# RAG chunks cache (regenerated automatically)
+server/knowledge_base/.chunks_cache.json
