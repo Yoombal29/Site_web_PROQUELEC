@@ -32,10 +32,26 @@ async function getUserPermissions(userId, userRole) {
     const result = await pool.query(`
         SELECT DISTINCT p.name
         FROM public.permissions p
-        WHERE p.id IN (
-            SELECT permission_id FROM public.role_permissions WHERE role = $1
-            UNION
-            SELECT permission_id FROM public.user_permissions WHERE user_id = $2 AND granted = true
+        WHERE (
+            EXISTS (
+                SELECT 1
+                FROM public.role_permissions rp
+                WHERE rp.role = $1 AND rp.permission_id = p.id
+            )
+            OR EXISTS (
+                SELECT 1
+                FROM public.user_permissions up
+                WHERE up.user_id = $2
+                  AND up.permission_id = p.id
+                  AND up.granted = true
+            )
+        )
+        AND NOT EXISTS (
+            SELECT 1
+            FROM public.user_permissions up
+            WHERE up.user_id = $2
+              AND up.permission_id = p.id
+              AND up.granted = false
         )
         ORDER BY p.name
     `, [userRole, userId]);

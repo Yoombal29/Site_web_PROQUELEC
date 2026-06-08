@@ -9,9 +9,9 @@
 #   Ce script deploie le CODE applicatif uniquement:
 #   1. commit/push GitHub depuis le poste local,
 #   2. pull Git sur le VPS,
-#   3. build Vite sur le VPS,
-#   4. redemarrage PM2 de l'API,
-#   5. verification HTTP rapide.
+#   3. installation des dependances et migrations sur le VPS,
+#   4. build Vite sur le VPS,
+#   5. redemarrage PM2 de l'API et verification HTTP rapide.
 #
 # Important:
 #   - Ne deploie pas les pages builder ni le contenu de la base.
@@ -124,17 +124,21 @@ if ($remoteStatus) {
     Stop-Step "Le VPS contient des fichiers suivis modifies. Committer/nettoyer sur le VPS avant deploy."
 }
 
-Invoke-Checked "[3/5] Pull code sur le VPS" {
+Invoke-Checked "[3/6] Pull code sur le VPS" {
     Invoke-Remote "cd $REMOTE_PATH && git pull origin $Branch"
 }
 
+Invoke-Checked "[4/6] Installation dependances et migrations" {
+    Invoke-Remote "cd $REMOTE_PATH && npm ci && npm run migrate:auto"
+}
+
 if (-not $SkipBuild) {
-    Invoke-Checked "[4/5] Build production sur le VPS" {
+    Invoke-Checked "[5/6] Build production sur le VPS" {
         Invoke-Remote "cd $REMOTE_PATH && env NODE_OPTIONS=--max-old-space-size=4096 npm run build"
     }
 }
 else {
-    Write-Host "  [4/5] Build ignore (-SkipBuild)" -ForegroundColor DarkYellow
+    Write-Host "  [5/6] Build ignore (-SkipBuild)" -ForegroundColor DarkYellow
 }
 
 # RAG: Regenerer le cache des embeddings sur le VPS
@@ -149,7 +153,7 @@ else {
     Write-Host "  (le RAG sera genere au premier demarrage du serveur)" -ForegroundColor DarkYellow
 }
 
-Invoke-Checked "[5/5] Redemarrage PM2" {
+Invoke-Checked "[6/6] Redemarrage PM2" {
     Invoke-Remote "pm2 restart $PM2_APP --update-env"
 }
 

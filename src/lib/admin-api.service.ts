@@ -28,8 +28,8 @@ export const adminApi = {
   },
 
   async getUserPermissions(userId) {
-    const d = await fetchApi(API + '/user/permissions?user_id=' + userId);
-    return d.permissions || [];
+    const d = await fetchApi(API + '/admin/users/' + userId + '/permissions');
+    return d.direct_permissions || d.permissions || [];
   },
 
   async setUserPermissions(userId, permissions) {

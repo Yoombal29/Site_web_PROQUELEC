@@ -4,7 +4,7 @@
  * Upload, gestion, sélection de fichiers (images, vidéos, documents)
  */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import * as XLSX from 'xlsx';
+import { readSheet } from 'read-excel-file/browser';
 import { apiFetch } from '@/lib/api-client';
 import { toast } from 'sonner';
 import {
@@ -260,11 +260,9 @@ export default function MediaLibrary({ onSelect }: MediaLibraryProps) {
         if (!response.ok) throw new Error('Aperçu indisponible');
         return response.arrayBuffer();
       })
-      .then((buffer) => {
+      .then(async (buffer) => {
         if (cancelled) return;
-        const wb = XLSX.read(buffer, { type: 'array' });
-        const sheet = wb.Sheets[wb.SheetNames[0]];
-        const rows = XLSX.utils.sheet_to_json<string[]>(sheet, { header: 1, raw: false });
+        const rows = await readSheet(buffer);
         setPreviewRows(rows.slice(0, 10).map((row) => row.slice(0, 6).map((cell) => String(cell ?? ''))));
       })
       .catch(() => !cancelled && setPreviewError('Aperçu Excel indisponible'));

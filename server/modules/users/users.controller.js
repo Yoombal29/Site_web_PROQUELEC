@@ -64,4 +64,37 @@ async function toggleStatus(req, res) {
     }
 }
 
-module.exports = { listUsers, listAdminUsers, createUser, updateUser, deleteUser, toggleStatus };
+async function getUserPermissions(req, res) {
+    try {
+        const permissions = await service.getUserPermissions(req.params.id);
+        res.json(permissions);
+    } catch (err) {
+        console.error('[API-ADMIN-USERS] Permissions error:', err);
+        res.status(err.status || 500).json({ error: err.message });
+    }
+}
+
+async function setUserPermissions(req, res) {
+    try {
+        const result = await service.setUserPermissions(
+            req.params.id,
+            req.body.permissions,
+            req.user.id
+        );
+        res.json(result);
+    } catch (err) {
+        console.error('[API-ADMIN-USERS] Permissions save error:', err);
+        res.status(err.status || 500).json({ error: err.message });
+    }
+}
+
+module.exports = {
+    listUsers,
+    listAdminUsers,
+    createUser,
+    updateUser,
+    deleteUser,
+    toggleStatus,
+    getUserPermissions,
+    setUserPermissions,
+};

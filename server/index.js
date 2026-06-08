@@ -262,23 +262,32 @@ app.get('/api/user/permissions', authenticateToken, async (req, res) => {
     const userId = req.user.id;
     const userRole = req.user.role;
 
-    // Récupérer toutes les permissions de l'utilisateur via son rôle + overrides
+    // Récupérer toutes les permissions de l'utilisateur via son rôle + overrides.
+    // Un override granted=false révoque explicitement une permission héritée du rôle.
     const result = await pool.query(
       `
             SELECT DISTINCT p.name
             FROM public.permissions p
-            WHERE p.id IN (
-                -- Permissions du rôle
-                SELECT permission_id
-                FROM public.role_permissions
-                WHERE role = $1
-
-                UNION
-
-                -- Permissions spécifiques à l'utilisateur (overrides)
-                SELECT permission_id
-                FROM public.user_permissions
-                WHERE user_id = $2 AND granted = true
+            WHERE (
+                EXISTS (
+                    SELECT 1
+                    FROM public.role_permissions rp
+                    WHERE rp.role = $1 AND rp.permission_id = p.id
+                )
+                OR EXISTS (
+                    SELECT 1
+                    FROM public.user_permissions up
+                    WHERE up.user_id = $2
+                      AND up.permission_id = p.id
+                      AND up.granted = true
+                )
+            )
+            AND NOT EXISTS (
+                SELECT 1
+                FROM public.user_permissions up
+                WHERE up.user_id = $2
+                  AND up.permission_id = p.id
+                  AND up.granted = false
             )
             ORDER BY p.name
         `,
@@ -327,6 +336,59 @@ app.get('/api/admin/role-permissions', authenticateToken, requireAdmin, async (r
   } catch (err) {
     console.error('[ADMIN] Erreur récupération mapping rôles:', err);
     res.status(500).json({ error: 'Impossible de récupérer le mapping des rôles' });
+  }
+});
+
+// ADMIN: Modifier le mapping permission -> rôle
+app.patch('/api/admin/role-permissions', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    if (req.user.email !== 'oumarkebe@proquelec.sn') {
+      return res.status(403).json({
+        error: 'Seul le Super Admin principal peut modifier la matrice globale',
+      });
+    }
+
+    const { role, permission, granted } = req.body;
+    if (!role || !permission || typeof granted !== 'boolean') {
+      return res.status(400).json({ error: 'Paramètres manquants (role, permission, granted)' });
+    }
+
+    if (
+      granted === false &&
+      permission === 'admin.permissions' &&
+      (role === 'admin' || role === 'superadmin')
+    ) {
+      return res.status(400).json({
+        error: 'admin.permissions doit rester accordée aux rôles admin et superadmin',
+      });
+    }
+
+    const permResult = await pool.query('SELECT id FROM public.permissions WHERE name = $1', [
+      permission,
+    ]);
+    if (permResult.rows.length === 0) {
+      return res.status(404).json({ error: `Permission "${permission}" introuvable` });
+    }
+
+    const permissionId = permResult.rows[0].id;
+    if (granted) {
+      await pool.query(
+        `INSERT INTO public.role_permissions (role, permission_id)
+         VALUES ($1, $2)
+         ON CONFLICT (role, permission_id) DO NOTHING`,
+        [role, permissionId],
+      );
+    } else {
+      await pool.query('DELETE FROM public.role_permissions WHERE role = $1 AND permission_id = $2', [
+        role,
+        permissionId,
+      ]);
+    }
+
+    res.json({ success: true, role, permission, granted });
+  } catch (err) {
+    console.error('[ADMIN] Erreur modification permission:', err);
+    res.status(500).json({ error: 'Impossible de modifier la permission' });
   }
 });
 
@@ -2434,6 +2496,115 @@ app.get('/api/admin/permissions-list', authenticateToken, requireAdmin, async (r
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// Récupérer les permissions directes d'un utilisateur.
+// Les permissions héritées du rôle restent gérées par /api/admin/role-permissions.
+app.get('/api/admin/users/:id/permissions', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userResult = await pool.query('SELECT id, role FROM public.users WHERE id = $1', [id]);
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    }
+
+    const directResult = await pool.query(
+      `
+        SELECT p.name, up.granted
+        FROM public.user_permissions up
+        JOIN public.permissions p ON p.id = up.permission_id
+        WHERE up.user_id = $1
+        ORDER BY p.name
+      `,
+      [id],
+    );
+
+    const effectiveResult = await pool.query(
+      `
+        SELECT DISTINCT p.name
+        FROM public.permissions p
+        WHERE (
+            EXISTS (
+                SELECT 1
+                FROM public.role_permissions rp
+                WHERE rp.role = $1 AND rp.permission_id = p.id
+            )
+            OR EXISTS (
+                SELECT 1
+                FROM public.user_permissions up
+                WHERE up.user_id = $2
+                  AND up.permission_id = p.id
+                  AND up.granted = true
+            )
+        )
+        AND NOT EXISTS (
+            SELECT 1
+            FROM public.user_permissions up
+            WHERE up.user_id = $2
+              AND up.permission_id = p.id
+              AND up.granted = false
+        )
+        ORDER BY p.name
+      `,
+      [userResult.rows[0].role, id],
+    );
+
+    res.json({
+      permissions: effectiveResult.rows.map((row) => row.name),
+      direct_permissions: directResult.rows
+        .filter((row) => row.granted === true)
+        .map((row) => row.name),
+      revoked_permissions: directResult.rows
+        .filter((row) => row.granted === false)
+        .map((row) => row.name),
+    });
+  } catch (err) {
+    console.error('[ADMIN] Erreur récupération permissions utilisateur:', err);
+    res.status(500).json({ error: 'Impossible de récupérer les permissions utilisateur' });
+  }
+});
+
+// Définir les permissions directes d'un utilisateur.
+app.put('/api/admin/users/:id/permissions', authenticateToken, requireAdmin, async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const { id } = req.params;
+    const permissions = Array.isArray(req.body.permissions) ? req.body.permissions : null;
+    if (!permissions) {
+      return res.status(400).json({ error: 'permissions doit être un tableau' });
+    }
+
+    const userResult = await client.query('SELECT id FROM public.users WHERE id = $1', [id]);
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    }
+
+    await client.query('BEGIN');
+    await client.query('DELETE FROM public.user_permissions WHERE user_id = $1', [id]);
+
+    for (const permission of permissions) {
+      await client.query(
+        `
+          INSERT INTO public.user_permissions (user_id, permission_id, granted, granted_by)
+          SELECT $1, id, true, $3
+          FROM public.permissions
+          WHERE name = $2
+          ON CONFLICT (user_id, permission_id)
+          DO UPDATE SET granted = true, granted_by = EXCLUDED.granted_by, granted_at = NOW()
+        `,
+        [id, permission, req.user.id],
+      );
+    }
+
+    await client.query('COMMIT');
+    res.json({ success: true, saved: permissions.length });
+  } catch (err) {
+    await client.query('ROLLBACK').catch(() => {});
+    console.error('[ADMIN] Erreur sauvegarde permissions utilisateur:', err);
+    res.status(500).json({ error: 'Impossible de sauvegarder les permissions utilisateur' });
+  } finally {
+    client.release();
   }
 });
 

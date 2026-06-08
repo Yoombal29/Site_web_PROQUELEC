@@ -37,7 +37,7 @@ function authenticateToken(req, res, next) {
 }
 
 function requireAdmin(req, res, next) {
-    if (!req.user || req.user.role !== 'admin') {
+    if (!req.user || (req.user.role !== 'admin' && req.user.role !== 'superadmin')) {
         return res.status(403).json({ error: 'Accès refusé. Droits administrateur requis.' });
     }
     next();
@@ -51,13 +51,30 @@ function requirePermission(permissionName) {
 
             const permissionCheck = await pool.query(`
                 SELECT EXISTS(
-                    SELECT 1 FROM public.role_permissions rp
-                    JOIN public.permissions p ON rp.permission_id = p.id
-                    WHERE rp.role = $1 AND p.name = $2
-                    UNION
-                    SELECT 1 FROM public.user_permissions up
-                    JOIN public.permissions p ON up.permission_id = p.id
-                    WHERE up.user_id = $3 AND p.name = $2 AND up.granted = true
+                    SELECT 1
+                    FROM public.permissions p
+                    WHERE p.name = $2
+                    AND (
+                        EXISTS (
+                            SELECT 1
+                            FROM public.role_permissions rp
+                            WHERE rp.role = $1 AND rp.permission_id = p.id
+                        )
+                        OR EXISTS (
+                            SELECT 1
+                            FROM public.user_permissions up
+                            WHERE up.user_id = $3
+                              AND up.permission_id = p.id
+                              AND up.granted = true
+                        )
+                    )
+                    AND NOT EXISTS (
+                        SELECT 1
+                        FROM public.user_permissions up
+                        WHERE up.user_id = $3
+                          AND up.permission_id = p.id
+                          AND up.granted = false
+                    )
                 ) as has_permission
             `, [userRole, permissionName, userId]);
 

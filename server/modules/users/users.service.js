@@ -49,4 +49,33 @@ async function toggleStatus(id, isActive) {
     return repository.updateStatus(id, isActive);
 }
 
-module.exports = { listAll, listAllAdmin, createUser, updateUser, deleteUser, toggleStatus };
+async function getUserPermissions(id) {
+    const permissions = await repository.getDirectPermissions(id);
+    if (!permissions) {
+        throw Object.assign(new Error('Utilisateur non trouvé'), { status: 404 });
+    }
+    return permissions;
+}
+
+async function setUserPermissions(id, permissions, grantedBy) {
+    if (!Array.isArray(permissions)) {
+        throw Object.assign(new Error('permissions doit être un tableau'), { status: 400 });
+    }
+
+    const result = await repository.setDirectPermissions(id, permissions, grantedBy);
+    if (!result) {
+        throw Object.assign(new Error('Utilisateur non trouvé'), { status: 404 });
+    }
+    return result;
+}
+
+module.exports = {
+    listAll,
+    listAllAdmin,
+    createUser,
+    updateUser,
+    deleteUser,
+    toggleStatus,
+    getUserPermissions,
+    setUserPermissions,
+};

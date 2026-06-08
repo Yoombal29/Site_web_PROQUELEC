@@ -11,5 +11,7 @@ router.post('/admin/users', authenticateToken, requireAdmin, validate(createUser
 router.put('/admin/users/:id', authenticateToken, requireAdmin, validate(updateUserSchema), controller.updateUser);
 router.delete('/admin/users/:id', authenticateToken, requireAdmin, controller.deleteUser);
 router.patch('/admin/users/:id/status', authenticateToken, requireAdmin, controller.toggleStatus);
+router.get('/admin/users/:id/permissions', authenticateToken, requireAdmin, controller.getUserPermissions);
+router.put('/admin/users/:id/permissions', authenticateToken, requireAdmin, controller.setUserPermissions);
 
 module.exports = { router, basePath: '/api' };

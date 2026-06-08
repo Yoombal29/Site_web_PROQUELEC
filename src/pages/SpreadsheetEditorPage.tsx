@@ -4,7 +4,7 @@ import { SpreadsheetEditor } from '@/components/office/spreadsheet/SpreadsheetEd
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Share2 } from 'lucide-react';
 import { toast } from 'sonner';
-import * as XLSX from 'xlsx';
+import writeExcelFile from 'write-excel-file/browser';
 
 export function SpreadsheetEditorPage() {
   const { id } = useParams();
@@ -50,12 +50,13 @@ export function SpreadsheetEditorPage() {
     }
   };
 
-  const handleExport = () => {
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet([[spreadsheetTitle]]);
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, `${spreadsheetTitle}.xlsx`);
-    toast.success('Excel exporté avec succès');
+  const handleExport = async () => {
+    try {
+      await writeExcelFile([[spreadsheetTitle]]).toFile(`${spreadsheetTitle}.xlsx`);
+      toast.success('Excel exporté avec succès');
+    } catch {
+      toast.error("Erreur lors de l'export Excel");
+    }
   };
 
   return (

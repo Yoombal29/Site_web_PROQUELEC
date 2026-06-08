@@ -536,7 +536,7 @@ router.post('/documents/:id/export', authenticateToken, async (req, res) => {
             filename = `${doc.title || 'document'}.docx`;
         }
         else if (format === 'xlsx') {
-            const XLSX = require('xlsx');
+            const writeExcelFile = require('write-excel-file/node');
             
             let data = [];
             if (doc.type === 'spreadsheet' && content && content.sheets) {
@@ -550,11 +550,16 @@ router.post('/documents/:id/export', authenticateToken, async (req, res) => {
                 ];
             }
             
-            const ws = XLSX.utils.aoa_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-            
-            const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'buffer' });
+            const sheetData = data.map((row) => {
+                const cells = Array.isArray(row) ? row : [row];
+                return cells.map((cell) => {
+                    if (cell === null || typeof cell === 'undefined') return null;
+                    if (typeof cell === 'string' || typeof cell === 'number' || typeof cell === 'boolean' || cell instanceof Date) return cell;
+                    if (typeof cell === 'object') return cell.v ?? cell.m ?? cell.f ?? '';
+                    return String(cell);
+                });
+            });
+            const excelBuffer = await writeExcelFile(sheetData).toBuffer();
             buffer = excelBuffer;
             contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
             filename = `${doc.title || 'document'}.xlsx`;

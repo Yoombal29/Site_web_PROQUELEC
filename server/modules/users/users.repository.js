@@ -59,4 +59,90 @@ async function updateStatus(id, isActive) {
     return result.rows[0];
 }
 
-module.exports = { findAll, findAllAdmin, findByEmail, create, update, remove, updateStatus };
+async function getDirectPermissions(userId) {
+    const userResult = await pool.query('SELECT id, role FROM public.users WHERE id = $1', [userId]);
+    if (userResult.rows.length === 0) return null;
+
+    const directResult = await pool.query(`
+        SELECT p.name, up.granted
+        FROM public.user_permissions up
+        JOIN public.permissions p ON p.id = up.permission_id
+        WHERE up.user_id = $1
+        ORDER BY p.name
+    `, [userId]);
+
+    const effectiveResult = await pool.query(`
+        SELECT DISTINCT p.name
+        FROM public.permissions p
+        WHERE (
+            EXISTS (
+                SELECT 1
+                FROM public.role_permissions rp
+                WHERE rp.role = $1 AND rp.permission_id = p.id
+            )
+            OR EXISTS (
+                SELECT 1
+                FROM public.user_permissions up
+                WHERE up.user_id = $2
+                  AND up.permission_id = p.id
+                  AND up.granted = true
+            )
+        )
+        AND NOT EXISTS (
+            SELECT 1
+            FROM public.user_permissions up
+            WHERE up.user_id = $2
+              AND up.permission_id = p.id
+              AND up.granted = false
+        )
+        ORDER BY p.name
+    `, [userResult.rows[0].role, userId]);
+
+    return {
+        permissions: effectiveResult.rows.map(row => row.name),
+        direct_permissions: directResult.rows.filter(row => row.granted === true).map(row => row.name),
+        revoked_permissions: directResult.rows.filter(row => row.granted === false).map(row => row.name),
+    };
+}
+
+async function setDirectPermissions(userId, permissions, grantedBy) {
+    const client = await pool.connect();
+    try {
+        const userResult = await client.query('SELECT id FROM public.users WHERE id = $1', [userId]);
+        if (userResult.rows.length === 0) return null;
+
+        await client.query('BEGIN');
+        await client.query('DELETE FROM public.user_permissions WHERE user_id = $1', [userId]);
+
+        for (const permission of permissions) {
+            await client.query(`
+                INSERT INTO public.user_permissions (user_id, permission_id, granted, granted_by)
+                SELECT $1, id, true, $3
+                FROM public.permissions
+                WHERE name = $2
+                ON CONFLICT (user_id, permission_id)
+                DO UPDATE SET granted = true, granted_by = EXCLUDED.granted_by, granted_at = NOW()
+            `, [userId, permission, grantedBy]);
+        }
+
+        await client.query('COMMIT');
+        return { success: true, saved: permissions.length };
+    } catch (err) {
+        await client.query('ROLLBACK').catch(() => {});
+        throw err;
+    } finally {
+        client.release();
+    }
+}
+
+module.exports = {
+    findAll,
+    findAllAdmin,
+    findByEmail,
+    create,
+    update,
+    remove,
+    updateStatus,
+    getDirectPermissions,
+    setDirectPermissions,
+};
