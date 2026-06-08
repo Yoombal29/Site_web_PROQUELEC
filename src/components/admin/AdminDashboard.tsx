@@ -701,7 +701,14 @@ const AdminDashboard: React.FC = () => {
       route: '/admin/tools-manager',
     },
     {
-      id: 'tools-stats',
+      id: 'builder-release',
+    label: 'Release Manager',
+    icon: <Rocket className="w-4 h-4" />,
+    route: '/admin/builder-release-manager',
+    color: 'text-purple-600',
+  },
+  {
+    id: 'tools-stats',
       label: 'Stats outils',
       icon: <BarChart3 className="w-4 h-4" />,
       route: '/admin/tools-stats',
