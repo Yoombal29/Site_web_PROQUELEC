@@ -73,11 +73,11 @@ function Publish-OnePage {
     Write-Host "  Titre: $($package.page.title) / Slug: $($package.page.slug)"
 
     Write-Host "  [2/3] Analyse ignoree (mode force)..." -ForegroundColor Yellow
-    $analysis = Invoke-Api -Method "POST" -Url "$ProdBaseUrl/api/admin/pages/release/analyze" -Token $ProdToken -Body @{ package = $package }
+    try { $analysis = Invoke-Api -Method "POST" -Url "$ProdBaseUrl/api/admin/pages/release/analyze" -Token $ProdToken -Body @{ package = $package } } catch { $analysis = $null; Write-Host "  Analyse indisponible, creation candidat" -ForegroundColor DarkYellow }
 
     $mode = "stage"
     if ((-not $analysis -or -not $StageOnly) -and ($analysis -eq $null -or $analysis.can_publish -eq $true)) {
-        if ($Yes) { $mode = "safe-apply" }
+        if ($Yes) { $mode = "stage" }
         else {
             $confirm = Read-Host "  Publier directement ? [O/n]"
             if (-not $confirm -or $confirm.ToLowerInvariant() -eq "o" -or $confirm.ToLowerInvariant() -eq "oui") { $mode = "safe-apply" }

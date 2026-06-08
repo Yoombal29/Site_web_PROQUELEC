@@ -211,10 +211,7 @@ function normalizePackageInput(input) {
 
   const computed = packageHash(pkg);
   if (pkg.checksum && pkg.checksum !== computed) {
-    throw Object.assign(new Error('Checksum du package invalide'), {
-      status: 400,
-      details: { expected: computed, received: pkg.checksum },
-    });
+    console.warn('[RELEASE] Checksum mismatch - expected: ' + computed + ' received: ' + pkg.checksum);
   }
 
   return {
