@@ -47,7 +47,7 @@ export default defineConfig(async ({ mode }) => {
             if (id.includes('sonner')) return 'sonner';
             if (id.includes('recharts')) return 'recharts';
             if (id.includes('react-router-dom')) return 'router';
-            if (id.includes('@radix-ui')) return 'radix';
+            
             if (id.includes('react/') || id.includes('react-dom/')) return 'react';
             if (id.includes('@tanstack')) return 'tanstack';
             if (id.includes('lodash')) return 'lodash';
