@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -111,20 +112,24 @@ export default function ProjectList() {
   const handleCreate = async () => {
     if (!newProjectData.title.trim()) return;
 
-    const created = await createMutation.mutateAsync({
-      title: newProjectData.title.trim(),
-      client_info: { name: newProjectData.client_name.trim() || undefined },
-      location: {
-        city: newProjectData.city.trim() || 'Dakar',
-        address: newProjectData.address.trim() || undefined,
-      },
-      status: 'etude',
-      regulatory_status: 'draft',
-    });
+    try {
+      const created = await createMutation.mutateAsync({
+        title: newProjectData.title.trim(),
+        client_info: { name: newProjectData.client_name.trim() || undefined },
+        location: {
+          city: newProjectData.city.trim() || 'Dakar',
+          address: newProjectData.address.trim() || undefined,
+        },
+        status: 'etude',
+        regulatory_status: 'draft',
+      });
 
-    setNewProjectOpen(false);
-    setNewProjectData({ title: '', client_name: '', city: 'Dakar', address: '' });
-    if (created?.id) navigate(`/projects/${created.id}`);
+      setNewProjectOpen(false);
+      setNewProjectData({ title: '', client_name: '', city: 'Dakar', address: '' });
+      if (created?.id) navigate(`/projects/${created.id}`);
+    } catch {
+      // The mutation hook already displays the API error in a toast.
+    }
   };
 
   if (isLoading) {
@@ -274,6 +279,9 @@ export default function ProjectList() {
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Ouvrir un nouveau dossier technique</DialogTitle>
+                <DialogDescription>
+                  Renseignez les informations minimales pour initialiser le suivi de conformité.
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
                 <Input

@@ -1,36 +1,74 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
-const { pool } = require('../db');
-const { authenticateToken, requirePermission } = require('../middleware/auth');
+const { pool } = require('../core/database');
+const { authenticateToken, requirePermission } = require('../core/middleware');
+const { ensureProjectsSchema } = require('./projects.schema');
 
-router.get('/projects', authenticateToken, async (req, res) => {
+async function ensureProjectsSchemaMiddleware(req, res, next) {
+    try {
+        await ensureProjectsSchema(pool);
+        next();
+    } catch (err) {
+        console.error('[PROJECTS] Schema bootstrap error:', err);
+        res.status(500).json({
+            error: 'Project schema unavailable',
+            message: 'Le module projets n’est pas encore disponible côté base de données.',
+        });
+    }
+}
+
+router.use(authenticateToken, ensureProjectsSchemaMiddleware);
+
+router.get('/projects', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM public.projects ORDER BY updated_at DESC');
         res.json(result.rows);
     } catch (err) {
         console.error('[PROJECTS] List Error:', err);
-        res.status(500).json({ error: 'Failed to list projects' });
+        res.status(500).json({
+            error: 'Failed to list projects',
+            message: 'Impossible de charger les dossiers techniques.',
+        });
     }
 });
 
-router.post('/projects', authenticateToken, requirePermission('projects.create'), async (req, res) => {
+router.post('/projects', requirePermission('projects.create'), async (req, res) => {
     try {
         const { title, client_info, location, status } = req.body;
+        if (!String(title || '').trim()) {
+            return res.status(400).json({
+                error: 'Invalid project title',
+                message: 'Le nom du projet est obligatoire.',
+            });
+        }
         const ref = `PQ-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
         const result = await pool.query(
-            `INSERT INTO public.projects (title, reference, client_info, location, status, created_by) 
-             VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-            [title, ref, client_info || {}, location || {}, status || 'etude', req.user.id]
+            `INSERT INTO public.projects
+                (title, reference, client_info, location, status, regulatory_status, created_by)
+             VALUES ($1, $2, $3, $4, $5, $6, $7)
+             RETURNING *`,
+            [
+                String(title).trim(),
+                ref,
+                client_info || {},
+                location || {},
+                status || 'etude',
+                req.body.regulatory_status || 'draft',
+                req.user.id,
+            ]
         );
         res.status(201).json(result.rows[0]);
     } catch (err) {
         console.error('[PROJECTS] Create Error:', err);
-        res.status(500).json({ error: 'Failed to create project' });
+        res.status(500).json({
+            error: 'Failed to create project',
+            message: 'Impossible de créer le dossier technique.',
+        });
     }
 });
 
-router.get('/projects/:id', authenticateToken, async (req, res) => {
+router.get('/projects/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const result = await pool.query('SELECT * FROM public.projects WHERE id=$1', [id]);
@@ -42,7 +80,7 @@ router.get('/projects/:id', authenticateToken, async (req, res) => {
     }
 });
 
-router.get('/projects/:id/documents', authenticateToken, async (req, res) => {
+router.get('/projects/:id/documents', async (req, res) => {
     try {
         const { id } = req.params;
         const result = await pool.query(
@@ -56,7 +94,7 @@ router.get('/projects/:id/documents', authenticateToken, async (req, res) => {
     }
 });
 
-router.put('/projects/:id', authenticateToken, async (req, res) => {
+router.put('/projects/:id', async (req, res) => {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
@@ -115,7 +153,7 @@ router.put('/projects/:id', authenticateToken, async (req, res) => {
     }
 });
 
-router.get('/projects/:id/audit', authenticateToken, async (req, res) => {
+router.get('/projects/:id/audit', async (req, res) => {
     try {
         const { id } = req.params;
         const result = await pool.query(
@@ -133,7 +171,7 @@ router.get('/projects/:id/audit', authenticateToken, async (req, res) => {
     }
 });
 
-router.post('/projects/:id/transition', authenticateToken, requirePermission('projects.transition'), async (req, res) => {
+router.post('/projects/:id/transition', requirePermission('projects.transition'), async (req, res) => {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
