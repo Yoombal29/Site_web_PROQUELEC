@@ -21,7 +21,7 @@ export const translations: Translations = {
     'nav.admin': 'Administration',
     'nav.login': 'Connexion',
     'nav.logout': 'Déconnexion',
-    
+
     // Common
     'common.loading': 'Chargement...',
     'common.error': 'Erreur',
@@ -37,7 +37,7 @@ export const translations: Translations = {
     'common.language': 'Langue',
     'common.language_fr': 'Français',
     'common.language_en': 'English',
-    
+
     // Home
     'home.title': 'Bienvenue à PROQUELEC',
     'home.subtitle': 'Expertise Électrique & Formations Certifiées',
@@ -45,27 +45,27 @@ export const translations: Translations = {
     'home.about_section': 'À propos de PROQUELEC',
     'home.services_section': 'Nos Services',
     'home.latest_news': 'Actualités Récentes',
-    
+
     // Inspections
     'inspections.title': 'Inspections Électriques',
     'inspections.new': 'Nouvelle Inspection',
     'inspections.list': 'Mes Inspections',
-    'inspections.report': 'Rapport d\'Inspection',
+    'inspections.report': "Rapport d'Inspection",
     'inspections.checklist': 'Checklist',
     'inspections.findings': 'Résultats',
     'inspections.conformity': 'Conformité: {score}%',
     'inspections.export_pdf': 'Exporter en PDF',
     'inspections.export_docx': 'Exporter en DOCX',
-    
+
     // Formations
     'formations.title': 'Formations PROQUELEC',
     'formations.my_courses': 'Mes Cours',
-    'formations.register': 'S\'inscrire',
+    'formations.register': "S'inscrire",
     'formations.continue': 'Continuer',
     'formations.completed': 'Terminé',
     'formations.certificate': 'Certificat',
     'formations.download_certificate': 'Télécharger le Certificat',
-    
+
     // Blog
     'blog.title': 'Blog',
     'blog.recent_posts': 'Articles Récents',
@@ -73,7 +73,7 @@ export const translations: Translations = {
     'blog.written_by': 'Écrit par',
     'blog.published': 'Publié le',
     'blog.categories': 'Catégories',
-    
+
     // Contact
     'contact.title': 'Nous Contacter',
     'contact.name': 'Nom',
@@ -83,16 +83,16 @@ export const translations: Translations = {
     'contact.send': 'Envoyer',
     'contact.address': 'Adresse',
     'contact.hours': 'Horaires',
-    
+
     // Footer
     'footer.copyright': '© 2026 PROQUELEC. Tous droits réservés.',
     'footer.legal': 'Mentions Légales',
     'footer.privacy': 'Politique de Confidentialité',
-    'footer.terms': 'Conditions d\'Utilisation',
+    'footer.terms': "Conditions d'Utilisation",
     'footer.contact': 'Contact',
     'footer.partners': 'Partenaires',
   },
-  
+
   en: {
     // Navigation
     'nav.home': 'Home',
@@ -104,7 +104,7 @@ export const translations: Translations = {
     'nav.admin': 'Administration',
     'nav.login': 'Sign In',
     'nav.logout': 'Sign Out',
-    
+
     // Common
     'common.loading': 'Loading...',
     'common.error': 'Error',
@@ -120,7 +120,7 @@ export const translations: Translations = {
     'common.language': 'Language',
     'common.language_fr': 'Français',
     'common.language_en': 'English',
-    
+
     // Home
     'home.title': 'Welcome to PROQUELEC',
     'home.subtitle': 'Electrical Expertise & Certified Trainings',
@@ -128,7 +128,7 @@ export const translations: Translations = {
     'home.about_section': 'About PROQUELEC',
     'home.services_section': 'Our Services',
     'home.latest_news': 'Latest News',
-    
+
     // Inspections
     'inspections.title': 'Electrical Inspections',
     'inspections.new': 'New Inspection',
@@ -139,7 +139,7 @@ export const translations: Translations = {
     'inspections.conformity': 'Conformity: {score}%',
     'inspections.export_pdf': 'Export as PDF',
     'inspections.export_docx': 'Export as DOCX',
-    
+
     // Trainings
     'formations.title': 'PROQUELEC Trainings',
     'formations.my_courses': 'My Courses',
@@ -148,7 +148,7 @@ export const translations: Translations = {
     'formations.completed': 'Completed',
     'formations.certificate': 'Certificate',
     'formations.download_certificate': 'Download Certificate',
-    
+
     // Blog
     'blog.title': 'Blog',
     'blog.recent_posts': 'Recent Articles',
@@ -156,7 +156,7 @@ export const translations: Translations = {
     'blog.written_by': 'Written by',
     'blog.published': 'Published on',
     'blog.categories': 'Categories',
-    
+
     // Contact
     'contact.title': 'Contact Us',
     'contact.name': 'Name',
@@ -166,7 +166,7 @@ export const translations: Translations = {
     'contact.send': 'Send',
     'contact.address': 'Address',
     'contact.hours': 'Hours',
-    
+
     // Footer
     'footer.copyright': '© 2026 PROQUELEC. All rights reserved.',
     'footer.legal': 'Legal Notice',
@@ -174,16 +174,16 @@ export const translations: Translations = {
     'footer.terms': 'Terms of Use',
     'footer.contact': 'Contact',
     'footer.partners': 'Partners',
-  }
+  },
 };
 
 // Get current language from localStorage or browser
 export function getCurrentLanguage(): Language {
   if (typeof window === 'undefined') return 'fr';
-  
+
   const stored = localStorage.getItem('language');
   if (stored === 'fr' || stored === 'en') return stored;
-  
+
   const browserLang = navigator.language.split('-')[0];
   return (browserLang === 'en' ? 'en' : 'fr') as Language;
 }
@@ -196,22 +196,26 @@ export function setLanguage(lang: Language) {
 }
 
 // Get translated string with interpolation support
-export function t(key: string, lang: Language = getCurrentLanguage(), vars?: Record<string, string>): string {
+export function t(
+  key: string,
+  lang: Language = getCurrentLanguage(),
+  vars?: Record<string, string>,
+): string {
   const keys = key.split('.');
-  let value: any = translations[lang];
-  
+  let value: unknown = translations[lang];
+
   for (const k of keys) {
     if (value && typeof value === 'object') {
-      value = value[k];
+      value = (value as Record<string, unknown>)[k];
     } else {
       return key; // Return key if translation not found
     }
   }
-  
+
   if (typeof value !== 'string') {
     return key;
   }
-  
+
   // Interpolate variables
   if (vars) {
     let result = value;
@@ -220,18 +224,18 @@ export function t(key: string, lang: Language = getCurrentLanguage(), vars?: Rec
     }
     return result;
   }
-  
+
   return value;
 }
 
 // Hook-like function for React components
 export function useTranslation(lang?: Language) {
   const currentLang = lang || getCurrentLanguage();
-  
+
   return {
     t: (key: string, vars?: Record<string, string>) => t(key, currentLang, vars),
     lang: currentLang,
     setLanguage,
-    allLanguages: ['fr', 'en'] as Language[]
+    allLanguages: ['fr', 'en'] as Language[],
   };
 }

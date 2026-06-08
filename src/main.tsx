@@ -30,27 +30,33 @@ const isMediaPlaybackAbort = (reason: unknown) => {
 };
 
 // Global Error Catching for robustness
-window.onerror = (message, source, lineno, colno, error) => {
-  console.error("[Global Error]", { message, source, lineno, colno, error });
+window.onerror = (
+  event: Event | string,
+  source?: string,
+  lineno?: number,
+  colno?: number,
+  error?: Error,
+) => {
+  console.error('[Global Error]', { message: event, source, lineno, colno, error });
   // Empêcher les boucles infinies de crash au démarrage
   return false;
 };
 
-window.onunhandledrejection = (event) => {
+window.onunhandledrejection = (event: PromiseRejectionEvent) => {
   if (isMediaPlaybackAbort(event.reason)) {
     event.preventDefault();
     return;
   }
 
-  console.error("[Unhandled Promise Rejection]", event.reason);
+  console.error('[Unhandled Promise Rejection]', event.reason);
 };
 
 const queryClient = new QueryClient();
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
-  </HelmetProvider>
+  </HelmetProvider>,
 );

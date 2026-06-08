@@ -3,9 +3,7 @@
 
 'use strict';
 
-const REQUIRED_IN_PROD = [
-  'JWT_SECRET',
-];
+const REQUIRED_IN_PROD = ['JWT_SECRET'];
 
 /**
  * Runtime environment mode.
@@ -44,7 +42,17 @@ const config = Object.freeze({
   dbName: process.env.DB_NAME || 'proquelec',
 
   // ── Auth ──
-  jwtSecret: process.env.JWT_SECRET || (isProd() ? '' : 'dev-secret-do-not-use-in-prod'),
+  jwtSecret:
+    process.env.JWT_SECRET ||
+    (() => {
+      if (isProd()) {
+        throw new Error('JWT_SECRET est requis en production');
+      }
+      console.warn(
+        '[SECURITY] JWT_SECRET non défini en développement — utilisez une clé forte en production',
+      );
+      return 'dev-secret-do-not-use-in-prod';
+    })(),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
 
   // ── Runtime Modes (explicit opt-in) ──
@@ -84,17 +92,15 @@ function validate() {
 
   const missing = REQUIRED_IN_PROD.filter((key) => !process.env[key]);
   if (missing.length > 0) {
-    throw new Error(
-      `Missing required environment variables in production: ${missing.join(', ')}`,
-    );
+    throw new Error(`Missing required environment variables in production: ${missing.join(', ')}`);
   }
 
   if (!config.databaseUrl) {
     throw new Error('DATABASE_URL is required in production');
   }
 
-  if (!config.jwtSecret || config.jwtSecret === 'changeme_en_production') {
-    throw new Error('JWT_SECRET must be changed from default in production');
+  if (!config.jwtSecret) {
+    throw new Error('JWT_SECRET must be configured in production');
   }
 }
 

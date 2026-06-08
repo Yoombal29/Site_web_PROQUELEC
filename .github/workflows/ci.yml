@@ -26,9 +26,10 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run lint
-      - name: TypeScript Check
-        run: npx tsc --noEmit
-        continue-on-error: true
+      - name: TypeScript Strict Check
+        run: npx tsc --noEmit --strict
+      - name: Check Dependency Integrity
+        run: npm audit signatures
 
   test:
     name: 🧪 Unit & Integration Tests
@@ -65,12 +66,32 @@ jobs:
       - run: npm ci
       - name: Build
         run: npm run build
+      - name: Analyze Bundle Size
+        run: npx vite-bundle-analyzer 2>/dev/null || echo "Bundle analysis skipped"
+        continue-on-error: true
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
           retention-days: 7
+
+  docker:
+    name: 🐳 Docker Build
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: proquelec/app:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   e2e:
     name: 🎭 Playwright E2E Tests

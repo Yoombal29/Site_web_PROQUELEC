@@ -5,7 +5,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { ThemeProvider } from 'next-themes';
 import { ThemeSync } from '@/components/ThemeSync';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { MainLayout } from '@/components/MainLayout';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { NotificationContainer } from '@/components/NotificationContainer';
@@ -15,69 +15,71 @@ import { useConstructionMode } from '@/hooks/useConstructionMode';
 import { useSession } from '@/hooks/useSession';
 import { useIsAdmin } from '@/hooks/useIsAdmin';
 import { useDynamicRoutes, type DynamicRoute } from '@/hooks/useDynamicRoutes';
-import DynamicPage from './pages/DynamicPage';
-import BlogPost from './pages/BlogPost';
-import NotFound from './pages/NotFound';
-import ToolsPlatform from './pages/ToolsPlatform';
-import Sitemap from './pages/Sitemap';
-import Dashboard from './pages/Dashboard';
-import Auth from './pages/Auth';
-import PartnerDashboard from './pages/admin/PartnerDashboard';
-import AdminSecondaryDashboard from './pages/admin/AdminSecondaryDashboard';
-import PageSectionsAdmin from './pages/admin/PageSectionsAdmin';
 import AdminDashboard from '@/components/admin/AdminDashboard';
-import SchemaBuilder from './pages/SchemaBuilder';
-import RubriqueSelectorPage from './pages/RubriqueSelectorPage';
-import ObservatoirePage from './pages/observatoire/ObservatoirePage';
 import { RoleProtectedRoute } from '@/components/RoleProtectedRoute';
-import GEDPage from './pages/GEDPage';
-import SubscriptionPage from './pages/SubscriptionPage';
 
-// Expert Lab Imports
-import ExpertDashboard from './expert-lab/pages/Dashboard';
-import ExpertChatPage from './expert-lab/pages/ChatPage';
-import InspecteurKEBE from './pages/InspecteurKEBE';
+// Lazy-loaded pages
+const DynamicPage = lazy(() => import('./pages/DynamicPage'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+
+const Sitemap = lazy(() => import('./pages/Sitemap'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Auth = lazy(() => import('./pages/Auth'));
+const PartnerDashboard = lazy(() => import('./pages/admin/PartnerDashboard'));
+const AdminSecondaryDashboard = lazy(() => import('./pages/admin/AdminSecondaryDashboard'));
+const PageSectionsAdmin = lazy(() => import('./pages/admin/PageSectionsAdmin'));
+const SchemaBuilder = lazy(() => import('./pages/SchemaBuilder'));
+const RubriqueSelectorPage = lazy(() => import('./pages/RubriqueSelectorPage'));
+const ObservatoirePage = lazy(() => import('./pages/observatoire/ObservatoirePage'));
+const GEDPage = lazy(() => import('./pages/GEDPage'));
+const SubscriptionPage = lazy(() => import('./pages/SubscriptionPage'));
+
+// Expert Lab
+const ExpertDashboard = lazy(() => import('./expert-lab/pages/Dashboard'));
+const ExpertChatPage = lazy(() => import('./expert-lab/pages/ChatPage'));
+const InspecteurKEBE = lazy(() => import('./pages/InspecteurKEBE'));
 
 // Office Suite Imports
 const DocumentEditorPage = lazy(() =>
   import('./pages/DocumentEditorPage').then((mod) => ({ default: mod.DocumentEditorPage })),
 );
-import { SpreadsheetEditorPage } from './pages/SpreadsheetEditorPage';
-import { PresentationEditorPage } from './pages/PresentationEditorPage';
-import { AnalyticsPage } from './pages/AnalyticsPage';
-import ExpertCalculatorsPage from './expert-lab/pages/CalculatorsPage';
-import ExpertLogsPage from './expert-lab/pages/LogsPage';
-import ExpertConfigPage from './expert-lab/pages/ConfigPage';
-import ExpertDocsPage from './expert-lab/pages/DocsPage';
-import ExpertAIProvidersPage from './expert-lab/pages/AIProvidersPage';
-import ExpertHistoryPage from './expert-lab/pages/HistoryPage';
-import ExpertSchemasPage from './expert-lab/pages/SchemasPage';
-import ExpertModelsPage from './expert-lab/pages/ModelsPage';
-import ExpertStatsPage from './expert-lab/pages/StatsPage';
-import ComplianceScannerPage from './expert-lab/pages/ComplianceScannerPage';
-
-import ElectricianDashboard from './pages/dashboards/ElectricianDashboard';
-import CompanyDashboard from './pages/dashboards/CompanyDashboard';
-import MemberDashboard from './pages/dashboards/MemberDashboard';
-import ProjectList from './pages/projects/ProjectList';
-import ProjectDetail from './pages/projects/ProjectDetail';
-import InspectionDetail from './pages/inspections/InspectionDetail';
-
-import PermissionsAdmin from './pages/admin/PermissionsAdmin';
-import ToolsManagerPage from './pages/admin/ToolsManagerPage';
-import ToolsStatsPage from './pages/admin/ToolsStatsPage';
-import AppDetailPage from './pages/AppDetailPage';
-import RBACDemo from './pages/examples/RBACDemo';
-
-// Lazy-load heavy pages
+const SpreadsheetEditorPage = lazy(() =>
+  import('./pages/SpreadsheetEditorPage').then((m) => ({ default: m.SpreadsheetEditorPage })),
+);
+const PresentationEditorPage = lazy(() =>
+  import('./pages/PresentationEditorPage').then((m) => ({ default: m.PresentationEditorPage })),
+);
 const AnalyticsPageLazy = lazy(() =>
   import('./pages/AnalyticsPage').then((mod) => ({ default: mod.AnalyticsPage })),
 );
+const ExpertCalculatorsPage = lazy(() => import('./expert-lab/pages/CalculatorsPage'));
+const ExpertLogsPage = lazy(() => import('./expert-lab/pages/LogsPage'));
+const ExpertConfigPage = lazy(() => import('./expert-lab/pages/ConfigPage'));
+const ExpertDocsPage = lazy(() => import('./expert-lab/pages/DocsPage'));
+const ExpertAIProvidersPage = lazy(() => import('./expert-lab/pages/AIProvidersPage'));
+const ExpertHistoryPage = lazy(() => import('./expert-lab/pages/HistoryPage'));
+const ExpertSchemasPage = lazy(() => import('./expert-lab/pages/SchemasPage'));
+const ExpertModelsPage = lazy(() => import('./expert-lab/pages/ModelsPage'));
+const ExpertStatsPage = lazy(() => import('./expert-lab/pages/StatsPage'));
+const ComplianceScannerPage = lazy(() => import('./expert-lab/pages/ComplianceScannerPage'));
+
+const ElectricianDashboard = lazy(() => import('./pages/dashboards/ElectricianDashboard'));
+const CompanyDashboard = lazy(() => import('./pages/dashboards/CompanyDashboard'));
+const MemberDashboard = lazy(() => import('./pages/dashboards/MemberDashboard'));
+const ProjectList = lazy(() => import('./pages/projects/ProjectList'));
+const ProjectDetail = lazy(() => import('./pages/projects/ProjectDetail'));
+const InspectionDetail = lazy(() => import('./pages/inspections/InspectionDetail'));
+
+const PermissionsAdmin = lazy(() => import('./pages/admin/PermissionsAdmin'));
+const ToolsManagerPage = lazy(() => import('./pages/admin/ToolsManagerPage'));
+const ToolsStatsPage = lazy(() => import('./pages/admin/ToolsStatsPage'));
+const AppDetailPage = lazy(() => import('./pages/AppDetailPage'));
+const RBACDemo = lazy(() => import('./pages/examples/RBACDemo'));
+
 const BuilderReleaseManagerPage = lazy(() => import('./pages/admin/BuilderReleaseManagerPage'));
-import BuilderPage from './pages/admin/BuilderPage';
-import BuilderConfigPage from './pages/admin/BuilderConfigPage';
-const SchematicEditorPage = lazy(() => import('./pages/admin/SchematicEditorPage'));
-const CraftBuilderPage = lazy(() => import('./pages/admin/CraftBuilderPage'));
+const BuilderPage = lazy(() => import('./pages/admin/BuilderPage'));
+const BuilderConfigPage = lazy(() => import('./pages/admin/BuilderConfigPage'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -90,8 +92,8 @@ const queryClient = new QueryClient({
 
 const AppContent = () => {
   const { isConstructionMode, isLoading } = useConstructionMode();
-  const { user, isLoading: isLoadingSession } = useSession();
-  const { isAdmin, isLoading: isLoadingAdmin } = useIsAdmin();
+  const { isLoading: isLoadingSession } = useSession();
+  const { isAdmin } = useIsAdmin();
   const { data: dynamicRoutes, isLoading: isLoadingRoutes } = useDynamicRoutes();
 
   // Si le mode construction est activé ET l'utilisateur n'est pas admin
@@ -358,9 +360,7 @@ const AppContent = () => {
           // GED Route (Document Management)
           {
             path: '/ged',
-            element: (
-              <FunctionalBuilderRoute slug="ged" title="GED" fallback={<GEDPage />} />
-            ),
+            element: <FunctionalBuilderRoute slug="ged" title="GED" fallback={<GEDPage />} />,
           },
           {
             path: '/abonnements',
@@ -562,7 +562,18 @@ const AppContent = () => {
         path: '/',
         element: (
           <MainLayout>
-            <Outlet />
+            <Suspense
+              fallback={
+                <div className="min-h-screen bg-proqblue flex items-center justify-center">
+                  <div className="text-white text-center">
+                    <div className="animate-spin w-8 h-8 border-2 border-white border-t-transparent rounded-full mx-auto mb-4"></div>
+                    <p>Chargement...</p>
+                  </div>
+                </div>
+              }
+            >
+              <Outlet />
+            </Suspense>
           </MainLayout>
         ),
         children: createRoutes(),

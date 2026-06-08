@@ -1,0 +1,282 @@
+<div class="font-sans antialiased">
+
+  <!-- Hero — Minimal & Luxe -->
+  <section class="relative bg-[#0c0a1d] pt-36 pb-52 overflow-hidden">
+    <!-- Ambient orbs -->
+    <div class="absolute top-[-10%] left-[15%] w-[500px] h-[500px] bg-violet-600/15 blur-[180px] rounded-full"></div>
+    <div class="absolute bottom-[-20%] right-[10%] w-[400px] h-[400px] bg-indigo-500/10 blur-[150px] rounded-full"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-fuchsia-500/10 blur-[100px] rounded-full"></div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-6 text-center space-y-8">
+      <div class="inline-flex items-center gap-2.5 px-5 py-2 bg-white/[0.04] border border-white/[0.08] rounded-full backdrop-blur-xl">
+        <span class="w-2 h-2 rounded-full bg-violet-400 animate-pulse"></span>
+        <span class="text-[11px] font-bold uppercase tracking-[0.25em] text-violet-300/90">Centre d'aide</span>
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-black text-white leading-[1.1] tracking-tight">
+        Comment pouvons‑nous <br class="hidden md:block"/>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-indigo-400">vous aider</span> ?
+      </h1>
+
+      <p class="text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-xl mx-auto">
+        Parcourez nos rubriques ou recherchez directement votre question. Réponse instantanée, 24h/24.
+      </p>
+
+      <!-- Search Bar -->
+      <div class="max-w-lg mx-auto pt-4">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-violet-600/40 to-fuchsia-600/40 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative flex items-center bg-white/[0.06] border border-white/[0.1] rounded-2xl backdrop-blur-xl overflow-hidden">
+            <svg class="w-5 h-5 text-slate-500 ml-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Rechercher une question..." class="w-full bg-transparent py-4 px-4 text-white placeholder-slate-500 text-base focus:outline-none" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Pills -->
+  <section class="bg-white relative -mt-10 z-20">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="bg-white rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.08)] border border-slate-100 p-3 flex flex-wrap justify-center gap-2">
+        <a href="#demarches" class="px-5 py-2.5 rounded-xl bg-violet-50 text-violet-700 text-sm font-bold hover:bg-violet-100 transition-colors">📋 Démarches</a>
+        <a href="#normes" class="px-5 py-2.5 rounded-xl bg-blue-50 text-blue-700 text-sm font-bold hover:bg-blue-100 transition-colors">🛡️ Norme SN 01-015</a>
+        <a href="#formations" class="px-5 py-2.5 rounded-xl bg-emerald-50 text-emerald-700 text-sm font-bold hover:bg-emerald-100 transition-colors">🎓 Formations</a>
+        <a href="#tarifs" class="px-5 py-2.5 rounded-xl bg-amber-50 text-amber-700 text-sm font-bold hover:bg-amber-100 transition-colors">💰 Tarifs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section class="py-24 bg-white px-6">
+    <div class="max-w-3xl mx-auto space-y-20">
+
+      <!-- ═══ Catégorie 1 : Démarches ═══ -->
+      <div id="demarches">
+        <div class="flex items-center gap-4 mb-10">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/20">
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 tracking-tight">Démarches & Procédures</h2>
+            <p class="text-sm text-slate-400 font-light">Tout savoir sur les étapes à suivre</p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <!-- Q1 -->
+          <details class="group rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-violet-200 transition-colors overflow-hidden">
+            <summary class="flex items-center gap-4 p-6 cursor-pointer select-none">
+              <span class="w-8 h-8 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center text-sm font-black shrink-0 group-open:bg-violet-600 group-open:text-white transition-colors">1</span>
+              <span class="font-semibold text-slate-800 flex-1 text-left">Comment demander un contrôle de conformité ?</span>
+              <svg class="w-5 h-5 text-slate-300 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-6 pb-6 pl-[4.5rem] text-slate-500 leading-relaxed text-[15px]">
+              Soumettez votre demande via notre <a href="/contact" class="text-violet-600 font-semibold underline underline-offset-2">formulaire en ligne</a> ou appelez notre standard au <strong class="text-slate-700">+221 33 XXX XX XX</strong>. Un technicien sera assigné sous 48 heures pour planifier la visite d'inspection.
+            </div>
+          </details>
+
+          <!-- Q2 -->
+          <details class="group rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-violet-200 transition-colors overflow-hidden">
+            <summary class="flex items-center gap-4 p-6 cursor-pointer select-none">
+              <span class="w-8 h-8 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center text-sm font-black shrink-0 group-open:bg-violet-600 group-open:text-white transition-colors">2</span>
+              <span class="font-semibold text-slate-800 flex-1 text-left">Quels documents fournir pour une certification QUALI-ELEC ?</span>
+              <svg class="w-5 h-5 text-slate-300 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-6 pb-6 pl-[4.5rem] text-slate-500 leading-relaxed text-[15px]">
+              <ul class="space-y-2 list-none">
+                <li class="flex items-start gap-2"><span class="text-violet-500 mt-0.5">›</span> Agrément professionnel en cours de validité</li>
+                <li class="flex items-start gap-2"><span class="text-violet-500 mt-0.5">›</span> Attestation d'assurance RC professionnelle</li>
+                <li class="flex items-start gap-2"><span class="text-violet-500 mt-0.5">›</span> Minimum 3 références de chantiers conformes à la norme SN 01-015</li>
+                <li class="flex items-start gap-2"><span class="text-violet-500 mt-0.5">›</span> Copie du registre de commerce (NINEA)</li>
+              </ul>
+            </div>
+          </details>
+
+          <!-- Q3 -->
+          <details class="group rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-violet-200 transition-colors overflow-hidden">
+            <summary class="flex items-center gap-4 p-6 cursor-pointer select-none">
+              <span class="w-8 h-8 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center text-sm font-black shrink-0 group-open:bg-violet-600 group-open:text-white transition-colors">3</span>
+              <span class="font-semibold text-slate-800 flex-1 text-left">Quel est le délai pour obtenir un certificat de conformité ?</span>
+              <svg class="w-5 h-5 text-slate-300 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-6 pb-6 pl-[4.5rem] text-slate-500 leading-relaxed text-[15px]">
+              <strong class="text-slate-700">5 à 10 jours ouvrés</strong> après la visite si l'installation est conforme. En cas de non-conformité, un rapport détaillé listant les corrections nécessaires vous est transmis sous 72 heures.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- ═══ Catégorie 2 : Normes ═══ -->
+      <div id="normes">
+        <div class="flex items-center gap-4 mb-10">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 tracking-tight">Norme SN 01-015</h2>
+            <p class="text-sm text-slate-400 font-light">Le référentiel obligatoire au Sénégal</p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <details class="group rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-blue-200 transition-colors overflow-hidden">
+            <summary class="flex items-center gap-4 p-6 cursor-pointer select-none">
+              <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-black shrink-0 group-open:bg-blue-600 group-open:text-white transition-colors">4</span>
+              <span class="font-semibold text-slate-800 flex-1 text-left">La norme SN 01-015 est-elle obligatoire ?</span>
+              <svg class="w-5 h-5 text-slate-300 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-6 pb-6 pl-[4.5rem] text-slate-500 leading-relaxed text-[15px]">
+              <strong class="text-slate-700">Oui, elle est obligatoire.</strong> Rendue applicable par arrêté ministériel, elle s'impose à toute installation électrique basse tension au Sénégal — neuve ou en rénovation — dans les secteurs résidentiel, tertiaire et industriel.
+            </div>
+          </details>
+
+          <details class="group rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-blue-200 transition-colors overflow-hidden">
+            <summary class="flex items-center gap-4 p-6 cursor-pointer select-none">
+              <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-black shrink-0 group-open:bg-blue-600 group-open:text-white transition-colors">5</span>
+              <span class="font-semibold text-slate-800 flex-1 text-left">Où consulter le texte complet de la norme ?</span>
+              <svg class="w-5 h-5 text-slate-300 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-6 pb-6 pl-[4.5rem] text-slate-500 leading-relaxed text-[15px]">
+              Le texte intégral est accessible gratuitement dans la section <a href="/documents" class="text-blue-600 font-semibold underline underline-offset-2">Documents & Ressources</a> de notre site, ainsi que dans votre espace membre si vous êtes un professionnel enregistré.
+            </div>
+          </details>
+
+          <details class="group rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-blue-200 transition-colors overflow-hidden">
+            <summary class="flex items-center gap-4 p-6 cursor-pointer select-none">
+              <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-black shrink-0 group-open:bg-blue-600 group-open:text-white transition-colors">6</span>
+              <span class="font-semibold text-slate-800 flex-1 text-left">Que risque-t-on en cas de non-conformité ?</span>
+              <svg class="w-5 h-5 text-slate-300 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-6 pb-6 pl-[4.5rem] text-slate-500 leading-relaxed text-[15px]">
+              Une installation non conforme peut entraîner le <strong class="text-slate-700">refus de raccordement par SENELEC</strong>, l'exclusion des appels d'offres publics, et engage la responsabilité civile et pénale du professionnel en cas d'accident.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- ═══ Catégorie 3 : Formations ═══ -->
+      <div id="formations">
+        <div class="flex items-center gap-4 mb-10">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 tracking-tight">Formations & Habilitations</h2>
+            <p class="text-sm text-slate-400 font-light">Montez en compétence avec PROQUELEC</p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <details class="group rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-emerald-200 transition-colors overflow-hidden">
+            <summary class="flex items-center gap-4 p-6 cursor-pointer select-none">
+              <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm font-black shrink-0 group-open:bg-emerald-600 group-open:text-white transition-colors">7</span>
+              <span class="font-semibold text-slate-800 flex-1 text-left">Quelles formations proposez-vous ?</span>
+              <svg class="w-5 h-5 text-slate-300 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-6 pb-6 pl-[4.5rem] text-slate-500 leading-relaxed text-[15px]">
+              <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white rounded-xl p-4 border border-slate-100">
+                  <p class="font-bold text-slate-700 text-sm">Normes Électriques</p>
+                  <p class="text-xs text-slate-400 mt-1">SN 01-015 • 5 jours</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 border border-slate-100">
+                  <p class="font-bold text-slate-700 text-sm">Habilitation Électrique</p>
+                  <p class="text-xs text-slate-400 mt-1">B1V / BR • 3 jours</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 border border-slate-100">
+                  <p class="font-bold text-slate-700 text-sm">Efficacité Énergétique</p>
+                  <p class="text-xs text-slate-400 mt-1">Audit & Optimisation • 4 jours</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 border border-slate-100">
+                  <p class="font-bold text-slate-700 text-sm">Audit Technique</p>
+                  <p class="text-xs text-slate-400 mt-1">Contrôle & Reporting • 3 jours</p>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="group rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-emerald-200 transition-colors overflow-hidden">
+            <summary class="flex items-center gap-4 p-6 cursor-pointer select-none">
+              <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center text-sm font-black shrink-0 group-open:bg-emerald-600 group-open:text-white transition-colors">8</span>
+              <span class="font-semibold text-slate-800 flex-1 text-left">Les certifications PROQUELEC sont-elles reconnues à l'international ?</span>
+              <svg class="w-5 h-5 text-slate-300 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-6 pb-6 pl-[4.5rem] text-slate-500 leading-relaxed text-[15px]">
+              Les certifications QUALI-ELEC sont reconnues sur <strong class="text-slate-700">tout le territoire sénégalais</strong> et dans les pays membres de la <strong class="text-slate-700">CEDEAO</strong> ayant adopté des accords de reconnaissance mutuelle. Nous travaillons activement à étendre cette reconnaissance.
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- ═══ Catégorie 4 : Tarifs ═══ -->
+      <div id="tarifs">
+        <div class="flex items-center gap-4 mb-10">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <h2 class="text-2xl font-black text-slate-900 tracking-tight">Tarifs & Conditions</h2>
+            <p class="text-sm text-slate-400 font-light">Transparence et accessibilité</p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <details class="group rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-amber-200 transition-colors overflow-hidden">
+            <summary class="flex items-center gap-4 p-6 cursor-pointer select-none">
+              <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center text-sm font-black shrink-0 group-open:bg-amber-600 group-open:text-white transition-colors">9</span>
+              <span class="font-semibold text-slate-800 flex-1 text-left">L'audit pour les particuliers est-il payant ?</span>
+              <svg class="w-5 h-5 text-slate-300 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-6 pb-6 pl-[4.5rem] text-slate-500 leading-relaxed text-[15px]">
+              PROQUELEC propose des <strong class="text-slate-700">audits de sensibilisation gratuits</strong> lors de nos campagnes terrain. Les audits détaillés avec rapport complet font l'objet d'une tarification régulée, accessible et transparente. <a href="/contact" class="text-amber-600 font-semibold underline underline-offset-2">Demandez un devis</a>.
+            </div>
+          </details>
+
+          <details class="group rounded-2xl bg-slate-50/80 border border-slate-100 hover:border-amber-200 transition-colors overflow-hidden">
+            <summary class="flex items-center gap-4 p-6 cursor-pointer select-none">
+              <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center text-sm font-black shrink-0 group-open:bg-amber-600 group-open:text-white transition-colors">10</span>
+              <span class="font-semibold text-slate-800 flex-1 text-left">Existe-t-il des aides pour financer les formations ?</span>
+              <svg class="w-5 h-5 text-slate-300 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-6 pb-6 pl-[4.5rem] text-slate-500 leading-relaxed text-[15px]">
+              Oui. Selon votre statut, vous pouvez bénéficier de prises en charge par le <strong class="text-slate-700">ONFP</strong> (Office National de la Formation Professionnelle), le <strong class="text-slate-700">3FPT</strong>, ou des programmes de coopération internationale. Contactez-nous pour une étude personnalisée.
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA — Glassmorphism -->
+  <section class="py-28 bg-[#0c0a1d] relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/10 blur-[200px] rounded-full"></div>
+
+    <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
+      <div class="bg-white/[0.04] border border-white/[0.08] backdrop-blur-xl rounded-[2rem] p-12 md:p-16 space-y-8">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
+          <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-black text-white leading-tight">
+          Toujours besoin d'aide ?
+        </h2>
+        <p class="text-slate-400 font-light leading-relaxed">
+          Notre équipe d'experts répond à toute question spécifique sous 24 heures. Appelez-nous ou envoyez un message.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-3 pt-2">
+          <a href="/contact">
+            <button class="w-full sm:w-auto bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-violet-600/30 transition-all hover:-translate-y-0.5">
+              Écrire à un expert
+            </button>
+          </a>
+          <a href="tel:+221330000000">
+            <button class="w-full sm:w-auto bg-white/[0.06] hover:bg-white/[0.1] text-white border border-white/[0.1] font-bold py-4 px-8 rounded-xl transition-all hover:-translate-y-0.5">
+              📞 +221 33 XXX XX XX
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

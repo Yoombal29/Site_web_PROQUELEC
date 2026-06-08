@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect, type ReactNode } from 'react';
 import {
   Menu,
   X,
@@ -27,10 +27,11 @@ import {
   Globe,
   Sparkles,
   CreditCard,
+  type LucideIcon,
 } from 'lucide-react';
 
 // Icon mapping for dynamic icons from DB
-const ICON_MAP: Record<string, unknown> = {
+const ICON_MAP: Record<string, LucideIcon> = {
   BookOpen,
   Award,
   Phone,
@@ -59,7 +60,6 @@ import { useSession } from '@/hooks/useSession';
 import { useIsAdmin } from '@/hooks/useIsAdmin';
 import { useSiteConfig } from '@/hooks/useSiteConfig';
 import { SearchGlobal } from '@/components/SearchGlobal';
-import { useRef, useLayoutEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getDashboardPath } from '@/utils/navigation';
@@ -68,18 +68,55 @@ interface HeaderProps {
   solid?: boolean;
 }
 
+interface HeaderGlobals {
+  alertEnabled?: boolean;
+  alertText?: string;
+  alertType?: string;
+  searchEnabled?: boolean;
+  searchPosition?: string;
+  height?: string;
+  [key: string]: unknown;
+}
+
+interface MegaMenuColumn {
+  title: string;
+  items: Array<{ label: string; path: string }>;
+}
+
+interface MegaMenuSection {
+  label: string;
+  icon: LucideIcon;
+  columns: MegaMenuColumn[];
+}
+
+interface SubMenuItem {
+  id?: string;
+  label: string;
+  path: string;
+}
+
+interface NavLinkItem {
+  id?: string;
+  label: string;
+  path?: string;
+  icon?: LucideIcon;
+  submenu?: SubMenuItem[];
+}
+
+type CombinedNavItem =
+  | (NavLinkItem & { type: 'nav' })
+  | (MegaMenuSection & { type: 'mega' })
+  | { id?: string; label: string; path: string; type: 'extra' };
+
 export const Header = ({ solid = false }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { isAdmin } = useIsAdmin();
   const location = useLocation();
-  const { settings: _s } = useLiveSettings();
-  const s = _s as any;
-  const { schema: _sc } = useSiteConfig();
-  const sc = _sc as any;
-  const { data: _mi } = useMenuItems();
-  const mi = _mi as any[];
+  const { settings: s } = useLiveSettings();
+  const { schema: sc } = useSiteConfig();
+  const { data: mi } = useMenuItems();
   const { user, isLoading, signOut } = useSession();
   const navigate = useNavigate();
 
@@ -157,7 +194,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const headerConfig = sc?.globals?.header || {};
+  const headerConfig = (sc?.globals?.header || {}) as HeaderGlobals;
   const isCompact = scrolled || solid;
 
   // Secondary menu items
@@ -308,6 +345,13 @@ export const Header = ({ solid = false }: HeaderProps) => {
     isHighlight = false,
     isActive = false,
     isMobile = false,
+  }: {
+    to: string;
+    children: ReactNode;
+    icon?: LucideIcon;
+    isHighlight?: boolean;
+    isActive?: boolean;
+    isMobile?: boolean;
   }) => (
     <Link
       to={to}
@@ -350,7 +394,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
     </Link>
   );
 
-  const MegaMenuLink = ({ section }) => {
+  const MegaMenuLink = ({ section }: { section: MegaMenuSection }) => {
     const isActive = activeDropdown === section.label;
     return (
       <div
@@ -419,14 +463,20 @@ export const Header = ({ solid = false }: HeaderProps) => {
     );
   };
 
-  const DropdownNavLink = ({ item, isHighlight = false }) => {
+  const DropdownNavLink = ({
+    item,
+    isHighlight = false,
+  }: {
+    item: NavLinkItem;
+    isHighlight?: boolean;
+  }) => {
     const hasSubmenu = item.submenu && item.submenu.length > 0;
     const isActive = activeDropdown === item.label || location.pathname === item.path;
 
     if (!hasSubmenu) {
       return (
         <NavLink
-          to={item.path}
+          to={item.path || '#'}
           icon={item.icon}
           isHighlight={isHighlight}
           isActive={location.pathname === item.path}
@@ -437,7 +487,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
     }
 
     // Calcul dynamique du nombre de colonnes optimal
-    const count = item.submenu.length;
+    const count = item.submenu!.length;
     const colCount = count <= 4 ? 1 : count <= 8 ? 2 : count <= 15 ? 3 : 4;
     const colWidthMap: Record<number, string> = {
       1: 'w-56',
@@ -505,7 +555,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                 colGridMap[colCount],
               )}
             >
-              {item.submenu.map((subItem, index) => (
+              {item.submenu!.map((subItem, index) => (
                 <Link
                   key={subItem.id || `sub-${index}`}
                   to={subItem.path}
@@ -569,7 +619,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
       {/* Barre d'alerte dynamique */}
       {headerConfig.alertEnabled && headerConfig.alertText && (
         <div
-          className={`w-full h-[var(--alert-height)] flex items-center justify-center px-4 overflow-hidden relative z-[101] ${getAlertStyles(headerConfig.alertType)}`}
+          className={`w-full h-[var(--alert-height)] flex items-center justify-center px-4 overflow-hidden relative z-[101] ${getAlertStyles(headerConfig.alertType ?? 'info')}`}
         >
           <div className="flex items-center gap-2 text-[11px] sm:text-xs font-bold uppercase tracking-wider animate-in fade-in slide-in-from-top-1 duration-500">
             <Bell className="h-3 w-3 animate-bounce" />
@@ -643,10 +693,15 @@ export const Header = ({ solid = false }: HeaderProps) => {
               >
                 {/* Combinaison dynamique de tous les liens pour le calcul d'overflow */}
                 {[
-                  ...mainNavLinks.map((l) => ({ ...l, type: 'nav' })),
-                  ...megaMenuSections.map((s) => ({ ...s, type: 'mega' })),
-                  ...activeMenuItems.map((m) => ({ label: m.title, path: m.url, type: 'extra' })),
-                ].map((item: any, idx) => {
+                  ...mainNavLinks.map((l) => ({ ...l, type: 'nav' as const })),
+                  ...megaMenuSections.map((s) => ({ ...s, type: 'mega' as const })),
+                  ...activeMenuItems.map((m) => ({
+                    id: m.id,
+                    label: m.title,
+                    path: m.url,
+                    type: 'extra' as const,
+                  })),
+                ].map((item: CombinedNavItem, idx) => {
                   // Gérer l'affichage conditionnel basé sur le calcul d'overflow
                   const isVisible = idx < visibleItemsCount;
 
@@ -658,9 +713,14 @@ export const Header = ({ solid = false }: HeaderProps) => {
 
                 {/* Bouton "Plus" intelligent si overflow */}
                 {[
-                  ...mainNavLinks.map((l) => ({ ...l, type: 'nav' })),
-                  ...megaMenuSections.map((s) => ({ ...s, type: 'mega' })),
-                  ...activeMenuItems.map((m) => ({ label: m.title, path: m.url, type: 'extra' })),
+                  ...mainNavLinks.map((l) => ({ ...l, type: 'nav' as const })),
+                  ...megaMenuSections.map((s) => ({ ...s, type: 'mega' as const })),
+                  ...activeMenuItems.map((m) => ({
+                    id: m.id,
+                    label: m.title,
+                    path: m.url,
+                    type: 'extra' as const,
+                  })),
                 ].length > visibleItemsCount && (
                   <div className="overflow-trigger">
                     {(() => {
@@ -677,7 +737,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                         groups.push({
                           label: 'Navigation',
                           items: hiddenNavs.map((l) => ({
-                            id: l.id,
+                            id: 'id' in l ? l.id : undefined,
                             label: l.label,
                             path: l.path,
                           })),
@@ -783,7 +843,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                                       </p>
                                       {group.items.map((item, ii) => (
                                         <Link
-                                          key={item.id || ii}
+                                          key={ii}
                                           to={item.path}
                                           className="group flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-all whitespace-nowrap"
                                           onClick={() => {
@@ -964,7 +1024,12 @@ export const Header = ({ solid = false }: HeaderProps) => {
                 Navigation
               </p>
               {mainNavLinks.map((link) => (
-                <NavLink key={link.id || link.path} to={link.path} icon={link.icon} isMobile>
+                <NavLink
+                  key={'id' in link ? link.id : link.path}
+                  to={link.path}
+                  icon={link.icon}
+                  isMobile
+                >
                   {link.label}
                 </NavLink>
               ))}

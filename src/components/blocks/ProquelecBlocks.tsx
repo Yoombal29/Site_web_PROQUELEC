@@ -2650,9 +2650,89 @@ GalleryBlock.craft = {
 // ─────────────────────────────────────────────
 const LazyMonacoEditor = lazy(() => import('@monaco-editor/react'));
 
-export const HtmlBlock = (props: any) => {
+/** Extrait les @import du CSS et les retourne séparément (doivent précéder les règles) */
+function extractCssImports(css: string): { imports: string[]; rules: string } {
+  const imports: string[] = [];
+  const rest = css.replace(/@import\s+(url\([^)]+\)|[^;]+);?\s*/gi, (match) => {
+    imports.push(match.trim());
+    return '';
+  });
+  return { imports, rules: rest.trim() };
+}
+
+/** Extrait les <link rel="stylesheet"> du HTML et les renvoie pour injection dans <head> */
+function extractExternalStylesheets(html: string): { hrefs: string[]; cleanHtml: string } {
+  const hrefs: string[] = [];
+  const cleanHtml = html.replace(
+    /<link[^>]*rel=["']stylesheet["'][^>]*href=["']([^"']+)["'][^>]*\/?>/gi,
+    (_match, href) => {
+      hrefs.push(href);
+      return '';
+    },
+  );
+  return { hrefs, cleanHtml };
+}
+
+/** Injecte une feuille de style <link> dans le document <head> */
+function injectStylesheetLink(blockId: string, href: string) {
+  if (typeof document === 'undefined') return;
+  const linkId = `htmlblock-link-${blockId}-${btoa(href).slice(0, 20)}`;
+  if (document.getElementById(linkId)) return; // déjà injecté
+  const link = document.createElement('link');
+  link.id = linkId;
+  link.rel = 'stylesheet';
+  link.href = href;
+  link.setAttribute('data-htmlblock-css', blockId);
+  document.head.appendChild(link);
+}
+
+/** Injecte ou met à jour une feuille de style globale liée à un bloc HTML */
+function injectGlobalCss(blockId: string, css: string) {
+  if (typeof document === 'undefined') return;
+  const styleId = `htmlblock-css-${blockId}`;
+  let styleTag = document.getElementById(styleId) as HTMLStyleElement | null;
+
+  // Séparer les @import des règles CSS
+  const { imports, rules } = extractCssImports(css || '');
+
+  if (!imports.length && !rules) {
+    removeGlobalCss(blockId);
+    return;
+  }
+
+  if (!styleTag) {
+    styleTag = document.createElement('style');
+    styleTag.id = styleId;
+    styleTag.setAttribute('data-htmlblock-css', blockId);
+    document.head.appendChild(styleTag);
+  }
+
+  // Les @import DOIVENT précéder les règles CSS (norme W3C)
+  const fullCss = [...imports, rules].filter(Boolean).join('\n');
+  styleTag.textContent = fullCss;
+}
+
+/** Supprime la feuille de style globale d'un bloc HTML */
+function removeGlobalCss(blockId: string) {
+  if (typeof document === 'undefined') return;
+  // Supprimer la <style>
+  const styleId = `htmlblock-css-${blockId}`;
+  const styleTag = document.getElementById(styleId);
+  if (styleTag) styleTag.remove();
+  // Supprimer toutes les <link> associées
+  document.querySelectorAll(`link[data-htmlblock-css="${blockId}"]`).forEach((el) => el.remove());
+}
+
+export const HtmlBlock = (props: {
+  html?: string;
+  globalCss?: string;
+  padding?: number;
+  hideLabel?: boolean;
+  nodeId?: string;
+}) => {
   const {
     html = '<div class="p-6 bg-slate-900/50 rounded-xl border border-slate-800 text-center"><p class="text-slate-400">Bloc HTML personnalisé. Cliquez sur modifier dans le panneau de droite.</p></div>',
+    globalCss = '',
     padding = 10,
     hideLabel = false,
   } = props;
@@ -2660,14 +2740,31 @@ export const HtmlBlock = (props: any) => {
     id,
     connectors: { connect, drag },
     selected,
-    actions: { setProp },
   } = useNode((node) => ({
     selected: node.events.selected,
   }));
   const { enabled } = useEditor((state) => ({ enabled: state.options.enabled }));
 
+  // Injecter / nettoyer CSS global + feuilles externes
+  React.useEffect(() => {
+    // 1. CSS personnalisé (onglet CSS Global)
+    if (globalCss?.trim()) {
+      injectGlobalCss(id, globalCss);
+    }
+
+    // 2. Liens <link rel="stylesheet"> dans le HTML
+    const { hrefs } = extractExternalStylesheets(html || '');
+    for (const href of hrefs) {
+      injectStylesheetLink(id, href);
+    }
+
+    return () => removeGlobalCss(id);
+  }, [id, globalCss, html]);
+
   const cleanHtml = React.useMemo(() => {
-    return DOMPurify.sanitize(html || '', {
+    // Extraire les <link stylesheet> du HTML (injectés dans <head> plus tard)
+    const { cleanHtml: htmlWithoutLinks } = extractExternalStylesheets(html || '');
+    return DOMPurify.sanitize(htmlWithoutLinks || '', {
       ADD_TAGS: [
         'iframe',
         'style',
@@ -2679,6 +2776,8 @@ export const HtmlBlock = (props: any) => {
         'svg',
         'path',
         'script',
+        'template',
+        'slot',
       ],
       ADD_ATTR: [
         'allow',
@@ -2702,11 +2801,21 @@ export const HtmlBlock = (props: any) => {
         'onerror',
         'disabled',
         'id',
+        'slot',
+        'part',
+        'exportparts',
+        // Permettre les liens CSS externes
+        'href',
+        'rel',
+        'type',
+        'media',
+        'crossorigin',
+        'integrity',
       ],
     });
   }, [html]);
 
-  const universal = getUniversalStyles(props);
+  const universal = getUniversalStyles(props as any);
 
   return (
     <div
@@ -2717,7 +2826,6 @@ export const HtmlBlock = (props: any) => {
       data-nodeid={id}
       className={`relative ${selected && enabled ? 'craft-selected' : ''}`}
     >
-      {/* Barre de sélection visible uniquement dans le builder */}
       {enabled && !hideLabel && (
         <div
           className={`h-5 flex items-center gap-1.5 px-2 cursor-pointer select-none transition-colors ${
@@ -2734,13 +2842,15 @@ export const HtmlBlock = (props: any) => {
             <circle cx="3" cy="9" r="1.5" />
             <circle cx="9" cy="9" r="1.5" />
           </svg>
-          <span className="text-[9px] font-medium tracking-wider opacity-70">Bloc HTML</span>
+          <span className="text-[9px] font-medium tracking-wider opacity-70">
+            {globalCss?.trim() ? 'Bloc HTML + CSS' : 'Bloc HTML'}
+          </span>
+          {globalCss?.trim() && <span className="text-[8px] text-emerald-400 ml-1">🎨</span>}
           {selected && (
             <span className="text-[8px] font-mono opacity-40 ml-auto">{id.slice(0, 8)}</span>
           )}
         </div>
       )}
-      {/* Contenu HTML - pointer-events: none dans le builder pour forcer la sélection du bloc */}
       <div
         style={{ padding: `${padding}px`, ...universal.style }}
         className={`w-full relative min-h-[40px] prose prose-slate max-w-none dark:prose-invert ${universal.className} ${enabled ? 'pointer-events-none' : ''}`}
@@ -2755,28 +2865,35 @@ const HtmlSettings = () => {
     id,
     actions: { setProp },
     html,
+    globalCss,
     padding,
     hideLabel,
   } = useNode((n) => ({
     html: n.data.props.html,
+    globalCss: n.data.props.globalCss,
     padding: n.data.props.padding,
     hideLabel: n.data.props.hideLabel,
   }));
   const [open, setOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'html' | 'css'>('html');
   const [localHtml, setLocalHtml] = useState('');
+  const [localCss, setLocalCss] = useState('');
   const editorRef = useRef<any>(null);
+  const cssEditorRef = useRef<any>(null);
 
-  // Sync localHtml when node changes (id) or html prop changes
+  // Sync editors when node changes
   useEffect(() => {
     setLocalHtml(html || '');
-  }, [id, html]);
+    setLocalCss(globalCss || '');
+  }, [id, html, globalCss]);
 
   const handleApply = () => {
-    setProp((p: any) => {
+    setProp((p: Record<string, unknown>) => {
       p.html = localHtml;
+      p.globalCss = localCss;
     });
     setOpen(false);
-    toast.success('Code HTML appliqué avec succès');
+    toast.success('Code HTML' + (localCss?.trim() ? ' + CSS' : '') + ' appliqué avec succès');
   };
 
   const handleEditorDidMount = (editor: any) => {
@@ -2784,22 +2901,30 @@ const HtmlSettings = () => {
   };
 
   const handleFormat = () => {
-    if (editorRef.current) {
-      editorRef.current.getAction('editor.action.formatDocument')?.run();
+    const ref = activeTab === 'css' ? cssEditorRef : editorRef;
+    if (ref.current) {
+      ref.current.getAction('editor.action.formatDocument')?.run();
     }
   };
 
   const handleExport = () => {
-    navigator.clipboard.writeText(localHtml);
-    toast.info('Code HTML copié dans le presse-papier');
+    const source = activeTab === 'css' ? localCss : localHtml;
+    navigator.clipboard.writeText(source);
+    toast.info(activeTab === 'css' ? 'CSS copié' : 'Code HTML copié');
   };
 
   const handleImport = () => {
-    const input = prompt('Collez votre code HTML ici pour écraser le contenu actuel :');
+    const label = activeTab === 'css' ? 'CSS' : 'HTML';
+    const input = prompt(`Collez votre code ${label} ici :`);
     if (input !== null) {
-      setLocalHtml(input);
-      toast.success('Code HTML importé localement. Cliquez sur Appliquer pour enregistrer.');
+      if (activeTab === 'css') setLocalCss(input);
+      else setLocalHtml(input);
+      toast.success(`Code ${label} importé. Cliquez sur Appliquer.`);
     }
+  };
+
+  const handleCssEditorDidMount = (editor: any) => {
+    cssEditorRef.current = editor;
   };
 
   return (
@@ -2853,40 +2978,87 @@ const HtmlSettings = () => {
               <div>
                 <DialogTitle className="text-xl font-bold flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
                   <Code2 size={20} className="text-indigo-400" />
-                  Éditeur de Code HTML
+                  Éditeur de Code{' '}
+                  <span className="text-xs font-mono text-slate-400 bg-[#1a1a2a] px-2 py-0.5 rounded">
+                    {activeTab === 'css' ? 'CSS Global' : 'HTML'}
+                  </span>
                 </DialogTitle>
                 <p className="text-xs text-slate-500 mt-1">
-                  Modifiez le contenu HTML du bloc. Tout le code (scripts exclus) sera sécurisé et
-                  appliqué.
+                  {activeTab === 'css'
+                    ? 'Le CSS sera injecté globalement dans le <head> de la page et nettoyé à la suppression du bloc.'
+                    : 'Modifiez le contenu HTML du bloc. Tout le code sera sécurisé et appliqué.'}
                 </p>
               </div>
             </DialogHeader>
 
-            <div className="flex-1 min-h-0 bg-[#07070a] border border-[#252538] rounded-lg overflow-hidden mt-4 relative">
+            {/* Tabs: HTML / CSS */}
+            <div className="flex gap-1 mt-4 border-b border-[#252538] pb-2">
+              <button
+                onClick={() => setActiveTab('html')}
+                className={`px-4 py-1.5 text-xs font-semibold rounded-t transition-colors ${
+                  activeTab === 'html'
+                    ? 'bg-indigo-600/20 text-indigo-300 border-b-2 border-indigo-500'
+                    : 'text-slate-500 hover:text-slate-300 hover:bg-[#161624]'
+                }`}
+              >
+                Code HTML
+              </button>
+              <button
+                onClick={() => setActiveTab('css')}
+                className={`px-4 py-1.5 text-xs font-semibold rounded-t transition-colors ${
+                  activeTab === 'css'
+                    ? 'bg-emerald-600/20 text-emerald-300 border-b-2 border-emerald-500'
+                    : 'text-slate-500 hover:text-slate-300 hover:bg-[#161624]'
+                }`}
+              >
+                CSS Global {localCss?.trim() ? '✓' : ''}
+              </button>
+            </div>
+
+            <div className="flex-1 min-h-0 bg-[#07070a] border border-[#252538] rounded-lg overflow-hidden relative">
               <Suspense
                 fallback={
                   <div className="absolute inset-0 flex items-center justify-center text-slate-500 bg-[#07070a]">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500 mb-2 mr-3" />
-                    <span>Chargement de Monaco Editor...</span>
+                    <span>Chargement de l'éditeur...</span>
                   </div>
                 }
               >
-                <LazyMonacoEditor
-                  height="100%"
-                  language="html"
-                  theme="vs-dark"
-                  value={localHtml}
-                  onChange={(val) => setLocalHtml(val || '')}
-                  onMount={handleEditorDidMount}
-                  options={{
-                    minimap: { enabled: true },
-                    fontSize: 13,
-                    wordWrap: 'on',
-                    automaticLayout: true,
-                    formatOnPaste: true,
-                    formatOnType: true,
-                  }}
-                />
+                {activeTab === 'html' ? (
+                  <LazyMonacoEditor
+                    height="100%"
+                    language="html"
+                    theme="vs-dark"
+                    value={localHtml}
+                    onChange={(val) => setLocalHtml(val || '')}
+                    onMount={handleEditorDidMount}
+                    options={{
+                      minimap: { enabled: true },
+                      fontSize: 13,
+                      wordWrap: 'on',
+                      automaticLayout: true,
+                      formatOnPaste: true,
+                      formatOnType: true,
+                    }}
+                  />
+                ) : (
+                  <LazyMonacoEditor
+                    height="100%"
+                    language="css"
+                    theme="vs-dark"
+                    value={localCss}
+                    onChange={(val) => setLocalCss(val || '')}
+                    onMount={handleCssEditorDidMount}
+                    options={{
+                      minimap: { enabled: false },
+                      fontSize: 13,
+                      wordWrap: 'on',
+                      automaticLayout: true,
+                      formatOnPaste: true,
+                      formatOnType: true,
+                    }}
+                  />
+                )}
               </Suspense>
             </div>
 
@@ -2944,9 +3116,10 @@ const HtmlSettings = () => {
 };
 
 HtmlBlock.craft = {
-  displayName: 'Code HTML',
+  displayName: 'Code HTML + CSS',
   props: {
     html: '<div class="p-6 bg-slate-900/50 rounded-xl border border-slate-800 text-center"><p class="text-slate-400">Bloc HTML personnalisé. Cliquez sur modifier dans le panneau de droite.</p></div>',
+    globalCss: '',
     padding: 10,
     hideLabel: false,
   },
@@ -3128,7 +3301,7 @@ export const CarouselBlock = (props: any) => {
           )}
 
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-            {imgList.map((_, idx) => (
+            {imgList.map((_item: string, idx: number) => (
               <button
                 key={idx}
                 type="button"

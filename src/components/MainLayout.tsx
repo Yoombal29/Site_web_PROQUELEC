@@ -5,7 +5,11 @@ import { RuntimeBanner } from '@/engine/runtime';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
-declare global { interface Window { __LAST_REDIRECT_REASON?: string; } }
+declare global {
+  interface Window {
+    __LAST_REDIRECT_REASON?: string;
+  }
+}
 
 // DEBUG: Surveille les redirections vers /connexion
 function useNavDebug() {
@@ -26,7 +30,10 @@ function useNavDebug() {
           ? previousUrlRef.current
           : document.referrer || '(direct)';
 
-      console.log('%c[DEBUG] Redirection vers /connexion', 'color:red;font-size:16px;font-weight:bold');
+      console.log(
+        '%c[DEBUG] Redirection vers /connexion',
+        'color:red;font-size:16px;font-weight:bold',
+      );
       console.log('  Page precedente:', previousPage);
       console.log('  Token present:', tokenPresent);
       console.log('  Raison declaree:', reason);
@@ -45,71 +52,50 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
     try {
       es = new EventSource('/api/events');
 
-      const invalidateAllPages = (payload: unknown) => {
+      const invalidateAllPages = (payload: Record<string, unknown> | null) => {
         queryClient.invalidateQueries({ queryKey: ['dynamic-routes'] });
         queryClient.invalidateQueries({ queryKey: ['pages'] });
-        if (payload && payload.slug) {
+        if (payload?.slug && typeof payload.slug === 'string') {
           queryClient.invalidateQueries({ queryKey: ['dynamic-page', payload.slug] });
         }
       };
 
-      es.addEventListener('page:created', (e: unknown) => {
+      const parsePayload = (e: MessageEvent): Record<string, unknown> | null => {
         try {
-          const payload = JSON.parse(e.data);
-          invalidateAllPages(payload);
+          return JSON.parse(e.data);
         } catch {
-          queryClient.invalidateQueries({ queryKey: ['pages'] });
+          return null;
         }
+      };
+
+      es.addEventListener('page:created', (e: MessageEvent) => {
+        const payload = parsePayload(e);
+        invalidateAllPages(payload);
       });
-      es.addEventListener('page:updated', (e: unknown) => {
-        try {
-          const payload = JSON.parse(e.data);
-          invalidateAllPages(payload);
-        } catch {
-          invalidateAllPages(null);
-        }
+      es.addEventListener('page:updated', (e: MessageEvent) => {
+        const payload = parsePayload(e);
+        invalidateAllPages(payload);
       });
-      es.addEventListener('page:deleted', (e: unknown) => {
-        try {
-          const payload = JSON.parse(e.data);
-          queryClient.invalidateQueries({ queryKey: ['dynamic-routes'] });
-          queryClient.invalidateQueries({ queryKey: ['pages'] });
-        } catch {
-          queryClient.invalidateQueries({ queryKey: ['pages'] });
-        }
+      es.addEventListener('page:deleted', () => {
+        queryClient.invalidateQueries({ queryKey: ['dynamic-routes'] });
+        queryClient.invalidateQueries({ queryKey: ['pages'] });
       });
 
-      es.addEventListener('theme:updated', (e: unknown) => {
-        try {
-          const payload = JSON.parse(e.data);
-          queryClient.invalidateQueries({ queryKey: ['liveSettings'] });
-          queryClient.invalidateQueries({ queryKey: ['theme-settings'] });
-        } catch {
-          queryClient.invalidateQueries({ queryKey: ['liveSettings'] });
-        }
+      es.addEventListener('theme:updated', () => {
+        queryClient.invalidateQueries({ queryKey: ['liveSettings'] });
+        queryClient.invalidateQueries({ queryKey: ['theme-settings'] });
       });
 
-      const mediaHandler = (e: unknown) => {
-        try {
-          const payload = JSON.parse(e.data);
-          queryClient.invalidateQueries({ queryKey: ['media-files'] });
-          queryClient.invalidateQueries({ queryKey: ['gallery-items'] });
-        } catch {
-          queryClient.invalidateQueries({ queryKey: ['media-files'] });
-        }
+      const mediaHandler = () => {
+        queryClient.invalidateQueries({ queryKey: ['media-files'] });
+        queryClient.invalidateQueries({ queryKey: ['gallery-items'] });
       };
       es.addEventListener('media:uploaded', mediaHandler);
       es.addEventListener('media:renamed', mediaHandler);
       es.addEventListener('media:deleted', mediaHandler);
 
-      es.addEventListener('cache:purged', (e: unknown) => {
-        try {
-          const payload = JSON.parse(e.data);
-          // conservative: invalidate all live settings & pages
-          queryClient.invalidateQueries();
-        } catch (err) {
-          queryClient.invalidateQueries();
-        }
+      es.addEventListener('cache:purged', () => {
+        queryClient.invalidateQueries();
       });
 
       es.onerror = (err) => {
@@ -121,10 +107,12 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     return () => {
-      try {
-        if (es) es.close();
-      } catch (_e) {
-        /* ignore close errors */
+      if (es) {
+        try {
+          es.close();
+        } catch {
+          /* ignore close errors */
+        }
       }
     };
   }, [queryClient]);

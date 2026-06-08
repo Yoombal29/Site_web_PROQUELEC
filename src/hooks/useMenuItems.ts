@@ -1,36 +1,33 @@
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Database } from '@/types/database';
 
-import { Database } from "@/types/database";
-
-export type MenuItem = Database["public"]["Tables"]["menu_items"]["Row"];
-type MenuItemInsert = Database["public"]["Tables"]["menu_items"]["Insert"];
-type MenuItemUpdate = Database["public"]["Tables"]["menu_items"]["Update"];
-
+export type MenuItem = Database['public']['Tables']['menu_items']['Row'];
+type MenuItemInsert = Database['public']['Tables']['menu_items']['Insert'];
+type MenuItemUpdate = Database['public']['Tables']['menu_items']['Update'];
 
 export function useMenuItems() {
-  return useQuery({
-    queryKey: ["menu-items"],
+  return useQuery<MenuItem[]>({
+    queryKey: ['menu-items'],
     queryFn: async () => {
       try {
-        const res = await fetch("/api/menu-items");
-        if (!res.ok) throw new Error("Failed to fetch menu items");
+        const res = await fetch('/api/menu-items');
+        if (!res.ok) throw new Error('Failed to fetch menu items');
         return await res.json();
       } catch (error) {
         console.warn('Error fetching menu items:', error);
         return [];
       }
-    }
+    },
   });
 }
-
 
 // Helper for authorized fetch
 const authFetch = async (url: string, options: RequestInit = {}) => {
   const token = localStorage.getItem('token');
   const headers = {
     'Content-Type': 'application/json',
-    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
   const res = await fetch(url, { ...options, headers: { ...headers, ...options.headers } });
@@ -45,29 +42,29 @@ export function useCreateMenuItem() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (menuItem: MenuItemInsert & { linked_page_id?: string | null }) => {
-      return authFetch("/api/menu-items", {
+      return authFetch('/api/menu-items', {
         method: 'POST',
-        body: JSON.stringify(menuItem)
+        body: JSON.stringify(menuItem),
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["menu-items"] });
-    }
+      queryClient.invalidateQueries({ queryKey: ['menu-items'] });
+    },
   });
 }
 
 export function useUpdateMenuItem() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, ...updates }: unknown) => {
+    mutationFn: async ({ id, ...updates }: { id: string } & MenuItemUpdate) => {
       return authFetch(`/api/menu-items/${id}`, {
         method: 'PUT',
-        body: JSON.stringify(updates)
+        body: JSON.stringify(updates),
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["menu-items"] });
-    }
+      queryClient.invalidateQueries({ queryKey: ['menu-items'] });
+    },
   });
 }
 
@@ -76,11 +73,11 @@ export function useDeleteMenuItem() {
   return useMutation({
     mutationFn: async (id: string) => {
       return authFetch(`/api/menu-items/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["menu-items"] });
-    }
+      queryClient.invalidateQueries({ queryKey: ['menu-items'] });
+    },
   });
 }

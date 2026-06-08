@@ -1,4 +1,4 @@
-# Logs
+# --- Logs ---
 logs
 *.log
 npm-debug.log*
@@ -7,12 +7,15 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# --- Dependencies ---
 node_modules
+
+# --- Build ---
 dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# --- Editor ---
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -23,38 +26,25 @@ dist-ssr
 *.sln
 *.sw?
 
-# Security and Infrastructure (Excluded from GitHub)
+# --- Environment & Secrets ---
 .env
-ACCESS_HELPER.md
-docker/postgres/init/backup_proquelec.sql
-public/normative-corpus
-export_full.cjs
+.env.local
+.env.*.local
 
-# Playwright auth state & test artifacts
-.auth/
-test-results/
-playwright-report/
+# --- Docker ---
 docker/postgres/data/
 docker/postgres/data-fresh/
 
-# Deploy scripts
-deploy.bat
-deploy.sh
-server/.ghost_cache/
+# --- Test artifacts ---
+coverage/
+.playwright/
 
-# Database data files (exported for VPS deployment)
+# --- Database exports ---
 db/
-nul
-tmp_pages.json
-teste.py
-tmp_*.py
-tmp_*.sql
-tmp_page_response.txt
-tmp_pages_schema.txt
 
-# Ignored premium model pages
-model-page/
-
-
-# RAG chunks cache (regenerated automatically)
+# --- RAG cache ---
 server/knowledge_base/.chunks_cache.json
+
+# --- OS ---
+Thumbs.db
+Desktop.ini

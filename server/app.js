@@ -7,6 +7,7 @@ const fs = require('fs');
 const { AppError, handleAppError } = require('./core/errors');
 const { getLogs, httpLogger } = require('./core/logger');
 const { sendSseEvent, addSseClient, removeSseClient, getSseStats } = require('./core/sse');
+const { applyCSP } = require('./middleware/csp');
 
 function createApp() {
   const app = express();
@@ -15,6 +16,7 @@ function createApp() {
   app.use(httpLogger);
   app.use(cors());
   app.use(helmet());
+  app.use(applyCSP);
   app.use(express.json({ limit: '500mb' }));
   app.use(express.urlencoded({ limit: '500mb', extended: true }));
 

@@ -1,5 +1,4 @@
-
-import React, { Component, ReactNode, ErrorInfo } from 'react';
+import { Component, ReactNode, ErrorInfo } from 'react';
 import { AlertTriangle, RefreshCw, Home, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -14,7 +13,7 @@ interface State {
 
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
-    hasError: false
+    hasError: false,
   };
 
   public static getDerivedStateFromError(error: Error): State {
@@ -29,7 +28,7 @@ export class ErrorBoundary extends Component<Props, State> {
     sessionStorage.setItem('app_crash_count', (crashCount + 1).toString());
 
     if (crashCount >= 2) {
-      console.warn("Crash répétitif détecté. Suggestion de réinitialisation du cache.");
+      console.warn('Crash répétitif détecté. Suggestion de réinitialisation du cache.');
     }
   }
 
@@ -44,7 +43,7 @@ export class ErrorBoundary extends Component<Props, State> {
       const crashCount = parseInt(
         typeof sessionStorage !== 'undefined'
           ? sessionStorage.getItem('app_crash_count') || '0'
-          : '0'
+          : '0',
       );
 
       return (
@@ -52,11 +51,10 @@ export class ErrorBoundary extends Component<Props, State> {
           <div className="text-center max-w-md mx-auto p-8 bg-white rounded-xl shadow-lg">
             <div className="mb-6">
               <AlertTriangle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                Une erreur est survenue
-              </h1>
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">Une erreur est survenue</h1>
               <p className="text-gray-600">
-                Nous nous excusons pour ce désagrément. L'application a rencontré une erreur inattendue.
+                Nous nous excusons pour ce désagrément. L'application a rencontré une erreur
+                inattendue.
               </p>
             </div>
 
@@ -86,18 +84,16 @@ export class ErrorBoundary extends Component<Props, State> {
 
               <Button
                 variant="outline"
-                onClick={() => { window.location.href = '/'; }}
+                onClick={() => {
+                  window.location.href = '/';
+                }}
               >
                 <Home className="mr-2 h-4 w-4" />
                 Retour à l'accueil
               </Button>
 
               {crashCount >= 2 && (
-                <Button
-                  variant="destructive"
-                  onClick={this.handleReset}
-                  className="mt-4 sm:mt-0"
-                >
+                <Button variant="destructive" onClick={this.handleReset} className="mt-4 sm:mt-0">
                   <Trash2 className="mr-2 h-4 w-4" />
                   Réinitialisation d'urgence
                 </Button>

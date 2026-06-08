@@ -1,4 +1,3 @@
-
 /**
  * PROQUELEC API Client with Empathy Layer
  * Handles errors with human-friendly messages and automatic retries.
@@ -13,9 +12,9 @@ export interface AppErrorResponse {
 }
 
 const DEFAULT_ERRORS: Record<string, string> = {
-  'UNKNOWN': "Une mystérieuse erreur est survenue. Nous enquêtons !",
-  'NETWORK_FAIL': "Connexion impossible. Vérifiez votre accès internet.",
-  'AUTH_EXPIRED': "Votre session a expiré. Redirection en cours..."
+  UNKNOWN: 'Une mystérieuse erreur est survenue. Nous enquêtons !',
+  NETWORK_FAIL: 'Connexion impossible. Vérifiez votre accès internet.',
+  AUTH_EXPIRED: 'Votre session a expiré. Redirection en cours...',
 };
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -31,8 +30,8 @@ export async function apiFetch<T>(url: string, options: RequestInit = {}, retrie
   const method = (options.method || 'GET').toUpperCase();
   const headers = new Headers({
     'Content-Type': 'application/json',
-    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
-    ...options.headers
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...options.headers,
   });
 
   try {
@@ -56,32 +55,36 @@ export async function apiFetch<T>(url: string, options: RequestInit = {}, retrie
 
     if (!response.ok) {
       if (isJson) {
-        const errorData = data as any;
-        console.error("API ERROR", {
+        const errorData = data as Record<string, unknown>;
+        console.error('API ERROR', {
           method,
           url,
           status: response.status,
           statusText: response.statusText,
           data: errorData,
         });
-        const message = errorData?.message || errorData?.error || DEFAULT_ERRORS[errorData?.code] || DEFAULT_ERRORS['UNKNOWN'];
+        const message = String(
+          errorData?.message ||
+            errorData?.error ||
+            DEFAULT_ERRORS[String(errorData?.code)] ||
+            DEFAULT_ERRORS['UNKNOWN'],
+        );
         const error = new Error(message) as ApiError;
-        error.code = errorData?.code;
+        error.code = String(errorData?.code ?? '');
         error.status = response.status;
-        error.icon = errorData?.icon;
+        error.icon = String(errorData?.icon ?? '');
         throw error;
       }
 
-      console.error("API ERROR", {
+      console.error('API ERROR', {
         method,
         url,
         status: response.status,
         statusText: response.statusText,
         text: data,
       });
-      const message = typeof data === 'string' && data.trim().length > 0
-        ? data
-        : DEFAULT_ERRORS['UNKNOWN'];
+      const message =
+        typeof data === 'string' && data.trim().length > 0 ? data : DEFAULT_ERRORS['UNKNOWN'];
       const error = new Error(message) as ApiError;
       error.status = response.status;
       throw error;
@@ -91,7 +94,11 @@ export async function apiFetch<T>(url: string, options: RequestInit = {}, retrie
   } catch (err: unknown) {
     const errorLike = err as Partial<ApiError>;
     const isGet = method === 'GET';
-    if (retries > 0 && isGet && (errorLike.name === 'TypeError' || errorLike.code === 'NETWORK_FAIL')) {
+    if (
+      retries > 0 &&
+      isGet &&
+      (errorLike.name === 'TypeError' || errorLike.code === 'NETWORK_FAIL')
+    ) {
       await sleep(1000 * (3 - retries));
       return apiFetch<T>(url, options, retries - 1);
     }

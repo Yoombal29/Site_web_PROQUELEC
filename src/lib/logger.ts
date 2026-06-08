@@ -40,9 +40,9 @@ class LoggerService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
-        body: JSON.stringify(log)
+        body: JSON.stringify(log),
       });
     } catch {
       // Silently fail if server is unavailable
@@ -50,7 +50,11 @@ class LoggerService {
   }
 
   private formatMessage(level: LogLevel, message: string, context?: LogContext): string {
-    const contextStr = context ? ` [${Object.entries(context).map(([k, v]) => `${k}=${v}`).join(', ')}]` : '';
+    const contextStr = context
+      ? ` [${Object.entries(context)
+          .map(([k, v]) => `${k}=${v}`)
+          .join(', ')}]`
+      : '';
     return `[${level.toUpperCase()}]${contextStr} ${message}`;
   }
 
@@ -63,16 +67,7 @@ class LoggerService {
       data,
       url: window.location.href,
       userAgent: navigator.userAgent,
-      stack: level === 'error' || level === 'fatal' ? new Error().stack : undefined
-    };
-
-    // Console output with colors
-    const colors = {
-      debug: 'gray',
-      info: 'skyblue',
-      warn: 'orange',
-      error: 'red',
-      fatal: 'magenta'
+      stack: level === 'error' || level === 'fatal' ? new Error().stack : undefined,
     };
 
     const formattedMessage = this.formatMessage(level, message, context);
@@ -170,5 +165,5 @@ export const builderLogger = {
 
   error: (message: string, context?: LogContext, data?: unknown) => {
     logger.error(message, context, data);
-  }
+  },
 };

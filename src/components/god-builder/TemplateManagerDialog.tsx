@@ -12,7 +12,21 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Download, Upload, Trash2, FileJson, Save, Eye, Loader2, Cloud, HardDrive, RefreshCw, Search, Tags, Layers } from 'lucide-react';
+import {
+  Download,
+  Upload,
+  Trash2,
+  FileJson,
+  Save,
+  Eye,
+  Loader2,
+  Cloud,
+  HardDrive,
+  RefreshCw,
+  Search,
+  Tags,
+  Layers,
+} from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { useTemplatesStore, type PageTemplate } from '@/stores/templates.store';
 import { useTemplates, useCreateTemplate, useDeleteTemplate } from '@/hooks/useTemplates';
@@ -23,12 +37,23 @@ interface Props {
 }
 
 export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) => {
-  const { templates, addTemplate, removeTemplate, exportTemplate, exportAllTemplates, importTemplate, importTemplatesBulk, setTemplates, deleteByServerId } = useTemplatesStore();
+  const {
+    templates,
+    addTemplate,
+    removeTemplate,
+    exportTemplate,
+    exportAllTemplates,
+    importTemplate,
+    importTemplatesBulk,
+    setTemplates,
+    deleteByServerId,
+  } = useTemplatesStore();
   const { data: serverTemplates, isLoading: serverLoading } = useTemplates();
   const createTemplateMut = useCreateTemplate();
   const deleteTemplateMut = useDeleteTemplate();
-  const { query } = useEditor();
+  const { query, actions } = useEditor();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [localId, _setLocalId] = useState<string | null>(null);
   const [saveName, setSaveName] = useState('');
   const [saveDesc, setSaveDesc] = useState('');
   const [saving, setSaving] = useState(false);
@@ -50,7 +75,7 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
       const merged = [...mapped];
       for (const local of existing) {
         if (!local.serverId) {
-          merged.push(local);
+          merged.push(local as (typeof mapped)[0]);
         }
       }
       setTemplates(merged);
@@ -84,20 +109,20 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
         console.warn('Thumbnail capture failed');
       }
       // Always save locally
-      const localId = addTemplate({
+      const newLocalId = addTemplate({
         name: saveName.trim(),
         description: saveDesc.trim(),
         structure,
         thumbnail,
         category: 'page',
       });
+      _setLocalId(newLocalId);
       // Also save on server if available
       try {
         await createTemplateMut.mutateAsync({
           name: saveName.trim(),
           description: saveDesc.trim(),
           structure,
-          thumbnail,
           category: 'page',
         });
       } catch {
@@ -107,7 +132,7 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
       toast.success(`Template "${saveName}" sauvegardé`);
       setSaveName('');
       setSaveDesc('');
-    } catch (e: any) {
+    } catch {
       toast.error('Erreur lors de la sauvegarde du template');
     } finally {
       setSaving(false);
@@ -116,12 +141,15 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
 
   const handleExportOne = (id: string) => {
     const json = exportTemplate(id);
-    if (!json) { toast.error('Template introuvable'); return; }
+    if (!json) {
+      toast.error('Template introuvable');
+      return;
+    }
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    const tpl = templates.find(t => t.id === id);
+    const tpl = templates.find((t) => t.id === id);
     a.download = `${tpl?.name || 'template'}.proquelec.json`;
     a.click();
     URL.revokeObjectURL(url);
@@ -165,7 +193,7 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
   };
 
   const handleDelete = async (id: string) => {
-    const tpl = templates.find(t => t.id === id);
+    const tpl = templates.find((t) => t.id === id);
     // If it has a serverId, delete from server too
     if (tpl?.serverId) {
       try {
@@ -183,18 +211,21 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
   const handleApply = (tpl: PageTemplate) => {
     try {
       const json = JSON.stringify(tpl.structure);
-      query.deserialize(json);
+      actions.deserialize(JSON.parse(json));
       toast.success(`Template "${tpl.name}" appliqué`);
       onOpenChange(false);
     } catch {
-      toast.error('Erreur lors de l\'application du template');
+      toast.error("Erreur lors de l'application du template");
     }
   };
 
   const handleRegenerateThumbnail = async (tpl: PageTemplate) => {
     try {
       const canvasEl = document.querySelector('[data-builder-canvas]') as HTMLElement;
-      if (!canvasEl) { toast.error('Zone de canvas introuvable'); return; }
+      if (!canvasEl) {
+        toast.error('Zone de canvas introuvable');
+        return;
+      }
       const captured = await html2canvas(canvasEl, {
         scale: 0.5,
         useCORS: true,
@@ -224,11 +255,13 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
 
         {/* Save current page */}
         <div className="bg-[#0d0d1a] border border-[#252538] rounded-lg p-4 space-y-3">
-          <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Sauvegarder la page actuelle</h3>
+          <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+            Sauvegarder la page actuelle
+          </h3>
           <div className="flex gap-3">
             <Input
               value={saveName}
-              onChange={e => setSaveName(e.target.value)}
+              onChange={(e) => setSaveName(e.target.value)}
               placeholder="Nom du template..."
               className="flex-1 bg-[#1a1a2a] border-[#252538] text-white text-sm placeholder:text-slate-600"
             />
@@ -243,7 +276,7 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
           </div>
           <Textarea
             value={saveDesc}
-            onChange={e => setSaveDesc(e.target.value)}
+            onChange={(e) => setSaveDesc(e.target.value)}
             placeholder="Description (optionnelle)..."
             rows={2}
             className="bg-[#1a1a2a] border-[#252538] text-white text-sm placeholder:text-slate-600 resize-none"
@@ -258,7 +291,7 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
             <input
               type="text"
               value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Rechercher un template..."
               className="w-full bg-[#0d0d1a] border border-[#252538] rounded-lg pl-9 pr-3 py-2 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/50 transition-colors"
             />
@@ -288,7 +321,9 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
                 Serveur
                 {serverLoading && <Loader2 size={10} className="animate-spin" />}
                 {!serverLoading && serverTemplates && (
-                  <span className="text-[10px] text-slate-600 ml-0.5">({serverTemplates.length})</span>
+                  <span className="text-[10px] text-slate-600 ml-0.5">
+                    ({serverTemplates.length})
+                  </span>
                 )}
               </button>
               <button
@@ -317,7 +352,9 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
                 <Layers size={12} />
                 Toutes
               </button>
-              {Array.from(new Set(templates.map(t => t.category).filter(Boolean) as string[])).map(cat => (
+              {Array.from(
+                new Set(templates.map((t) => t.category).filter(Boolean) as string[]),
+              ).map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setCategoryFilter(cat)}
@@ -366,10 +403,13 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
         </div>
 
         {/* Filtered + searched templates list */}
-        <div className="flex-1 overflow-y-auto space-y-2 custom-scrollbar" style={{ scrollbarWidth: 'thin', scrollbarColor: '#252538 transparent' }}>
+        <div
+          className="flex-1 overflow-y-auto space-y-2 custom-scrollbar"
+          style={{ scrollbarWidth: 'thin', scrollbarColor: '#252538 transparent' }}
+        >
           {(() => {
             // Compute filtered list
-            const filtered = templates.filter(t => {
+            const filtered = templates.filter((t) => {
               // Tab filter
               if (activeTab === 'server' && !t.serverId) return false;
               if (activeTab === 'local' && t.serverId) return false;
@@ -395,12 +435,14 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
                       ? 'Aucun template ne correspond à vos filtres'
                       : activeTab === 'server'
                         ? 'Aucun template serveur disponible'
-                        : 'Aucun template local sauvegardé'
-                    }
+                        : 'Aucun template local sauvegardé'}
                   </p>
                   {(searchQuery || categoryFilter !== 'all') && (
                     <button
-                      onClick={() => { setSearchQuery(''); setCategoryFilter('all'); }}
+                      onClick={() => {
+                        setSearchQuery('');
+                        setCategoryFilter('all');
+                      }}
                       className="text-xs text-indigo-400 hover:text-indigo-300 mt-2 underline"
                     >
                       Réinitialiser les filtres
@@ -414,7 +456,9 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
               <div
                 key={tpl.id}
                 className={`bg-[#0d0d1a] border rounded-lg transition-all cursor-pointer ${
-                  selectedId === tpl.id ? 'border-indigo-500 ring-1 ring-indigo-500/20' : 'border-[#252538] hover:border-[#3a3a5a] hover:bg-[#0d0d1a]/80'
+                  selectedId === tpl.id
+                    ? 'border-indigo-500 ring-1 ring-indigo-500/20'
+                    : 'border-[#252538] hover:border-[#3a3a5a] hover:bg-[#0d0d1a]/80'
                 }`}
                 onClick={() => setSelectedId(tpl.id === selectedId ? null : tpl.id)}
               >
@@ -438,7 +482,9 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="font-semibold text-sm text-slate-200 truncate max-w-[200px]">{tpl.name}</h4>
+                      <h4 className="font-semibold text-sm text-slate-200 truncate max-w-[200px]">
+                        {tpl.name}
+                      </h4>
                       {tpl.serverId ? (
                         <span className="text-[9px] text-indigo-400 bg-indigo-500/10 px-1.5 py-0.5 rounded font-semibold shrink-0 flex items-center gap-1">
                           <Cloud size={8} />
@@ -457,23 +503,34 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
                       )}
                     </div>
                     {tpl.description && (
-                      <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">{tpl.description}</p>
+                      <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">
+                        {tpl.description}
+                      </p>
                     )}
                     <div className="flex items-center gap-3 mt-1.5">
                       <p className="text-[10px] text-slate-600">
                         {new Date(tpl.createdAt).toLocaleDateString('fr-FR', {
-                          day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
                         })}
                       </p>
                       {tpl.tags && tpl.tags.length > 0 && (
                         <div className="flex items-center gap-1">
-                          {tpl.tags.slice(0, 3).map(tag => (
-                            <span key={tag} className="text-[8px] text-slate-600 bg-slate-800/50 px-1.5 py-0.5 rounded">
+                          {tpl.tags.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="text-[8px] text-slate-600 bg-slate-800/50 px-1.5 py-0.5 rounded"
+                            >
                               {tag}
                             </span>
                           ))}
                           {tpl.tags.length > 3 && (
-                            <span className="text-[8px] text-slate-600">+{tpl.tags.length - 3}</span>
+                            <span className="text-[8px] text-slate-600">
+                              +{tpl.tags.length - 3}
+                            </span>
                           )}
                         </div>
                       )}
@@ -482,7 +539,10 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
                   {/* Actions column */}
                   <div className="flex flex-col items-end gap-1.5 shrink-0">
                     <Button
-                      onClick={(e) => { e.stopPropagation(); handleApply(tpl); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleApply(tpl);
+                      }}
                       size="sm"
                       className="bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] h-7 px-3 font-semibold w-full"
                     >
@@ -491,7 +551,10 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
                     </Button>
                     <div className="flex items-center gap-1">
                       <Button
-                        onClick={(e) => { e.stopPropagation(); handleRegenerateThumbnail(tpl); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleRegenerateThumbnail(tpl);
+                        }}
                         size="sm"
                         variant="ghost"
                         className="text-slate-500 hover:text-white hover:bg-[#1a1a2a] h-7 w-7 p-0"
@@ -500,7 +563,10 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
                         <RefreshCw size={11} />
                       </Button>
                       <Button
-                        onClick={(e) => { e.stopPropagation(); handleExportOne(tpl.id); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleExportOne(tpl.id);
+                        }}
                         size="sm"
                         variant="ghost"
                         className="text-slate-500 hover:text-white hover:bg-[#1a1a2a] h-7 w-7 p-0"
@@ -509,7 +575,10 @@ export const TemplateManagerDialog: React.FC<Props> = ({ open, onOpenChange }) =
                         <Download size={12} />
                       </Button>
                       <Button
-                        onClick={(e) => { e.stopPropagation(); handleDelete(tpl.id); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(tpl.id);
+                        }}
                         size="sm"
                         variant="ghost"
                         className="text-rose-500 hover:text-rose-400 hover:bg-rose-500/10 h-7 w-7 p-0"
