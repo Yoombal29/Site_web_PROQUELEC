@@ -39,6 +39,7 @@ import {
   Menu,
   ImageIcon,
   CreditCard,
+  Rocket,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -702,7 +703,8 @@ const AdminDashboard: React.FC = () => {
     },
     {
       id: 'builder-release',
-    label: 'Release Manager',
+    label: 'Publipostage des Pages',
+    description: 'Exporter, analyser et publier les pages du Builder vers le VPS',
     icon: <Rocket className="w-4 h-4" />,
     route: '/admin/builder-release-manager',
     color: 'text-purple-600',
