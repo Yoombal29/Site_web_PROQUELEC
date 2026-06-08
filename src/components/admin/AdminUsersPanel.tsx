@@ -442,7 +442,22 @@ const AdminUsersPanel: React.FC = () => {
                 value={formPassword}
                 onChange={(e) => setFormPassword(e.target.value)}
               />
-            </div>
+
+
+            {/* 2FA Code */}
+            {editingUser && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">
+                  Code 2FA <span className="text-muted-foreground font-normal">(requis pour compte protege)</span>
+                </label>
+                <Input
+                  type="password"
+                  placeholder="Laisser vide si non requis"
+                  value={twoFactorCode}
+                  onChange={(e) => setTwoFactorCode(e.target.value)}
+                />
+              </div>
+            )}
 
             {/* Role */}
             <div className="space-y-2">
