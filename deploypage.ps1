@@ -8,6 +8,8 @@
 param(
     [string]$Page = "",
     [switch]$AllPages,
+    [string]$LocalPassword = "",
+    [string]$ProdPassword = "",
     [string]$LocalBaseUrl = "http://localhost:5175",
     [string]$ProdBaseUrl = "https://www.proquelec.sn",
     [string]$LocalEmail = "",
@@ -104,10 +106,16 @@ Write-Host "  VPS:   $ProdBaseUrl`n"
 if (-not $LocalEmail) { $LocalEmail = Read-Default "  Email admin local" $ProdEmail }
 if (-not $ProdEmail) { $ProdEmail = Read-Host "  Email admin VPS" }
 
-$localPasswordSecure = Read-Host "  Mot de passe admin local" -AsSecureString
-$prodPasswordSecure = Read-Host "  Mot de passe admin VPS" -AsSecureString
-$localPassword = Convert-SecretToPlainText $localPasswordSecure
-$prodPassword = Convert-SecretToPlainText $prodPasswordSecure
+if ($LocalPassword -and $ProdPassword) {
+    $localPassword = $LocalPassword
+    $prodPassword = $ProdPassword
+    Write-Host "  Utilisation des mots de passe fournis en paramètres" -ForegroundColor DarkYellow
+} else {
+    $localPasswordSecure = Read-Host "  Mot de passe admin local" -AsSecureString
+    $prodPasswordSecure = Read-Host "  Mot de passe admin VPS" -AsSecureString
+    $localPassword = Convert-SecretToPlainText $localPasswordSecure
+    $prodPassword = Convert-SecretToPlainText $prodPasswordSecure
+}
 
 try {
     $localToken = Get-AuthToken -BaseUrl $LocalBaseUrl -Email $LocalEmail -Password $localPassword -Label "local"
