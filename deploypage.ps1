@@ -45,7 +45,8 @@ function Invoke-Api {
     try {
         if ($null -eq $Body) { return Invoke-RestMethod -Method $Method -Uri $Url -Headers $headers }
         $json = $Body | ConvertTo-Json -Depth 100
-        return Invoke-RestMethod -Method $Method -Uri $Url -Headers $headers -ContentType "application/json" -Body $json
+        $bodyBytes = [System.Text.Encoding]::UTF8.GetBytes($json)
+        return Invoke-RestMethod -Method $Method -Uri $Url -Headers $headers -ContentType "application/json; charset=utf-8" -Body $bodyBytes
     } catch {
         $detail = $_.Exception.Message
         if ($_.ErrorDetails -and $_.ErrorDetails.Message) { $detail = $_.ErrorDetails.Message }
