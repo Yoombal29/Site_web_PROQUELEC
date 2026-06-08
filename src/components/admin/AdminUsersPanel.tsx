@@ -271,7 +271,8 @@ const AdminUsersPanel: React.FC = () => {
   // -----------------------------------------------------------------------
 
   return (
-    <section className="space-y-6 animate-fade-in">
+    <>
+      <section className="space-y-6 animate-fade-in">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -397,13 +398,14 @@ const AdminUsersPanel: React.FC = () => {
           </Table>
         )}
       </div>
+    </section>
 
-      {/* ================================================================ */}
-      {/* Modal Création / Édition                                          */}
-      {/* ================================================================ */}
-      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
+    {/* ================================================================ */}
+    {/* Modal Création / Édition                                          */}
+    {/* ================================================================ */}
+    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
             <DialogTitle>
               {editingUser ? "Modifier l'utilisateur" : 'Créer un nouvel utilisateur'}
             </DialogTitle>
@@ -442,7 +444,6 @@ const AdminUsersPanel: React.FC = () => {
                 value={formPassword}
                 onChange={(e) => setFormPassword(e.target.value)}
               />
-
 
             {/* 2FA Code */}
             {editingUser && (
@@ -487,8 +488,9 @@ const AdminUsersPanel: React.FC = () => {
               </label>
             </div>
           </div>
+        </div>
 
-          <DialogFooter>
+        <DialogFooter>
             <Button variant="outline" onClick={closeModal} disabled={saving}>
               Annuler
             </Button>
@@ -533,7 +535,7 @@ const AdminUsersPanel: React.FC = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </section>
+    </>
   );
 };
 

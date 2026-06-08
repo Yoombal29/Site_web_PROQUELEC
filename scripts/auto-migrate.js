@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -26,13 +26,50 @@ const dbUrl = process.env.DATABASE_URL || 'postgresql://postgres:postgres@127.0.
 const parsedUrl = new URL(dbUrl);
 const dbName = (parsedUrl.pathname || '').replace(/^\//, '') || 'postgres';
 
+const resolveDbContainer = () => {
+    const configured = process.env.DB_CONTAINER_NAME || process.env.POSTGRES_CONTAINER;
+    const candidates = [
+        configured,
+        'site-proquelec-db-1',
+        'site-proquelec_db_1',
+        'proquelec-db',
+        'proquelec_db'
+    ].filter(Boolean);
+
+    try {
+        const names = execFileSync('docker', ['ps', '--format', '{{.Names}}'], {
+            stdio: ['ignore', 'pipe', 'pipe']
+        }).toString().split(/\r?\n/).filter(Boolean);
+
+        return candidates.find(name => names.includes(name))
+            || names.find(name => /proquelec.*db|db.*proquelec/i.test(name))
+            || candidates[0];
+    } catch {
+        return candidates[0];
+    }
+};
+
+const dbContainer = resolveDbContainer();
+console.log(`🐘 Conteneur DB: ${dbContainer}`);
+
+const runPsql = (args, sql) => execFileSync('docker', [
+    'exec',
+    '-i',
+    dbContainer,
+    'psql',
+    '-U',
+    'postgres',
+    '-d',
+    dbName,
+    ...args
+], {
+    input: sql,
+    stdio: ['pipe', 'pipe', 'pipe']
+});
+
 const runSql = (sql, logError = true) => {
     try {
-        const cmd = `docker exec -i site-proquelec-db-1 psql -U postgres -d ${dbName} -t`;
-        return execSync(cmd, {
-            input: sql,
-            stdio: ['pipe', 'pipe', 'pipe'] // Capture stdout/stderr
-        }).toString().trim();
+        return runPsql(['-t'], sql).toString().trim();
     } catch (e) {
         if (logError) console.error("SQL Error:", e.message);
         throw e;
@@ -70,9 +107,8 @@ for (const file of files) {
     process.stdout.write(`📡 Migration NOUVELLE : ${file} ... `);
     try {
         const filePath = path.join(migrationsDir, file);
-        const command = `docker exec -i site-proquelec-db-1 psql -U postgres -d ${dbName}`;
         const sqlContent = fs.readFileSync(filePath);
-        execSync(command, { input: sqlContent });
+        runPsql([], sqlContent);
 
         // Mark as applied
         runSql(`INSERT INTO _migrations_meta (filename) VALUES ('${file}');`);
