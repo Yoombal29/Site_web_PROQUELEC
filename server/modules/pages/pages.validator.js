@@ -126,11 +126,37 @@ const releasePurgeHistorySchema = z.object({
     dry_run: z.boolean().optional().default(false),
 });
 
+const optionalUrlSchema = z.string().url().optional().or(z.literal(''));
+
+const deployPagesSchema = z.object({
+    page: z.string().trim().min(1).max(160).optional().or(z.literal('')),
+    all_pages: z.boolean().optional().default(false),
+    mode: z.enum(['stage', 'safe-apply']).optional().default('stage'),
+    source_base_url: optionalUrlSchema,
+    target_base_url: optionalUrlSchema,
+    source_token: z.string().trim().max(4000).optional().or(z.literal('')),
+    target_token: z.string().trim().max(4000).optional().or(z.literal('')),
+}).refine((value) => value.all_pages || Boolean(value.page), {
+    message: 'Choisir une page ou all_pages=true',
+    path: ['page'],
+});
+
+const deployCodeSchema = z.object({
+    branch: z.string().trim().regex(/^[A-Za-z0-9._/-]{1,120}$/, 'Branche invalide').optional().default('chore/remove-unused-docker-services'),
+    strategy: z.enum(['auto', 'native', 'script']).optional().default('auto'),
+    skip_build: z.boolean().optional().default(false),
+    run_install: z.boolean().optional().default(true),
+    run_migrations: z.boolean().optional().default(true),
+    restart_pm2: z.boolean().optional().default(true),
+    pm2_app: z.string().trim().regex(/^[A-Za-z0-9._-]{1,80}$/, 'Nom PM2 invalide').optional().default('proquelec-api'),
+});
+
 module.exports = {
     createPageSchema, updatePageSchema, adminUpdatePageSchema,
     draftPageSchema, namedVersionSchema, themeConfigSchema,
     createMenuItemSchema, updateMenuItemSchema,
     constructionModeSchema,
     releaseAnalyzeSchema, releaseImportSchema, releasePublishSchema,
-    releaseRejectSchema, releaseRollbackSchema, releasePurgeHistorySchema
+    releaseRejectSchema, releaseRollbackSchema, releasePurgeHistorySchema,
+    deployPagesSchema, deployCodeSchema
 };

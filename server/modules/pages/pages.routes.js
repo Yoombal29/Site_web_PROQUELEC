@@ -7,13 +7,19 @@ const {
     createMenuItemSchema, updateMenuItemSchema,
     constructionModeSchema,
     releaseAnalyzeSchema, releaseImportSchema, releasePublishSchema,
-    releaseRejectSchema, releaseRollbackSchema, releasePurgeHistorySchema
+    releaseRejectSchema, releaseRollbackSchema, releasePurgeHistorySchema,
+    deployPagesSchema, deployCodeSchema
 } = require('./pages.validator');
 
 const router = Router();
 
 const requireReleasePublishPermission = (req, res, next) =>
     requirePermission(req.body?.force === true ? 'builder.release.force' : 'builder.release.publish')(req, res, next);
+
+const requirePagesDeployModePermission = (req, res, next) => {
+    if (req.body?.mode !== 'safe-apply') return next();
+    return requirePermission('builder.release.publish')(req, res, next);
+};
 
 router.get('/pages', controller.listPages);
 router.get('/pages/slug/:slug', controller.getPage);
@@ -26,6 +32,10 @@ router.get('/admin/pages', authenticateToken, requireAdmin, controller.listPages
 router.post('/admin/pages/release/analyze', authenticateToken, requireAdmin, requirePermission('builder.release.view'), validate(releaseAnalyzeSchema), controller.analyzePageRelease);
 router.post('/admin/pages/release/import', authenticateToken, requireAdmin, requirePermission('builder.release.create'), validate(releaseImportSchema), controller.importPageRelease);
 router.delete('/admin/pages/release/history', authenticateToken, requireAdmin, requirePermission('builder.release.purge'), validate(releasePurgeHistorySchema), controller.purgeReleaseHistory);
+router.get('/admin/pages/release/deploy/jobs', authenticateToken, requireAdmin, requirePermission('builder.release.view'), controller.listDeployJobs);
+router.get('/admin/pages/release/deploy/jobs/:jobId', authenticateToken, requireAdmin, requirePermission('builder.release.view'), controller.getDeployJob);
+router.post('/admin/pages/release/deploy/pages', authenticateToken, requireAdmin, requirePermission('builder.release.create'), validate(deployPagesSchema), requirePagesDeployModePermission, controller.startPagesDeploy);
+router.post('/admin/pages/release/deploy/code', authenticateToken, requireAdmin, requirePermission('builder.release.force'), validate(deployCodeSchema), controller.startCodeDeploy);
 router.get('/admin/pages/release/candidates', authenticateToken, requireAdmin, requirePermission('builder.release.view'), controller.listReleaseCandidates);
 router.get('/admin/pages/release/candidates/:candidateId', authenticateToken, requireAdmin, requirePermission('builder.release.view'), controller.getReleaseCandidate);
 router.post('/admin/pages/release/candidates/:candidateId/publish', authenticateToken, requireAdmin, validate(releasePublishSchema), requireReleasePublishPermission, controller.publishReleaseCandidate);

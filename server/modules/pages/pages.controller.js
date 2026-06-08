@@ -1,5 +1,6 @@
 const service = require('./pages.service');
 const releaseManager = require('./release-manager');
+const deployOrchestrator = require('./deploy-orchestrator');
 const { handleAppError } = require('../../core/errors');
 
 async function listPages(req, res) {
@@ -225,6 +226,18 @@ function handleReleaseError(err, res) {
   });
 }
 
+function getRequestBearer(req) {
+  const header = req.headers.authorization || '';
+  const match = header.match(/^Bearer\s+(.+)$/i);
+  return match ? match[1] : '';
+}
+
+function getCurrentBaseUrl(req) {
+  const forwardedProto = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim();
+  const protocol = forwardedProto || req.protocol || 'http';
+  return `${protocol}://${req.get('host')}`;
+}
+
 async function exportPageRelease(req, res) {
   try {
     const pkg = await releaseManager.exportPageRelease(
@@ -336,6 +349,67 @@ async function purgeReleaseHistory(req, res) {
   }
 }
 
+async function listDeployJobs(req, res) {
+  try {
+    res.json(deployOrchestrator.listJobs());
+  } catch (err) {
+    handleReleaseError(err, res);
+  }
+}
+
+async function getDeployJob(req, res) {
+  try {
+    const job = deployOrchestrator.getJob(req.params.jobId);
+    if (!job) return res.status(404).json({ error: 'Job de deploiement introuvable' });
+    res.json(job);
+  } catch (err) {
+    handleReleaseError(err, res);
+  }
+}
+
+async function startPagesDeploy(req, res) {
+  try {
+    const currentToken = getRequestBearer(req);
+    const job = deployOrchestrator.startPagesDeploy(
+      {
+        page: req.body.page || '',
+        allPages: req.body.all_pages === true,
+        mode: req.body.mode || 'stage',
+        sourceBaseUrl: req.body.source_base_url || getCurrentBaseUrl(req),
+        targetBaseUrl: req.body.target_base_url || deployOrchestrator.DEFAULT_TARGET_BASE_URL,
+        sourceToken: req.body.source_token || '',
+        targetToken: req.body.target_token || '',
+        currentToken,
+        currentBaseUrl: getCurrentBaseUrl(req),
+      },
+      req.user?.email || req.user?.id,
+    );
+    res.status(202).json(job);
+  } catch (err) {
+    handleReleaseError(err, res);
+  }
+}
+
+async function startCodeDeploy(req, res) {
+  try {
+    const job = deployOrchestrator.startCodeDeploy(
+      {
+        branch: req.body.branch,
+        strategy: req.body.strategy || 'auto',
+        skipBuild: req.body.skip_build === true,
+        runInstall: req.body.run_install !== false,
+        runMigrations: req.body.run_migrations !== false,
+        restartPm2: req.body.restart_pm2 !== false,
+        pm2App: req.body.pm2_app || 'proquelec-api',
+      },
+      req.user?.email || req.user?.id,
+    );
+    res.status(202).json(job);
+  } catch (err) {
+    handleReleaseError(err, res);
+  }
+}
+
 module.exports = {
   listPages,
   getPage,
@@ -361,6 +435,10 @@ module.exports = {
   rejectReleaseCandidate,
   rollbackReleaseCandidate,
   purgeReleaseHistory,
+  listDeployJobs,
+  getDeployJob,
+  startPagesDeploy,
+  startCodeDeploy,
   listMenuItems,
   createMenuItem,
   updateMenuItem,

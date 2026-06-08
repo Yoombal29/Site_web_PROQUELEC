@@ -10,12 +10,15 @@ import {
   GitCompare,
   History,
   Loader2,
+  PlayCircle,
   RefreshCw,
   Rocket,
   RotateCcw,
   Search,
+  Server,
   ShieldAlert,
   ShieldCheck,
+  Terminal,
   Trash2,
   Upload,
   XCircle,
@@ -192,6 +195,26 @@ type ClientPackageHealth = {
   looks_safe: boolean;
 };
 
+type DeployLog = {
+  at: string;
+  level: 'info' | 'warn' | 'error' | 'success';
+  message: string;
+};
+
+type DeployJob = {
+  id: string;
+  type: 'pages-deploy' | 'code-deploy';
+  status: 'queued' | 'running' | 'succeeded' | 'failed';
+  title: string;
+  created_at: string;
+  updated_at: string;
+  finished_at?: string | null;
+  started_by?: string | null;
+  summary?: unknown;
+  error?: string | null;
+  logs?: DeployLog[];
+};
+
 const ACTIVE_STATUSES: CandidateStatus[] = ['candidate', 'conflict'];
 const PROCESSED_STATUSES: CandidateStatus[] = [
   'published',
@@ -201,6 +224,8 @@ const PROCESSED_STATUSES: CandidateStatus[] = [
   'rolled_back',
 ];
 const ALL_STATUSES: CandidateStatus[] = [...ACTIVE_STATUSES, ...PROCESSED_STATUSES];
+const DEFAULT_PROD_BASE_URL = 'https://www.proquelec.sn';
+const DEFAULT_DEPLOY_BRANCH = 'chore/remove-unused-docker-services';
 
 const hashLabel = (value?: string | null) => (value ? value.slice(0, 12) : 'non initialise');
 
@@ -304,6 +329,20 @@ export default function BuilderReleaseManagerPage() {
   const [purgeDays, setPurgeDays] = useState('0');
   const [purgeStatuses, setPurgeStatuses] = useState<CandidateStatus[]>(['published', 'rejected', 'rolled_back']);
   const [purgePreview, setPurgePreview] = useState<PurgePreview | null>(null);
+  const [deployJobs, setDeployJobs] = useState<DeployJob[]>([]);
+  const [activeDeployJob, setActiveDeployJob] = useState<DeployJob | null>(null);
+  const [deployAllPages, setDeployAllPages] = useState(false);
+  const [deployMode, setDeployMode] = useState<'stage' | 'safe-apply'>('stage');
+  const [deploySourceBaseUrl, setDeploySourceBaseUrl] = useState('');
+  const [deployTargetBaseUrl, setDeployTargetBaseUrl] = useState(DEFAULT_PROD_BASE_URL);
+  const [deploySourceToken, setDeploySourceToken] = useState('');
+  const [deployTargetToken, setDeployTargetToken] = useState('');
+  const [codeBranch, setCodeBranch] = useState(DEFAULT_DEPLOY_BRANCH);
+  const [codeStrategy, setCodeStrategy] = useState<'auto' | 'native' | 'script'>('auto');
+  const [codeRunInstall, setCodeRunInstall] = useState(true);
+  const [codeRunMigrations, setCodeRunMigrations] = useState(true);
+  const [codeRunBuild, setCodeRunBuild] = useState(true);
+  const [codeRestartPm2, setCodeRestartPm2] = useState(true);
 
   const selectedPage = useMemo(
     () => pages.find((page) => page.id === selectedPageId) || null,
@@ -336,15 +375,45 @@ export default function BuilderReleaseManagerPage() {
     setRole(data.role || '');
   }, []);
 
+  const loadDeployJobs = useCallback(async () => {
+    const data = await apiFetch<DeployJob[]>('/api/admin/pages/release/deploy/jobs');
+    setDeployJobs(Array.isArray(data) ? data : []);
+  }, []);
+
+  const loadDeployJob = useCallback(async (jobId: string) => {
+    const data = await apiFetch<DeployJob>(`/api/admin/pages/release/deploy/jobs/${jobId}`);
+    setActiveDeployJob(data);
+    setDeployJobs((current) => {
+      const without = current.filter((job) => job.id !== data.id);
+      return [data, ...without].slice(0, 20);
+    });
+    return data;
+  }, []);
+
   const refreshAll = useCallback(async () => {
-    await Promise.all([loadPages(), loadCandidates(), loadPermissions()]);
-  }, [loadCandidates, loadPages, loadPermissions]);
+    await Promise.all([loadPages(), loadCandidates(), loadPermissions(), loadDeployJobs()]);
+  }, [loadCandidates, loadDeployJobs, loadPages, loadPermissions]);
 
   useEffect(() => {
+    setDeploySourceBaseUrl(window.location.origin);
     void refreshAll().catch((error: unknown) => {
       toast.error(error instanceof Error ? error.message : 'Chargement impossible');
     });
   }, [refreshAll]);
+
+  useEffect(() => {
+    if (!activeDeployJob || !['queued', 'running'].includes(activeDeployJob.status)) return;
+
+    const intervalId = window.setInterval(() => {
+      void loadDeployJob(activeDeployJob.id).then((job) => {
+        if (['succeeded', 'failed'].includes(job.status)) {
+          void Promise.all([loadCandidates(), loadPages(), loadDeployJobs()]);
+        }
+      });
+    }, 2500);
+
+    return () => window.clearInterval(intervalId);
+  }, [activeDeployJob, loadCandidates, loadDeployJob, loadDeployJobs, loadPages]);
 
   const filteredCandidates = useMemo(() => {
     const normalizedSearch = search.trim().toLowerCase();
@@ -448,6 +517,71 @@ export default function BuilderReleaseManagerPage() {
       await Promise.all([loadPages(), loadCandidates()]);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Import impossible');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const startPagesDeploy = async () => {
+    if (!deployAllPages && !selectedPage) {
+      toast.error('Choisissez une page ou activez toutes les pages');
+      return;
+    }
+
+    if (deployMode === 'safe-apply' && !hasPermission('builder.release.publish')) {
+      toast.error('Permission builder.release.publish requise pour publier automatiquement');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const job = await apiFetch<DeployJob>('/api/admin/pages/release/deploy/pages', {
+        method: 'POST',
+        body: JSON.stringify({
+          page: deployAllPages ? '' : selectedPage?.slug || selectedPageId,
+          all_pages: deployAllPages,
+          mode: deployMode,
+          source_base_url: deploySourceBaseUrl.trim(),
+          target_base_url: deployTargetBaseUrl.trim(),
+          source_token: deploySourceToken.trim(),
+          target_token: deployTargetToken.trim(),
+        }),
+      });
+      setActiveDeployJob(job);
+      await loadDeployJobs();
+      toast.success('Job de deploiement pages lance');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Deploiement pages impossible');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const startCodeDeploy = async () => {
+    if (!hasPermission('builder.release.force')) {
+      toast.error('Permission builder.release.force requise pour deployer le code');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const job = await apiFetch<DeployJob>('/api/admin/pages/release/deploy/code', {
+        method: 'POST',
+        body: JSON.stringify({
+          branch: codeBranch.trim() || DEFAULT_DEPLOY_BRANCH,
+          strategy: codeStrategy,
+          skip_build: !codeRunBuild,
+          run_install: codeRunInstall,
+          run_migrations: codeRunMigrations,
+          restart_pm2: codeRestartPm2,
+          pm2_app: 'proquelec-api',
+        }),
+      });
+      setActiveDeployJob(job);
+      await loadDeployJobs();
+      toast.success('Job de deploiement code lance');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Deploiement code impossible');
     } finally {
       setLoading(false);
     }
@@ -625,7 +759,7 @@ export default function BuilderReleaseManagerPage() {
         </header>
 
         <Tabs defaultValue="export" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:w-[560px]">
+          <TabsList className="grid w-full grid-cols-4 lg:w-[740px]">
             <TabsTrigger value="export">
               <Download className="mr-2 h-4 w-4" />
               Export
@@ -637,6 +771,10 @@ export default function BuilderReleaseManagerPage() {
             <TabsTrigger value="candidates">
               <ShieldAlert className="mr-2 h-4 w-4" />
               Candidats
+            </TabsTrigger>
+            <TabsTrigger value="deploy">
+              <Terminal className="mr-2 h-4 w-4" />
+              Deploiement
             </TabsTrigger>
           </TabsList>
 
@@ -881,6 +1019,195 @@ export default function BuilderReleaseManagerPage() {
               </CardContent>
             </Card>
           </TabsContent>
+
+          <TabsContent value="deploy" className="space-y-6">
+            <div className="grid gap-6 lg:grid-cols-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl">
+                    <Server className="h-5 w-5 text-blue-600" />
+                    Workflow deploypage.ps1
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="rounded-md border border-blue-100 bg-blue-50 p-4 text-sm leading-6 text-blue-950">
+                    Lance le workflow Builder en API serveur a serveur: export source, dry-run cible,
+                    puis candidat ou publication safe. Aucun script PowerShell n'est execute cote navigateur.
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label className="text-xs font-bold uppercase text-slate-500">Source</label>
+                      <Input
+                        value={deploySourceBaseUrl}
+                        onChange={(event) => setDeploySourceBaseUrl(event.target.value)}
+                        placeholder="http://localhost:5175"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase text-slate-500">Cible VPS</label>
+                      <Input
+                        value={deployTargetBaseUrl}
+                        onChange={(event) => setDeployTargetBaseUrl(event.target.value)}
+                        placeholder={DEFAULT_PROD_BASE_URL}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label className="text-xs font-bold uppercase text-slate-500">Page</label>
+                      <select
+                        value={selectedPageId}
+                        onChange={(event) => setSelectedPageId(event.target.value)}
+                        disabled={deployAllPages}
+                        className="h-10 w-full rounded-md border border-slate-300 bg-white px-3 text-sm"
+                      >
+                        {pages.map((page) => (
+                          <option key={page.id} value={page.id}>
+                            {page.title} /{page.slug}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase text-slate-500">Mode</label>
+                      <select
+                        value={deployMode}
+                        onChange={(event) => setDeployMode(event.target.value as typeof deployMode)}
+                        className="h-10 w-full rounded-md border border-slate-300 bg-white px-3 text-sm"
+                      >
+                        <option value="stage">StageOnly: creer candidat</option>
+                        <option value="safe-apply">Publier si sans conflit</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <label className="flex items-center gap-2 rounded-md border border-slate-200 bg-white p-3 text-sm font-medium text-slate-700">
+                    <input
+                      type="checkbox"
+                      checked={deployAllPages}
+                      onChange={(event) => setDeployAllPages(event.target.checked)}
+                    />
+                    Deployer toutes les pages Builder
+                  </label>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label className="text-xs font-bold uppercase text-slate-500">
+                        Token source optionnel
+                      </label>
+                      <Input
+                        value={deploySourceToken}
+                        onChange={(event) => setDeploySourceToken(event.target.value)}
+                        type="password"
+                        placeholder="Session actuelle par defaut"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase text-slate-500">
+                        Token cible optionnel
+                      </label>
+                      <Input
+                        value={deployTargetToken}
+                        onChange={(event) => setDeployTargetToken(event.target.value)}
+                        type="password"
+                        placeholder="Session actuelle par defaut"
+                      />
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={() => void startPagesDeploy()}
+                    disabled={
+                      loading ||
+                      !hasPermission('builder.release.create') ||
+                      (deployMode === 'safe-apply' && !hasPermission('builder.release.publish'))
+                    }
+                    className="w-full"
+                  >
+                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <PlayCircle className="mr-2 h-4 w-4" />}
+                    Lancer deploiement pages
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-xl">
+                    <Terminal className="h-5 w-5 text-slate-700" />
+                    Workflow deploy.ps1
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="rounded-md border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+                    Action sensible: synchronise le code depuis Git, peut installer les dependances,
+                    executer les migrations, builder et redemarrer PM2. Le commit/staging local n'est pas expose depuis l'admin.
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label className="text-xs font-bold uppercase text-slate-500">Branche</label>
+                      <Input
+                        value={codeBranch}
+                        onChange={(event) => setCodeBranch(event.target.value)}
+                        placeholder={DEFAULT_DEPLOY_BRANCH}
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold uppercase text-slate-500">Strategie</label>
+                      <select
+                        value={codeStrategy}
+                        onChange={(event) => setCodeStrategy(event.target.value as typeof codeStrategy)}
+                        className="h-10 w-full rounded-md border border-slate-300 bg-white px-3 text-sm"
+                      >
+                        <option value="auto">Auto</option>
+                        <option value="native">Native serveur</option>
+                        <option value="script">deploy.ps1 Windows</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    {[
+                      ['npm ci', codeRunInstall, setCodeRunInstall],
+                      ['Migrations', codeRunMigrations, setCodeRunMigrations],
+                      ['Build Vite', codeRunBuild, setCodeRunBuild],
+                      ['Redemarrer PM2', codeRestartPm2, setCodeRestartPm2],
+                    ].map(([label, checked, setter]) => (
+                      <label key={String(label)} className="flex items-center gap-2 rounded-md border border-slate-200 bg-white p-3 text-sm font-medium text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={Boolean(checked)}
+                          onChange={(event) => {
+                            (setter as (value: boolean) => void)(event.target.checked);
+                          }}
+                        />
+                        {String(label)}
+                      </label>
+                    ))}
+                  </div>
+
+                  <Button
+                    variant="destructive"
+                    onClick={() => void startCodeDeploy()}
+                    disabled={loading || !hasPermission('builder.release.force')}
+                    className="w-full"
+                  >
+                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Rocket className="mr-2 h-4 w-4" />}
+                    Lancer deploiement code
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            <DeployJobsPanel
+              jobs={deployJobs}
+              activeJob={activeDeployJob}
+              onRefresh={() => void loadDeployJobs()}
+              onSelect={(job) => void loadDeployJob(job.id)}
+            />
+          </TabsContent>
         </Tabs>
       </div>
 
@@ -999,6 +1326,106 @@ export default function BuilderReleaseManagerPage() {
         </DialogContent>
       </Dialog>
     </main>
+  );
+}
+
+function DeployJobsPanel({
+  jobs,
+  activeJob,
+  onRefresh,
+  onSelect,
+}: {
+  jobs: DeployJob[];
+  activeJob: DeployJob | null;
+  onRefresh: () => void;
+  onSelect: (job: DeployJob) => void;
+}) {
+  const statusTone: Record<DeployJob['status'], string> = {
+    queued: 'bg-slate-100 text-slate-700',
+    running: 'bg-blue-100 text-blue-700',
+    succeeded: 'bg-emerald-100 text-emerald-700',
+    failed: 'bg-red-100 text-red-700',
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex flex-col gap-3 text-xl sm:flex-row sm:items-center sm:justify-between">
+          <span className="flex items-center gap-2">
+            <History className="h-5 w-5 text-slate-700" />
+            Jobs et logs de deploiement
+          </span>
+          <Button variant="outline" size="sm" onClick={onRefresh}>
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Rafraichir
+          </Button>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="grid gap-6 lg:grid-cols-[360px_1fr]">
+        <section className="space-y-3">
+          {jobs.length === 0 && (
+            <div className="rounded-md border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500">
+              Aucun job lance pendant cette session serveur.
+            </div>
+          )}
+          {jobs.map((job) => (
+            <button
+              key={job.id}
+              type="button"
+              onClick={() => onSelect(job)}
+              className="w-full rounded-md border border-slate-200 bg-white p-4 text-left transition hover:border-blue-300 hover:bg-blue-50/50"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-sm font-black text-slate-900">{job.title}</p>
+                  <p className="mt-1 text-xs text-slate-500">{formatDate(job.created_at)}</p>
+                </div>
+                <span className={`rounded-md px-2 py-1 text-xs font-bold ${statusTone[job.status]}`}>
+                  {job.status}
+                </span>
+              </div>
+              {job.error && <p className="mt-2 line-clamp-2 text-xs text-red-600">{job.error}</p>}
+            </button>
+          ))}
+        </section>
+
+        <section className="min-w-0 rounded-md border border-slate-200 bg-slate-950 text-slate-100">
+          <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+            <div className="min-w-0">
+              <p className="truncate text-sm font-black">
+                {activeJob ? activeJob.title : 'Selectionnez un job'}
+              </p>
+              {activeJob && (
+                <p className="mt-1 text-xs text-slate-400">
+                  {activeJob.type} / {activeJob.status} / {activeJob.id.slice(0, 8)}
+                </p>
+              )}
+            </div>
+            {activeJob?.status === 'running' && <Loader2 className="h-4 w-4 animate-spin text-blue-300" />}
+          </div>
+          <div className="max-h-[520px] min-h-[280px] overflow-auto p-4 font-mono text-xs leading-5">
+            {!activeJob && <p className="text-slate-500">Les logs apparaissent ici.</p>}
+            {activeJob?.logs?.map((log, index) => (
+              <div
+                key={`${log.at}-${index}`}
+                className={
+                  log.level === 'error'
+                    ? 'text-red-300'
+                    : log.level === 'warn'
+                      ? 'text-amber-200'
+                      : log.level === 'success'
+                        ? 'text-emerald-300'
+                        : 'text-slate-200'
+                }
+              >
+                <span className="text-slate-500">{new Date(log.at).toLocaleTimeString('fr-FR')}</span>{' '}
+                {log.message}
+              </div>
+            ))}
+          </div>
+        </section>
+      </CardContent>
+    </Card>
   );
 }
 
