@@ -7505,6 +7505,10 @@ app.use('/api/office', officeRouter);
 const academyRouter = require('./routes/academy');
 app.use('/api/academy', academyRouter);
 
+// == BUILDER PERMISSIONS ROUTES ==
+const builderPermsRouter = require('./routes/builder-permissions');
+app.use('/api/admin/builder-permissions', builderPermsRouter);
+
 // --- AI PROXY / PING ---
 app.post('/api/ai/ping-provider', authenticateToken, requireAdmin, async (req, res) => {
   const { providerId, apiKey } = req.body;
