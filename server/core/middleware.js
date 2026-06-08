@@ -2,7 +2,9 @@ const jwt = require('jsonwebtoken');
 const z = require('zod');
 const { pool } = require('./database');
 
-const JWT_SECRET = process.env.JWT_SECRET || process.env.VITE_JWT_SECRET;
+function getJwtSecret() {
+    return process.env.JWT_SECRET || process.env.VITE_JWT_SECRET;
+}
 
 function validate(schema, source = 'body') {
     return (req, res, next) => {
@@ -27,7 +29,7 @@ function authenticateToken(req, res, next) {
         return res.status(401).json({ error: 'Access token required' });
     }
 
-    jwt.verify(token, JWT_SECRET, (err, user) => {
+    jwt.verify(token, getJwtSecret(), (err, user) => {
         if (err) {
             return res.status(403).json({ error: 'Invalid or expired token' });
         }
@@ -94,4 +96,13 @@ function requirePermission(permissionName) {
     };
 }
 
-module.exports = { authenticateToken, requireAdmin, requirePermission, validate, JWT_SECRET };
+module.exports = {
+    authenticateToken,
+    requireAdmin,
+    requirePermission,
+    validate,
+    getJwtSecret,
+    get JWT_SECRET() {
+        return getJwtSecret();
+    }
+};

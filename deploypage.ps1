@@ -14,6 +14,8 @@ param(
     [string]$ProdBaseUrl = "https://www.proquelec.sn",
     [string]$LocalEmail = "",
     [string]$ProdEmail = "oumarkebe@proquelec.sn",
+    [string]$LocalToken = "",
+    [string]$ProdToken = "",
     [switch]$StageOnly,
     [switch]$Yes
 )
@@ -115,23 +117,45 @@ Write-Host "`n  === PROQUELEC DEPLOY PAGES BUILDER ===" -ForegroundColor Cyan
 Write-Host "  Local: $LocalBaseUrl"
 Write-Host "  VPS:   $ProdBaseUrl`n"
 
-if (-not $LocalEmail) { $LocalEmail = Read-Default "  Email admin local" $ProdEmail }
-if (-not $ProdEmail) { $ProdEmail = Read-Host "  Email admin VPS" }
+if (-not $LocalToken -and -not $LocalEmail) { $LocalEmail = Read-Default "  Email admin local" $ProdEmail }
+if (-not $ProdToken -and -not $ProdEmail) { $ProdEmail = Read-Host "  Email admin VPS" }
 
-if ($LocalPassword -and $ProdPassword) {
-    $localPassword = $LocalPassword
-    $prodPassword = $ProdPassword
+if (-not $LocalToken) {
+    if ($LocalPassword) {
+        $localPassword = $LocalPassword
+    } else {
+        $localPasswordSecure = Read-Host "  Mot de passe admin local" -AsSecureString
+        $localPassword = Convert-SecretToPlainText $localPasswordSecure
+    }
+}
+
+if (-not $ProdToken) {
+    if ($ProdPassword) {
+        $prodPassword = $ProdPassword
+    } else {
+        $prodPasswordSecure = Read-Host "  Mot de passe admin VPS" -AsSecureString
+        $prodPassword = Convert-SecretToPlainText $prodPasswordSecure
+    }
+}
+
+if ($LocalToken -or $ProdToken) {
+    Write-Host "  Utilisation de token(s) admin fourni(s) en paramètres" -ForegroundColor DarkYellow
+} elseif ($LocalPassword -or $ProdPassword) {
     Write-Host "  Utilisation des mots de passe fournis en paramètres" -ForegroundColor DarkYellow
-} else {
-    $localPasswordSecure = Read-Host "  Mot de passe admin local" -AsSecureString
-    $prodPasswordSecure = Read-Host "  Mot de passe admin VPS" -AsSecureString
-    $localPassword = Convert-SecretToPlainText $localPasswordSecure
-    $prodPassword = Convert-SecretToPlainText $prodPasswordSecure
 }
 
 try {
-    $localToken = Get-AuthToken -BaseUrl $LocalBaseUrl -Email $LocalEmail -Password $localPassword -Label "local"
-    $prodToken = Get-AuthToken -BaseUrl $ProdBaseUrl -Email $ProdEmail -Password $prodPassword -Label "VPS"
+    if ($LocalToken) {
+        $localToken = $LocalToken
+    } else {
+        $localToken = Get-AuthToken -BaseUrl $LocalBaseUrl -Email $LocalEmail -Password $localPassword -Label "local"
+    }
+
+    if ($ProdToken) {
+        $prodToken = $ProdToken
+    } else {
+        $prodToken = Get-AuthToken -BaseUrl $ProdBaseUrl -Email $ProdEmail -Password $prodPassword -Label "VPS"
+    }
 
     # Si AllPages, recuperer la liste depuis le local
     if ($AllPages) {

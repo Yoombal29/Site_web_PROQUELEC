@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../../core/middleware');
+const { getJwtSecret } = require('../../core/middleware');
 const repository = require('./auth.repository');
 
 async function login(email, password) {
@@ -25,7 +25,7 @@ async function login(email, password) {
 
     const token = jwt.sign(
         { id: user.id, email: user.email, role: user.role },
-        JWT_SECRET,
+        getJwtSecret(),
         { expiresIn: '24h' }
     );
 
@@ -69,7 +69,7 @@ async function register({ email, password, full_name, phone, company, role }) {
 
     const token = jwt.sign(
         { id: user.id, email: user.email, role: user.role },
-        JWT_SECRET,
+        getJwtSecret(),
         { expiresIn: '24h' }
     );
 
