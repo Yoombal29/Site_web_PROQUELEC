@@ -47,7 +47,7 @@ function Invoke-Api {
     } catch {
         $detail = $_.Exception.Message
         if ($_.ErrorDetails -and $_.ErrorDetails.Message) { $detail = $_.ErrorDetails.Message }
-        Stop-Step "Appel API echoue: $Method $Url`n$detail"
+        throw "Appel API echoue: $Method $Url`n$detail"
     }
 }
 
@@ -76,7 +76,7 @@ function Publish-OnePage {
     $analysis = Invoke-Api -Method "POST" -Url "$ProdBaseUrl/api/admin/pages/release/analyze" -Token $ProdToken -Body @{ package = $package }
 
     $mode = "stage"
-    if (-not $StageOnly -and $analysis.can_publish -eq $true) {
+    if ($analysis -and -not $StageOnly -and $analysis.can_publish -eq $true) {
         if ($Yes) { $mode = "safe-apply" }
         else {
             $confirm = Read-Host "  Publier directement ? [O/n]"
