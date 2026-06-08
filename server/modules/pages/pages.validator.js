@@ -109,6 +109,21 @@ const releaseImportSchema = z.object({
 
 const releasePublishSchema = z.object({
     force: z.boolean().optional().default(false),
+    reason: z.string().optional(),
+});
+
+const releaseRejectSchema = z.object({
+    reason: z.string().optional(),
+});
+
+const releaseRollbackSchema = z.object({
+    reason: z.string().min(8, 'Raison de rollback requise'),
+});
+
+const releasePurgeHistorySchema = z.object({
+    statuses: z.array(z.enum(['published', 'rejected', 'invalid', 'quarantined', 'rolled_back'])).optional(),
+    older_than_days: z.number().int().min(0).optional().default(0),
+    dry_run: z.boolean().optional().default(false),
 });
 
 module.exports = {
@@ -116,5 +131,6 @@ module.exports = {
     draftPageSchema, namedVersionSchema, themeConfigSchema,
     createMenuItemSchema, updateMenuItemSchema,
     constructionModeSchema,
-    releaseAnalyzeSchema, releaseImportSchema, releasePublishSchema
+    releaseAnalyzeSchema, releaseImportSchema, releasePublishSchema,
+    releaseRejectSchema, releaseRollbackSchema, releasePurgeHistorySchema
 };

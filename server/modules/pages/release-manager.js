@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
 const { pool } = require('../../core/database');
 
 const PACKAGE_KIND = 'proquelec.builder.page.release';
@@ -102,6 +104,9 @@ const JSON_FIELDS = new Set([
   'animation_config',
 ]);
 
+const PROCESSED_STATUSES = ['published', 'rejected', 'invalid', 'quarantined', 'rolled_back'];
+const ACTIVE_STATUSES = ['candidate', 'conflict'];
+
 function isPlainObject(value) {
   return value && typeof value === 'object' && !Array.isArray(value) && !(value instanceof Date);
 }
@@ -187,6 +192,204 @@ function extractAssetRefs(value, refs = new Set()) {
   return refs;
 }
 
+function countOccurrences(text, pattern) {
+  if (!text) return 0;
+  const matches = text.match(pattern);
+  return matches ? matches.length : 0;
+}
+
+function assetExists(ref) {
+  if (!ref || /^https?:\/\//i.test(ref)) {
+    return { status: 'external', exists: null };
+  }
+
+  const cleanRef = ref.split('?')[0].split('#')[0];
+  const relativeRef = cleanRef.replace(/^\/+/, '');
+  const candidates = [
+    path.resolve(process.cwd(), relativeRef),
+    path.resolve(process.cwd(), 'server', relativeRef),
+    path.resolve(process.cwd(), 'dist', relativeRef.replace(/^assets\//, 'assets/')),
+    path.resolve(process.cwd(), 'public', relativeRef),
+  ];
+
+  return {
+    status: candidates.some((candidatePath) => fs.existsSync(candidatePath)) ? 'present' : 'missing',
+    exists: candidates.some((candidatePath) => fs.existsSync(candidatePath)),
+  };
+}
+
+function evaluateReleasePackageHealth(pkg, computedChecksum = null) {
+  const serialized = stableStringify(pkg);
+  const declaredChecksum = pkg?.checksum || null;
+  const computed = computedChecksum || packageHash(pkg || {});
+  const replacementCount = countOccurrences(serialized, /\uFFFD/g);
+  const tripleQuestionCount = countOccurrences(serialized, /\?\?\?/g);
+  const mojibakeCount = countOccurrences(serialized, /(Ã|Â|â€|â€™|â€œ|â€\u009d|�)/g);
+  const checksumMismatch = Boolean(declaredChecksum && declaredChecksum !== computed);
+  const assets = Array.from(extractAssetRefs(pkg?.page?.fields || pkg || {})).sort();
+  const assetResults = assets.map((ref) => ({ ref, ...assetExists(ref) }));
+  const missingAssets = assetResults.filter((asset) => asset.status === 'missing');
+  const externalAssets = assetResults.filter((asset) => asset.status === 'external');
+  const blockers = [];
+  const warnings = [];
+
+  if (replacementCount > 0) {
+    blockers.push(`${replacementCount} caractère(s) de remplacement UTF-8 détecté(s)`);
+  }
+  if (tripleQuestionCount > 0) {
+    blockers.push(`${tripleQuestionCount} groupe(s) "???" détecté(s)`);
+  }
+  if (checksumMismatch) {
+    blockers.push('Checksum déclaré différent du contenu réel');
+  }
+  if (mojibakeCount > 0 && replacementCount === 0) {
+    warnings.push(`${mojibakeCount} séquence(s) possiblement mal encodée(s)`);
+  }
+  if (missingAssets.length > 0) {
+    warnings.push(`${missingAssets.length} asset(s) locaux introuvable(s)`);
+  }
+  if (externalAssets.length > 0) {
+    warnings.push(`${externalAssets.length} asset(s) externe(s) non vérifié(s)`);
+  }
+
+  const riskLevel = blockers.length > 0 ? 'high' : warnings.length > 0 ? 'medium' : 'low';
+
+  return {
+    is_valid: blockers.length === 0,
+    is_publishable: blockers.length === 0,
+    risk_level: riskLevel,
+    blockers,
+    warnings,
+    encoding: {
+      replacement_count: replacementCount,
+      triple_question_count: tripleQuestionCount,
+      mojibake_count: mojibakeCount,
+    },
+    checksum: {
+      declared: declaredChecksum,
+      computed,
+      mismatch: checksumMismatch,
+    },
+    assets: {
+      total: assets.length,
+      external_count: externalAssets.length,
+      missing_count: missingAssets.length,
+      refs: assetResults.slice(0, 40),
+    },
+  };
+}
+
+function getPackageHealth(pkg) {
+  return pkg?.__package_health || evaluateReleasePackageHealth(pkg);
+}
+
+function statusFromAnalysisAndHealth(analysis, health) {
+  if (!health.is_publishable) return 'invalid';
+  if (health.assets?.missing_count > 0) return 'quarantined';
+  return analysis.conflict ? 'conflict' : 'candidate';
+}
+
+function stripHtml(value) {
+  return String(value || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function collectText(value, parts = []) {
+  if (typeof value === 'string') {
+    const clean = stripHtml(value);
+    if (clean) parts.push(clean);
+    return parts;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectText(item, parts));
+    return parts;
+  }
+  if (isPlainObject(value)) {
+    Object.values(value).forEach((item) => collectText(item, parts));
+  }
+  return parts;
+}
+
+function findFirstHtml(value) {
+  if (typeof value === 'string' && /<\/?[a-z][\s\S]*>/i.test(value)) return value;
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const html = findFirstHtml(item);
+      if (html) return html;
+    }
+  }
+  if (isPlainObject(value)) {
+    for (const item of Object.values(value)) {
+      const html = findFirstHtml(item);
+      if (html) return html;
+    }
+  }
+  return '';
+}
+
+function buildPreviewFromFields(fields = {}) {
+  const text = collectText({
+    title: fields.title,
+    meta_description: fields.meta_description,
+    content: fields.content,
+    content_raw: fields.content_raw,
+    content_compiled: fields.content_compiled,
+    structure_json: fields.structure_json,
+    content_blocks: fields.content_blocks,
+  }).join(' ');
+
+  return {
+    title: fields.title || 'Page sans titre',
+    slug: fields.slug || '',
+    meta_description: fields.meta_description || '',
+    text_excerpt: text.slice(0, 900),
+    html_excerpt: findFirstHtml(fields.structure_json || fields.content_blocks || fields.content || ''),
+    node_count: countCraftNodes(fields.structure_json) || countCraftNodes(fields.content_blocks),
+    character_count: text.length,
+  };
+}
+
+function decorateCandidate(row, { includePackage = false, livePage = null, events = [] } = {}) {
+  if (!row) return null;
+  const pkg = parseJsonIfNeeded(row.package);
+  const storedHealth = row.package_health && Object.keys(row.package_health).length > 0
+    ? row.package_health
+    : evaluateReleasePackageHealth(pkg);
+  const incomingFields = pkg?.page?.fields || {};
+  const output = {
+    ...row,
+    package_health: storedHealth,
+    candidate_preview: buildPreviewFromFields(incomingFields),
+    live_preview: livePage ? buildPreviewFromFields(getSnapshotFromPage(livePage).fields) : null,
+    events,
+  };
+
+  if (includePackage) {
+    output.package = pkg;
+  } else {
+    delete output.package;
+  }
+
+  return output;
+}
+
+async function logReleaseEvent(clientOrPool, { candidateId, eventType, userId, reason = null, metadata = {} }) {
+  try {
+    await clientOrPool.query(
+      `INSERT INTO public.builder_release_events
+         (candidate_id, event_type, user_id, reason, metadata)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [candidateId || null, eventType, userId || null, reason || null, JSON.stringify(metadata || {})],
+    );
+  } catch (error) {
+    console.warn('[RELEASE] Event audit unavailable:', error.message);
+  }
+}
+
 function stripChecksum(pkg) {
   const clone = { ...pkg };
   delete clone.checksum;
@@ -210,14 +413,20 @@ function normalizePackageInput(input) {
   }
 
   const computed = packageHash(pkg);
+  const health = evaluateReleasePackageHealth(pkg, computed);
   if (pkg.checksum && pkg.checksum !== computed) {
     console.warn('[RELEASE] Checksum mismatch - expected: ' + computed + ' received: ' + pkg.checksum);
   }
 
-  return {
+  const normalized = {
     ...pkg,
     checksum: computed,
   };
+  Object.defineProperty(normalized, '__package_health', {
+    value: health,
+    enumerable: false,
+  });
+  return normalized;
 }
 
 async function findPageBySlugOrId(client, pageId, slug, lock = false) {
@@ -336,6 +545,7 @@ function countCraftNodes(structure) {
 
 async function analyzeReleasePackage(rawPackage) {
   const pkg = normalizePackageInput(rawPackage);
+  const packageHealth = getPackageHealth(pkg);
   const incomingSnapshot = {
     id: pkg.page.id || null,
     fields: normalizeValue(pkg.page.fields),
@@ -352,6 +562,7 @@ async function analyzeReleasePackage(rawPackage) {
 
   return {
     package_hash: pkg.checksum,
+    package_health: packageHealth,
     target_exists: Boolean(target),
     target_page_id: target?.id || null,
     target_slug: target?.slug || incomingSnapshot.fields.slug,
@@ -363,8 +574,10 @@ async function analyzeReleasePackage(rawPackage) {
     current_revision: currentRevision,
     incoming_hash: computeSnapshotHash(incomingSnapshot),
     conflict,
-    can_publish: !conflict,
-    conflict_reason: conflict
+    can_publish: !conflict && packageHealth.is_publishable,
+    conflict_reason: !packageHealth.is_publishable
+      ? packageHealth.blockers.join(' · ')
+      : conflict
       ? 'La page VPS a changé depuis la base utilisée par le package local.'
       : null,
     diff_summary: diffSummary,
@@ -374,12 +587,13 @@ async function analyzeReleasePackage(rawPackage) {
 async function createReleaseCandidate(rawPackage, userId, analysisOverride = null) {
   const pkg = normalizePackageInput(rawPackage);
   const analysis = analysisOverride || (await analyzeReleasePackage(pkg));
-  const status = analysis.conflict ? 'conflict' : 'candidate';
+  const health = analysis.package_health || getPackageHealth(pkg);
+  const status = statusFromAnalysisAndHealth(analysis, health);
   const result = await pool.query(
     `INSERT INTO public.builder_release_candidates
        (target_page_id, target_slug, package, package_hash, base_hash, base_revision,
-        current_hash, current_revision, status, conflict_reason, diff_summary, created_by)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        current_hash, current_revision, status, conflict_reason, diff_summary, package_health, created_by)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
      RETURNING *`,
     [
       analysis.target_page_id,
@@ -391,13 +605,23 @@ async function createReleaseCandidate(rawPackage, userId, analysisOverride = nul
       analysis.current_hash,
       analysis.current_revision,
       status,
-      analysis.conflict_reason,
+      status === 'invalid' || status === 'quarantined'
+        ? health.blockers.concat(health.warnings).join(' · ')
+        : analysis.conflict_reason,
       JSON.stringify(analysis.diff_summary || {}),
+      JSON.stringify(health),
       userId || null,
     ],
   );
 
-  return result.rows[0];
+  await logReleaseEvent(pool, {
+    candidateId: result.rows[0].id,
+    eventType: 'created',
+    userId,
+    metadata: { status, package_hash: pkg.checksum, package_health: health },
+  });
+
+  return decorateCandidate(result.rows[0], { includePackage: true });
 }
 
 async function listReleaseCandidates({ status } = {}) {
@@ -409,28 +633,58 @@ async function listReleaseCandidates({ status } = {}) {
            p.updated_at AS live_updated_at,
            p.builder_revision AS live_revision
     FROM public.builder_release_candidates c
-    LEFT JOIN public.pages p ON p.id = c.target_page_id`;
+    LEFT JOIN public.pages p ON p.id = c.target_page_id
+    WHERE c.deleted_at IS NULL`;
 
   if (status) {
     params.push(status);
-    sql += ` WHERE c.status = $${params.length}`;
+    sql += ` AND c.status = $${params.length}`;
   }
 
   sql += ' ORDER BY c.created_at DESC LIMIT 100';
   const result = await pool.query(sql, params);
-  return result.rows;
+  return result.rows.map((row) => decorateCandidate(row));
 }
 
 async function getReleaseCandidate(id) {
-  const result = await pool.query('SELECT * FROM public.builder_release_candidates WHERE id = $1', [id]);
-  return result.rows[0] || null;
+  const result = await pool.query(
+    'SELECT * FROM public.builder_release_candidates WHERE id = $1 AND deleted_at IS NULL',
+    [id],
+  );
+  const candidate = result.rows[0] || null;
+  if (!candidate) return null;
+
+  const liveResult = await pool.query('SELECT * FROM public.pages WHERE id = $1 OR slug = $2 LIMIT 1', [
+    candidate.target_page_id,
+    candidate.target_slug,
+  ]);
+  let events = [];
+  try {
+    const eventsResult = await pool.query(
+      `SELECT id, event_type, user_id, reason, metadata, created_at
+       FROM public.builder_release_events
+       WHERE candidate_id = $1
+       ORDER BY created_at DESC
+       LIMIT 50`,
+      [candidate.id],
+    );
+    events = eventsResult.rows;
+  } catch (error) {
+    console.warn('[RELEASE] Event audit read unavailable:', error.message);
+  }
+
+  return decorateCandidate(candidate, {
+    includePackage: true,
+    livePage: liveResult.rows[0] || null,
+    events,
+  });
 }
 
 async function importReleasePackage(rawPackage, userId, mode = 'stage') {
   const pkg = normalizePackageInput(rawPackage);
   const analysis = await analyzeReleasePackage(pkg);
 
-  if (mode === 'safe-apply' && !analysis.conflict) {
+  if (mode === 'safe-apply' && analysis.can_publish) {
     const page = await publishReleasePackage(pkg, {
       userId,
       force: false,
@@ -447,40 +701,261 @@ async function importReleasePackage(rawPackage, userId, mode = 'stage') {
   };
 }
 
-async function rejectReleaseCandidate(id, userId) {
+async function rejectReleaseCandidate(id, userId, reason = null) {
   const result = await pool.query(
     `UPDATE public.builder_release_candidates
-     SET status = 'rejected', updated_at = NOW()
+     SET status = 'rejected',
+         rejected_by = $2,
+         rejected_at = NOW(),
+         reject_reason = $3,
+         updated_at = NOW()
      WHERE id = $1 AND status IN ('candidate', 'conflict')
-     RETURNING *, $2::uuid AS rejected_by`,
-    [id, userId || null],
+     RETURNING *`,
+    [id, userId || null, reason || null],
   );
-  return result.rows[0] || null;
+
+  if (result.rows[0]) {
+    await logReleaseEvent(pool, {
+      candidateId: id,
+      eventType: 'rejected',
+      userId,
+      reason,
+    });
+  }
+
+  return result.rows[0] ? decorateCandidate(result.rows[0], { includePackage: true }) : null;
 }
 
-async function publishReleaseCandidate(id, { userId, force = false } = {}) {
+function validatePublishedPage(page, pkg) {
+  const snapshot = getSnapshotFromPage(page);
+  const currentHash = computeSnapshotHash(snapshot);
+  const health = evaluateReleasePackageHealth({
+    ...pkg,
+    page: {
+      ...pkg.page,
+      fields: snapshot.fields,
+    },
+  }, currentHash);
+
+  return {
+    ok: health.is_publishable && page.builder_content_hash === pkg.checksum,
+    content_hash: currentHash,
+    expected_hash: pkg.checksum,
+    stored_hash: page.builder_content_hash,
+    health,
+  };
+}
+
+async function publishReleaseCandidate(id, { userId, force = false, reason = null } = {}) {
   const candidate = await getReleaseCandidate(id);
   if (!candidate) throw Object.assign(new Error('Candidat introuvable'), { status: 404 });
   if (!['candidate', 'conflict'].includes(candidate.status)) {
     throw Object.assign(new Error('Ce candidat ne peut plus être publié'), { status: 409 });
   }
+  if (force && (!reason || reason.trim().length < 8)) {
+    throw Object.assign(new Error('Une raison de forçage explicite est requise.'), { status: 400 });
+  }
 
   const pkg = normalizePackageInput(candidate.package);
+  const health = candidate.package_health?.is_publishable !== undefined
+    ? candidate.package_health
+    : getPackageHealth(pkg);
+  if (!health.is_publishable) {
+    throw Object.assign(new Error('Publication bloquée: le package est corrompu ou invalide.'), {
+      status: 422,
+      details: health,
+    });
+  }
+
   const page = await publishReleasePackage(pkg, {
     userId,
     force,
     candidateId: candidate.id,
     expectedHash: candidate.current_hash || null,
   });
+  const validation = validatePublishedPage(page, pkg);
 
   await pool.query(
     `UPDATE public.builder_release_candidates
-     SET status = 'published', target_page_id = $2, published_by = $3, published_at = NOW(), updated_at = NOW()
+     SET status = 'published',
+         target_page_id = $2,
+         published_by = $3,
+         published_at = NOW(),
+         publish_reason = $4,
+         forced = $5,
+         validation_summary = $6,
+         updated_at = NOW()
      WHERE id = $1`,
-    [candidate.id, page.id, userId || null],
+    [candidate.id, page.id, userId || null, reason || null, force === true, JSON.stringify(validation)],
   );
 
+  await logReleaseEvent(pool, {
+    candidateId: candidate.id,
+    eventType: force ? 'force-published' : 'published',
+    userId,
+    reason,
+    metadata: validation,
+  });
+
   return page;
+}
+
+async function rollbackReleaseCandidate(id, { userId, reason = null } = {}) {
+  if (!reason || reason.trim().length < 8) {
+    throw Object.assign(new Error('Une raison de rollback explicite est requise.'), { status: 400 });
+  }
+
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    const candidateResult = await client.query(
+      `SELECT * FROM public.builder_release_candidates
+       WHERE id = $1 AND status = 'published' AND deleted_at IS NULL
+       FOR UPDATE`,
+      [id],
+    );
+    const candidate = candidateResult.rows[0];
+    if (!candidate) {
+      throw Object.assign(new Error('Candidat publié introuvable ou déjà traité.'), { status: 404 });
+    }
+
+    const revisionResult = await client.query(
+      `SELECT *
+       FROM public.builder_page_revisions
+       WHERE release_candidate_id = $1
+         AND action IN ('before-force-release', 'before-release')
+       ORDER BY created_at DESC
+       LIMIT 1`,
+      [id],
+    );
+    const revision = revisionResult.rows[0];
+    if (!revision) {
+      throw Object.assign(new Error('Aucune révision précédente disponible pour rollback.'), { status: 404 });
+    }
+
+    const currentPage = await findPageBySlugOrId(
+      client,
+      candidate.target_page_id,
+      candidate.target_slug,
+      true,
+    );
+    if (!currentPage) {
+      throw Object.assign(new Error('Page cible introuvable pour rollback.'), { status: 404 });
+    }
+
+    const currentSnapshot = getSnapshotFromPage(currentPage);
+    const currentHash = computeSnapshotHash(currentSnapshot);
+    await saveBuilderRevision(client, {
+      page: currentPage,
+      snapshot: currentSnapshot,
+      hash: currentHash,
+      source: 'release-manager',
+      action: 'before-rollback',
+      candidateId: candidate.id,
+      userId,
+    });
+
+    const restoredFields = normalizeValue(parseJsonIfNeeded(revision.snapshot));
+    const restoredSnapshot = {
+      id: currentPage.id,
+      fields: {
+        ...restoredFields,
+        slug: restoredFields.slug || currentPage.slug,
+      },
+    };
+    const restoredHash = computeSnapshotHash(restoredSnapshot);
+    const page = await updatePageFromRelease(client, currentPage, restoredSnapshot, restoredHash, userId);
+
+    await saveBuilderRevision(client, {
+      page,
+      snapshot: getSnapshotFromPage(page),
+      hash: computeSnapshotHash(getSnapshotFromPage(page)),
+      source: 'release-manager',
+      action: 'after-rollback',
+      candidateId: candidate.id,
+      userId,
+    });
+
+    await client.query(
+      `UPDATE public.builder_release_candidates
+       SET status = 'rolled_back',
+           rollback_by = $2,
+           rollback_at = NOW(),
+           rollback_reason = $3,
+           updated_at = NOW()
+       WHERE id = $1`,
+      [candidate.id, userId || null, reason],
+    );
+
+    await logReleaseEvent(client, {
+      candidateId: candidate.id,
+      eventType: 'rolled-back',
+      userId,
+      reason,
+      metadata: {
+        restored_revision_id: revision.id,
+        restored_hash: restoredHash,
+        previous_hash: currentHash,
+      },
+    });
+
+    await client.query('COMMIT');
+    return { page, restored_revision: revision.id, restored_hash: restoredHash };
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+async function purgeReleaseHistory({ statuses = PROCESSED_STATUSES, olderThanDays = 0, dryRun = false } = {}, userId) {
+  const cleanStatuses = statuses.filter((status) => PROCESSED_STATUSES.includes(status));
+  if (cleanStatuses.length === 0) {
+    throw Object.assign(new Error('Aucun statut traité valide à supprimer.'), { status: 400 });
+  }
+
+  const age = Number.isFinite(Number(olderThanDays)) ? Math.max(0, Number(olderThanDays)) : 0;
+  const sql = `
+    SELECT id, target_slug, status, created_at
+    FROM public.builder_release_candidates
+    WHERE deleted_at IS NULL
+      AND status = ANY($1)
+      AND created_at <= NOW() - ($2::int * INTERVAL '1 day')
+    ORDER BY created_at DESC`;
+  const candidates = await pool.query(sql, [cleanStatuses, age]);
+
+  if (dryRun) {
+    return { dry_run: true, count: candidates.rowCount, candidates: candidates.rows };
+  }
+
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    await logReleaseEvent(client, {
+      candidateId: null,
+      eventType: 'history-purged',
+      userId,
+      reason: `Suppression historique traité (${cleanStatuses.join(', ')})`,
+      metadata: { statuses: cleanStatuses, older_than_days: age, count: candidates.rowCount },
+    });
+    const deleted = await client.query(
+      `DELETE FROM public.builder_release_candidates
+       WHERE deleted_at IS NULL
+         AND status = ANY($1)
+         AND created_at <= NOW() - ($2::int * INTERVAL '1 day')
+       RETURNING id, target_slug, status, created_at`,
+      [cleanStatuses, age],
+    );
+    await client.query('COMMIT');
+    return { dry_run: false, count: deleted.rowCount, candidates: deleted.rows };
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
 }
 
 async function publishReleasePackage(pkg, { userId, force = false, candidateId = null, expectedHash = null } = {}) {
@@ -672,4 +1147,6 @@ module.exports = {
   getReleaseCandidate,
   publishReleaseCandidate,
   rejectReleaseCandidate,
+  rollbackReleaseCandidate,
+  purgeReleaseHistory,
 };

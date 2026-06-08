@@ -1,15 +1,19 @@
 const { Router } = require('express');
 const controller = require('./pages.controller');
-const { authenticateToken, requireAdmin, validate } = require('../../core/middleware');
+const { authenticateToken, requireAdmin, requirePermission, validate } = require('../../core/middleware');
 const {
     createPageSchema, updatePageSchema, adminUpdatePageSchema,
     draftPageSchema, namedVersionSchema, themeConfigSchema,
     createMenuItemSchema, updateMenuItemSchema,
     constructionModeSchema,
-    releaseAnalyzeSchema, releaseImportSchema, releasePublishSchema
+    releaseAnalyzeSchema, releaseImportSchema, releasePublishSchema,
+    releaseRejectSchema, releaseRollbackSchema, releasePurgeHistorySchema
 } = require('./pages.validator');
 
 const router = Router();
+
+const requireReleasePublishPermission = (req, res, next) =>
+    requirePermission(req.body?.force === true ? 'builder.release.force' : 'builder.release.publish')(req, res, next);
 
 router.get('/pages', controller.listPages);
 router.get('/pages/slug/:slug', controller.getPage);
@@ -19,13 +23,15 @@ router.put('/pages/:id', authenticateToken, validate(updatePageSchema), controll
 router.delete('/pages/:id', authenticateToken, controller.deletePage);
 
 router.get('/admin/pages', authenticateToken, requireAdmin, controller.listPages);
-router.post('/admin/pages/release/analyze', authenticateToken, requireAdmin, validate(releaseAnalyzeSchema), controller.analyzePageRelease);
-router.post('/admin/pages/release/import', authenticateToken, requireAdmin, validate(releaseImportSchema), controller.importPageRelease);
-router.get('/admin/pages/release/candidates', authenticateToken, requireAdmin, controller.listReleaseCandidates);
-router.get('/admin/pages/release/candidates/:candidateId', authenticateToken, requireAdmin, controller.getReleaseCandidate);
-router.post('/admin/pages/release/candidates/:candidateId/publish', authenticateToken, requireAdmin, validate(releasePublishSchema), controller.publishReleaseCandidate);
-router.delete('/admin/pages/release/candidates/:candidateId', authenticateToken, requireAdmin, controller.rejectReleaseCandidate);
-router.get('/admin/pages/:id/release/export', authenticateToken, requireAdmin, controller.exportPageRelease);
+router.post('/admin/pages/release/analyze', authenticateToken, requireAdmin, requirePermission('builder.release.view'), validate(releaseAnalyzeSchema), controller.analyzePageRelease);
+router.post('/admin/pages/release/import', authenticateToken, requireAdmin, requirePermission('builder.release.create'), validate(releaseImportSchema), controller.importPageRelease);
+router.delete('/admin/pages/release/history', authenticateToken, requireAdmin, requirePermission('builder.release.purge'), validate(releasePurgeHistorySchema), controller.purgeReleaseHistory);
+router.get('/admin/pages/release/candidates', authenticateToken, requireAdmin, requirePermission('builder.release.view'), controller.listReleaseCandidates);
+router.get('/admin/pages/release/candidates/:candidateId', authenticateToken, requireAdmin, requirePermission('builder.release.view'), controller.getReleaseCandidate);
+router.post('/admin/pages/release/candidates/:candidateId/publish', authenticateToken, requireAdmin, validate(releasePublishSchema), requireReleasePublishPermission, controller.publishReleaseCandidate);
+router.post('/admin/pages/release/candidates/:candidateId/rollback', authenticateToken, requireAdmin, requirePermission('builder.release.rollback'), validate(releaseRollbackSchema), controller.rollbackReleaseCandidate);
+router.delete('/admin/pages/release/candidates/:candidateId', authenticateToken, requireAdmin, requirePermission('builder.release.create'), validate(releaseRejectSchema), controller.rejectReleaseCandidate);
+router.get('/admin/pages/:id/release/export', authenticateToken, requireAdmin, requirePermission('builder.release.create'), controller.exportPageRelease);
 router.get('/admin/pages/:id', authenticateToken, requireAdmin, controller.adminGetPage);
 router.put('/admin/pages/:id', authenticateToken, requireAdmin, validate(adminUpdatePageSchema), controller.adminUpdatePage);
 router.get('/admin/page-versions/:id/:version', authenticateToken, requireAdmin, controller.getPageVersion);

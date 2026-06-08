@@ -1,21 +1,39 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   AlertTriangle,
+  Ban,
   CheckCircle2,
   Download,
+  Eye,
   FileJson,
+  Filter,
   GitCompare,
+  History,
   Loader2,
+  RefreshCw,
   Rocket,
+  RotateCcw,
+  Search,
   ShieldAlert,
+  ShieldCheck,
   Trash2,
   Upload,
+  XCircle,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { apiFetch } from '@/lib/api-client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -52,8 +70,33 @@ type ReleasePackage = {
   assets?: string[];
 };
 
+type PackageHealth = {
+  is_valid: boolean;
+  is_publishable: boolean;
+  risk_level: 'low' | 'medium' | 'high';
+  blockers: string[];
+  warnings: string[];
+  encoding: {
+    replacement_count: number;
+    triple_question_count: number;
+    mojibake_count: number;
+  };
+  checksum: {
+    declared?: string | null;
+    computed?: string | null;
+    mismatch: boolean;
+  };
+  assets: {
+    total: number;
+    external_count: number;
+    missing_count: number;
+    refs?: Array<{ ref: string; status: string; exists: boolean | null }>;
+  };
+};
+
 type ReleaseAnalysis = {
   package_hash: string;
+  package_health?: PackageHealth;
   target_exists: boolean;
   target_page_id: string | null;
   target_slug: string;
@@ -76,6 +119,32 @@ type ReleaseAnalysis = {
   };
 };
 
+type CandidateStatus =
+  | 'candidate'
+  | 'conflict'
+  | 'published'
+  | 'rejected'
+  | 'invalid'
+  | 'quarantined'
+  | 'rolled_back';
+
+type CandidatePreview = {
+  title: string;
+  slug: string;
+  meta_description?: string;
+  text_excerpt: string;
+  html_excerpt?: string;
+  node_count: number;
+  character_count: number;
+};
+
+type ReleaseEvent = {
+  id: string;
+  event_type: string;
+  reason?: string | null;
+  created_at: string;
+};
+
 type ReleaseCandidate = {
   id: string;
   target_page_id: string | null;
@@ -85,28 +154,130 @@ type ReleaseCandidate = {
   base_revision: number | null;
   current_hash: string | null;
   current_revision: number | null;
-  status: 'candidate' | 'conflict' | 'published' | 'rejected';
+  status: CandidateStatus;
   conflict_reason?: string | null;
   diff_summary?: ReleaseAnalysis['diff_summary'];
+  package_health?: PackageHealth;
+  validation_summary?: Record<string, unknown>;
+  candidate_preview?: CandidatePreview;
+  live_preview?: CandidatePreview | null;
+  events?: ReleaseEvent[];
+  package?: ReleasePackage;
   created_at: string;
   published_at?: string | null;
+  published_by?: string | null;
+  publish_reason?: string | null;
+  forced?: boolean;
+  rollback_at?: string | null;
+  rollback_reason?: string | null;
   target_title?: string | null;
   live_revision?: number | null;
 };
 
+type BuilderPermissionsResponse = {
+  permissions: string[];
+  role: string;
+};
+
+type PurgePreview = {
+  dry_run: boolean;
+  count: number;
+  candidates: Array<{ id: string; target_slug: string; status: CandidateStatus; created_at: string }>;
+};
+
+type ClientPackageHealth = {
+  parse_error: string | null;
+  replacement_count: number;
+  triple_question_count: number;
+  looks_safe: boolean;
+};
+
+const ACTIVE_STATUSES: CandidateStatus[] = ['candidate', 'conflict'];
+const PROCESSED_STATUSES: CandidateStatus[] = [
+  'published',
+  'rejected',
+  'invalid',
+  'quarantined',
+  'rolled_back',
+];
+const ALL_STATUSES: CandidateStatus[] = [...ACTIVE_STATUSES, ...PROCESSED_STATUSES];
+
 const hashLabel = (value?: string | null) => (value ? value.slice(0, 12) : 'non initialise');
 
-const statusVariant = (status: ReleaseCandidate['status']) => {
+const formatDate = (value?: string | null) => {
+  if (!value) return 'non renseigne';
+  return new Intl.DateTimeFormat('fr-FR', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  }).format(new Date(value));
+};
+
+const statusVariant = (status: CandidateStatus) => {
   if (status === 'published') return 'default';
-  if (status === 'conflict') return 'destructive';
-  if (status === 'rejected') return 'secondary';
+  if (status === 'conflict' || status === 'invalid' || status === 'quarantined') return 'destructive';
+  if (status === 'rejected' || status === 'rolled_back') return 'secondary';
   return 'outline';
+};
+
+const statusLabel: Record<CandidateStatus, string> = {
+  candidate: 'Candidat',
+  conflict: 'Conflit',
+  published: 'Publie',
+  rejected: 'Rejete',
+  invalid: 'Invalide',
+  quarantined: 'Quarantaine',
+  rolled_back: 'Rollback',
 };
 
 const parsePackage = (raw: string): ReleasePackage | null => {
   if (!raw.trim()) return null;
-  return JSON.parse(raw) as ReleasePackage;
+  try {
+    return JSON.parse(raw) as ReleasePackage;
+  } catch {
+    return null;
+  }
 };
+
+const inspectPackageText = (raw: string): ClientPackageHealth | null => {
+  if (!raw.trim()) return null;
+  const replacement = String.fromCharCode(0xfffd);
+  let parseError: string | null = null;
+  try {
+    JSON.parse(raw);
+  } catch (error) {
+    parseError = error instanceof Error ? error.message : 'JSON invalide';
+  }
+  const replacementCount = raw.split(replacement).length - 1;
+  const tripleQuestionCount = (raw.match(/\?\?\?/g) || []).length;
+  return {
+    parse_error: parseError,
+    replacement_count: replacementCount,
+    triple_question_count: tripleQuestionCount,
+    looks_safe: !parseError && replacementCount === 0 && tripleQuestionCount === 0,
+  };
+};
+
+const healthLabel = (health?: PackageHealth) => {
+  if (!health) return { label: 'Non scanne', variant: 'outline' as const };
+  if (!health.is_publishable) return { label: 'Bloque', variant: 'destructive' as const };
+  if (health.risk_level === 'medium') return { label: 'A verifier', variant: 'secondary' as const };
+  return { label: 'Sain', variant: 'outline' as const };
+};
+
+const canPublishCandidate = (candidate: ReleaseCandidate) =>
+  ACTIVE_STATUSES.includes(candidate.status) && candidate.package_health?.is_publishable !== false;
+
+const previewDocument = (html: string, title: string) => `<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${title}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body{margin:0;font-family:Inter,Arial,sans-serif;background:#fff;color:#0f172a}</style>
+</head>
+<body>${html || '<div style="padding:24px;color:#64748b">Aucun HTML detecte dans le paquet.</div>'}</body>
+</html>`;
 
 export default function BuilderReleaseManagerPage() {
   const [pages, setPages] = useState<PageRow[]>([]);
@@ -115,12 +286,35 @@ export default function BuilderReleaseManagerPage() {
   const [packageText, setPackageText] = useState('');
   const [analysis, setAnalysis] = useState<ReleaseAnalysis | null>(null);
   const [candidates, setCandidates] = useState<ReleaseCandidate[]>([]);
+  const [permissions, setPermissions] = useState<string[]>([]);
+  const [role, setRole] = useState('');
   const [loading, setLoading] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'processed' | CandidateStatus>('active');
+  const [healthFilter, setHealthFilter] = useState<'all' | 'clean' | 'problems'>('all');
+  const [pageFilter, setPageFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [inspectedCandidate, setInspectedCandidate] = useState<ReleaseCandidate | null>(null);
+  const [forceCandidate, setForceCandidate] = useState<ReleaseCandidate | null>(null);
+  const [forceText, setForceText] = useState('');
+  const [forceReason, setForceReason] = useState('');
+  const [rollbackCandidate, setRollbackCandidate] = useState<ReleaseCandidate | null>(null);
+  const [rollbackReason, setRollbackReason] = useState('');
+  const [purgeOpen, setPurgeOpen] = useState(false);
+  const [purgeDays, setPurgeDays] = useState('0');
+  const [purgeStatuses, setPurgeStatuses] = useState<CandidateStatus[]>(['published', 'rejected', 'rolled_back']);
+  const [purgePreview, setPurgePreview] = useState<PurgePreview | null>(null);
 
   const selectedPage = useMemo(
     () => pages.find((page) => page.id === selectedPageId) || null,
     [pages, selectedPageId],
+  );
+
+  const localPackageHealth = useMemo(() => inspectPackageText(packageText), [packageText]);
+
+  const hasPermission = useCallback(
+    (permission: string) => permissions.includes(permission),
+    [permissions],
   );
 
   const loadPages = useCallback(async () => {
@@ -136,11 +330,48 @@ export default function BuilderReleaseManagerPage() {
     setCandidates(Array.isArray(data) ? data : []);
   }, []);
 
+  const loadPermissions = useCallback(async () => {
+    const data = await apiFetch<BuilderPermissionsResponse>('/api/admin/builder-permissions/user');
+    setPermissions(data.permissions || []);
+    setRole(data.role || '');
+  }, []);
+
+  const refreshAll = useCallback(async () => {
+    await Promise.all([loadPages(), loadCandidates(), loadPermissions()]);
+  }, [loadCandidates, loadPages, loadPermissions]);
+
   useEffect(() => {
-    void Promise.all([loadPages(), loadCandidates()]).catch((error: unknown) => {
+    void refreshAll().catch((error: unknown) => {
       toast.error(error instanceof Error ? error.message : 'Chargement impossible');
     });
-  }, [loadCandidates, loadPages]);
+  }, [refreshAll]);
+
+  const filteredCandidates = useMemo(() => {
+    const normalizedSearch = search.trim().toLowerCase();
+    return candidates.filter((candidate) => {
+      const statusMatch =
+        statusFilter === 'all' ||
+        (statusFilter === 'active' && ACTIVE_STATUSES.includes(candidate.status)) ||
+        (statusFilter === 'processed' && PROCESSED_STATUSES.includes(candidate.status)) ||
+        candidate.status === statusFilter;
+      const healthMatch =
+        healthFilter === 'all' ||
+        (healthFilter === 'clean' && candidate.package_health?.risk_level === 'low') ||
+        (healthFilter === 'problems' && candidate.package_health?.risk_level !== 'low');
+      const pageMatch = pageFilter === 'all' || candidate.target_slug === pageFilter;
+      const searchMatch =
+        !normalizedSearch ||
+        candidate.target_slug.toLowerCase().includes(normalizedSearch) ||
+        candidate.id.toLowerCase().includes(normalizedSearch) ||
+        candidate.package_hash.toLowerCase().includes(normalizedSearch);
+      return statusMatch && healthMatch && pageMatch && searchMatch;
+    });
+  }, [candidates, healthFilter, pageFilter, search, statusFilter]);
+
+  const pageSlugs = useMemo(
+    () => Array.from(new Set(candidates.map((candidate) => candidate.target_slug))).sort(),
+    [candidates],
+  );
 
   const exportPage = async () => {
     if (!selectedPageId) return;
@@ -177,7 +408,7 @@ export default function BuilderReleaseManagerPage() {
   const analyzePackage = async () => {
     const pkg = parsePackage(packageText);
     if (!pkg) {
-      toast.error('Package JSON requis');
+      toast.error('Package JSON invalide ou absent');
       return;
     }
 
@@ -188,7 +419,7 @@ export default function BuilderReleaseManagerPage() {
         body: JSON.stringify({ package: pkg }),
       });
       setAnalysis(result);
-      toast.success(result.conflict ? 'Conflit detecte' : 'Dry-run valide');
+      toast.success(result.can_publish ? 'Dry-run valide' : 'Publication bloquee');
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Analyse impossible');
     } finally {
@@ -199,7 +430,7 @@ export default function BuilderReleaseManagerPage() {
   const importPackage = async (mode: 'stage' | 'safe-apply') => {
     const pkg = parsePackage(packageText);
     if (!pkg) {
-      toast.error('Package JSON requis');
+      toast.error('Package JSON invalide ou absent');
       return;
     }
 
@@ -222,18 +453,28 @@ export default function BuilderReleaseManagerPage() {
     }
   };
 
-  const publishCandidate = async (candidate: ReleaseCandidate, force: boolean) => {
-    if (force && !window.confirm('Forcer la publication remplacera la version VPS actuelle. Continuer ?')) {
-      return;
+  const inspectCandidate = async (candidate: ReleaseCandidate) => {
+    setBusyId(candidate.id);
+    try {
+      const detail = await apiFetch<ReleaseCandidate>(
+        `/api/admin/pages/release/candidates/${candidate.id}`,
+      );
+      setInspectedCandidate(detail);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Inspection impossible');
+    } finally {
+      setBusyId(null);
     }
+  };
 
+  const publishCandidateSafe = async (candidate: ReleaseCandidate) => {
     setBusyId(candidate.id);
     try {
       await apiFetch(`/api/admin/pages/release/candidates/${candidate.id}/publish`, {
         method: 'POST',
-        body: JSON.stringify({ force }),
+        body: JSON.stringify({ force: false }),
       });
-      toast.success(force ? 'Publication forcee appliquee' : 'Publication appliquee');
+      toast.success('Publication safe appliquee');
       await Promise.all([loadPages(), loadCandidates()]);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Publication impossible');
@@ -242,11 +483,47 @@ export default function BuilderReleaseManagerPage() {
     }
   };
 
+  const confirmForcePublish = async () => {
+    if (!forceCandidate) return;
+    const expected = `FORCER ${forceCandidate.target_slug}`;
+    if (forceText.trim() !== expected) {
+      toast.error(`Tapez exactement: ${expected}`);
+      return;
+    }
+    if (forceReason.trim().length < 8) {
+      toast.error('Raison de forçage requise');
+      return;
+    }
+    if (!canPublishCandidate(forceCandidate)) {
+      toast.error('Ce candidat est bloque par sa sante ou son statut');
+      return;
+    }
+
+    setBusyId(forceCandidate.id);
+    try {
+      await apiFetch(`/api/admin/pages/release/candidates/${forceCandidate.id}/publish`, {
+        method: 'POST',
+        body: JSON.stringify({ force: true, reason: forceReason.trim() }),
+      });
+      toast.success('Publication forcee appliquee');
+      setForceCandidate(null);
+      setForceText('');
+      setForceReason('');
+      await Promise.all([loadPages(), loadCandidates()]);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Publication forcee impossible');
+    } finally {
+      setBusyId(null);
+    }
+  };
+
   const rejectCandidate = async (candidate: ReleaseCandidate) => {
+    const reason = window.prompt('Raison du rejet (optionnel)', 'Candidat remplace ou invalide') || '';
     setBusyId(candidate.id);
     try {
       await apiFetch(`/api/admin/pages/release/candidates/${candidate.id}`, {
         method: 'DELETE',
+        body: JSON.stringify({ reason }),
       });
       toast.success('Candidat rejete');
       await loadCandidates();
@@ -254,6 +531,64 @@ export default function BuilderReleaseManagerPage() {
       toast.error(error instanceof Error ? error.message : 'Rejet impossible');
     } finally {
       setBusyId(null);
+    }
+  };
+
+  const confirmRollback = async () => {
+    if (!rollbackCandidate) return;
+    if (rollbackReason.trim().length < 8) {
+      toast.error('Raison de rollback requise');
+      return;
+    }
+    setBusyId(rollbackCandidate.id);
+    try {
+      await apiFetch(`/api/admin/pages/release/candidates/${rollbackCandidate.id}/rollback`, {
+        method: 'POST',
+        body: JSON.stringify({ reason: rollbackReason.trim() }),
+      });
+      toast.success('Rollback applique');
+      setRollbackCandidate(null);
+      setRollbackReason('');
+      await Promise.all([loadPages(), loadCandidates()]);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Rollback impossible');
+    } finally {
+      setBusyId(null);
+    }
+  };
+
+  const dryRunPurge = async () => {
+    try {
+      const result = await apiFetch<PurgePreview>('/api/admin/pages/release/history', {
+        method: 'DELETE',
+        body: JSON.stringify({
+          statuses: purgeStatuses,
+          older_than_days: Number(purgeDays) || 0,
+          dry_run: true,
+        }),
+      });
+      setPurgePreview(result);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Simulation purge impossible');
+    }
+  };
+
+  const confirmPurge = async () => {
+    try {
+      const result = await apiFetch<PurgePreview>('/api/admin/pages/release/history', {
+        method: 'DELETE',
+        body: JSON.stringify({
+          statuses: purgeStatuses,
+          older_than_days: Number(purgeDays) || 0,
+          dry_run: false,
+        }),
+      });
+      toast.success(`${result.count} candidat(s) traite(s) supprime(s)`);
+      setPurgeOpen(false);
+      setPurgePreview(null);
+      await loadCandidates();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Purge impossible');
     }
   };
 
@@ -277,14 +612,16 @@ export default function BuilderReleaseManagerPage() {
               Migration controlee local vers VPS
             </h1>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
-              Exportez une page, analysez le dry-run, puis publiez uniquement si la version VPS
-              correspond encore a la base utilisee localement.
+              Exportez, analysez, inspectez, publiez et restaurez les pages Builder avec validation UTF-8, audit et rollback.
             </p>
           </div>
-          <Button variant="outline" onClick={() => void Promise.all([loadPages(), loadCandidates()])}>
-            <GitCompare className="mr-2 h-4 w-4" />
-            Actualiser
-          </Button>
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="outline">Role {role || '...'}</Badge>
+            <Button variant="outline" onClick={() => void refreshAll()}>
+              <RefreshCw className="mr-2 h-4 w-4" />
+              Actualiser
+            </Button>
+          </div>
         </header>
 
         <Tabs defaultValue="export" className="space-y-6">
@@ -340,7 +677,11 @@ export default function BuilderReleaseManagerPage() {
                     </div>
                   )}
 
-                  <Button disabled={!selectedPageId || loading} onClick={exportPage} className="w-full">
+                  <Button
+                    disabled={!selectedPageId || loading || !hasPermission('builder.release.create')}
+                    onClick={exportPage}
+                    className="w-full"
+                  >
                     {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
                     Exporter
                   </Button>
@@ -392,19 +733,33 @@ export default function BuilderReleaseManagerPage() {
                       onChange={(event) => void onFileSelected(event.target.files?.[0] || null)}
                       className="block text-sm text-slate-600 file:mr-4 file:rounded-md file:border-0 file:bg-slate-900 file:px-4 file:py-2 file:text-sm file:font-bold file:text-white"
                     />
-                    <Button variant="outline" onClick={analyzePackage} disabled={loading || !packageText.trim()}>
+                    <Button
+                      variant="outline"
+                      onClick={analyzePackage}
+                      disabled={loading || !packageText.trim() || !hasPermission('builder.release.view')}
+                    >
                       <GitCompare className="mr-2 h-4 w-4" />
                       Dry-run
                     </Button>
-                    <Button variant="outline" onClick={() => void importPackage('stage')} disabled={loading || !packageText.trim()}>
+                    <Button
+                      variant="outline"
+                      onClick={() => void importPackage('stage')}
+                      disabled={loading || !packageText.trim() || !hasPermission('builder.release.create')}
+                    >
                       <ShieldAlert className="mr-2 h-4 w-4" />
                       Creer candidat
                     </Button>
-                    <Button onClick={() => void importPackage('safe-apply')} disabled={loading || !packageText.trim()}>
+                    <Button
+                      onClick={() => void importPackage('safe-apply')}
+                      disabled={loading || !packageText.trim() || !hasPermission('builder.release.publish')}
+                    >
                       <CheckCircle2 className="mr-2 h-4 w-4" />
                       Publier si sans conflit
                     </Button>
                   </div>
+
+                  <PackageTextHealthPanel health={localPackageHealth} />
+
                   <Textarea
                     value={packageText}
                     onChange={(event) => {
@@ -421,97 +776,347 @@ export default function BuilderReleaseManagerPage() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="candidates">
+          <TabsContent value="candidates" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-xl">
+                  <Filter className="h-5 w-5 text-blue-600" />
+                  Filtres et maintenance
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="grid gap-3 lg:grid-cols-[1fr_180px_180px_180px_auto]">
+                <div className="relative">
+                  <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                  <Input
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                    className="pl-9"
+                    placeholder="Rechercher slug, ID ou hash"
+                  />
+                </div>
+                <select
+                  value={statusFilter}
+                  onChange={(event) => setStatusFilter(event.target.value as typeof statusFilter)}
+                  className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm"
+                >
+                  <option value="active">Actifs</option>
+                  <option value="processed">Traites</option>
+                  <option value="all">Tous</option>
+                  {ALL_STATUSES.map((status) => (
+                    <option key={status} value={status}>{statusLabel[status]}</option>
+                  ))}
+                </select>
+                <select
+                  value={healthFilter}
+                  onChange={(event) => setHealthFilter(event.target.value as typeof healthFilter)}
+                  className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm"
+                >
+                  <option value="all">Toutes santes</option>
+                  <option value="clean">Sains</option>
+                  <option value="problems">A risque</option>
+                </select>
+                <select
+                  value={pageFilter}
+                  onChange={(event) => setPageFilter(event.target.value)}
+                  className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm"
+                >
+                  <option value="all">Toutes pages</option>
+                  {pageSlugs.map((slug) => (
+                    <option key={slug} value={slug}>/{slug}</option>
+                  ))}
+                </select>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setPurgeOpen(true);
+                    setPurgePreview(null);
+                  }}
+                  disabled={!hasPermission('builder.release.purge')}
+                >
+                  <History className="mr-2 h-4 w-4" />
+                  Purger traites
+                </Button>
+              </CardContent>
+            </Card>
+
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-xl">
                   <ShieldAlert className="h-5 w-5 text-amber-600" />
                   Candidats de release
+                  <Badge variant="outline">{filteredCandidates.length}</Badge>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {candidates.length === 0 && (
+                {filteredCandidates.length === 0 && (
                   <div className="rounded-md border border-dashed border-slate-300 bg-white p-8 text-center text-sm text-slate-500">
-                    Aucun candidat pour le moment.
+                    Aucun candidat ne correspond aux filtres.
                   </div>
                 )}
 
-                {candidates.map((candidate) => (
-                  <div
+                {filteredCandidates.map((candidate) => (
+                  <CandidateRow
                     key={candidate.id}
-                    className="rounded-md border border-slate-200 bg-white p-4 shadow-sm"
-                  >
-                    <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-                      <div>
-                        <div className="flex flex-wrap items-center gap-2">
-                          <h2 className="text-base font-black text-slate-950">
-                            /{candidate.target_slug}
-                          </h2>
-                          <Badge variant={statusVariant(candidate.status)}>{candidate.status}</Badge>
-                          <Badge variant="outline">rev {candidate.current_revision || 'new'}</Badge>
-                        </div>
-                        <p className="mt-1 text-sm text-slate-500">
-                          Package {hashLabel(candidate.package_hash)} · base {hashLabel(candidate.base_hash)}
-                        </p>
-                        {candidate.conflict_reason && (
-                          <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-red-700">
-                            <AlertTriangle className="h-4 w-4" />
-                            {candidate.conflict_reason}
-                          </p>
-                        )}
-                        {candidate.diff_summary && (
-                          <p className="mt-2 text-xs text-slate-500">
-                            {candidate.diff_summary.changed_fields.length} champs modifies ·{' '}
-                            {candidate.diff_summary.incoming_node_count} noeuds entrants
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {['candidate', 'conflict'].includes(candidate.status) && (
-                          <>
-                            <Button
-                              size="sm"
-                              disabled={busyId === candidate.id || candidate.status === 'conflict'}
-                              onClick={() => void publishCandidate(candidate, false)}
-                            >
-                              {busyId === candidate.id ? (
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                              ) : (
-                                <CheckCircle2 className="mr-2 h-4 w-4" />
-                              )}
-                              Publier safe
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              disabled={busyId === candidate.id}
-                              onClick={() => void publishCandidate(candidate, true)}
-                            >
-                              <ShieldAlert className="mr-2 h-4 w-4" />
-                              Forcer
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              disabled={busyId === candidate.id}
-                              onClick={() => void rejectCandidate(candidate)}
-                            >
-                              <Trash2 className="mr-2 h-4 w-4" />
-                              Rejeter
-                            </Button>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                    candidate={candidate}
+                    busy={busyId === candidate.id}
+                    canPublish={canPublishCandidate(candidate)}
+                    canPublishSafe={hasPermission('builder.release.publish')}
+                    canForce={hasPermission('builder.release.force')}
+                    canRollback={hasPermission('builder.release.rollback')}
+                    canCreate={hasPermission('builder.release.create')}
+                    onInspect={() => void inspectCandidate(candidate)}
+                    onPublishSafe={() => void publishCandidateSafe(candidate)}
+                    onForce={() => {
+                      setForceCandidate(candidate);
+                      setForceText('');
+                      setForceReason('');
+                    }}
+                    onReject={() => void rejectCandidate(candidate)}
+                    onRollback={() => {
+                      setRollbackCandidate(candidate);
+                      setRollbackReason('');
+                    }}
+                  />
                 ))}
               </CardContent>
             </Card>
           </TabsContent>
         </Tabs>
       </div>
+
+      <CandidateInspectDialog
+        candidate={inspectedCandidate}
+        onOpenChange={(open) => {
+          if (!open) setInspectedCandidate(null);
+        }}
+      />
+
+      <Dialog open={Boolean(forceCandidate)} onOpenChange={(open) => !open && setForceCandidate(null)}>
+        <DialogContent className="max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Forcer la publication</DialogTitle>
+            <DialogDescription>
+              Cette action remplace la version VPS actuelle. Le package doit etre sain et une raison sera auditee.
+            </DialogDescription>
+          </DialogHeader>
+          {forceCandidate && (
+            <div className="space-y-4">
+              <HealthCard health={forceCandidate.package_health} />
+              <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-900">
+                Tapez <strong>FORCER {forceCandidate.target_slug}</strong> pour confirmer.
+              </div>
+              <Input value={forceText} onChange={(event) => setForceText(event.target.value)} />
+              <Textarea
+                value={forceReason}
+                onChange={(event) => setForceReason(event.target.value)}
+                placeholder="Raison obligatoire: correction encodage, remplacement valide, etc."
+              />
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setForceCandidate(null)}>Annuler</Button>
+            <Button variant="destructive" onClick={() => void confirmForcePublish()}>
+              <ShieldAlert className="mr-2 h-4 w-4" />
+              Forcer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={Boolean(rollbackCandidate)} onOpenChange={(open) => !open && setRollbackCandidate(null)}>
+        <DialogContent className="max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Restaurer la version precedente</DialogTitle>
+            <DialogDescription>
+              Le rollback restaure la revision sauvegardee avant la publication de ce candidat.
+            </DialogDescription>
+          </DialogHeader>
+          <Textarea
+            value={rollbackReason}
+            onChange={(event) => setRollbackReason(event.target.value)}
+            placeholder="Raison obligatoire du rollback"
+          />
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setRollbackCandidate(null)}>Annuler</Button>
+            <Button onClick={() => void confirmRollback()}>
+              <RotateCcw className="mr-2 h-4 w-4" />
+              Restaurer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={purgeOpen} onOpenChange={setPurgeOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Supprimer l'historique des candidats traites</DialogTitle>
+            <DialogDescription>
+              Les candidats actifs ne sont pas supprimes. Les revisions de page restent disponibles.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label className="text-xs font-bold uppercase text-slate-500">Age minimum en jours</label>
+              <Input value={purgeDays} onChange={(event) => setPurgeDays(event.target.value)} type="number" min={0} />
+            </div>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {PROCESSED_STATUSES.map((status) => (
+                <label key={status} className="flex items-center gap-2 rounded-md border border-slate-200 bg-white p-3 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={purgeStatuses.includes(status)}
+                    onChange={(event) => {
+                      setPurgeStatuses((current) =>
+                        event.target.checked
+                          ? Array.from(new Set([...current, status]))
+                          : current.filter((item) => item !== status),
+                      );
+                    }}
+                  />
+                  {statusLabel[status]}
+                </label>
+              ))}
+            </div>
+            {purgePreview && (
+              <div className="rounded-md border border-slate-200 bg-slate-50 p-4 text-sm">
+                <p className="font-bold text-slate-900">{purgePreview.count} candidat(s) seront supprimes.</p>
+                <div className="mt-2 max-h-40 space-y-1 overflow-auto font-mono text-xs text-slate-600">
+                  {purgePreview.candidates.slice(0, 20).map((candidate) => (
+                    <p key={candidate.id}>{candidate.status} /{candidate.target_slug} {candidate.id}</p>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setPurgeOpen(false)}>Annuler</Button>
+            <Button variant="outline" onClick={() => void dryRunPurge()}>Simuler</Button>
+            <Button variant="destructive" disabled={!purgePreview || purgePreview.count === 0} onClick={() => void confirmPurge()}>
+              <Trash2 className="mr-2 h-4 w-4" />
+              Supprimer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </main>
+  );
+}
+
+function CandidateRow({
+  candidate,
+  busy,
+  canPublish,
+  canPublishSafe,
+  canForce,
+  canRollback,
+  canCreate,
+  onInspect,
+  onPublishSafe,
+  onForce,
+  onReject,
+  onRollback,
+}: {
+  candidate: ReleaseCandidate;
+  busy: boolean;
+  canPublish: boolean;
+  canPublishSafe: boolean;
+  canForce: boolean;
+  canRollback: boolean;
+  canCreate: boolean;
+  onInspect: () => void;
+  onPublishSafe: () => void;
+  onForce: () => void;
+  onReject: () => void;
+  onRollback: () => void;
+}) {
+  const health = healthLabel(candidate.package_health);
+  const active = ACTIVE_STATUSES.includes(candidate.status);
+  return (
+    <div className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-base font-black text-slate-950">/{candidate.target_slug}</h2>
+            <Badge variant={statusVariant(candidate.status)}>{statusLabel[candidate.status]}</Badge>
+            <Badge variant={health.variant}>{health.label}</Badge>
+            <Badge variant="outline">rev {candidate.current_revision || 'new'}</Badge>
+            {candidate.forced && <Badge variant="destructive">force</Badge>}
+          </div>
+          <p className="mt-1 truncate text-sm text-slate-500">
+            Package {hashLabel(candidate.package_hash)} · base {hashLabel(candidate.base_hash)} · cree {formatDate(candidate.created_at)}
+          </p>
+          {candidate.conflict_reason && (
+            <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-red-700">
+              <AlertTriangle className="h-4 w-4" />
+              {candidate.conflict_reason}
+            </p>
+          )}
+          <HealthSummary health={candidate.package_health} />
+          {candidate.diff_summary && (
+            <p className="mt-2 text-xs text-slate-500">
+              {candidate.diff_summary.changed_fields.length} champs modifies · {candidate.diff_summary.incoming_node_count} noeuds entrants
+            </p>
+          )}
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          <Button size="sm" variant="outline" disabled={busy} onClick={onInspect}>
+            {busy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Eye className="mr-2 h-4 w-4" />}
+            Inspecter
+          </Button>
+          {active && (
+            <>
+              <Button
+                size="sm"
+                disabled={busy || candidate.status === 'conflict' || !canPublish || !canPublishSafe}
+                onClick={onPublishSafe}
+              >
+                <CheckCircle2 className="mr-2 h-4 w-4" />
+                Publier safe
+              </Button>
+              <Button
+                size="sm"
+                variant="destructive"
+                disabled={busy || !canPublish || !canForce}
+                onClick={onForce}
+              >
+                <ShieldAlert className="mr-2 h-4 w-4" />
+                Forcer
+              </Button>
+              <Button size="sm" variant="outline" disabled={busy || !canCreate} onClick={onReject}>
+                <Trash2 className="mr-2 h-4 w-4" />
+                Rejeter
+              </Button>
+            </>
+          )}
+          {candidate.status === 'published' && (
+            <Button size="sm" variant="outline" disabled={busy || !canRollback} onClick={onRollback}>
+              <RotateCcw className="mr-2 h-4 w-4" />
+              Rollback
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PackageTextHealthPanel({ health }: { health: ClientPackageHealth | null }) {
+  if (!health) return null;
+  return (
+    <div
+      className={`rounded-md border p-3 text-sm ${
+        health.looks_safe ? 'border-emerald-200 bg-emerald-50 text-emerald-900' : 'border-red-200 bg-red-50 text-red-900'
+      }`}
+    >
+      <div className="flex items-center gap-2 font-bold">
+        {health.looks_safe ? <ShieldCheck className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
+        Scan local du JSON: {health.looks_safe ? 'sain' : 'a corriger'}
+      </div>
+      <p className="mt-1 text-xs">
+        parse={health.parse_error ? 'erreur' : 'ok'} · caracteres casses={health.replacement_count} · groupes ???={health.triple_question_count}
+      </p>
+    </div>
   );
 }
 
@@ -521,7 +1126,7 @@ function AnalysisPanel({ analysis }: { analysis: ReleaseAnalysis | null }) {
       <aside className="rounded-md border border-slate-200 bg-white p-5">
         <p className="text-sm font-bold text-slate-900">Aucun dry-run</p>
         <p className="mt-2 text-sm leading-6 text-slate-500">
-          Lancez une analyse pour connaitre le statut de conflit avant publication.
+          Lancez une analyse pour connaitre les conflits, la sante UTF-8, les assets et les champs modifies.
         </p>
       </aside>
     );
@@ -531,20 +1136,21 @@ function AnalysisPanel({ analysis }: { analysis: ReleaseAnalysis | null }) {
     <aside className="space-y-4">
       <div
         className={`rounded-md border p-5 ${
-          analysis.conflict
-            ? 'border-red-200 bg-red-50 text-red-950'
-            : 'border-emerald-200 bg-emerald-50 text-emerald-950'
+          analysis.can_publish
+            ? 'border-emerald-200 bg-emerald-50 text-emerald-950'
+            : 'border-red-200 bg-red-50 text-red-950'
         }`}
       >
         <div className="flex items-center gap-2 text-sm font-black uppercase">
-          {analysis.conflict ? <AlertTriangle className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
-          {analysis.conflict ? 'Conflit detecte' : 'Publication safe possible'}
+          {analysis.can_publish ? <CheckCircle2 className="h-4 w-4" /> : <AlertTriangle className="h-4 w-4" />}
+          {analysis.can_publish ? 'Publication safe possible' : 'Publication bloquee'}
         </div>
         <p className="mt-3 text-sm leading-6">
-          {analysis.conflict_reason ||
-            'La version VPS correspond a la base declaree par le package.'}
+          {analysis.conflict_reason || 'La version VPS correspond a la base declaree par le package.'}
         </p>
       </div>
+
+      <HealthCard health={analysis.package_health} />
 
       <div className="rounded-md border border-slate-200 bg-white p-5 text-sm">
         <h3 className="mb-4 font-black text-slate-950">{analysis.incoming_title}</h3>
@@ -560,24 +1166,175 @@ function AnalysisPanel({ analysis }: { analysis: ReleaseAnalysis | null }) {
         </dl>
       </div>
 
-      <div className="rounded-md border border-slate-200 bg-white p-5">
-        <h3 className="text-sm font-black text-slate-950">Champs modifies</h3>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {analysis.diff_summary.changed_fields.length === 0 ? (
-            <Badge variant="outline">aucun changement</Badge>
-          ) : (
-            analysis.diff_summary.changed_fields.map((field) => (
-              <Badge
-                key={field}
-                variant={analysis.diff_summary.critical_fields.includes(field) ? 'destructive' : 'secondary'}
-              >
-                {field}
-              </Badge>
-            ))
-          )}
-        </div>
-      </div>
+      <ChangedFieldsPanel diff={analysis.diff_summary} />
     </aside>
+  );
+}
+
+function HealthCard({ health }: { health?: PackageHealth }) {
+  if (!health) {
+    return (
+      <div className="rounded-md border border-slate-200 bg-white p-5 text-sm text-slate-500">
+        Sante package non disponible.
+      </div>
+    );
+  }
+  const label = healthLabel(health);
+  return (
+    <div className="rounded-md border border-slate-200 bg-white p-5 text-sm">
+      <div className="flex flex-wrap items-center gap-2">
+        <Badge variant={label.variant}>{label.label}</Badge>
+        <span className="font-bold text-slate-900">Sante du package</span>
+      </div>
+      <div className="mt-4 grid gap-2 text-xs text-slate-600 sm:grid-cols-2">
+        <span>Caracteres casses: {health.encoding.replacement_count}</span>
+        <span>Groupes ???: {health.encoding.triple_question_count}</span>
+        <span>Mojibake suspect: {health.encoding.mojibake_count}</span>
+        <span>Assets manquants: {health.assets.missing_count}</span>
+        <span>Assets externes: {health.assets.external_count}</span>
+        <span>Checksum: {health.checksum.mismatch ? 'mismatch' : 'ok'}</span>
+      </div>
+      {(health.blockers.length > 0 || health.warnings.length > 0) && (
+        <div className="mt-4 space-y-2">
+          {health.blockers.map((blocker) => (
+            <p key={blocker} className="flex items-center gap-2 text-xs font-semibold text-red-700">
+              <Ban className="h-3.5 w-3.5" />
+              {blocker}
+            </p>
+          ))}
+          {health.warnings.map((warning) => (
+            <p key={warning} className="flex items-center gap-2 text-xs font-semibold text-amber-700">
+              <AlertTriangle className="h-3.5 w-3.5" />
+              {warning}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function HealthSummary({ health }: { health?: PackageHealth }) {
+  if (!health) return null;
+  return (
+    <p className="mt-2 text-xs text-slate-500">
+      UTF-8: {health.encoding.replacement_count} casse(s), {health.encoding.triple_question_count} groupe(s) ??? · assets manquants: {health.assets.missing_count}
+    </p>
+  );
+}
+
+function ChangedFieldsPanel({ diff }: { diff: ReleaseAnalysis['diff_summary'] }) {
+  return (
+    <div className="rounded-md border border-slate-200 bg-white p-5">
+      <h3 className="text-sm font-black text-slate-950">Champs modifies</h3>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {diff.changed_fields.length === 0 ? (
+          <Badge variant="outline">aucun changement</Badge>
+        ) : (
+          diff.changed_fields.map((field) => (
+            <Badge
+              key={field}
+              variant={diff.critical_fields.includes(field) ? 'destructive' : 'secondary'}
+            >
+              {field}
+            </Badge>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+function CandidateInspectDialog({
+  candidate,
+  onOpenChange,
+}: {
+  candidate: ReleaseCandidate | null;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const open = Boolean(candidate);
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-h-[92vh] max-w-6xl overflow-auto">
+        <DialogHeader>
+          <DialogTitle>Inspection candidat {candidate?.target_slug ? `/${candidate.target_slug}` : ''}</DialogTitle>
+          <DialogDescription>
+            Controlez la sante, le diff, le rendu et l'audit avant toute action irreversible.
+          </DialogDescription>
+        </DialogHeader>
+        {candidate && (
+          <div className="space-y-6">
+            <div className="grid gap-4 lg:grid-cols-3">
+              <HealthCard health={candidate.package_health} />
+              <PreviewSummary title="Version VPS actuelle" preview={candidate.live_preview} />
+              <PreviewSummary title="Version candidate" preview={candidate.candidate_preview} />
+            </div>
+
+            {candidate.diff_summary && <ChangedFieldsPanel diff={candidate.diff_summary} />}
+
+            <div className="grid gap-4 lg:grid-cols-2">
+              <PreviewFrame title="Rendu VPS actuel" preview={candidate.live_preview} />
+              <PreviewFrame title="Rendu candidat" preview={candidate.candidate_preview} />
+            </div>
+
+            <div className="rounded-md border border-slate-200 bg-white p-5">
+              <h3 className="mb-3 text-sm font-black text-slate-950">Audit</h3>
+              <div className="space-y-2 text-sm text-slate-600">
+                <InfoRow label="ID" value={candidate.id} />
+                <InfoRow label="Statut" value={statusLabel[candidate.status]} />
+                <InfoRow label="Cree" value={formatDate(candidate.created_at)} />
+                <InfoRow label="Publie" value={formatDate(candidate.published_at)} />
+                <InfoRow label="Raison publication" value={candidate.publish_reason || 'non renseignee'} />
+                <InfoRow label="Rollback" value={formatDate(candidate.rollback_at)} />
+                <InfoRow label="Raison rollback" value={candidate.rollback_reason || 'non renseignee'} />
+              </div>
+              {candidate.events && candidate.events.length > 0 && (
+                <div className="mt-4 max-h-48 space-y-2 overflow-auto border-t border-slate-100 pt-4">
+                  {candidate.events.map((event) => (
+                    <p key={event.id} className="text-xs text-slate-500">
+                      {formatDate(event.created_at)} · {event.event_type}
+                      {event.reason ? ` · ${event.reason}` : ''}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function PreviewSummary({ title, preview }: { title: string; preview?: CandidatePreview | null }) {
+  return (
+    <div className="rounded-md border border-slate-200 bg-white p-5 text-sm">
+      <h3 className="font-black text-slate-950">{title}</h3>
+      {preview ? (
+        <div className="mt-3 space-y-2 text-slate-600">
+          <p className="font-semibold text-slate-900">{preview.title}</p>
+          <p>/{preview.slug}</p>
+          <p>{preview.node_count} noeuds · {preview.character_count} caracteres</p>
+          <p className="line-clamp-4 text-xs leading-5">{preview.text_excerpt || 'Aucun extrait texte.'}</p>
+        </div>
+      ) : (
+        <p className="mt-3 text-slate-500">Aucune version cible.</p>
+      )}
+    </div>
+  );
+}
+
+function PreviewFrame({ title, preview }: { title: string; preview?: CandidatePreview | null }) {
+  return (
+    <div className="rounded-md border border-slate-200 bg-white p-4">
+      <h3 className="mb-3 text-sm font-black text-slate-950">{title}</h3>
+      <iframe
+        title={title}
+        sandbox=""
+        srcDoc={previewDocument(preview?.html_excerpt || '', preview?.title || title)}
+        className="h-[360px] w-full rounded-md border border-slate-200 bg-white"
+      />
+    </div>
   );
 }
 
