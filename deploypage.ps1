@@ -134,7 +134,7 @@ try {
 
         # Choix: une page ou toutes
         if (-not $Page) {
-            $choice = Read-Host "`n  Numero de la page a deployer (ou 'all' pour toutes)"
+            if ($Yes) { $choice = "all" } else { $choice = Read-Host "`n  Numero de la page a deployer (ou 'all' pour toutes)" }
             if ($choice.ToLowerInvariant() -eq "all") {
                 $pagesToDeploy = $pages
             } else {
