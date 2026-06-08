@@ -108,6 +108,7 @@ const AdminUsersPanel: React.FC = () => {
   const [formRole, setFormRole] = useState<Role>('membre');
   const [formStatus, setFormStatus] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [twoFactorCode, setTwoFactorCode] = useState('');
 
   // --- Delete confirmation ---
   const [deleteTarget, setDeleteTarget] = useState<User | null>(null);
@@ -150,6 +151,7 @@ const AdminUsersPanel: React.FC = () => {
     setFormPassword('');
     setFormRole('membre');
     setFormStatus(true);
+    setTwoFactorCode('');
     setModalOpen(true);
   };
 
@@ -159,6 +161,7 @@ const AdminUsersPanel: React.FC = () => {
     setFormPassword('');
     setFormRole(user.role);
     setFormStatus(user.status);
+    setTwoFactorCode('');
     setModalOpen(true);
   };
 
@@ -193,8 +196,11 @@ const AdminUsersPanel: React.FC = () => {
         if (formPassword.trim()) {
           body.password = formPassword.trim();
         }
+        const headers: Record<string, string> = {};
+        if (twoFactorCode.trim()) headers['x-2fa-code'] = twoFactorCode.trim();
         await apiFetch(`/api/admin/users/${editingUser.id}`, {
           method: 'PUT',
+          headers,
           body: JSON.stringify(body),
         });
         toast.success('Utilisateur mis à jour avec succès');
