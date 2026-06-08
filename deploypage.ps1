@@ -3,7 +3,7 @@
 #   .\deploypage.ps1 -Page "formations"              # Une seule page
 #   .\deploypage.ps1 -AllPages                        # Toutes les pages
 #   .\deploypage.ps1 -Page "formations" -StageOnly    # Sans publier
-#   .\deploypage.ps1 -AllPages -Yes                   # Auto sans confirmation
+#   .\deploypage.ps1 -AllPages -Yes                   # Auto sans confirmation si dry-run OK
 
 param(
     [string]$Page = "",
@@ -72,16 +72,28 @@ function Publish-OnePage {
 
     Write-Host "  Titre: $($package.page.title) / Slug: $($package.page.slug)"
 
-    Write-Host "  [2/3] Analyse ignoree (mode force)..." -ForegroundColor Yellow
-    try { $analysis = Invoke-Api -Method "POST" -Url "$ProdBaseUrl/api/admin/pages/release/analyze" -Token $ProdToken -Body @{ package = $package } } catch { $analysis = $null; Write-Host "  Analyse indisponible, creation candidat" -ForegroundColor DarkYellow }
+    Write-Host "  [2/3] Analyse dry-run VPS..." -ForegroundColor Yellow
+    $analysis = $null
+    try {
+        $analysis = Invoke-Api -Method "POST" -Url "$ProdBaseUrl/api/admin/pages/release/analyze" -Token $ProdToken -Body @{ package = $package }
+        if ($analysis.conflict) {
+            Write-Host "  Conflit detecte: $($analysis.conflict_reason)" -ForegroundColor DarkYellow
+        }
+    } catch {
+        Write-Host "  Analyse indisponible, import en candidat uniquement" -ForegroundColor DarkYellow
+    }
 
     $mode = "stage"
-    if ((-not $analysis -or -not $StageOnly) -and ($analysis -eq $null -or $analysis.can_publish -eq $true)) {
-        if ($Yes) { $mode = "stage" }
+    if ($analysis -and -not $StageOnly -and $analysis.can_publish -eq $true) {
+        if ($Yes) { $mode = "safe-apply" }
         else {
             $confirm = Read-Host "  Publier directement ? [O/n]"
             if (-not $confirm -or $confirm.ToLowerInvariant() -eq "o" -or $confirm.ToLowerInvariant() -eq "oui") { $mode = "safe-apply" }
         }
+    } elseif ($StageOnly) {
+        Write-Host "  StageOnly actif: creation candidat sans publication" -ForegroundColor DarkYellow
+    } else {
+        Write-Host "  Publication directe bloquee: creation candidat" -ForegroundColor DarkYellow
     }
 
     Write-Host "  [3/3] Import mode $mode..." -ForegroundColor Yellow
@@ -138,7 +150,9 @@ try {
             if ($choice.ToLowerInvariant() -eq "all") {
                 $pagesToDeploy = $pages
             } else {
-                $idx = [int]$choice
+                $idx = 0
+                if (-not [int]::TryParse($choice, [ref]$idx)) { Stop-Step "Choix invalide: $choice" }
+                if ($idx -lt 0 -or $idx -ge $pages.Count) { Stop-Step "Index de page invalide: $idx" }
                 $pagesToDeploy = @($pages[$idx])
             }
         } else {
@@ -163,9 +177,15 @@ try {
         if ($choice.ToLowerInvariant() -eq "all") {
             $pagesToDeploy = $pages
         } else {
-            $idx = [int]$choice
+            $idx = 0
+            if (-not [int]::TryParse($choice, [ref]$idx)) { Stop-Step "Choix invalide: $choice" }
+            if ($idx -lt 0 -or $idx -ge $pages.Count) { Stop-Step "Index de page invalide: $idx" }
             $pagesToDeploy = @($pages[$idx])
         }
+    }
+
+    if (-not $pagesToDeploy -or $pagesToDeploy.Count -eq 0) {
+        Stop-Step "Aucune page a deployer."
     }
 
     # Deployer chaque page
