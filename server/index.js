@@ -2300,10 +2300,48 @@ app.get('/api/users', authenticateToken, async (req, res) => {
 // ----------------------
 // Admin users management
 // ----------------------
+function parseUserActive(value, fallback = false) {
+  if (typeof value === 'undefined') return fallback;
+  if (value === 'active') return true;
+  if (value === 'inactive') return false;
+  if (typeof value === 'string') return value.toLowerCase() === 'true' || value === '1';
+  return value === true || value === 1;
+}
+
+async function assertCanSetUserStatus(targetUserId, isActive, actorUserId) {
+  if (isActive) return;
+
+  if (actorUserId && targetUserId === actorUserId) {
+    const err = new Error('Vous ne pouvez pas désactiver votre propre compte.');
+    err.status = 400;
+    throw err;
+  }
+
+  const target = await pool.query('SELECT role FROM public.users WHERE id = $1', [targetUserId]);
+  const targetRole = target.rows[0]?.role;
+  if (!['admin', 'superadmin'].includes(targetRole)) return;
+
+  const remainingAdmins = await pool.query(
+    `SELECT COUNT(*)::int AS count
+     FROM public.users
+     WHERE id <> $1
+       AND role IN ('admin', 'superadmin')
+       AND is_active IS TRUE`,
+    [targetUserId],
+  );
+  if ((remainingAdmins.rows[0]?.count || 0) === 0) {
+    const err = new Error('Impossible de désactiver le dernier administrateur actif.');
+    err.status = 400;
+    throw err;
+  }
+}
+
 app.get('/api/admin/users', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT id, email, role, is_active, created_at FROM public.users ORDER BY created_at DESC`,
+      `SELECT id, email, role, is_active, is_active AS status, created_at
+       FROM public.users
+       ORDER BY created_at DESC`,
     );
     res.json(result.rows);
   } catch (err) {
@@ -2314,7 +2352,9 @@ app.get('/api/admin/users', authenticateToken, requireAdmin, async (req, res) =>
 
 app.post('/api/admin/users', authenticateToken, requireAdmin, async (req, res) => {
   try {
-    const { email, password, role, is_active } = req.body;
+    const { email, password, role } = req.body;
+    const activeInput =
+      typeof req.body.is_active !== 'undefined' ? req.body.is_active : req.body.status;
     if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
     const normalizedEmail = String(email).trim().toLowerCase();
     const exists = await pool.query('SELECT id FROM public.users WHERE email = $1', [
@@ -2325,8 +2365,8 @@ app.post('/api/admin/users', authenticateToken, requireAdmin, async (req, res) =
     const result = await pool.query(
       `INSERT INTO public.users (email, password_hash, role, is_active, created_at)
              VALUES ($1, $2, $3, $4, NOW())
-             RETURNING id, email, role, is_active, created_at`,
-      [normalizedEmail, passwordHash, role || 'user', is_active === true],
+             RETURNING id, email, role, is_active, is_active AS status, created_at`,
+      [normalizedEmail, passwordHash, role || 'user', parseUserActive(activeInput, true)],
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -2340,7 +2380,7 @@ app.put('/api/admin/users/:id', authenticateToken, requireAdmin, async (req, res
     const id = req.params.id;
 
     // Vérifier si l'utilisateur est immutable
-    const check = await pool.query('SELECT immutable FROM public.users WHERE id = $1', [id]);
+    const check = await pool.query('SELECT immutable, role FROM public.users WHERE id = $1', [id]);
     if (check.rows.length === 0) return res.status(404).json({ error: 'Utilisateur non trouvé' });
 
     if (check.rows[0].immutable) {
@@ -2361,7 +2401,9 @@ app.put('/api/admin/users/:id', authenticateToken, requireAdmin, async (req, res
       }
     }
 
-    const { email, role, password, is_active } = req.body;
+    const { email, role, password } = req.body;
+    const activeInput =
+      typeof req.body.is_active !== 'undefined' ? req.body.is_active : req.body.status;
     const updates = [];
     const params = [];
     let idx = 1;
@@ -2373,9 +2415,11 @@ app.put('/api/admin/users/:id', authenticateToken, requireAdmin, async (req, res
       updates.push(`role = $${idx++}`);
       params.push(role);
     }
-    if (typeof is_active !== 'undefined') {
+    if (typeof activeInput !== 'undefined') {
+      const nextActive = parseUserActive(activeInput);
+      await assertCanSetUserStatus(id, nextActive, req.user?.id);
       updates.push(`is_active = $${idx++}`);
-      params.push(!!is_active);
+      params.push(nextActive);
     }
     if (password) {
       const hash = await bcrypt.hash(password, 10);
@@ -2384,12 +2428,12 @@ app.put('/api/admin/users/:id', authenticateToken, requireAdmin, async (req, res
     }
     if (updates.length === 0) return res.status(400).json({ error: 'Aucune modification fournie' });
     params.push(id);
-    const q = `UPDATE public.users SET ${updates.join(', ')} WHERE id = $${idx} RETURNING id, email, role, is_active, created_at, immutable`;
+    const q = `UPDATE public.users SET ${updates.join(', ')} WHERE id = $${idx} RETURNING id, email, role, is_active, is_active AS status, created_at, immutable`;
     const result = await pool.query(q, params);
     res.json(result.rows[0]);
   } catch (err) {
     console.error('[API-ADMIN-USERS] Update error:', err);
-    res.status(500).json({ error: err.message });
+    res.status(err.status || 500).json({ error: err.message });
   }
 });
 
@@ -2398,7 +2442,7 @@ app.delete('/api/admin/users/:id', authenticateToken, requireAdmin, async (req, 
     const id = req.params.id;
 
     // Vérifier si l'utilisateur est immutable
-    const check = await pool.query('SELECT immutable FROM public.users WHERE id = $1', [id]);
+    const check = await pool.query('SELECT immutable, role FROM public.users WHERE id = $1', [id]);
     if (check.rows.length === 0) return res.status(404).json({ error: 'Utilisateur non trouvé' });
 
     if (check.rows[0].immutable) {
@@ -2441,17 +2485,20 @@ app.patch('/api/admin/users/:id/status', authenticateToken, requireAdmin, async 
       }
     }
 
-    const { is_active } = req.body;
-    if (typeof is_active === 'undefined')
+    const activeInput =
+      typeof req.body.is_active !== 'undefined' ? req.body.is_active : req.body.status;
+    if (typeof activeInput === 'undefined')
       return res.status(400).json({ error: 'is_active required' });
+    const nextActive = parseUserActive(activeInput);
+    await assertCanSetUserStatus(id, nextActive, req.user?.id);
     const result = await pool.query(
-      'UPDATE public.users SET is_active = $1 WHERE id = $2 RETURNING id, email, role, is_active, created_at, immutable',
-      [!!is_active, id],
+      'UPDATE public.users SET is_active = $1 WHERE id = $2 RETURNING id, email, role, is_active, is_active AS status, created_at, immutable',
+      [nextActive, id],
     );
     res.json(result.rows[0]);
   } catch (err) {
     console.error('[API-ADMIN-USERS] Status error:', err);
-    res.status(500).json({ error: err.message });
+    res.status(err.status || 500).json({ error: err.message });
   }
 });
 

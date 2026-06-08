@@ -38,7 +38,7 @@ import {
 interface User {
   id: string;
   email: string;
-  role: 'admin' | 'secondary_admin' | 'electricien' | 'entreprise' | 'membre' | 'partner';
+  role: 'admin' | 'secondary_admin' | 'electricien' | 'entreprise' | 'membre' | 'partner' | 'user';
   status: boolean;
   createdAt: string;
 }
@@ -47,10 +47,12 @@ type Role = User['role'];
 
 const ROLES: { value: Role; label: string }[] = [
   { value: 'admin', label: 'Admin' },
+  { value: 'secondary_admin', label: 'Admin secondaire' },
   { value: 'electricien', label: 'Électricien' },
   { value: 'entreprise', label: 'Entreprise' },
   { value: 'membre', label: 'Membre' },
   { value: 'partner', label: 'Partenaire' },
+  { value: 'user', label: 'Utilisateur' },
 ];
 
 const ROLE_BADGE_VARIANTS: Record<Role, string> = {
@@ -60,6 +62,7 @@ const ROLE_BADGE_VARIANTS: Record<Role, string> = {
   entreprise: 'secondary',
   membre: 'outline',
   partner: 'secondary',
+  user: 'outline',
 };
 
 const ROLE_BADGE_STYLES: Record<Role, string> = {
@@ -69,7 +72,18 @@ const ROLE_BADGE_STYLES: Record<Role, string> = {
   entreprise: 'bg-green-100 text-green-800 border-green-200 hover:bg-green-100',
   membre: 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-100',
   partner: 'bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-100',
+  user: 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-100',
 };
+
+interface ApiUser {
+  id: string;
+  email: string;
+  role?: string | null;
+  is_active?: boolean | string | null;
+  status?: boolean | 'active' | 'inactive' | null;
+  created_at?: string | null;
+  createdAt?: string | null;
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -88,6 +102,28 @@ function formatDate(dateStr: string): string {
   }
 }
 
+function normalizeRole(role: unknown): Role {
+  const value = String(role || 'membre') as Role;
+  return ROLES.some((item) => item.value === value) ? value : 'membre';
+}
+
+function normalizeStatus(user: ApiUser): boolean {
+  const raw = user.is_active ?? user.status;
+  if (raw === 'active') return true;
+  if (raw === 'inactive') return false;
+  return raw === true;
+}
+
+function normalizeUser(user: ApiUser): User {
+  return {
+    id: user.id,
+    email: user.email,
+    role: normalizeRole(user.role),
+    status: normalizeStatus(user),
+    createdAt: user.created_at || user.createdAt || '',
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -96,6 +132,7 @@ const AdminUsersPanel: React.FC = () => {
   // --- Data state ---
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [statusSavingIds, setStatusSavingIds] = useState<Set<string>>(new Set());
 
   // --- Search ---
   const [search, setSearch] = useState('');
@@ -121,8 +158,8 @@ const AdminUsersPanel: React.FC = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const data = await apiFetch<User[]>('/api/admin/users');
-      setUsers(data);
+      const data = await apiFetch<ApiUser[]>('/api/admin/users');
+      setUsers((data || []).map(normalizeUser));
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Impossible de charger les utilisateurs';
       toast.error(msg);
@@ -191,7 +228,7 @@ const AdminUsersPanel: React.FC = () => {
         const body: Record<string, unknown> = {
           email: formEmail.trim(),
           role: formRole,
-          status: formStatus,
+          is_active: formStatus,
         };
         if (formPassword.trim()) {
           body.password = formPassword.trim();
@@ -212,7 +249,7 @@ const AdminUsersPanel: React.FC = () => {
             email: formEmail.trim(),
             password: formPassword.trim(),
             role: formRole,
-            status: formStatus,
+            is_active: formStatus,
           }),
         });
         toast.success('Utilisateur créé avec succès');
@@ -231,18 +268,34 @@ const AdminUsersPanel: React.FC = () => {
   // Toggle status
   // -----------------------------------------------------------------------
 
-  const handleToggleStatus = async (user: User) => {
-    const newStatus = !user.status;
+  const handleToggleStatus = async (user: User, checked?: boolean) => {
+    const newStatus = typeof checked === 'boolean' ? checked : !user.status;
+    setStatusSavingIds((current) => new Set(current).add(user.id));
+    setUsers((current) =>
+      current.map((item) => (item.id === user.id ? { ...item, status: newStatus } : item)),
+    );
     try {
-      await apiFetch(`/api/admin/users/${user.id}/status`, {
+      const updatedUser = await apiFetch<ApiUser>(`/api/admin/users/${user.id}/status`, {
         method: 'PATCH',
-        body: JSON.stringify({ status: newStatus }),
+        body: JSON.stringify({ is_active: newStatus }),
       });
+      setUsers((current) =>
+        current.map((item) => (item.id === user.id ? normalizeUser(updatedUser) : item)),
+      );
       toast.success(`Utilisateur ${newStatus ? 'activé' : 'désactivé'} avec succès`);
       fetchUsers();
     } catch (err: unknown) {
+      setUsers((current) =>
+        current.map((item) => (item.id === user.id ? { ...item, status: user.status } : item)),
+      );
       const msg = err instanceof Error ? err.message : 'Erreur lors du changement de statut';
       toast.error(msg);
+    } finally {
+      setStatusSavingIds((current) => {
+        const next = new Set(current);
+        next.delete(user.id);
+        return next;
+      });
     }
   };
 
@@ -329,8 +382,10 @@ const AdminUsersPanel: React.FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredUsers.map((user) => (
-                <TableRow key={user.id}>
+              {filteredUsers.map((user) => {
+                const statusSaving = statusSavingIds.has(user.id);
+                return (
+                  <TableRow key={user.id}>
                   <TableCell className="font-medium">{user.email}</TableCell>
                   <TableCell>
                     <Badge
@@ -351,7 +406,8 @@ const AdminUsersPanel: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <Switch
                         checked={user.status}
-                        onCheckedChange={() => handleToggleStatus(user)}
+                        disabled={statusSaving}
+                        onCheckedChange={(checked) => handleToggleStatus(user, checked)}
                       />
                       <span
                         className={`text-xs font-medium ${user.status ? 'text-green-600' : 'text-red-500'}`}
@@ -376,10 +432,15 @@ const AdminUsersPanel: React.FC = () => {
                       <Button
                         variant="ghost"
                         size="icon"
+                        disabled={statusSaving}
                         onClick={() => handleToggleStatus(user)}
                         title={user.status ? 'Désactiver' : 'Activer'}
                       >
-                        <span className="text-base leading-none">{user.status ? '🔄' : '🔄'}</span>
+                        {statusSaving ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <span className="text-base leading-none">🔄</span>
+                        )}
                       </Button>
                       <Button
                         variant="ghost"
@@ -393,7 +454,8 @@ const AdminUsersPanel: React.FC = () => {
                     </div>
                   </TableCell>
                 </TableRow>
-              ))}
+                );
+              })}
             </TableBody>
           </Table>
         )}

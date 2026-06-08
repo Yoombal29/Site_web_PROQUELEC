@@ -9,7 +9,7 @@ async function findAll() {
 
 async function findAllAdmin() {
     const result = await pool.query(
-        'SELECT id, email, role, is_active, created_at FROM public.users ORDER BY created_at DESC'
+        'SELECT id, email, role, is_active, is_active as status, created_at FROM public.users ORDER BY created_at DESC'
     );
     return result.rows;
 }
@@ -23,8 +23,8 @@ async function create({ email, passwordHash, role, isActive }) {
     const result = await pool.query(
         `INSERT INTO public.users (email, password_hash, role, is_active, created_at)
          VALUES ($1, $2, $3, $4, NOW())
-         RETURNING id, email, role, is_active, created_at`,
-        [email, passwordHash, role || 'user', isActive === true]
+         RETURNING id, email, role, is_active, is_active as status, created_at`,
+        [email, passwordHash, role || 'user', isActive !== false]
     );
     return result.rows[0];
 }
@@ -42,7 +42,7 @@ async function update(id, fields) {
     if (updates.length === 0) return null;
 
     params.push(fields.id);
-    const query = `UPDATE public.users SET ${updates.join(', ')} WHERE id = $${idx} RETURNING id, email, role, is_active, created_at`;
+    const query = `UPDATE public.users SET ${updates.join(', ')} WHERE id = $${idx} RETURNING id, email, role, is_active, is_active as status, created_at`;
     const result = await pool.query(query, params);
     return result.rows[0];
 }
@@ -53,7 +53,7 @@ async function remove(id) {
 
 async function updateStatus(id, isActive) {
     const result = await pool.query(
-        'UPDATE public.users SET is_active = $1 WHERE id = $2 RETURNING id, email, role, is_active, created_at',
+        'UPDATE public.users SET is_active = $1 WHERE id = $2 RETURNING id, email, role, is_active, is_active as status, created_at',
         [!!isActive, id]
     );
     return result.rows[0];

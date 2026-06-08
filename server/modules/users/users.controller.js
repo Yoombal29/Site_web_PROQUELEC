@@ -52,11 +52,13 @@ async function deleteUser(req, res) {
 
 async function toggleStatus(req, res) {
     try {
-        const { is_active } = req.body;
-        if (typeof is_active === 'undefined') {
+        const activeInput = typeof req.body.is_active !== 'undefined'
+            ? req.body.is_active
+            : req.body.status;
+        if (typeof activeInput === 'undefined') {
             return res.status(400).json({ error: 'is_active required' });
         }
-        const user = await service.toggleStatus(req.params.id, is_active);
+        const user = await service.toggleStatus(req.params.id, activeInput);
         res.json(user);
     } catch (err) {
         console.error('[API-ADMIN-USERS] Status error:', err);
