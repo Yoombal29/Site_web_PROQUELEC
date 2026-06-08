@@ -36,6 +36,7 @@ $SSH_HOST = "root@proquelec.sn"
 $REMOTE_PATH = "/var/www/proquelec/www.proquelec.sn"
 $PM2_APP = "proquelec-api"
 $SITE_URL = "https://www.proquelec.sn"
+$REMOTE_CHANGED_MIGRATIONS = "/tmp/proquelec_changed_migrations.txt"
 
 function Stop-Step {
     param([string]$Message)
@@ -125,11 +126,11 @@ if ($remoteStatus) {
 }
 
 Invoke-Checked "[3/6] Pull code sur le VPS" {
-    Invoke-Remote "cd $REMOTE_PATH && git pull origin $Branch"
+    Invoke-Remote "cd $REMOTE_PATH && BEFORE=`$(git rev-parse HEAD) && git pull origin $Branch && AFTER=`$(git rev-parse HEAD) && git diff --name-only `$BEFORE `$AFTER -- 'corpus-db/migrations/*.sql' > $REMOTE_CHANGED_MIGRATIONS"
 }
 
 Invoke-Checked "[4/6] Installation dependances et migrations" {
-    Invoke-Remote "cd $REMOTE_PATH && npm ci && npm run migrate:auto"
+    Invoke-Remote "cd $REMOTE_PATH && npm ci && npm run migrate:auto && node scripts/apply-active-db-migrations.mjs `$(cat $REMOTE_CHANGED_MIGRATIONS 2>/dev/null)"
 }
 
 if (-not $SkipBuild) {
