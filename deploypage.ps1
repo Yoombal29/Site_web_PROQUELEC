@@ -76,7 +76,7 @@ function Publish-OnePage {
     $analysis = Invoke-Api -Method "POST" -Url "$ProdBaseUrl/api/admin/pages/release/analyze" -Token $ProdToken -Body @{ package = $package }
 
     $mode = "stage"
-    if ($analysis -and -not $StageOnly -and $analysis.can_publish -eq $true) {
+    if ((-not $analysis -or -not $StageOnly) -and ($analysis -eq $null -or $analysis.can_publish -eq $true)) {
         if ($Yes) { $mode = "safe-apply" }
         else {
             $confirm = Read-Host "  Publier directement ? [O/n]"
