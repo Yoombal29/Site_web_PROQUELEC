@@ -10,15 +10,30 @@ declare global { interface Window { __LAST_REDIRECT_REASON?: string; } }
 // DEBUG: Surveille les redirections vers /connexion
 function useNavDebug() {
   const loc = useLocation();
+  const previousUrlRef = React.useRef(typeof window !== 'undefined' ? window.location.href : '');
+
   React.useEffect(() => {
+    const currentUrl = window.location.href;
     if (loc.pathname === '/connexion') {
+      const tokenPresent = !!localStorage.getItem('token');
+      const reason =
+        window.__LAST_REDIRECT_REASON ||
+        (tokenPresent
+          ? 'Route protegee: session non valide malgre un token local'
+          : 'Route protegee: aucun token local');
+      const previousPage =
+        previousUrlRef.current && previousUrlRef.current !== currentUrl
+          ? previousUrlRef.current
+          : document.referrer || '(direct)';
+
       console.log('%c[DEBUG] Redirection vers /connexion', 'color:red;font-size:16px;font-weight:bold');
-      console.log('  Page precedente:', document.referrer || '(direct)');
-      console.log('  Token present:', !!localStorage.getItem('token'));
-      console.log('  Raison declaree:', window.__LAST_REDIRECT_REASON || '(aucune)');
+      console.log('  Page precedente:', previousPage);
+      console.log('  Token present:', tokenPresent);
+      console.log('  Raison declaree:', reason);
       console.log('  Stack:', new Error().stack);
     }
-  }, [loc.pathname]);
+    previousUrlRef.current = currentUrl;
+  }, [loc.hash, loc.pathname, loc.search]);
 }
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {

@@ -18,7 +18,7 @@ export const RoleProtectedRoute: React.FC<RoleProtectedRouteProps> = ({
   allowedRoles,
   redirectTo = '/connexion',
 }) => {
-  const { user, isLoading: isLoadingSession } = useSession();
+  const { user, error: sessionError, isLoading: isLoadingSession } = useSession();
   const { role, status, isLoading: isLoadingRole } = useUserRole();
 
   if (isLoadingSession || isLoadingRole) {
@@ -29,8 +29,39 @@ export const RoleProtectedRoute: React.FC<RoleProtectedRouteProps> = ({
     );
   }
 
+  if (sessionError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+        <div className="text-center max-w-md">
+          <h1 className="text-5xl font-black text-slate-200 mb-4">Session</h1>
+          <h2 className="text-2xl font-bold text-slate-900 mb-4">Vérification impossible</h2>
+          <p className="text-slate-600 mb-8">
+            Le serveur n'a pas pu confirmer votre session. Réessayez ou reconnectez-vous si le
+            problème persiste.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              className="inline-block bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all"
+            >
+              Réessayer
+            </button>
+            <a
+              href="/connexion"
+              onClick={() => localStorage.removeItem('token')}
+              className="inline-block bg-slate-900 text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 transition-all"
+            >
+              Se reconnecter
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (!user) {
-    window.__LAST_REDIRECT_REASON = 'RoleProtectedRoute: utilisateur non connecte';
+    window.__LAST_REDIRECT_REASON ||= 'RoleProtectedRoute: utilisateur non connecte';
     return <Navigate to={redirectTo} replace />;
   }
 
