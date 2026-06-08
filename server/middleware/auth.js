@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { pool } = require('../db');
+const { pool } = require('../core/database');
 
 function getJwtSecret() {
   return process.env.JWT_SECRET || process.env.VITE_JWT_SECRET;
