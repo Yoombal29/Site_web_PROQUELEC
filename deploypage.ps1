@@ -72,7 +72,7 @@ function Publish-OnePage {
 
     Write-Host "  Titre: $($package.page.title) / Slug: $($package.page.slug)"
 
-    Write-Host "  [2/3] Analyse conflit VPS..." -ForegroundColor Yellow
+    Write-Host "  [2/3] Analyse ignoree (mode force)..." -ForegroundColor Yellow
     $analysis = Invoke-Api -Method "POST" -Url "$ProdBaseUrl/api/admin/pages/release/analyze" -Token $ProdToken -Body @{ package = $package }
 
     $mode = "stage"
