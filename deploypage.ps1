@@ -142,10 +142,22 @@ try {
         $pagesToDeploy = @(@{ slug = $Page; title = $Page })
     }
     else {
-        # Demander le slug
-        $PageSlug = Read-Host "  Slug ou ID de la page a deployer"
-        if (-not $PageSlug) { Stop-Step "Page obligatoire." }
-        $pagesToDeploy = @(@{ slug = $PageSlug; title = $PageSlug })
+        # Aucun parametre -> lister les pages avec choix
+        Write-Host ""
+        Write-Host "  Recuperation de la liste des pages locales..." -ForegroundColor Yellow
+        $allPagesData = Invoke-Api -Method "GET" -Url "$LocalBaseUrl/api/admin/pages" -Token $localToken
+        $pages = $allPagesData | Where-Object { $_.slug -and $_.slug -ne "" }
+        Write-Host "  $($pages.Count) pages trouvees"
+        $i = 0
+        $pages | ForEach-Object { Write-Host "  [$i] $($_.slug) - $($_.title)"; $i++ }
+        $choice = Read-Host "  Numero de la page (ou 'all' pour toutes, ou 'quit')"
+        if ($choice.ToLowerInvariant() -eq "quit") { exit 0 }
+        if ($choice.ToLowerInvariant() -eq "all") {
+            $pagesToDeploy = $pages
+        } else {
+            $idx = [int]$choice
+            $pagesToDeploy = @($pages[$idx])
+        }
     }
 
     # Deployer chaque page
