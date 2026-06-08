@@ -125,6 +125,32 @@ async function ensureProjectsSchemaOnce(pool) {
         EXECUTE 'ALTER TABLE public.media_files ADD COLUMN IF NOT EXISTS is_latest BOOLEAN DEFAULT true';
         EXECUTE 'CREATE INDEX IF NOT EXISTS idx_media_files_project_id ON public.media_files(project_id)';
       END IF;
+
+      IF to_regclass('public.permissions') IS NOT NULL THEN
+        INSERT INTO public.permissions (name, description, category) VALUES
+          ('projects.view', 'View project details', 'projects'),
+          ('projects.create', 'Create new projects', 'projects'),
+          ('projects.edit', 'Edit project information', 'projects'),
+          ('projects.delete', 'Delete projects', 'projects'),
+          ('projects.transition', 'Change project regulatory status', 'projects')
+        ON CONFLICT (name) DO NOTHING;
+      END IF;
+
+      IF to_regclass('public.permissions') IS NOT NULL
+        AND to_regclass('public.role_permissions') IS NOT NULL THEN
+        INSERT INTO public.role_permissions (role, permission_id)
+        SELECT role_name, p.id
+        FROM public.permissions p
+        CROSS JOIN (VALUES ('admin'), ('superadmin')) AS roles(role_name)
+        WHERE p.name IN (
+          'projects.view',
+          'projects.create',
+          'projects.edit',
+          'projects.delete',
+          'projects.transition'
+        )
+        ON CONFLICT (role, permission_id) DO NOTHING;
+      END IF;
     END $$;
 
     CREATE INDEX IF NOT EXISTS idx_audit_logs_project_entity ON public.audit_logs(entity_type, entity_id, performed_at DESC);
