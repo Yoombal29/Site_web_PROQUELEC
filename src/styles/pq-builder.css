@@ -79,6 +79,68 @@
   transform: scale(0.99);
 }
 
+/* ==========================================================================
+   Builder edit-mode safety
+   Keeps imported HTML, fixed headers, popups, and overlays from blocking Craft.js
+   drag/drop targets while the admin canvas is editable.
+   ========================================================================== */
+.builder-canvas-enabled {
+  isolation: isolate;
+}
+
+.builder-canvas-enabled [data-htmlblock] {
+  isolation: isolate;
+  min-height: 40px;
+}
+
+.builder-canvas-enabled [data-htmlblock] [data-htmlblock-content],
+.builder-canvas-enabled [data-htmlblock] [data-htmlblock-content] * {
+  pointer-events: none !important;
+}
+
+.builder-canvas-enabled.builder-canvas-dragging [data-htmlblock] {
+  pointer-events: none !important;
+}
+
+.builder-canvas-enabled .proquelec-builder-node.fixed,
+.builder-canvas-enabled .proquelec-builder-node.sticky,
+.builder-canvas-enabled .proquelec-builder-node[style*="position: fixed"],
+.builder-canvas-enabled .proquelec-builder-node[style*="position:fixed"],
+.builder-canvas-enabled .proquelec-builder-node[style*="position: sticky"],
+.builder-canvas-enabled .proquelec-builder-node[style*="position:sticky"] {
+  position: relative !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  z-index: auto !important;
+  transform: none !important;
+}
+
+.builder-canvas-enabled .proquelec-builder-node :not(.proquelec-builder-node).fixed,
+.builder-canvas-enabled .proquelec-builder-node :not(.proquelec-builder-node).sticky,
+.builder-canvas-enabled .proquelec-builder-node :not(.proquelec-builder-node)[style*="position: fixed"],
+.builder-canvas-enabled .proquelec-builder-node :not(.proquelec-builder-node)[style*="position:fixed"],
+.builder-canvas-enabled .proquelec-builder-node :not(.proquelec-builder-node)[style*="position: sticky"],
+.builder-canvas-enabled .proquelec-builder-node :not(.proquelec-builder-node)[style*="position:sticky"] {
+  position: relative !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  z-index: auto !important;
+  transform: none !important;
+  pointer-events: none !important;
+}
+
+.builder-canvas-enabled .proquelec-builder-node [style*="z-index: 999"],
+.builder-canvas-enabled .proquelec-builder-node [style*="z-index:999"],
+.builder-canvas-enabled .proquelec-builder-node [class*="z-[999"] {
+  z-index: 20 !important;
+}
+
 /* Builder Effects Engine */
 .effect-hover-lift,
 .effect-hover-scale,

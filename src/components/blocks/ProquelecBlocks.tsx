@@ -2824,7 +2824,7 @@ export const HtmlBlock = (props: {
       }}
       data-htmlblock
       data-nodeid={id}
-      className={`relative ${selected && enabled ? 'craft-selected' : ''}`}
+      className={`relative proquelec-builder-node builder-html-block ${selected && enabled ? 'craft-selected' : ''}`}
     >
       {enabled && !hideLabel && (
         <div
@@ -2852,8 +2852,9 @@ export const HtmlBlock = (props: {
         </div>
       )}
       <div
+        data-htmlblock-content
         style={{ padding: `${padding}px`, ...universal.style }}
-        className={`w-full relative min-h-[40px] prose prose-slate max-w-none dark:prose-invert ${universal.className} ${enabled ? 'pointer-events-none' : ''}`}
+        className={`w-full relative min-h-[40px] prose prose-slate max-w-none dark:prose-invert builder-html-block-content ${universal.className} ${enabled ? 'pointer-events-none' : ''}`}
         dangerouslySetInnerHTML={{ __html: cleanHtml }}
       />
     </div>

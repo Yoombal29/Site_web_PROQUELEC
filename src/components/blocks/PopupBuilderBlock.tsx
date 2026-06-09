@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNode, Element } from '@craftjs/core';
+import { useEditor, useNode, Element } from '@craftjs/core';
 import { getUniversalStyles } from './universalStyles';
 import { useDisplayConditions } from './useDisplayConditions';
 import { ContainerBlock } from './ProquelecBlocks';
@@ -14,14 +14,19 @@ const Color = (p: any) => <SettingsColor {...p} />;
 export const PopupBlock = (props: any) => {
   const { children, trigger = 'click', delay = 0, width = 480, overlayColor = 'rgba(0,0,0,0.5)', bgColor = '#ffffff', closeOnOverlay = true, enableOnMobile = false } = props;
   const { connectors: { connect, drag } } = useNode();
+  const { enabled } = useEditor((state) => ({ enabled: state.options.enabled }));
   const u = getUniversalStyles(props);
   const visible = useDisplayConditions(props);
   const [open, setOpen] = useState(false);
 
-  const openPopup = useCallback(() => setOpen(true), []);
+  const openPopup = useCallback(() => {
+    if (enabled) return;
+    setOpen(true);
+  }, [enabled]);
   const closePopup = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
+    if (enabled) return;
     if (trigger === 'pageLoad') {
       const t = setTimeout(openPopup, delay);
       return () => clearTimeout(t);
@@ -40,14 +45,14 @@ export const PopupBlock = (props: any) => {
       document.addEventListener('mouseleave', handler);
       return () => document.removeEventListener('mouseleave', handler);
     }
-  }, [trigger, delay, openPopup]);
+  }, [trigger, delay, openPopup, enabled]);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open || enabled) return;
     if (!enableOnMobile && window.innerWidth < 768) { setOpen(false); return; }
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
-  }, [open, enableOnMobile]);
+  }, [open, enableOnMobile, enabled]);
 
   if (!visible) return null;
 
@@ -55,12 +60,12 @@ export const PopupBlock = (props: any) => {
     <>
       <div ref={(r: any) => { if (r) connect(drag(r)); }} style={{ display: 'inline-block', ...u.style }} className={'proquelec-builder-node ' + u.className}>
         {trigger === 'click' && (
-          <button onClick={openPopup} style={{ background: '#2563eb', color: 'white', border: 'none', padding: '8px 20px', borderRadius: 8, cursor: 'pointer', fontSize: 14, fontWeight: 600 }}>
+          <button onClick={openPopup} style={{ background: '#2563eb', color: 'white', border: 'none', padding: '8px 20px', borderRadius: 8, cursor: enabled ? 'grab' : 'pointer', fontSize: 14, fontWeight: 600 }}>
             {props.buttonLabel || 'Ouvrir la popup'}
           </button>
         )}
       </div>
-      {open && (
+      {open && !enabled && (
         <div
           onClick={closeOnOverlay ? closePopup : undefined}
           style={{

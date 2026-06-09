@@ -398,6 +398,7 @@ export const GodCanvas = () => {
     nodeId: string;
     nodeName: string;
   } | null>(null);
+  const [isCanvasDragActive, setIsCanvasDragActive] = useState(false);
 
   const { isEnabled, actions, query } = useEditor((state) => ({
     isEnabled: state.options.enabled,
@@ -407,6 +408,7 @@ export const GodCanvas = () => {
   const { setHoveredNodeId, hoveredNodeId } = useBuilderUiStore();
 
   const canvasRef = useRef<HTMLDivElement | null>(null);
+  const dragResetTimerRef = useRef<number | null>(null);
   useAnimateOnScroll(canvasRef, { threshold: 0.1, once: true });
 
   useEffect(() => {
@@ -445,6 +447,33 @@ export const GodCanvas = () => {
       setHoveredNodeId(hoveredId);
     }
   };
+
+  const markCanvasDragActive = useCallback(() => {
+    if (!isEnabled) return;
+    if (dragResetTimerRef.current !== null) {
+      window.clearTimeout(dragResetTimerRef.current);
+      dragResetTimerRef.current = null;
+    }
+    setIsCanvasDragActive(true);
+  }, [isEnabled]);
+
+  const scheduleCanvasDragReset = useCallback(() => {
+    if (dragResetTimerRef.current !== null) {
+      window.clearTimeout(dragResetTimerRef.current);
+    }
+    dragResetTimerRef.current = window.setTimeout(() => {
+      setIsCanvasDragActive(false);
+      dragResetTimerRef.current = null;
+    }, 120);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (dragResetTimerRef.current !== null) {
+        window.clearTimeout(dragResetTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handler = (event: Event) => {
@@ -988,12 +1017,17 @@ export const GodCanvas = () => {
         onContextMenu={handleContextMenu}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setHoveredNodeId(null)}
+        onDragEnter={markCanvasDragActive}
+        onDragOver={markCanvasDragActive}
+        onDragLeave={scheduleCanvasDragReset}
+        onDrop={() => setIsCanvasDragActive(false)}
       >
         <div data-viewport={device} className="canvas-viewport-wrapper">
           <div
             ref={canvasRef}
             data-builder-canvas
-            className={`relative bg-white shadow-2xl shadow-black/40 transition-all duration-300 ease-out build-canvas-wrapper ${ZOOM_CLASS_MAP[zoom] ?? ''} ${isEnabled ? 'builder-canvas-enabled' : 'builder-canvas-disabled'}`}
+            data-builder-drag-active={isCanvasDragActive ? 'true' : 'false'}
+            className={`relative bg-white shadow-2xl shadow-black/40 transition-all duration-300 ease-out build-canvas-wrapper ${ZOOM_CLASS_MAP[zoom] ?? ''} ${isEnabled ? 'builder-canvas-enabled' : 'builder-canvas-disabled'} ${isCanvasDragActive ? 'builder-canvas-dragging' : ''}`}
           >
             <BuilderErrorBoundary>
               <Frame

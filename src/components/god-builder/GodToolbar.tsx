@@ -30,7 +30,7 @@ import { useBrandingStore } from '@/stores/branding.store';
 import { TemplateManagerDialog } from './TemplateManagerDialog';
 import { useBuilderHistoryStore } from '@/stores/builder-history.store';
 import { useBuilderPermissions } from '@/hooks/useBuilderPermissions';
-import { HtmlBlock } from '@/components/blocks/ProquelecBlocks';
+import { createHtmlCraftStructure } from '@/lib/craft-html-structure';
 import {
   Dialog,
   DialogContent,
@@ -176,26 +176,14 @@ export const GodToolbar = () => {
       });
       toast.success('Code HTML mis à jour.');
     } else {
-      // Sinon, remplacer TOUTE la page par un HtmlBlock
-      // 1. Supprimer tous les noeuds existants (sauf ROOT)
+      // Sinon, remplacer TOUTE la page par une structure HTML normalisée.
+      // Le HtmlBlock reste dans un conteneur canvas pour conserver le drag/drop.
       try {
-        const state = query.getState();
-        Object.keys(state.nodes).forEach((id) => {
-          if (id !== 'ROOT') {
-            actions.delete(id);
-          }
-        });
+        actions.deserialize(createHtmlCraftStructure(globalHtml));
       } catch (e) {
-        // Silencieux - supprimer ce qui peut l'être
-      }
-      // 2. Créer le HtmlBlock
-      try {
-        const htmlNode = query.createNode(
-          React.createElement(HtmlBlock, { html: globalHtml, padding: 10, hideLabel: false }),
-        );
-        actions.add(htmlNode, 'ROOT');
-      } catch (e) {
-        console.error('Erreur création HtmlBlock:', e);
+        console.error('Erreur création structure HtmlBlock:', e);
+        toast.error('Impossible de convertir la page en HTML.');
+        return;
       }
       toast.success('Page convertie en HTML. Tous les blocs ont été remplacés.');
     }

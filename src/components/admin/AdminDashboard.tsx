@@ -60,6 +60,18 @@ import NewsletterAdminPanel from './NewsletterAdminPanel';
 import MediaLibrary from '@/components/admin/MediaLibrary';
 import NotificationsAdminPanel from './NotificationsAdminPanel';
 import AdminPaymentPanel from './AdminPaymentPanel';
+import AdminBlogPanel from './AdminBlogPanel';
+import AdminElectricalCertificationsPanel from './AdminElectricalCertificationsPanel';
+import AdminProfessionalTrainingPanel from './AdminProfessionalTrainingPanel';
+import AdminFormSubmissionsPanel from './AdminFormSubmissionsPanel';
+import TemplateMarketplace from './TemplateMarketplace';
+import EcommerceAdminPanel from './EcommerceAdminPanel';
+import CustomFontsPanel from './CustomFontsPanel';
+import AdminBrandingPanel from './AdminBrandingPanel';
+import InfraDocs from './InfraDocs';
+import { DocumentManager } from '@/components/DocumentManager';
+import ProjectList from '@/pages/projects/ProjectList';
+import { EventCalendar } from '@/components/EventCalendar';
 
 interface TabConfig {
   id: string;
@@ -703,14 +715,14 @@ const AdminDashboard: React.FC = () => {
     },
     {
       id: 'builder-release',
-    label: 'Publipostage des Pages',
-    description: 'Exporter, analyser et publier les pages du Builder vers le VPS',
-    icon: <Rocket className="w-4 h-4" />,
-    route: '/admin/builder-release-manager',
-    color: 'text-purple-600',
-  },
-  {
-    id: 'tools-stats',
+      label: 'Publipostage des Pages',
+      description: 'Exporter, analyser et publier les pages du Builder vers le VPS',
+      icon: <Rocket className="w-4 h-4" />,
+      route: '/admin/builder-release-manager',
+      color: 'text-purple-600',
+    },
+    {
+      id: 'tools-stats',
       label: 'Stats outils',
       icon: <BarChart3 className="w-4 h-4" />,
       route: '/admin/tools-stats',
@@ -1426,6 +1438,90 @@ const AdminDashboard: React.FC = () => {
                   <p className="text-muted-foreground">Système de notifications du site</p>
                 </div>
                 <NotificationsAdminPanel />
+              </div>
+            )}
+
+            {/* --- TABS MANQUANTS (ajoutés depuis AdminSecondaryDashboard) --- */}
+            {activeTab === 'projects' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground mb-2">Projets & Chantiers</h2>
+                  <p className="text-muted-foreground">Gestion des projets et chantiers</p>
+                </div>
+                <ProjectList />
+              </div>
+            )}
+            {activeTab === 'blog' && <AdminBlogPanel />}
+            {activeTab === 'events' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground mb-2">Agenda & Événements</h2>
+                  <p className="text-muted-foreground">Gestion du calendrier et des événements</p>
+                </div>
+                <EventCalendar />
+              </div>
+            )}
+            {activeTab === 'certifications' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground mb-2">Certifications</h2>
+                  <p className="text-muted-foreground">Gestion des certifications électriques</p>
+                </div>
+                <AdminElectricalCertificationsPanel />
+              </div>
+            )}
+            {activeTab === 'training' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground mb-2">
+                    Formations Professionnelles
+                  </h2>
+                  <p className="text-muted-foreground">Gestion des formations</p>
+                </div>
+                <AdminProfessionalTrainingPanel />
+              </div>
+            )}
+            {activeTab === 'templates' && <TemplateMarketplace />}
+            {activeTab === 'ecommerce' && <EcommerceAdminPanel />}
+            {activeTab === 'form_submissions' && <AdminFormSubmissionsPanel />}
+            {activeTab === 'fonts' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground mb-2">
+                    Polices Personnalisées
+                  </h2>
+                  <p className="text-muted-foreground">Gérez les polices du site</p>
+                </div>
+                <CustomFontsPanel />
+              </div>
+            )}
+            {activeTab === 'branding' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground mb-2">Identité & Marque</h2>
+                  <p className="text-muted-foreground">Personnalisez l'identité visuelle</p>
+                </div>
+                <AdminBrandingPanel />
+              </div>
+            )}
+            {activeTab === 'infrastructure' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground mb-2">Infrastructure Docker</h2>
+                  <p className="text-muted-foreground">Monitoring des services</p>
+                </div>
+                <InfraDocs />
+              </div>
+            )}
+            {activeTab === 'media' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground mb-2">
+                    Médiathèque & Archives
+                  </h2>
+                  <p className="text-muted-foreground">Gestion des documents et fichiers</p>
+                </div>
+                <DocumentManager />
               </div>
             )}
           </div>

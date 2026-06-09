@@ -22,7 +22,7 @@ export function createHtmlCraftStructure(html: string | null | undefined) {
       props: {
         html: html || '<p>Contenu en cours de création...</p>',
         padding: 0,
-        hideLabel: true,
+        hideLabel: false,
       },
       parent: 'html_wrapper',
       linkedNodes: {},

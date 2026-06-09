@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { useNode } from '@craftjs/core';
+import { useEditor, useNode } from '@craftjs/core';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Menu,
@@ -104,6 +104,7 @@ export const HeaderBuilderBlock = (props: any) => {
   const {
     connectors: { connect, drag },
   } = useNode();
+  const { enabled } = useEditor((state) => ({ enabled: state.options.enabled }));
   const u = getUniversalStyles(props);
   const { settings } = useLiveSettings();
   const { data: menuItems } = useMenuItems();
@@ -114,11 +115,11 @@ export const HeaderBuilderBlock = (props: any) => {
 
   // Track scroll for sticky effect
   useEffect(() => {
-    if (!sticky) return;
+    if (!sticky || enabled) return;
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [sticky]);
+  }, [sticky, enabled]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -139,8 +140,8 @@ export const HeaderBuilderBlock = (props: any) => {
 
   const headerClasses = cn(
     'w-full transition-all duration-300 z-[100]',
-    sticky ? 'fixed top-0 left-0 right-0' : 'relative',
-    scrolled && sticky ? 'shadow-md' : 'shadow-sm',
+    sticky && !enabled ? 'fixed top-0 left-0 right-0' : 'relative',
+    scrolled && sticky && !enabled ? 'shadow-md' : 'shadow-sm',
   );
 
   return (
@@ -256,7 +257,10 @@ export const HeaderBuilderBlock = (props: any) => {
             {/* Mobile hamburger */}
             <button
               type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => {
+                if (enabled) return;
+                setMobileMenuOpen(!mobileMenuOpen);
+              }}
               className="lg:hidden p-2 rounded-lg transition-colors duration-200 hover:opacity-70"
               style={{ color: textColor }}
               aria-label="Menu"
@@ -267,7 +271,7 @@ export const HeaderBuilderBlock = (props: any) => {
         </div>
 
         {/* Mobile overlay menu */}
-        {mobileMenuOpen && (
+        {mobileMenuOpen && !enabled && (
           <div
             className="lg:hidden fixed inset-0 z-50 flex flex-col"
             style={{
@@ -339,7 +343,7 @@ export const HeaderBuilderBlock = (props: any) => {
       </header>
 
       {/* Spacer for fixed header */}
-      {sticky && <div style={{ height: headerHeight }} />}
+      {sticky && !enabled && <div style={{ height: headerHeight }} />}
     </div>
   );
 };
