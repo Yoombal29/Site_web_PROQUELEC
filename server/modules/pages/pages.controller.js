@@ -12,10 +12,29 @@ async function listPages(req, res) {
   }
 }
 
+async function listPublicPages(req, res) {
+  try {
+    const pages = await service.listPublicPages();
+    res.json(pages);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 async function getPage(req, res) {
   try {
     const { slug } = req.params;
     const page = await service.getPage(slug);
+    res.json(page);
+  } catch (err) {
+    res.status(err.status || 500).json({ error: err.message });
+  }
+}
+
+async function getPublicPage(req, res) {
+  try {
+    const { slug } = req.params;
+    const page = await service.getPublicPage(slug);
     res.json(page);
   } catch (err) {
     res.status(err.status || 500).json({ error: err.message });
@@ -412,7 +431,9 @@ async function startCodeDeploy(req, res) {
 
 module.exports = {
   listPages,
+  listPublicPages,
   getPage,
+  getPublicPage,
   getPageById,
   createPage,
   updatePage,

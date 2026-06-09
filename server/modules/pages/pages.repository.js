@@ -1,13 +1,39 @@
 const { pool } = require('../../core/database');
 
 // --- Pages ---
+const publishedPageWhere = `
+    (is_published = true OR status = 'published')
+    AND (publish_date IS NULL OR publish_date <= NOW())
+    AND (unpublish_date IS NULL OR unpublish_date > NOW())
+`;
+
 async function findAllPages() {
     const result = await pool.query('SELECT * FROM public.pages ORDER BY menu_order ASC, updated_at DESC');
     return result.rows;
 }
 
+async function findPublishedPages() {
+    const result = await pool.query(
+        `SELECT * FROM public.pages
+         WHERE ${publishedPageWhere}
+         ORDER BY menu_order ASC, updated_at DESC`
+    );
+    return result.rows;
+}
+
 async function findPageBySlug(slug) {
     const result = await pool.query('SELECT * FROM public.pages WHERE slug = $1', [slug]);
+    return result.rows[0] || null;
+}
+
+async function findPublishedPageBySlug(slug) {
+    const result = await pool.query(
+        `SELECT * FROM public.pages
+         WHERE slug = $1 AND ${publishedPageWhere}
+         ORDER BY updated_at DESC
+         LIMIT 1`,
+        [slug]
+    );
     return result.rows[0] || null;
 }
 
@@ -265,7 +291,7 @@ async function saveThemeConfig(pageId, themeConfig) {
 }
 
 module.exports = {
-    findAllPages, findPageBySlug, findPageById, findPageBySlugOrId,
+    findAllPages, findPublishedPages, findPageBySlug, findPublishedPageBySlug, findPageById, findPageBySlugOrId,
     createPage, updatePage, deletePage, adminUpdatePage,
     savePageVersion, findPageVersion,
     saveDraft, createNamedVersion, listNamedVersions, findNamedVersionById, saveThemeConfig,

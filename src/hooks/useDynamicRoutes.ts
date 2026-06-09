@@ -86,12 +86,59 @@ const fetchPagesFrom = async (url: string): Promise<PageRecord[]> => {
 
 const fetchPages = async (): Promise<PageRecord[]> => {
   try {
-    return await fetchPagesFrom('/api/pages');
+    return await fetchPagesFrom('/api/public/pages');
   } catch (error) {
-    if (!isLocalHost()) throw error;
+    console.warn('[DynamicRoutes] /api/public/pages failed, trying legacy endpoint:', error);
 
-    console.warn('[DynamicRoutes] /api/pages failed through current origin, trying local API:', error);
-    return fetchPagesFrom('http://127.0.0.1:3010/api/pages');
+    try {
+      return await fetchPagesFrom('/api/pages');
+    } catch (legacyError) {
+      if (!isLocalHost()) {
+        console.warn('[DynamicRoutes] Legacy /api/pages failed:', legacyError);
+        return [];
+      }
+
+      console.warn(
+        '[DynamicRoutes] /api/pages failed through current origin, trying local API:',
+        legacyError,
+      );
+
+      try {
+        return await fetchPagesFrom('http://127.0.0.1:3010/api/public/pages');
+      } catch (localPublicError) {
+        console.warn('[DynamicRoutes] Local /api/public/pages failed:', localPublicError);
+        return fetchPagesFrom('http://127.0.0.1:3010/api/pages').catch((localLegacyError) => {
+          console.warn('[DynamicRoutes] Local legacy /api/pages failed:', localLegacyError);
+          return [];
+        });
+      }
+    }
+  }
+};
+
+const fetchPageBySlug = async (slug: string): Promise<PageRecord | null> => {
+  const normalizedSlug = encodeURIComponent(slug);
+
+  try {
+    const response = await fetch(`/api/public/pages/slug/${normalizedSlug}`);
+    if (!response.ok) throw new Error(`Failed to fetch public page: ${response.status}`);
+    const page = await response.json();
+    return normalizePagesResponse([page])[0] || null;
+  } catch (error) {
+    console.warn('[DynamicRoutes] /api/public/pages/slug failed, trying legacy page endpoint:', error);
+
+    try {
+      const response = await fetch(`/api/pages/slug/${normalizedSlug}`);
+      if (response.status === 404) return null;
+      if (!response.ok) throw new Error(`Failed to fetch legacy page: ${response.status}`);
+      const page = await response.json();
+      const normalized = normalizePagesResponse([page])[0];
+      return normalized && isPublished(normalized) ? normalized : null;
+    } catch (legacyError) {
+      console.warn('[DynamicRoutes] Legacy page endpoint failed:', legacyError);
+      const pages = await fetchPages();
+      return pages.find((page) => page.slug === slug && isPublished(page)) || null;
+    }
   }
 };
 
@@ -155,8 +202,7 @@ export function useDynamicPage(slug: string) {
     queryKey: ["dynamic-page", slug],
     queryFn: async (): Promise<DynamicRoute | null> => {
       try {
-        const allPages = await fetchPages();
-        const data = allPages.find((page) => page.slug === slug && isPublished(page));
+        const data = await fetchPageBySlug(slug);
 
         if (!data) {
           return null;

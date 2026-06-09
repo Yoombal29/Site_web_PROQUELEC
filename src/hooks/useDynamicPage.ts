@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiFetch } from "@/lib/api-client";
 
 export interface DynamicPageData {
   id: string;
@@ -39,9 +38,20 @@ export function useDynamicPage(slug: string) {
   return useQuery({
     queryKey: ["dynamic-page", slug],
     queryFn: async (): Promise<DynamicPageData | null> => {
+      const encodedSlug = encodeURIComponent(slug);
+
       try {
-        const data = await apiFetch<DynamicPageData>(`/api/pages/${slug}`);
-        return data;
+        const response = await fetch(`/api/public/pages/slug/${encodedSlug}`);
+        if (response.ok) return response.json();
+
+        const legacyResponse = await fetch(`/api/pages/slug/${encodedSlug}`);
+        if (legacyResponse.ok) {
+          const page = (await legacyResponse.json()) as DynamicPageData;
+          if (page.is_published === false) return null;
+          return page;
+        }
+
+        return null;
       } catch (error) {
         console.error("Error fetching dynamic page:", error);
         return null;

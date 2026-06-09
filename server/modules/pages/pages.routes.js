@@ -24,6 +24,8 @@ const requirePagesDeployModePermission = (req, res, next) => {
 router.get('/pages', controller.listPages);
 router.get('/pages/slug/:slug', controller.getPage);
 router.get('/pages/:id', controller.getPageById);
+router.get('/public/pages', controller.listPublicPages);
+router.get('/public/pages/slug/:slug', controller.getPublicPage);
 router.post('/pages', authenticateToken, validate(createPageSchema), controller.createPage);
 router.put('/pages/:id', authenticateToken, validate(updatePageSchema), controller.updatePage);
 router.delete('/pages/:id', authenticateToken, controller.deletePage);

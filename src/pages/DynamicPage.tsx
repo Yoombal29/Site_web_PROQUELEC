@@ -80,6 +80,77 @@ const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
   labels: Labels,
 };
 
+type ApiPageRecord = PageRecord & {
+  content_raw?: string;
+  status?: string;
+  structure_json?: unknown;
+  theme_config?: unknown;
+  render_engine?: string;
+  security_level?: string;
+  immutable?: boolean;
+};
+
+function normalizePagesResponse(responseData: unknown): ApiPageRecord[] {
+  const rows = Array.isArray(responseData)
+    ? responseData
+    : (responseData as { rows?: unknown[]; data?: unknown[] })?.rows ||
+      (responseData as { rows?: unknown[]; data?: unknown[] })?.data ||
+      [];
+
+  return rows.filter((page): page is ApiPageRecord => {
+    if (!page || typeof page !== 'object') return false;
+    const candidate = page as Partial<ApiPageRecord>;
+    return typeof candidate.slug === 'string' && typeof candidate.title === 'string';
+  });
+}
+
+function isPublishedPage(page: ApiPageRecord) {
+  if (page.status) return page.status === 'published';
+  return page.is_published !== false;
+}
+
+async function fetchJson<T>(url: string): Promise<T> {
+  const response = await fetch(url);
+  if (!response.ok) {
+    const body = await response.text().catch(() => '');
+    throw new Error(`${url} ${response.status} ${body.slice(0, 160)}`);
+  }
+  return response.json() as Promise<T>;
+}
+
+async function fetchPublishedPages(): Promise<ApiPageRecord[]> {
+  const endpoints = ['/api/public/pages', '/api/pages'];
+
+  for (const endpoint of endpoints) {
+    try {
+      return normalizePagesResponse(await fetchJson<unknown>(endpoint)).filter(isPublishedPage);
+    } catch (error) {
+      console.warn(`[DynamicPage] Chargement liste pages impossible depuis ${endpoint}:`, error);
+    }
+  }
+
+  return [];
+}
+
+async function fetchPublishedPageBySlug(slug: string): Promise<ApiPageRecord | null> {
+  const encodedSlug = encodeURIComponent(slug);
+  const directEndpoints = slug.includes('/')
+    ? []
+    : [`/api/public/pages/slug/${encodedSlug}`, `/api/pages/slug/${encodedSlug}`];
+
+  for (const endpoint of directEndpoints) {
+    try {
+      const page = normalizePagesResponse([await fetchJson<unknown>(endpoint)])[0];
+      if (page && isPublishedPage(page)) return page;
+    } catch (error) {
+      console.warn(`[DynamicPage] Chargement page impossible depuis ${endpoint}:`, error);
+    }
+  }
+
+  const pages = await fetchPublishedPages();
+  return pages.find((page) => page.slug.replace(/^\//, '') === slug) || null;
+}
+
 /**
  * Détecte si une structure JSON est un arbre de nœuds Craft.js
  * (objet avec une clé "ROOT" contenant un type et des nœuds)
@@ -164,20 +235,10 @@ const DynamicPageComponent: React.FC = () => {
       const settingsKey = resolvedPageKey;
 
       try {
-        const response = await fetch('/api/pages');
-        if (!response.ok) throw new Error('Failed to fetch pages');
-        const allPages = await response.json();
-
-        const findPublishedPageBySlug = (slugToFind: string) =>
-          allPages.find((p: any) => {
-            const pageSlug = (p.slug || '').replace(/^\//, '');
-            return pageSlug === slugToFind && (p.is_published === true || p.status === 'published');
-          });
-
         const data =
-          findPublishedPageBySlug(effectiveSlug) ||
+          (await fetchPublishedPageBySlug(effectiveSlug)) ||
           (PAGE_ALIASES[effectiveSlug]
-            ? findPublishedPageBySlug(PAGE_ALIASES[effectiveSlug])
+            ? await fetchPublishedPageBySlug(PAGE_ALIASES[effectiveSlug])
             : null);
 
         if (!data) {

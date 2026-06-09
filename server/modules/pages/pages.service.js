@@ -6,8 +6,18 @@ async function listPages() {
   return repo.findAllPages();
 }
 
+async function listPublicPages() {
+  return repo.findPublishedPages();
+}
+
 async function getPage(slug) {
   const page = await repo.findPageBySlug(slug);
+  if (!page) throw Object.assign(new Error('Page non trouvée'), { status: 404 });
+  return page;
+}
+
+async function getPublicPage(slug) {
+  const page = await repo.findPublishedPageBySlug(slug);
   if (!page) throw Object.assign(new Error('Page non trouvée'), { status: 404 });
   return page;
 }
@@ -221,7 +231,9 @@ async function saveThemeConfig(pageId, themeConfig) {
 
 module.exports = {
   listPages,
+  listPublicPages,
   getPage,
+  getPublicPage,
   getPageById,
   createPage,
   updatePage,

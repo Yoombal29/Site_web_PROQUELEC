@@ -355,6 +355,25 @@ mountAdminFeaturesRoutes(app, pool);
 const { mountEngineRoutes } = require('./routes/inline/engine');
 mountEngineRoutes(app);
 
+// --- Public Site Settings (used by frontend without auth) ---
+app.get('/api/site-settings', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM public.site_settings WHERE id = 1');
+    res.json(result.rows[0] || {});
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/theme-settings', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM public.theme_settings WHERE id = 1');
+    res.json(result.rows[0] || {});
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ------------------------------------------
 // REMAINING INLINE ROUTES
 // ------------------------------------------
