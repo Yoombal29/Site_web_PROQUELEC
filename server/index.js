@@ -1205,7 +1205,47 @@ async function initDB() {
   await pool.query(`
     CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS content_raw TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS content_blocks JSONB;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS structure_json JSONB;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS design_options JSONB;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS security_level TEXT DEFAULT 'public';
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS immutable BOOLEAN DEFAULT false;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS is_published BOOLEAN DEFAULT false;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS categories TEXT[];
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS tags TEXT[];
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS author TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS excerpt TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS meta_description TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS meta_keywords TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS meta_robots TEXT DEFAULT 'index,follow';
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS featured_image TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS template TEXT DEFAULT 'default';
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS show_hero BOOLEAN DEFAULT true;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS show_footer BOOLEAN DEFAULT true;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS custom_css TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS custom_js TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS header_html TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS footer_html TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS hero_title TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS hero_subtitle TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS hero_background_image TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS hero_cta_text TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS hero_cta_link TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS published_at TIMESTAMP;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS workflow_status TEXT DEFAULT 'draft';
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'draft';
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS publish_date TIMESTAMP;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS unpublish_date TIMESTAMP;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS reading_time INTEGER DEFAULT 0;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS theme_config JSONB;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS draft_json JSONB;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS builder_revision INTEGER DEFAULT 0;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS builder_content_hash TEXT;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS version INTEGER DEFAULT 1;
     ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS menu_order INTEGER DEFAULT 0;
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT NOW();
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT NOW();
 
     CREATE TABLE IF NOT EXISTS public.users (
       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
