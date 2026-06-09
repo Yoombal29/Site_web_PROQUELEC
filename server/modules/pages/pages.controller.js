@@ -24,7 +24,7 @@ async function getPage(req, res) {
 
 async function getPageById(req, res) {
   try {
-    const page = await service.getPageById(req.params.id);
+    const page = await service.getPageBySlugOrId(req.params.id);
     res.json(page);
   } catch (err) {
     res.status(err.status || 500).json({ error: err.message });

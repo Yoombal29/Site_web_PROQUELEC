@@ -1202,6 +1202,77 @@ async function initDB() {
   await pool.query(
     `CREATE TABLE IF NOT EXISTS public.pages (id SERIAL PRIMARY KEY, title TEXT, slug TEXT UNIQUE, content TEXT, content_raw TEXT, content_blocks JSONB, structure_json JSONB, design_options JSONB, security_level TEXT DEFAULT 'public', immutable BOOLEAN DEFAULT false, is_published BOOLEAN DEFAULT false, categories TEXT[], tags TEXT[], author TEXT, excerpt TEXT, meta_description TEXT, meta_keywords TEXT, meta_robots TEXT DEFAULT 'index,follow', featured_image TEXT, template TEXT DEFAULT 'default', show_hero BOOLEAN DEFAULT true, show_footer BOOLEAN DEFAULT true, custom_css TEXT, custom_js TEXT, header_html TEXT, footer_html TEXT, hero_title TEXT, hero_subtitle TEXT, hero_background_image TEXT, hero_cta_text TEXT, hero_cta_link TEXT, published_at TIMESTAMP, workflow_status TEXT DEFAULT 'draft', status TEXT DEFAULT 'draft', publish_date TIMESTAMP, unpublish_date TIMESTAMP, reading_time INTEGER DEFAULT 0, theme_config JSONB, draft_json JSONB, builder_revision INTEGER DEFAULT 0, builder_content_hash TEXT, version INTEGER DEFAULT 1, created_at TIMESTAMP DEFAULT NOW(), updated_at TIMESTAMP DEFAULT NOW())`,
   );
+  await pool.query(`
+    CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+    ALTER TABLE public.pages ADD COLUMN IF NOT EXISTS menu_order INTEGER DEFAULT 0;
+
+    CREATE TABLE IF NOT EXISTS public.users (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      email TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'user',
+      is_active BOOLEAN DEFAULT true,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      updated_at TIMESTAMPTZ DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS public.menu_items (
+      id SERIAL PRIMARY KEY,
+      title TEXT NOT NULL DEFAULT '',
+      url TEXT NOT NULL DEFAULT '#',
+      menu_order INTEGER DEFAULT 0,
+      parent_id INTEGER REFERENCES public.menu_items(id) ON DELETE SET NULL,
+      is_active BOOLEAN DEFAULT true,
+      menu_type TEXT DEFAULT 'main',
+      target TEXT DEFAULT '_self',
+      icon TEXT,
+      label TEXT,
+      linked_page_id TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      updated_at TIMESTAMPTZ DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS public.construction_mode (
+      id INTEGER PRIMARY KEY DEFAULT 1,
+      is_enabled BOOLEAN DEFAULT false,
+      updated_at TIMESTAMPTZ DEFAULT NOW(),
+      updated_by TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS public.page_versions (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      page_id TEXT NOT NULL,
+      content_raw TEXT,
+      structure_json JSONB,
+      version INTEGER,
+      version_name TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      created_by TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS public.testimonials (
+      id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL DEFAULT '',
+      role TEXT,
+      content TEXT,
+      rating INTEGER DEFAULT 5,
+      avatar_url TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS public.subscription_plans (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      name TEXT NOT NULL,
+      description TEXT,
+      price NUMERIC DEFAULT 0,
+      duration_days INTEGER DEFAULT 30,
+      features JSONB DEFAULT '[]'::jsonb,
+      is_active BOOLEAN DEFAULT true,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      updated_at TIMESTAMPTZ DEFAULT NOW()
+    );
+  `);
 
   // Check and insert initial pages
   for (const page of initialPages) {
@@ -1236,6 +1307,9 @@ async function initDB() {
   );
   await pool.query(
     `CREATE TABLE IF NOT EXISTS public.home_services (id SERIAL PRIMARY KEY, title TEXT, subtitle TEXT, description TEXT, cta_text TEXT, cta_link TEXT, background_url TEXT, created_at TIMESTAMP DEFAULT NOW())`,
+  );
+  await pool.query(
+    `ALTER TABLE public.home_services ADD COLUMN IF NOT EXISTS display_order INTEGER DEFAULT 0`,
   );
   await pool.query(
     `CREATE TABLE IF NOT EXISTS public.home_stats (id SERIAL PRIMARY KEY, label TEXT, value TEXT, icon_name TEXT, description TEXT, is_warning BOOLEAN DEFAULT false, display_order INTEGER DEFAULT 0)`,

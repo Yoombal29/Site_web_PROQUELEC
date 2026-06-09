@@ -18,6 +18,12 @@ async function getPageById(id) {
   return page;
 }
 
+async function getPageBySlugOrId(slugOrId) {
+  const page = await repo.findPageBySlugOrId(slugOrId);
+  if (!page) throw Object.assign(new Error('Page not found'), { status: 404 });
+  return page;
+}
+
 async function createPage(data) {
   return repo.createPage(data);
 }
@@ -223,6 +229,7 @@ module.exports = {
   listPages,
   getPage,
   getPageById,
+  getPageBySlugOrId,
   createPage,
   updatePage,
   deletePage,
