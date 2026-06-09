@@ -6,7 +6,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import DashboardHome from "@/components/admin/DashboardHome";
-import AdminPagesPanel from "@/components/admin/AdminPagesPanel";
 import AdminBlogPanel from "@/components/admin/AdminBlogPanel";
 import { EventCalendar } from "@/components/EventCalendar";
 import InfraDocs from '@/components/admin/InfraDocs';
@@ -14,6 +13,11 @@ import { AdminElectricalCertificationsPanel } from "@/components/admin/AdminElec
 import { AdminProfessionalTrainingPanel } from "@/components/admin/AdminProfessionalTrainingPanel";
 import { DocumentManager } from "@/components/DocumentManager";
 import ProjectList from "@/pages/projects/ProjectList"; // Import ProjectList
+import { AdminFormSubmissionsPanel } from "@/components/admin/AdminFormSubmissionsPanel";
+import { TemplateMarketplace } from "@/components/admin/TemplateMarketplace";
+import { EcommerceAdminPanel } from "@/components/admin/EcommerceAdminPanel";
+import { CustomFontsPanel } from "@/components/admin/CustomFontsPanel";
+import { AdminBrandingPanel } from "@/components/admin/AdminBrandingPanel";
 import { Loader2 } from "lucide-react";
 
 export default function AdminSecondaryDashboard() {
@@ -35,8 +39,6 @@ export default function AdminSecondaryDashboard() {
                 return <DashboardHome />;
             case "projects": // Integrated ProjectList Tab
                 return <ProjectList />;
-            case "pages":
-                return <AdminPagesPanel />;
             case "blog":
                 return <AdminBlogPanel />;
             case "events":
@@ -52,6 +54,16 @@ export default function AdminSecondaryDashboard() {
                         <DocumentManager />
                     </div>
                 );
+            case "templates":
+                return <TemplateMarketplace />;
+            case "ecommerce":
+                return <EcommerceAdminPanel />;
+            case "form_submissions":
+                return <AdminFormSubmissionsPanel />;
+            case "fonts":
+                return <CustomFontsPanel />;
+            case "branding":
+                return <AdminBrandingPanel />;
             case "infrastructure":
                 return <InfraDocs />;
             default:

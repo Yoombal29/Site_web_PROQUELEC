@@ -7,7 +7,7 @@ import { TableRow } from '@tiptap/extension-table-row';
 import { TableCell } from '@tiptap/extension-table-cell';
 import { TableHeader } from '@tiptap/extension-table-header';
 import { Collaboration } from '@tiptap/extension-collaboration';
-import { CollaborationCursor } from '@tiptap/extension-collaboration-cursor';
+import { CollaborationCaret } from '@tiptap/extension-collaboration-caret';
 import { Color } from '@tiptap/extension-color';
 import { TextStyle } from '@tiptap/extension-text-style';
 import { FontFamily } from '@tiptap/extension-font-family';
@@ -94,7 +94,7 @@ export function DocumentEditor({ documentId, initialContent = '', initialTitle =
       TableCell,
       ...(provider ? [
         Collaboration.configure({ document: ydoc }),
-        CollaborationCursor.configure({
+        CollaborationCaret.configure({
           provider: provider,
           user: {
             name: user?.email?.split('@')[0] || 'Anonyme',
@@ -172,7 +172,7 @@ export function DocumentEditor({ documentId, initialContent = '', initialTitle =
           let content = server.content;
           if (server.title) setTitle(server.title);
           if (typeof content === 'string') {
-            try { content = JSON.parse(content); } catch (e) { }
+            try { content = JSON.parse(content); } catch (_e) { /* not valid JSON, keep as-is */ }
           }
           if (ydoc.getXmlFragment('default').length === 0 && content) {
             editor.commands.setContent(content);

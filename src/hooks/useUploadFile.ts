@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useSession } from './useSession';
+import { normalizeUploadUrl } from '@/lib/normalizeUploadUrl';
 
 export const useUploadFile = (bucketName: string = 'uploads') => {
   const { session } = useSession();
@@ -34,8 +35,7 @@ export const useUploadFile = (bucketName: string = 'uploads') => {
 
       const result = await response.json();
 
-
-      return result.url; // Return the public URL for local use
+      return normalizeUploadUrl(result.url || `/uploads/${result.file_name}`); // Return the public URL for local use
     },
     onSuccess: (url) => {
 

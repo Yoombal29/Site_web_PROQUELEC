@@ -133,7 +133,7 @@ export const PageBuilder: React.FC<PageBuilderProps> = ({ blocks, onChange }) =>
   );
 
   return (
-    <div className="flex flex-col gap-6 h-full">
+    <div className="flex flex-col gap-6 h-full p-4 overflow-y-auto">
             {/* Search and Categories for Elements */}
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="relative flex-1">
@@ -147,9 +147,9 @@ export const PageBuilder: React.FC<PageBuilderProps> = ({ blocks, onChange }) =>
                 </div>
                 <Dialog open={isAddingBlock} onOpenChange={setIsAddingBlock}>
                     <DialogTrigger asChild>
-                        <Button className="bg-proqblue hover:bg-proqblue-dark">
-                            <Plus className="w-4 h-4 mr-2" /> Ajouter un élément
-                        </Button>
+                      <Button title="Ajouter un élément" aria-label="Ajouter un élément" className="bg-proqblue hover:bg-proqblue-dark text-white">
+                        <Plus className="w-4 h-4 mr-2" /> Ajouter un élément
+                      </Button>
                     </DialogTrigger>
                     <DialogContent className="max-w-4xl max-h-[80vh] flex flex-col">
                         <DialogHeader>
@@ -166,7 +166,8 @@ export const PageBuilder: React.FC<PageBuilderProps> = ({ blocks, onChange }) =>
                     <button
                       key={el.type}
                       onClick={() => addBlock(el.type)}
-                      className="flex flex-col items-center justify-center p-6 rounded-xl border-2 border-transparent hover:border-proqblue hover:bg-proqblue/5 transition-all group" aria-label="Action">
+                      className="flex flex-col items-center justify-center p-6 rounded-xl border-2 border-transparent hover:border-proqblue hover:bg-proqblue/5 transition-all group"
+                      aria-label={`Ajouter ${el.label}`}>
                       
                                             <div className="w-12 h-12 rounded-lg bg-slate-100 group-hover:bg-proqblue/10 flex items-center justify-center mb-3">
                                                 <Icon className="w-6 h-6 text-slate-600 group-hover:text-proqblue" />
@@ -202,17 +203,17 @@ export const PageBuilder: React.FC<PageBuilderProps> = ({ blocks, onChange }) =>
                                     <span className="text-[10px] text-muted-foreground font-mono">{block.id.split('-')[0]}</span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500" onClick={() => moveBlock(index, 'up')} disabled={index === 0}>
-                                        <MoveUp className="w-4 h-4" />
+                                    <Button title="Monter" aria-label="Monter le bloc" variant="ghost" size="icon" className="h-8 w-8 text-slate-500" onClick={() => moveBlock(index, 'up')} disabled={index === 0}>
+                                      <MoveUp className="w-4 h-4" />
                                     </Button>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500" onClick={() => moveBlock(index, 'down')} disabled={index === blocks.length - 1}>
-                                        <MoveDown className="w-4 h-4" />
+                                    <Button title="Descendre" aria-label="Descendre le bloc" variant="ghost" size="icon" className="h-8 w-8 text-slate-500" onClick={() => moveBlock(index, 'down')} disabled={index === blocks.length - 1}>
+                                      <MoveDown className="w-4 h-4" />
                                     </Button>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-proqblue" onClick={() => setEditingBlockId(editingBlockId === block.id ? null : block.id)}>
-                                        <Settings2 className="w-4 h-4" />
+                                    <Button title="Paramètres" aria-label="Ouvrir paramètres du bloc" variant="ghost" size="icon" className="h-8 w-8 text-proqblue" onClick={() => setEditingBlockId(editingBlockId === block.id ? null : block.id)}>
+                                      <Settings2 className="w-4 h-4" />
                                     </Button>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:bg-red-50 hover:text-red-600" onClick={() => removeBlock(block.id)}>
-                                        <Trash2 className="w-4 h-4" />
+                                    <Button title="Supprimer" aria-label="Supprimer le bloc" variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:bg-red-50 hover:text-red-600" onClick={() => removeBlock(block.id)}>
+                                      <Trash2 className="w-4 h-4" />
                                     </Button>
                                 </div>
                             </div>
@@ -311,7 +312,7 @@ const BlockSettingsEditor: React.FC<{type: string;data: unknown;onChange: (data:
                     </div>
                     <div className="grid gap-2">
                         <Label>Épaisseur (px)</Label>
-                        <Input type="number" value={data.height} onChange={(e) => handleChange('height', parseInt(e.target.value))} />
+                        <Input type="number" min={0} value={data.height} onChange={(e) => handleChange('height', parseInt(e.target.value))} />
                     </div>
                 </div>);
 
@@ -319,7 +320,7 @@ const BlockSettingsEditor: React.FC<{type: string;data: unknown;onChange: (data:
       return (
         <div className="grid gap-2">
                     <Label>Espace vertical (px)</Label>
-                    <Input type="number" value={data.height} onChange={(e) => handleChange('height', parseInt(e.target.value))} />
+                    <Input type="number" min={0} value={data.height} onChange={(e) => handleChange('height', parseInt(e.target.value))} />
                 </div>);
 
     case 'quote':
@@ -362,7 +363,7 @@ const BlockSettingsEditor: React.FC<{type: string;data: unknown;onChange: (data:
                 handleChange('items', newItems);
               }} />
                             </div>
-                            <Button variant="ghost" size="icon" onClick={() => {
+                            <Button title="Supprimer" aria-label="Supprimer la statistique" variant="ghost" size="icon" onClick={() => {
               const newItems = data.items.filter((_: unknown, idx: number) => idx !== i);
               handleChange('items', newItems);
             }}>
@@ -466,7 +467,7 @@ const BlockSettingsEditor: React.FC<{type: string;data: unknown;onChange: (data:
                     </div>
                     <div className="grid gap-2">
                         <Label>Type de plateforme</Label>
-                        <select title="Type de plateforme" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" value={data.type} onChange={(e) => handleChange('type', e.target.value)}>
+                        <select aria-label="Type de plateforme" title="Type de plateforme" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" value={data.type} onChange={(e) => handleChange('type', e.target.value)}>
                             <option value="youtube">YouTube</option>
                             <option value="vimeo">Vimeo</option>
                             <option value="mp4">Fichier Direct (MP4)</option>
@@ -486,8 +487,9 @@ const BlockSettingsEditor: React.FC<{type: string;data: unknown;onChange: (data:
                         <Input value={data.subtitle} onChange={(e) => handleChange('subtitle', e.target.value)} />
                     </div>
                     <div className="grid gap-2">
-                        <Label>Image de Fond (URL)</Label>
-                        <Input value={data.background_url} onChange={(e) => handleChange('background_url', e.target.value)} placeholder="/images/hero.jpg" />
+                      <Label>Image de Fond (URL)</Label>
+                      <Input aria-label="Image de fond" value={data.background_url} onChange={(e) => handleChange('background_url', e.target.value)} placeholder="/uploads/nom-fichier.ext" />
+                      <p className="text-xs text-slate-400">Pour une image locale, utilisez <strong>/uploads/nom-fichier.ext</strong></p>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-2">

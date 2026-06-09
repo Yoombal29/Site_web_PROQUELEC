@@ -1,43 +1,46 @@
-# Exclude large model files and caches from Docker build context
-# Note: .dockerignore patterns are relative to the build context. For builds
-# using subfolder contexts (example: haystack_backend), add a .dockerignore
-# inside that subfolder (already present at haystack_backend/.dockerignore).
-
-# AI models and caches
-.cache
-models
-checkpoints
-*.bin
-*.pt
-*.safetensors
-.huggingface
-
-# Python
-.venv
-venv
-.venv_arc
-__pycache__
-*.pyc
-
-# Node
+# Dependencies
 node_modules
+server/node_modules
+
+# Build output
+dist
+dist-ssr
+*.local
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs
+
+# Test
+coverage
+__tests__
+test-results
+playwright-report
 
 # Git
 .git
 .gitignore
+.gitattributes
 
-# Logs
-*.log
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
 
-# Windows
+# OS
+.DS_Store
 Thumbs.db
-Desktop.ini
 
-# Datasets / downloads
-data
-datasets
-downloads
+# Docker
+docker/postgres/data
 
-# Optional large folders
-build
-dist
+# Temp
+tmp
+scratch
+.cache

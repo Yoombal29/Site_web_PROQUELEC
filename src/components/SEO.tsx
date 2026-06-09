@@ -56,8 +56,8 @@ export function SEO({
       addressLocality: 'Dakar',
       addressCountry: 'SN'
     },
-    telephone: settings?.phone_number || '+221 76 644 76 06',
-    email: settings?.contact_email || 'contact@proquelec.sn',
+    telephone: settings?.phone_number || '+221 33 848 68 55',
+    email: settings?.contact_email || 'proquelec@proquelec.sn',
     sameAs: [
     settings?.facebook_url,
     settings?.linkedin_url,

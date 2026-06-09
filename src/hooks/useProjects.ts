@@ -41,7 +41,7 @@ export interface AuditLog {
     entity_type: string;
     entity_id: string;
     action: string;
-    changes: any;
+    changes: unknown;
     performed_by: string;
     performed_by_email?: string;
     performed_by_role?: string;
@@ -85,6 +85,15 @@ const fetchProjectDocuments = async (id: string): Promise<ProjectDocument[]> => 
     return res.json();
 };
 
+async function readApiError(res: Response, fallback: string) {
+    try {
+        const data = await res.json();
+        return String(data?.message || data?.error || fallback);
+    } catch {
+        return fallback;
+    }
+}
+
 const createProject = async (project: Partial<Project>) => {
     const token = localStorage.getItem('token');
     const res = await fetch('/api/projects', {
@@ -95,7 +104,7 @@ const createProject = async (project: Partial<Project>) => {
         },
         body: JSON.stringify(project)
     });
-    if (!res.ok) throw new Error('Failed to create project');
+    if (!res.ok) throw new Error(await readApiError(res, 'Impossible de créer le dossier'));
     return res.json();
 };
 

@@ -41,11 +41,7 @@ export function contentBlocksToJson(blocks: SyncBlock[]): string {
 }
 
 export function jsonToContentBlocks(json: string): SyncBlock[] {
-  try {
-    return JSON.parse(json);
-  } catch (e) {
-    throw e;
-  }
+  return JSON.parse(json);
 }
 
 export function useBidirectionalSync(

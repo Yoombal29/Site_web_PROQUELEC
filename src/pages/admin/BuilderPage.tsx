@@ -1,821 +1,648 @@
-
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useBuilderStore } from '@/stores/useBuilderStore';
-import type { Block } from '@/types/builder';
-import type { DragEndEvent } from '@dnd-kit/core';
-
-import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
-import { Button } from '@/components/ui/button';
+/**
+ * BuilderPage.tsx — GOD MODE
+ * Éditeur de page centralisé et unifié basé sur Craft.js.
+ *
+ * Si pageId est absent → affiche un écran de sélection de page.
+ * Si pageId est présent → ouvre l'éditeur directement.
+ */
+import React, { useEffect, useState } from 'react';
+import { Editor } from '@craftjs/core';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
-  Plus, LayoutTemplate, Box, Trash2, Save, Loader2, MousePointer2,
-  Monitor, Tablet, Smartphone, Undo, Redo, Code, ChevronLeft, Eye } from
-'lucide-react';
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-  arrayMove } from
-'@dnd-kit/sortable';
-import BuilderPageRenderer from '@/components/builder/BuilderPageRenderer';
-import PropertyPanel from '@/components/builder/PropertyPanel';
+  Zap,
+  FileText,
+  Plus,
+  Search,
+  ExternalLink,
+  Loader2,
+  ChevronRight,
+  Menu,
+  X,
+  Copy,
+} from 'lucide-react';
 import { apiFetch } from '@/lib/api-client';
 import { toast } from 'sonner';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger } from
-"@/components/ui/dialog";
-import { useContentVersioning } from '@/hooks/useContentVersioning';
-import { useAnalytics } from '@/hooks/useAnalytics';
 
-type WorkflowStatus = 'draft' | 'review' | 'approved' | 'published';
+import { GodToolbar } from '@/components/god-builder/GodToolbar';
+import { GodToolbox } from '@/components/god-builder/GodToolbox';
+import { GodCanvas } from '@/components/god-builder/GodCanvas';
+import { GodSettings } from '@/components/god-builder/GodSettings';
+import { GodLayers } from '@/components/god-builder/GodLayers';
+import { GodTimeline } from '@/components/god-builder/GodTimeline';
+import { BuilderErrorBoundary } from '@/components/god-builder/BuilderErrorBoundary';
+import { useBrandingStore } from '@/stores/branding.store';
 
-type AdminPageResponse = {
+import { CRAFT_RESOLVER as RESOLVER } from '@/components/blocks/craftResolver';
+
+import { GodEditorProvider, useGodEditor } from '@/components/god-builder/GodEditorContext';
+import { DynamicContextProvider } from '@/components/blocks/DynamicDataBlocks';
+
+type BuilderDesignOptions = Record<string, unknown> & {
+  page_type?: string;
+};
+
+type BuilderListPage = {
+  id: string;
   title?: string;
   slug?: string;
-  structure_json?: unknown;
-  content_blocks?: unknown[];
+  status?: string;
+  immutable?: boolean;
   content?: string;
-  meta_description?: string;
-  meta_keywords?: string;
-  meta_robots?: string;
-  custom_css?: string;
-  custom_js?: string;
-  is_published?: boolean;
-  workflow_status?: WorkflowStatus;
+  content_raw?: string;
+  content_blocks?: unknown;
+  structure_json?: unknown;
+  design_options?: BuilderDesignOptions | null;
+  theme_config?: unknown;
 };
 
-type LegacyContentBlock = {
-  id?: string;
-  type?: string;
-  data?: Record<string, unknown>;
-};
-
-type LegacyTemplate = {
+type BuilderTemplate = {
   id: string;
   name: string;
-  createdAt: number;
-  block: Block;
+  description?: string;
+  category?: string;
+  structure?: unknown;
+  theme_config?: unknown;
 };
 
-type PageDataState = {
+type CreatePagePayload = {
   title: string;
   slug: string;
-  metaDescription: string;
-  metaKeywords: string;
-  metaRobots: string;
-  customCss: string;
-  customJs: string;
-  isPublished: boolean;
-  workflowStatus: 'draft' | 'review' | 'approved' | 'published';
+  content_raw: string;
+  is_published: boolean;
+  status: 'draft';
+  workflow_status: 'draft';
+  content_blocks?: unknown;
+  structure_json?: unknown;
+  design_options?: BuilderDesignOptions | null;
+  theme_config?: unknown;
 };
 
-const BuilderPage: React.FC = () => {
-  const { pageId } = useParams<{ pageId: string }>();
-  const {
-    blocks,
-    setBlocks,
-    addBlock,
-    importBlock,
-    selectedBlockId,
-    selectBlock,
-    templates,
-    loadTemplates,
-    deleteTemplate,
-    undo,
-    redo,
-    canUndo,
-    canRedo
-  } = useBuilderStore();
+const getErrorMessage = (error: unknown, fallback: string) =>
+  error instanceof Error ? error.message : fallback;
 
-  const { createVersion, getVersions, restoreVersion } = useContentVersioning();
-  const { getPageAnalytics } = useAnalytics();
+const getPageType = (page: Pick<BuilderListPage, 'design_options'>) =>
+  page.design_options && typeof page.design_options === 'object'
+    ? page.design_options.page_type
+    : undefined;
 
-  const [isSaving, setIsSaving] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
-  const [showPreview, setShowPreview] = useState(false);
-  const [previewMode, setPreviewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
-  const [versionDialogOpen, setVersionDialogOpen] = useState(false);
-  const [showAnalytics, setShowAnalytics] = useState(false);
-  const [versionChangeLog, setVersionChangeLog] = useState('Sauvegarde manuelle du builder');
-  const [analyticsData, setAnalyticsData] = useState<{ views: number; uniqueVisitors: number; avgTime: string; bounceRate: string } | null>(null);
-  const [pageData, setPageData] = useState<PageDataState | null>(null);
-  const [initialPageState, setInitialPageState] = useState<{
-    blocks: Block[];
-    title: string;
-    slug: string;
-    metaDescription: string;
-    metaKeywords: string;
-    metaRobots: string;
-    customCss: string;
-    customJs: string;
-    isPublished: boolean;
-    workflowStatus: 'draft' | 'review' | 'published' | 'archived';
-  } | null>(null);
+// ─────────────────────────────────────────────────────────
+// PAGE SELECTOR SCREEN (shown when no pageId in URL)
+// ─────────────────────────────────────────────────────────
+const PageSelectorScreen = () => {
+  const navigate = useNavigate();
+  const { config: brand } = useBrandingStore();
+  const [pages, setPages] = useState<BuilderListPage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
+  const [showNewDialog, setShowNewDialog] = useState(false);
+  const [templates, setTemplates] = useState<BuilderTemplate[]>([]);
+  const [creating, setCreating] = useState(false);
+  const [pageTypeFilter, setPageTypeFilter] = useState<string>('all');
 
-  const isDirty = useMemo(() => {
-    if (!initialPageState) return false;
-    return JSON.stringify({
-      blocks,
-      title: pageData?.title || '',
-      slug: pageData?.slug || '',
-      metaDescription: pageData?.metaDescription || '',
-      metaKeywords: pageData?.metaKeywords || '',
-      metaRobots: pageData?.metaRobots || '',
-      customCss: pageData?.customCss || '',
-      customJs: pageData?.customJs || '',
-      isPublished: pageData?.isPublished || false,
-      workflowStatus: pageData?.workflowStatus || 'draft'
-    }) !== JSON.stringify(initialPageState);
-  }, [blocks, initialPageState, pageData]);
-
-  const handlePageDataChange = useCallback((changes: Partial<PageDataState>) => {
-    setPageData((current) => current ? { ...current, ...changes } : current);
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await apiFetch<BuilderListPage[]>('/api/admin/pages');
+        setPages(Array.isArray(data) ? data : []);
+      } catch (e: unknown) {
+        setError(getErrorMessage(e, 'Impossible de charger les pages'));
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
   }, []);
 
-  // 1. Initial Load
+  // Charger les templates disponibles
   useEffect(() => {
-    const loadPage = async () => {
-      loadTemplates();
-      setLoadError(null);
-
-      if (!pageId) {
-        setLoadError('Aucun identifiant de page fourni.');
-        setBlocks([]);
-        setIsLoading(false);
-        return;
-      }
-
-      setIsLoading(true);
+    const loadTemplates = async () => {
       try {
-        const adminPage = await apiFetch<AdminPageResponse>(`/api/admin/pages/${pageId}`);
-
-        if (!adminPage) {
-          setLoadError('Page introuvable.');
-          setBlocks([]);
-          return;
-        }
-
-        setPageData({
-          title: adminPage.title || `Page ${pageId}`,
-          slug: adminPage.slug || pageId,
-          metaDescription: adminPage.meta_description || '',
-          metaKeywords: adminPage.meta_keywords || '',
-          metaRobots: adminPage.meta_robots || 'index,follow',
-          customCss: adminPage.custom_css || '',
-          customJs: adminPage.custom_js || '',
-          isPublished: adminPage.is_published || false,
-          workflowStatus: adminPage.workflow_status || (adminPage.is_published ? 'published' : 'draft')
-        });
-
-        let availableBlocks: Block[] = [];
-
-        if (Array.isArray(adminPage.structure_json)) {
-          availableBlocks = adminPage.structure_json as Block[];
-        } else if (typeof adminPage.structure_json === 'string' && adminPage.structure_json.trim().length > 0) {
-          try {
-            availableBlocks = JSON.parse(adminPage.structure_json) as Block[];
-          } catch (parseError) {
-            console.warn('Impossible de parser structure_json:', parseError);
-          }
-        }
-
-        if (!availableBlocks || availableBlocks.length === 0) {
-          if (Array.isArray(adminPage.content_blocks) && adminPage.content_blocks.length > 0) {
-            availableBlocks = adminPage.content_blocks.map((b: LegacyContentBlock) => ({
-              id: b?.id || `legacy-${Math.random().toString(36).slice(2, 9)}`,
-              type: b?.type === 'text' ? 'text-block' : b?.type || 'section',
-              content: {
-                title: b?.data?.title,
-                subtitle: b?.data?.subtitle,
-                text: b?.data?.text || b?.data?.cta_text,
-                html: b?.data?.content,
-                src: b?.data?.url,
-                href: b?.data?.cta_link || b?.data?.href,
-                caption: b?.data?.caption
-              },
-              style: b?.data?.background_image ? {
-                backgroundImage: `url(${b.data?.background_image})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                color: '#ffffff'
-              } : {}
-            }));
-            toast.info('Anciens blocs importés automatiquement.');
-          } else if (adminPage.content && typeof adminPage.content === 'string' && adminPage.content.trim().length > 0) {
-            availableBlocks = [{
-              id: `legacy-html-${Date.now()}`,
-              type: 'html',
-              content: { html: adminPage.content },
-              style: { padding: '20px' }
-            }];
-            toast.info('Contenu HTML existant importé.');
-          }
-        }
-
-          setBlocks(availableBlocks || []);
-        setInitialPageState({
-          blocks: availableBlocks || [],
-          title: adminPage.title || `Page ${pageId}`,
-          slug: adminPage.slug || pageId,
-          metaDescription: adminPage.meta_description || '',
-          metaKeywords: adminPage.meta_keywords || '',
-          metaRobots: adminPage.meta_robots || 'index,follow',
-          customCss: adminPage.custom_css || '',
-          customJs: adminPage.custom_js || '',
-          isPublished: adminPage.is_published || false,
-          workflowStatus: adminPage.workflow_status || (adminPage.is_published ? 'published' : 'draft')
-        });
-      } catch (error: unknown) {
-        console.error('Erreur chargement du builder:', error);
-        const errorStatus = (error as unknown as { status?: number }).status;
-        if (errorStatus === 401) {
-          setLoadError('Accès refusé. Veuillez vous connecter pour utiliser le builder.');
-        } else {
-          setLoadError((error as Error)?.message || 'Impossible de charger la page. Vérifiez la connexion ou l’identifiant.');
-        }
-        setBlocks([]);
-      } finally {
-        setIsLoading(false);
+        const data = await apiFetch<BuilderTemplate[]>('/api/builder/templates');
+        setTemplates(Array.isArray(data) ? data : []);
+      } catch {
+        // Pas de templates disponibles
       }
     };
+    loadTemplates();
+  }, []);
 
-    loadPage();
-  }, [pageId, setBlocks, loadTemplates]);
-
-  // 2. Save Page
-  const handleSave = useCallback(async () => {
-    if (!pageId) {
-      toast.error('Impossible de sauvegarder : identifiant de page manquant.');
-      return;
-    }
-
-    setIsSaving(true);
+  // Créer une nouvelle page
+  const createPage = async (template?: BuilderTemplate) => {
+    setCreating(true);
     try {
-      await apiFetch(`/api/admin/pages/${pageId}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-          structure_json: blocks,
-          title: pageData?.title,
-          slug: pageData?.slug,
-          meta_description: pageData?.metaDescription,
-          meta_keywords: pageData?.metaKeywords,
-          meta_robots: pageData?.metaRobots,
-          custom_css: pageData?.customCss,
-          custom_js: pageData?.customJs,
-          is_published: pageData?.isPublished,
-          workflow_status: pageData?.workflowStatus
-        })
+      const title = `Nouvelle page ${new Date().toLocaleDateString('fr-FR')}`;
+      const slug = `nouvelle-page-${Date.now()}`;
+
+      const body: CreatePagePayload = {
+        title,
+        slug,
+        content_raw: '',
+        is_published: false,
+        status: 'draft',
+        workflow_status: 'draft',
+      };
+
+      // Si un template est sélectionné, l'utiliser comme structure de base
+      if (template?.structure) {
+        const structure =
+          typeof template.structure === 'string'
+            ? JSON.parse(template.structure)
+            : template.structure;
+        body.structure_json = structure;
+        body.theme_config = template.theme_config;
+      }
+
+      const newPage = await apiFetch<{ id: string }>('/api/pages', {
+        method: 'POST',
+        body: JSON.stringify(body),
       });
-      if (pageData) {
-        setInitialPageState({
-          blocks,
-          title: pageData.title,
-          slug: pageData.slug,
-          metaDescription: pageData.metaDescription,
-          metaKeywords: pageData.metaKeywords,
-          metaRobots: pageData.metaRobots,
-          customCss: pageData.customCss,
-          customJs: pageData.customJs,
-          isPublished: pageData.isPublished,
-          workflowStatus: pageData.workflowStatus
-        });
-      }
-      toast.success('Page sauvegardée avec succès !');
-    } catch (error) {
-      console.error('Erreur sauvegarde du builder:', error);
-      toast.error('Erreur lors de la sauvegarde. Réessayez plus tard.');
+
+      setShowNewDialog(false);
+      navigate(`/admin/builder/${newPage.id}`);
+    } catch (e: unknown) {
+      console.error('Erreur création page:', e);
+      setError(getErrorMessage(e, 'Erreur lors de la création'));
     } finally {
-      setIsSaving(false);
+      setCreating(false);
     }
-  }, [blocks, pageId, pageData]);
+  };
 
-  const pageVersions = useMemo(() => {
-    return pageId ? getVersions(pageId) : [];
-  }, [getVersions, pageId]);
-
-  useEffect(() => {
-    if (!pageId) return;
-
-    const loadAnalytics = async () => {
-      const analytics = await getPageAnalytics(pageId);
-      setAnalyticsData(analytics);
-    };
-
-    loadAnalytics();
-  }, [pageId, getPageAnalytics]);
-
-  const handleCreateVersion = useCallback(async () => {
-    if (!pageId || !pageData) {
-      toast.error('Impossible de créer une version sans données de page.');
-      return;
-    }
-
-    await createVersion(pageId, pageData.title, JSON.stringify({ blocks, pageData }), versionChangeLog || 'Sauvegarde manuelle du builder');
-    setVersionDialogOpen(false);
-    toast.success('Version créée pour cette page.');
-  }, [pageId, pageData, blocks, createVersion, versionChangeLog]);
-
-  const handleRestoreVersion = useCallback(async (versionId: string) => {
-    const version = await restoreVersion(versionId);
-    if (!version) {
-      toast.error('Version introuvable.');
-      return;
-    }
-
+  // Dupliquer une page
+  const duplicatePage = async (page: BuilderListPage, e: React.MouseEvent) => {
+    e.stopPropagation();
     try {
-      const payload = JSON.parse(version.content);
-      if (payload.blocks) {
-        setBlocks(payload.blocks);
-      }
-      if (payload.pageData) {
-        setPageData(payload.pageData);
-      }
-      toast.success(`Version ${version.version} restaurée.`);
-    } catch (restoreError) {
-      console.error('Erreur restauration version:', restoreError);
-      toast.error('Impossible de restaurer cette version.');
-    }
-  }, [restoreVersion, setBlocks]);
+      const newTitle = `${page.title || 'Sans titre'} (copie)`;
+      const newSlug = `${page.slug || 'page'}-copie-${Date.now()}`;
 
-  // 3. Drag End Handler
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
+      await apiFetch<BuilderListPage>('/api/pages', {
+        method: 'POST',
+        body: JSON.stringify({
+          title: newTitle,
+          slug: newSlug,
+          content_raw: page.content_raw || '',
+          content_blocks: page.content_blocks,
+          structure_json: page.structure_json,
+          design_options: page.design_options,
+          theme_config: page.theme_config,
+          is_published: false,
+          status: 'draft',
+          workflow_status: 'draft',
+        }),
+      });
 
-    if (!over) return;
-
-    const activeId = active.id.toString();
-    const overId = over.id.toString();
-
-    // CASE 1: Dropping from Sidebar (New Block/Template)
-    if (activeId.startsWith('sidebar-')) {
-      let index = blocks.length; // Default: end
-
-      if (overId !== 'canvas-droppable') {
-        // If dropped over a specific block, insert before it
-        const overIndex = blocks.findIndex((b) => b.id === overId);
-        if (overIndex !== -1) index = overIndex;
-      }
-
-      if (activeId.startsWith('sidebar-item-')) {
-        const type = active.data.current?.type;
-        if (type) addBlock(type, undefined, index);
-      } else if (activeId.startsWith('sidebar-template-')) {
-        const templateBlock = active.data.current?.block;
-        if (templateBlock) importBlock(templateBlock, undefined, index);
-      }
-    }
-    // CASE 2: Reordering Existing Blocks
-    else if (activeId !== overId) {
-      const oldIndex = blocks.findIndex((b) => b.id === activeId);
-      const newIndex = blocks.findIndex((b) => b.id === overId);
-
-      if (oldIndex !== -1 && newIndex !== -1) {
-        const newBlocks = arrayMove(blocks, oldIndex, newIndex);
-        setBlocks(newBlocks);
-      }
+      // Recharger la liste
+      const data = await apiFetch<BuilderListPage[]>('/api/admin/pages');
+      setPages(Array.isArray(data) ? data : []);
+      toast.success(`Page dupliquée : ${newTitle}`);
+    } catch (err) {
+      console.error('Erreur duplication:', err);
+      toast.error('Erreur lors de la duplication');
     }
   };
 
-  // Helper for View Mode Width
-  const getCanvasWidth = () => {
-    switch (viewMode) {
-      case 'mobile':return 'max-w-[375px]';
-      case 'tablet':return 'max-w-[768px]';
-      default:return 'max-w-6xl';
-    }
+  const filtered = pages.filter((p) => {
+    // Search filter
+    const matchesSearch =
+      (p.title || '').toLowerCase().includes(search.toLowerCase()) ||
+      (p.slug || '').toLowerCase().includes(search.toLowerCase());
+    if (!matchesSearch) return false;
+
+    // Type filter
+    if (pageTypeFilter === 'all') return true;
+    if (pageTypeFilter === 'content') return !p.immutable;
+    if (pageTypeFilter === 'functional') return p.immutable === true && getPageType(p) !== 'hybrid';
+    if (pageTypeFilter === 'hybrid') return getPageType(p) === 'hybrid';
+    return true;
+  });
+
+  const statusColors: Record<string, string> = {
+    published: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20',
+    draft: 'bg-slate-500/15 text-slate-400 border-slate-500/20',
+    review: 'bg-amber-500/15 text-amber-400 border-amber-500/20',
+    approved: 'bg-blue-500/15 text-blue-400 border-blue-500/20',
+    archived: 'bg-red-500/15 text-red-400 border-red-500/20',
+  };
+
+  const statusLabels: Record<string, string> = {
+    published: 'Publié',
+    draft: 'Brouillon',
+    review: 'En revue',
+    approved: 'Approuvé',
+    archived: 'Archivé',
   };
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
-            <div className="flex h-screen w-full bg-slate-100 overflow-hidden">
-
-                {/* GAUCHE: Bibliothèques */}
-                <aside className="w-72 bg-white border-r border-slate-200 flex flex-col shadow-sm z-10 shrink-0">
-                    <div className="h-14 border-b flex items-center px-4 font-bold text-slate-700 bg-white">
-                        <Plus className="w-5 h-5 mr-2 text-blue-600" /> Bibliothèque
-                    </div>
-
-                    <Tabs defaultValue="elements" className="flex-1 flex flex-col overflow-hidden">
-                        <div className="px-2 pt-2 border-b bg-slate-50">
-                            <TabsList className="w-full grid grid-cols-2">
-                                <TabsTrigger value="elements" className="text-xs">Éléments</TabsTrigger>
-                                <TabsTrigger value="templates" className="text-xs">Modèles</TabsTrigger>
-                            </TabsList>
-                        </div>
-
-                        <TabsContent value="elements" className="flex-1 overflow-y-auto p-4 space-y-2">
-                            <div className="uppercase text-[10px] font-bold text-slate-400 mb-2 tracking-wider">Base</div>
-                            <DraggableItem type="hero" label="Hero Section" icon={<LayoutTemplate size={16} />} />
-                            <DraggableItem type="section" label="Section Vide" icon={<Box size={16} />} />
-                            <DraggableItem type="text-block" label="Bloc Texte" icon={<Box size={16} />} />
-                            <DraggableItem type="image" label="Image Seule" icon={<Box size={16} />} />
-                            <DraggableItem type="html" label="Code HTML" icon={<Box size={16} />} />
-                        </TabsContent>
-
-                        <TabsContent value="templates" className="flex-1 overflow-y-auto p-4 space-y-3">
-                            <div className="uppercase text-[10px] font-bold text-slate-400 mb-2 tracking-wider">Mes Modèles</div>
-                            {templates.length === 0 &&
-              <div className="text-center py-8 text-slate-400 text-xs italic border border-dashed rounded bg-slate-50">
-                                    Aucun modèle sauvegardé.<br />
-                                    Utilisez le panneau de droite.
-                                </div>
-              }
-                            {templates.map((tpl) =>
-              <div key={tpl.id} className="group relative">
-                                    <DraggableTemplate template={tpl} />
-                                    <button
-                  className="absolute top-2 right-2 p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                  onClick={(e) => {e.stopPropagation();deleteTemplate(tpl.id);}}
-                  title="Supprimer le modèle">
-                  
-                                        <Trash2 size={12} />
-                                    </button>
-                                </div>
-              )}
-                        </TabsContent>
-                    </Tabs>
-                </aside>
-
-                {/* CENTRE: Canvas */}
-                <main className="flex-1 flex flex-col relative w-0 bg-slate-100">
-
-                    {/* Toolbar */}
-                    <header className="h-14 bg-white border-b flex items-center justify-between px-4 z-10 w-full shadow-sm shrink-0">
-
-                        {/* Left Controls (Undo/Redo) */}
-                        <div className="flex items-center gap-2">
-                            <Button variant="ghost" size="icon" className="mr-2 text-slate-400 hover:text-slate-600" title="Retour à la liste" asChild>
-                                <a href="/dashboard?tab=pages" title="Retour à la liste des pages">
-                                    <ChevronLeft className="w-5 h-5" />
-                                </a>
-                            </Button>
-
-                            <div className="flex bg-slate-100 rounded p-1">
-                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={undo} disabled={!canUndo()} title="Annuler (Ctrl+Z)">
-                                    <Undo className="w-4 h-4 text-slate-600" />
-                                </Button>
-                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={redo} disabled={!canRedo()} title="Rétablir (Ctrl+Y)">
-                                    <Redo className="w-4 h-4 text-slate-600" />
-                                </Button>
-                            </div>
-                            <span className="h-6 w-px bg-slate-200 mx-2"></span>
-
-                            {/* Device Selector */}
-                            <div className="flex bg-slate-100 rounded p-1">
-                                <Button variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'desktop' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('desktop')}>
-                                    <Monitor className="w-4 h-4" />
-                                </Button>
-                                <Button variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'tablet' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('tablet')}>
-                                    <Tablet className="w-4 h-4" />
-                                </Button>
-                                <Button variant="ghost" size="icon" className={`h-7 w-7 ${viewMode === 'mobile' ? 'bg-white shadow text-blue-600' : 'text-slate-500'}`} onClick={() => setViewMode('mobile')}>
-                                    <Smartphone className="w-4 h-4" />
-                                </Button>
-                            </div>
-                        </div>
-
-                        {/* Center Info: Page Title */}
-                        <div className="flex flex-col items-center">
-                            {pageData ?
-              <>
-                                    <h1 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                                        {pageData.title}
-                                        <span className={`px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-tighter ${pageData.workflowStatus === 'published' ? 'bg-emerald-50 text-emerald-700' : pageData.workflowStatus === 'review' ? 'bg-amber-50 text-amber-700' : pageData.workflowStatus === 'archived' ? 'bg-rose-50 text-rose-700' : 'bg-slate-100 text-slate-500'}`}>
-                                          {pageData.workflowStatus === 'published' ? 'Publié' : pageData.workflowStatus === 'review' ? 'En relecture' : pageData.workflowStatus === 'archived' ? 'Archivée' : 'Brouillon'}
-                                        </span>
-                                    </h1>
-                                    <p className="text-[10px] text-slate-400 font-mono italic">/{pageData.slug}</p>
-                                    <div className="mt-1 flex gap-2">
-                                        {loadError ? (
-                                            <span className="text-[10px] uppercase text-rose-500 tracking-[0.18em] font-semibold">Erreur de chargement</span>
-                                        ) : isDirty ? (
-                                            <span className="text-[10px] uppercase text-amber-500 tracking-[0.18em] font-semibold">Modifications non sauvegardées</span>
-                                        ) : (
-                                            <span className="text-[10px] uppercase text-emerald-600 tracking-[0.18em] font-semibold">Synchronisé</span>
-                                        )}
-                                    </div>
-                                </> :
-
-              <div className="h-8 w-32 bg-slate-100 animate-pulse rounded"></div>
-              }
-                        </div>
-
-                        {/* Right Actions */}
-                        <div className="flex gap-2">
-                            {/* Code View Dialog */}
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <Button variant="ghost" size="sm" className="hidden xl:flex text-slate-500">
-                                        <Code className="w-4 h-4 mr-2" /> Code
-                                    </Button>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-                                    <DialogHeader>
-                                        <DialogTitle>Code Structure (JSON)</DialogTitle>
-                                        <DialogDescription>
-                                            Structure brute de la page.
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <pre className="bg-slate-950 text-slate-50 p-4 rounded text-xs font-mono overflow-auto max-h-[500px]">
-                                        {JSON.stringify(blocks, null, 2)}
-                                    </pre>
-                                </DialogContent>
-                            </Dialog>
-
-                            <Button size="sm" variant="outline" onClick={() => setShowPreview(true)} className="hidden xl:inline-flex text-slate-500">
-                                <Eye className="w-4 h-4 mr-2" /> Aperçu
-                            </Button>
-
-                            <Button size="sm" variant="outline" onClick={() => setVersionDialogOpen(true)} className="hidden xl:inline-flex text-slate-500">
-                                <Code className="w-4 h-4 mr-2" /> Versions
-                            </Button>
-
-                            <Button size="sm" variant="outline" onClick={() => setShowAnalytics(true)} className="hidden xl:inline-flex text-slate-500">
-                                <Monitor className="w-4 h-4 mr-2" /> Analytics
-                            </Button>
-
-                            <Button size="sm" variant="outline" asChild>
-                                <Link to="/admin?tab=pages">
-                                    Retour au menu
-                                </Link>
-                            </Button>
-                            <Button size="sm" variant="outline" asChild>
-                                <a href={`/${pageData?.slug || ''}`} target="_blank" rel="noreferrer">
-                                    Voir
-                                </a>
-                            </Button>
-                            <Button
-                size="sm"
-                className="bg-blue-600 hover:bg-blue-700 min-w-[120px]"
-                onClick={handleSave}
-                disabled={isSaving || isLoading}>
-                
-                                {isSaving ?
-                <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Sauvegarde...</> :
-
-                <><Save className="w-4 h-4 mr-2" /> Sauvegarder</>
+    <>
+      <div className="min-h-screen bg-[#0a0a15] flex flex-col">
+        {/* Header */}
+        <div className="bg-[#12121f] border-b border-[#252538] px-6 py-4 sticky top-0 z-40">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="p-2 hover:bg-[#252538] rounded-lg transition text-slate-300"
+                aria-label={
+                  sidebarOpen ? 'Masquer le menu des pages' : 'Afficher le menu des pages'
                 }
-                            </Button>
-                        </div>
-                    </header>
+                title="Basculer le menu"
+              >
+                <Menu size={20} />
+              </button>
+              <div>
+                <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 text-amber-400 px-3 py-1 rounded-full text-xs font-bold">
+                  <Zap size={12} />
+                  {brand.hideGodMode ? brand.builderLabel : 'BUILDER'}
+                </div>
+                <h1 className="text-2xl font-bold text-white mt-1">Studio de Création</h1>
+              </div>
+            </div>
+            <button
+              onClick={() => navigate('/admin')}
+              className="px-4 py-2 text-slate-300 hover:text-white transition text-sm"
+            >
+              ← Admin
+            </button>
+          </div>
+        </div>
 
-                    <Dialog open={showPreview} onOpenChange={setShowPreview}>
-                      <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden p-0">
-                        <DialogHeader>
-                          <DialogTitle>Aperçu de la page</DialogTitle>
-                          <DialogDescription>Visualisez le rendu final de la page sans les contrôles du builder.</DialogDescription>
-                        </DialogHeader>
-                        <div className="p-4 border-b bg-slate-50 flex items-center justify-between gap-3">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold">Mode aperçu</span>
-                            <span className="text-xs text-slate-500">{pageData?.title || 'Page'}</span>
-                          </div>
-                          <div className="flex gap-2">
-                            <Button size="sm" variant={previewMode === 'desktop' ? 'default' : 'outline'} onClick={() => setPreviewMode('desktop')}>
-                              <Monitor className="w-4 h-4" />
-                            </Button>
-                            <Button size="sm" variant={previewMode === 'tablet' ? 'default' : 'outline'} onClick={() => setPreviewMode('tablet')}>
-                              <Tablet className="w-4 h-4" />
-                            </Button>
-                            <Button size="sm" variant={previewMode === 'mobile' ? 'default' : 'outline'} onClick={() => setPreviewMode('mobile')}>
-                              <Smartphone className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="bg-slate-200 p-4 overflow-auto h-[calc(90vh-120px)]">
-                          <div className={`mx-auto bg-white shadow rounded overflow-hidden ${previewMode === 'desktop' ? 'max-w-4xl' : previewMode === 'tablet' ? 'max-w-md' : 'max-w-sm'}`}>
-                            <BuilderPageRenderer blocks={blocks} isEditor={false} className="min-h-[75vh]" />
-                          </div>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
+        {/* Layout with Sidebar */}
+        <div className="flex flex-1 overflow-hidden gap-4 p-4">
+          {/* Sidebar - Pages List */}
+          {sidebarOpen && (
+            <div className="w-80 bg-[#12121f] border border-[#252538] rounded-xl flex flex-col overflow-hidden">
+              {/* Search */}
+              <div className="p-4 border-b border-[#252538]">
+                <div className="relative">
+                  <Search
+                    size={14}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"
+                  />
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Rechercher..."
+                    className="w-full bg-[#0d0d1a] border border-[#252538] rounded-lg pl-9 pr-4 py-2.5 text-sm text-slate-300 placeholder:text-slate-600 focus:outline-none focus:border-indigo-500 transition-colors"
+                  />
+                </div>
+              </div>
 
-                    <Dialog open={versionDialogOpen} onOpenChange={setVersionDialogOpen}>
-                      <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
-                        <DialogHeader>
-                          <DialogTitle>Historique des versions</DialogTitle>
-                          <DialogDescription>Gérez les sauvegardes manuelles de cette page.</DialogDescription>
-                        </DialogHeader>
-                        <div className="space-y-4">
-                          <div className="p-4 bg-slate-50 rounded border border-slate-200">
-                            <label htmlFor="version-change-log" className="block text-xs uppercase text-slate-400 mb-2">Description de la version</label>
-                            <input
-                              id="version-change-log"
-                              className="w-full rounded border border-slate-300 px-3 py-2 text-sm"
-                              value={versionChangeLog}
-                              onChange={(e) => setVersionChangeLog(e.target.value)}
-                            />
-                            <div className="mt-3 text-right">
-                              <Button size="sm" onClick={handleCreateVersion} className="min-w-[140px]">
-                                Créer une version
-                              </Button>
-                            </div>
-                          </div>
+              {/* Type Filter */}
+              <div className="px-4 py-3 border-b border-[#252538] flex gap-1">
+                {[
+                  { key: 'all', label: 'Tous' },
+                  { key: 'content', label: '🟢 Contenu', check: (p) => !p.immutable },
+                  {
+                    key: 'functional',
+                    label: '🔒 Fonctionnel',
+                    check: (p: BuilderListPage) =>
+                      p.immutable === true && getPageType(p) !== 'hybrid',
+                  },
+                  {
+                    key: 'hybrid',
+                    label: '🔵 Hybride',
+                    check: (p: BuilderListPage) => getPageType(p) === 'hybrid',
+                  },
+                ].map(({ key, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => setPageTypeFilter(key)}
+                    className={`px-2 py-1 text-[10px] font-bold rounded-lg transition whitespace-nowrap ${
+                      pageTypeFilter === key
+                        ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
+                        : 'text-slate-500 hover:text-slate-300 hover:bg-[#1a1a2a]'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
 
-                          {pageVersions.length === 0 ? (
-                            <div className="text-sm text-slate-500">Aucune version enregistrée pour cette page.</div>
-                          ) : (
-                            <div className="space-y-3">
-                              {pageVersions.map((version) => (
-                                <div key={version.id} className="p-4 rounded border border-slate-200 bg-white flex flex-col gap-3">
-                                  <div className="flex items-start justify-between gap-3">
-                                    <div>
-                                      <div className="text-sm font-semibold">Version {version.version}</div>
-                                      <div className="text-[11px] text-slate-500">{version.title}</div>
-                                    </div>
-                                    <div className="text-[11px] text-slate-400">{new Date(version.timestamp).toLocaleString()}</div>
-                                  </div>
-                                  <div className="text-[12px] text-slate-600">{version.changeLog}</div>
-                                  <div className="flex flex-wrap gap-2">
-                                    <Button size="sm" variant="outline" onClick={() => handleRestoreVersion(version.id)}>
-                                      Restaurer
-                                    </Button>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
+              {/* Pages List */}
+              <div className="flex-1 overflow-y-auto scrollbar-thin">
+                {loading && (
+                  <div className="flex items-center justify-center gap-2 py-8 text-slate-500">
+                    <Loader2 size={16} className="animate-spin" />
+                    <span className="text-sm">Chargement...</span>
+                  </div>
+                )}
+
+                {error && (
+                  <div className="m-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-xs text-center">
+                    ⚠️ Erreur: {error}
+                  </div>
+                )}
+
+                {!loading && !error && filtered.length === 0 && (
+                  <div className="py-8 text-center text-slate-500 text-xs">
+                    <FileText size={20} className="mx-auto mb-2 opacity-30" />
+                    {search ? `Aucune page trouvée` : 'Aucune page'}
+                  </div>
+                )}
+
+                {!loading &&
+                  filtered.map((page) => (
+                    <div
+                      key={page.id}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => {
+                        // Pages fonctionnelles et hybrides : ouvrir dans le Builder
+                        navigate(`/admin/builder/${page.id}`);
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault();
+                          navigate(`/admin/builder/${page.id}`);
+                        }
+                      }}
+                      className="w-full text-left px-4 py-3 border-b border-[#252538] hover:bg-[#16161f] transition flex items-center justify-between group"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <p className="text-slate-200 text-sm font-medium truncate group-hover:text-white">
+                          {page.title || 'Sans titre'}
+                        </p>
+                        <p className="text-slate-500 text-xs truncate">/{page.slug}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {/* Action buttons - visible on hover */}
+                        <div className="hidden group-hover:flex items-center gap-1 mr-1">
+                          <a
+                            href={`/${page.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="p-1.5 rounded text-slate-500 hover:text-white hover:bg-[#252538] transition"
+                            aria-label={`Voir la page ${page.title || page.slug} dans un nouvel onglet`}
+                            title="Voir la page (nouvel onglet)"
+                          >
+                            <ExternalLink size={12} />
+                          </a>
+                          <button
+                            onClick={(e) => duplicatePage(page, e)}
+                            className="p-1.5 rounded text-slate-500 hover:text-emerald-400 hover:bg-[#252538] transition"
+                            aria-label={`Dupliquer la page ${page.title || page.slug}`}
+                            title="Dupliquer cette page"
+                          >
+                            <Copy size={12} />
+                          </button>
                         </div>
-                      </DialogContent>
-                    </Dialog>
-
-                    <Dialog open={showAnalytics} onOpenChange={setShowAnalytics}>
-                      <DialogContent className="max-w-xl max-h-[80vh] overflow-y-auto">
-                        <DialogHeader>
-                          <DialogTitle>Analytics de page</DialogTitle>
-                          <DialogDescription>Vue sur les performances et l’engagement de cette page.</DialogDescription>
-                        </DialogHeader>
-                        <div className="space-y-4">
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="p-4 rounded border border-slate-200 bg-slate-50">
-                              <div className="text-xs uppercase text-slate-400">Vues</div>
-                              <div className="text-3xl font-semibold text-slate-900">{analyticsData?.views ?? '—'}</div>
-                            </div>
-                            <div className="p-4 rounded border border-slate-200 bg-slate-50">
-                              <div className="text-xs uppercase text-slate-400">Visiteurs uniques</div>
-                              <div className="text-3xl font-semibold text-slate-900">{analyticsData?.uniqueVisitors ?? '—'}</div>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="p-4 rounded border border-slate-200 bg-slate-50">
-                              <div className="text-xs uppercase text-slate-400">Temps moyen</div>
-                              <div className="text-2xl font-semibold text-slate-900">{analyticsData?.avgTime ?? '—'}</div>
-                            </div>
-                            <div className="p-4 rounded border border-slate-200 bg-slate-50">
-                              <div className="text-xs uppercase text-slate-400">Taux de rebond</div>
-                              <div className="text-2xl font-semibold text-slate-900">{analyticsData?.bounceRate ?? '—'}</div>
-                            </div>
-                          </div>
-                          <div className="text-sm text-slate-500">Les données affichées sont basées sur des analytics agrégés et la correspondance de page.</div>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-
-                    {/* Zone de Drop (Canvas) */}
-                    <div className="flex-1 overflow-auto p-8 relative bg-slate-100/50 custom-scrollbar flex justify-center">
-                        <DroppableCanvas blocks={blocks} widthClass={getCanvasWidth()} />
-                        {(isLoading || loadError) && (
-                          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center rounded-xl bg-white/90 text-center p-6">
-                              {isLoading ? (
-                                <>
-                                  <Loader2 className="w-10 h-10 animate-spin text-blue-600" />
-                                  <p className="mt-4 text-slate-700 text-sm font-semibold">Chargement du builder...</p>
-                                  <p className="text-[11px] text-slate-500 max-w-xs mt-2">Patientez pendant que la page et ses blocs sont prêts à l’édition.</p>
-                                </>
-                              ) : (
-                                <>
-                                  <p className="text-rose-600 text-sm font-semibold">Erreur de chargement</p>
-                                  <p className="mt-2 text-slate-600 text-[12px] max-w-sm">{loadError}</p>
-                                  <Button size="sm" className="mt-4" onClick={() => window.location.reload()}>Recharger</Button>
-                                </>
-                              )}
-                          </div>
+                        {getPageType(page) === 'hybrid' && (
+                          <span className="text-xs px-2 py-1 rounded-full whitespace-nowrap bg-blue-500/15 text-blue-400 border border-blue-500/20">
+                            🔵 Hybride
+                          </span>
                         )}
+                        {page.immutable === true && getPageType(page) !== 'hybrid' && (
+                          <span className="text-xs px-2 py-1 rounded-full whitespace-nowrap bg-amber-500/15 text-amber-400 border border-amber-500/20">
+                            🔒 Fonctionnel
+                          </span>
+                        )}
+                        {page.status && (
+                          <span
+                            className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${statusColors[page.status] || ''}`}
+                          >
+                            {statusLabels[page.status] || page.status}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                </main>
+                  ))}
+              </div>
 
-                {/* DROITE: Propriétés */}
-                <aside className="border-l border-slate-200 flex flex-col shadow-sm z-10 w-[400px] min-w-[400px] bg-white transition-all duration-300 shrink-0">
-                    <PropertyPanel
-                      pageSettings={pageData}
-                      onPageSettingsChange={handlePageDataChange}
-                    />
-                </aside>
+              {/* New Page Button */}
+              <div className="p-4 border-t border-[#252538]">
+                <button
+                  onClick={() => setShowNewDialog(true)}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-sm font-bold rounded-lg transition-all shadow-lg shadow-indigo-900/20"
+                >
+                  <Plus size={14} />
+                  Nouvelle page
+                </button>
+              </div>
             </div>
-        </DndContext>);
+          )}
 
-};
-
-// Composant Draggable Item (Élément de base)
-const DraggableItem = ({ type, label, icon }: {type: string;label: string;icon?: React.ReactNode;}) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: `sidebar-item-${type}`,
-    data: { type }
-  });
-
-  const nodeRef = React.useRef<HTMLDivElement | null>(null);
-  const setRefs = React.useCallback((node: HTMLDivElement | null) => {
-    nodeRef.current = node;
-    setNodeRef(node);
-  }, [setNodeRef]);
-
-  React.useEffect(() => {
-    if (nodeRef.current) {
-      nodeRef.current.style.transform = transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '';
-    }
-  }, [transform]);
-
-  return (
-    <div
-      ref={setRefs}
-      {...listeners}
-      {...attributes}
-      className="p-3 bg-white hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded cursor-grab active:cursor-grabbing flex items-center gap-3 transition-colors shadow-sm select-none">
-      
-            <div className="w-8 h-8 bg-slate-100 rounded flex items-center justify-center text-slate-500">
-                {icon}
+          {/* Main Content Area */}
+          <div className="flex-1 bg-[#12121f] border border-[#252538] rounded-xl p-8 flex flex-col items-center justify-center">
+            <div className="text-center max-w-2xl">
+              <div className="mb-6">
+                <FileText size={48} className="mx-auto opacity-40 text-slate-500" />
+              </div>
+              <h2 className="text-3xl font-black text-white mb-3">Sélectionnez une page</h2>
+              <p className="text-slate-400 mb-8">
+                {filtered.length === 0
+                  ? search
+                    ? `Aucune page ne correspond à "${search}"`
+                    : 'Aucune page disponible. Créez-en une pour commencer!'
+                  : `Sélectionnez une page dans la liste pour l'éditer`}
+              </p>
+              <button
+                onClick={() => setShowNewDialog(true)}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-lg transition-all shadow-lg shadow-indigo-900/20"
+              >
+                <Plus size={18} />
+                Créer une nouvelle page
+              </button>
             </div>
-            <span className="text-sm font-medium text-slate-700">{label}</span>
-        </div>);
+          </div>
+        </div>
+      </div>
 
-};
-
-// Composant Draggable Template (Modèle Sauvegardé)
-const DraggableTemplate = ({ template }: {template: LegacyTemplate;}) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: `sidebar-template-${template.id}`,
-    data: { block: template.block }
-  });
-
-  const nodeRef = React.useRef<HTMLDivElement | null>(null);
-  const setRefs = React.useCallback((node: HTMLDivElement | null) => {
-    nodeRef.current = node;
-    setNodeRef(node);
-  }, [setNodeRef]);
-
-  React.useEffect(() => {
-    if (nodeRef.current) {
-      nodeRef.current.style.transform = transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '';
-    }
-  }, [transform]);
-
-  return (
-    <div
-      ref={setRefs}
-      {...listeners}
-      {...attributes}
-      className="p-3 bg-white hover:bg-purple-50 border border-slate-200 hover:border-purple-200 rounded cursor-grab active:cursor-grabbing flex flex-col gap-1 transition-colors shadow-sm select-none relative overflow-hidden">
-      
-            <div className="flex items-center gap-2 mb-1">
-                <Box size={14} className="text-purple-500" />
-                <span className="text-sm font-bold text-slate-800 truncate pr-4">{template.name}</span>
+      {/* ── New Page Dialog ── */}
+      {showNewDialog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+          <div className="bg-[#12121f] border border-[#252538] rounded-2xl w-full max-w-3xl max-h-[85vh] overflow-hidden shadow-2xl">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[#252538]">
+              <div>
+                <h2 className="text-xl font-bold text-white">Créer une nouvelle page</h2>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Choisissez un template ou partez d'une page vierge
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowNewDialog(false)}
+                className="p-2 hover:bg-[#252538] rounded-lg text-slate-500 hover:text-white transition"
+                aria-label="Fermer la fenêtre de création de page"
+                title="Fermer"
+              >
+                <X size={18} />
+              </button>
             </div>
-            <span className="text-[10px] text-slate-400 capitalize">{template.block.type} • {new Date(template.createdAt).toLocaleDateString()}</span>
-        </div>);
-
-};
-
-// Composant Droppable (Zone Canvas)
-const DroppableCanvas = ({ blocks, widthClass }: { blocks: Block[]; widthClass: string }) => {
-  const { isOver, setNodeRef } = useDroppable({ id: 'canvas-droppable' });
-  const { selectedBlockId, selectBlock } = useBuilderStore();
-
-  const overClasses = isOver ? 'border-blue-400 shadow-lg' : 'border-slate-200';
-
-  return (
-    <div
-      ref={setNodeRef}
-      className={`${widthClass} w-full min-h-[800px] bg-white shadow-xl rounded-sm border-2 ${overClasses} transition-all p-8 shrink-0 click-outside-handler pb-32`}
-      onClick={(e) => {
-        if (e.target === e.currentTarget && selectedBlockId) {
-          selectBlock(null);
-        }
-      }}>
-      
-            <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
-                {blocks.length > 0 ? <BuilderPageRenderer
-          blocks={blocks}
-          isEditor={true}
-          selectedId={selectedBlockId}
-          onSelect={selectBlock} /> :
-
-
-        <div className="flex flex-col items-center justify-center h-[400px] text-slate-300 border-2 border-dashed border-slate-100 rounded-lg">
-                        <MousePointer2 className="w-16 h-16 mb-4 opacity-20" />
-                        <p className="text-lg font-medium text-slate-400">La page est vide</p>
-                        <p className="text-sm">Glissez un élément ou un modèle depuis la barre latérale.</p>
+            <div className="p-6 overflow-y-auto max-h-[calc(85vh-120px)]">
+              <div className="mb-6">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                  Page vierge
+                </h3>
+                <button
+                  onClick={() => createPage()}
+                  disabled={creating}
+                  className="w-full p-4 border-2 border-dashed border-[#252538] hover:border-indigo-500/50 rounded-xl text-left transition group"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-[#1a1a2a] rounded-xl flex items-center justify-center group-hover:bg-indigo-500/10 transition">
+                      <FileText className="w-6 h-6 text-slate-400 group-hover:text-indigo-400" />
                     </div>
-        }
-            </SortableContext>
-        </div>);
+                    <div>
+                      <p className="text-sm font-bold text-slate-300 group-hover:text-white">
+                        Page vierge
+                      </p>
+                      <p className="text-xs text-slate-600">
+                        Canvas vide, vous choisissez les blocs
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              {templates.length > 0 && (
+                <div>
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+                    Templates premium ({templates.length})
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {templates.map((tpl) => (
+                      <button
+                        key={tpl.id}
+                        onClick={() => createPage(tpl)}
+                        disabled={creating}
+                        className="p-4 bg-[#1a1a2a] border border-[#252538] hover:border-indigo-500/50 rounded-xl text-left transition group"
+                      >
+                        <div className="text-2xl mb-2">🎨</div>
+                        <p className="text-sm font-bold text-slate-200 group-hover:text-white mb-1">
+                          {tpl.name}
+                        </p>
+                        <p className="text-xs text-slate-500 line-clamp-2">{tpl.description}</p>
+                        {tpl.category && (
+                          <span className="inline-block mt-2 text-[10px] px-2 py-0.5 rounded-full bg-slate-700/50 text-slate-400">
+                            {tpl.category}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {creating && (
+                <div className="flex items-center justify-center gap-2 mt-4 text-slate-400">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span className="text-xs">Création de la page...</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
+// ─────────────────────────────────────────────────────────
+// EDITOR LAYOUT
+// ─────────────────────────────────────────────────────────
+// BUILDER CONTENT (with loading state handling)
+// ─────────────────────────────────────────────────────────
+const BuilderPageContent = () => {
+  const { isLoading, error } = useGodEditor();
+
+  if (isLoading) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-[#0d0d1a]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-300 text-sm">Chargement de l'éditeur...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-[#0d0d1a]">
+        <div className="max-w-md bg-red-900/30 border border-red-600 rounded-lg p-6 text-center">
+          <p className="text-red-200 font-semibold mb-2">Erreur de chargement</p>
+          <p className="text-red-100 text-sm mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded transition"
+          >
+            Réessayer
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <GodToolbar />
+      <div className="flex-1 flex overflow-hidden">
+        <div className="flex flex-col h-full overflow-hidden bg-[#1a1a2a]">
+          <div className="flex flex-1 overflow-hidden">
+            <GodToolbox />
+          </div>
+          <GodLayers />
+        </div>
+        <BuilderErrorBoundary>
+          <GodCanvas />
+        </BuilderErrorBoundary>
+        <GodSettings />
+        <GodTimeline />
+      </div>
+    </>
+  );
+};
+
+// ─────────────────────────────────────────────────────────
+// MAIN EXPORT
+// ─────────────────────────────────────────────────────────
+const BuilderPage = () => {
+  const { pageId } = useParams<{ pageId: string }>();
+
+  // No pageId → show page selection screen
+  if (!pageId) {
+    return <PageSelectorScreen />;
+  }
+
+  // pageId present → open editor
+  return (
+    <div className="h-screen w-screen flex flex-col overflow-hidden font-sans bg-[#0d0d1a]">
+      <button
+        onClick={() => (window.location.pathname = '/admin/builder/config')}
+        title="Ouvrir configuration Builder"
+        className="fixed right-4 top-4 z-50 inline-flex items-center gap-2 px-3 py-2 bg-indigo-600 text-white rounded-md shadow-lg hover:bg-indigo-500 transition"
+      >
+        Config Builder
+      </button>
+      <Editor resolver={RESOLVER}>
+        <GodEditorProvider pageId={pageId}>
+          <DynamicContextProvider>
+            <BuilderErrorBoundary>
+              <BuilderPageContent />
+            </BuilderErrorBoundary>
+          </DynamicContextProvider>
+        </GodEditorProvider>
+      </Editor>
+
+      <style>{`
+        .custom-scrollbar { scrollbar-width: thin; scrollbar-color: #3f3f5a #1a1a2a; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1a1a2a; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #3f3f5a; border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #5a5a7d; }
+        /* Style des blocs HtmlBlock dans le canvas */
+        [data-htmlblock] {
+          margin-bottom: 2px;
+        }
+        [data-htmlblock].craft-selected {
+          outline: 2px solid rgba(99, 102, 241, 0.8);
+          box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+          z-index: 10;
+        }
+      `}</style>
+    </div>
+  );
 };
 
 export default BuilderPage;

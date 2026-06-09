@@ -5,7 +5,7 @@ Infrastructure web souveraine pour la Promotion de la Qualité des Installations
 ## 🏗️ Architecture
 
 - **Frontend**: React + TypeScript + Vite
-- **Backend API**: PostgREST (API REST auto-générée depuis PostgreSQL)
+- **Backend API**: Node / Express + PostgreSQL
 - **Base de données**: PostgreSQL 15
 - **Gateway**: Nginx (reverse proxy avec CORS)
 - **Containerisation**: Docker Compose
@@ -40,9 +40,7 @@ cp .env.example .env
 
 4. Démarrer l'infrastructure Docker
 ```bash
-cd docker
 docker-compose up -d
-```
 
 5. Installer les dépendances frontend
 ```bash
@@ -54,7 +52,7 @@ npm install
 npm run dev
 ```
 
-Le site sera accessible sur `http://localhost:8080`
+Le site sera accessible sur `http://localhost:5175`
 
 ### ✅ Valider la Configuration IA
 
@@ -101,10 +99,12 @@ Pour une vue détaillée de **tous les endpoints IA** avec modèles utilisés, p
 
 ## 📦 Services Docker
 
-- **PostgreSQL**: Port 5433
-- **PostgREST API**: Port 3000 (interne)
-- **Nginx Gateway**: Port 3102
-- **Frontend Dev**: Port 8080
+- **PostgreSQL**: Port 5436 (interne 5432)
+- **Backend API**: Port 3000
+- **Cortex Brain (IA)**: Port 8000
+- **Cortex Vision (IA)**: Port 8003
+- **Cortex Image (IA)**: Port 8004
+- **Frontend Dev**: Port 5175
 
 ## 🤖 Endpoints IA Disponibles
 
@@ -228,6 +228,91 @@ node test_ai_endpoints.js --verbose
 - **Haystack Docs**: https://haystack.deepset.ai
 
 Les migrations SQL sont dans `corpus-db/migrations/` et s'exécutent automatiquement au premier démarrage.
+
+## 💳 Configuration des Paiements
+
+Le système supporte **13 providers** de paiement, gérables depuis l'interface Admin → Paiements.
+
+### Providers disponibles
+
+| Provider | Type | Frais | Reversement |
+|----------|------|-------|-------------|
+| Wave Business | Opérateur Direct | 1% | Immédiat |
+| Orange Money Web | Opérateur Direct | 1% (plaf. 500 F) | 24h-48h |
+| Free Money | Opérateur Direct | 1% à 1,5% | 24h-48h |
+| PayTech | Agrégateur Local | 1,5% à 3% | 24h-72h |
+| SenePay | Agrégateur Local | 1,8% + frais op. | 24h-48h |
+| InTouch (TouchPay) | Agrégateur Local | 2% à 3,5% | 48h-72h |
+| CinetPay | Panafricain | 1,5% à 3,5% | 72h |
+| Flutterwave | Panafricain/Global | 2,9% à 3,8% | 48h-72h |
+| FedaPay | Panafricain | 1% à 4% | 72h |
+| Kkiapay | Panafricain | 2,5% à 3,5% | 48h |
+| Julaya (B2B) | Panafricain B2B | Sur mesure | Immédiat |
+| PayDunya | Agrégateur Local | Variable | 48h-72h |
+| 💰 Espèces | Hors-ligne | 0% | Immédiat |
+
+### Configuration rapide
+
+1. Allez dans **Dashboard → Admin → Paiements**
+2. Activez les providers souhaités (curseur)
+3. Cliquez sur le **❓** pour voir le guide de configuration
+4. Entrez vos clés API et cliquez sur **Test**
+5. Sélectionnez le provider par défaut avec **⭐ Défaut**
+
+### Variables d'environnement
+
+```env
+# PayDunya (activé par défaut)
+PAYDUNYA_API_KEY=votre_cle_api
+PAYDUNYA_SECRET_KEY=votre_cle_secrete
+
+# Wave Business
+WAVE_API_KEY=wave_live_xxx
+WAVE_SECRET_KEY=xxx
+
+# Orange Money Web
+ORANGE_CLIENT_ID=orange_client_xxx
+ORANGE_CLIENT_SECRET=xxx
+ORANGE_MERCHANT_CODE=OM_MERCHANT_xxx
+
+# Free Money
+FREE_API_KEY=free_live_xxx
+FREE_MERCHANT_ID=FREE_xxx
+
+# PayTech
+PAYTECH_API_KEY=paytech_live_xxx
+PAYTECH_SECRET_KEY=xxx
+
+# CinetPay (panafricain)
+CINETPAY_API_KEY=cp_live_xxx
+CINETPAY_SITE_ID=CP_SITE_xxx
+
+# Flutterwave (global)
+FW_SECRET_KEY=FLWSECK_xxx
+```
+
+### Initialisation
+
+```bash
+# Initialiser les paramètres de paiement en base
+node scripts/seed-payment-settings.cjs
+```
+
+### Architecture technique
+
+```
+Frontend (AdminPaymentPanel.tsx)
+  ↓ fetch /api/admin/payment-settings
+Express (payments.admin.routes.js)
+  ↓
+Provider Registry (providers/index.js)
+  ↓ auto-découverte
+12 providers .service.js + Cash
+  ↓ interface unifiée
+processPayment() / verifyPayment() / handleWebhook()
+```
+
+Tous les providers partagent la même interface. La commutation se fait par le champ `provider` dans la table `orders`.
 
 ## 📚 Documentation
 

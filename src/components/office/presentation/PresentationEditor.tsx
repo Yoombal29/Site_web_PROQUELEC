@@ -56,7 +56,7 @@ export function PresentationEditor({ presentationId, initialSlides, onSave }: Pr
     id: '4',
     content: `
         <h2>Merci !</h2>
-        <p>Contact: contact@proquelec.fr</p>
+        <p>Contact: proquelec@proquelec.sn</p>
       `,
     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
   }]

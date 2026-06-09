@@ -329,7 +329,10 @@ const AdminPagesManagerAdvanced: React.FC = () => {
 
                   {selectedPage &&
                 <Button
-                  onClick={() => window.open(`/${selectedPage.slug}`, '_blank')}
+                  onClick={() => {
+                    const slug = (selectedPage.slug || '').replace(/^\//, '');
+                    window.open(slug ? `/${slug}` : '/', '_blank');
+                  }}
                   className="gap-2 bg-blue-600 hover:bg-blue-700">
                   
                       <Eye className="w-4 h-4" /> Voir

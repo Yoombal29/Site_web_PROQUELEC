@@ -1,9 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
 
-import { useQuery } from "@tanstack/react-query";
+import { useEffect } from 'react';
 
-import { useEffect } from "react";
-
-interface LiveSettings {
+export interface LiveSettings {
   site_name: string;
   slogan: string;
   logo_url?: string;
@@ -43,8 +42,8 @@ interface LiveSettings {
 const fetchLiveSettings = async (): Promise<LiveSettings> => {
   // console.log('Récupération des paramètres en temps réel...');
 
-  let siteData = null;
-  let themeData = null;
+  let siteData: Record<string, unknown> | null = null;
+  let themeData: Record<string, unknown> | null = null;
 
   try {
     const siteRes = await fetch('/api/site-settings');
@@ -52,7 +51,9 @@ const fetchLiveSettings = async (): Promise<LiveSettings> => {
       const rawSite = await siteRes.json();
       siteData = Array.isArray(rawSite) ? rawSite[0] : rawSite;
     }
-  } catch (e) {console.error('Error fetching site settings', e);}
+  } catch (e) {
+    console.error('Error fetching site settings', e);
+  }
 
   try {
     const themeRes = await fetch('/api/theme-settings');
@@ -60,58 +61,88 @@ const fetchLiveSettings = async (): Promise<LiveSettings> => {
       const rawTheme = await themeRes.json();
       themeData = Array.isArray(rawTheme) ? rawTheme[0] : rawTheme;
     }
-  } catch (e) {console.error('Error fetching theme settings', e);}
+  } catch (e) {
+    console.error('Error fetching theme settings', e);
+  }
+
+  // Helper to safely extract string values from unknown
+  const s = (val: unknown, fallback: string): string => String(val ?? fallback);
+  const sOpt = (val: unknown): string | undefined =>
+    val !== null && val !== undefined ? String(val) : undefined;
 
   // Combiner les données
-  const settings = {
-    site_name: siteData?.site_name || "PROQUELEC SENEGAL",
-    slogan: siteData?.slogan || "Sécurité · Qualité · Formation",
-    logo_url: siteData?.logo_url,
-    favicon_url: siteData?.favicon_url,
-    contact_email: siteData?.contact_email || "contact@proquelec.sn",
-    phone_number: siteData?.phone_number || "+221 XX XXX XX XX",
-    address: siteData?.address || "Dakar, Sénégal",
-    copyright_text: siteData?.copyright_text,
-    facebook_url: siteData?.facebook_url,
-    linkedin_url: siteData?.linkedin_url,
-    twitter_url: siteData?.twitter_url,
-    primary_color: themeData?.primary_color || "#2376df",
-    secondary_color: themeData?.secondary_color || "#054393",
-    accent_color: themeData?.accent_color || "#1a73e8",
-    background_color: themeData?.background_color || "#f8f9fa",
-    text_color: themeData?.text_color || "#333333",
-    font_family: themeData?.font_family || "Roboto",
-    footer_background_url: themeData?.footer_background_url,
-    // CTA mapping
-    cta_primary_text: siteData?.cta_primary_text,
-    cta_primary_url: siteData?.cta_primary_url,
-    cta_secondary_text: siteData?.cta_secondary_text,
-    cta_secondary_url: siteData?.cta_secondary_url,
-    // Audience mapping
-    audience_section_title: siteData?.audience_section_title || 'Des Services Sur-Mesure',
-    audience_section_subtitle: siteData?.audience_section_subtitle || "Que vous soyez indépendant, une entreprise ou un expert membre, PROQUELEC vous accompagne avec des outils dédiés.",
-    audience_title_electrician: siteData?.audience_title_electrician || 'Électriciens',
-    audience_subtitle_electrician: siteData?.audience_subtitle_electrician || 'Indépendants & Artisans',
-    audience_desc_electrician: siteData?.audience_desc_electrician || 'Accédez aux normes gratuites, nos calculateurs pro et le générateur de schémas pour vos dossiers.',
-    audience_title_company: siteData?.audience_title_company || 'Professionnels',
-    audience_subtitle_company: siteData?.audience_subtitle_company || 'Entreprises & Installateurs',
-    audience_desc_company: siteData?.audience_desc_company || "Gérez vos chantiers, vos certifications et bénéficiez d'une visibilité accrue sur l'annuaire national.",
-    audience_title_member: siteData?.audience_title_member || 'Membres',
-    audience_subtitle_member: siteData?.audience_subtitle_member || 'Association & Experts',
-    audience_desc_member: siteData?.audience_desc_member || "Participez à la vie de l'institution, bénéficiez d'un support prioritaire et de la veille normative en avant-première.",
-    page_sections: siteData?.page_sections || {}
+  const settings: LiveSettings = {
+    site_name: s(siteData?.site_name, 'PROQUELEC SENEGAL'),
+    slogan: s(siteData?.slogan, 'Sécurité · Qualité · Formation'),
+    logo_url: sOpt(siteData?.logo_url),
+    favicon_url: sOpt(siteData?.favicon_url),
+    contact_email: s(siteData?.contact_email, 'proquelec@proquelec.sn'),
+    phone_number: s(siteData?.phone_number, '+221 33 848 68 55'),
+    address: s(siteData?.address, 'Immeuble Coumba Castel, 12 rue Saint-Michel, 4e étage, Dakar'),
+    copyright_text: sOpt(siteData?.copyright_text),
+    facebook_url: sOpt(siteData?.facebook_url),
+    linkedin_url: sOpt(siteData?.linkedin_url),
+    twitter_url: sOpt(siteData?.twitter_url),
+    primary_color: s(themeData?.primary_color, '#2376df'),
+    secondary_color: s(themeData?.secondary_color, '#054393'),
+    accent_color: s(themeData?.accent_color, '#1a73e8'),
+    background_color: s(themeData?.background_color, '#f8f9fa'),
+    text_color: s(themeData?.text_color, '#333333'),
+    font_family: s(themeData?.font_family, 'Roboto'),
+    footer_background_url: sOpt(themeData?.footer_background_url),
+    cta_primary_text: sOpt(siteData?.cta_primary_text),
+    cta_primary_url: sOpt(siteData?.cta_primary_url),
+    cta_secondary_text: sOpt(siteData?.cta_secondary_text),
+    cta_secondary_url: sOpt(siteData?.cta_secondary_url),
+    audience_section_title: s(siteData?.audience_section_title, 'Des Services Sur-Mesure'),
+    audience_section_subtitle: s(
+      siteData?.audience_section_subtitle,
+      'Que vous soyez indépendant, une entreprise ou un expert membre, PROQUELEC vous accompagne avec des outils dédiés.',
+    ),
+    audience_title_electrician: s(siteData?.audience_title_electrician, 'Électriciens'),
+    audience_subtitle_electrician: s(
+      siteData?.audience_subtitle_electrician,
+      'Indépendants & Artisans',
+    ),
+    audience_desc_electrician: s(
+      siteData?.audience_desc_electrician,
+      'Accédez aux normes gratuites, nos calculateurs pro et le générateur de schémas pour vos dossiers.',
+    ),
+    audience_title_company: s(siteData?.audience_title_company, 'Professionnels'),
+    audience_subtitle_company: s(
+      siteData?.audience_subtitle_company,
+      'Entreprises & Installateurs',
+    ),
+    audience_desc_company: s(
+      siteData?.audience_desc_company,
+      "Gérez vos chantiers, vos certifications et bénéficiez d'une visibilité accrue sur l'annuaire national.",
+    ),
+    audience_title_member: s(siteData?.audience_title_member, 'Membres'),
+    audience_subtitle_member: s(siteData?.audience_subtitle_member, 'Association & Experts'),
+    audience_desc_member: s(
+      siteData?.audience_desc_member,
+      "Participez à la vie de l'institution, bénéficiez d'un support prioritaire et de la veille normative en avant-première.",
+    ),
+    page_sections: (siteData?.page_sections as Record<string, unknown>) || {},
   };
 
-  // console.log('Paramètres récupérés:', settings);
   return settings;
 };
 
 export function useLiveSettings() {
-  const { data: settings, isLoading, error, refetch } = useQuery({
-    queryKey: ["liveSettings"],
+  const {
+    data: settings,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ['liveSettings'],
     queryFn: fetchLiveSettings,
-    refetchInterval: 30000, // Rafraîchir toutes les 30 secondes au lieu de 2
-    staleTime: 10000 // Considérer comme périmé après 10 secondes
+    refetchInterval: 1000 * 60 * 5, // Rafraîchir toutes les 5 minutes
+    staleTime: 1000 * 60 * 5, // Considérer comme périmé après 5 minutes
+    gcTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 
   // Appliquer les styles CSS dynamiquement
@@ -120,14 +151,14 @@ export function useLiveSettings() {
       const root = document.documentElement;
 
       // Appliquer les couleurs
-      root.style.setProperty('--color-proqblue', settings.primary_color);
-      root.style.setProperty('--color-proqblue-dark', settings.secondary_color);
-      root.style.setProperty('--color-accent', settings.accent_color);
-      root.style.setProperty('--color-background', settings.background_color);
-      root.style.setProperty('--color-text', settings.text_color);
+      root.style.setProperty('--color-proqblue', settings.primary_color ?? null);
+      root.style.setProperty('--color-proqblue-dark', settings.secondary_color ?? null);
+      root.style.setProperty('--color-accent', settings.accent_color ?? null);
+      root.style.setProperty('--color-background', settings.background_color ?? null);
+      root.style.setProperty('--color-text', settings.text_color ?? null);
 
       // Appliquer la police
-      document.body.style.fontFamily = settings.font_family;
+      document.body.style.fontFamily = settings.font_family ?? 'Roboto';
 
       // Mettre à jour le titre et favicon
       document.title = settings.site_name;

@@ -1,23 +1,22 @@
 /**
  * Service de gestion multi-normes
- * 
+ *
  * Permet d'importer, gérer et rechercher dans plusieurs bases normatives
  * (NS 01-001, NF C 15-100, IEC 60364, etc.)
  */
 
-import {
-
-
-
-
-
+import type {
   NormImportFormat,
-
-
   NormFullJSON,
-
-  NormQCMQuestion } from
-'@/types/academy';
+  NormQCMQuestion,
+  NormRule,
+  NormDatabase,
+  NormMetadata,
+  NormChunk,
+  NormSearchResult,
+  NormImportValidation,
+  MultiNormDatabase,
+} from '@/types/academy';
 
 class MultiNormService {
   private static instance: MultiNormService;
@@ -25,25 +24,31 @@ class MultiNormService {
     norms: new Map(),
     metadata: new Map(),
     activeNormId: null,
-    totalRuleCount: 0
+    totalRuleCount: 0,
   };
   private keywordIndexes: Map<string, Map<string, Set<string>>> = new Map();
   private readonly STORAGE_KEY = 'imported_norms';
-  private readonly DEFAULT_NORMS = [
-  {
-    id: 'NS-01-001',
-    name: 'Norme Sénégalaise (NS 01-001)',
-    path: '/data/NS-01-001/full_ai/ns_01_001_full.json',
-    chunksPath: '/data/NS-01-001/full_ai/train/chunks.jsonl',
-    qcmPath: '/data/NS-01-001/full_ai/datasets/qcm_multi.json'
-  },
-  {
-    id: 'NF-C18-510',
-    name: 'Norme Sécurité (NF C18-510)',
-    path: '/data/NF_C18-510/full_ai/nf_c18_510_full.json',
-    chunksPath: '/data/NF_C18-510/full_ai/train/chunks.jsonl'
-  }];
-
+  private readonly DEFAULT_NORMS: {
+    id: string;
+    name: string;
+    path: string;
+    chunksPath?: string;
+    qcmPath?: string;
+  }[] = [
+    {
+      id: 'NS-01-001',
+      name: 'Norme Sénégalaise (NS 01-001)',
+      path: '/data/NS-01-001/full_ai/ns_01_001_full.json',
+      chunksPath: '/data/NS-01-001/full_ai/train/chunks.jsonl',
+      qcmPath: '/data/NS-01-001/full_ai/datasets/qcm_multi.json',
+    },
+    {
+      id: 'NF-C18-510',
+      name: 'Norme Sécurité (NF C18-510)',
+      path: '/data/NF_C18-510/full_ai/nf_c18_510_full.json',
+      chunksPath: '/data/NF_C18-510/full_ai/train/chunks.jsonl',
+    },
+  ];
 
   static getInstance(): MultiNormService {
     if (!MultiNormService.instance) {
@@ -61,13 +66,17 @@ class MultiNormService {
       if (saved) {
         const data = JSON.parse(saved);
         for (const [normId, normData] of Object.entries(data.norms || {})) {
-          const norm = normData as {metadata: NormMetadata;database: NormDatabase;};
+          const norm = normData as { metadata: NormMetadata; database: NormDatabase };
           this.database.norms.set(normId, norm.database);
           this.database.metadata.set(normId, norm.metadata);
           this.buildKeywordIndex(normId, norm.database.rules);
         }
         this.updateTotalCount();
 
+        // Restaurer la norme active
+        if (data.activeNormId) {
+          this.database.activeNormId = data.activeNormId;
+        }
       }
 
       // Toujours vérifier si les normes par défaut sont chargées
@@ -82,14 +91,17 @@ class MultiNormService {
    */
   private saveToStorage(): void {
     try {
-      const data: Record<string, {metadata: NormMetadata;database: NormDatabase;}> = {};
+      const data: Record<string, { metadata: NormMetadata; database: NormDatabase }> = {};
       for (const [normId, database] of this.database.norms) {
         const metadata = this.database.metadata.get(normId);
         if (metadata) {
           data[normId] = { metadata, database };
         }
       }
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify({ norms: data }));
+      localStorage.setItem(
+        this.STORAGE_KEY,
+        JSON.stringify({ norms: data, activeNormId: this.database.activeNormId }),
+      );
     } catch (error) {
       console.error('Erreur sauvegarde normes:', error);
     }
@@ -150,7 +162,7 @@ class MultiNormService {
           article: r.article || '',
           content: r.content || '',
           page: r.page || 0,
-          normId: data.metadata.id
+          normId: data.metadata.id,
         }));
 
         return {
@@ -160,8 +172,8 @@ class MultiNormService {
           preview: {
             name: data.metadata.name,
             ruleCount: data.rules.length,
-            sampleRules
-          }
+            sampleRules,
+          },
         };
       }
 
@@ -170,22 +182,38 @@ class MultiNormService {
       return {
         valid: false,
         errors: [`JSON invalide: ${e instanceof Error ? e.message : 'Erreur de parsing'}`],
-        warnings: []
+        warnings: [],
       };
+    }
+  }
+
+  /**
+   * Parse et valide un JSON de norme, retourne l'objet parsé ou une erreur
+   */
+  parseAndValidate(jsonContent: string): { data?: NormImportFormat; error?: string } {
+    try {
+      const data = JSON.parse(jsonContent) as NormImportFormat;
+      const validation = this.validateImport(jsonContent);
+      if (!validation.valid) {
+        return { error: validation.errors.join('; ') };
+      }
+      return { data };
+    } catch (e) {
+      return { error: `JSON invalide: ${e instanceof Error ? e.message : 'Erreur de parsing'}` };
     }
   }
 
   /**
    * Importe une norme depuis un JSON
    */
-  importNorm(jsonContent: string): {success: boolean;normId?: string;error?: string;} {
-    const validation = this.validateImport(jsonContent);
-    if (!validation.valid) {
-      return { success: false, error: validation.errors.join('; ') };
+  importNorm(jsonContent: string): { success: boolean; normId?: string; error?: string } {
+    const parsed = this.parseAndValidate(jsonContent);
+    if (!parsed.data) {
+      return { success: false, error: parsed.error };
     }
 
     try {
-      const data = JSON.parse(jsonContent) as NormImportFormat;
+      const data = parsed.data;
       const normId = data.metadata.id;
 
       // Créer les règles avec normId
@@ -197,7 +225,7 @@ class MultiNormService {
         page: r.page || 0,
         normId,
         category: r.category,
-        keywords: r.keywords
+        keywords: r.keywords,
       }));
 
       // Créer la base de données
@@ -205,7 +233,7 @@ class MultiNormService {
         rules,
         sommaire: data.sommaire || [],
         loaded: true,
-        ruleCount: rules.length
+        ruleCount: rules.length,
       };
 
       // Créer les métadonnées
@@ -217,7 +245,7 @@ class MultiNormService {
         country: data.metadata.country,
         domain: data.metadata.domain,
         importedAt: new Date().toISOString(),
-        ruleCount: rules.length
+        ruleCount: rules.length,
       };
 
       // Enregistrer
@@ -234,12 +262,11 @@ class MultiNormService {
       // Sauvegarder
       this.saveToStorage();
 
-
       return { success: true, normId };
     } catch (error) {
       return {
         success: false,
-        error: `Erreur d'import: ${error instanceof Error ? error.message : 'Erreur inconnue'}`
+        error: `Erreur d'import: ${error instanceof Error ? error.message : 'Erreur inconnue'}`,
       };
     }
   }
@@ -250,8 +277,7 @@ class MultiNormService {
   async initializeDefaultNorms(): Promise<void> {
     for (const def of this.DEFAULT_NORMS) {
       if (!this.database.norms.has(def.id)) {
-
-        await this.loadFullNorm(def.id, def.path, def.chunksPath, (def as unknown).qcmPath);
+        await this.loadFullNorm(def.id, def.path, def.chunksPath, def.qcmPath);
       }
     }
   }
@@ -259,22 +285,51 @@ class MultiNormService {
   /**
    * Charge une norme au format Full AI (JSON riche + Chunks optionnels + QCM optionnel)
    */
-  async loadFullNorm(normId: string, jsonPath: string, chunksPath?: string, qcmPath?: string): Promise<boolean> {
+  async loadFullNorm(
+    normId: string,
+    jsonPath: string,
+    chunksPath?: string,
+    qcmPath?: string,
+  ): Promise<boolean> {
     try {
       const response = await fetch(jsonPath);
       if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
 
       const data = (await response.json()) as NormFullJSON;
 
+      // Use a custom interface type to safely check sections vs articles on the atomisation object
+      const atomisation = data.atomisation as {
+        sections?: Array<{
+          id?: string;
+          numero?: string;
+          titre?: string;
+          type?: string;
+          contenu?: string;
+          contenu_complet?: string;
+          niveau?: number;
+        }>;
+        articles?: Array<{
+          id?: string;
+          numero?: string;
+          titre?: string;
+          type?: string;
+          contenu?: string;
+          contenu_complet?: string;
+          niveau?: number;
+        }>;
+      };
+      const sections = atomisation.sections || atomisation.articles || [];
+
       // Transformer l'atomisation en règles classiques pour la compatibilité
-      const rules: NormRule[] = data.atomisation.sections.map((section) => ({
-        id: section.id || `${normId}-${section.numero}`,
-        titre: section.titre,
-        article: section.numero,
-        content: section.contenu,
+      const rules: NormRule[] = sections.map((section, index) => ({
+        id: section.id ? `${section.id}_${index}` : `${normId}-${section.numero || ''}-${index}`,
+        titre: section.titre || 'Sans titre',
+        article: section.numero || '',
+        content: section.contenu || section.contenu_complet || '',
         page: 0,
         normId,
-        category: section.type
+        category:
+          section.type || (section.niveau !== undefined ? `niveau_${section.niveau}` : 'article'),
       }));
 
       const database: NormDatabase = {
@@ -282,7 +337,7 @@ class MultiNormService {
         sommaire: [], // Sera construit ou extrait
         loaded: true,
         ruleCount: rules.length,
-        fullData: data
+        fullData: data,
       };
 
       const metadata: NormMetadata = {
@@ -294,7 +349,7 @@ class MultiNormService {
         domain: 'Électricité',
         importedAt: new Date().toISOString(),
         ruleCount: rules.length,
-        source: 'Full AI Engine'
+        source: 'Full AI Engine',
       };
 
       this.database.norms.set(normId, database);
@@ -306,12 +361,12 @@ class MultiNormService {
 
       // Charger les chunks si demandés
       if (chunksPath) {
-        this.loadChunks(normId, chunksPath);
+        await this.loadChunks(normId, chunksPath);
       }
 
       // Charger le QCM si demandé
       if (qcmPath) {
-        this.loadQCM(normId, qcmPath);
+        await this.loadQCM(normId, qcmPath);
       }
 
       return true;
@@ -340,15 +395,14 @@ class MultiNormService {
           metadata: {
             normId,
             titre: obj.section_title,
-            article: obj.article_ref
-          }
+            article: obj.article_ref,
+          },
         };
       });
 
       const db = this.getNormDatabase(normId);
       if (db) {
         db.chunks = chunks;
-
       }
     } catch (error) {
       console.warn(`Impossible de charger les chunks pour ${normId}:`, error);
@@ -369,11 +423,91 @@ class MultiNormService {
       const db = this.getNormDatabase(normId);
       if (db) {
         db.qcm = qcm;
-
       }
     } catch (error) {
       console.warn(`Impossible de charger le QCM pour ${normId}:`, error);
     }
+  }
+
+  /**
+   * Génère des chunks RAG à partir des données complètes (Full AI JSON) déjà chargées.
+   * Parcourt les sections, articles, définitions et annexes de l'atomisation
+   * pour créer des chunks de texte pertinents pour la recherche sémantique.
+   */
+  buildChunksFromFullData(normId: string): number {
+    const db = this.getNormDatabase(normId);
+    if (!db || !db.fullData) {
+      console.warn(`[Chunking] Aucune donnée complète pour ${normId}`);
+      return 0;
+    }
+
+    const chunks: NormChunk[] = [];
+    const data = db.fullData;
+
+    // Extraire les sections de l'atomisation
+    if (data.atomisation) {
+      const sections = data.atomisation.sections || [];
+      for (const section of sections) {
+        const text = section.contenu || section.contenu_complet || '';
+        const titre = section.titre || '';
+        const numero = section.numero || '';
+
+        if (text.length > 10) {
+          chunks.push({
+            id: `${normId}_section_${section.id || numero}_${section.niveau || 0}`,
+            text: `${titre ? `**${titre}**\n\n` : ''}${numero ? `*${numero}* ` : ''}${text}`,
+            metadata: {
+              normId,
+              titre,
+              article: numero,
+              context: `Niveau ${section.niveau || '?'}`,
+            },
+          });
+        }
+      }
+    }
+
+    // Extraire les définitions si présentes (format NF C18-510)
+    if ((data as any).atomisation?.definitions?.section_3?.categories) {
+      const categories = (data as any).atomisation.definitions.section_3.categories;
+      for (const category of categories) {
+        if (category.termes) {
+          for (const terme of category.termes) {
+            if (terme.terme && terme.definition) {
+              chunks.push({
+                id: `${normId}_def_${terme.numero}`,
+                text: `**${terme.terme}** : ${terme.definition}`,
+                metadata: {
+                  normId,
+                  titre: `Définition: ${terme.terme}`,
+                  article: terme.numero,
+                },
+              });
+            }
+          }
+        }
+      }
+    }
+
+    // Extraire les sections principales (niveau 1) si présentes (format NS 01-001)
+    if ((data as any).sections) {
+      for (const section of (data as any).sections) {
+        if (section.content && section.content.length > 10) {
+          chunks.push({
+            id: `${normId}_section_principale_${section.id || section.numero || '0'}`,
+            text: `${section.titre || ''}\n\n${section.content}`,
+            metadata: {
+              normId,
+              titre: section.titre,
+            },
+          });
+        }
+      }
+    }
+
+    db.chunks = chunks;
+    console.log(`[Chunking] ${chunks.length} chunks générés pour ${normId}`);
+    return chunks.length;
   }
 
   /**
@@ -399,17 +533,106 @@ class MultiNormService {
     const index: Map<string, Set<string>> = new Map();
 
     const stopWords = new Set([
-    'le', 'la', 'les', 'un', 'une', 'des', 'du', 'de', 'et', 'ou', 'est',
-    'sont', 'être', 'avoir', 'dans', 'pour', 'par', 'avec', 'sur', 'que',
-    'qui', 'dont', 'où', 'ce', 'cette', 'ces', 'il', 'elle', 'ils', 'elles',
-    'the', 'a', 'an', 'and', 'or', 'is', 'are', 'in', 'on', 'for', 'with']
-    );
+      'le',
+      'la',
+      'les',
+      'un',
+      'une',
+      'des',
+      'du',
+      'de',
+      'et',
+      'ou',
+      'est',
+      'sont',
+      'être',
+      'avoir',
+      'dans',
+      'pour',
+      'par',
+      'avec',
+      'sur',
+      'que',
+      'qui',
+      'dont',
+      'où',
+      'ce',
+      'cette',
+      'ces',
+      'il',
+      'elle',
+      'ils',
+      'elles',
+      'nous',
+      'vous',
+      'leur',
+      'leurs',
+      'plus',
+      'très',
+      'aussi',
+      'mais',
+      'donc',
+      'car',
+      'ni',
+      'si',
+      'tout',
+      'tous',
+      'toute',
+      'toutes',
+      'peut',
+      'peu',
+      'fait',
+      'faire',
+      'comme',
+      'entre',
+      'sans',
+      'sous',
+      'chez',
+      'après',
+      'avant',
+      'pendant',
+      'depuis',
+      'jusque',
+      'enfin',
+      'alors',
+      'ainsi',
+      'the',
+      'a',
+      'an',
+      'and',
+      'or',
+      'is',
+      'are',
+      'in',
+      'on',
+      'for',
+      'with',
+      'this',
+      'that',
+      'these',
+      'those',
+      'shall',
+      'should',
+      'must',
+      'may',
+      'been',
+      'have',
+      'has',
+      'had',
+      'not',
+      'no',
+      'nor',
+      'but',
+      'by',
+      'from',
+    ]);
 
     for (const rule of rules) {
       const text = `${rule.titre} ${rule.content}`.toLowerCase();
-      const words = text.split(/\s+/).
-      map((w) => w.replace(/[^a-zàâäéèêëïîôùûüÿç0-9]/gi, '')).
-      filter((w) => w.length > 2 && !stopWords.has(w));
+      const words = text
+        .split(/\s+/)
+        .map((w) => w.replace(/[^a-zàâäéèêëïîôùûüÿç0-9]/gi, ''))
+        .filter((w) => w.length > 2 && !stopWords.has(w));
 
       // Ajouter les mots-clés explicites
       if (rule.keywords) {
@@ -498,9 +721,7 @@ class MultiNormService {
     const queryLower = query.toLowerCase().trim();
     const queryWords = queryLower.split(/\s+/).filter((w) => w.length > 2);
 
-    const normsToSearch = normId ?
-    [normId] :
-    Array.from(this.database.norms.keys());
+    const normsToSearch = normId ? [normId] : Array.from(this.database.norms.keys());
 
     for (const nId of normsToSearch) {
       const db = this.database.norms.get(nId);
@@ -539,7 +760,7 @@ class MultiNormService {
         if (results.some((r) => r.rule.id === id)) continue;
         const rule = db.rules.find((r) => r.id === id);
         if (rule) {
-          const score = count / queryWords.length * 60;
+          const score = (count / queryWords.length) * 60;
           results.push({ rule, score, matchType: 'keyword', normId: nId });
         }
       }
@@ -552,13 +773,11 @@ class MultiNormService {
    * Recherche dans les chunks RAG pour le moteur d'IA
    */
   searchChunks(query: string, normId?: string, limit: number = 5): NormChunk[] {
-    const results: {chunk: NormChunk;score: number;}[] = [];
+    const results: { chunk: NormChunk; score: number }[] = [];
     const queryLower = query.toLowerCase().trim();
     const queryWords = queryLower.split(/\s+/).filter((w) => w.length > 2);
 
-    const normsToSearch = normId ?
-    [normId] :
-    Array.from(this.database.norms.keys());
+    const normsToSearch = normId ? [normId] : Array.from(this.database.norms.keys());
 
     for (const nId of normsToSearch) {
       const db = this.database.norms.get(nId);
@@ -582,7 +801,7 @@ class MultiNormService {
         }
 
         if (queryWords.length > 0) {
-          score += matches / queryWords.length * 40;
+          score += (matches / queryWords.length) * 40;
         }
 
         if (score > 0) {
@@ -591,22 +810,148 @@ class MultiNormService {
       }
     }
 
-    return results.
-    sort((a, b) => b.score - a.score).
-    slice(0, limit).
-    map((r) => r.chunk);
+    return results
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit)
+      .map((r) => r.chunk);
   }
 
   /**
    * Statistiques globales
    */
-  getStats(): {normCount: number;totalRuleCount: number;norms: NormMetadata[];} {
+  getStats(): { normCount: number; totalRuleCount: number; norms: NormMetadata[] } {
     return {
       normCount: this.database.norms.size,
       totalRuleCount: this.database.totalRuleCount,
-      norms: this.listNorms()
+      norms: this.listNorms(),
     };
   }
+
+  /**
+   * Retourne les problèmes courants : règles sans contenu,
+   * normes sans QCM/chunks, métadonnées manquantes, etc.
+   */
+  getCurrentProblems(): NormProblem[] {
+    const problems: NormProblem[] = [];
+
+    for (const [normId, metadata] of this.database.metadata) {
+      const db = this.database.norms.get(normId);
+
+      // Métadonnées manquantes
+      if (!metadata.version) {
+        problems.push({
+          normId,
+          severity: 'warning',
+          message: `Version manquante pour "${metadata.name}"`,
+          field: 'version',
+        });
+      }
+      if (!metadata.country) {
+        problems.push({
+          normId,
+          severity: 'info',
+          message: `Pays non défini pour "${metadata.name}"`,
+          field: 'country',
+        });
+      }
+      if (!metadata.source) {
+        problems.push({
+          normId,
+          severity: 'info',
+          message: `Source non spécifiée pour "${metadata.name}"`,
+          field: 'source',
+        });
+      }
+
+      if (!db) {
+        problems.push({
+          normId,
+          severity: 'error',
+          message: `Base de données manquante pour "${metadata.name}"`,
+          field: 'database',
+        });
+        continue;
+      }
+
+      // Règles sans contenu
+      const emptyRules = db.rules.filter((r) => !r.content || r.content.trim() === '');
+      if (emptyRules.length > 0) {
+        problems.push({
+          normId,
+          severity: 'warning',
+          message: `${emptyRules.length} règle(s) sans contenu dans "${metadata.name}" (ex: "${emptyRules[0].titre}")`,
+          field: 'content',
+          count: emptyRules.length,
+        });
+      }
+
+      // Règles sans titre
+      const untitledRules = db.rules.filter((r) => !r.titre || r.titre === 'Sans titre');
+      if (untitledRules.length > 0) {
+        problems.push({
+          normId,
+          severity: 'warning',
+          message: `${untitledRules.length} règle(s) sans titre dans "${metadata.name}"`,
+          field: 'titre',
+          count: untitledRules.length,
+        });
+      }
+
+      // Pas de chunks RAG
+      if (!db.chunks || db.chunks.length === 0) {
+        problems.push({
+          normId,
+          severity: 'warning',
+          message: `Aucun chunk RAG chargé pour "${metadata.name}" — recherche sémantique limitée`,
+          field: 'chunks',
+        });
+      }
+
+      // Pas de QCM
+      if (!db.qcm || db.qcm.length === 0) {
+        problems.push({
+          normId,
+          severity: 'info',
+          message: `Aucun QCM disponible pour "${metadata.name}"`,
+          field: 'qcm',
+        });
+      }
+
+      // Sommaire vide
+      if (!db.sommaire || db.sommaire.length === 0) {
+        problems.push({
+          normId,
+          severity: 'warning',
+          message: `Sommaire vide pour "${metadata.name}" — navigation hiérarchique limitée`,
+          field: 'sommaire',
+        });
+      }
+    }
+
+    // Vérifier index de mots-clés
+    for (const normId of this.database.norms.keys()) {
+      if (!this.keywordIndexes.has(normId)) {
+        problems.push({
+          normId,
+          severity: 'error',
+          message: `Index de mots-clés manquant pour la norme ${normId}`,
+          field: 'index',
+        });
+      }
+    }
+
+    return problems;
+  }
+}
+
+export type NormProblemSeverity = 'error' | 'warning' | 'info';
+
+export interface NormProblem {
+  normId: string;
+  severity: NormProblemSeverity;
+  message: string;
+  field: string;
+  count?: number;
 }
 
 export const multiNormService = MultiNormService.getInstance();

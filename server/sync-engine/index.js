@@ -9,11 +9,38 @@
  */
 
 const adapter = require('./cossuel-adapter');
-const { Pool } = require('pg');
 
 let pool; // Sera injecté depuis server/index.js
 
 const SYNC_INTERVAL_MS = 60 * 60 * 1000; // 1 heure
+
+async function tableExists(client, tableName) {
+    const result = await client.query('SELECT to_regclass($1) AS exists', [tableName]);
+    return !!(result.rows && result.rows[0] && result.rows[0].exists);
+}
+
+function normalizeDossier(dossier) {
+    const id = String(dossier.id || dossier.dossier_number || '').trim();
+    if (!id) return null;
+
+    return {
+        id,
+        region: dossier.region || null,
+        status: dossier.status || null,
+        type: dossier.type || dossier.installation_type || null,
+        date: dossier.date || dossier.submission_date || null,
+    };
+}
+
+function uniqueDossiers(dossiers) {
+    const byId = new Map();
+    for (const dossier of dossiers) {
+        const normalized = normalizeDossier(dossier);
+        if (!normalized) continue;
+        byId.set(normalized.id, normalized);
+    }
+    return Array.from(byId.values());
+}
 
 async function startSyncEngine(dbPool) {
     console.log('🚀 [SYNC-ENGINE] Démarrage du moteur de synchronisation COSSUEL...');
@@ -39,59 +66,106 @@ async function runSyncCycle() {
         await adapter.authenticate();
 
         // 2. Récupérer les données
-        const dossiers = await adapter.fetchRecentDossiers(7);
-        console.log(`📦 [SYNC-ENGINE] ${dossiers.length} dossiers récupérés depuis COSSUEL.`);
+        const rawDossiers = await adapter.fetchRecentDossiers(7);
+        const dossiers = uniqueDossiers(rawDossiers);
+        const skippedCount = rawDossiers.length - dossiers.length;
+        console.log(`📦 [SYNC-ENGINE] ${rawDossiers.length} dossiers récupérés depuis COSSUEL.`);
+        if (skippedCount > 0) {
+            console.warn(`⚠️ [SYNC-ENGINE] ${skippedCount} dossier(s) sans ID ou doublon(s) ignoré(s).`);
+        }
 
         // 3. Sauvegarder dans Data Warehouse
-        // Utilisation d'une transaction pour garantir l'intégrité
+        // Vérifier l'existence des tables attendues avant d'écrire
         const client = await pool.connect();
         try {
-            await client.query('BEGIN');
+            const hasDossiers = await tableExists(client, 'public.cossuel_dossiers');
+            const hasLogs = await tableExists(client, 'public.cossuel_sync_logs');
+            const hasStats = await tableExists(client, 'public.cossuel_stats_daily');
 
-            for (const dossier of dossiers) {
-                // Upsert Dossier
-                await client.query(`
-                    INSERT INTO public.cossuel_dossiers (id, region, status, installation_type, submission_date)
-                    VALUES ($1, $2, $3, $4, $5)
-                    ON CONFLICT (id) DO UPDATE 
-                    SET status = EXCLUDED.status, 
-                        last_sync_at = NOW();
-                `, [dossier.id, dossier.region, dossier.status, dossier.type, dossier.date]);
-
-                recordsProcessed++;
+            if (!hasDossiers) {
+                console.warn('⚠️ [SYNC-ENGINE] Table `public.cossuel_dossiers` manquante — écriture ignorée.');
+            }
+            if (!hasLogs) {
+                console.warn('⚠️ [SYNC-ENGINE] Table `public.cossuel_sync_logs` manquante — logs de sync non enregistrés.');
+            }
+            if (!hasStats) {
+                console.warn('⚠️ [SYNC-ENGINE] Table `public.cossuel_stats_daily` manquante — stats journalières non mises à jour.');
             }
 
-            // 4. Mettre à jour les stats journalières
-            const today = new Date().toISOString().split('T')[0];
-            await client.query(`
-                INSERT INTO public.cossuel_stats_daily (date, total_dossiers, updated_at)
-                VALUES ($1, $2, NOW())
-                ON CONFLICT (date) DO UPDATE
-                SET total_dossiers = cossuel_stats_daily.total_dossiers + $2, updated_at = NOW();
-            `, [today, recordsProcessed]); // Simplifié pour l'exemple
+            if (hasDossiers) {
+                try {
+                    await client.query('BEGIN');
 
-            await client.query('COMMIT');
-            console.log(`✅ [SYNC-ENGINE] Cycle terminé avec succès. ${recordsProcessed} enregistrements traités.`);
+                    for (const dossier of dossiers) {
+                        // Upsert Dossier
+                        await client.query(`
+                            INSERT INTO public.cossuel_dossiers (id, region, status, installation_type, submission_date)
+                            VALUES ($1, $2, $3, $4, $5)
+                            ON CONFLICT (id) DO UPDATE 
+                            SET region = EXCLUDED.region,
+                                status = EXCLUDED.status,
+                                installation_type = EXCLUDED.installation_type,
+                                submission_date = EXCLUDED.submission_date,
+                                last_sync_at = NOW();
+                        `, [dossier.id, dossier.region, dossier.status, dossier.type, dossier.date]);
 
-            // Log Success
-            await logSync(client, startTime, 'SUCCESS', recordsProcessed, 0, 'Cycle complet OK');
+                        recordsProcessed++;
+                    }
 
-        } catch (dbError) {
-            await client.query('ROLLBACK');
-            throw dbError;
+                    // 4. Mettre à jour les stats journalières si la table existe
+                    if (hasStats) {
+                        const today = new Date().toISOString().split('T')[0];
+                        await client.query(`
+                            INSERT INTO public.cossuel_stats_daily (date, total_dossiers, updated_at)
+                            VALUES ($1, $2, NOW())
+                            ON CONFLICT (date) DO UPDATE
+                            SET total_dossiers = cossuel_stats_daily.total_dossiers + $2, updated_at = NOW();
+                        `, [today, recordsProcessed]);
+                    }
+
+                    await client.query('COMMIT');
+                    console.log(`✅ [SYNC-ENGINE] Cycle terminé avec succès. ${recordsProcessed} enregistrements traités.`);
+
+                } catch (dbError) {
+                    await client.query('ROLLBACK');
+                    throw dbError;
+                }
+            } else {
+                console.log('ℹ️ [SYNC-ENGINE] Ignoré: pas de tables cossuel présentes pour inscription.');
+            }
+
+            // Log Success if logs table exists
+            if (hasLogs) {
+                try {
+                    await logSync(client, startTime, 'SUCCESS', recordsProcessed, 0, 'Cycle complet OK');
+                } catch (e) {
+                    console.error('Impossible d\'enregistrer le log de sync:', e.message || e);
+                }
+            }
+
         } finally {
             client.release();
         }
 
     } catch (error) {
-        console.error(`❌ [SYNC-ENGINE] Erreur critique:`, error.message);
+        const isConfigError = error && error.code === 'CONFIG_ERROR';
+        const level = isConfigError ? 'warn' : 'error';
+        console[level](`${isConfigError ? '⚠️' : '❌'} [SYNC-ENGINE] ${isConfigError ? 'Synchronisation ignorée' : 'Erreur critique'}:`, error.message);
         errorsCount++;
         // Log Error (si possible)
+        let client;
         try {
-            const client = await pool.connect();
-            await logSync(client, startTime, 'ERROR', recordsProcessed, errorsCount, error.message);
-            client.release();
-        } catch (e) { console.error('Impossible de logger l\'erreur sync', e); }
+            client = await pool.connect();
+            if (await tableExists(client, 'public.cossuel_sync_logs')) {
+                await logSync(client, startTime, isConfigError ? 'WARNING' : 'ERROR', recordsProcessed, errorsCount, error.message);
+            } else {
+                console.warn('⚠️ [SYNC-ENGINE] Table `public.cossuel_sync_logs` manquante — erreur non enregistrée.');
+            }
+        } catch (e) {
+            console.error('Impossible de logger l\'erreur sync', e.message || e);
+        } finally {
+            client?.release();
+        }
     }
 }
 
@@ -102,4 +176,4 @@ async function logSync(client, startTime, status, processed, errors, details) {
     `, [startTime, status, processed, errors, details]);
 }
 
-module.exports = { startSyncEngine };
+module.exports = { startSyncEngine, runSyncCycle };

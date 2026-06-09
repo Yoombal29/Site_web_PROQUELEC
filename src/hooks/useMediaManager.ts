@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { useSession } from './useSession';
+import { normalizeUploadUrl } from '@/lib/normalizeUploadUrl';
 
 export interface MediaFile {
   id: string;
@@ -23,21 +24,8 @@ export const useMediaManager = () => {
   const { session, user } = useSession();
 
   const getFullUrl = (path: string) => {
-    const normalizeUploadUrl = (value: string) => {
-      try {
-        const parsed = new URL(value);
-        if (parsed.pathname.startsWith('/uploads/')) {
-          return `${parsed.pathname}${parsed.search}${parsed.hash}`;
-        }
-        return value;
-      } catch {
-        return value;
-      }
-    };
-
-    if (path.startsWith('http')) return normalizeUploadUrl(path);
-    // Base URL for local uploads served via the proxy
-    return `/uploads/${path}`;
+    if (!path) return path;
+    return normalizeUploadUrl(path.startsWith('http') ? path : (path.startsWith('/uploads/') ? path : `/uploads/${path}`));
   };
 
   const uploadFile = useMutation({

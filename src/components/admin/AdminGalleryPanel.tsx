@@ -352,11 +352,11 @@ export default function AdminGalleryPanel() {
                                     </div>
                                 </div>
                                 <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <Button size="icon" className="bg-white text-proqblue hover:bg-blue-50 rounded-xl shadow-lg" onClick={() => {setForm(item);setEditingId(item.id);}}>
-                                        <ImageIcon size={18} />
+                                    <Button title="Modifier" aria-label={`Modifier ${item.title || 'élément'}`} size="icon" className="bg-white text-proqblue hover:bg-blue-50 rounded-xl shadow-lg" onClick={() => {setForm(item);setEditingId(item.id);}}>
+                                      <ImageIcon size={18} />
                                     </Button>
-                                    <Button size="icon" className="bg-red-500 text-white hover:bg-red-600 rounded-xl shadow-lg" onClick={() => handleDelete(item.id)}>
-                                        <Trash2 size={18} />
+                                    <Button title="Supprimer" aria-label={`Supprimer ${item.title || 'élément'}`} size="icon" className="bg-red-500 text-white hover:bg-red-600 rounded-xl shadow-lg" onClick={() => handleDelete(item.id)}>
+                                      <Trash2 size={18} />
                                     </Button>
                                 </div>
                             </div>

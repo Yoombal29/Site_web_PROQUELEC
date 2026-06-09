@@ -4,7 +4,7 @@
 
 -- 1. Permissions Table (Master List)
 CREATE TABLE IF NOT EXISTS public.permissions (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(100) UNIQUE NOT NULL, -- e.g., 'projects.edit', 'inspections.validate'
     description TEXT,
     category VARCHAR(50), -- e.g., 'projects', 'inspections', 'audit'
@@ -13,18 +13,18 @@ CREATE TABLE IF NOT EXISTS public.permissions (
 
 -- 2. Role Permissions (Default Permissions per Role)
 CREATE TABLE IF NOT EXISTS public.role_permissions (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     role VARCHAR(50) NOT NULL, -- 'admin', 'installer', 'client', 'authority'
-    permission_id INTEGER REFERENCES public.permissions(id) ON DELETE CASCADE,
+    permission_id UUID REFERENCES public.permissions(id) ON DELETE CASCADE,
     granted_at TIMESTAMPTZ DEFAULT NOW(),
     UNIQUE(role, permission_id)
 );
 
 -- 3. User Permissions (Override/Additional Permissions per User)
 CREATE TABLE IF NOT EXISTS public.user_permissions (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
-    permission_id INTEGER REFERENCES public.permissions(id) ON DELETE CASCADE,
+    permission_id UUID REFERENCES public.permissions(id) ON DELETE CASCADE,
     granted BOOLEAN DEFAULT true, -- true = grant, false = revoke (override role permission)
     granted_at TIMESTAMPTZ DEFAULT NOW(),
     granted_by UUID REFERENCES public.users(id),
@@ -66,6 +66,11 @@ ON CONFLICT (name) DO NOTHING;
 -- ADMIN: Full Access
 INSERT INTO public.role_permissions (role, permission_id)
 SELECT 'admin', id FROM public.permissions
+ON CONFLICT (role, permission_id) DO NOTHING;
+
+-- SUPERADMIN: Full Access
+INSERT INTO public.role_permissions (role, permission_id)
+SELECT 'superadmin', id FROM public.permissions
 ON CONFLICT (role, permission_id) DO NOTHING;
 
 -- INSTALLER: Project & Inspection Management

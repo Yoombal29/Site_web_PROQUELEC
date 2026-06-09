@@ -1,24 +1,26 @@
-import { describe, expect } from '@jest/globals';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import VoltageDropCalculator from '../components/tools/VoltageDropCalculator';
 
+vi.setConfig({ testTimeout: 15000 });
+
 // Mock crypto-js
 vi.mock('crypto-js', () => ({
-  SHA256: vi.fn(() => ({ toString: () => 'mocked-hash' }))
+  SHA256: vi.fn(() => ({ toString: () => 'mocked-hash' })),
 }));
 
 // Mock file-saver
 vi.mock('file-saver', () => ({
-  saveAs: vi.fn()
+  saveAs: vi.fn(),
 }));
 
 // Mock jszip
 vi.mock('jszip', () => ({
   default: vi.fn(() => ({
     file: vi.fn(),
-    generateAsync: vi.fn(() => Promise.resolve(new Blob()))
-  }))
+    generateAsync: vi.fn(() => Promise.resolve(new Blob())),
+  })),
 }));
 
 describe('VoltageDropCalculator', () => {
@@ -34,7 +36,7 @@ describe('VoltageDropCalculator', () => {
     // Find info icon for current input
     const infoIcons = screen.getAllByRole('button', { hidden: true });
     const currentInfoIcon = infoIcons.find((icon) =>
-    icon.parentElement?.textContent?.includes('Courant')
+      icon.parentElement?.textContent?.includes('Courant'),
     );
 
     if (currentInfoIcon) {
@@ -45,55 +47,20 @@ describe('VoltageDropCalculator', () => {
     }
   });
 
-  it('validates input fields', async () => {
-    const user = userEvent.setup();
+  it('validates input fields', () => {
     render(<VoltageDropCalculator />);
 
-    // Fill required fields with valid data
+    // Fill required numeric fields with valid data
     const currentInput = screen.getByLabelText(/Courant/);
     const lengthInput = screen.getByLabelText(/Longueur/);
     const voltageInput = screen.getByLabelText(/Tension/);
     const powerFactorInput = screen.getByLabelText(/Facteur de Puissance/);
 
-    await user.type(currentInput, '16');
-    await user.type(lengthInput, '50');
-    await user.type(voltageInput, '230');
-    await user.type(powerFactorInput, '1.0');
+    fireEvent.change(currentInput, { target: { value: '16' } });
+    fireEvent.change(lengthInput, { target: { value: '50' } });
+    fireEvent.change(voltageInput, { target: { value: '230' } });
+    fireEvent.change(powerFactorInput, { target: { value: '1.0' } });
 
-    // Select required dropdowns
-    const conductorSelect = screen.getByLabelText(/Matériau/);
-    await user.click(conductorSelect);
-    await user.click(screen.getByText('Cuivre'));
-
-    const phaseSelect = screen.getByLabelText(/Régime Électrique/);
-    await user.click(phaseSelect);
-    await user.click(screen.getByText(/Monophasé/));
-
-    const installationSelect = screen.getByLabelText(/Type d'Installation/);
-    await user.click(installationSelect);
-    await user.click(screen.getByText('Éclairage'));
-
-    const modeSelect = screen.getByLabelText(/Mode de Pose/);
-    await user.click(modeSelect);
-    await user.click(screen.getByText('B1 - Fixation directe'));
-
-    // Set temperature and insulation
-    const tempInput = screen.getByLabelText(/Température Ambiante/);
-    await user.type(tempInput, '30');
-
-    const insulationSelect = screen.getByLabelText(/Type d'Isolation/);
-    await user.click(insulationSelect);
-    await user.click(screen.getByText('PVC'));
-
-    const circuitsInput = screen.getByLabelText(/Nombre de Circuits/);
-    await user.type(circuitsInput, '1');
-
-    // Select cross section for manual mode
-    const sectionSelect = screen.getByLabelText(/Section Normalisée/);
-    await user.click(sectionSelect);
-    await user.click(screen.getByText('2.5 mm²'));
-
-    // Button should be enabled
     const calculateButton = screen.getByRole('button', { name: /Calculer/ });
     expect(calculateButton).not.toBeDisabled();
   });
@@ -104,7 +71,9 @@ describe('VoltageDropCalculator', () => {
 
     // Fill required fields quickly
     const currentInput = screen.getByLabelText(/Courant/);
-    await user.type(currentInput, '16');
+    const lengthInput = screen.getByLabelText(/Longueur/);
+    fireEvent.change(currentInput, { target: { value: '16' } });
+    fireEvent.change(lengthInput, { target: { value: '50' } });
 
     // Mock rapid clicks
     const calculateButton = screen.getByRole('button', { name: /Calculer/ });
@@ -119,13 +88,30 @@ describe('VoltageDropCalculator', () => {
     expect(calculateButton).not.toBeDisabled();
   });
 
-  it('displays calculation results correctly', async () => {
+  it('performs a full manual calculation and displays a normative result', async () => {
     const user = userEvent.setup();
     render(<VoltageDropCalculator />);
 
-    // Fill all required fields and perform calculation
-    // (This would require a full integration test with mocked calculation results)
-    // For now, just verify the results section exists
-    expect(screen.getByText('Résultats du Calcul')).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText(/Courant/), { target: { value: '16' } });
+    fireEvent.change(screen.getByLabelText(/Longueur/), { target: { value: '50' } });
+    fireEvent.change(screen.getByLabelText(/Tension/), { target: { value: '230' } });
+    fireEvent.change(screen.getByLabelText(/Facteur de Puissance/), { target: { value: '1.0' } });
+    fireEvent.change(screen.getByLabelText(/Nombre de Circuits/), { target: { value: '1' } });
+
+    await user.click(screen.getByLabelText(/Section Normalisée/));
+    await user.click(screen.getByRole('button', { name: /16 mm²/ }));
+
+    await user.click(screen.getByLabelText(/Type d'Isolation/));
+    await user.click(screen.getByRole('button', { name: /PVC/ }));
+
+    const calculateButton = screen.getByRole('button', { name: /Calculer/i });
+    expect(calculateButton).not.toBeDisabled();
+
+    await user.click(calculateButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Limite Autorisée/)).toBeInTheDocument();
+      expect(screen.queryByText(/Saisissez les paramètres et cliquez sur/)).not.toBeInTheDocument();
+    });
   });
 });

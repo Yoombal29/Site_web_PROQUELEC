@@ -6,7 +6,7 @@
  * - Logique métier sans dépendances UI complexes
  */
 
-import { describe, test, expect } from '@jest/globals';
+import { describe, test, expect } from 'vitest';
 import { TronçonEngine } from '@/engines/TronçonEngine';
 import { GraphStore } from '@/stores/GraphStore';
 
@@ -180,7 +180,7 @@ describe('Système Électrique - Tests de Base', () => {
 
     // Vérifier le courant total mis à jour
     const updatedTotalCurrent = graphStore.getTotalCurrent('receptor-1');
-    const expectedCurrent = (100/230) + (500/(230/0.9)); // cosφ affecte le calcul
+    const expectedCurrent = (100/230) + (500/(230 * 0.9)); // cosφ affecte le calcul
     expect(updatedTotalCurrent).toBeCloseTo(expectedCurrent, 2);
   });
 });

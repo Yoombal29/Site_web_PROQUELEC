@@ -91,8 +91,9 @@ class AIMasterService {
         case 'expert': return await this.consultExpert(request);
         default: throw new Error("Agent inconnu.");
       }
-    } catch (error: any) {
-      return { success: false, data: null, message: error.message, modelUsed: 'PROQUELEC-AI Orchestrator' };
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : 'Erreur interne';
+      return { success: false, data: null, message: msg, modelUsed: 'PROQUELEC-AI Orchestrator' };
     }
   }
 
@@ -114,7 +115,7 @@ class AIMasterService {
     return { style: "Standard" };
   }
 
-  private async callBackend(task: string, prompt: string, content?: string, device?: string, extraParams?: any): Promise<any> {
+  private async callBackend(task: string, prompt: string, content?: string, device?: string, extraParams?: Record<string, unknown>): Promise<Record<string, unknown>> {
     // SOVEREIGN ROUTING via Node Proxy (/api/ai/...)
     let endpoint = '/api/ai/chat';
 
@@ -127,7 +128,7 @@ class AIMasterService {
     // Standardized Phi-3.5 Prompt Format (System/User/Assistant)
     const systemPrompt = this.systemPrompts[task as keyof typeof this.systemPrompts] || "Tu es PROQUELEC AI.";
 
-    const body: any = {
+    const body: Record<string, unknown> = {
       query: content || prompt,
       prompt: prompt, // Raw user prompt
       system_prompt: systemPrompt, // Injected for local cortex
@@ -180,7 +181,8 @@ class AIMasterService {
     const resp = await this.callBackend('seo', req.prompt || "");
     // Try parse JSON if string
     let data = resp.content || resp.response;
-    try { if (typeof data === 'string') data = JSON.parse(data); } catch (e) { }
+     
+    try { if (typeof data === 'string') data = JSON.parse(data); } catch (_e) { /* intentionally empty */ }
     return { success: true, data: data, modelUsed: this.models.seo };
   }
 

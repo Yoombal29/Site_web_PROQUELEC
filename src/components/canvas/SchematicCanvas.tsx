@@ -37,6 +37,7 @@ interface SchematicCanvasProps {
   showAxes?: boolean;
   showGuides?: boolean;
   onExport?: () => void;
+  onAnalyzeEdge?: (edgeId: string) => void;
 }
 
 interface NodeWithSymbol extends GraphNode {
@@ -55,7 +56,8 @@ export function SchematicCanvas({
   showGrid: initialShowGrid = true,
   showAxes: initialShowAxes = true,
   showGuides: initialShowGuides = true,
-  onExport
+  onExport,
+  onAnalyzeEdge
 }: SchematicCanvasProps) {
   const stageRef = useRef<Konva.Stage>(null);
   const layerRef = useRef<Konva.Layer>(null);
@@ -1381,6 +1383,24 @@ export function SchematicCanvas({
           <div className="text-slate-400 text-xs">
             Type: <span className="text-slate-300 font-mono">{nodes.get(selectedNodeId)?.type}</span>
           </div>
+        </div>
+      }
+
+      {/* 5. SELECTED EDGE INFO - Bottom-left */}
+      {selectedEdgeId && edges.has(selectedEdgeId) &&
+      <div className="absolute bottom-3 left-3 z-20 text-xs bg-slate-900/85 backdrop-blur-sm p-3 rounded-lg border border-slate-600/50 max-w-xs space-y-2 shadow-lg">
+          <div className="font-bold text-green-400 font-mono text-sm">Câble sélectionné</div>
+          <div className="text-slate-300 text-xs grid grid-cols-2 gap-2">
+            <div><span className="text-slate-500">L:</span> <span className="text-slate-200 font-mono">{edges.get(selectedEdgeId)?.properties.length?.toFixed(1) || 0} m</span></div>
+            <div><span className="text-slate-500">S:</span> <span className="text-slate-200 font-mono">{edges.get(selectedEdgeId)?.properties.section || 2.5} mm²</span></div>
+          </div>
+          {onAnalyzeEdge &&
+          <button
+              onClick={() => onAnalyzeEdge(selectedEdgeId)}
+              className="w-full mt-2 px-3 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white rounded font-bold text-xs transition-all shadow-md">
+              ⚡ Analyser Conformité
+            </button>
+          }
         </div>
       }
 

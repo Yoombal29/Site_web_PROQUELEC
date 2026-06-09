@@ -9,13 +9,15 @@ CREATE TABLE IF NOT EXISTS public.users (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Insert admin user with password 'admin123'
+-- Insert admin users with password 'admin123'
 -- Password hash: $2b$10$Qf5sFqC8KhF5g0qLUNkI2.TmB4z8pWxIoOUaFQJBGZTYqJmZ7zjcm
 INSERT INTO public.users (email, password_hash, role)
-VALUES ('admin@proquelec.com', '$2b$10$Qf5sFqC8KhF5g0qLUNkI2.TmB4z8pWxIoOUaFQJBGZTYqJmZ7zjcm', 'admin')
+VALUES
+    ('admin@proquelec.sn', '$2b$10$Qf5sFqC8KhF5g0qLUNkI2.TmB4z8pWxIoOUaFQJBGZTYqJmZ7zjcm', 'admin'),
+    ('admin@proquelec.com', '$2b$10$Qf5sFqC8KhF5g0qLUNkI2.TmB4z8pWxIoOUaFQJBGZTYqJmZ7zjcm', 'admin')
 ON CONFLICT (email) DO UPDATE SET 
     password_hash = EXCLUDED.password_hash, 
     role = EXCLUDED.role;
 
--- Verify the user was created
-SELECT email, role, is_active FROM public.users WHERE email = 'admin@proquelec.com';
+-- Verify the users were created
+SELECT email, role, is_active FROM public.users WHERE email IN ('admin@proquelec.sn', 'admin@proquelec.com');

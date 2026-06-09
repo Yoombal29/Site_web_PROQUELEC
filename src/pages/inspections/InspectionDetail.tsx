@@ -8,6 +8,16 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useSession } from '@/hooks/useSession';
 
+interface InspectionResult {
+  id: string;
+  is_compliant: boolean;
+  checkpoint_category?: string;
+  checkpoint_label?: string;
+  item_text?: string;
+  checkpoint_description?: string;
+  inspector_comment?: string;
+}
+
 export default function InspectionDetail() {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
@@ -133,7 +143,7 @@ export default function InspectionDetail() {
                     </div>
 
                     <div className="divide-y divide-slate-100">
-                        {inspection.results?.map((item: any) => (
+                        {inspection.results?.map((item: InspectionResult) => (
                             <div key={item.id} className="p-6 flex items-start gap-4 hover:bg-slate-50 transition-colors break-inside-avoid">
                                 <div className="mt-1">
                                     {item.is_compliant ? (

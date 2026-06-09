@@ -250,7 +250,7 @@ export const TestimonialsListBlock = ({ testimonials = [] }: unknown) => {
 
 // --- HERO BLOCK ---
 export const HeroBlock = ({ title, subtitle, background_url, cta_text, cta_link }: unknown) => {
-  const defaultBg = 'https://images.unsplash.com/photo-1558449028-s549c1d27c63?auto=format&fit=crop&q=80';
+  const defaultBg = 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80';
   return (
     <div className="relative w-full min-h-[500px] flex items-center justify-center overflow-hidden">
             <div

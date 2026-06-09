@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,11 +7,14 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { DesignEditor } from '@/components/admin/DesignEditor';
-import { FileText, Eye, Zap, Save, X, Copy, Plus } from 'lucide-react';
+import { FileText, Eye, Zap, Save, X } from 'lucide-react';
 import { apiFetch } from '@/lib/api-client';
-import { LAYOUT_TEMPLATES, getDefaultDesignForLayout } from '@/utils/pageLayouts';
+import { getDefaultDesignForLayout } from '@/utils/pageLayouts';
 import type { PageRecord, PageDesignOptions, PageSeoOptions } from '@/types/PageSystem';
 import { useToast } from '@/hooks/use-toast';
+
+type EditorTab = 'content' | 'design' | 'preview';
+type PreviewMode = 'desktop' | 'tablet' | 'mobile';
 
 interface AdvancedPageEditorProps {
   pageId?: string;
@@ -25,24 +28,14 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
   onSaved
 }) => {
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<'content' | 'design' | 'preview'>('content');
-  const [previewMode, setPreviewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
+  const [activeTab, setActiveTab] = useState<EditorTab>('content');
+  const [previewMode, setPreviewMode] = useState<PreviewMode>('desktop');
   const [page, setPage] = useState<PageRecord | null>(null);
   const [isLoading, setIsLoading] = useState(!!pageId);
   const [isSaving, setIsSaving] = useState(false);
   const [unsavedChanges, setUnsavedChanges] = useState(false);
 
-  // Charger la page si c'est une modification
-  useEffect(() => {
-    if (pageId) {
-      loadPage();
-    } else {
-      // Créer une nouvelle page vide
-      initNewPage();
-    }
-  }, [pageId]);
-
-  const loadPage = async () => {
+  const loadPage = useCallback(async () => {
     try {
       const data = await apiFetch<PageRecord>(`/api/pages/${pageId}`);
 
@@ -76,9 +69,9 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [pageId, toast]);
 
-  const initNewPage = () => {
+  const initNewPage = useCallback(() => {
     const newPage: PageRecord = {
       id: '',
       title: 'Nouvelle page',
@@ -86,6 +79,8 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
       content: '<h2>Commencez à écrire votre contenu ici...</h2>',
       template: 'default',
       layout_type: 'standard',
+      content_blocks: [],
+      workflow_status: 'draft',
       design_options: getDefaultDesignForLayout('standard'),
       seo_options: {
         focus_keyword: '',
@@ -98,12 +93,25 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
         schema_type: 'WebPage'
       },
       is_published: false,
+      is_sticky: false,
+      comment_status: 'closed',
+      plugins_active: [],
+      language_code: 'fr',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };
     setPage(newPage);
     setIsLoading(false);
-  };
+  }, []);
+
+  // Charger la page si c'est une modification
+  useEffect(() => {
+    if (pageId) {
+      void loadPage();
+    } else {
+      initNewPage();
+    }
+  }, [pageId, loadPage, initNewPage]);
 
   const handleSave = async () => {
     if (!page) return;
@@ -168,7 +176,7 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
     }
   };
 
-  const updatePageField = (field: keyof PageRecord, value: any) => {
+  const updatePageField = <K extends keyof PageRecord>(field: K, value: PageRecord[K]) => {
     setPage((prev) => prev ? { ...prev, [field]: value } : null);
     setUnsavedChanges(true);
   };
@@ -189,7 +197,7 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
       prev
         ? {
           ...prev,
-          layout_type: layoutType as any,
+          layout_type: layoutType,
           design_options: {
             ...prev.design_options,
             ...defaultDesign
@@ -198,6 +206,12 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
         : null
     );
     setUnsavedChanges(true);
+  };
+
+  const handleTabChange = (value: string) => {
+    if (value === 'content' || value === 'design' || value === 'preview') {
+      setActiveTab(value);
+    }
   };
 
   if (isLoading) {
@@ -240,7 +254,7 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
       </div>
 
       {/* Onglets */}
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
+      <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="content" className="flex items-center gap-2">
             <FileText className="w-4 h-4" />
@@ -320,9 +334,48 @@ export const AdvancedPageEditor: React.FC<AdvancedPageEditorProps> = ({
               </div>
             </CardContent>
           </Card>
-          ...
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Contenu HTML</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Textarea
+                value={page.content || ''}
+                onChange={(e) => updatePageField('content', e.target.value)}
+                placeholder="<h2>Commencez à écrire votre contenu ici...</h2>"
+                className="min-h-[260px] font-mono text-sm"
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* TAB: DESIGN */}
+        <TabsContent value="design" className="space-y-6">
+          <DesignEditor
+            page={page}
+            onDesignChange={handleDesignChange}
+            onSeoChange={handleSeoChange}
+            onLayoutChange={handleLayoutChange}
+            previewMode={previewMode}
+            onPreviewModeChange={setPreviewMode}
+          />
+        </TabsContent>
+
           {/* TAB: APERÇU */}
           <TabsContent value="preview" className="space-y-4">
+            <div className="flex items-center gap-2">
+              {(['desktop', 'tablet', 'mobile'] as const).map((mode) => (
+                <Button
+                  key={mode}
+                  type="button"
+                  variant={previewMode === mode ? 'default' : 'outline'}
+                  onClick={() => setPreviewMode(mode)}
+                >
+                  {mode === 'desktop' ? 'Desktop' : mode === 'tablet' ? 'Tablette' : 'Mobile'}
+                </Button>
+              ))}
+            </div>
             <div className="bg-gray-100 p-4 rounded-lg">
               <div className="bg-white rounded-lg shadow-lg overflow-hidden">
                 {previewMode === 'desktop' && (

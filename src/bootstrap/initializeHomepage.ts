@@ -6,6 +6,7 @@
  */
 
 import { homepageRegistry } from '@/services/HomepageRegistry';
+import { getSiteConfig } from '@/services/BuilderConfigService';
 import { HeroBanner } from '@/components/HeroBanner';
 import { PartnerLogos } from '@/components/PartnerLogos';
 import { LatestNews } from '@/components/LatestNews';
@@ -15,6 +16,7 @@ import { VisionMission } from '@/components/VisionMission';
 import { LandingStats } from '@/components/LandingStats';
 import { LandingTestimonials } from '@/components/LandingTestimonials';
 import { AudienceOffers } from '@/components/AudienceOffers';
+import { AvailableToolsSection } from '@/components/AvailableToolsSection';
 
 // ... DEFINITION DES MODULES ---
 
@@ -52,6 +54,17 @@ export function initializeHomepageModules(): void {
     defaultPriority: 20,
     isEnabledByDefault: true,
     component: VisionMission
+  });
+
+  // 2.5 OUTILS DISPONIBLES
+  homepageRegistry.register({
+    id: 'available_tools_section',
+    name: 'Outils disponibles',
+    description: 'Annonce les outils disponibles et dirige les utilisateurs vers la page Outils',
+    type: 'content',
+    defaultPriority: 35,
+    isEnabledByDefault: true,
+    component: AvailableToolsSection
   });
 
   // 3. STATS (La preuve d'autorité)
@@ -120,5 +133,39 @@ export function initializeHomepageModules(): void {
     component: NewsletterSignup
   });
 
+  // Apply optional site-specific homepage overrides if present
+  try {
+    const cfg = getSiteConfig();
+    const moduleOverrides = cfg?.homepage?.modules || cfg?.homepageModules || null;
+    if (moduleOverrides && Array.isArray(moduleOverrides)) {
+      moduleOverrides.forEach((m: any) => {
+        const existing = homepageRegistry.get(m.id);
+        if (existing) {
+          // Merge settings provided by site config (priority, enabled flag, name/desc)
+          homepageRegistry.register({
+            ...existing,
+            ...m,
+            // Preserve component reference unless explicitly replaced by code
+            component: m.component || existing.component
+          });
+        } else {
+          // If new module is declared but no component can be wired automatically,
+          // register a placeholder that administrators can replace via builder admin.
+          homepageRegistry.register({
+            id: m.id,
+            name: m.name || m.id,
+            description: m.description || 'Module ajouté via configuration site',
+            type: m.type || 'content',
+            defaultPriority: m.defaultPriority || 999,
+            isEnabledByDefault: m.isEnabledByDefault !== false,
+            component: m.component || (() => null) // placeholder
+          });
+        }
+      });
+    }
+  } catch (e) {
+    // silently ignore site config errors at bootstrap
+    console.warn('Homepage overrides could not be applied', e);
+  }
 
 }

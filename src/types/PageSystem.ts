@@ -3,7 +3,7 @@
  * Utilisés pour le contrat de données entre API locale ↔ UI ↔ Renderer
  */
 
-export type WorkflowStatus = 'draft' | 'review' | 'approved' | 'published';
+export type WorkflowStatus = 'draft' | 'review' | 'approved' | 'published' | 'archived';
 export type CommentStatus = 'open' | 'closed';
 
 // Registre des Sections Personnalisées
@@ -37,10 +37,14 @@ export interface PageDesignOptions {
   hero_enabled: boolean;
   hero_height: 'small' | 'medium' | 'large' | 'fullscreen';
   hero_overlay: number;
+  hero_gradient?: string;
   hero_alignment: 'left' | 'center' | 'right';
   content_width: 'default' | 'narrow' | 'wide' | 'full';
   sidebar_enabled: boolean;
   sidebar_position: 'left' | 'right';
+  header_style?: 'standard' | 'overlay' | 'minimal';
+  button_style?: 'solid' | 'outline' | 'ghost';
+  section_spacing?: 'compact' | 'normal' | 'spacious';
   footer_cta_enabled: boolean;
   background_color: string;
   accent_color: string;
@@ -101,15 +105,34 @@ export interface PageRecord {
   slug: string;
   content: string; // Legacy field for plain text fallback
   excerpt?: string;
+  template?: string | null;
+  layout_type?: string | null;
   content_blocks: ContentBlock[];
   workflow_status: WorkflowStatus;
   is_published: boolean;
   is_sticky: boolean;
   comment_status: CommentStatus;
   published_at?: string;
+  publish_date?: string;
+  unpublish_date?: string;
   meta_description?: string;
   meta_keywords?: string;
+  meta_robots?: string;
   featured_image?: string;
+  show_hero?: boolean;
+  show_footer?: boolean;
+  custom_css?: string;
+  custom_js?: string;
+  header_html?: string;
+  footer_html?: string;
+  hero_title?: string;
+  hero_subtitle?: string;
+  hero_background_image?: string;
+  hero_cta_text?: string;
+  hero_cta_link?: string;
+  categories?: string[];
+  tags?: string[];
+  reading_time?: number;
   design_options: PageDesignOptions;
   seo_options: PageSeoOptions;
   plugins_active: string[];

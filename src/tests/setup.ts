@@ -13,7 +13,7 @@ import { vi } from 'vitest';
 
 // Ensure a DOM is available when running under Node (vitest environment fallback)
 if (typeof document === 'undefined' || typeof window === 'undefined') {
-  const { JSDOM } = require('jsdom');
+  const { JSDOM } = await import('jsdom');
   const dom = new JSDOM('<!doctype html><html><body></body></html>');
   (global as unknown).window = dom.window;
   (global as unknown).document = dom.window.document;
@@ -33,6 +33,34 @@ global.ResizeObserver = class ResizeObserver {
   unobserve() {}
   disconnect() {}
 };
+
+// Polyfill for Blob.prototype.text in environments where it is missing
+if (typeof Blob !== 'undefined' && !Blob.prototype.text) {
+  Blob.prototype.text = function() {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsText(this);
+    });
+  };
+}
+
+// Polyfill for Pointer Capture APIs which are missing in JSDOM but required by modern UI libraries like Radix
+if (typeof window !== 'undefined' && window.Element) {
+  if (!window.Element.prototype.hasPointerCapture) {
+    window.Element.prototype.hasPointerCapture = function() { return false; };
+  }
+  if (!window.Element.prototype.setPointerCapture) {
+    window.Element.prototype.setPointerCapture = function() {};
+  }
+  if (!window.Element.prototype.releasePointerCapture) {
+    window.Element.prototype.releasePointerCapture = function() {};
+  }
+  if (!window.Element.prototype.scrollIntoView) {
+    window.Element.prototype.scrollIntoView = function() {};
+  }
+}
 
 // Polyfill pour matchMedia
 Object.defineProperty(window, 'matchMedia', {
@@ -60,7 +88,7 @@ global.IntersectionObserver = (global as unknown).vi ? (global as unknown).vi.fn
 
 // Mock Monaco Editor
 vi.mock('@monaco-editor/react', () => {
-  const React = require('react');
+  const React = await import('react');
   return {
     default: (props: unknown) => {
       return React.createElement('textarea', {
@@ -77,11 +105,137 @@ vi.mock('@monaco-editor/react', () => {
   };
 });
 
+// Mock useLiveSettings globally to avoid QueryClientProvider requirements in component tests
+vi.mock('@/hooks/useLiveSettings', () => ({
+  useLiveSettings: () => ({
+    settings: {
+      site_name: "PROQUELEC SENEGAL",
+      slogan: "Sécurité · Qualité · Formation",
+      contact_email: "contact@proquelec.sn",
+      phone_number: "+221 XX XXX XX XX",
+      address: "Dakar, Sénégal",
+      primary_color: "#2376df",
+      secondary_color: "#054393",
+      accent_color: "#1a73e8",
+      background_color: "#f8f9fa",
+      text_color: "#333333",
+      font_family: "Roboto",
+    },
+    isLoading: false,
+    error: null,
+    refetch: vi.fn(),
+  }),
+}));
+
+// Mock Radix Tooltip component globally to render inline for reliable testing in JSDOM
+vi.mock('@/components/ui/tooltip', () => {
+  const React = await import('react');
+  return {
+    TooltipProvider: ({ children }: { children: React.ReactNode }) => children,
+    Tooltip: ({ children }: { children: React.ReactNode }) => children,
+    TooltipTrigger: ({ children }: { children: React.ReactNode }) => children,
+    TooltipContent: ({ children }: { children: React.ReactNode }) => React.createElement('div', {}, children),
+  };
+});
+
+// Mock Radix Select component globally to render inline with context for robust testing in JSDOM
+vi.mock('@radix-ui/react-select', () => {
+  const React = await import('react');
+  interface SelectContextProps {
+    value?: unknown;
+    onValueChange?: (val: unknown) => void;
+  }
+  const SelectContext = React.createContext<SelectContextProps | null>(null);
+
+  const Root = ({ children, value, onValueChange }: { children: React.ReactNode; value?: unknown; onValueChange?: (val: unknown) => void }) => {
+    return React.createElement(
+      SelectContext.Provider,
+      { value: { value, onValueChange } },
+      React.createElement('div', {}, children)
+    );
+  };
+  Root.displayName = 'Select';
+
+  const Trigger = ({ children, id }: { children: React.ReactNode; id?: string }) => {
+    return React.createElement('button', { id, type: 'button' }, children);
+  };
+  Trigger.displayName = 'Trigger';
+
+  const Value = ({ placeholder, children }: { placeholder?: string; children?: React.ReactNode }) => children || placeholder || null;
+  Value.displayName = 'Value';
+
+  const Content = ({ children }: { children: React.ReactNode }) => {
+    return React.createElement('div', {}, children);
+  };
+  Content.displayName = 'Content';
+
+  const Item = ({ children, value }: { children: React.ReactNode; value: string }) => {
+    const context = React.useContext(SelectContext);
+    return React.createElement('button', {
+      type: 'button',
+      onClick: () => {
+        if (context && context.onValueChange) {
+          context.onValueChange(value);
+        }
+      }
+    }, children);
+  };
+  Item.displayName = 'Item';
+
+  const Group = ({ children }: { children: React.ReactNode }) => children;
+  Group.displayName = 'Group';
+
+  const Label = ({ children }: { children: React.ReactNode }) => children;
+  Label.displayName = 'Label';
+
+  const Separator = () => null;
+  Separator.displayName = 'Separator';
+
+  const ScrollUpButton = () => null;
+  ScrollUpButton.displayName = 'ScrollUpButton';
+
+  const ScrollDownButton = () => null;
+  ScrollDownButton.displayName = 'ScrollDownButton';
+
+  const Viewport = ({ children }: { children: React.ReactNode }) => children;
+  Viewport.displayName = 'Viewport';
+
+  const Icon = ({ children }: { children?: React.ReactNode }) => children || null;
+  Icon.displayName = 'Icon';
+
+  const Portal = ({ children }: { children: React.ReactNode }) => children;
+  Portal.displayName = 'Portal';
+
+  const ItemIndicator = ({ children }: { children?: React.ReactNode }) => children || null;
+  ItemIndicator.displayName = 'ItemIndicator';
+
+  const ItemText = ({ children }: { children: React.ReactNode }) => children;
+  ItemText.displayName = 'ItemText';
+
+  return {
+    Root,
+    Trigger,
+    Value,
+    Content,
+    Item,
+    Group,
+    Label,
+    Separator,
+    ScrollUpButton,
+    ScrollDownButton,
+    Viewport,
+    Icon,
+    Portal,
+    ItemIndicator,
+    ItemText
+  };
+});
+
 // Ensure DOMParser exists in JSDOM
 if (!(window as unknown).DOMParser) {
   class DOMParserPolyfill {
     parseFromString(str: string) {
-      const { JSDOM } = require('jsdom');
+  const { JSDOM } = await import('jsdom');
       return new JSDOM(str).window.document;
     }
   }
@@ -208,13 +362,13 @@ expect.extend({
 
 // Fonction utilitaire pour créer un GraphStore de test
 export const createTestGraphStore = () => {
-  const { GraphStore } = require('@/stores/GraphStore');
+  const { GraphStore } = await import('@/stores/GraphStore');
   return new GraphStore();
 };
 
 // Fonction utilitaire pour créer un EditorManager de test
 export const createTestEditorManager = (graphStore?: unknown) => {
-  const { EditorManager } = require('@/managers/EditorManager');
+  const { EditorManager } = await import('@/managers/EditorManager');
   return new EditorManager(graphStore || createTestGraphStore());
 };
 

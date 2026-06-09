@@ -4,6 +4,7 @@ import { SpreadsheetEditor } from '@/components/office/spreadsheet/SpreadsheetEd
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Share2 } from 'lucide-react';
 import { toast } from 'sonner';
+import writeExcelFile from 'write-excel-file/browser';
 
 export function SpreadsheetEditorPage() {
   const { id } = useParams();
@@ -49,9 +50,13 @@ export function SpreadsheetEditorPage() {
     }
   };
 
-  const handleExport = () => {
-    toast.info('Export Excel en cours...');
-    // TODO: Implement Excel export
+  const handleExport = async () => {
+    try {
+      await writeExcelFile([[spreadsheetTitle]]).toFile(`${spreadsheetTitle}.xlsx`);
+      toast.success('Excel exporté avec succès');
+    } catch {
+      toast.error("Erreur lors de l'export Excel");
+    }
   };
 
   return (

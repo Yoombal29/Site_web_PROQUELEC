@@ -8,6 +8,7 @@ export const DEFAULT_PAGE_SECTIONS = {
         sections: [
             { id: "hero", label: "Bannière Accueil", icon: "Zap", type: "hero" },
             { id: "audience", label: "Offres par Audience", icon: "Users", type: "features-list" },
+            { id: "tools", label: "Outils disponibles", icon: "Briefcase", type: "features-list" },
             { id: "mission", label: "Vision & Mission", icon: "Target", type: "text-image" },
             { id: "stats", label: "Statistiques", icon: "BarChart", type: "stats" },
             { id: "news", label: "Dernières Actualités", icon: "Newspaper", type: "custom" },
@@ -30,6 +31,19 @@ export const DEFAULT_PAGE_SECTIONS = {
                     { title: "Membres", subtitle: "Experts", icon: "Users", description: "Veille normative et support prioritaire." }
                 ]
             }
+            ,
+            tools: {
+                title: "Catalogue d'Outils PROQUELEC",
+                subtitle: "Tous les outils disponibles, classés en gratuit et premium pour répondre à chaque besoin métier.",
+                layout: "grid-2",
+                badge: "Classification",
+                features: [
+                    { title: "Outils Gratuits", description: "Accédez aux calculateurs et guides sans frais pour les besoins de sécurité et de conformité basique.", icon: "Zap" },
+                    { title: "Outils Premium", description: "Solutions avancées pour les professionnels, ingénieurs et bureaux d'études.", icon: "Crown" },
+                    { title: "Normes & Documentation", description: "Bibliothèques normatives et guides de référence disponibles en ligne.", icon: "BookOpen" },
+                    { title: "Vérifications & Diagnostics", description: "Outils de contrôle de mise à la terre, baisse de tension et performances réseau.", icon: "ShieldCheck" }
+                ]
+            },
         }
     },
     autorites: {

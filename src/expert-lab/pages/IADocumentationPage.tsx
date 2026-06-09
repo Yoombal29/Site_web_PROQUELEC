@@ -328,7 +328,7 @@ export default function IADocumentationPage() {
               </p>
             </a>
             <a
-              href="/test_ai_endpoints.js"
+              href="/expert/ai-providers"
               target="_blank"
               rel="noopener noreferrer"
               className="p-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-blue-500 transition"

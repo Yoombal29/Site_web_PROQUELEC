@@ -130,7 +130,7 @@ const DashboardHome: React.FC = () => {
             </p>
           </div>
           <Button asChild className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 h-12 rounded-xl shadow-md transition-all active:scale-95">
-            <Link to="/admin?tab=pages">Ouvrir le BE Builder</Link>
+            <Link to="/admin/builder">Ouvrir le Studio de création</Link>
           </Button>
         </div>
       </section>

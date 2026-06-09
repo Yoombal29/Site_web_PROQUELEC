@@ -6,6 +6,7 @@ import { Loader2, Upload } from 'lucide-react';
 import { useUploadFile } from '@/hooks/useUploadFile';
 import { toast } from 'sonner';
 import { MediaLibrary } from '@/components/MediaLibrary';
+import { normalizeUploadUrl } from '@/lib/normalizeUploadUrl';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Library } from 'lucide-react';
 
@@ -83,7 +84,8 @@ export default function ImageUploadInput({ value, onChange, bucketName }: ImageU
             </DialogHeader>
             <MediaLibrary
               onSelect={(file) => {
-                const url = `/uploads/${file.file_path}`;
+                const url = normalizeUploadUrl(file.file_path.startsWith('/uploads/') ? file.file_path : `/uploads/${file.file_path}`);
+                onChange(url);
               }} />
             
           </DialogContent>

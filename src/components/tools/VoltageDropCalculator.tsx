@@ -303,17 +303,37 @@ const generateDOEData = (result: unknown): unknown => {
 // ════════════════════════════════════════════════════════════════════════════════════════════════════════════
 // Interface utilisateur et logique métier du calculateur
 
-export default function VoltageDropCalculator() {
+export interface VoltageDropCalculatorProps {
+  initialLength?: number;
+  initialCurrent?: number;
+  initialCrossSection?: number;
+  initialMaterial?: string;
+}
+
+export default function VoltageDropCalculator({
+  initialLength,
+  initialCurrent,
+  initialCrossSection,
+  initialMaterial
+}: VoltageDropCalculatorProps = {}) {
   // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
   // 📝 ÉTATS — PARAMÈTRES D'ENTRÉE
   // ─────────────────────────────────────────────────────────────────────────────────────────────────────────
   // Chaque paramètre de l'utilisateur est stocké dans un état React
   // Voir formulaire de saisie en bas du composant
-  const [current, setCurrent] = useState<string>('');
-  const [length, setLength] = useState<string>('');
-  const [crossSection, setCrossSection] = useState<string>('2.5');
+  const [current, setCurrent] = useState<string>(initialCurrent ? String(initialCurrent) : '');
+  const [length, setLength] = useState<string>(initialLength ? String(initialLength) : '');
+  const [crossSection, setCrossSection] = useState<string>(initialCrossSection ? String(initialCrossSection) : '2.5');
   const [voltage, setVoltage] = useState<string>('230'); // Default to 230V
-  const [conductorType, setConductorType] = useState<string>('copper');
+  const [conductorType, setConductorType] = useState<string>(initialMaterial === 'Al' ? 'aluminum' : 'copper');
+  
+  React.useEffect(() => {
+    if (initialCurrent !== undefined) setCurrent(String(initialCurrent));
+    if (initialLength !== undefined) setLength(String(initialLength));
+    if (initialCrossSection !== undefined) setCrossSection(String(initialCrossSection));
+    if (initialMaterial !== undefined) setConductorType(initialMaterial === 'Al' ? 'aluminum' : 'copper');
+  }, [initialLength, initialCurrent, initialCrossSection, initialMaterial]);
+
   const [installationType, setInstallationType] = useState<string>('lighting');
   const [powerFactor, setPowerFactor] = useState<string>('1.0');
   const [phaseSystem, setPhaseSystem] = useState<string>('single'); // single or three
@@ -497,7 +517,7 @@ export default function VoltageDropCalculator() {
       role: "IA Certifiée Bureau d'Études",
       hash_calcul: calculationHash,
       hash_audit: auditHash,
-      conformite_eidas: "Signature électronique simulée (eIDAS compliant en production)"
+      conformite_eidas: "Empreinte numérique d'intégrité (signature électronique certifiée en production)"
     };
 
     const jsonString = JSON.stringify(signatureData, null, 2);
@@ -882,7 +902,7 @@ export default function VoltageDropCalculator() {
       const deltaUPercent = 100 * u / U0;
 
       // Limites admissibles selon Tableau 52V
-      let baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
+      const baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
       let maxAllowedDrop = baseLimit;
 
       // Correction pour L > 100 m
@@ -1050,7 +1070,7 @@ export default function VoltageDropCalculator() {
         const deltaUPercent = 100 * u / U0;
 
         // Limites admissibles
-        let baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
+        const baseLimit = VOLTAGE_DROP_LIMITS[alimentationType as keyof typeof VOLTAGE_DROP_LIMITS][installationType as keyof typeof VOLTAGE_DROP_LIMITS.A];
         let maxAllowedDrop = baseLimit;
 
         if (L > 100) {
@@ -1393,7 +1413,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                 Mode de Calcul
                             </Label>
                             <Select value={calculationMode} onValueChange={setCalculationMode}>
-                                <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                <SelectTrigger id="calculationMode" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1409,7 +1429,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                 Type d'Alimentation
                             </Label>
                             <Select value={alimentationType} onValueChange={setAlimentationType}>
-                                <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                <SelectTrigger id="alimentationType" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1531,7 +1551,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     </TooltipProvider>
                                 </div>
                                 <Select value={crossSection} onValueChange={setCrossSection} disabled={calculationMode === 'auto'}>
-                                    <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                    <SelectTrigger id="crossSection" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -1553,7 +1573,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                 Matériau du Conducteur
                             </Label>
                             <Select value={conductorType} onValueChange={setConductorType}>
-                                <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                <SelectTrigger id="conductorType" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1568,7 +1588,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                 Régime Électrique
                             </Label>
                             <Select value={phaseSystem} onValueChange={setPhaseSystem}>
-                                <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                <SelectTrigger id="phaseSystem" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -1584,7 +1604,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     Type d'Installation
                                 </Label>
                                 <Select value={installationType} onValueChange={setInstallationType}>
-                                    <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                    <SelectTrigger id="installationType" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -1649,7 +1669,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     </TooltipProvider>
                                 </div>
                                 <Select value={modeOfInstallation} onValueChange={setModeOfInstallation}>
-                                    <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                    <SelectTrigger id="modeOfInstallation" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -1689,7 +1709,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                                     Type d'Isolation
                                 </Label>
                                 <Select value={insulationType} onValueChange={setInsulationType}>
-                                    <SelectTrigger className="bg-emerald-900/20 border-emerald-800/40 text-white">
+                                    <SelectTrigger id="insulationType" className="bg-emerald-900/20 border-emerald-800/40 text-white">
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>

@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
-import { Workbook } from '@fortune-sheet/react';
-import '@fortune-sheet/react/dist/index.css';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Save, Table, Sparkles, Calculator } from 'lucide-react';
+import { Save, Table, Sparkles, Calculator, Plus } from 'lucide-react';
 
 interface SpreadsheetEditorProps {
   spreadsheetId?: string;
   initialData?: unknown[];
   onSave?: (data: unknown[]) => void;
 }
+
+type SpreadsheetCell = {
+  v?: string | number;
+  m?: string;
+  f?: string;
+  ct?: unknown;
+  bg?: string;
+  fc?: string;
+};
+
+type SpreadsheetSheet = {
+  name: string;
+  data: SpreadsheetCell[][];
+  config?: Record<string, unknown>;
+  celldata?: unknown[];
+  [key: string]: unknown;
+};
+
+const cloneSheets = (sheets: unknown[]): SpreadsheetSheet[] =>
+  JSON.parse(JSON.stringify(sheets)) as SpreadsheetSheet[];
+
+const getCellValue = (cell?: SpreadsheetCell) =>
+  String(cell?.f ?? cell?.m ?? cell?.v ?? '');
 
 export function SpreadsheetEditor({ spreadsheetId, initialData, onSave }: SpreadsheetEditorProps) {
   const [data, setData] = useState(initialData || [
@@ -63,8 +84,39 @@ export function SpreadsheetEditor({ spreadsheetId, initialData, onSave }: Spread
     }
   };
 
-  const handleChange = (newData: unknown[]) => {
-    setData(newData);
+  const sheet = (data[0] as SpreadsheetSheet | undefined) || { name: 'Feuille1', data: [] };
+  const rows = Array.isArray(sheet.data) ? sheet.data : [];
+  const columnCount = Math.max(4, ...rows.map((row) => row.length));
+
+  const updateCell = (rowIndex: number, colIndex: number, value: string) => {
+    const next = cloneSheets(data);
+    const nextSheet = next[0] || { name: 'Feuille1', data: [], celldata: [] };
+    next[0] = nextSheet;
+    nextSheet.data = Array.isArray(nextSheet.data) ? nextSheet.data : [];
+    nextSheet.data[rowIndex] = Array.isArray(nextSheet.data[rowIndex]) ? nextSheet.data[rowIndex] : [];
+    const existing = nextSheet.data[rowIndex][colIndex] || {};
+    nextSheet.data[rowIndex][colIndex] = value.startsWith('=')
+      ? { ...existing, f: value, v: '', m: value }
+      : { ...existing, v: value, m: value, f: undefined };
+    setData(next);
+  };
+
+  const addRow = () => {
+    const next = cloneSheets(data);
+    const nextSheet = next[0] || { name: 'Feuille1', data: [], celldata: [] };
+    next[0] = nextSheet;
+    nextSheet.data = Array.isArray(nextSheet.data) ? nextSheet.data : [];
+    nextSheet.data.push(Array.from({ length: columnCount }, () => ({ v: '', m: '' })));
+    setData(next);
+  };
+
+  const addColumn = () => {
+    const next = cloneSheets(data);
+    const nextSheet = next[0] || { name: 'Feuille1', data: [], celldata: [] };
+    next[0] = nextSheet;
+    nextSheet.data = Array.isArray(nextSheet.data) ? nextSheet.data : [];
+    nextSheet.data = nextSheet.data.map((row) => [...row, { v: '', m: '' }]);
+    setData(next);
   };
 
   return (
@@ -90,6 +142,14 @@ export function SpreadsheetEditor({ spreadsheetId, initialData, onSave }: Spread
                         <Sparkles className="h-3 w-3" />
                         IA disponible
                     </Badge>
+                    <Button variant="outline" onClick={addRow} className="gap-2">
+                        <Plus className="h-4 w-4" />
+                        Ligne
+                    </Button>
+                    <Button variant="outline" onClick={addColumn} className="gap-2">
+                        <Plus className="h-4 w-4" />
+                        Colonne
+                    </Button>
                     <Button onClick={handleSave} className="gap-2 bg-green-600 hover:bg-green-700">
                         <Save className="h-4 w-4" />
                         Sauvegarder
@@ -98,22 +158,45 @@ export function SpreadsheetEditor({ spreadsheetId, initialData, onSave }: Spread
             </div>
 
             {/* Spreadsheet */}
-            <div className="flex-1 overflow-hidden">
-                <Workbook
-          data={data}
-          onChange={handleChange}
-          options={{
-            container: 'luckysheet',
-            showinfobar: false,
-            showsheetbar: true,
-            showstatisticBar: true,
-            enableAddRow: true,
-            enableAddCol: true,
-            userInfo: false,
-            myFolderUrl: '',
-            lang: 'fr'
-          }} />
-        
+            <div className="flex-1 overflow-auto bg-slate-50">
+                <table className="min-w-full border-collapse bg-white text-sm">
+                    <thead className="sticky top-0 z-10 bg-slate-100">
+                        <tr>
+                            <th className="w-12 border border-slate-200 bg-slate-100 p-2 text-xs text-slate-500" />
+                            {Array.from({ length: columnCount }).map((_, colIndex) => (
+                                <th key={colIndex} className="min-w-36 border border-slate-200 p-2 text-xs font-semibold text-slate-500">
+                                    {String.fromCharCode(65 + colIndex)}
+                                </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows.map((row, rowIndex) => (
+                            <tr key={rowIndex}>
+                                <th className="sticky left-0 z-10 border border-slate-200 bg-slate-100 p-2 text-xs font-semibold text-slate-500">
+                                    {rowIndex + 1}
+                                </th>
+                                {Array.from({ length: columnCount }).map((_, colIndex) => {
+                                    const cell = row[colIndex];
+                                    return (
+                                        <td key={colIndex} className="border border-slate-200 p-0">
+                                            <input
+                                                value={getCellValue(cell)}
+                                                onChange={(event) => updateCell(rowIndex, colIndex, event.target.value)}
+                                                className="h-10 w-full min-w-36 bg-transparent px-3 text-sm outline-none focus:bg-emerald-50 focus:ring-2 focus:ring-emerald-500"
+                                                style={{
+                                                    backgroundColor: cell?.bg,
+                                                    color: cell?.fc,
+                                                    fontWeight: rowIndex === 0 ? 700 : undefined,
+                                                }}
+                                            />
+                                        </td>
+                                    );
+                                })}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
 
             {/* Status Bar */}

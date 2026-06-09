@@ -180,11 +180,11 @@ export default function AdminPartnersPanel() {
                                 <img src={p.logo_url} className="max-h-full max-w-full object-contain" alt={p.name} loading="lazy" />
                             </div>
                             <div className="flex gap-1">
-                                <Button size="icon" variant="ghost" className="h-8 w-8 text-blue-600 hover:text-blue-800" onClick={() => handleEdit(p)}>
-                                    <Save className="w-4 h-4" />
+                                <Button title="Modifier" aria-label={`Modifier ${p.name}`} size="icon" variant="ghost" className="h-8 w-8 text-blue-600 hover:text-blue-800" onClick={() => handleEdit(p)}>
+                                  <Save className="w-4 h-4" />
                                 </Button>
-                                <Button size="icon" variant="ghost" className="h-8 w-8 text-red-600 hover:text-red-800" onClick={() => handleDelete(p.id)}>
-                                    <Trash2 className="w-4 h-4" />
+                                <Button title="Supprimer" aria-label={`Supprimer ${p.name}`} size="icon" variant="ghost" className="h-8 w-8 text-red-600 hover:text-red-800" onClick={() => handleDelete(p.id)}>
+                                  <Trash2 className="w-4 h-4" />
                                 </Button>
                             </div>
                         </div>

@@ -1,14 +1,69 @@
 
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
+
+const builderColors =
+	"(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)";
+const builderShades = "(50|100|200|300|400|500|600|700|800|900|950)";
+const builderSpacing =
+	"(0|px|0\\.5|1|1\\.5|2|2\\.5|3|3\\.5|4|5|6|7|8|9|10|11|12|14|16|20|24|28|32|36|40|44|48|56|64|72|80|96)";
+const builderAlpha = ["5", "10", "15", "20", "25", "30", "40", "50", "60", "70", "75", "80", "90"];
+const builderHtmlSafelist = [
+	"container",
+	"mx-auto",
+	"sr-only",
+	"not-sr-only",
+	"prose",
+	"prose-sm",
+	"prose-lg",
+	"prose-slate",
+	"text-transparent",
+	"bg-clip-text",
+	"divide-y",
+	"divide-x",
+	"divide-slate-100",
+	"divide-slate-200",
+	...builderAlpha.flatMap((alpha) => [
+		`bg-white/${alpha}`,
+		`bg-black/${alpha}`,
+		`text-white/${alpha}`,
+		`text-black/${alpha}`,
+		`border-white/${alpha}`,
+		`border-black/${alpha}`,
+	]),
+	{ pattern: new RegExp(`^(bg|text|border|ring|from|via|to)-${builderColors}-${builderShades}$`), variants: ["hover", "focus", "group-hover"] },
+	{ pattern: /^(bg|text|border|ring)-(white|black)$/, variants: ["hover", "focus"] },
+	{ pattern: new RegExp(`^(p|px|py|pt|pr|pb|pl|m|mx|my|mt|mr|mb|ml|gap|gap-x|gap-y|space-x|space-y)-${builderSpacing}$`), variants: ["sm", "md", "lg", "xl"] },
+	{ pattern: /^(w|h|min-h|max-h)-(0|1|2|3|4|5|6|8|10|12|14|16|20|24|28|32|36|40|44|48|56|64|72|80|96|full|screen|auto|fit|min|max)$/, variants: ["sm", "md", "lg", "xl"] },
+	{ pattern: /^(max-w|size)-(xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|full|none|screen-sm|screen-md|screen-lg|screen-xl|screen-2xl)$/, variants: ["sm", "md", "lg", "xl"] },
+	{ pattern: /^(grid-cols|col-span|columns)-(1|2|3|4|5|6|7|8|9|10|11|12|none)$/, variants: ["sm", "md", "lg", "xl", "2xl"] },
+	{ pattern: /^(flex|inline-flex|grid|inline-grid|block|inline-block|hidden|relative|absolute|fixed|sticky|overflow-hidden|overflow-auto|overflow-x-auto|object-cover|object-contain)$/ },
+	{ pattern: /^(items|justify|content|place)-(start|end|center|between|around|evenly|stretch)$/, variants: ["sm", "md", "lg", "xl"] },
+	{ pattern: /^(flex-row|flex-col|flex-wrap|flex-nowrap|shrink|shrink-0|grow|grow-0)$/, variants: ["sm", "md", "lg", "xl"] },
+	{ pattern: /^(text)-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)$/, variants: ["sm", "md", "lg", "xl"] },
+	{ pattern: /^(font)-(thin|extralight|light|normal|medium|semibold|bold|extrabold|black)$/ },
+	{ pattern: /^(leading)-(none|tight|snug|normal|relaxed|loose|3|4|5|6|7|8|9|10)$/ },
+	{ pattern: /^(text)-(left|center|right|justify)$/, variants: ["sm", "md", "lg", "xl"] },
+	{ pattern: /^(rounded|rounded-sm|rounded-md|rounded-lg|rounded-xl|rounded-2xl|rounded-3xl|rounded-full)$/ },
+	{ pattern: /^(border|border-0|border-2|border-4|border-t|border-r|border-b|border-l)$/ },
+	{ pattern: /^(shadow|shadow-sm|shadow-md|shadow-lg|shadow-xl|shadow-2xl|shadow-none)$/ },
+	{ pattern: /^(opacity)-(0|5|10|20|25|30|40|50|60|70|75|80|90|95|100)$/ },
+	{ pattern: /^(transition|duration-75|duration-100|duration-150|duration-200|duration-300|duration-500|duration-700|ease-in|ease-out|ease-in-out)$/ },
+	{ pattern: /^(aspect)-(auto|square|video)$/ },
+	{ pattern: /^(z)-(0|10|20|30|40|50)$/ },
+];
 
 export default {
 	darkMode: ["class"],
 	content: [
+		"./index.html",
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
 	],
+	// Classes utiles aux blocs HTML stockés en base. Tailwind ne scanne pas le HTML injecté au runtime.
+	safelist: builderHtmlSafelist,
 	prefix: "",
 	theme: {
 		container: {
@@ -107,5 +162,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindcssAnimate],
 } satisfies Config;

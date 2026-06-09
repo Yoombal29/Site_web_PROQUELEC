@@ -112,8 +112,8 @@ export default function ProjectDetail() {
             setTransitionReason('');
             // Refresh project data
             window.location.reload();
-        } catch (err: any) {
-            toast.error(err.message || 'Erreur lors de la transition');
+        } catch (err: unknown) {
+            toast.error(err instanceof Error ? err.message : 'Erreur lors de la transition');
         }
     };
 
@@ -149,7 +149,7 @@ export default function ProjectDetail() {
         setExpandedLogs(next);
     };
 
-    const handleExport = (type: 'pdf' | 'excel', data: any) => {
+    const handleExport = (type: 'pdf' | 'excel', data: unknown) => {
         toast.info(`Préparation de l'export ${type.toUpperCase()}...`);
         // Simuler un export
         setTimeout(() => {
@@ -614,12 +614,13 @@ export default function ProjectDetail() {
                                     };
 
                                     const translateStatus = (val: string) => statusLabels[val] || val;
-                                    const formatValue = (val: any) => {
+                                    const formatValue = (val: unknown) => {
                                         if (val === null || val === undefined) return '—';
                                         if (typeof val === 'object') return JSON.stringify(val, null, 2);
+                                        const strVal = String(val);
                                         // Traduire les statuts
-                                        if (statusLabels[val]) return translateStatus(val);
-                                        return val;
+                                        if (statusLabels[strVal]) return translateStatus(strVal);
+                                        return strVal;
                                     };
 
                                     return (
@@ -655,7 +656,7 @@ export default function ProjectDetail() {
 
                                                     {log.changes && Object.keys(log.changes).length > 0 && (
                                                         <div className="bg-white p-3 rounded-lg border border-slate-200 font-mono text-[11px] shadow-inner mb-4">
-                                                            {Object.entries(log.changes).map(([key, val]: [string, any]) => (
+                                                            {Object.entries(log.changes).map(([key, val]: [string, { from: unknown; to: unknown }]) => (
                                                                 <div key={key} className="mb-2 last:mb-0 pb-2 border-b border-slate-50 last:border-0 last:pb-0">
                                                                     <div className="text-slate-400 font-bold mb-1 uppercase text-[9px]">
                                                                         {fieldLabels[key] || key}

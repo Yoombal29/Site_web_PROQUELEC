@@ -15,13 +15,8 @@ export default function InfraDocs() {
                         <h3 className="font-bold">Services démarrés</h3>
                         <ul className="list-disc ml-5 mt-2 text-sm text-slate-700 space-y-1">
                             <li><strong>gateway (nginx)</strong> — point d'entrée HTTP (local: <span className="font-mono">3102</span> → container: <span className="font-mono">80</span>).</li>
-                            <li><strong>share / alfresco</strong> — portail GED (local: <span className="font-mono">8190</span> → container: <span className="font-mono">8080</span>).</li>
                             <li><strong>metabase</strong> — BI (local: <span className="font-mono">3111</span> → container: <span className="font-mono">3000</span>).</li>
-                            <li><strong>keycloak</strong> — SSO (local: <span className="font-mono">8193</span> → container: <span className="font-mono">8080</span>).</li>
-                            <li><strong>auth (gotrue)</strong> — service d'auth local interne (interne au réseau Docker).</li>
-                            <li><strong>api (postgrest)</strong> — API exposant la BDD (interne).</li>
                             <li><strong>db (postgres)</strong> — base de données (local: <span className="font-mono">5437</span> → container: <span className="font-mono">5432</span>).</li>
-                            <li><strong>swagger</strong> — UI de documentation API (local: <span className="font-mono">3103</span> → container: <span className="font-mono">8080</span>).</li>
                         </ul>
                     </div>
 

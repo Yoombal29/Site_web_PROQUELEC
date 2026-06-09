@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
+import { useSortable, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { ComponentRegistry } from './ComponentRegistry';
-
-
+import { BlockErrorBoundary } from './BlockErrorBoundary';
+import { sanitizeCSS, sanitizeCSSSelector, sanitizeCSSValue } from '@/utils/sanitize';
+import type { Block, BlockStyle } from '@/types/builder';
 export interface PageRendererProps {
   blocks: Block[];
   className?: string; // Classe CSS additionnelle
@@ -14,13 +15,13 @@ export interface PageRendererProps {
 }
 
 // Composant Interne pour rendre un bloc individuel avec Sortable
-const SortableBlockWrapper: React.FC<{
+const SortableBlockWrapper = React.memo<{
   block: Block;
   isEditor: boolean;
   isSelected: boolean;
   onSelect?: (id: string) => void;
   children: React.ReactNode;
-}> = ({ block, isEditor, isSelected, onSelect, children }) => {
+}>(({ block, isEditor, isSelected, onSelect, children }) => {
   const {
     attributes,
     listeners,
@@ -75,16 +76,16 @@ const SortableBlockWrapper: React.FC<{
             {children}
         </div>);
 
-};
+});
 
-// Helper pour extraire toutes les polices utilisées
 const getUsedFonts = (blocks: Block[]): Set<string> => {
-  let fonts = new Set<string>();
+  const fonts = new Set<string>();
   if (!blocks) return fonts;
 
   blocks.forEach((block) => {
-    if (block.style?.fontFamily && !['sans', 'serif', 'mono', 'inherit'].includes(block.style.fontFamily)) {
-      fonts.add(block.style.fontFamily);
+    const baseStyle = (block.style as any)?.base || block.style || {};
+    if (baseStyle.fontFamily && !['sans', 'serif', 'mono', 'inherit'].includes(baseStyle.fontFamily)) {
+      fonts.add(baseStyle.fontFamily);
     }
     if (block.children) {
       const childFonts = getUsedFonts(block.children);
@@ -93,6 +94,117 @@ const getUsedFonts = (blocks: Block[]): Set<string> => {
   });
   return fonts;
 };
+
+// Helper to generate CSS for responsive and dark mode styles
+const generateResponsiveCss = (blocks: Block[]): string => {
+  let css = '';
+  if (!blocks) return css;
+
+  blocks.forEach((block) => {
+    const rawStyle = block.style as any;
+    if (rawStyle && (rawStyle.tablet || rawStyle.mobile || rawStyle.dark)) {
+      const id = sanitizeCSSSelector(block.id);
+      
+      const toCssString = (styleObj: any) => {
+        if (!styleObj) return '';
+        return Object.entries(styleObj)
+          .filter(([k]) => k !== 'className' && k !== 'customCss')
+          .map(([k, v]) => {
+            const kebabKey = k.replace(/([A-Z])/g, '-$1').toLowerCase();
+            const sanitizedValue = sanitizeCSSValue(String(v));
+            return `${kebabKey}: ${sanitizedValue} !important;`;
+          })
+          .join(' ');
+      };
+
+      if (rawStyle.tablet && Object.keys(rawStyle.tablet).length > 0) {
+        const tabletCss = toCssString(rawStyle.tablet);
+        css += `@media (max-width: 1024px) { [id="${id}"] { ${tabletCss} } }\n`;
+      }
+      if (rawStyle.mobile && Object.keys(rawStyle.mobile).length > 0) {
+        const mobileCss = toCssString(rawStyle.mobile);
+        css += `@media (max-width: 768px) { [id="${id}"] { ${mobileCss} } }\n`;
+      }
+      if (rawStyle.dark && Object.keys(rawStyle.dark).length > 0) {
+        const darkCss = toCssString(rawStyle.dark);
+        css += `.dark [id="${id}"] { ${darkCss} }\n`;
+      }
+    }
+    
+    if (block.children) {
+      css += generateResponsiveCss(block.children);
+    }
+  });
+  return sanitizeCSS(css);
+};
+
+const BlockRenderer = React.memo<{
+  block: Block;
+  isEditor: boolean;
+  isSelected: boolean;
+  onSelect?: (id: string) => void;
+  selectedId?: string | null;
+}>(({ block, isEditor, isSelected, onSelect, selectedId }) => {
+  const Component = ComponentRegistry[block.type];
+
+  if (!Component) {
+    return isEditor ? (
+      <div className="text-red-500 p-4 border border-red-300 bg-red-50 mb-2 rounded">
+        [Erreur Build: Type "{block.type}" inconnu]
+      </div>
+    ) : null;
+  }
+
+  const rawStyle = block.style as any;
+  const hasNested = rawStyle && (rawStyle.base || rawStyle.tablet || rawStyle.mobile || rawStyle.dark);
+  const baseStyle = hasNested ? rawStyle.base : rawStyle;
+
+  // Support new schema { props: {...} } and legacy schema { content: {...} }
+  const blockProps = (block as any).props || block.content || {};
+
+  const componentRender = (
+    <BlockErrorBoundary blockId={block.id}>
+      <Component
+        id={block.id}
+        {...blockProps}
+        content={block.content ?? {}}
+        style={(baseStyle ?? {}) as BlockStyle}
+        className={baseStyle?.className}
+        children={
+          block.children && block.children.length > 0 ? (
+            <SortableContext items={block.children.map(c => c.id)} strategy={verticalListSortingStrategy}>
+              <BuilderPageRenderer
+                blocks={block.children}
+                isEditor={isEditor}
+                selectedId={selectedId}
+                onSelect={onSelect}
+              />
+            </SortableContext>
+          ) : undefined
+        }
+      />
+    </BlockErrorBoundary>
+  );
+
+  return (
+    <SortableBlockWrapper
+      block={block}
+      isEditor={isEditor}
+      isSelected={isSelected}
+      onSelect={onSelect}
+    >
+      {componentRender}
+    </SortableBlockWrapper>
+  );
+}, (prevProps, nextProps) => {
+  return (
+    prevProps.block === nextProps.block &&
+    prevProps.isEditor === nextProps.isEditor &&
+    prevProps.isSelected === nextProps.isSelected &&
+    prevProps.onSelect === nextProps.onSelect &&
+    prevProps.selectedId === nextProps.selectedId
+  );
+});
 
 const BuilderPageRenderer: React.FC<PageRendererProps> = ({
   blocks,
@@ -127,60 +239,34 @@ const BuilderPageRenderer: React.FC<PageRendererProps> = ({
     if (isEditor) {
       return (
         <div className="text-gray-400 py-10 text-center italic border-2 border-dashed border-gray-200 rounded m-4">
-                    Page vide. Glissez un bloc ici.
-                </div>);
-
+          Page vide. Glissez un bloc ici.
+        </div>
+      );
     }
     return null;
   }
 
   return (
     <div className={`page-builder-content ${className || ''}`}>
-            {blocks.map((block) => {
-        const Component = ComponentRegistry[block.type] || ComponentRegistry['section'];
-
-        if (!Component) {
-          return isEditor ?
-          <div key={block.id} className="text-red-500 p-4 border border-red-300 bg-red-50 mb-2 rounded">
-                            [Erreur Build: Type "{block.type}" inconnu]
-                        </div> :
-          null;
-        }
-
-        const componentRender =
-        <Component
-          id={block.id}
-          content={block.content}
-          style={block.style}
-          className={block.style?.className}
-          children={
-          block.children && block.children.length > 0 ?
-          <BuilderPageRenderer
-            blocks={block.children}
-            isEditor={isEditor}
-            selectedId={selectedId}
-            onSelect={onSelect} /> :
-
-          undefined
-          } />;
-
-
+      <style dangerouslySetInnerHTML={{ __html: generateResponsiveCss(blocks) }} />
+      {blocks.map((block) => {
+        // Skip disabled blocks (new schema)
+        if ((block as any).enabled === false) return null;
 
         return (
-          <SortableBlockWrapper
+          <BlockRenderer
             key={block.id}
             block={block}
             isEditor={isEditor}
             isSelected={selectedId === block.id}
-            onSelect={onSelect}>
-            
-                        {componentRender}
-                    </SortableBlockWrapper>);
-
+            onSelect={onSelect}
+            selectedId={selectedId}
+          />
+        );
       })}
-        </div>);
-
+    </div>
+  );
 };
 
 
-export default BuilderPageRenderer;
+export default React.memo(BuilderPageRenderer);

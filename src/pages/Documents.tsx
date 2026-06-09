@@ -83,16 +83,30 @@ const Documents = () => {
 
   const simulatePayment = async () => {
     setPaymentStep("simulating");
-    await new Promise((resolve) => setTimeout(resolve, 2500));
-    setPaymentStep("success");
-    toast.success("Paiement réussi ! Votre téléchargement commence.");
-
-    setTimeout(() => {
-      if (purchaseAsset) {
-        window.open(purchaseAsset.file_url, '_blank');
-        setPurchaseAsset(null);
+    try {
+      const session = await apiFetch('/api/payments/checkout', {
+        method: 'POST',
+        body: JSON.stringify({
+          amount: purchaseAsset?.price_fcfy || 5000,
+          currency: 'XOF',
+          description: purchaseAsset?.title || 'Document PROQUELEC',
+        }),
+      });
+      if (!session.simulated) {
+        window.open(session.url, '_blank');
       }
-    }, 1500);
+      setPaymentStep("success");
+      toast.success("Paiement réussi ! Votre téléchargement commence.");
+      setTimeout(() => {
+        if (purchaseAsset) {
+          window.open(purchaseAsset.file_url, '_blank');
+          setPurchaseAsset(null);
+        }
+      }, 1500);
+    } catch (err) {
+      setPaymentStep("method");
+      toast.error("Erreur de paiement. Veuillez réessayer.");
+    }
   };
 
   const filteredAssets = assets?.filter((asset) =>

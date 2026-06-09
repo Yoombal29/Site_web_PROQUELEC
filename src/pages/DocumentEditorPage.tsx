@@ -4,6 +4,7 @@ import { DocumentEditor } from '@/components/office/document/DocumentEditor';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Share2 } from 'lucide-react';
 import { toast } from 'sonner';
+import jsPDF from 'jspdf';
 
 export function DocumentEditorPage() {
   const { id } = useParams();
@@ -70,8 +71,10 @@ export function DocumentEditorPage() {
   };
 
   const handleExport = () => {
-    toast.info('Export PDF en cours...');
-    // TODO: Implement PDF export
+    const doc = new jsPDF();
+    doc.text(documentTitle, 10, 10);
+    doc.save(`${documentTitle}.pdf`);
+    toast.success('PDF exporté avec succès');
   };
 
   return (

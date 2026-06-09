@@ -11,7 +11,7 @@
  * Couverture complète avec Jest + React Testing Library.
  */
 
-import { describe, test, expect, beforeEach, afterEach } from '@jest/globals';
+import { describe, test, expect, beforeEach, afterEach } from 'vitest';
 import { GraphStore } from '@/stores/GraphStore';
 import { EditorManager } from '@/managers/EditorManager';
 import { TronçonEngine } from '@/engines/TronçonEngine';
@@ -119,7 +119,7 @@ describe('Système Électrique Complet', () => {
 
       expect(resultConforme.resultats?.conformity).toBe('CONFORME');
       expect(resultNonConforme.resultats?.conformity).toBe('NON_CONFORME');
-      expect(resultNonConforme.resultats?.issues).toContain('Chute');
+      expect(resultNonConforme.resultats?.issues?.[0]).toContain('Chute');
     });
 
     test('calculs multiples avec verdict global', () => {
@@ -221,9 +221,26 @@ describe('Système Électrique Complet', () => {
       expect(compatibilityValidation).toBeDefined();
       expect(compatibilityValidation?.severity).toBe('error');
     });
-
     test('correction automatique section', () => {
-      const edge = {
+      graphStore.addNode({
+        id: 'source',
+        type: 'SOURCE',
+        position: { x: 0, y: 0 },
+        params: {},
+        properties: {},
+        metadata: { createdAt: Date.now(), modifiedAt: Date.now() }
+      });
+
+      graphStore.addNode({
+        id: 'load',
+        type: 'RECEPTOR',
+        position: { x: 100, y: 0 },
+        params: {},
+        properties: {},
+        metadata: { createdAt: Date.now(), modifiedAt: Date.now() }
+      });
+
+      graphStore.addEdge({
         id: 'test-cable',
         from: 'source',
         to: 'load',
@@ -233,7 +250,7 @@ describe('Système Électrique Complet', () => {
           length: 10,
           courant: 25
         }
-      };
+      });
 
       const fixed = ValidationEngine.applyFix(graphStore, {
         ruleId: 'section-current-compatibility',
@@ -246,6 +263,7 @@ describe('Système Électrique Complet', () => {
 
       expect(fixed).toBe(true);
       // La section devrait être ajustée automatiquement
+      expect(graphStore.edges.get('test-cable')?.properties.section).toBe(2.5);
     });
   });
 
