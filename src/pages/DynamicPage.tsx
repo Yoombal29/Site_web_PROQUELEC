@@ -311,11 +311,11 @@ const DynamicPageComponent: React.FC = () => {
         } as PageRecord;
 
         // Si la page est une page spéciale (outils, showroom, etc.)
-        // avec render_engine='react' en DB, utiliser le composant React
-        // au lieu du rendu Craft.js (HtmlBlock)
+        // avec render_engine='react' en DB, on charge QUAND MÊME les content_blocks
+        // pour permettre l'ajout de blocs supplémentaires sous le composant React
         if (SPECIAL_FALLBACK_PAGES[effectiveSlug] && (data as any).render_engine === 'react') {
           setFallbackPageKey(effectiveSlug);
-          setPage(null);
+          setPage(pageData); // Garder les données pour les blocs additionnels
           setLoading(false);
           return;
         }
@@ -344,8 +344,22 @@ const DynamicPageComponent: React.FC = () => {
   }
 
   const specialFallbackPage = SPECIAL_FALLBACK_PAGES[fallbackPageKey || effectiveSlug];
-  if (specialFallbackPage && !page) {
-    return React.createElement(specialFallbackPage);
+  if (specialFallbackPage) {
+    // Page hybride : composant React + blocs additionnels (s'il y en a)
+    const hasExtraBlocks = page && page.content_blocks && page.content_blocks.length > 0;
+    if (!hasExtraBlocks) {
+      // Aucun bloc additionnel : afficher uniquement le composant React
+      return React.createElement(specialFallbackPage);
+    }
+    // Blocs additionnels présents : afficher le composant PUIS les blocs
+    return (
+      <>
+        {React.createElement(specialFallbackPage)}
+        <div className="hybrid-extra-blocks">
+          <PageRenderer page={page} />
+        </div>
+      </>
+    );
   }
 
   if (fallbackPageKey) {

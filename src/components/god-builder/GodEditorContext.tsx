@@ -257,7 +257,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
             ? JSON.parse(page.design_options)
             : page.design_options || {};
         const pageType: PageDataState['pageType'] =
-          page.immutable === true && designOptions?.page_type === 'hybrid'
+          designOptions?.page_type === 'hybrid'
             ? 'hybrid'
             : page.immutable === true
               ? 'functional'
