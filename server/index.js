@@ -1028,17 +1028,19 @@ app.use('/api/academy', academyRouter);
 const builderPermsRouter = require('./routes/builder-permissions');
 app.use('/api/admin/builder-permissions', builderPermsRouter);
 
+// Pages module (must be BEFORE projects to avoid router-level auth interception)
+const pagesModule = require('./modules/pages/pages.routes');
+app.use(pagesModule.basePath || '/api', pagesModule.router);
+
 // ELECTRO-GED 4.0 Modules
 const projectsRouter = require('./routes/projects');
 const inspectionsRouter = require('./routes/inspections');
 const observatoireRouter = require('./routes/observatoire');
-const pagesModule = require('./modules/pages/pages.routes');
 const builderModule = require('./modules/builder/builder.routes');
 const templatesModule = require('./modules/templates/templates.routes');
 app.use('/api', projectsRouter);
 app.use('/api', inspectionsRouter);
 app.use('/api', observatoireRouter);
-app.use(pagesModule.basePath || '/api', pagesModule.router);
 app.use(
   builderModule.basePath || '/api',
   async (req, res, next) => {

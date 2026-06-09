@@ -1,0 +1,246 @@
+/* ==========================================================================
+   Responsive Visibility (hide on specific breakpoints)
+   ========================================================================== */
+@media (min-width: 1025px) { .hide-desktop { display: none !important; } }
+@media (min-width: 641px) and (max-width: 1024px) { .hide-tablet { display: none !important; } }
+@media (max-width: 640px) { .hide-mobile { display: none !important; } }
+@media (max-width: 768px) { .reverse-mobile { flex-direction: column-reverse !important; } }
+
+/* ==========================================================================
+   Page Builder Responsive Style Engine (.proquelec-builder-node)
+   ========================================================================== */
+.proquelec-builder-node,
+.pb-node {
+  margin-top: var(--desktop-margin-top, 0px);
+  margin-right: var(--desktop-margin-right, 0px);
+  margin-bottom: var(--desktop-margin-bottom, 0px);
+  margin-left: var(--desktop-margin-left, 0px);
+
+  padding-top: var(--desktop-padding-top, 0px);
+  padding-right: var(--desktop-padding-right, 0px);
+  padding-bottom: var(--desktop-padding-bottom, 0px);
+  padding-left: var(--desktop-padding-left, 0px);
+
+  font-size: var(--desktop-font-size, inherit);
+  text-align: var(--desktop-text-align, inherit);
+
+  /* Layout: Flex & Grid */
+  display: var(--desktop-display, block);
+  flex-direction: var(--desktop-flex-direction, row);
+  flex-wrap: var(--desktop-flex-wrap, nowrap);
+  justify-content: var(--desktop-justify-content, flex-start);
+  align-items: var(--desktop-align-items, stretch);
+  gap: var(--desktop-gap, 0px);
+  flex-grow: var(--desktop-flex-grow, 0);
+  flex-shrink: var(--desktop-flex-shrink, 1);
+  flex-basis: var(--desktop-flex-basis, auto);
+  order: var(--desktop-order, 0);
+  align-self: var(--desktop-align-self, auto);
+  grid-template-columns: var(--desktop-grid-template-columns, none);
+  grid-template-rows: var(--desktop-grid-template-rows, none);
+  place-items: var(--desktop-place-items, stretch);
+
+  border-width: var(--border-width, 0px);
+  border-color: var(--border-color, transparent);
+  border-style: var(--border-style, none);
+  border-radius: var(--border-radius, 0px);
+  opacity: var(--opacity, 1);
+  box-shadow: var(--box-shadow, none);
+  z-index: var(--z-index, auto);
+}
+
+.pb-selected {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+}
+
+.pb-hover {
+  box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.35);
+}
+
+.pb-dropzone {
+  min-height: 96px;
+  border: 1px dashed rgba(37, 99, 235, 0.45);
+  border-radius: 12px;
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.pb-grid-overlay {
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.pb-dragging {
+  opacity: 0.72;
+  transform: scale(0.99);
+}
+
+/* Builder Effects Engine */
+.effect-hover-lift,
+.effect-hover-scale,
+.effect-hover-zoom,
+.effect-hover-shadow,
+.effect-hover-glow,
+.effect-hover-tiltLeft,
+.effect-hover-tiltRight,
+.effect-hover-rotate,
+.effect-hover-float,
+.effect-hover-pulse,
+.effect-hover-blur,
+.effect-hover-grayscale,
+.effect-hover-saturate {
+  transition:
+    transform var(--hover-duration, 220ms) var(--hover-easing, ease-out),
+    box-shadow var(--hover-duration, 220ms) var(--hover-easing, ease-out),
+    filter var(--hover-duration, 220ms) var(--hover-easing, ease-out);
+  will-change: transform, box-shadow, filter;
+}
+
+.effect-hover-lift:hover {
+  transform: translateY(calc(var(--hover-distance, 10px) * -1));
+}
+
+.effect-hover-scale:hover {
+  transform: scale(var(--hover-scale, 1.04));
+}
+
+.effect-hover-zoom:hover {
+  transform: scale(var(--hover-zoom, 1.08));
+}
+
+.effect-hover-shadow:hover {
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.18), 0 10px 28px rgba(15, 23, 42, 0.12);
+}
+
+.effect-hover-glow:hover {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--hover-glow-color, #2563eb) 35%, transparent), 0 20px 60px color-mix(in srgb, var(--hover-glow-color, #2563eb) 30%, transparent);
+}
+
+.effect-hover-tiltLeft:hover {
+  transform: perspective(900px) rotateX(2deg) rotateY(calc(var(--hover-rotate, 3deg) * -1));
+}
+
+.effect-hover-tiltRight:hover {
+  transform: perspective(900px) rotateX(2deg) rotateY(var(--hover-rotate, 3deg));
+}
+
+.effect-hover-rotate:hover {
+  transform: rotate(var(--hover-rotate, 3deg));
+}
+
+.effect-hover-float:hover {
+  transform: translateY(calc(var(--hover-distance, 10px) * -0.75)) scale(var(--hover-scale, 1.04));
+}
+
+.effect-hover-pulse:hover {
+  transform: scale(var(--hover-scale, 1.04));
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--hover-glow-color, #2563eb) 12%, transparent);
+}
+
+.effect-hover-blur:hover {
+  filter: blur(var(--hover-blur, 2px));
+}
+
+.effect-hover-grayscale:hover {
+  filter: grayscale(100%);
+}
+
+.effect-hover-saturate:hover {
+  filter: saturate(1.45);
+}
+
+.effect-filter-grayscale {
+  filter: grayscale(var(--filter-amount, 100%));
+}
+
+.effect-filter-sepia {
+  filter: sepia(var(--filter-amount, 100%));
+}
+
+.effect-filter-blur {
+  filter: blur(var(--filter-blur, 4px));
+}
+
+.effect-filter-saturate {
+  filter: saturate(var(--filter-amount, 140%));
+}
+
+.effect-filter-contrast {
+  filter: contrast(var(--filter-amount, 120%));
+}
+
+.effect-filter-brightness {
+  filter: brightness(var(--filter-amount, 110%));
+}
+
+@media (max-width: 1024px) {
+  .proquelec-builder-node,
+  .pb-node {
+    margin-top: var(--tablet-margin-top, var(--desktop-margin-top, 0px));
+    margin-right: var(--tablet-margin-right, var(--desktop-margin-right, 0px));
+    margin-bottom: var(--tablet-margin-bottom, var(--desktop-margin-bottom, 0px));
+    margin-left: var(--tablet-margin-left, var(--desktop-margin-left, 0px));
+
+    padding-top: var(--tablet-padding-top, var(--desktop-padding-top, 0px));
+    padding-right: var(--tablet-padding-right, var(--desktop-padding-right, 0px));
+    padding-bottom: var(--tablet-padding-bottom, var(--desktop-padding-bottom, 0px));
+    padding-left: var(--tablet-padding-left, var(--desktop-padding-left, 0px));
+
+    font-size: var(--tablet-font-size, var(--desktop-font-size, inherit));
+    text-align: var(--tablet-text-align, var(--desktop-text-align, inherit));
+
+    /* Layout Tablet Fallbacks */
+    display: var(--tablet-display, var(--desktop-display, block));
+    flex-direction: var(--tablet-flex-direction, var(--desktop-flex-direction, row));
+    flex-wrap: var(--tablet-flex-wrap, var(--desktop-flex-wrap, nowrap));
+    justify-content: var(--tablet-justify-content, var(--desktop-justify-content, flex-start));
+    align-items: var(--tablet-align-items, var(--desktop-align-items, stretch));
+    gap: var(--tablet-gap, var(--desktop-gap, 0px));
+    flex-grow: var(--tablet-flex-grow, var(--desktop-flex-grow, 0));
+    flex-shrink: var(--tablet-flex-shrink, var(--desktop-flex-shrink, 1));
+    flex-basis: var(--tablet-flex-basis, var(--desktop-flex-basis, auto));
+    order: var(--tablet-order, var(--desktop-order, 0));
+    align-self: var(--tablet-align-self, var(--desktop-align-self, auto));
+    grid-template-columns: var(--tablet-grid-template-columns, var(--desktop-grid-template-columns, none));
+    grid-template-rows: var(--tablet-grid-template-rows, var(--desktop-grid-template-rows, none));
+    place-items: var(--tablet-place-items, var(--desktop-place-items, stretch));
+  }
+}
+
+@media (max-width: 640px) {
+  .proquelec-builder-node,
+  .pb-node {
+    margin-top: var(--mobile-margin-top, var(--tablet-margin-top, var(--desktop-margin-top, 0px)));
+    margin-right: var(--mobile-margin-right, var(--tablet-margin-right, var(--desktop-margin-right, 0px)));
+    margin-bottom: var(--mobile-margin-bottom, var(--tablet-margin-bottom, var(--desktop-margin-bottom, 0px)));
+    margin-left: var(--mobile-margin-left, var(--tablet-margin-left, var(--desktop-margin-left, 0px)));
+
+    padding-top: var(--mobile-padding-top, var(--tablet-padding-top, var(--desktop-padding-top, 0px)));
+    padding-right: var(--mobile-padding-right, var(--tablet-padding-right, var(--desktop-padding-right, 0px)));
+    padding-bottom: var(--mobile-padding-bottom, var(--tablet-padding-bottom, var(--desktop-padding-bottom, 0px)));
+    padding-left: var(--mobile-padding-left, var(--tablet-padding-left, var(--desktop-padding-left, 0px)));
+
+    font-size: var(--mobile-font-size, var(--tablet-font-size, var(--desktop-font-size, inherit)));
+    text-align: var(--mobile-text-align, var(--tablet-text-align, var(--desktop-text-align, inherit)));
+
+    /* Layout Mobile Fallbacks */
+    display: var(--mobile-display, var(--tablet-display, var(--desktop-display, block)));
+    flex-direction: var(--mobile-flex-direction, var(--tablet-flex-direction, var(--desktop-flex-direction, row)));
+    flex-wrap: var(--mobile-flex-wrap, var(--tablet-flex-wrap, var(--desktop-flex-wrap, nowrap)));
+    justify-content: var(--mobile-justify-content, var(--tablet-justify-content, var(--desktop-justify-content, flex-start)));
+    align-items: var(--mobile-align-items, var(--tablet-align-items, var(--desktop-align-items, stretch)));
+    gap: var(--mobile-gap, var(--tablet-gap, var(--desktop-gap, 0px)));
+    flex-grow: var(--mobile-flex-grow, var(--tablet-flex-grow, var(--desktop-flex-grow, 0)));
+    flex-shrink: var(--mobile-flex-shrink, var(--tablet-flex-shrink, var(--desktop-flex-shrink, 1)));
+    flex-basis: var(--mobile-flex-basis, var(--tablet-flex-basis, var(--desktop-flex-basis, auto)));
+    order: var(--mobile-order, var(--tablet-order, var(--desktop-order, 0)));
+    align-self: var(--mobile-align-self, var(--tablet-align-self, var(--desktop-align-self, auto)));
+    grid-template-columns: var(--mobile-grid-template-columns, var(--tablet-grid-template-columns, var(--desktop-grid-template-columns, none)));
+    grid-template-rows: var(--mobile-grid-template-rows, var(--tablet-grid-template-rows, var(--desktop-grid-template-rows, none)));
+    place-items: var(--mobile-place-items, var(--tablet-place-items, var(--desktop-place-items, stretch)));
+  }
+}

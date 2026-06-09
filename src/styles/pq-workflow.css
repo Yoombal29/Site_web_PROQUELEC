@@ -1,0 +1,60 @@
+/* Workflow and lists */
+.pq-steps {
+  @apply grid gap-4 md:grid-cols-2 lg:grid-cols-4;
+}
+
+.pq-step {
+  @apply rounded-lg border border-slate-200 bg-white p-6 shadow-sm;
+}
+
+.pq-step-number {
+  @apply mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-950 text-sm font-black text-white;
+}
+
+.pq-step-title {
+  @apply text-base font-bold text-slate-950;
+}
+
+.pq-step-text {
+  @apply mt-3 text-sm leading-6 text-slate-600;
+}
+
+.pq-panel {
+  @apply rounded-lg border border-slate-200 bg-slate-50 p-6;
+}
+
+.pq-panel-title {
+  @apply text-2xl font-black text-slate-950;
+}
+
+.pq-checklist {
+  @apply mt-6 space-y-4 text-sm leading-6 text-slate-700;
+}
+
+.pq-check-item {
+  @apply flex gap-3;
+}
+
+.pq-check-icon {
+  @apply mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded bg-emerald-50 text-xs font-black text-emerald-700;
+}
+
+.pq-result {
+  @apply rounded-lg border border-slate-900 bg-slate-950 p-6 text-white;
+}
+
+.pq-result-kicker {
+  @apply text-sm font-bold uppercase tracking-wide text-amber-300;
+}
+
+.pq-result-title {
+  @apply mt-3 text-2xl font-black;
+}
+
+.pq-result-text {
+  @apply mt-5 text-base leading-7 text-slate-300;
+}
+
+.pq-result-note {
+  @apply mt-6 border-t border-white/10 pt-6 text-sm leading-6 text-slate-300;
+}

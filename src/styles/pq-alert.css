@@ -1,0 +1,25 @@
+/* Alerts */
+.pq-alert,
+.pq-alert-info,
+.pq-alert-warning,
+.pq-alert-success,
+.pq-alert-danger {
+  @apply rounded-lg border p-4 text-sm leading-6;
+}
+
+.pq-alert,
+.pq-alert-info {
+  @apply border-blue-200 bg-blue-50 text-blue-900;
+}
+
+.pq-alert-warning {
+  @apply border-amber-200 bg-amber-50 text-amber-900;
+}
+
+.pq-alert-success {
+  @apply border-emerald-200 bg-emerald-50 text-emerald-900;
+}
+
+.pq-alert-danger {
+  @apply border-red-200 bg-red-50 text-red-900;
+}

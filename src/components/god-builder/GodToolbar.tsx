@@ -34,11 +34,14 @@ import { HtmlBlock } from '@/components/blocks/ProquelecBlocks';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import type { PqComponentCatalogItem } from '@/data/pqComponentCatalog';
+import type { PqTemplate } from '@/data/pqTemplates';
 
 const LazyMonacoEditor = lazy(() => import('@monaco-editor/react'));
 
@@ -94,9 +97,19 @@ export const GodToolbar = () => {
 
   const [htmlDialogOpen, setHtmlDialogOpen] = useState(false);
   const [globalHtml, setGlobalHtml] = useState(htmlValue);
+  const [pqTemplates, setPqTemplates] = useState<PqTemplate[]>([]);
+  const [pqTemplatesLoading, setPqTemplatesLoading] = useState(false);
+  const [selectedPqTemplateId, setSelectedPqTemplateId] = useState('');
+  const [pqComponents, setPqComponents] = useState<PqComponentCatalogItem[]>([]);
+  const [pqComponentsLoading, setPqComponentsLoading] = useState(false);
+  const [selectedPqComponentId, setSelectedPqComponentId] = useState('');
   const globalEditorRef = useRef<MonacoEditorInstance | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const selectedPqTemplate = pqTemplates.find((template) => template.id === selectedPqTemplateId);
+  const selectedPqComponent = pqComponents.find(
+    (component) => component.id === selectedPqComponentId,
+  );
 
   // Sync state when dialog opens
   useEffect(() => {
@@ -112,6 +125,32 @@ export const GodToolbar = () => {
       }
     }
   }, [htmlDialogOpen, htmlNodeId, htmlValue, query]);
+
+  useEffect(() => {
+    if (!htmlDialogOpen || pqTemplates.length > 0 || pqTemplatesLoading) return;
+
+    setPqTemplatesLoading(true);
+    import('@/data/pqTemplates')
+      .then((module) => setPqTemplates(module.pqTemplates))
+      .catch((error) => {
+        console.error('Erreur chargement modèles PROQUELEC:', error);
+        toast.error('Impossible de charger les modèles PROQUELEC.');
+      })
+      .finally(() => setPqTemplatesLoading(false));
+  }, [htmlDialogOpen, pqTemplates.length, pqTemplatesLoading]);
+
+  useEffect(() => {
+    if (!htmlDialogOpen || pqComponents.length > 0 || pqComponentsLoading) return;
+
+    setPqComponentsLoading(true);
+    import('@/data/pqComponentCatalog')
+      .then((module) => setPqComponents(module.pqComponentCatalog))
+      .catch((error) => {
+        console.error('Erreur chargement composants PROQUELEC:', error);
+        toast.error('Impossible de charger les composants PROQUELEC.');
+      })
+      .finally(() => setPqComponentsLoading(false));
+  }, [htmlDialogOpen, pqComponents.length, pqComponentsLoading]);
 
   /**
    * Génère le HTML complet de la page à partir des blocs Craft.js
@@ -184,6 +223,52 @@ export const GodToolbar = () => {
       setGlobalHtml(input);
       toast.success('Code HTML importé localement. Cliquez sur Appliquer pour enregistrer.');
     }
+  };
+
+  const handleInsertPqTemplate = () => {
+    if (!selectedPqTemplate) {
+      toast.warning('Choisissez un modèle PROQUELEC à insérer.');
+      return;
+    }
+
+    setGlobalHtml(selectedPqTemplate.html);
+    toast.success(`Modèle "${selectedPqTemplate.name}" chargé. Cliquez sur Appliquer pour enregistrer.`);
+  };
+
+  const insertHtmlAtCursor = (html: string) => {
+    const editor = globalEditorRef.current;
+    const snippet = `\n${html.trim()}\n`;
+
+    if (!editor) {
+      setGlobalHtml((current) => `${current.trimEnd()}\n${snippet}`);
+      return;
+    }
+
+    const selection = editor.getSelection();
+    if (!selection) {
+      setGlobalHtml((current) => `${current.trimEnd()}\n${snippet}`);
+      return;
+    }
+
+    editor.executeEdits('insert-pq-component', [
+      {
+        range: selection,
+        text: snippet,
+        forceMoveMarkers: true,
+      },
+    ]);
+    setGlobalHtml(editor.getValue());
+    editor.focus();
+  };
+
+  const handleInsertPqComponent = () => {
+    if (!selectedPqComponent) {
+      toast.warning('Choisissez un composant PROQUELEC à insérer.');
+      return;
+    }
+
+    insertHtmlAtCursor(selectedPqComponent.html);
+    toast.success(`Composant "${selectedPqComponent.name}" inséré.`);
   };
 
   const handleSave = async () => {
@@ -511,12 +596,12 @@ export const GodToolbar = () => {
                   <Code2 size={20} className="text-indigo-400" />
                   Éditeur HTML Global
                 </DialogTitle>
-                <p className="text-xs text-slate-500 mt-1">
+                <DialogDescription className="text-xs text-slate-500 mt-1">
                   Modifiez le code HTML de la page.
                   {htmlNodeId
                     ? 'Le bloc HtmlBlock existant sera mis à jour.'
                     : '⚠️ Tous les blocs seront remplacés par ce code HTML.'}
-                </p>
+                </DialogDescription>
                 {!htmlNodeId && (
                   <div className="mt-2 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                     <p className="text-[11px] text-amber-300 font-medium">
@@ -528,6 +613,81 @@ export const GodToolbar = () => {
                 )}
               </div>
             </DialogHeader>
+
+            <div className="mt-4 rounded-lg border border-indigo-500/20 bg-indigo-500/10 p-3">
+              <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+                <div className="flex min-w-0 flex-1 items-center gap-2">
+                  <Layers size={15} className="shrink-0 text-indigo-300" />
+                  <select
+                    value={selectedPqTemplateId}
+                    onChange={(event) => setSelectedPqTemplateId(event.target.value)}
+                    className="min-h-10 w-full rounded-lg border border-[#252538] bg-[#07070a] px-3 text-xs font-semibold text-slate-200 outline-none focus:border-indigo-400"
+                    aria-label="Choisir un modèle PROQUELEC"
+                  >
+                    <option value="">
+                      {pqTemplatesLoading ? 'Chargement des modèles...' : 'Modèles PROQUELEC officiels'}
+                    </option>
+                    {pqTemplates.map((template) => (
+                      <option key={template.id} value={template.id}>
+                        {template.name} · {template.category}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={handleInsertPqTemplate}
+                  disabled={!selectedPqTemplate}
+                  className="bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-40"
+                >
+                  Insérer modèle
+                </Button>
+              </div>
+              {selectedPqTemplate && (
+                <p className="mt-2 text-[11px] leading-5 text-indigo-100/80">
+                  {selectedPqTemplate.description}
+                </p>
+              )}
+
+              <div className="mt-3 flex flex-col gap-3 border-t border-indigo-400/15 pt-3 lg:flex-row lg:items-center">
+                <div className="flex min-w-0 flex-1 items-center gap-2">
+                  <Sparkles size={15} className="shrink-0 text-amber-300" />
+                  <select
+                    value={selectedPqComponentId}
+                    onChange={(event) => setSelectedPqComponentId(event.target.value)}
+                    className="min-h-10 w-full rounded-lg border border-[#252538] bg-[#07070a] px-3 text-xs font-semibold text-slate-200 outline-none focus:border-amber-300"
+                    aria-label="Choisir un composant PROQUELEC"
+                  >
+                    <option value="">
+                      {pqComponentsLoading
+                        ? 'Chargement des composants...'
+                        : 'Composants PROQUELEC officiels'}
+                    </option>
+                    {pqComponents.map((component) => (
+                      <option key={component.id} value={component.id}>
+                        {component.name} · {component.category}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={handleInsertPqComponent}
+                  disabled={!selectedPqComponent}
+                  className="bg-amber-500 text-slate-950 hover:bg-amber-400 disabled:opacity-40"
+                >
+                  Insérer composant
+                </Button>
+              </div>
+              {selectedPqComponent && (
+                <p className="mt-2 text-[11px] leading-5 text-amber-100/85">
+                  {selectedPqComponent.description} Classes :{' '}
+                  {selectedPqComponent.classes.join(', ')}
+                </p>
+              )}
+            </div>
 
             <div className="flex-1 min-h-0 bg-[#07070a] border border-[#252538] rounded-lg overflow-hidden mt-4 relative">
               <Suspense

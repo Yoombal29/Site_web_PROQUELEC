@@ -1,0 +1,62 @@
+/* Hero */
+.pq-hero {
+  @apply bg-slate-950 text-white;
+}
+
+.pq-hero-premium {
+  @apply relative overflow-hidden bg-slate-950 text-white;
+}
+
+.pq-hero-premium::before {
+  content: "";
+  @apply pointer-events-none absolute inset-0 opacity-80;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(251, 191, 36, 0.18), transparent 32%),
+    radial-gradient(circle at 80% 10%, rgba(37, 99, 235, 0.22), transparent 34%),
+    linear-gradient(135deg, #020617 0%, #0f172a 52%, #1e3a8a 100%);
+}
+
+.pq-hero-premium > * {
+  @apply relative z-10;
+}
+
+.pq-hero-inner {
+  @apply py-20 md:py-24;
+}
+
+.pq-brand {
+  @apply flex flex-col gap-5 sm:flex-row sm:items-center;
+}
+
+.pq-logo {
+  @apply h-12 w-auto rounded-lg bg-white p-2;
+}
+
+.pq-eyebrow,
+.pq-badge {
+  @apply inline-flex w-fit items-center rounded-full border border-amber-300/30 bg-amber-300/10 px-3 py-1 text-xs font-black uppercase tracking-wide text-amber-300;
+}
+
+.pq-brand-note {
+  @apply mt-2 text-sm text-slate-400;
+}
+
+.pq-hero-copy {
+  @apply mt-12 max-w-4xl;
+}
+
+.pq-title {
+  @apply text-4xl font-black leading-tight md:text-6xl;
+}
+
+.pq-subtitle {
+  @apply mt-4 text-2xl font-semibold text-blue-200 md:text-3xl;
+}
+
+.pq-lead {
+  @apply mt-6 max-w-3xl text-lg leading-8 text-slate-300;
+}
+
+.pq-actions {
+  @apply mt-8 flex flex-wrap gap-3;
+}

@@ -1,0 +1,27 @@
+/* Buttons */
+.pq-button,
+.pq-btn {
+  @apply inline-flex min-h-12 items-center justify-center rounded-lg px-6 py-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+.pq-button-primary,
+.pq-btn-primary {
+  @apply bg-amber-400 text-slate-950 shadow-sm hover:bg-amber-300;
+}
+
+.pq-button-premium {
+  @apply bg-slate-950 text-white shadow-lg shadow-slate-900/20 hover:bg-blue-950;
+}
+
+.pq-button-secondary,
+.pq-btn-secondary {
+  @apply border border-white/25 text-white hover:bg-white/10;
+}
+
+.pq-button-outline {
+  @apply border border-slate-300 bg-white text-slate-900 hover:border-blue-300 hover:bg-blue-50;
+}
+
+.pq-button-ghost {
+  @apply text-slate-700 hover:bg-slate-100;
+}

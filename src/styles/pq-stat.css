@@ -1,0 +1,35 @@
+/* Stats */
+.pq-stats,
+.pq-metrics {
+  @apply mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4;
+}
+
+.pq-stat,
+.pq-metric {
+  @apply rounded-lg border border-white/15 bg-white/10 p-5;
+}
+
+.pq-section .pq-stat,
+.pq-section .pq-metric {
+  @apply border-slate-200 bg-white shadow-sm;
+}
+
+.pq-stat-value,
+.pq-metric-value {
+  @apply text-2xl font-black text-white;
+}
+
+.pq-section .pq-stat-value,
+.pq-section .pq-metric-value {
+  @apply text-slate-950;
+}
+
+.pq-stat-label,
+.pq-metric-label {
+  @apply mt-1 text-sm text-slate-300;
+}
+
+.pq-section .pq-stat-label,
+.pq-section .pq-metric-label {
+  @apply text-slate-600;
+}

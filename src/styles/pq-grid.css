@@ -1,0 +1,17 @@
+/* Grids */
+.pq-grid-2,
+.pq-two-col {
+  @apply grid gap-8 lg:grid-cols-2;
+}
+
+.pq-grid-3 {
+  @apply grid gap-6 md:grid-cols-2 lg:grid-cols-3;
+}
+
+.pq-grid-4 {
+  @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-4;
+}
+
+.pq-card-grid {
+  @apply grid gap-4 sm:grid-cols-2 lg:col-span-2;
+}
