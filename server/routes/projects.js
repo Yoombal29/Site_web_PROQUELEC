@@ -18,7 +18,7 @@ async function ensureProjectsSchemaMiddleware(req, res, next) {
     }
 }
 
-router.use(authenticateToken, ensureProjectsSchemaMiddleware);
+router.use('/projects', authenticateToken, ensureProjectsSchemaMiddleware);
 
 router.get('/projects', async (req, res) => {
     try {
