@@ -34,6 +34,7 @@ try {
 }
 const { orchestrate } = require('./orchestrator');
 const { spawn } = require('child_process');
+const { ensureCoreRbac } = require('./core/rbac-bootstrap');
 const { sendEmail, sendContactNotification, sendNewUserNotification } = require('./email-service');
 const {
   validateContactRequestPayload,
@@ -1259,6 +1260,8 @@ async function initDB() {
     );
     console.log(`[DB] Admin user created: ${adminEmail}`);
   }
+
+  await ensureCoreRbac(pool);
 
   console.log('[DB] Database initialization complete');
 }
