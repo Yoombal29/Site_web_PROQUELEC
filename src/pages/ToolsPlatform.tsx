@@ -36,11 +36,23 @@ import GlossaireElectrique from '@/components/tools/GlossaireElectrique';
 import PremiumPaywall from '@/components/tools/PremiumPaywall';
 import { usePremiumAccess } from '@/hooks/usePremiumAccess';
 import { useToolAnalytics } from '@/hooks/useToolAnalytics';
+import { useUserRole } from '@/hooks/useUserRole';
 import EarthResistanceChecker from '@/components/tools/EarthResistanceChecker';
 import ElectricalUnitConverter from '@/components/tools/ElectricalUnitConverter';
 import LightingCalculator from '@/components/tools/LightingCalculator';
-import { freeApps, premiumApps, appGroups, type ProquelecApp } from '@/data/applications-catalog';
+import OperationalToolSuite, { hasOperationalTool } from '@/components/tools/OperationalToolSuite';
+import {
+  freeApps,
+  premiumApps,
+  internalApps,
+  appGroups,
+  type AppCategory,
+  type ProquelecApp,
+} from '@/data/applications-catalog';
 import { getEffectiveCategory, getEffectiveStatus } from '@/lib/toolOverrides';
+
+const publicCatalogApps = [...freeApps, ...premiumApps];
+const fullCatalogApps = [...freeApps, ...premiumApps, ...internalApps];
 
 /**
  * TOOLS PLATFORM - HUB D'INGÉNIERIE SOUVERAIN
@@ -52,7 +64,9 @@ export default function ToolsPlatform() {
   const { settings } = useLiveSettings();
   const { hasPremium, isLoading: isLoadingPremium } = usePremiumAccess();
   const { trackEvent, getEvents } = useToolAnalytics();
-  const [activeCategory, setActiveCategory] = useState<'free' | 'premium'>('free');
+  const { role } = useUserRole();
+  const canViewInternalTools = role === 'admin' || role === 'superadmin' || role === 'secondary_admin';
+  const [activeCategory, setActiveCategory] = useState<AppCategory>('free');
   const [activeTool, setActiveTool] = useState<string | null>(null);
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
   const [blockedToolName, setBlockedToolName] = useState<string | null>(null);
@@ -79,11 +93,11 @@ export default function ToolsPlatform() {
   }, [getEvents]);
 
   const recentApps = useMemo(() => {
-    const all = [...freeApps, ...premiumApps].map(applyOverrides);
+    const all = (canViewInternalTools ? fullCatalogApps : publicCatalogApps).map(applyOverrides);
     return recentToolIds
       .map((id) => all.find((a) => a.id === id))
       .filter(Boolean) as ProquelecApp[];
-  }, [recentToolIds]);
+  }, [canViewInternalTools, recentToolIds]);
 
   const pageData = settings?.page_sections?.outils;
   const heroData = pageData?.content?.hero;
@@ -99,14 +113,24 @@ export default function ToolsPlatform() {
 
   // Liste des apps avec surcharges, filtrée par catégorie effective
   const getEffectiveFreeApps = (): ProquelecApp[] =>
-    freeApps.map(applyOverrides).filter((a) => a.category === 'free');
+    publicCatalogApps.map(applyOverrides).filter((a) => a.category === 'free');
 
   const getEffectivePremiumApps = (): ProquelecApp[] =>
-    premiumApps.map(applyOverrides).filter((a) => a.category === 'premium');
+    publicCatalogApps.map(applyOverrides).filter((a) => a.category === 'premium');
+
+  const getEffectiveInternalApps = (): ProquelecApp[] =>
+    canViewInternalTools
+      ? fullCatalogApps.map(applyOverrides).filter((a) => a.category === 'internal')
+      : [];
 
   // Filtrer les apps selon la catégorie, le groupe et la recherche
   const getFilteredApps = (): ProquelecApp[] => {
-    const apps = activeCategory === 'free' ? getEffectiveFreeApps() : getEffectivePremiumApps();
+    const apps =
+      activeCategory === 'free'
+        ? getEffectiveFreeApps()
+        : activeCategory === 'premium'
+          ? getEffectivePremiumApps()
+          : getEffectiveInternalApps();
     let filtered = apps;
     if (activeGroup) {
       filtered = filtered.filter((app) => app.group === activeGroup);
@@ -125,8 +149,18 @@ export default function ToolsPlatform() {
 
   const currentEffectiveFree = getEffectiveFreeApps();
   const currentEffectivePremium = getEffectivePremiumApps();
+  const currentEffectiveInternal = getEffectiveInternalApps();
+  const visibleToolCount =
+    currentEffectiveFree.length +
+    currentEffectivePremium.length +
+    (canViewInternalTools ? currentEffectiveInternal.length : 0);
 
-  const currentGroups = activeCategory === 'free' ? appGroups.free : appGroups.premium;
+  const currentGroups =
+    activeCategory === 'free'
+      ? appGroups.free
+      : activeCategory === 'premium'
+        ? appGroups.premium
+        : appGroups.internal;
 
   const handleAppClick = (app: ProquelecApp) => {
     if (app.status === 'coming') {
@@ -137,7 +171,7 @@ export default function ToolsPlatform() {
 
     // Vérification premium pour les outils payants
     // Tracker l'ouverture des outils gratuits
-    if (app.category === 'free' || hasPremium) {
+    if (app.category === 'free' || app.category === 'internal' || hasPremium) {
       trackEvent({ toolId: app.id, toolName: app.title, action: 'open' });
     }
 
@@ -219,7 +253,9 @@ export default function ToolsPlatform() {
         setActiveTool('sovereign-ai');
         break;
       default:
-        if (app.route) {
+        if (app.route === '/outils') {
+          setActiveTool(app.id);
+        } else if (app.route) {
           navigate(app.route);
         }
     }
@@ -256,7 +292,7 @@ export default function ToolsPlatform() {
         title={heroData?.seo_title || "Plateforme d'Ingénierie Électrotechnique - PROQUELEC"}
         description={
           heroData?.seo_description ||
-          'Référentiel Officiel & Corpus Normatif Central. 40 applications pour professionnels et grand public.'
+          'Référentiel officiel et corpus normatif central pour professionnels, grand public et équipes PROQUELEC.'
         }
       />
 
@@ -271,7 +307,7 @@ export default function ToolsPlatform() {
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="max-w-4xl">
               <Badge className="mb-4 md:mb-6 bg-emerald-500/10 text-emerald-400 border-emerald-500/20 px-3 md:px-4 py-1 md:py-1.5 rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.15em] md:tracking-[0.2em]">
-                {heroData?.features?.[0] || '40 Applications • Ingénierie Souveraine'}
+                {heroData?.features?.[0] || `${visibleToolCount} Applications • Ingénierie Souveraine`}
               </Badge>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black mb-4 md:mb-8 leading-[1.1] md:leading-[1.05] tracking-tight">
                 {heroData?.title?.split('Outils')?.[0]}Outils <br className="hidden sm:block" />
@@ -411,7 +447,7 @@ export default function ToolsPlatform() {
               >
                 <RotateCcw className="w-4 h-4" /> Retour au Hub
               </button>
-              <ElectricalUnitConverter />
+              <OperationalToolSuite toolId="calcul-puissance" demoMode={demoToolId === 'calcul-puissance'} />
             </div>
           ) : activeTool === 'generateur-devis' ? (
             <div className="space-y-8">
@@ -518,6 +554,19 @@ export default function ToolsPlatform() {
               </button>
               <LightingCalculator />
             </div>
+          ) : hasOperationalTool(activeTool) ? (
+            <div className="space-y-8">
+              <button
+                onClick={() => {
+                  setActiveTool(null);
+                  setDemoToolId(null);
+                }}
+                className="flex items-center gap-2 text-emerald-500 font-black uppercase text-xs tracking-widest hover:text-white transition-colors"
+              >
+                <RotateCcw className="w-4 h-4" /> Retour au Hub
+              </button>
+              <OperationalToolSuite toolId={activeTool} demoMode={demoToolId === activeTool} />
+            </div>
           ) : (
             <>
               {/* Header avec onglets */}
@@ -529,16 +578,22 @@ export default function ToolsPlatform() {
                         <>
                           Applications <span className="text-emerald-400">Gratuites</span>
                         </>
-                      ) : (
+                      ) : activeCategory === 'premium' ? (
                         <>
                           Solutions <span className="text-amber-400">Premium</span>
+                        </>
+                      ) : (
+                        <>
+                          Outils <span className="text-sky-400">Internes</span>
                         </>
                       )}
                     </h2>
                     <p className="text-sm md:text-base text-slate-400 font-medium">
                       {activeCategory === 'free'
                         ? "Outils de sensibilisation et d'éducation pour le grand public."
-                        : "Outils professionnels certifiés pour électriciens et bureaux d'études."}
+                        : activeCategory === 'premium'
+                          ? "Outils professionnels certifiés pour électriciens et bureaux d'études."
+                          : 'Outils internes réservés aux équipes autorisées PROQUELEC.'}
                     </p>
                   </div>
 
@@ -565,6 +620,19 @@ export default function ToolsPlatform() {
                       <span className="hidden xs:inline">PREMIUM</span>
                       <span className="xs:hidden">Premium</span> ({currentEffectivePremium.length})
                     </button>
+                    {canViewInternalTools && (
+                      <button
+                        onClick={() => {
+                          setActiveCategory('internal');
+                          setActiveGroup(null);
+                        }}
+                        className={`flex-1 sm:flex-none px-4 md:px-8 py-2.5 md:py-3 rounded-lg md:rounded-xl text-xs md:text-sm font-black transition-all flex items-center justify-center gap-1.5 md:gap-2 ${activeCategory === 'internal' ? 'bg-sky-400 text-slate-950 shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                      >
+                        <ShieldCheck className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                        <span className="hidden xs:inline">INTERNE</span>
+                        <span className="xs:hidden">Interne</span> ({currentEffectiveInternal.length})
+                      </button>
+                    )}
                   </div>
                 </div>
 
@@ -735,7 +803,7 @@ export default function ToolsPlatform() {
                 <div className="p-2 md:p-3 bg-emerald-500/20 w-fit rounded-lg md:rounded-xl border border-emerald-500/30">
                   <BadgeCheck className="text-emerald-400 w-4 h-4 md:w-6 md:h-6" />
                 </div>
-                <h4 className="font-black text-sm md:text-lg">40 Applications</h4>
+                <h4 className="font-black text-sm md:text-lg">{visibleToolCount} Applications</h4>
                 <p className="text-xs md:text-sm text-slate-500 font-medium leading-relaxed">
                   Catalogue complet d'outils pour électriciens et grand public.
                 </p>

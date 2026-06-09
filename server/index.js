@@ -1075,6 +1075,26 @@ app.use(
 app.use(templatesModule.basePath || '/api', templatesModule.router);
 
 // ------------------------------------------
+// SPA (Single Page Application) - Servir le frontend buildé
+// ------------------------------------------
+const distPath = path.join(__dirname, '..', 'dist');
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+  console.log('[SPA] Serving static files from', distPath);
+
+  // Catch-all pour le routage client-side : servir index.html pour toute route non-API, non-fichier
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) return next();
+    if (path.extname(req.path)) return next();
+    const indexPath = path.join(distPath, 'index.html');
+    if (fs.existsSync(indexPath)) res.sendFile(indexPath);
+    else next();
+  });
+} else {
+  console.warn('[SPA] dist directory not found at', distPath, '— SPA fallback disabled.');
+}
+
+// ------------------------------------------
 // CATCH-ALL & ERROR HANDLING
 // ------------------------------------------
 

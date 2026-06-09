@@ -3,17 +3,19 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { freeApps, premiumApps, type ProquelecApp } from '@/data/applications-catalog';
 
+const publicApps = [...freeApps, ...premiumApps];
+
 const toolSections = [
   {
     title: 'Outils Gratuits',
     subtitle: 'Accédez aux ressources gratuites pour sécuriser, sensibiliser et vérifier vos installations.',
-    apps: freeApps,
+    apps: publicApps.filter((app) => app.category === 'free'),
     accent: 'emerald'
   },
   {
     title: 'Outils Premium',
     subtitle: 'Solutions métiers avancées pour électriciens, bureaux d’études et ingénierie.',
-    apps: premiumApps,
+    apps: publicApps.filter((app) => app.category === 'premium'),
     accent: 'amber'
   }
 ];

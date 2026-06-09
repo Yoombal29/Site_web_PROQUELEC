@@ -1,17 +1,43 @@
-@import "./styles/design-tokens.css";
-@import "./styles/pq-layout.css";
-@import "./styles/pq-section.css";
-@import "./styles/pq-grid.css";
-@import "./styles/pq-button.css";
-@import "./styles/pq-stat.css";
-@import "./styles/pq-card.css";
-@import "./styles/pq-alert.css";
-@import "./styles/pq-workflow.css";
-@import "./styles/pq-form.css";
-@import "./styles/pq-table.css";
-@import "./styles/animations.css";
-@import "./styles/pq-builder.css";
+@import './styles/design-tokens.css';
+@import './styles/pq-layout.css';
+@import './styles/pq-section.css';
+@import './styles/pq-grid.css';
+@import './styles/pq-button.css';
+@import './styles/pq-stat.css';
+@import './styles/pq-card.css';
+@import './styles/pq-alert.css';
+@import './styles/pq-workflow.css';
+@import './styles/pq-form.css';
+@import './styles/pq-table.css';
+@import './styles/animations.css';
+@import './styles/pq-builder.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}

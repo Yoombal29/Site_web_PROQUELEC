@@ -295,6 +295,651 @@ const cardPresets = {
   purple: { accentColor: colors.purple },
 } as const;
 
+const PremiumPageRoot = ({ children }: { children: React.ReactNode }) => (
+  <Element is={ContainerBlock} canvas padding={0} backgroundColor={colors.white} maxWidth="100%">
+    {children}
+  </Element>
+);
+
+const PremiumHero = ({
+  badge,
+  title,
+  subtitle,
+  primaryLabel,
+  primaryHref = '/contact',
+  accentColor = colors.gold,
+  backgroundColor = colors.dark,
+}: {
+  badge: string;
+  title: string;
+  subtitle: string;
+  primaryLabel: string;
+  primaryHref?: string;
+  accentColor?: string;
+  backgroundColor?: string;
+}) => (
+  <Section backgroundColor={backgroundColor} paddingY={spacing.hero}>
+    <TextBlock
+      text={badge}
+      fontSize={parseInt(font.badge)}
+      textAlign="center"
+      fontWeight="800"
+      color={accentColor}
+      extraClasses="uppercase tracking-[0.15em]"
+    />
+    <SpacerBlock height={spacing.sm} />
+    <TextBlock
+      text={title}
+      fontSize={parseInt(font.h1)}
+      textAlign="center"
+      fontWeight="900"
+      color={colors.white}
+      extraClasses="leading-[1.08] max-w-5xl mx-auto"
+    />
+    <SpacerBlock height={spacing.md} />
+    <TextBlock
+      text={subtitle}
+      fontSize={parseInt(font.body)}
+      textAlign="center"
+      color={colors.slateLight}
+      lineHeight="1.75"
+      extraClasses="max-w-3xl mx-auto"
+    />
+    <SpacerBlock height={spacing.lg} />
+    <ButtonBlock
+      label={primaryLabel}
+      href={primaryHref}
+      backgroundColor={accentColor}
+      textColor={backgroundColor === colors.dark ? colors.dark : colors.white}
+      size="lg"
+      rounded="xl"
+    />
+  </Section>
+);
+
+const PremiumCardGrid = ({
+  items,
+  columns = 3,
+  accentColor = colors.blue,
+}: {
+  items: Array<{ icon: string; title: string; subtitle?: string; text: string }>;
+  columns?: number;
+  accentColor?: string;
+}) => (
+  <Grid columns={columns}>
+    {items.map((item) => (
+      <CardBlock
+        key={item.title}
+        icon={item.icon}
+        title={item.title}
+        subtitle={item.subtitle || ''}
+        text={item.text}
+        accentColor={accentColor}
+      />
+    ))}
+  </Grid>
+);
+
+const renderAuditElectricalPremiumPage = () => (
+  <PremiumPageRoot>
+    <PremiumHero
+      badge="AUDIT ÉLECTRIQUE PREMIUM"
+      title="Contrôler, prioriser et sécuriser les installations électriques"
+      subtitle="Une page service complète pour transformer une demande d'audit en dossier clair : périmètre, méthode, livrables, criticité et demande de visite."
+      primaryLabel="Demander un audit"
+    />
+    <StatsBlock
+      stat1Value="4"
+      stat1Label="Étapes d'audit"
+      stat2Value="72h"
+      stat2Label="Rapport cible"
+      stat3Value="3"
+      stat3Label="Niveaux de priorité"
+      backgroundColor={colors.blueBg}
+      accentColor={colors.blue}
+    />
+    <Section>
+      <SectionHeader
+        badge="PÉRIMÈTRE"
+        title="Ce que l'audit vérifie"
+        subtitle="Le visiteur comprend immédiatement les points contrôlés et les preuves attendues."
+      />
+      <PremiumCardGrid
+        accentColor={colors.blue}
+        items={[
+          {
+            icon: '⚡',
+            title: 'Tableaux et protections',
+            text: 'Repérage, calibres, différentiels, sélectivité et cohérence des départs.',
+          },
+          {
+            icon: '⏚',
+            title: 'Terre et continuité',
+            text: 'Mesures, liaisons équipotentielles, circuits sensibles et zones humides.',
+          },
+          {
+            icon: '📄',
+            title: 'Dossier technique',
+            text: 'Schémas, PV de mesure, photos, réserves et recommandations classées.',
+          },
+        ]}
+      />
+    </Section>
+    <Section backgroundColor={colors.dark}>
+      <AuditProcessBlock
+        title="Méthode d'audit PROQUELEC"
+        subtitle="Un parcours lisible pour cadrer, inspecter, documenter et suivre les réserves."
+        steps={[
+          {
+            phase: '01',
+            title: 'Cadrage',
+            description: 'Site, usage, puissance, historique et documents disponibles.',
+            meta: '24 h',
+          },
+          {
+            phase: '02',
+            title: 'Inspection',
+            description: 'Contrôle visuel, mesures et photos des points critiques.',
+            meta: 'Sur site',
+          },
+          {
+            phase: '03',
+            title: 'Rapport',
+            description: 'Réserves classées par criticité avec actions recommandées.',
+            meta: 'Livrable',
+          },
+          {
+            phase: '04',
+            title: 'Suivi',
+            description: 'Validation de la levée des réserves si demandée.',
+            meta: 'Option',
+          },
+        ]}
+      />
+    </Section>
+    <Section>
+      <ComplianceChecklistBlock
+        title="Documents à préparer avant audit"
+        subtitle="Une checklist simple pour réduire les allers-retours et accélérer le diagnostic."
+        accentColor={colors.green}
+        items={[
+          {
+            status: 'conforme',
+            label: 'Adresse et interlocuteur technique',
+            detail: 'Coordonnées du responsable présent pendant la visite.',
+          },
+          {
+            status: 'a verifier',
+            label: 'Plans, schémas et PV disponibles',
+            detail: 'Même incomplets, ils aident à cadrer le contrôle.',
+          },
+          {
+            status: 'critique',
+            label: 'Incidents récents',
+            detail: 'Disjonctions, échauffements, odeurs ou zones dangereuses.',
+          },
+        ]}
+      />
+    </Section>
+    <ContactPremiumBlock
+      title="Planifier un audit électrique"
+      subtitle="Décrivez le site, le type d'installation et l'urgence. L'équipe oriente la demande vers le bon expert."
+      backgroundColor={colors.blueBg}
+    />
+  </PremiumPageRoot>
+);
+
+const renderHouseholdDiagnosticPremiumPage = () => (
+  <PremiumPageRoot>
+    <PremiumHero
+      badge="DIAGNOSTIC MÉNAGE PREMIUM"
+      title="Aider les familles à repérer les risques avant l'incident"
+      subtitle="Un parcours clair pour les particuliers : signaux d'alerte, photos utiles, niveau d'urgence et demande de diagnostic logement."
+      primaryLabel="Demander un diagnostic"
+      accentColor={colors.green}
+      backgroundColor={colors.navy}
+    />
+    <Section>
+      <SectionHeader
+        badge="SÉCURITÉ DOMESTIQUE"
+        title="Les signaux qui doivent alerter"
+        subtitle="Le contenu parle simple et aide le ménage à savoir quand couper, documenter ou appeler."
+        badgeColor={colors.green}
+      />
+      <PremiumCardGrid
+        accentColor={colors.green}
+        items={[
+          {
+            icon: '🔥',
+            title: 'Échauffement',
+            text: 'Prises chaudes, odeur de brûlé, tableau noirci ou appareil qui coupe souvent.',
+          },
+          {
+            icon: '💧',
+            title: 'Zones humides',
+            text: "Cuisine, salle d'eau et extérieur doivent être protégés avec attention.",
+          },
+          {
+            icon: '📷',
+            title: 'Photos utiles',
+            text: 'Tableau, prises concernées, câbles visibles et zone du problème.',
+          },
+        ]}
+      />
+    </Section>
+    <Section backgroundColor={colors.light}>
+      <ComplianceChecklistBlock
+        title="Préparer la visite logement"
+        subtitle="Les informations qui permettent au technicien de qualifier rapidement le risque."
+        accentColor={colors.green}
+        items={[
+          {
+            status: 'conforme',
+            label: 'Adresse complète et disponibilité',
+            detail: 'Créneau de visite et personne à contacter.',
+          },
+          {
+            status: 'a verifier',
+            label: 'Photo du tableau électrique',
+            detail: 'Vue globale et gros plan des protections.',
+          },
+          {
+            status: 'critique',
+            label: 'Symptôme dangereux',
+            detail: 'Odeur, étincelle, fil apparent, eau ou disjonction répétée.',
+          },
+        ]}
+      />
+    </Section>
+    <ContactPremiumBlock
+      title="Qualifier une demande ménage"
+      subtitle="Le formulaire doit orienter vers diagnostic, conseil de prévention ou urgence technique."
+      backgroundColor="#ecfdf5"
+    />
+  </PremiumPageRoot>
+);
+
+const renderTrainingProquelecPremiumPage = () => (
+  <PremiumPageRoot>
+    <TrainingHeroPremiumBlock
+      badge="ACADÉMIE PROQUELEC"
+      title="Formation PROQUELEC Premium"
+      subtitle="Un catalogue clair pour former, évaluer et qualifier les compétences électriques selon le niveau réel des participants."
+      duration="2 à 5 jours"
+      level="BT / HTA"
+      certification="Attestation PROQUELEC"
+    />
+    <Section>
+      <SectionHeader
+        badge="PARCOURS"
+        title="Choisir le bon module"
+        subtitle="Chaque module indique public, prérequis, durée, livrable et niveau d'habilitation."
+      />
+      <TrainingProgramPremiumBlock />
+    </Section>
+    <Section backgroundColor={colors.light}>
+      <PremiumCardGrid
+        accentColor={colors.blue}
+        items={[
+          {
+            icon: '🎯',
+            title: 'Analyse du besoin',
+            text: 'Postes, missions, exposition au risque et niveau initial.',
+          },
+          {
+            icon: '🧪',
+            title: 'Cas pratiques',
+            text: 'Manipulation, mesures, consignation et lecture de situations terrain.',
+          },
+          {
+            icon: '🏅',
+            title: 'Évaluation',
+            text: 'QCM, observation pratique et attestation de fin de session.',
+          },
+        ]}
+      />
+    </Section>
+    <PricingComparisonPremiumBlock
+      title="Construire une session adaptée"
+      subtitle="Individuel, groupe ou entreprise : le modèle laisse le webmaster ajuster les offres."
+      accentColor={colors.green}
+    />
+    <ContactPremiumBlock
+      title="Planifier une session"
+      subtitle="Indiquez le nombre de participants, les profils et les habilitations souhaitées."
+      backgroundColor={colors.blueBg}
+    />
+  </PremiumPageRoot>
+);
+
+const renderQualiElecCertificationPremiumPage = () => (
+  <PremiumPageRoot>
+    <PremiumHero
+      badge="CERTIFICATION QUALI-ELEC"
+      title="Transformer la conformité en preuve vérifiable"
+      subtitle="Un parcours candidat complet : éligibilité, dossier, audit, commission, registre public et renouvellement."
+      primaryLabel="Candidater au label"
+      accentColor={colors.gold}
+      backgroundColor={colors.navy}
+    />
+    <Section>
+      <CertificationRequirementsPremiumBlock
+        title="Dossier de certification QUALI-ELEC"
+        accentColor={colors.amber}
+        resources={[
+          {
+            type: 'Formulaire',
+            title: 'Candidature',
+            description: 'Entreprise, responsables, références et engagement qualité.',
+            href: '/contact',
+            label: 'Démarrer',
+          },
+          {
+            type: 'Preuves',
+            title: 'Documents techniques',
+            description: 'Assurance, agrément, chantiers, schémas, PV et photos.',
+            href: '/ged-publications',
+            label: 'Préparer',
+          },
+          {
+            type: 'Audit',
+            title: 'Contrôle terrain',
+            description: 'Vérification documentaire et inspection des pratiques.',
+            href: '/expertises',
+            label: 'Comprendre',
+          },
+        ]}
+      />
+    </Section>
+    <Section backgroundColor={colors.light}>
+      <AuditProcessBlock
+        title="Cycle de certification"
+        subtitle="Une logique traçable du dépôt jusqu'au renouvellement."
+        backgroundColor={colors.navy}
+        accentColor={colors.gold}
+        steps={[
+          {
+            phase: '01',
+            title: 'Pré-qualification',
+            description: 'Vérification des critères administratifs et techniques.',
+            meta: 'Dossier',
+          },
+          {
+            phase: '02',
+            title: 'Audit',
+            description: 'Analyse documentaire et contrôle sur référence chantier.',
+            meta: 'Terrain',
+          },
+          {
+            phase: '03',
+            title: 'Commission',
+            description: 'Décision motivée, réserves et compléments éventuels.',
+            meta: 'Avis',
+          },
+          {
+            phase: '04',
+            title: 'Registre',
+            description: 'Publication du statut et suivi du renouvellement.',
+            meta: 'Suivi',
+          },
+        ]}
+      />
+    </Section>
+  </PremiumPageRoot>
+);
+
+const renderAwarenessCampaignPremiumPage = () => (
+  <PremiumPageRoot>
+    <PremiumHero
+      badge="CAMPAGNE DE SENSIBILISATION"
+      title="Organiser une action terrain mesurable"
+      subtitle="Un modèle pour annoncer une campagne, préciser les publics concernés, mobiliser les partenaires et publier un bilan utile."
+      primaryLabel="Proposer une campagne"
+      accentColor={colors.gold}
+    />
+    <StatsBlock
+      stat1Value="Objectif"
+      stat1Label="Risque ciblé"
+      stat2Value="Terrain"
+      stat2Label="Actions locales"
+      stat3Value="Bilan"
+      stat3Label="Indicateurs suivis"
+      backgroundColor={colors.amberLight}
+      accentColor={colors.amber}
+    />
+    <Section>
+      <SectionHeader
+        badge="ORGANISATION"
+        title="Une campagne doit être cadrée avant publication"
+        subtitle="Le webmaster peut renseigner lieu, cible, responsable, partenaires et résultats attendus."
+        badgeColor={colors.amber}
+      />
+      <PremiumCardGrid
+        accentColor={colors.amber}
+        items={[
+          {
+            icon: '📍',
+            title: 'Lieu et public',
+            text: 'Marché, école, collectivité, quartier ou zone professionnelle.',
+          },
+          {
+            icon: '🤝',
+            title: 'Partenaires',
+            text: 'Responsabilités, relais local, ressources et supports de communication.',
+          },
+          {
+            icon: '📊',
+            title: 'Indicateurs',
+            text: 'Personnes sensibilisées, sites visités, demandes reçues et suites prévues.',
+          },
+        ]}
+      />
+    </Section>
+    <Section backgroundColor={colors.light}>
+      <AuditProcessBlock
+        title="Workflow campagne"
+        subtitle="Un parcours opérationnel pour passer de l'annonce au bilan."
+        backgroundColor={colors.dark}
+        accentColor={colors.gold}
+        steps={[
+          {
+            phase: '01',
+            title: 'Objectif',
+            description: 'Définir le risque, la cible et le message prioritaire.',
+            meta: 'Cadrage',
+          },
+          {
+            phase: '02',
+            title: 'Mobilisation',
+            description: 'Confirmer lieu, partenaire local, supports et équipe.',
+            meta: 'Agenda',
+          },
+          {
+            phase: '03',
+            title: 'Action terrain',
+            description: 'Sensibiliser, collecter les constats et orienter les demandes.',
+            meta: 'Jour J',
+          },
+          {
+            phase: '04',
+            title: 'Bilan',
+            description: 'Publier chiffres, enseignements et actions de suivi.',
+            meta: 'Après',
+          },
+        ]}
+      />
+    </Section>
+  </PremiumPageRoot>
+);
+
+const renderSecurityObservatoryPremiumPage = () => (
+  <PremiumPageRoot>
+    <PremiumHero
+      badge="OBSERVATOIRE SÉCURITÉ"
+      title="Piloter les risques électriques par la donnée"
+      subtitle="Une page premium pour présenter indicateurs, sources, tendances, cartes et priorités d'action par territoire."
+      primaryLabel="Demander un bilan"
+      accentColor={colors.blueLight}
+      backgroundColor={colors.navy}
+    />
+    <StatsBlock
+      stat1Value="Cartes"
+      stat1Label="Territoires"
+      stat2Value="Risques"
+      stat2Label="Criticité"
+      stat3Value="Rapports"
+      stat3Label="Publication"
+      backgroundColor={colors.blueBg}
+      accentColor={colors.blue}
+    />
+    <Section>
+      <SectionHeader
+        badge="INDICATEURS"
+        title="Des chiffres orientés décision"
+        subtitle="Chaque donnée doit afficher sa source, sa date, sa définition et son usage."
+      />
+      <PremiumCardGrid
+        columns={4}
+        accentColor={colors.blue}
+        items={[
+          {
+            icon: '✅',
+            title: 'Conformité',
+            text: 'Taux de dossiers conformes et réserves fréquentes.',
+          },
+          {
+            icon: '⚠️',
+            title: 'Incidents',
+            text: 'Signalements, zones sensibles et facteurs récurrents.',
+          },
+          {
+            icon: '🎓',
+            title: 'Formations',
+            text: 'Professionnels formés par région, métier et module.',
+          },
+          {
+            icon: '📣',
+            title: 'Campagnes',
+            text: 'Sites visités, personnes sensibilisées et suites engagées.',
+          },
+        ]}
+      />
+    </Section>
+    <Section backgroundColor={colors.light}>
+      <ResourceCardsBlock
+        title="Tableau de bord public"
+        subtitle="Ajoutez cartes, rapports, notes de méthode et exports de synthèse."
+        accentColor={colors.blue}
+      />
+    </Section>
+  </PremiumPageRoot>
+);
+
+const renderGedResourcesPremiumPage = () => (
+  <PremiumPageRoot>
+    <PremiumHero
+      badge="GED & RESSOURCES PREMIUM"
+      title="Centraliser les documents utiles et traçables"
+      subtitle="Une bibliothèque claire pour guides, rapports, formulaires, fiches pratiques et ressources de campagne."
+      primaryLabel="Demander un document"
+      accentColor={colors.purpleLight}
+      backgroundColor={colors.dark}
+    />
+    <Section>
+      <SectionHeader
+        badge="DOCUMENTATION"
+        title="Une GED utile est classée, datée et versionnée"
+        subtitle="Le visiteur comprend le statut du document, son public cible et l'usage attendu."
+        badgeColor={colors.purple}
+      />
+      <Grid>
+        <ResourceCardsBlock
+          title="Guides pratiques"
+          subtitle="Fiches prévention, checklists et supports pour ménages, pros et collectivités."
+          accentColor={colors.purple}
+        />
+        <ResourceCardsBlock
+          title="Rapports et bilans"
+          subtitle="Synthèses de campagne, observatoire, notes d'orientation et retours terrain."
+          accentColor={colors.purple}
+        />
+        <ResourceCardsBlock
+          title="Documents techniques"
+          subtitle="Référentiels commentés, formulaires et modèles de dossier."
+          accentColor={colors.purple}
+        />
+      </Grid>
+    </Section>
+    <Section backgroundColor={colors.light}>
+      <ComplianceChecklistBlock
+        title="Qualité documentaire"
+        subtitle="Avant publication, chaque document doit être vérifié et contextualisé."
+        accentColor={colors.purple}
+        items={[
+          {
+            status: 'conforme',
+            label: 'Titre, version et date',
+            detail: 'Le document est identifiable sans ambiguïté.',
+          },
+          {
+            status: 'a verifier',
+            label: 'Public cible',
+            detail: 'Public, professionnel, collectivité, presse ou interne.',
+          },
+          {
+            status: 'critique',
+            label: 'Droits de publication',
+            detail: 'Aucun texte normatif protégé ne doit être publié sans autorisation.',
+          },
+        ]}
+      />
+    </Section>
+  </PremiumPageRoot>
+);
+
+const renderQualifiedContactPremiumPage = () => (
+  <PremiumPageRoot>
+    <ContactPremiumBlock
+      title="Contact qualifié PROQUELEC"
+      subtitle="Un modèle contact orienté routage : audit, diagnostic ménage, formation, certification, partenariat ou presse."
+      backgroundColor={colors.blueBg}
+    />
+    <Section>
+      <SectionHeader
+        badge="ROUTAGE"
+        title="Diriger chaque demande vers le bon service"
+        subtitle="Le contenu aide le visiteur à préparer les bonnes informations dès le premier message."
+      />
+      <PremiumCardGrid
+        columns={4}
+        accentColor={colors.blue}
+        items={[
+          {
+            icon: '🛡️',
+            title: 'Audit',
+            text: 'Site, usage, urgence, documents et interlocuteur technique.',
+          },
+          {
+            icon: '🏠',
+            title: 'Ménage',
+            text: 'Adresse, photos, symptôme visible et disponibilité.',
+          },
+          {
+            icon: '🎓',
+            title: 'Formation',
+            text: 'Nombre de participants, profils et habilitations visées.',
+          },
+          {
+            icon: '🏅',
+            title: 'Certification',
+            text: 'Type de label, entreprise, références et pièces disponibles.',
+          },
+        ]}
+      />
+    </Section>
+  </PremiumPageRoot>
+);
+
 // ══════════════════════════════════════════════
 // SECTION TEMPLATES
 // ══════════════════════════════════════════════
@@ -588,378 +1233,95 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
   },
 
   {
-    label: 'Page Formation Complète',
+    label: 'Formation PROQUELEC Premium',
     description:
-      'Structure complète : hero, objectifs, programme, prérequis, tarifs, calendrier et CTA',
+      'Page complete pour presenter modules, publics, prerequis, durees, livrables, tarifs et demande de session.',
     emoji: '🎓',
     category: 'pages',
     previewGradient: `linear-gradient(180deg, #06111f 0%, ${colors.blueBg} 42%, ${colors.white} 100%)`,
-    factory: withErrorBoundary(
-      () => (
-        <Element
-          is={ContainerBlock}
-          canvas
-          padding={0}
-          backgroundColor={colors.white}
-          maxWidth="100%"
-        >
-          <TrainingHeroPremiumBlock
-            badge="ACADÉMIE PROQUELEC"
-            title="Formation Complète en Électricité Bâtiment"
-            subtitle="De la théorie à la pratique — maîtrisez l'installation électrique conforme NF C 15-100."
-            duration="35 heures"
-            level="Tous niveaux"
-            certification="Certificat PROQUELEC"
-          />
-          <Section>
-            <SectionHeader
-              badge="PROGRAMME"
-              title="Objectifs pédagogiques"
-              subtitle="Acquérez des compétences immédiatement opérationnelles."
-            />
-            <TrainingProgramPremiumBlock />
-          </Section>
-          <Section backgroundColor={colors.light}>
-            <SectionHeader
-              badge="TARIFS"
-              title="Options de financement"
-              subtitle="Formation individuelle, en groupe ou sur site."
-              badgeColor={colors.green}
-            />
-            <PricingComparisonPremiumBlock
-              title="Choisissez votre formule"
-              accentColor={colors.green}
-              plans={[
-                {
-                  name: 'Individuel',
-                  price: 'Sur devis',
-                  description: 'Inscription à une session programmée.',
-                  features: ['Programme complet', 'Support de cours', 'Attestation'],
-                  buttonText: 'Demander une date',
-                  href: '/contact',
-                  featured: false,
-                },
-                {
-                  name: 'Groupe',
-                  price: 'À partir de 25 000 FCFA',
-                  description: 'Réduction pour inscriptions collectives (3+).',
-                  features: ['Tarif dégressif', 'Programme personnalisé', 'Suivi post-formation'],
-                  buttonText: 'Devis groupe',
-                  href: '/contact',
-                  featured: true,
-                },
-                {
-                  name: 'Sur site',
-                  price: 'Personnalisé',
-                  description: 'Formation dans vos locaux aux dates de votre choix.',
-                  features: ['Programme sur-mesure', 'Pas de déplacement', 'Formateur dédié'],
-                  buttonText: 'Nous contacter',
-                  href: '/contact',
-                  featured: false,
-                },
-              ]}
-            />
-          </Section>
-        </Element>
-      ),
-      'Page Formation Complète',
-    ),
-    meta: { version: 2, estimatedRenderMs: 75 },
+    factory: withErrorBoundary(renderTrainingProquelecPremiumPage, 'Formation PROQUELEC Premium'),
+    meta: {
+      version: 3,
+      estimatedRenderMs: 75,
+      tags: ['formation', 'habilitation', 'certification', 'catalogue'],
+    },
   },
 
   {
-    label: 'Page Audit Électrique',
+    label: 'Audit Électrique Premium',
     description:
-      'Landing complète pour audit : promesse, étapes, checklist, preuves et demande de devis',
+      'Page service complete pour cadrer un audit, expliquer la methode, les livrables, la criticite et la demande de visite.',
     emoji: '🛡️',
     category: 'pages',
     previewGradient: `linear-gradient(180deg, ${colors.dark} 0%, ${colors.blueLight} 45%, ${colors.white} 100%)`,
-    factory: withErrorBoundary(
-      () => (
-        <Element
-          is={ContainerBlock}
-          canvas
-          padding={0}
-          backgroundColor={colors.white}
-          maxWidth="100%"
-        >
-          <Section backgroundColor={colors.dark} paddingY={spacing.hero}>
-            <TextBlock
-              text="AUDIT CONFORMITÉ"
-              fontSize={parseInt(font.badge)}
-              textAlign="center"
-              fontWeight="700"
-              color={colors.gold}
-              extraClasses="uppercase tracking-[0.15em]"
-            />
-            <SpacerBlock height={spacing.sm} />
-            <TextBlock
-              text="Saviez-vous que 93% des installations au Sénégal ne sont pas conformes ?"
-              fontSize={parseInt(font.h1)}
-              textAlign="center"
-              fontWeight="900"
-              color={colors.white}
-              extraClasses="leading-[1.1]"
-            />
-            <SpacerBlock height={spacing.md} />
-            <TextBlock
-              text="Une enquête nationale PROQUELEC a révélé ce constat alarmant. Nos experts certifiés réalisent un audit complet de votre installation."
-              fontSize={parseInt(font.body)}
-              textAlign="center"
-              color={colors.slateLight}
-              lineHeight="1.7"
-              extraClasses="max-w-3xl mx-auto"
-            />
-            <SpacerBlock height={spacing.lg} />
-            <ButtonBlock
-              label="Demander un audit"
-              href="/contact"
-              backgroundColor={colors.gold}
-              textColor={colors.dark}
-              size="lg"
-              rounded="xl"
-            />
-          </Section>
-          <Section backgroundColor={colors.light}>
-            <SectionHeader
-              badge="MÉTHODE"
-              title="Comment se déroule un audit ?"
-              subtitle="Un processus transparent en 4 étapes."
-            />
-            <StepsBlock />
-          </Section>
-          <Section>
-            <SectionHeader
-              badge="CHECKLIST"
-              title="Préparez votre contrôle"
-              subtitle="Vérifiez les points essentiels avant notre passage."
-              badgeColor={colors.green}
-            />
-            <ComplianceChecklistBlock
-              title="Préparer le contrôle PROQUELEC"
-              subtitle="Utilisez cette checklist pour clarifier les prérequis avant intervention."
-              accentColor={colors.green}
-            />
-          </Section>
-          <Section backgroundColor={colors.light}>
-            <SectionHeader
-              badge="RÉFÉRENCES"
-              title="Ils nous font confiance"
-              subtitle="Plus de 500 installations contrôlées chaque année."
-            />
-            <LogoGridBlock />
-          </Section>
-          <Section backgroundColor={colors.blue} paddingY={spacing.xxl}>
-            <TextBlock
-              text="Obtenez votre diagnostic personnalisé"
-              fontSize={parseInt(font.h3)}
-              textAlign="center"
-              fontWeight="800"
-              color={colors.white}
-            />
-            <SpacerBlock height={spacing.sm} />
-            <TextBlock
-              text="Réponse sous 48h ouvrées."
-              fontSize={parseInt(font.body)}
-              textAlign="center"
-              color={colors.blueLight}
-            />
-            <SpacerBlock height={spacing.lg} />
-            <ButtonBlock
-              label="Demander un audit"
-              href="/contact"
-              backgroundColor={colors.white}
-              textColor={colors.dark}
-              size="lg"
-              rounded="xl"
-            />
-          </Section>
-        </Element>
-      ),
-      'Page Audit Électrique',
-    ),
-    meta: { version: 2, estimatedRenderMs: 90, tags: ['audit', 'conformité', 'landing'] },
+    factory: withErrorBoundary(renderAuditElectricalPremiumPage, 'Audit Électrique Premium'),
+    meta: { version: 3, estimatedRenderMs: 90, tags: ['audit', 'conformite', 'diagnostic'] },
   },
 
   {
-    label: 'Page Certification / Agrément',
+    label: 'Diagnostic Ménage Premium',
     description:
-      "Présentation premium d'un parcours de certification avec documents, délais et étapes",
+      'Page orientee particuliers avec signaux d alerte, checklist logement, informations a preparer et contact qualifie.',
+    emoji: '🏠',
+    category: 'pages',
+    previewGradient: `linear-gradient(180deg, ${colors.navy} 0%, #ecfdf5 52%, ${colors.white} 100%)`,
+    factory: withErrorBoundary(renderHouseholdDiagnosticPremiumPage, 'Diagnostic Ménage Premium'),
+    meta: { version: 1, estimatedRenderMs: 70, tags: ['menage', 'diagnostic', 'securite domestique'] },
+  },
+
+  {
+    label: 'Certification QUALI-ELEC Premium',
+    description:
+      'Page complete pour expliquer candidature, dossier, audit, commission, registre public et renouvellement.',
     emoji: '🏅',
     category: 'pages',
     previewGradient: `linear-gradient(180deg, ${colors.navy} 0%, ${colors.amberLight} 48%, ${colors.white} 100%)`,
-    factory: withErrorBoundary(
-      () => (
-        <Element
-          is={ContainerBlock}
-          canvas
-          padding={0}
-          backgroundColor={colors.white}
-          maxWidth="100%"
-        >
-          <Section backgroundColor={colors.dark} paddingY={spacing.hero}>
-            <TextBlock
-              text="CERTIFICATION PROQUELEC"
-              fontSize={parseInt(font.badge)}
-              textAlign="center"
-              fontWeight="700"
-              color={colors.gold}
-              extraClasses="uppercase tracking-[0.15em]"
-            />
-            <SpacerBlock height={spacing.sm} />
-            <TextBlock
-              text="Obtenez votre certification qualité"
-              fontSize={parseInt(font.h1)}
-              textAlign="center"
-              fontWeight="900"
-              color={colors.white}
-              extraClasses="leading-[1.1]"
-            />
-            <SpacerBlock height={spacing.md} />
-            <TextBlock
-              text="La certification PROQUELEC est la marque de confiance pour les professionnels de l'électricité au Sénégal."
-              fontSize={parseInt(font.body)}
-              textAlign="center"
-              color={colors.slateLight}
-              lineHeight="1.7"
-              extraClasses="max-w-3xl mx-auto"
-            />
-          </Section>
-          <Section>
-            <SectionHeader
-              badge="PARCOURS"
-              title="Structurer un dossier clair et recevable"
-              subtitle="Nos experts vous accompagnent à chaque étape."
-              badgeColor={colors.amber}
-            />
-            <CertificationRequirementsPremiumBlock
-              title="Structurer un dossier clair et recevable"
-              accentColor={colors.amber}
-              resources={[
-                {
-                  type: 'Formulaire',
-                  title: "Demande d'agrément",
-                  description: 'Document de base pour ouvrir le dossier.',
-                  href: '/documents',
-                  label: 'Télécharger',
-                },
-                {
-                  type: 'Guide',
-                  title: 'Critères techniques',
-                  description: 'Comprendre les exigences attendues.',
-                  href: '/normes-ressources',
-                  label: 'Consulter',
-                },
-                {
-                  type: 'Contact',
-                  title: 'Assistance dossier',
-                  description: "Échanger avec l'équipe avant dépôt.",
-                  href: '/contact',
-                  label: 'Contacter',
-                },
-              ]}
-            />
-          </Section>
-        </Element>
-      ),
-      'Page Certification / Agrément',
-    ),
-    meta: { version: 2, estimatedRenderMs: 55 },
+    factory: withErrorBoundary(renderQualiElecCertificationPremiumPage, 'Certification QUALI-ELEC Premium'),
+    meta: { version: 3, estimatedRenderMs: 70, tags: ['certification', 'quali-elec', 'label'] },
   },
 
   {
-    label: 'Landing Page Contact Premium',
+    label: 'Campagne de Sensibilisation Premium',
     description:
-      'Page contact complète : promesse, formulaire, coordonnées, délais et raisons de contacter',
+      'Page evenement terrain avec objectif, public, partenaires, indicateurs et bilan post-campagne.',
+    emoji: '📣',
+    category: 'pages',
+    previewGradient: `linear-gradient(180deg, ${colors.dark} 0%, ${colors.amberLight} 52%, ${colors.white} 100%)`,
+    factory: withErrorBoundary(renderAwarenessCampaignPremiumPage, 'Campagne de Sensibilisation Premium'),
+    meta: { version: 1, estimatedRenderMs: 75, tags: ['campagne', 'sensibilisation', 'evenement'] },
+  },
+
+  {
+    label: 'Observatoire Sécurité Premium',
+    description:
+      'Page tableau de bord pour presenter indicateurs, sources, risques, cartes, rapports et priorites publiques.',
+    emoji: '📊',
+    category: 'pages',
+    previewGradient: `linear-gradient(180deg, ${colors.navy} 0%, ${colors.blueBg} 50%, ${colors.white} 100%)`,
+    factory: withErrorBoundary(renderSecurityObservatoryPremiumPage, 'Observatoire Sécurité Premium'),
+    meta: { version: 1, estimatedRenderMs: 75, tags: ['observatoire', 'donnees', 'risques'] },
+  },
+
+  {
+    label: 'Contact Qualifié Premium',
+    description:
+      'Page contact avancee pour router les demandes audit, menage, formation, certification, partenariat ou presse.',
     emoji: '📬',
     category: 'pages',
     previewGradient: `linear-gradient(180deg, ${colors.light} 0%, ${colors.blueLight} 55%, ${colors.white} 100%)`,
-    factory: withErrorBoundary(
-      () => (
-        <ContactPremiumBlock
-          title="Une demande claire, une réponse orientée action"
-          subtitle="Centralisez les demandes de contrôle, formation, audit, certification ou assistance technique."
-          backgroundColor={colors.blueBg}
-        />
-      ),
-      'Landing Page Contact Premium',
-    ),
-    meta: { version: 2, estimatedRenderMs: 30 },
+    factory: withErrorBoundary(renderQualifiedContactPremiumPage, 'Contact Qualifié Premium'),
+    meta: { version: 3, estimatedRenderMs: 55, tags: ['contact', 'routage', 'formulaire'] },
   },
 
   {
-    label: 'Page Ressources Techniques',
-    description: 'Bibliothèque premium pour guides, normes, formulaires et fiches pratiques',
+    label: 'GED / Ressources Premium',
+    description:
+      'Bibliotheque premium pour guides, rapports, normes commentees, formulaires, versions et droits de publication.',
     emoji: '📚',
     category: 'pages',
     previewGradient: `linear-gradient(180deg, ${colors.white} 0%, ${colors.blueBg} 50%, #e0f2fe 100%)`,
-    factory: withErrorBoundary(
-      () => (
-        <Element
-          is={ContainerBlock}
-          canvas
-          padding={0}
-          backgroundColor={colors.white}
-          maxWidth="100%"
-        >
-          <Section backgroundColor={colors.blueBg} paddingY={spacing.hero}>
-            <TextBlock
-              text="RESSOURCES TECHNIQUES"
-              fontSize={parseInt(font.badge)}
-              textAlign="center"
-              fontWeight="700"
-              color={colors.blue}
-              extraClasses="uppercase tracking-[0.15em]"
-            />
-            <SpacerBlock height={spacing.sm} />
-            <TextBlock
-              text="Guides, normes et formulaires"
-              fontSize={parseInt(font.h1)}
-              textAlign="center"
-              fontWeight="900"
-              color={colors.dark}
-              extraClasses="leading-[1.1]"
-            />
-            <SpacerBlock height={spacing.md} />
-            <TextBlock
-              text="Accédez à l'ensemble des documents techniques PROQUELEC pour vos projets électriques."
-              fontSize={parseInt(font.body)}
-              textAlign="center"
-              color={colors.slate}
-              lineHeight="1.7"
-              extraClasses="max-w-3xl mx-auto"
-            />
-          </Section>
-          <Section>
-            <SectionHeader
-              badge="TECHNICAL LIBRARY"
-              title="Guides & Normes"
-              subtitle="Ressources essentielles pour les professionnels."
-              badgeColor={colors.purple}
-            />
-            <Grid>
-              <ResourceCardsBlock
-                title="Préparer un contrôle"
-                subtitle="Checklist des informations à réunir avant visite."
-                accentColor={colors.purple}
-              />
-              <ResourceCardsBlock
-                title="Référentiels électriques"
-                subtitle="Points clés pour installations intérieures."
-                accentColor={colors.purple}
-              />
-              <ResourceCardsBlock
-                title="Sécurité chantier"
-                subtitle="Bonnes pratiques terrain et prévention."
-                accentColor={colors.purple}
-              />
-            </Grid>
-          </Section>
-        </Element>
-      ),
-      'Page Ressources Techniques',
-    ),
-    meta: { version: 2, estimatedRenderMs: 65 },
+    factory: withErrorBoundary(renderGedResourcesPremiumPage, 'GED / Ressources Premium'),
+    meta: { version: 3, estimatedRenderMs: 75, tags: ['ged', 'ressources', 'documents'] },
   },
 
   // ── CONTENT ──
