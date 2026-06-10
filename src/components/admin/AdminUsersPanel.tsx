@@ -38,7 +38,15 @@ import {
 interface User {
   id: string;
   email: string;
-  role: 'admin' | 'secondary_admin' | 'electricien' | 'entreprise' | 'membre' | 'partner' | 'user';
+  role:
+    | 'superadmin'
+    | 'admin'
+    | 'secondary_admin'
+    | 'electricien'
+    | 'entreprise'
+    | 'membre'
+    | 'partner'
+    | 'user';
   status: boolean;
   createdAt: string;
 }
@@ -46,6 +54,7 @@ interface User {
 type Role = User['role'];
 
 const ROLES: { value: Role; label: string }[] = [
+  { value: 'superadmin', label: 'Super Admin' },
   { value: 'admin', label: 'Admin' },
   { value: 'secondary_admin', label: 'Admin secondaire' },
   { value: 'electricien', label: 'Électricien' },
@@ -56,6 +65,7 @@ const ROLES: { value: Role; label: string }[] = [
 ];
 
 const ROLE_BADGE_VARIANTS: Record<Role, string> = {
+  superadmin: 'destructive',
   admin: 'destructive',
   secondary_admin: 'warning',
   electricien: 'default',
@@ -66,6 +76,7 @@ const ROLE_BADGE_VARIANTS: Record<Role, string> = {
 };
 
 const ROLE_BADGE_STYLES: Record<Role, string> = {
+  superadmin: 'bg-purple-100 text-purple-800 border-purple-200 hover:bg-purple-100',
   admin: 'bg-red-100 text-red-800 border-red-200 hover:bg-red-100',
   secondary_admin: 'bg-amber-100 text-amber-800 border-amber-200 hover:bg-amber-100',
   electricien: 'bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-100',
@@ -326,148 +337,148 @@ const AdminUsersPanel: React.FC = () => {
   return (
     <>
       <section className="space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white">
-            <UsersIcon className="w-5 h-5" />
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white">
+              <UsersIcon className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-foreground">Gestion des utilisateurs</h2>
+              <p className="text-sm text-muted-foreground">
+                {users.length} utilisateur{users.length > 1 ? 's' : ''} enregistré
+                {users.length > 1 ? 's' : ''}
+              </p>
+            </div>
           </div>
-          <div>
-            <h2 className="text-xl font-bold text-foreground">Gestion des utilisateurs</h2>
-            <p className="text-sm text-muted-foreground">
-              {users.length} utilisateur{users.length > 1 ? 's' : ''} enregistré
-              {users.length > 1 ? 's' : ''}
-            </p>
-          </div>
+
+          <Button onClick={openCreateModal} className="gap-2">
+            <Plus className="w-4 h-4" />
+            Nouvel utilisateur
+          </Button>
         </div>
 
-        <Button onClick={openCreateModal} className="gap-2">
-          <Plus className="w-4 h-4" />
-          Nouvel utilisateur
-        </Button>
-      </div>
+        {/* Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder="Rechercher par email…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9 max-w-sm"
+          />
+        </div>
 
-      {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <Input
-          placeholder="Rechercher par email…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="pl-9 max-w-sm"
-        />
-      </div>
-
-      {/* Table */}
-      <div className="bg-card border border-border rounded-xl shadow overflow-hidden">
-        {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
-          </div>
-        ) : filteredUsers.length === 0 ? (
-          <div className="text-center py-16 text-muted-foreground">
-            {search
-              ? 'Aucun utilisateur ne correspond à votre recherche'
-              : 'Aucun utilisateur trouvé'}
-          </div>
-        ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Email</TableHead>
-                <TableHead>Rôle</TableHead>
-                <TableHead>Statut</TableHead>
-                <TableHead className="hidden md:table-cell">Date création</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredUsers.map((user) => {
-                const statusSaving = statusSavingIds.has(user.id);
-                return (
-                  <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.email}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={
-                        ROLE_BADGE_VARIANTS[user.role] as
-                          | 'destructive'
-                          | 'warning'
-                          | 'default'
-                          | 'secondary'
-                          | 'outline'
-                      }
-                      className={ROLE_BADGE_STYLES[user.role]}
-                    >
-                      {ROLES.find((r) => r.value === user.role)?.label ?? user.role}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Switch
-                        checked={user.status}
-                        disabled={statusSaving}
-                        onCheckedChange={(checked) => handleToggleStatus(user, checked)}
-                      />
-                      <span
-                        className={`text-xs font-medium ${user.status ? 'text-green-600' : 'text-red-500'}`}
-                      >
-                        {user.status ? 'Actif' : 'Inactif'}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell text-muted-foreground text-sm">
-                    {formatDate(user.createdAt)}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => openEditModal(user)}
-                        title="Modifier"
-                      >
-                        <Pencil className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        disabled={statusSaving}
-                        onClick={() => handleToggleStatus(user)}
-                        title={user.status ? 'Désactiver' : 'Activer'}
-                      >
-                        {statusSaving ? (
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                        ) : (
-                          <span className="text-base leading-none">🔄</span>
-                        )}
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setDeleteTarget(user)}
-                        title="Supprimer"
-                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
+        {/* Table */}
+        <div className="bg-card border border-border rounded-xl shadow overflow-hidden">
+          {loading ? (
+            <div className="flex items-center justify-center py-16">
+              <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+            </div>
+          ) : filteredUsers.length === 0 ? (
+            <div className="text-center py-16 text-muted-foreground">
+              {search
+                ? 'Aucun utilisateur ne correspond à votre recherche'
+                : 'Aucun utilisateur trouvé'}
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Rôle</TableHead>
+                  <TableHead>Statut</TableHead>
+                  <TableHead className="hidden md:table-cell">Date création</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        )}
-      </div>
-    </section>
+              </TableHeader>
+              <TableBody>
+                {filteredUsers.map((user) => {
+                  const statusSaving = statusSavingIds.has(user.id);
+                  return (
+                    <TableRow key={user.id}>
+                      <TableCell className="font-medium">{user.email}</TableCell>
+                      <TableCell>
+                        <Badge
+                          variant={
+                            ROLE_BADGE_VARIANTS[user.role] as
+                              | 'destructive'
+                              | 'warning'
+                              | 'default'
+                              | 'secondary'
+                              | 'outline'
+                          }
+                          className={ROLE_BADGE_STYLES[user.role]}
+                        >
+                          {ROLES.find((r) => r.value === user.role)?.label ?? user.role}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Switch
+                            checked={user.status}
+                            disabled={statusSaving}
+                            onCheckedChange={(checked) => handleToggleStatus(user, checked)}
+                          />
+                          <span
+                            className={`text-xs font-medium ${user.status ? 'text-green-600' : 'text-red-500'}`}
+                          >
+                            {user.status ? 'Actif' : 'Inactif'}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell text-muted-foreground text-sm">
+                        {formatDate(user.createdAt)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => openEditModal(user)}
+                            title="Modifier"
+                          >
+                            <Pencil className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            disabled={statusSaving}
+                            onClick={() => handleToggleStatus(user)}
+                            title={user.status ? 'Désactiver' : 'Activer'}
+                          >
+                            {statusSaving ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <span className="text-base leading-none">🔄</span>
+                            )}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setDeleteTarget(user)}
+                            title="Supprimer"
+                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          )}
+        </div>
+      </section>
 
-    {/* ================================================================ */}
-    {/* Modal Création / Édition                                          */}
-    {/* ================================================================ */}
-    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
+      {/* ================================================================ */}
+      {/* Modal Création / Édition                                          */}
+      {/* ================================================================ */}
+      <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
             <DialogTitle>
               {editingUser ? "Modifier l'utilisateur" : 'Créer un nouvel utilisateur'}
             </DialogTitle>
@@ -507,52 +518,55 @@ const AdminUsersPanel: React.FC = () => {
                 onChange={(e) => setFormPassword(e.target.value)}
               />
 
-            {/* 2FA Code */}
-            {editingUser && (
+              {/* 2FA Code */}
+              {editingUser && (
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">
+                    Code 2FA{' '}
+                    <span className="text-muted-foreground font-normal">
+                      (requis pour compte protege)
+                    </span>
+                  </label>
+                  <Input
+                    type="password"
+                    placeholder="Laisser vide si non requis"
+                    value={twoFactorCode}
+                    onChange={(e) => setTwoFactorCode(e.target.value)}
+                  />
+                </div>
+              )}
+
+              {/* Role */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">
-                  Code 2FA <span className="text-muted-foreground font-normal">(requis pour compte protege)</span>
-                </label>
-                <Input
-                  type="password"
-                  placeholder="Laisser vide si non requis"
-                  value={twoFactorCode}
-                  onChange={(e) => setTwoFactorCode(e.target.value)}
-                />
+                <label className="text-sm font-medium text-foreground">Rôle</label>
+                <Select value={formRole} onValueChange={(v: Role) => setFormRole(v)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionner un rôle" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ROLES.map((r) => (
+                      <SelectItem key={r.value} value={r.value}>
+                        {r.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-            )}
 
-            {/* Role */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Rôle</label>
-              <Select value={formRole} onValueChange={(v: Role) => setFormRole(v)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sélectionner un rôle" />
-                </SelectTrigger>
-                <SelectContent>
-                  {ROLES.map((r) => (
-                    <SelectItem key={r.value} value={r.value}>
-                      {r.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Status */}
-            <div className="flex items-center gap-3 pt-2">
-              <Switch id="user-status" checked={formStatus} onCheckedChange={setFormStatus} />
-              <label
-                htmlFor="user-status"
-                className="text-sm font-medium text-foreground cursor-pointer"
-              >
-                {formStatus ? 'Actif' : 'Inactif'}
-              </label>
+              {/* Status */}
+              <div className="flex items-center gap-3 pt-2">
+                <Switch id="user-status" checked={formStatus} onCheckedChange={setFormStatus} />
+                <label
+                  htmlFor="user-status"
+                  className="text-sm font-medium text-foreground cursor-pointer"
+                >
+                  {formStatus ? 'Actif' : 'Inactif'}
+                </label>
+              </div>
             </div>
           </div>
-        </div>
 
-        <DialogFooter>
+          <DialogFooter>
             <Button variant="outline" onClick={closeModal} disabled={saving}>
               Annuler
             </Button>

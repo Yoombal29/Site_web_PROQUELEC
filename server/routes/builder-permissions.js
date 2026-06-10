@@ -3,16 +3,11 @@ const router = express.Router();
 const { pool } = require('../core/database');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
 
-// E-mail du superadmin principal (seul à pouvoir modifier la matrice)
-const SUPERADMIN_EMAIL = 'oumarkebe@proquelec.sn';
-
-/** Middleware : seul le superadmin principal peut modifier la matrice */
+/** Middleware : seul un superadmin peut modifier la matrice */
 function requireSuperAdmin(req, res, next) {
-  const email = req.user?.email;
-
-  if (email !== SUPERADMIN_EMAIL) {
+  if (req.user?.role !== 'superadmin') {
     return res.status(403).json({
-      error: 'Accès refusé. Seul le superadmin principal oumarkebe@proquelec.sn peut modifier la matrice des permissions builder.',
+      error: 'Accès refusé. Seul un Super Admin peut modifier la matrice des permissions builder.',
     });
   }
   next();
@@ -42,13 +37,23 @@ router.get('/', authenticateToken, requireAdmin, async (req, res) => {
     `);
 
     // Rôles distincts qui ont au moins une permission builder OU qui existent
-    const roles = ['superadmin', 'admin', 'secondary_admin', 'partner', 'electricien', 'entreprise', 'membre'];
+    const roles = [
+      'superadmin',
+      'admin',
+      'secondary_admin',
+      'partner',
+      'electricien',
+      'entreprise',
+      'membre',
+    ];
 
     // Construire la matrice : { role → Set<permissionName> }
     const matrix = {};
-    roles.forEach(r => { matrix[r] = new Set(); });
+    roles.forEach((r) => {
+      matrix[r] = new Set();
+    });
 
-    rolePermsResult.rows.forEach(row => {
+    rolePermsResult.rows.forEach((row) => {
       if (matrix[row.role]) {
         matrix[row.role].add(row.permission_name);
       }
@@ -81,24 +86,30 @@ router.patch('/', authenticateToken, requireSuperAdmin, async (req, res) => {
   const { role, permission, granted } = req.body;
 
   if (!role || !permission || typeof granted !== 'boolean') {
-    return res.status(400).json({ error: 'Champs requis : role, permission (string), granted (boolean)' });
+    return res
+      .status(400)
+      .json({ error: 'Champs requis : role, permission (string), granted (boolean)' });
   }
 
   // Sécurité : on ne peut modifier que les permissions builder.*
   if (!permission.startsWith('builder.')) {
-    return res.status(400).json({ error: 'Seules les permissions builder.* sont modifiables via cette route.' });
+    return res
+      .status(400)
+      .json({ error: 'Seules les permissions builder.* sont modifiables via cette route.' });
   }
 
-  // Le superadmin ne peut pas perdre ses propres droits builder, sauf si c'est oumarkebe@proquelec.sn qui fait la modification
-  if (role === 'superadmin' && !granted && req.user.email !== SUPERADMIN_EMAIL) {
-    return res.status(403).json({ error: 'Impossible de révoquer les permissions builder du rôle superadmin.' });
+  // Le superadmin ne peut pas perdre ses propres droits builder
+  if (role === 'superadmin' && !granted) {
+    return res
+      .status(403)
+      .json({ error: 'Impossible de révoquer les permissions builder du rôle superadmin.' });
   }
 
   try {
     // Récupérer l'ID de la permission
     const permResult = await pool.query(
       `SELECT id FROM public.permissions WHERE name = $1 AND category = 'builder'`,
-      [permission]
+      [permission],
     );
 
     if (permResult.rows.length === 0) {
@@ -113,18 +124,20 @@ router.patch('/', authenticateToken, requireSuperAdmin, async (req, res) => {
         `INSERT INTO public.role_permissions (role, permission_id)
          VALUES ($1, $2)
          ON CONFLICT (role, permission_id) DO NOTHING`,
-        [role, permId]
+        [role, permId],
       );
     } else {
       // Révoquer la permission
       await pool.query(
         `DELETE FROM public.role_permissions WHERE role = $1 AND permission_id = $2`,
-        [role, permId]
+        [role, permId],
       );
     }
 
     // Log de l'action
-    console.log(`[Builder Perms] ${granted ? '✅ GRANT' : '❌ REVOKE'} → role=${role} permission=${permission} by=${req.user.email}`);
+    console.log(
+      `[Builder Perms] ${granted ? '✅ GRANT' : '❌ REVOKE'} → role=${role} permission=${permission} by=${req.user.email}`,
+    );
 
     res.json({
       success: true,
@@ -149,7 +162,8 @@ router.get('/user', authenticateToken, async (req, res) => {
     const userId = req.user.id;
     const userRole = req.user.role;
 
-    const result = await pool.query(`
+    const result = await pool.query(
+      `
       SELECT DISTINCT p.name
       FROM public.permissions p
       WHERE p.category = 'builder'
@@ -172,10 +186,12 @@ router.get('/user', authenticateToken, async (req, res) => {
         WHERE up.user_id = $2 AND up.permission_id = p.id AND up.granted = false
       )
       ORDER BY p.name
-    `, [userRole, userId]);
+    `,
+      [userRole, userId],
+    );
 
     res.json({
-      permissions: result.rows.map(r => r.name),
+      permissions: result.rows.map((r) => r.name),
       role: userRole,
     });
   } catch (err) {

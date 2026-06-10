@@ -16,6 +16,7 @@ import {
   SettingsRow,
 } from './ProquelecBlocks';
 import { AutoSettingsPanel } from './AutoSettingsPanel';
+import { toast } from 'sonner';
 
 const Input = (p: any) => <SettingsInput {...p} />;
 const Textarea = (p: any) => <SettingsTextarea {...p} />;
@@ -5484,6 +5485,7 @@ export const ContactPremiumBlock = (props: any) => {
     hours = 'Lun - Ven · 8h30 - 17h30',
     responseTime = 'Réponse sous 24 h ouvrées',
     fields = ['Nom complet', 'Téléphone', 'Email', 'Objet de la demande'],
+    subjectOptions = ['Audit de conformité', 'Certification professionnelle', 'Formation technique', 'Autre demande'],
     departments = [
       { icon: '⚡', title: 'Contrôle', description: 'Visite, réception ou levée de réserves.' },
       {
@@ -5514,6 +5516,12 @@ export const ContactPremiumBlock = (props: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleReset = () => {
+    setSubmitted(false);
+    setFormData({});
+    setError('');
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -5532,6 +5540,7 @@ export const ContactPremiumBlock = (props: any) => {
       });
       if (!res.ok) throw new Error(await res.text());
       setSubmitted(true);
+      toast.success('Message envoyé avec succès !');
     } catch (err) {
       setError("Erreur lors de l'envoi. Veuillez réessayer ou nous contacter par téléphone.");
     } finally {
@@ -5554,6 +5563,22 @@ export const ContactPremiumBlock = (props: any) => {
             Message envoyé !
           </h3>
           <p style={{ color: '#64748b' }}>Merci, nous vous répondrons sous 24h ouvrées.</p>
+          <button
+            type="button"
+            onClick={handleReset}
+            style={{
+              marginTop: 16,
+              background: accentColor,
+              color: '#ffffff',
+              border: 'none',
+              padding: '10px 20px',
+              borderRadius: 10,
+              fontWeight: 900,
+              cursor: 'pointer',
+            }}
+          >
+            Envoyer un autre message
+          </button>
         </div>
       ) : (
         <>
@@ -5648,24 +5673,48 @@ export const ContactPremiumBlock = (props: any) => {
               }}
             >
               <div style={{ display: 'grid', gap: 10 }}>
-                {(fields || []).map((field: string, index: number) => (
-                  <input
-                    key={index}
-                    aria-label={field}
-                    placeholder={resolveDynamicContent(field)}
-                    value={formData[field] || ''}
-                    onChange={(e) => handleChange(field, e.target.value)}
-                    required
-                    style={{
-                      width: '100%',
-                      border: '1px solid #e2e8f0',
-                      borderRadius: 10,
-                      padding: '11px 12px',
-                      fontSize: 13,
-                      color: '#0f172a',
-                    }}
-                  />
-                ))}
+                {(fields || []).map((field: string, index: number) => {
+                  const isSubjectField = field.toLowerCase().includes('objet');
+                  return isSubjectField ? (
+                    <select
+                      key={index}
+                      aria-label={field}
+                      title={field}
+                      value={formData[field] || (subjectOptions[0] || '')}
+                      onChange={(e) => handleChange(field, e.target.value)}
+                      style={{
+                        width: '100%',
+                        border: '1px solid #e2e8f0',
+                        borderRadius: 10,
+                        padding: '11px 12px',
+                        fontSize: 13,
+                        color: '#0f172a',
+                        background: '#ffffff',
+                      }}
+                    >
+                      {(subjectOptions || []).map((opt: string, i: number) => (
+                        <option key={i} value={opt}>{resolveDynamicContent(opt)}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      key={index}
+                      aria-label={field}
+                      placeholder={resolveDynamicContent(field)}
+                      value={formData[field] || ''}
+                      onChange={(e) => handleChange(field, e.target.value)}
+                      required
+                      style={{
+                        width: '100%',
+                        border: '1px solid #e2e8f0',
+                        borderRadius: 10,
+                        padding: '11px 12px',
+                        fontSize: 13,
+                        color: '#0f172a',
+                      }}
+                    />
+                  );
+                })}
                 <textarea
                   aria-label="Message"
                   placeholder="Message"
@@ -5749,6 +5798,7 @@ const ContactPremiumSettings = () => {
     hours,
     responseTime,
     fields,
+    subjectOptions,
     departments,
     buttonText,
     buttonHref,
@@ -5821,6 +5871,16 @@ const ContactPremiumSettings = () => {
         />
       </Row>
       <Row>
+        <Label label="Options sujet" />
+        <Textarea
+          rows={4}
+          value={(subjectOptions || []).join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => (p.subjectOptions = splitLines(e.target.value)))
+          }
+        />
+      </Row>
+      <Row>
         <Label label="Services (icône|titre|description)" />
         <Textarea
           rows={5}
@@ -5886,6 +5946,7 @@ ContactPremiumBlock.craft = {
     hours: 'Lun - Ven · 8h30 - 17h30',
     responseTime: 'Réponse sous 24 h ouvrées',
     fields: ['Nom complet', 'Téléphone', 'Email', 'Objet de la demande'],
+    subjectOptions: ['Audit de conformité', 'Certification professionnelle', 'Formation technique', 'Autre demande'],
     departments: [
       { icon: '⚡', title: 'Contrôle', description: 'Visite, réception ou levée de réserves.' },
       {
@@ -5903,6 +5964,11 @@ ContactPremiumBlock.craft = {
     buttonHref: '/contact',
     accentColor: '#2563eb',
     backgroundColor: '#f8fafc',
+  },
+  rules: {
+    canDrag: () => false,
+    canMoveIn: () => false,
+    canMoveOut: () => false,
   },
   related: { settings: ContactPremiumSettings },
 };

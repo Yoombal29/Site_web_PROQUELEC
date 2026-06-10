@@ -309,6 +309,18 @@ export const FUNCTIONAL_PAGE_DEFINITIONS: FunctionalPageDefinition[] = [
     securityLevel: 'public',
     component: lazyDefault(() => import('@/pages/SubscriptionPage')),
   },
+  {
+    slug: 'contact',
+    title: 'Contact',
+    description: 'Page de contact avec formulaire et informations',
+    route: '/contact',
+    securityLevel: 'public',
+    component: lazyDefault(() =>
+      import('@/components/blocks/ProquelecBlocksPlus').then((m) => ({
+        default: m.ContactPremiumBlock,
+      })),
+    ),
+  },
 ];
 
 const FUNCTIONAL_PAGE_LOOKUP = new Map<string, FunctionalPageDefinition>();

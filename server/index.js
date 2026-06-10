@@ -424,10 +424,10 @@ app.get('/api/admin/role-permissions', authenticateToken, requireAdmin, async (r
 
 app.patch('/api/admin/role-permissions', authenticateToken, requireAdmin, async (req, res) => {
   try {
-    if (req.user.email !== 'oumarkebe@proquelec.sn') {
+    if (req.user.role !== 'superadmin') {
       return res
         .status(403)
-        .json({ error: 'Seul le Super Admin principal peut modifier la matrice globale' });
+        .json({ error: 'Seul un Super Admin peut modifier la matrice globale' });
     }
     const { role, permission, granted } = req.body;
     if (!role || !permission || typeof granted !== 'boolean') {

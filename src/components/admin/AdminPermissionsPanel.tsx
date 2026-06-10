@@ -10,7 +10,11 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import { Loader2, Shield, Crown, Key, Ban } from 'lucide-react';
 
@@ -58,7 +62,9 @@ export default function AdminPermissionsPanel() {
     setLoading(false);
   };
 
-  useEffect(() => { loadData(); }, []);
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const openPermissions = async (user: any) => {
     setSelectedUser(user);
@@ -84,8 +90,8 @@ export default function AdminPermissionsPanel() {
   };
 
   const togglePerm = (permName: string) => {
-    setUserPerms(prev =>
-      prev.includes(permName) ? prev.filter(p => p !== permName) : [...prev, permName]
+    setUserPerms((prev) =>
+      prev.includes(permName) ? prev.filter((p) => p !== permName) : [...prev, permName],
     );
   };
 
@@ -119,7 +125,12 @@ export default function AdminPermissionsPanel() {
     (permsByCategory[p.category] = permsByCategory[p.category] || []).push(p);
   }
 
-  if (loading) return <div className="flex items-center gap-2 text-muted-foreground"><Loader2 className="animate-spin" /> Chargement...</div>;
+  if (loading)
+    return (
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <Loader2 className="animate-spin" /> Chargement...
+      </div>
+    );
 
   return (
     <div className="space-y-6">
@@ -127,10 +138,13 @@ export default function AdminPermissionsPanel() {
         <div>
           <h2 className="text-2xl font-bold">Permissions & Abonnements</h2>
           <p className="text-sm text-muted-foreground">
-            {users.length} utilisateur{users.length > 1 ? 's' : ''} — {permissions.length} permissions disponibles
+            {users.length} utilisateur{users.length > 1 ? 's' : ''} — {permissions.length}{' '}
+            permissions disponibles
           </p>
         </div>
-        <Button variant="outline" size="sm" onClick={loadData}>Actualiser</Button>
+        <Button variant="outline" size="sm" onClick={loadData}>
+          Actualiser
+        </Button>
       </div>
 
       <div className="border rounded-xl overflow-hidden">
@@ -144,26 +158,52 @@ export default function AdminPermissionsPanel() {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {users.map((user) => (
               <tr key={user.id} className="border-t hover:bg-muted/30 transition-colors">
                 <td className="p-3">{user.email}</td>
                 <td className="p-3">
-                  <Badge variant={user.role === 'admin' ? 'destructive' : 'secondary'}>
-                    {user.role === 'admin' ? 'Super Admin' : user.role === 'secondary_admin' ? 'Admin Limite' : user.role}
+                  <Badge
+                    variant={
+                      user.role === 'superadmin' || user.role === 'admin'
+                        ? 'destructive'
+                        : 'secondary'
+                    }
+                  >
+                    {user.role === 'superadmin'
+                      ? 'Super Admin'
+                      : user.role === 'admin'
+                        ? 'Admin'
+                        : user.role === 'secondary_admin'
+                          ? 'Admin Limité'
+                          : user.role}
                   </Badge>
                 </td>
                 <td className="p-3">
-                  <span className={`inline-flex items-center gap-1.5 ${user.is_active !== false ? 'text-green-600' : 'text-red-500'}`}>
-                    <span className={`w-2 h-2 rounded-full ${user.is_active !== false ? 'bg-green-500' : 'bg-red-500'}`} />
+                  <span
+                    className={`inline-flex items-center gap-1.5 ${user.is_active !== false ? 'text-green-600' : 'text-red-500'}`}
+                  >
+                    <span
+                      className={`w-2 h-2 rounded-full ${user.is_active !== false ? 'bg-green-500' : 'bg-red-500'}`}
+                    />
                     {user.is_active !== false ? 'Actif' : 'Inactif'}
                   </span>
                 </td>
                 <td className="p-3 text-right">
                   <div className="flex items-center justify-end gap-2">
-                    <Button variant="ghost" size="sm" onClick={() => openPermissions(user)} title="Permissions">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => openPermissions(user)}
+                      title="Permissions"
+                    >
                       <Shield className="w-4 h-4" />
                     </Button>
-                    <Button variant="ghost" size="sm" onClick={() => openSubscription(user)} title="Abonnement">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => openSubscription(user)}
+                      title="Abonnement"
+                    >
                       <Crown className="w-4 h-4" />
                     </Button>
                   </div>
@@ -171,7 +211,11 @@ export default function AdminPermissionsPanel() {
               </tr>
             ))}
             {users.length === 0 && (
-              <tr><td colSpan={4} className="p-6 text-center text-muted-foreground">Aucun utilisateur</td></tr>
+              <tr>
+                <td colSpan={4} className="p-6 text-center text-muted-foreground">
+                  Aucun utilisateur
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
@@ -185,17 +229,23 @@ export default function AdminPermissionsPanel() {
               <Shield className="w-5 h-5" /> Permissions — {selectedUser?.email}
             </DialogTitle>
             <DialogDescription>
-              Cochez les permissions a accorder a cet utilisateur. Les permissions vides utilisent celles par defaut du role.
+              Cochez les permissions a accorder a cet utilisateur. Les permissions vides utilisent
+              celles par defaut du role.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-6 py-4">
             {Object.entries(permsByCategory).map(([category, perms]) => (
               <div key={category}>
-                <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-2">{category}</h4>
+                <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-2">
+                  {category}
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  {perms.map(perm => (
-                    <label key={perm.id} className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+                  {perms.map((perm) => (
+                    <label
+                      key={perm.id}
+                      className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors"
+                    >
                       <input
                         type="checkbox"
                         className="mt-0.5"
@@ -204,7 +254,9 @@ export default function AdminPermissionsPanel() {
                       />
                       <div>
                         <p className="text-sm font-medium">{perm.name}</p>
-                        {perm.description && <p className="text-xs text-muted-foreground">{perm.description}</p>}
+                        {perm.description && (
+                          <p className="text-xs text-muted-foreground">{perm.description}</p>
+                        )}
                       </div>
                     </label>
                   ))}
@@ -214,9 +266,17 @@ export default function AdminPermissionsPanel() {
           </div>
 
           <div className="flex justify-end gap-3 pt-4 border-t">
-            <Button variant="ghost" onClick={() => setShowPermModal(false)}>Annuler</Button>
+            <Button variant="ghost" onClick={() => setShowPermModal(false)}>
+              Annuler
+            </Button>
             <Button onClick={savePermissions} disabled={saving}>
-              {saving ? <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Sauvegarde...</> : 'Enregistrer les permissions'}
+              {saving ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin mr-2" /> Sauvegarde...
+                </>
+              ) : (
+                'Enregistrer les permissions'
+              )}
             </Button>
           </div>
         </DialogContent>
@@ -240,7 +300,9 @@ export default function AdminPermissionsPanel() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium">Expire le</span>
-                  <span className="text-sm">{new Date(userSub.end_date).toLocaleDateString('fr-FR')}</span>
+                  <span className="text-sm">
+                    {new Date(userSub.end_date).toLocaleDateString('fr-FR')}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium">Statut</span>
@@ -249,15 +311,19 @@ export default function AdminPermissionsPanel() {
                   </Badge>
                 </div>
                 <div className="pt-3 border-t">
-                  <Button variant="destructive" size="sm" onClick={async () => {
-                    if (confirm('Annuler cet abonnement ?')) {
-                      try {
-                        await adminApi.cancelSubscription(userSub.id);
-                        toast.success('Abonnement annule');
-                        setUserSub(prev => prev ? { ...prev, is_active: false } : null);
-                      } catch {}
-                    }
-                  }}>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={async () => {
+                      if (confirm('Annuler cet abonnement ?')) {
+                        try {
+                          await adminApi.cancelSubscription(userSub.id);
+                          toast.success('Abonnement annule');
+                          setUserSub((prev) => (prev ? { ...prev, is_active: false } : null));
+                        } catch {}
+                      }
+                    }}
+                  >
                     <Ban className="w-4 h-4 mr-1" /> Annuler
                   </Button>
                 </div>
@@ -266,7 +332,11 @@ export default function AdminPermissionsPanel() {
               <div className="text-center py-8 space-y-4">
                 <p className="text-muted-foreground">Aucun abonnement actif</p>
                 <Button onClick={forcePremium} disabled={saving}>
-                  {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Crown className="w-4 h-4 mr-2" />}
+                  {saving ? (
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                  ) : (
+                    <Crown className="w-4 h-4 mr-2" />
+                  )}
                   Forcer acces Premium
                 </Button>
               </div>
@@ -274,7 +344,9 @@ export default function AdminPermissionsPanel() {
           </div>
 
           <div className="flex justify-end pt-4 border-t">
-            <Button variant="ghost" onClick={() => setShowSubModal(false)}>Fermer</Button>
+            <Button variant="ghost" onClick={() => setShowSubModal(false)}>
+              Fermer
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
