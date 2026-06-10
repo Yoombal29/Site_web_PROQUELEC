@@ -1331,7 +1331,7 @@ export const GodToolbox = () => {
 
   const handleInsertBlock = (factory: () => React.ReactElement, label: string) => {
     if (!canAddBlocks) {
-      toast.error('Vous n\'avez pas le droit d\'ajouter des blocs. Contactez l\'administrateur.');
+      toast.error("Vous n'avez pas le droit d'ajouter des blocs. Contactez l'administrateur.");
       return;
     }
     try {
@@ -1376,7 +1376,9 @@ export const GodToolbox = () => {
             <button
               onClick={() => setActiveTab('blocks')}
               className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'blocks' ? 'text-white border-b-2 border-indigo-500' : 'text-slate-500 hover:text-slate-300'} ${!canAddBlocks ? 'opacity-50' : ''}`}
-              title={!canAddBlocks ? 'Accès restreint — vous ne pouvez pas ajouter de blocs' : 'Blocs'}
+              title={
+                !canAddBlocks ? 'Accès restreint — vous ne pouvez pas ajouter de blocs' : 'Blocs'
+              }
             >
               <Layers size={10} className="inline mr-1" />
               Blocs
@@ -1384,7 +1386,9 @@ export const GodToolbox = () => {
             <button
               onClick={() => canManageTemplates && setActiveTab('templates')}
               className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-wider transition-colors ${activeTab === 'templates' ? 'text-white border-b-2 border-amber-500' : 'text-slate-500 hover:text-slate-300'} ${!canManageTemplates ? 'opacity-50 cursor-not-allowed' : ''}`}
-              title={!canManageTemplates ? 'Accès restreint — droits templates requis' : 'Templates'}
+              title={
+                !canManageTemplates ? 'Accès restreint — droits templates requis' : 'Templates'
+              }
             >
               <BookOpen size={10} className="inline mr-1" />
               Templates
@@ -1571,7 +1575,21 @@ export const GodToolbox = () => {
                             template={tmpl}
                             expanded={expanded}
                             connectRef={(ref) => {
-                              if (ref) connectors.create(ref, tmpl.factory());
+                              if (ref) {
+                                try {
+                                  // Valider que le template est parsable avant de permettre le drag
+                                  const testEl = tmpl.factory();
+                                  if (testEl?.type) query.parseReactElement(testEl);
+                                  connectors.create(ref, testEl);
+                                } catch {
+                                  // Si le parse échoue, on utilise un élément simple pour le drag visuel
+                                  // et l'insertion se fera via onInsert (double-clic)
+                                  connectors.create(
+                                    ref,
+                                    React.createElement('div', null, tmpl.label),
+                                  );
+                                }
+                              }
                             }}
                             onInsert={() => handleInsertTemplate(tmpl.factory, tmpl.label)}
                           />
