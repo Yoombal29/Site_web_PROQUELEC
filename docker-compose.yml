@@ -1,6 +1,3 @@
-name: Site-Proquelec
-version: '3.8'
-
 services:
   # --- CORE APPLICATION (NODE.JS + REACT) ---
   app-backend:

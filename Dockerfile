@@ -10,13 +10,13 @@ WORKDIR /app
 
 # Copy package files
 COPY package.json package-lock.json* ./
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --ignore-scripts && npm cache clean --force
 
 # Copy frontend source
 COPY . .
 
 # Build the React app
-RUN npm run build
+RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
 
 # ---- Stage 2: Build Backend ----
 FROM node:20-alpine AS backend-builder
