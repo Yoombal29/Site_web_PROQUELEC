@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { pool } = require('../db');
+const { pool } = require('../core/database');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
 
 // E-mail du superadmin principal (seul à pouvoir modifier la matrice)
