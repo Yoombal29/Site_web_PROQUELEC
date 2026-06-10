@@ -157,6 +157,7 @@ import {
 import { NavMenuBlock, MenuItemBlock, MegaMenuContainerBlock } from './MegaMenuBlock';
 import { OffCanvasPanelBlock, OffCanvasToggleBlock } from './OffCanvasBlock';
 import { HeaderBuilderBlock, FooterBuilderBlock } from './HeaderFooterBlocks';
+import { TemplateErrorBoundary } from '../god-builder/builderTemplates';
 
 /**
  * Fallback component for missing/unknown block types
@@ -337,6 +338,9 @@ export const CRAFT_RESOLVER = {
   VisionMissionBlock,
   AudienceOffersBlock,
   LandingStatsBlock,
+
+  // Error Boundary for templates
+  TemplateErrorBoundary,
 
   // Fallback for missing types
   '': FallbackBlock,

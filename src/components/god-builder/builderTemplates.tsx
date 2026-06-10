@@ -142,7 +142,7 @@ interface TemplateErrorBoundaryState {
   error: Error | null;
 }
 
-class TemplateErrorBoundary extends React.Component<
+export class TemplateErrorBoundary extends React.Component<
   TemplateErrorBoundaryProps,
   TemplateErrorBoundaryState
 > {
@@ -1266,7 +1266,11 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     category: 'pages',
     previewGradient: `linear-gradient(180deg, ${colors.navy} 0%, #ecfdf5 52%, ${colors.white} 100%)`,
     factory: withErrorBoundary(renderHouseholdDiagnosticPremiumPage, 'Diagnostic Ménage Premium'),
-    meta: { version: 1, estimatedRenderMs: 70, tags: ['menage', 'diagnostic', 'securite domestique'] },
+    meta: {
+      version: 1,
+      estimatedRenderMs: 70,
+      tags: ['menage', 'diagnostic', 'securite domestique'],
+    },
   },
 
   {
@@ -1276,7 +1280,10 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     emoji: '🏅',
     category: 'pages',
     previewGradient: `linear-gradient(180deg, ${colors.navy} 0%, ${colors.amberLight} 48%, ${colors.white} 100%)`,
-    factory: withErrorBoundary(renderQualiElecCertificationPremiumPage, 'Certification QUALI-ELEC Premium'),
+    factory: withErrorBoundary(
+      renderQualiElecCertificationPremiumPage,
+      'Certification QUALI-ELEC Premium',
+    ),
     meta: { version: 3, estimatedRenderMs: 70, tags: ['certification', 'quali-elec', 'label'] },
   },
 
@@ -1287,7 +1294,10 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     emoji: '📣',
     category: 'pages',
     previewGradient: `linear-gradient(180deg, ${colors.dark} 0%, ${colors.amberLight} 52%, ${colors.white} 100%)`,
-    factory: withErrorBoundary(renderAwarenessCampaignPremiumPage, 'Campagne de Sensibilisation Premium'),
+    factory: withErrorBoundary(
+      renderAwarenessCampaignPremiumPage,
+      'Campagne de Sensibilisation Premium',
+    ),
     meta: { version: 1, estimatedRenderMs: 75, tags: ['campagne', 'sensibilisation', 'evenement'] },
   },
 
@@ -1298,7 +1308,10 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     emoji: '📊',
     category: 'pages',
     previewGradient: `linear-gradient(180deg, ${colors.navy} 0%, ${colors.blueBg} 50%, ${colors.white} 100%)`,
-    factory: withErrorBoundary(renderSecurityObservatoryPremiumPage, 'Observatoire Sécurité Premium'),
+    factory: withErrorBoundary(
+      renderSecurityObservatoryPremiumPage,
+      'Observatoire Sécurité Premium',
+    ),
     meta: { version: 1, estimatedRenderMs: 75, tags: ['observatoire', 'donnees', 'risques'] },
   },
 
