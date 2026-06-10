@@ -47,13 +47,25 @@ import {
 
   "lucide-react";
 
+import { usePermissions } from "@/hooks/usePermissions";
+
 interface AdminSidebarProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
   role?: string;
 }
 
-export const menuItems = [
+export interface MenuItem {
+  id: string;
+  label: string;
+  icon: React.ComponentType<any>;
+  category: string;
+  roles: string[];
+  permission?: string;
+  href?: string;
+}
+
+export const menuItems: MenuItem[] = [
   // --- 1. PILOTAGE & STRATÉGIE ---
   {
     id: "overview",
@@ -67,21 +79,24 @@ export const menuItems = [
     label: "Projets & Chantiers",
     icon: HardHat,
     category: "pilotage",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "projects.view"
   },
   {
     id: "analytics",
     label: "Analytics & Trafic",
     icon: BarChart3,
     category: "pilotage",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "audit.view"
   },
   {
     id: "construction",
     label: "Mode Construction",
     icon: Construction,
     category: "pilotage",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
 
   // --- 2. CORTEX IA (SOUVERAIN) ---
@@ -90,49 +105,56 @@ export const menuItems = [
     label: "CORTEX SOUVERAIN (QG)",
     icon: Brain,
     category: "ia",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "inspections.view"
   },
   {
     id: "ai_providers",
     label: "Gestion API modèle",
     icon: Brain,
     category: "ia",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "ia_docs",
     label: "📚 Documentation IA",
     icon: BookOpen,
     category: "ia",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "inspections.view"
   },
   {
     id: "agents",
     label: "Agents Autonomes",
     icon: Terminal,
     category: "ia",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "academy_ai",
     label: "Académie IA (KEBE)",
     icon: GraduationCap,
     category: "ia",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "inspections.view"
   },
   {
     id: "auto_repair",
     label: "Maintenance IA (Auto-Repair)",
     icon: Wrench,
     category: "ia",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "monitoring",
     label: "Surveillance Temps Réel (IA)",
     icon: Activity,
     category: "ia",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
 
   // --- 3. MÉTIER & ÉLECTRICITÉ (CORE BUSINESS) ---
@@ -141,28 +163,32 @@ export const menuItems = [
     label: "Certifications",
     icon: Award,
     category: "metier",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "inspections.view"
   },
   {
     id: "training",
     label: "Formations Pro",
     icon: BookOpen,
     category: "metier",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "inspections.view"
   },
   {
     id: "standards",
     label: "Normes & Réglementation",
     icon: Shield,
     category: "metier",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "projects.view"
   },
   {
     id: "equipment",
     label: "Catalogue Équipements",
     icon: Zap,
     category: "metier",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "projects.view"
   },
 
   // --- 4. GESTION DE CONTENU (CMS) ---
@@ -171,14 +197,16 @@ export const menuItems = [
     label: "Sections & Contenus",
     icon: FileText,
     category: "cms",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "god_builder",
     label: "Studio de Création",
     icon: Layout,
     category: "cms",
-    roles: ["admin"],
+    roles: ["admin", "secondary_admin"],
+    permission: "builder.access",
     href: "/admin/builder"
   },
   {
@@ -186,49 +214,56 @@ export const menuItems = [
     label: "Blog & Actualités",
     icon: PenTool,
     category: "cms",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "media",
     label: "Médiathèque & Fichiers",
     icon: FolderOpen,
     category: "cms",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "documents.upload"
   },
   {
     id: "menu",
     label: "Menus & Navigation",
     icon: Menu,
     category: "cms",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "form_submissions",
     label: "Soumissions Formulaires",
     icon: Mail,
     category: "cms",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "documents.upload"
   },
   {
     id: "templates",
     label: "Marketplace Templates",
     icon: LayoutTemplate,
     category: "cms",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "builder.access"
   },
   {
     id: "ecommerce",
     label: "Boutique E-commerce",
     icon: ShoppingCart,
     category: "cms",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "events",
     label: "Agenda & Événements",
     icon: Calendar,
     category: "cms",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "projects.view"
   },
 
   // --- 5. COMMUNAUTÉ & VISIBILITÉ ---
@@ -237,35 +272,40 @@ export const menuItems = [
     label: "Utilisateurs & Accès",
     icon: Users,
     category: "communaute",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.users"
   },
   {
     id: "tech-tools",
     label: "Outils techniques",
     icon: Wrench,
     category: "communaute",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "partners",
     label: "Réseau Partenaires",
     icon: Share2,
     category: "communaute",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "projects.view"
   },
   {
     id: "newsletter",
     label: "Newsletter & Campagnes",
     icon: Mail,
     category: "communaute",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "espace_presse",
     label: "Espace Presse",
     icon: Newspaper,
     category: "communaute",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "projects.view"
   },
 
   // --- 6. SYSTÈME & CONFIGURATION ---
@@ -274,56 +314,64 @@ export const menuItems = [
     label: "Configuration Globale",
     icon: Sliders,
     category: "systeme",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "infrastructure",
     label: "Infrastructure Docker",
     icon: Terminal,
     category: "systeme",
-    roles: ["admin", "secondary_admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "design",
     label: "Apparence & Thème",
     icon: Palette,
     category: "systeme",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "fonts",
     label: "Polices personnalisées",
     icon: Type,
     category: "systeme",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "branding",
     label: "Marque & White-Label",
     icon: Tag,
     category: "systeme",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "database",
     label: "Base de Données",
     icon: Database,
     category: "systeme",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "security",
     label: "Sécurité & Logs",
     icon: Shield,
     category: "systeme",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.permissions"
   },
   {
     id: "performance",
     label: "Performance Système",
     icon: Activity,
     category: "systeme",
-    roles: ["admin"]
+    roles: ["admin", "secondary_admin"],
+    permission: "admin.settings"
   },
   {
     id: "help",
@@ -333,7 +381,6 @@ export const menuItems = [
     roles: ["admin", "secondary_admin"]
   }
 ];
-
 
 export const categories: Record<string, string> = {
   "pilotage": "🚀 Pilotage & Stratégie",
@@ -345,9 +392,20 @@ export const categories: Record<string, string> = {
 };
 
 export function AdminSidebar({ activeTab, onTabChange, role = 'admin' }: AdminSidebarProps) {
-  const filteredItems = menuItems.filter((item) =>
-    item.roles.includes(role as string)
-  );
+  const { hasPermission, isLoading } = usePermissions();
+
+  const filteredItems = menuItems.filter((item) => {
+    // 1. Validation du rôle
+    const isRoleAllowed = item.roles.includes(role as string);
+    if (!isRoleAllowed) return false;
+
+    // 2. Validation dynamique par permissions RBAC
+    if (item.permission) {
+      return hasPermission(item.permission);
+    }
+
+    return true;
+  });
 
   const groupedItems = filteredItems.reduce((acc, item) => {
     if (!acc[item.category]) {
@@ -407,5 +465,4 @@ export function AdminSidebar({ activeTab, onTabChange, role = 'admin' }: AdminSi
         </div>
       </ScrollArea>
     </div>);
-
 }

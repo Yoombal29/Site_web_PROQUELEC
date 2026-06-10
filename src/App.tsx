@@ -123,11 +123,12 @@ const AppContent = () => {
         {
           path: '/admin',
           element: (
-            <RoleProtectedRoute allowedRoles={['admin']}>
+            <RoleProtectedRoute allowedRoles={['admin', 'secondary_admin']}>
               <AdminDashboard />
             </RoleProtectedRoute>
           ),
         },
+
       ];
 
       if (showConstructionPage) {
@@ -266,10 +267,11 @@ const AppContent = () => {
             path: '/admin-secondary',
             element: (
               <RoleProtectedRoute allowedRoles={['admin', 'secondary_admin']}>
-                <AdminSecondaryDashboard />
+                <AdminDashboard />
               </RoleProtectedRoute>
             ),
           },
+
           {
             path: '/partner',
             element: (
