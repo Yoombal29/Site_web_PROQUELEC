@@ -45,6 +45,8 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { apiFetch } from '@/lib/api-client';
 import { useSession } from '@/hooks/useSession';
+import { useUserRole } from '@/hooks/useUserRole';
+import { AdminSidebar } from '@/components/AdminSidebar';
 
 // SECTION: Imports stratégiques
 import { useSiteSettings } from '@/hooks/useSiteSettings';
@@ -72,6 +74,16 @@ import InfraDocs from './InfraDocs';
 import { DocumentManager } from '@/components/DocumentManager';
 import ProjectList from '@/pages/projects/ProjectList';
 import { EventCalendar } from '@/components/EventCalendar';
+import AdminAIControlPanel from './AdminAIControlPanel';
+import AdminAcademyPanel from './AdminAcademyPanel';
+import { AdminAutoRepair } from './AdminAutoRepair';
+import AdminMonitoringDashboard from './AdminMonitoringDashboard';
+import AdminAnalyticsPanel from './AdminAnalyticsPanel';
+import AdminConstructionModePanel from './AdminConstructionModePanel';
+import AdminPartnersPanel from './AdminPartnersPanel';
+import AdminDatabasePanel from './AdminDatabasePanel';
+import AdminSiteSettingsPanel from './AdminSiteSettingsPanel';
+import MenuManager from './MenuManager';
 
 interface TabConfig {
   id: string;
@@ -96,6 +108,8 @@ const AdminDashboard: React.FC = () => {
   const { settings } = useSiteSettings();
   const { data: analytics } = useAnalytics();
   const { data: realAnalytics } = useRealAnalytics();
+  const { role } = useUserRole();
+  const isSecondaryAdmin = role === 'secondary_admin';
 
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -823,20 +837,16 @@ const AdminDashboard: React.FC = () => {
       <div className="bg-card border-b border-border sticky top-0 z-40">
         <div className="px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 hover:bg-accent rounded-lg transition text-foreground"
-              title="Basculer le menu"
-              aria-label="Basculer le menu"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
             <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold">
-              A
+              {isSecondaryAdmin ? 'A2' : 'A'}
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-foreground">Admin</h1>
-              <p className="text-xs text-muted-foreground">Gestion du site</p>
+              <h1 className="text-2xl font-bold text-foreground">
+                {isSecondaryAdmin ? 'Administration Adjointe' : 'Admin'}
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                {isSecondaryAdmin ? 'Accès limité par le Super Admin' : 'Gestion du site'}
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -861,19 +871,21 @@ const AdminDashboard: React.FC = () => {
                   <p className="text-sm font-bold truncate">{user?.email}</p>
                 </div>
                 <a
-                  href="/admin"
+                  href={isSecondaryAdmin ? '/admin-secondary' : '/admin'}
                   className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors"
                 >
                   <BarChart3 className="w-4 h-4 text-blue-500" />
                   Tableau de bord
                 </a>
-                <a
-                  href="/admin/builder"
-                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors"
-                >
-                  <FileText className="w-4 h-4 text-emerald-500" />
-                  Builder (Pages)
-                </a>
+                {!isSecondaryAdmin && (
+                  <a
+                    href="/admin/builder"
+                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors"
+                  >
+                    <FileText className="w-4 h-4 text-emerald-500" />
+                    Builder (Pages)
+                  </a>
+                )}
                 <a
                   href="/"
                   className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors"
@@ -897,57 +909,10 @@ const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Layout Principal avec Sidebar */}
+      {/* Layout Principal avec Sidebar AdminSidebar unifié */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar - Panneau gauche pliable */}
-        <div
-          className={`bg-card border-r border-border transition-all duration-300 flex flex-col overflow-y-auto ${
-            sidebarOpen ? 'w-64' : 'w-20'
-          }`}
-        >
-          {/* Navigation des onglets */}
-          <nav className="flex-1 p-4 space-y-2">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  if (tab.id === 'expert-lab') {
-                    navigate('/expert/chat');
-                  } else {
-                    setActiveTab(tab.id);
-                  }
-                }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                  activeTab === tab.id
-                    ? 'bg-blue-600/20 text-blue-600 border border-blue-600/30'
-                    : 'text-muted-foreground hover:bg-accent hover:text-foreground'
-                }`}
-                title={!sidebarOpen ? tab.label : ''}
-              >
-                {tab.icon}
-                {sidebarOpen && <span className="font-medium text-sm">{tab.label}</span>}
-              </button>
-            ))}
-          </nav>
-
-          {/* Quick Actions au bas du sidebar */}
-          {sidebarOpen && (
-            <div className="border-t border-border p-4 space-y-2">
-              <p className="text-xs text-muted-foreground font-semibold uppercase mb-3">
-                Accès rapides
-              </p>
-              {quickActions.slice(0, 3).map((action) => (
-                <button
-                  key={action.id}
-                  onClick={() => navigateAdminSection(action.route)}
-                  className="w-full text-left text-xs px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition"
-                >
-                  {action.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        {/* AdminSidebar dynamique et filtré par RBAC */}
+        <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} role={role ?? 'admin'} />
 
         {/* Content Area - Zone principale */}
         <div className="flex-1 overflow-y-auto">
@@ -1513,15 +1478,213 @@ const AdminDashboard: React.FC = () => {
                 <InfraDocs />
               </div>
             )}
-            {activeTab === 'media' && (
+            {activeTab === 'help' && (
               <div className="animate-fade-in">
                 <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-foreground mb-2">
-                    Médiathèque & Archives
-                  </h2>
+                  <h2 className="text-3xl font-bold text-foreground">Aide &amp; Support</h2>
+                  <p className="text-muted-foreground">Documentation et assistance technique</p>
+                </div>
+                <InfraDocs />
+              </div>
+            )}
+            {/* Documents (tab documents - DocumentManager) */}
+            {activeTab === 'documents' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Médiathèque &amp; Archives</h2>
                   <p className="text-muted-foreground">Gestion des documents et fichiers</p>
                 </div>
                 <DocumentManager />
+              </div>
+            )}
+
+            {/* ========== ONGLETS CORTEX IA ========== */}
+            {activeTab === 'expert_lab' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">CORTEX SOUVERAIN</h2>
+                  <p className="text-muted-foreground">Plateforme IA souveraine et pipeline RAG</p>
+                </div>
+                <AdminAIControlPanel />
+              </div>
+            )}
+            {activeTab === 'ai_providers' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Gestion des modèles IA</h2>
+                  <p className="text-muted-foreground">Configuration des API et modèles</p>
+                </div>
+                <AdminRagDashboard />
+              </div>
+            )}
+            {activeTab === 'ia_docs' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Documentation IA</h2>
+                  <p className="text-muted-foreground">Guides et références techniques IA</p>
+                </div>
+                <InfraDocs />
+              </div>
+            )}
+            {activeTab === 'agents' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Agents Autonomes</h2>
+                  <p className="text-muted-foreground">Gestion et supervision des agents IA</p>
+                </div>
+                <AdminAIControlPanel />
+              </div>
+            )}
+            {activeTab === 'academy_ai' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Académie IA — KEBE</h2>
+                  <p className="text-muted-foreground">Formations et ressources IA</p>
+                </div>
+                <AdminAcademyPanel />
+              </div>
+            )}
+            {activeTab === 'auto_repair' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Maintenance IA — Auto-Repair</h2>
+                  <p className="text-muted-foreground">Détection et correction automatique des anomalies</p>
+                </div>
+                <AdminAutoRepair />
+              </div>
+            )}
+            {activeTab === 'monitoring' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Surveillance Temps Réel</h2>
+                  <p className="text-muted-foreground">Monitoring IA et services système</p>
+                </div>
+                <AdminMonitoringDashboard />
+              </div>
+            )}
+
+            {/* ========== ONGLETS MÉTIER ========== */}
+            {activeTab === 'standards' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Normes &amp; Réglementation</h2>
+                  <p className="text-muted-foreground">Gestion des normes électriques (NFC 15-100, etc.)</p>
+                </div>
+                <TechToolsPanel />
+              </div>
+            )}
+            {activeTab === 'equipment' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Catalogue Équipements</h2>
+                  <p className="text-muted-foreground">Gestion du catalogue de matériel électrique</p>
+                </div>
+                <EcommerceAdminPanel />
+              </div>
+            )}
+
+            {/* ========== ONGLETS CMS SUPPLÉMENTAIRES ========== */}
+            {activeTab === 'dynamic_content' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Sections &amp; Contenus</h2>
+                  <p className="text-muted-foreground">Gestion des sections de pages</p>
+                </div>
+                <AdminFormSubmissionsPanel />
+              </div>
+            )}
+            {activeTab === 'menu' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Menus &amp; Navigation</h2>
+                  <p className="text-muted-foreground">Gestion des menus du site</p>
+                </div>
+                <MenuManager />
+              </div>
+            )}
+
+            {/* ========== ONGLETS COMMUNAUTÉ ========== */}
+            {activeTab === 'analytics' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Analytics &amp; Trafic</h2>
+                  <p className="text-muted-foreground">Statistiques avancées du site</p>
+                </div>
+                <AdminAnalyticsPanel />
+              </div>
+            )}
+            {activeTab === 'partners' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Réseau Partenaires</h2>
+                  <p className="text-muted-foreground">Gestion des partenaires et affiliés</p>
+                </div>
+                <AdminPartnersPanel />
+              </div>
+            )}
+            {activeTab === 'espace_presse' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Espace Presse</h2>
+                  <p className="text-muted-foreground">Communiqués et dossiers de presse</p>
+                </div>
+                <AdminBlogPanel />
+              </div>
+            )}
+
+            {/* ========== ONGLETS SYSTÈME ========== */}
+            {activeTab === 'construction' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Mode Construction</h2>
+                  <p className="text-muted-foreground">Activer/désactiver le mode maintenance du site</p>
+                </div>
+                <AdminConstructionModePanel />
+              </div>
+            )}
+            {activeTab === 'site_settings' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Configuration Globale</h2>
+                  <p className="text-muted-foreground">Paramètres avancés du site</p>
+                </div>
+                <AdminSiteSettingsPanel />
+              </div>
+            )}
+            {activeTab === 'database' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Base de Données</h2>
+                  <p className="text-muted-foreground">Administration et optimisation de la base de données</p>
+                </div>
+                <AdminDatabasePanel />
+              </div>
+            )}
+            {activeTab === 'security' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Sécurité &amp; Logs</h2>
+                  <p className="text-muted-foreground">Journaux d'audit et paramètres de sécurité</p>
+                </div>
+                <AdminPermissionsPanel />
+              </div>
+            )}
+            {activeTab === 'performance' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Performance Système</h2>
+                  <p className="text-muted-foreground">Optimisation et monitoring des performances</p>
+                </div>
+                <AdminMonitoringDashboard />
+              </div>
+            )}
+            {activeTab === 'design' && (
+              <div className="animate-fade-in">
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground">Apparence &amp; Thème</h2>
+                  <p className="text-muted-foreground">Personnalisation visuelle du site</p>
+                </div>
+                <AdminBrandingPanel />
               </div>
             )}
           </div>
@@ -1532,3 +1695,4 @@ const AdminDashboard: React.FC = () => {
 };
 
 export default AdminDashboard;
+
