@@ -77,13 +77,13 @@ import { EventCalendar } from '@/components/EventCalendar';
 import AdminAIControlPanel from './AdminAIControlPanel';
 import AdminAcademyPanel from './AdminAcademyPanel';
 import { AdminAutoRepair } from './AdminAutoRepair';
-import AdminMonitoringDashboard from './AdminMonitoringDashboard';
+import { AdminMonitoringDashboard } from './AdminMonitoringDashboard';
 import AdminAnalyticsPanel from './AdminAnalyticsPanel';
-import AdminConstructionModePanel from './AdminConstructionModePanel';
+import { AdminConstructionModePanel } from './AdminConstructionModePanel';
 import AdminPartnersPanel from './AdminPartnersPanel';
-import AdminDatabasePanel from './AdminDatabasePanel';
+import { AdminDatabasePanel } from './AdminDatabasePanel';
 import AdminSiteSettingsPanel from './AdminSiteSettingsPanel';
-import MenuManager from './MenuManager';
+import { MenuManager } from './MenuManager';
 
 interface TabConfig {
   id: string;
