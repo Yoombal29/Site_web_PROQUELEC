@@ -1211,6 +1211,28 @@ type DbTemplate = {
 // ─────────────────────────────────────────────────────────
 // MAIN TOOLBOX
 // ─────────────────────────────────────────────────────────
+// Cache pour stocker les templates parsés (évite de re-parser à chaque drag)
+const templateParseCache = new Map<string, { nodeTree: NodeTree; element: React.ReactElement }>();
+
+function parseTemplate(
+  factory: () => React.ReactElement,
+  label: string,
+  query: any,
+): { nodeTree: NodeTree; element: React.ReactElement } | null {
+  const cached = templateParseCache.get(label);
+  if (cached) return cached;
+  try {
+    const element = factory();
+    if (!element?.type) return null;
+    const nodeTree = query.parseReactElement(element).toNodeTree();
+    const result = { nodeTree, element };
+    templateParseCache.set(label, result);
+    return result;
+  } catch {
+    return null;
+  }
+}
+
 export const GodToolbox = () => {
   const { connectors, actions, query } = useEditor();
   const [expanded, setExpanded] = useState(true);
@@ -1576,18 +1598,14 @@ export const GodToolbox = () => {
                             expanded={expanded}
                             connectRef={(ref) => {
                               if (ref) {
-                                try {
-                                  // Valider que le template est parsable avant de permettre le drag
-                                  const testEl = tmpl.factory();
-                                  if (testEl?.type) query.parseReactElement(testEl);
-                                  connectors.create(ref, testEl);
-                                } catch {
-                                  // Si le parse échoue, on utilise un élément simple pour le drag visuel
-                                  // et l'insertion se fera via onInsert (double-clic)
-                                  connectors.create(
-                                    ref,
-                                    React.createElement('div', null, tmpl.label),
-                                  );
+                                // Essayer de parser le template d'abord
+                                const parsed = parseTemplate(tmpl.factory, tmpl.label, query);
+                                if (parsed) {
+                                  // Si le parse réussit, utiliser l'élément parsé pour le drag (guide vert OK)
+                                  connectors.create(ref, parsed.element);
+                                } else {
+                                  // Fallback: ContainerBlock vide pour avoir le guide vert
+                                  connectors.create(ref, React.createElement(ContainerBlock));
                                 }
                               }
                             }}
