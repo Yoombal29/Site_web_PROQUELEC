@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   LineChart,
@@ -51,7 +52,6 @@ import { AdminSidebar } from '@/components/AdminSidebar';
 // SECTION: Imports stratégiques
 import { useSiteSettings } from '@/hooks/useSiteSettings';
 import { useAnalytics } from '@/hooks/useAnalytics';
-import { useRealAnalytics } from '@/hooks/useRealAnalytics';
 import { getDashboardPath } from '@/utils/navigation';
 import AdminUsersPanel from './AdminUsersPanel';
 import AdminPermissionsPanel from './AdminPermissionsPanel';
@@ -104,10 +104,10 @@ interface SiteParameter {
 }
 
 const AdminDashboard: React.FC = () => {
+  const queryClient = useQueryClient();
   const { toast } = useToast();
   const { settings } = useSiteSettings();
-  const { data: analytics } = useAnalytics();
-  const { data: realAnalytics } = useRealAnalytics();
+  const { data: analytics, isLoading: analyticsLoading, error: analyticsError } = useAnalytics();
   const { role } = useUserRole();
   const isSecondaryAdmin = role === 'secondary_admin';
 
@@ -146,7 +146,7 @@ const AdminDashboard: React.FC = () => {
   const pageStatsData = useMemo(() => {
     return (
       analytics?.popularContent.map((p) => ({
-        name: p.title.replace('/', '').charAt(0).toUpperCase() + p.title.slice(2) || 'Accueil',
+        name: p.title.replace(/^\//, '').replace(/^./, (c) => c.toUpperCase()) || 'Accueil',
         value: p.engagement,
       })) || []
     );
@@ -602,6 +602,7 @@ const AdminDashboard: React.FC = () => {
         variant: 'default',
       });
       setEditingParams({});
+      queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
     } catch (error) {
       // Fallback localstorage
       localStorage.setItem('site_parameters', JSON.stringify(editingParams));
@@ -788,7 +789,7 @@ const AdminDashboard: React.FC = () => {
       color: 'text-orange-600',
     },
     {
-      id: 'expert-lab',
+      id: 'expert_lab',
       label: 'Lab Expert IA',
       icon: <Cpu className="w-5 h-5" />,
       color: 'text-rose-600',
@@ -1010,47 +1011,59 @@ const AdminDashboard: React.FC = () => {
                 </div>
 
                 {/* Charts */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  <div className="lg:col-span-2 bg-card border border-border rounded-xl shadow p-6">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">
-                      Trafic et Utilisateurs
-                    </h3>
-                    <ResponsiveContainer width="100%" height={300}>
-                      <LineChart data={analyticsData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="visits" stroke="#2376df" />
-                        <Line type="monotone" dataKey="users" stroke="#16a34a" />
-                      </LineChart>
-                    </ResponsiveContainer>
+                {analyticsLoading && (
+                  <div className="flex items-center justify-center p-8">
+                    <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
                   </div>
+                )}
+                {analyticsError && !analyticsLoading && (
+                  <div className="p-8 text-red-500">Erreur de chargement des analytics</div>
+                )}
+                {!analyticsLoading && !analyticsError && (
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-2 bg-card border border-border rounded-xl shadow p-6">
+                      <h3 className="text-lg font-semibold text-foreground mb-4">
+                        Trafic et Utilisateurs
+                      </h3>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={analyticsData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis />
+                          <Tooltip />
+                          <Legend />
+                          <Line type="monotone" dataKey="visits" stroke="#2376df" />
+                          <Line type="monotone" dataKey="users" stroke="#16a34a" />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
 
-                  <div className="bg-card border border-border rounded-xl shadow p-6">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">Pages Populaires</h3>
-                    <ResponsiveContainer width="100%" height={300}>
-                      <PieChart>
-                        <Pie
-                          data={pageStatsData}
-                          cx="50%"
-                          cy="50%"
-                          labelLine={false}
-                          label={{ fontSize: 12 }}
-                          outerRadius={100}
-                          fill="#8884d8"
-                          dataKey="value"
-                        >
-                          {COLORS.map((color, index) => (
-                            <Cell key={`cell-${index}`} fill={color} />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                      </PieChart>
-                    </ResponsiveContainer>
+                    <div className="bg-card border border-border rounded-xl shadow p-6">
+                      <h3 className="text-lg font-semibold text-foreground mb-4">
+                        Pages Populaires
+                      </h3>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                          <Pie
+                            data={pageStatsData}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            label={{ fontSize: 12 }}
+                            outerRadius={100}
+                            fill="#8884d8"
+                            dataKey="value"
+                          >
+                            {COLORS.map((color, index) => (
+                              <Cell key={`cell-${index}`} fill={color} />
+                            ))}
+                          </Pie>
+                          <Tooltip />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             )}
 
@@ -1547,8 +1560,12 @@ const AdminDashboard: React.FC = () => {
             {activeTab === 'auto_repair' && (
               <div className="animate-fade-in">
                 <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-foreground">Maintenance IA — Auto-Repair</h2>
-                  <p className="text-muted-foreground">Détection et correction automatique des anomalies</p>
+                  <h2 className="text-3xl font-bold text-foreground">
+                    Maintenance IA — Auto-Repair
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Détection et correction automatique des anomalies
+                  </p>
                 </div>
                 <AdminAutoRepair />
               </div>
@@ -1567,8 +1584,12 @@ const AdminDashboard: React.FC = () => {
             {activeTab === 'standards' && (
               <div className="animate-fade-in">
                 <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-foreground">Normes &amp; Réglementation</h2>
-                  <p className="text-muted-foreground">Gestion des normes électriques (NFC 15-100, etc.)</p>
+                  <h2 className="text-3xl font-bold text-foreground">
+                    Normes &amp; Réglementation
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Gestion des normes électriques (NFC 15-100, etc.)
+                  </p>
                 </div>
                 <TechToolsPanel />
               </div>
@@ -1577,7 +1598,9 @@ const AdminDashboard: React.FC = () => {
               <div className="animate-fade-in">
                 <div className="mb-6">
                   <h2 className="text-3xl font-bold text-foreground">Catalogue Équipements</h2>
-                  <p className="text-muted-foreground">Gestion du catalogue de matériel électrique</p>
+                  <p className="text-muted-foreground">
+                    Gestion du catalogue de matériel électrique
+                  </p>
                 </div>
                 <EcommerceAdminPanel />
               </div>
@@ -1637,7 +1660,9 @@ const AdminDashboard: React.FC = () => {
               <div className="animate-fade-in">
                 <div className="mb-6">
                   <h2 className="text-3xl font-bold text-foreground">Mode Construction</h2>
-                  <p className="text-muted-foreground">Activer/désactiver le mode maintenance du site</p>
+                  <p className="text-muted-foreground">
+                    Activer/désactiver le mode maintenance du site
+                  </p>
                 </div>
                 <AdminConstructionModePanel />
               </div>
@@ -1655,7 +1680,9 @@ const AdminDashboard: React.FC = () => {
               <div className="animate-fade-in">
                 <div className="mb-6">
                   <h2 className="text-3xl font-bold text-foreground">Base de Données</h2>
-                  <p className="text-muted-foreground">Administration et optimisation de la base de données</p>
+                  <p className="text-muted-foreground">
+                    Administration et optimisation de la base de données
+                  </p>
                 </div>
                 <AdminDatabasePanel />
               </div>
@@ -1664,7 +1691,9 @@ const AdminDashboard: React.FC = () => {
               <div className="animate-fade-in">
                 <div className="mb-6">
                   <h2 className="text-3xl font-bold text-foreground">Sécurité &amp; Logs</h2>
-                  <p className="text-muted-foreground">Journaux d'audit et paramètres de sécurité</p>
+                  <p className="text-muted-foreground">
+                    Journaux d'audit et paramètres de sécurité
+                  </p>
                 </div>
                 <AdminPermissionsPanel />
               </div>
@@ -1673,7 +1702,9 @@ const AdminDashboard: React.FC = () => {
               <div className="animate-fade-in">
                 <div className="mb-6">
                   <h2 className="text-3xl font-bold text-foreground">Performance Système</h2>
-                  <p className="text-muted-foreground">Optimisation et monitoring des performances</p>
+                  <p className="text-muted-foreground">
+                    Optimisation et monitoring des performances
+                  </p>
                 </div>
                 <AdminMonitoringDashboard />
               </div>
@@ -1695,4 +1726,3 @@ const AdminDashboard: React.FC = () => {
 };
 
 export default AdminDashboard;
-

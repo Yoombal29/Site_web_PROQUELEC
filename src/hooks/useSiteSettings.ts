@@ -1,8 +1,7 @@
-
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 import { toast } from 'sonner';
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 interface SiteSettings {
   site_name: string;
@@ -21,8 +20,8 @@ interface SiteSettings {
 // Fonction pour récupérer les paramètres du site depuis l'API locale
 const fetchSiteSettings = async (): Promise<SiteSettings> => {
   try {
-    const res = await fetch("/api/site-settings");
-    if (!res.ok) throw new Error("Failed to fetch settings");
+    const res = await fetch('/api/site-settings');
+    if (!res.ok) throw new Error('Failed to fetch settings');
     const data = await res.json();
     // Assuming API returns array (getTable helper), we take first item or match single() logic
     return Array.isArray(data) ? data[0] : data;
@@ -30,23 +29,27 @@ const fetchSiteSettings = async (): Promise<SiteSettings> => {
     console.error('Error fetching site settings:', error);
     toast.error('Erreur lors de la récupération des paramètres du site.');
     return {
-      site_name: "PROQUELEC SENEGAL",
-      slogan: "Sécurité · Qualité · Formation",
-      contact_email: "proquelec@proquelec.sn",
-      phone_number: "+221 33 848 68 55",
-      address: "Immeuble Coumba Castel, 12 rue Saint-Michel, 4e étage, Dakar",
-      facebook_url: "https://facebook.com/proquelec",
-      twitter_url: "https://twitter.com/proquelec",
-      linkedin_url: "https://linkedin.com/company/proquelec",
+      site_name: 'PROQUELEC SENEGAL',
+      slogan: 'Sécurité · Qualité · Formation',
+      contact_email: 'proquelec@proquelec.sn',
+      phone_number: '+221 33 848 68 55',
+      address: 'Immeuble Coumba Castel, 12 rue Saint-Michel, 4e étage, Dakar',
+      facebook_url: 'https://facebook.com/proquelec',
+      twitter_url: 'https://twitter.com/proquelec',
+      linkedin_url: 'https://linkedin.com/company/proquelec',
     };
   }
 };
 
 export function useSiteSettings() {
-  const { data: settings, isLoading, error } = useQuery({
-    queryKey: ["siteSettings"],
+  const {
+    data: settings,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['siteSettings'],
     queryFn: fetchSiteSettings,
-    staleTime: Infinity, // Les paramètres du site ne changent pas souvent
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 
   // Effet pour mettre à jour le titre du document et le favicon

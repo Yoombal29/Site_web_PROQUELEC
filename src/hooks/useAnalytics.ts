@@ -1,11 +1,10 @@
-
-import { useRealAnalytics } from "./useRealAnalytics";
+import { useRealAnalytics } from './useRealAnalytics';
 
 export interface AnalyticsData {
-  pageViews: {page: string;views: number;}[];
-  blogEngagement: {title: string;views: number;comments: number;}[];
-  userActivity: {date: string;activeUsers: number;}[];
-  popularContent: {title: string;type: string;engagement: number;}[];
+  pageViews: { page: string; views: number }[];
+  blogEngagement: { title: string; views: number; comments: number }[];
+  userActivity: { date: string; activeUsers: number }[];
+  popularContent: { title: string; type: string; engagement: number }[];
 }
 
 export function useAnalytics() {
@@ -24,8 +23,10 @@ export function useAnalytics() {
     return {
       views: pageData?.engagement || 0,
       uniqueVisitors: Math.round((pageData?.engagement || 0) * 0.7), // Estimation réelle basée sur ratio standard
-      avgTime: realData.performanceMetrics ? `${Math.round(realData.performanceMetrics.avgLoadTime / 1000)}s` : '0s',
-      bounceRate: 'N/A'
+      avgTime: realData.performanceMetrics
+        ? `${Math.round(realData.performanceMetrics.avgLoadTime / 1000)}s`
+        : '0s',
+      bounceRate: 'N/A',
     };
   };
 
@@ -33,21 +34,22 @@ export function useAnalytics() {
     // Tracking réel via beacon ou API
     if (navigator.sendBeacon) {
       const payload = JSON.stringify({ event, data, timestamp: new Date().toISOString() });
-      navigator.sendBeacon('/api/analytics/track', payload);
+      navigator.sendBeacon('/api/analytics/events', payload);
     }
-
   };
 
   return {
-    data: realData ? {
-      pageViews: realData.pageViews,
-      blogEngagement: realData.blogEngagement,
-      userActivity: realData.userActivity,
-      popularContent: realData.popularContent
-    } : undefined,
+    data: realData
+      ? {
+          pageViews: realData.pageViews,
+          blogEngagement: realData.blogEngagement,
+          userActivity: realData.userActivity,
+          popularContent: realData.popularContent,
+        }
+      : undefined,
     isLoading,
     error,
     getPageAnalytics,
-    trackEvent
+    trackEvent,
   };
 }
