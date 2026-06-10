@@ -1190,10 +1190,11 @@ async function initDB() {
     {
       title: 'Contact',
       slug: 'contact',
-      content: 'Contactez-nous...',
-      meta_description: 'Contactez PROQUELEC',
+      content: '',
+      meta_description: 'Contactez PROQUELEC — formulaire de contact, téléphone, email et adresse.',
       hero_title: 'Contact',
       hero_subtitle: 'Parlons de votre projet',
+      immutable: true,
       menu_order: 5,
     },
     {
@@ -1251,17 +1252,18 @@ async function initDB() {
         { id: 'default-block', type: 'ContentBlock', props: { content: page.content || '' } },
       ]);
       await pool.query(
-        'INSERT INTO public.pages (title, slug, content, structure_json, meta_description, hero_title, hero_subtitle, is_published, status, menu_order, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, true, $8, $9, NOW(), NOW())',
+        'INSERT INTO public.pages (title, slug, content, structure_json, meta_description, hero_title, hero_subtitle, is_published, status, menu_order, immutable, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, true, $8, $9, $10, NOW(), NOW())',
         [
           page.title,
           page.slug,
           page.content || '',
           contentJson,
-          page.meta_description || '',
-          page.hero_title || '',
-          page.hero_subtitle || '',
-          'published',
+          page.meta_description,
+          page.hero_title,
+          page.hero_subtitle,
+          page.status || 'published',
           page.menu_order || 0,
+          page.immutable || false,
         ],
       );
     }
@@ -1299,6 +1301,46 @@ async function initDB() {
       [adminEmail, hashedPassword, 'admin'],
     );
     console.log(`[DB] Admin user created: ${adminEmail}`);
+  }
+
+  // Auto-migrate contact page to functional (immutable) CMS page
+  try {
+    const contactPage = await pool.query(
+      'SELECT id, immutable FROM public.pages WHERE slug = $1 LIMIT 1',
+      ['contact'],
+    );
+    if (contactPage.rows.length > 0 && contactPage.rows[0].immutable !== true) {
+      const functionalStructure = JSON.stringify({
+        ROOT: {
+          type: 'div',
+          nodes: ['func_page_block'],
+          props: { style: {} },
+          linkedNodes: {},
+        },
+        func_page_block: {
+          type: { resolvedName: 'FunctionalPageBlock' },
+          nodes: [],
+          props: { slug: 'contact', pageTitle: 'Contact' },
+          parent: 'ROOT',
+          linkedNodes: {},
+          isCanvas: false,
+          displayName: 'FunctionalPageBlock',
+        },
+      });
+      await pool.query(
+        `UPDATE public.pages
+         SET immutable = true, is_published = true, status = 'published',
+             structure_json = $1, updated_at = NOW()
+         WHERE slug = 'contact'`,
+        [functionalStructure],
+      );
+      console.log('[DB] Contact page migrated to immutable functional page.');
+    }
+    if (contactPage.rows.length === 0) {
+      console.log('[DB] Contact page not found — will be created by init.');
+    }
+  } catch (migrateErr) {
+    console.warn('[DB] Contact page migration skipped:', migrateErr.message);
   }
 
   console.log('[DB] Database initialization complete');
