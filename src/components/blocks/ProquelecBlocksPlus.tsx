@@ -4568,7 +4568,13 @@ export const TrainingHeroPremiumBlock = (props: any) => {
       ref={(r: any) => {
         if (r) connect(drag(r));
       }}
-      style={{ background: backgroundColor, color: textColor, borderRadius: 18, padding: 40, ...u.style }}
+      style={{
+        background: backgroundColor,
+        color: textColor,
+        borderRadius: 18,
+        padding: 40,
+        ...u.style,
+      }}
       className={'proquelec-builder-node ' + u.className}
     >
       <div
@@ -4580,20 +4586,60 @@ export const TrainingHeroPremiumBlock = (props: any) => {
         }}
       >
         <div>
-          <p style={{ margin: '0 0 12px', color: accentColor, fontSize: 12, fontWeight: 900, letterSpacing: 1.6, textTransform: 'uppercase' }}>
+          <p
+            style={{
+              margin: '0 0 12px',
+              color: accentColor,
+              fontSize: 12,
+              fontWeight: 900,
+              letterSpacing: 1.6,
+              textTransform: 'uppercase',
+            }}
+          >
             {resolveDynamicContent(badge)}
           </p>
-          <h1 style={{ margin: 0, fontSize: 46, lineHeight: 1.05, fontWeight: 900, letterSpacing: 0 }}>
+          <h1
+            style={{ margin: 0, fontSize: 46, lineHeight: 1.05, fontWeight: 900, letterSpacing: 0 }}
+          >
             {resolveDynamicContent(title)}
           </h1>
-          <p style={{ margin: '18px 0 0', color: 'rgba(255,255,255,0.76)', fontSize: 17, lineHeight: 1.7 }}>
+          <p
+            style={{
+              margin: '18px 0 0',
+              color: 'rgba(255,255,255,0.76)',
+              fontSize: 17,
+              lineHeight: 1.7,
+            }}
+          >
             {resolveDynamicContent(subtitle)}
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 28 }}>
-            <a href={primaryHref} style={{ background: accentColor, color: '#111827', textDecoration: 'none', padding: '13px 20px', borderRadius: 10, fontWeight: 900, fontSize: 14 }}>
+            <a
+              href={primaryHref}
+              style={{
+                background: accentColor,
+                color: '#111827',
+                textDecoration: 'none',
+                padding: '13px 20px',
+                borderRadius: 10,
+                fontWeight: 900,
+                fontSize: 14,
+              }}
+            >
               {resolveDynamicContent(primaryLabel)}
             </a>
-            <a href={secondaryHref} style={{ color: textColor, textDecoration: 'none', padding: '12px 18px', borderRadius: 10, fontWeight: 800, fontSize: 14, border: '1px solid rgba(255,255,255,0.28)' }}>
+            <a
+              href={secondaryHref}
+              style={{
+                color: textColor,
+                textDecoration: 'none',
+                padding: '12px 18px',
+                borderRadius: 10,
+                fontWeight: 800,
+                fontSize: 14,
+                border: '1px solid rgba(255,255,255,0.28)',
+              }}
+            >
               {resolveDynamicContent(secondaryLabel)}
             </a>
           </div>
@@ -4614,16 +4660,48 @@ export const TrainingHeroPremiumBlock = (props: any) => {
               boxShadow: '0 28px 70px rgba(0,0,0,0.28)',
             }}
           >
-            <span style={{ alignSelf: 'flex-start', background: 'rgba(255,255,255,0.12)', color: textColor, borderRadius: 999, padding: '7px 11px', fontSize: 12, fontWeight: 850 }}>
+            <span
+              style={{
+                alignSelf: 'flex-start',
+                background: 'rgba(255,255,255,0.12)',
+                color: textColor,
+                borderRadius: 999,
+                padding: '7px 11px',
+                fontSize: 12,
+                fontWeight: 850,
+              }}
+            >
               {resolveDynamicContent(nextSession)}
             </span>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 10 }}>
+            <div
+              style={{ display: 'grid', gridTemplateColumns: 'repeat(2,minmax(0,1fr))', gap: 10 }}
+            >
               {facts.map((fact, index) => (
-                <div key={index} style={{ background: 'rgba(255,255,255,0.9)', borderRadius: 12, padding: 12 }}>
-                  <p style={{ margin: 0, color: '#64748b', fontSize: 10, fontWeight: 900, textTransform: 'uppercase', letterSpacing: 0.8 }}>
+                <div
+                  key={index}
+                  style={{ background: 'rgba(255,255,255,0.9)', borderRadius: 12, padding: 12 }}
+                >
+                  <p
+                    style={{
+                      margin: 0,
+                      color: '#64748b',
+                      fontSize: 10,
+                      fontWeight: 900,
+                      textTransform: 'uppercase',
+                      letterSpacing: 0.8,
+                    }}
+                  >
                     {fact.label}
                   </p>
-                  <p style={{ margin: '5px 0 0', color: '#0f172a', fontSize: 14, fontWeight: 850, lineHeight: 1.35 }}>
+                  <p
+                    style={{
+                      margin: '5px 0 0',
+                      color: '#0f172a',
+                      fontSize: 14,
+                      fontWeight: 850,
+                      lineHeight: 1.35,
+                    }}
+                  >
                     {resolveDynamicContent(fact.value)}
                   </p>
                 </div>
@@ -4657,28 +4735,127 @@ const TrainingHeroPremiumSettings = () => {
   } = useNode((n: any) => ({ ...n.data.props }));
   return (
     <div className="space-y-3">
-      <Row><Label label="Badge" /><Input value={badge} onChange={(e: any) => setProp((p: any) => (p.badge = e.target.value))} /></Row>
-      <Row><Label label="Titre" /><Textarea rows={2} value={title} onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))} /></Row>
-      <Row><Label label="Sous-titre" /><Textarea rows={3} value={subtitle} onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))} /></Row>
+      <Row>
+        <Label label="Badge" />
+        <Input
+          value={badge}
+          onChange={(e: any) => setProp((p: any) => (p.badge = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Titre" />
+        <Textarea
+          rows={2}
+          value={title}
+          onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Sous-titre" />
+        <Textarea
+          rows={3}
+          value={subtitle}
+          onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))}
+        />
+      </Row>
       <Grid2>
-        <Row><Label label="Niveau" /><Input value={level} onChange={(e: any) => setProp((p: any) => (p.level = e.target.value))} /></Row>
-        <Row><Label label="Durée" /><Input value={duration} onChange={(e: any) => setProp((p: any) => (p.duration = e.target.value))} /></Row>
+        <Row>
+          <Label label="Niveau" />
+          <Input
+            value={level}
+            onChange={(e: any) => setProp((p: any) => (p.level = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Durée" />
+          <Input
+            value={duration}
+            onChange={(e: any) => setProp((p: any) => (p.duration = e.target.value))}
+          />
+        </Row>
       </Grid2>
-      <Row><Label label="Certification" /><Input value={certification} onChange={(e: any) => setProp((p: any) => (p.certification = e.target.value))} /></Row>
-      <Row><Label label="Public cible" /><Textarea rows={2} value={audience} onChange={(e: any) => setProp((p: any) => (p.audience = e.target.value))} /></Row>
-      <Row><Label label="Prochaine session" /><Input value={nextSession} onChange={(e: any) => setProp((p: any) => (p.nextSession = e.target.value))} /></Row>
-      <Row><Label label="Image URL" /><Input value={imageUrl} onChange={(e: any) => setProp((p: any) => (p.imageUrl = e.target.value))} /></Row>
+      <Row>
+        <Label label="Certification" />
+        <Input
+          value={certification}
+          onChange={(e: any) => setProp((p: any) => (p.certification = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Public cible" />
+        <Textarea
+          rows={2}
+          value={audience}
+          onChange={(e: any) => setProp((p: any) => (p.audience = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Prochaine session" />
+        <Input
+          value={nextSession}
+          onChange={(e: any) => setProp((p: any) => (p.nextSession = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Image URL" />
+        <Input
+          value={imageUrl}
+          onChange={(e: any) => setProp((p: any) => (p.imageUrl = e.target.value))}
+        />
+      </Row>
       <Grid2>
-        <Row><Label label="CTA principal" /><Input value={primaryLabel} onChange={(e: any) => setProp((p: any) => (p.primaryLabel = e.target.value))} /></Row>
-        <Row><Label label="Lien principal" /><Input value={primaryHref} onChange={(e: any) => setProp((p: any) => (p.primaryHref = e.target.value))} /></Row>
-        <Row><Label label="CTA secondaire" /><Input value={secondaryLabel} onChange={(e: any) => setProp((p: any) => (p.secondaryLabel = e.target.value))} /></Row>
-        <Row><Label label="Lien secondaire" /><Input value={secondaryHref} onChange={(e: any) => setProp((p: any) => (p.secondaryHref = e.target.value))} /></Row>
+        <Row>
+          <Label label="CTA principal" />
+          <Input
+            value={primaryLabel}
+            onChange={(e: any) => setProp((p: any) => (p.primaryLabel = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Lien principal" />
+          <Input
+            value={primaryHref}
+            onChange={(e: any) => setProp((p: any) => (p.primaryHref = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="CTA secondaire" />
+          <Input
+            value={secondaryLabel}
+            onChange={(e: any) => setProp((p: any) => (p.secondaryLabel = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Lien secondaire" />
+          <Input
+            value={secondaryHref}
+            onChange={(e: any) => setProp((p: any) => (p.secondaryHref = e.target.value))}
+          />
+        </Row>
       </Grid2>
       <Grid2>
-        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))} /></Row>
-        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))} /></Row>
+        <Row>
+          <Label label="Accent" />
+          <Color
+            value={accentColor}
+            onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Fond" />
+          <Color
+            value={backgroundColor}
+            onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))}
+          />
+        </Row>
       </Grid2>
-      <Row><Label label="Texte" /><Color value={textColor} onChange={(e: any) => setProp((p: any) => (p.textColor = e.target.value))} /></Row>
+      <Row>
+        <Label label="Texte" />
+        <Color
+          value={textColor}
+          onChange={(e: any) => setProp((p: any) => (p.textColor = e.target.value))}
+        />
+      </Row>
     </div>
   );
 };
@@ -4687,7 +4864,8 @@ TrainingHeroPremiumBlock.craft = {
   props: {
     badge: 'Formation certifiante',
     title: 'Maîtriser la conformité des installations électriques',
-    subtitle: 'Un parcours professionnel pour renforcer les compétences terrain, sécuriser les interventions et préparer les contrôles PROQUELEC.',
+    subtitle:
+      'Un parcours professionnel pour renforcer les compétences terrain, sécuriser les interventions et préparer les contrôles PROQUELEC.',
     level: 'Débutant à avancé',
     duration: '3 à 5 jours',
     certification: 'Attestation PROQUELEC',
@@ -4711,12 +4889,39 @@ export const TrainingProgramPremiumBlock = (props: any) => {
     title = 'Programme pédagogique',
     subtitle = 'Modules, prérequis et livrables structurés pour une session professionnelle.',
     modules = [
-      { phase: 'Jour 1', title: 'Fondamentaux électriques', duration: '7 h', description: 'Grandeurs, protections et vocabulaire technique.', topics: 'Tension, intensité, résistance' },
-      { phase: 'Jour 2', title: 'Sécurité & schémas', duration: '7 h', description: 'Lecture de schémas et repérage des circuits.', topics: 'Schémas, tableaux, protections' },
-      { phase: 'Jour 3', title: 'Contrôle conformité', duration: '7 h', description: 'Cas pratiques et préparation au contrôle.', topics: 'Checklist, réserves, rapport' },
+      {
+        phase: 'Jour 1',
+        title: 'Fondamentaux électriques',
+        duration: '7 h',
+        description: 'Grandeurs, protections et vocabulaire technique.',
+        topics: 'Tension, intensité, résistance',
+      },
+      {
+        phase: 'Jour 2',
+        title: 'Sécurité & schémas',
+        duration: '7 h',
+        description: 'Lecture de schémas et repérage des circuits.',
+        topics: 'Schémas, tableaux, protections',
+      },
+      {
+        phase: 'Jour 3',
+        title: 'Contrôle conformité',
+        duration: '7 h',
+        description: 'Cas pratiques et préparation au contrôle.',
+        topics: 'Checklist, réserves, rapport',
+      },
     ],
-    prerequisites = ['Bases techniques souhaitées', 'Profil installateur ou technicien', 'Dossier entreprise si session dédiée'],
-    outcomes = ['Support de cours', 'Fiches pratiques', 'Attestation de participation', 'Plan d’action post-formation'],
+    prerequisites = [
+      'Bases techniques souhaitées',
+      'Profil installateur ou technicien',
+      'Dossier entreprise si session dédiée',
+    ],
+    outcomes = [
+      'Support de cours',
+      'Fiches pratiques',
+      'Attestation de participation',
+      'Plan d’action post-formation',
+    ],
     accentColor = '#2563eb',
     backgroundColor = '#ffffff',
     panelColor = '#f8fafc',
@@ -4727,40 +4932,124 @@ export const TrainingProgramPremiumBlock = (props: any) => {
   const u = getUniversalStyles(props);
 
   return (
-    <section ref={(r: any) => { if (r) connect(drag(r)); }} style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }} className={'proquelec-builder-node ' + u.className}>
+    <section
+      ref={(r: any) => {
+        if (r) connect(drag(r));
+      }}
+      style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }}
+      className={'proquelec-builder-node ' + u.className}
+    >
       <div style={{ maxWidth: 760, marginBottom: 26 }}>
-        <p style={{ margin: '0 0 8px', color: accentColor, fontSize: 12, fontWeight: 900, letterSpacing: 1.5, textTransform: 'uppercase' }}>Formation</p>
-        <h3 style={{ margin: 0, color: '#0f172a', fontSize: 32, lineHeight: 1.15, fontWeight: 900 }}>{resolveDynamicContent(title)}</h3>
-        <p style={{ margin: '10px 0 0', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>{resolveDynamicContent(subtitle)}</p>
+        <p
+          style={{
+            margin: '0 0 8px',
+            color: accentColor,
+            fontSize: 12,
+            fontWeight: 900,
+            letterSpacing: 1.5,
+            textTransform: 'uppercase',
+          }}
+        >
+          Formation
+        </p>
+        <h3
+          style={{ margin: 0, color: '#0f172a', fontSize: 32, lineHeight: 1.15, fontWeight: 900 }}
+        >
+          {resolveDynamicContent(title)}
+        </h3>
+        <p style={{ margin: '10px 0 0', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>
+          {resolveDynamicContent(subtitle)}
+        </p>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 22 }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+          gap: 22,
+        }}
+      >
         <div style={{ display: 'grid', gap: 12 }}>
           {(modules || []).map((mod: any, index: number) => (
-            <article key={index} style={{ border: '1px solid #e2e8f0', borderRadius: 14, padding: 18, background: '#ffffff', boxShadow: '0 18px 45px rgba(15,23,42,0.05)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 10 }}>
-                <span style={{ color: accentColor, fontSize: 12, fontWeight: 900 }}>{resolveDynamicContent(mod.phase)}</span>
-                <span style={{ background: '#eff6ff', color: accentColor, borderRadius: 999, padding: '4px 9px', fontSize: 11, fontWeight: 850 }}>{resolveDynamicContent(mod.duration)}</span>
+            <article
+              key={index}
+              style={{
+                border: '1px solid #e2e8f0',
+                borderRadius: 14,
+                padding: 18,
+                background: '#ffffff',
+                boxShadow: '0 18px 45px rgba(15,23,42,0.05)',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: 12,
+                  marginBottom: 10,
+                }}
+              >
+                <span style={{ color: accentColor, fontSize: 12, fontWeight: 900 }}>
+                  {resolveDynamicContent(mod.phase)}
+                </span>
+                <span
+                  style={{
+                    background: '#eff6ff',
+                    color: accentColor,
+                    borderRadius: 999,
+                    padding: '4px 9px',
+                    fontSize: 11,
+                    fontWeight: 850,
+                  }}
+                >
+                  {resolveDynamicContent(mod.duration)}
+                </span>
               </div>
-              <h4 style={{ margin: 0, color: '#0f172a', fontSize: 18, fontWeight: 900 }}>{resolveDynamicContent(mod.title)}</h4>
-              <p style={{ margin: '8px 0 10px', color: '#64748b', fontSize: 13, lineHeight: 1.6 }}>{resolveDynamicContent(mod.description)}</p>
-              <p style={{ margin: 0, color: '#334155', fontSize: 12, fontWeight: 750 }}>{resolveDynamicContent(mod.topics)}</p>
+              <h4 style={{ margin: 0, color: '#0f172a', fontSize: 18, fontWeight: 900 }}>
+                {resolveDynamicContent(mod.title)}
+              </h4>
+              <p style={{ margin: '8px 0 10px', color: '#64748b', fontSize: 13, lineHeight: 1.6 }}>
+                {resolveDynamicContent(mod.description)}
+              </p>
+              <p style={{ margin: 0, color: '#334155', fontSize: 12, fontWeight: 750 }}>
+                {resolveDynamicContent(mod.topics)}
+              </p>
             </article>
           ))}
         </div>
-        <aside style={{ background: panelColor, borderRadius: 14, padding: 20, border: '1px solid #e2e8f0' }}>
-          <h4 style={{ margin: '0 0 12px', color: '#0f172a', fontSize: 17, fontWeight: 900 }}>Prérequis</h4>
+        <aside
+          style={{
+            background: panelColor,
+            borderRadius: 14,
+            padding: 20,
+            border: '1px solid #e2e8f0',
+          }}
+        >
+          <h4 style={{ margin: '0 0 12px', color: '#0f172a', fontSize: 17, fontWeight: 900 }}>
+            Prérequis
+          </h4>
           <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'grid', gap: 10 }}>
             {(prerequisites || []).map((item: string, index: number) => (
-              <li key={index} style={{ display: 'flex', gap: 8, color: '#475569', fontSize: 13, lineHeight: 1.5 }}>
-                <span style={{ color: accentColor, fontWeight: 900 }}>✓</span>{resolveDynamicContent(item)}
+              <li
+                key={index}
+                style={{ display: 'flex', gap: 8, color: '#475569', fontSize: 13, lineHeight: 1.5 }}
+              >
+                <span style={{ color: accentColor, fontWeight: 900 }}>✓</span>
+                {resolveDynamicContent(item)}
               </li>
             ))}
           </ul>
-          <h4 style={{ margin: '22px 0 12px', color: '#0f172a', fontSize: 17, fontWeight: 900 }}>Livrables</h4>
+          <h4 style={{ margin: '22px 0 12px', color: '#0f172a', fontSize: 17, fontWeight: 900 }}>
+            Livrables
+          </h4>
           <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'grid', gap: 10 }}>
             {(outcomes || []).map((item: string, index: number) => (
-              <li key={index} style={{ display: 'flex', gap: 8, color: '#475569', fontSize: 13, lineHeight: 1.5 }}>
-                <span style={{ color: accentColor, fontWeight: 900 }}>•</span>{resolveDynamicContent(item)}
+              <li
+                key={index}
+                style={{ display: 'flex', gap: 8, color: '#475569', fontSize: 13, lineHeight: 1.5 }}
+              >
+                <span style={{ color: accentColor, fontWeight: 900 }}>•</span>
+                {resolveDynamicContent(item)}
               </li>
             ))}
           </ul>
@@ -4770,22 +5059,96 @@ export const TrainingProgramPremiumBlock = (props: any) => {
   );
 };
 const TrainingProgramPremiumSettings = () => {
-  const { actions: { setProp }, title, subtitle, modules, prerequisites, outcomes, accentColor, backgroundColor, panelColor } = useNode((n: any) => ({ ...n.data.props }));
+  const {
+    actions: { setProp },
+    title,
+    subtitle,
+    modules,
+    prerequisites,
+    outcomes,
+    accentColor,
+    backgroundColor,
+    panelColor,
+  } = useNode((n: any) => ({ ...n.data.props }));
   return (
     <div className="space-y-3">
-      <Row><Label label="Titre" /><Input value={title} onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))} /></Row>
-      <Row><Label label="Sous-titre" /><Textarea rows={2} value={subtitle} onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))} /></Row>
+      <Row>
+        <Label label="Titre" />
+        <Input
+          value={title}
+          onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Sous-titre" />
+        <Textarea
+          rows={2}
+          value={subtitle}
+          onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))}
+        />
+      </Row>
       <Row>
         <Label label="Modules (phase|titre|durée|description|sujets)" />
-        <Textarea rows={8} value={(modules || []).map((m: any) => `${m.phase}|${m.title}|${m.duration}|${m.description}|${m.topics}`).join('\n')} onChange={(e: any) => setProp((p: any) => { p.modules = parsePipeItems(e.target.value, ([phase, title, duration, description, ...topics], raw) => ({ phase: phase || 'Module', title: title || raw, duration: duration || '', description: description || '', topics: topics.join('|') || '' })); })} />
+        <Textarea
+          rows={8}
+          value={(modules || [])
+            .map((m: any) => `${m.phase}|${m.title}|${m.duration}|${m.description}|${m.topics}`)
+            .join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.modules = parsePipeItems(
+                e.target.value,
+                ([phase, title, duration, description, ...topics], raw) => ({
+                  phase: phase || 'Module',
+                  title: title || raw,
+                  duration: duration || '',
+                  description: description || '',
+                  topics: topics.join('|') || '',
+                }),
+              );
+            })
+          }
+        />
       </Row>
-      <Row><Label label="Prérequis (1 par ligne)" /><Textarea rows={4} value={(prerequisites || []).join('\n')} onChange={(e: any) => setProp((p: any) => (p.prerequisites = splitLines(e.target.value)))} /></Row>
-      <Row><Label label="Livrables (1 par ligne)" /><Textarea rows={4} value={(outcomes || []).join('\n')} onChange={(e: any) => setProp((p: any) => (p.outcomes = splitLines(e.target.value)))} /></Row>
+      <Row>
+        <Label label="Prérequis (1 par ligne)" />
+        <Textarea
+          rows={4}
+          value={(prerequisites || []).join('\n')}
+          onChange={(e: any) => setProp((p: any) => (p.prerequisites = splitLines(e.target.value)))}
+        />
+      </Row>
+      <Row>
+        <Label label="Livrables (1 par ligne)" />
+        <Textarea
+          rows={4}
+          value={(outcomes || []).join('\n')}
+          onChange={(e: any) => setProp((p: any) => (p.outcomes = splitLines(e.target.value)))}
+        />
+      </Row>
       <Grid2>
-        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))} /></Row>
-        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))} /></Row>
+        <Row>
+          <Label label="Accent" />
+          <Color
+            value={accentColor}
+            onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Fond" />
+          <Color
+            value={backgroundColor}
+            onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))}
+          />
+        </Row>
       </Grid2>
-      <Row><Label label="Panneau" /><Color value={panelColor} onChange={(e: any) => setProp((p: any) => (p.panelColor = e.target.value))} /></Row>
+      <Row>
+        <Label label="Panneau" />
+        <Color
+          value={panelColor}
+          onChange={(e: any) => setProp((p: any) => (p.panelColor = e.target.value))}
+        />
+      </Row>
     </div>
   );
 };
@@ -4795,12 +5158,39 @@ TrainingProgramPremiumBlock.craft = {
     title: 'Programme pédagogique',
     subtitle: 'Modules, prérequis et livrables structurés pour une session professionnelle.',
     modules: [
-      { phase: 'Jour 1', title: 'Fondamentaux électriques', duration: '7 h', description: 'Grandeurs, protections et vocabulaire technique.', topics: 'Tension, intensité, résistance' },
-      { phase: 'Jour 2', title: 'Sécurité & schémas', duration: '7 h', description: 'Lecture de schémas et repérage des circuits.', topics: 'Schémas, tableaux, protections' },
-      { phase: 'Jour 3', title: 'Contrôle conformité', duration: '7 h', description: 'Cas pratiques et préparation au contrôle.', topics: 'Checklist, réserves, rapport' },
+      {
+        phase: 'Jour 1',
+        title: 'Fondamentaux électriques',
+        duration: '7 h',
+        description: 'Grandeurs, protections et vocabulaire technique.',
+        topics: 'Tension, intensité, résistance',
+      },
+      {
+        phase: 'Jour 2',
+        title: 'Sécurité & schémas',
+        duration: '7 h',
+        description: 'Lecture de schémas et repérage des circuits.',
+        topics: 'Schémas, tableaux, protections',
+      },
+      {
+        phase: 'Jour 3',
+        title: 'Contrôle conformité',
+        duration: '7 h',
+        description: 'Cas pratiques et préparation au contrôle.',
+        topics: 'Checklist, réserves, rapport',
+      },
     ],
-    prerequisites: ['Bases techniques souhaitées', 'Profil installateur ou technicien', 'Dossier entreprise si session dédiée'],
-    outcomes: ['Support de cours', 'Fiches pratiques', 'Attestation de participation', 'Plan d’action post-formation'],
+    prerequisites: [
+      'Bases techniques souhaitées',
+      'Profil installateur ou technicien',
+      'Dossier entreprise si session dédiée',
+    ],
+    outcomes: [
+      'Support de cours',
+      'Fiches pratiques',
+      'Attestation de participation',
+      'Plan d’action post-formation',
+    ],
     accentColor: '#2563eb',
     backgroundColor: '#ffffff',
     panelColor: '#f8fafc',
@@ -4814,36 +5204,142 @@ export const PricingComparisonPremiumBlock = (props: any) => {
     title = 'Comparer les offres',
     subtitle = 'Des formules lisibles pour choisir le bon niveau d’accompagnement.',
     plans = [
-      { name: 'Débutant', price: 'Essentiel', description: 'Découverte, bases de sécurité et orientation.', features: ['Bases électriques', 'Support synthèse', 'Attestation'], buttonText: 'Choisir', href: '/contact', featured: false },
-      { name: 'Intermédiaire', price: 'Standard', description: 'Programme structuré avec cas pratiques.', features: ['Modules complets', 'Cas pratiques', 'Suivi pédagogique'], buttonText: 'Demander un devis', href: '/contact', featured: true },
-      { name: 'Entreprise', price: 'Sur devis', description: 'Session dédiée et adaptation métier.', features: ['Groupe dédié', 'Programme adapté', 'Planning flexible'], buttonText: 'Planifier', href: '/contact', featured: false },
+      {
+        name: 'Débutant',
+        price: 'Essentiel',
+        description: 'Découverte, bases de sécurité et orientation.',
+        features: ['Bases électriques', 'Support synthèse', 'Attestation'],
+        buttonText: 'Choisir',
+        href: '/contact',
+        featured: false,
+      },
+      {
+        name: 'Intermédiaire',
+        price: 'Standard',
+        description: 'Programme structuré avec cas pratiques.',
+        features: ['Modules complets', 'Cas pratiques', 'Suivi pédagogique'],
+        buttonText: 'Demander un devis',
+        href: '/contact',
+        featured: true,
+      },
+      {
+        name: 'Entreprise',
+        price: 'Sur devis',
+        description: 'Session dédiée et adaptation métier.',
+        features: ['Groupe dédié', 'Programme adapté', 'Planning flexible'],
+        buttonText: 'Planifier',
+        href: '/contact',
+        featured: false,
+      },
     ],
     accentColor = '#2563eb',
     backgroundColor = '#f8fafc',
     cardColor = '#ffffff',
   } = props;
-  const { connectors: { connect, drag } } = useNode();
+  const {
+    connectors: { connect, drag },
+  } = useNode();
   const u = getUniversalStyles(props);
   return (
-    <section ref={(r: any) => { if (r) connect(drag(r)); }} style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }} className={'proquelec-builder-node ' + u.className}>
+    <section
+      ref={(r: any) => {
+        if (r) connect(drag(r));
+      }}
+      style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }}
+      className={'proquelec-builder-node ' + u.className}
+    >
       <div style={{ maxWidth: 760, margin: '0 auto 26px', textAlign: 'center' }}>
-        <p style={{ margin: '0 0 8px', color: accentColor, fontSize: 12, fontWeight: 900, letterSpacing: 1.5, textTransform: 'uppercase' }}>Offres</p>
-        <h3 style={{ margin: 0, color: '#0f172a', fontSize: 32, lineHeight: 1.15, fontWeight: 900 }}>{resolveDynamicContent(title)}</h3>
-        <p style={{ margin: '10px 0 0', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>{resolveDynamicContent(subtitle)}</p>
+        <p
+          style={{
+            margin: '0 0 8px',
+            color: accentColor,
+            fontSize: 12,
+            fontWeight: 900,
+            letterSpacing: 1.5,
+            textTransform: 'uppercase',
+          }}
+        >
+          Offres
+        </p>
+        <h3
+          style={{ margin: 0, color: '#0f172a', fontSize: 32, lineHeight: 1.15, fontWeight: 900 }}
+        >
+          {resolveDynamicContent(title)}
+        </h3>
+        <p style={{ margin: '10px 0 0', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>
+          {resolveDynamicContent(subtitle)}
+        </p>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(245px,1fr))', gap: 16 }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit,minmax(245px,1fr))',
+          gap: 16,
+        }}
+      >
         {(plans || []).map((plan: any, index: number) => (
-          <article key={index} style={{ position: 'relative', background: cardColor, border: plan.featured ? `2px solid ${accentColor}` : '1px solid #e2e8f0', borderRadius: 16, padding: 22, boxShadow: plan.featured ? '0 24px 70px rgba(37,99,235,0.18)' : '0 18px 45px rgba(15,23,42,0.06)' }}>
-            {plan.featured && <span style={{ position: 'absolute', top: -12, left: 20, background: accentColor, color: '#ffffff', borderRadius: 999, padding: '5px 10px', fontSize: 11, fontWeight: 900 }}>Recommandé</span>}
-            <h4 style={{ margin: '4px 0 8px', color: '#0f172a', fontSize: 19, fontWeight: 900 }}>{resolveDynamicContent(plan.name)}</h4>
-            <div style={{ color: '#0f172a', fontSize: 30, fontWeight: 900, marginBottom: 8 }}>{resolveDynamicContent(plan.price)}</div>
-            <p style={{ margin: '0 0 16px', color: '#64748b', fontSize: 13, lineHeight: 1.6 }}>{resolveDynamicContent(plan.description)}</p>
+          <article
+            key={index}
+            style={{
+              position: 'relative',
+              background: cardColor,
+              border: plan.featured ? `2px solid ${accentColor}` : '1px solid #e2e8f0',
+              borderRadius: 16,
+              padding: 22,
+              boxShadow: plan.featured
+                ? '0 24px 70px rgba(37,99,235,0.18)'
+                : '0 18px 45px rgba(15,23,42,0.06)',
+            }}
+          >
+            {plan.featured && (
+              <span
+                style={{
+                  position: 'absolute',
+                  top: -12,
+                  left: 20,
+                  background: accentColor,
+                  color: '#ffffff',
+                  borderRadius: 999,
+                  padding: '5px 10px',
+                  fontSize: 11,
+                  fontWeight: 900,
+                }}
+              >
+                Recommandé
+              </span>
+            )}
+            <h4 style={{ margin: '4px 0 8px', color: '#0f172a', fontSize: 19, fontWeight: 900 }}>
+              {resolveDynamicContent(plan.name)}
+            </h4>
+            <div style={{ color: '#0f172a', fontSize: 30, fontWeight: 900, marginBottom: 8 }}>
+              {resolveDynamicContent(plan.price)}
+            </div>
+            <p style={{ margin: '0 0 16px', color: '#64748b', fontSize: 13, lineHeight: 1.6 }}>
+              {resolveDynamicContent(plan.description)}
+            </p>
             <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'grid', gap: 9 }}>
               {(plan.features || []).map((feature: string, idx: number) => (
-                <li key={idx} style={{ display: 'flex', gap: 8, color: '#334155', fontSize: 13 }}><span style={{ color: accentColor, fontWeight: 900 }}>✓</span>{resolveDynamicContent(feature)}</li>
+                <li key={idx} style={{ display: 'flex', gap: 8, color: '#334155', fontSize: 13 }}>
+                  <span style={{ color: accentColor, fontWeight: 900 }}>✓</span>
+                  {resolveDynamicContent(feature)}
+                </li>
               ))}
             </ul>
-            <a href={plan.href || '#'} style={{ display: 'block', marginTop: 18, textAlign: 'center', background: plan.featured ? accentColor : '#f1f5f9', color: plan.featured ? '#ffffff' : '#0f172a', textDecoration: 'none', padding: '10px 14px', borderRadius: 10, fontWeight: 850, fontSize: 13 }}>
+            <a
+              href={plan.href || '#'}
+              style={{
+                display: 'block',
+                marginTop: 18,
+                textAlign: 'center',
+                background: plan.featured ? accentColor : '#f1f5f9',
+                color: plan.featured ? '#ffffff' : '#0f172a',
+                textDecoration: 'none',
+                padding: '10px 14px',
+                borderRadius: 10,
+                fontWeight: 850,
+                fontSize: 13,
+              }}
+            >
               {resolveDynamicContent(plan.buttonText || 'Demander')}
             </a>
           </article>
@@ -4853,20 +5349,86 @@ export const PricingComparisonPremiumBlock = (props: any) => {
   );
 };
 const PricingComparisonPremiumSettings = () => {
-  const { actions: { setProp }, title, subtitle, plans, accentColor, backgroundColor, cardColor } = useNode((n: any) => ({ ...n.data.props }));
+  const {
+    actions: { setProp },
+    title,
+    subtitle,
+    plans,
+    accentColor,
+    backgroundColor,
+    cardColor,
+  } = useNode((n: any) => ({ ...n.data.props }));
   return (
     <div className="space-y-3">
-      <Row><Label label="Titre" /><Input value={title} onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))} /></Row>
-      <Row><Label label="Sous-titre" /><Textarea rows={2} value={subtitle} onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))} /></Row>
+      <Row>
+        <Label label="Titre" />
+        <Input
+          value={title}
+          onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Sous-titre" />
+        <Textarea
+          rows={2}
+          value={subtitle}
+          onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))}
+        />
+      </Row>
       <Row>
         <Label label="Offres (nom|prix|desc|features ;|bouton|lien|featured)" />
-        <Textarea rows={8} value={(plans || []).map((p: any) => `${p.name}|${p.price}|${p.description}|${(p.features || []).join(';')}|${p.buttonText}|${p.href}|${p.featured ? 'true' : 'false'}`).join('\n')} onChange={(e: any) => setProp((p: any) => { p.plans = parsePipeItems(e.target.value, ([name, price, description, features, buttonText, href, featured], raw) => ({ name: name || raw, price: price || '', description: description || '', features: String(features || '').split(';').map((v) => v.trim()).filter(Boolean), buttonText: buttonText || 'Demander', href: href || '/contact', featured: featured === 'true' || featured === '1' || featured === 'oui' })); })} />
+        <Textarea
+          rows={8}
+          value={(plans || [])
+            .map(
+              (p: any) =>
+                `${p.name}|${p.price}|${p.description}|${(p.features || []).join(';')}|${p.buttonText}|${p.href}|${p.featured ? 'true' : 'false'}`,
+            )
+            .join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.plans = parsePipeItems(
+                e.target.value,
+                ([name, price, description, features, buttonText, href, featured], raw) => ({
+                  name: name || raw,
+                  price: price || '',
+                  description: description || '',
+                  features: String(features || '')
+                    .split(';')
+                    .map((v) => v.trim())
+                    .filter(Boolean),
+                  buttonText: buttonText || 'Demander',
+                  href: href || '/contact',
+                  featured: featured === 'true' || featured === '1' || featured === 'oui',
+                }),
+              );
+            })
+          }
+        />
       </Row>
       <Grid2>
-        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))} /></Row>
-        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))} /></Row>
+        <Row>
+          <Label label="Accent" />
+          <Color
+            value={accentColor}
+            onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Fond" />
+          <Color
+            value={backgroundColor}
+            onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))}
+          />
+        </Row>
       </Grid2>
-      <Row><Label label="Fond cartes" /><Color value={cardColor} onChange={(e: any) => setProp((p: any) => (p.cardColor = e.target.value))} /></Row>
+      <Row>
+        <Label label="Fond cartes" />
+        <Color
+          value={cardColor}
+          onChange={(e: any) => setProp((p: any) => (p.cardColor = e.target.value))}
+        />
+      </Row>
     </div>
   );
 };
@@ -4876,9 +5438,33 @@ PricingComparisonPremiumBlock.craft = {
     title: 'Comparer les offres',
     subtitle: 'Des formules lisibles pour choisir le bon niveau d’accompagnement.',
     plans: [
-      { name: 'Débutant', price: 'Essentiel', description: 'Découverte, bases de sécurité et orientation.', features: ['Bases électriques', 'Support synthèse', 'Attestation'], buttonText: 'Choisir', href: '/contact', featured: false },
-      { name: 'Intermédiaire', price: 'Standard', description: 'Programme structuré avec cas pratiques.', features: ['Modules complets', 'Cas pratiques', 'Suivi pédagogique'], buttonText: 'Demander un devis', href: '/contact', featured: true },
-      { name: 'Entreprise', price: 'Sur devis', description: 'Session dédiée et adaptation métier.', features: ['Groupe dédié', 'Programme adapté', 'Planning flexible'], buttonText: 'Planifier', href: '/contact', featured: false },
+      {
+        name: 'Débutant',
+        price: 'Essentiel',
+        description: 'Découverte, bases de sécurité et orientation.',
+        features: ['Bases électriques', 'Support synthèse', 'Attestation'],
+        buttonText: 'Choisir',
+        href: '/contact',
+        featured: false,
+      },
+      {
+        name: 'Intermédiaire',
+        price: 'Standard',
+        description: 'Programme structuré avec cas pratiques.',
+        features: ['Modules complets', 'Cas pratiques', 'Suivi pédagogique'],
+        buttonText: 'Demander un devis',
+        href: '/contact',
+        featured: true,
+      },
+      {
+        name: 'Entreprise',
+        price: 'Sur devis',
+        description: 'Session dédiée et adaptation métier.',
+        features: ['Groupe dédié', 'Programme adapté', 'Planning flexible'],
+        buttonText: 'Planifier',
+        href: '/contact',
+        featured: false,
+      },
     ],
     accentColor: '#2563eb',
     backgroundColor: '#f8fafc',
@@ -4887,7 +5473,7 @@ PricingComparisonPremiumBlock.craft = {
   related: { settings: PricingComparisonPremiumSettings },
 };
 
-// ── 53. ContactPremiumBlock ──
+// ── 53. ContactPremiumBlock (with form submission) ──
 export const ContactPremiumBlock = (props: any) => {
   const {
     title = 'Échangeons sur votre besoin',
@@ -4900,77 +5486,390 @@ export const ContactPremiumBlock = (props: any) => {
     fields = ['Nom complet', 'Téléphone', 'Email', 'Objet de la demande'],
     departments = [
       { icon: '⚡', title: 'Contrôle', description: 'Visite, réception ou levée de réserves.' },
-      { icon: '🎓', title: 'Formation', description: 'Inscription individuelle, groupe ou session sur site.' },
-      { icon: '🏅', title: 'Certification', description: 'Dossier, pièces et parcours de validation.' },
+      {
+        icon: '🎓',
+        title: 'Formation',
+        description: 'Inscription individuelle, groupe ou session sur site.',
+      },
+      {
+        icon: '🏅',
+        title: 'Certification',
+        description: 'Dossier, pièces et parcours de validation.',
+      },
     ],
-    buttonText = 'Envoyer la demande',
-    buttonHref = '/contact',
+    buttonText = 'Envoyer',
     accentColor = '#2563eb',
     backgroundColor = '#f8fafc',
   } = props;
-  const { connectors: { connect, drag } } = useNode();
+  const {
+    connectors: { connect, drag },
+  } = useNode();
   const u = getUniversalStyles(props);
+  const [formData, setFormData] = React.useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = React.useState(false);
+  const [submitted, setSubmitted] = React.useState(false);
+  const [error, setError] = React.useState('');
+
+  const handleChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/contact-requests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nom: formData['Nom complet'] || '',
+          email: formData['Email'] || '',
+          telephone: formData['Téléphone'] || '',
+          sujet: formData['Objet de la demande'] || '',
+          message: formData['message'] || '',
+        }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      setSubmitted(true);
+    } catch (err) {
+      setError("Erreur lors de l'envoi. Veuillez réessayer ou nous contacter par téléphone.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
-    <section ref={(r: any) => { if (r) connect(drag(r)); }} style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }} className={'proquelec-builder-node ' + u.className}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 24 }}>
-        <div>
-          <p style={{ margin: '0 0 8px', color: accentColor, fontSize: 12, fontWeight: 900, letterSpacing: 1.5, textTransform: 'uppercase' }}>Contact</p>
-          <h3 style={{ margin: 0, color: '#0f172a', fontSize: 34, lineHeight: 1.12, fontWeight: 900 }}>{resolveDynamicContent(title)}</h3>
-          <p style={{ margin: '12px 0 22px', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>{resolveDynamicContent(subtitle)}</p>
-          <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
-            {[{ label: 'Téléphone', value: phone, href: 'tel:' + phone }, { label: 'Email', value: email, href: 'mailto:' + email }, { label: 'Adresse', value: address }, { label: 'Horaires', value: hours }].map((item: any, index: number) => (
-              <div key={index} style={{ background: '#ffffff', borderRadius: 12, padding: 14, border: '1px solid #e2e8f0' }}>
-                <p style={{ margin: '0 0 4px', color: '#94a3b8', fontSize: 11, fontWeight: 900, textTransform: 'uppercase' }}>{item.label}</p>
-                {item.href ? <a href={item.href} style={{ color: accentColor, fontWeight: 850, textDecoration: 'none' }}>{resolveDynamicContent(item.value)}</a> : <p style={{ margin: 0, color: '#0f172a', fontWeight: 800 }}>{resolveDynamicContent(item.value)}</p>}
+    <section
+      ref={(r: any) => {
+        if (r) connect(drag(r));
+      }}
+      style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }}
+      className={'proquelec-builder-node ' + u.className}
+    >
+      {submitted ? (
+        <div style={{ textAlign: 'center', padding: 40 }}>
+          <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
+          <h3 style={{ color: '#059669', fontSize: 24, fontWeight: 900, margin: '0 0 8px' }}>
+            Message envoyé !
+          </h3>
+          <p style={{ color: '#64748b' }}>Merci, nous vous répondrons sous 24h ouvrées.</p>
+        </div>
+      ) : (
+        <>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+              gap: 24,
+            }}
+          >
+            <div>
+              <p
+                style={{
+                  margin: '0 0 8px',
+                  color: accentColor,
+                  fontSize: 12,
+                  fontWeight: 900,
+                  letterSpacing: 1.5,
+                  textTransform: 'uppercase',
+                }}
+              >
+                Contact
+              </p>
+              <h3
+                style={{
+                  margin: 0,
+                  color: '#0f172a',
+                  fontSize: 34,
+                  lineHeight: 1.12,
+                  fontWeight: 900,
+                }}
+              >
+                {resolveDynamicContent(title)}
+              </h3>
+              <p style={{ margin: '12px 0 22px', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>
+                {resolveDynamicContent(subtitle)}
+              </p>
+              <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
+                {[
+                  { label: 'Téléphone', value: phone, href: 'tel:' + phone },
+                  { label: 'Email', value: email, href: 'mailto:' + email },
+                  { label: 'Adresse', value: address },
+                  { label: 'Horaires', value: hours },
+                ].map((item: any, index: number) => (
+                  <div
+                    key={index}
+                    style={{
+                      background: '#ffffff',
+                      borderRadius: 12,
+                      padding: 14,
+                      border: '1px solid #e2e8f0',
+                    }}
+                  >
+                    <p
+                      style={{
+                        margin: '0 0 4px',
+                        color: '#94a3b8',
+                        fontSize: 11,
+                        fontWeight: 900,
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      {item.label}
+                    </p>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        style={{ color: accentColor, fontWeight: 850, textDecoration: 'none' }}
+                      >
+                        {resolveDynamicContent(item.value)}
+                      </a>
+                    ) : (
+                      <p style={{ margin: 0, color: '#0f172a', fontWeight: 800 }}>
+                        {resolveDynamicContent(item.value)}
+                      </p>
+                    )}
+                  </div>
+                ))}
               </div>
+              <p style={{ color: accentColor, fontSize: 13, fontWeight: 900, margin: 0 }}>
+                {resolveDynamicContent(responseTime)}
+              </p>
+            </div>
+            <form
+              onSubmit={handleSubmit}
+              style={{
+                background: '#ffffff',
+                border: '1px solid #e2e8f0',
+                borderRadius: 16,
+                padding: 22,
+                boxShadow: '0 20px 55px rgba(15,23,42,0.08)',
+              }}
+            >
+              <div style={{ display: 'grid', gap: 10 }}>
+                {(fields || []).map((field: string, index: number) => (
+                  <input
+                    key={index}
+                    aria-label={field}
+                    placeholder={resolveDynamicContent(field)}
+                    value={formData[field] || ''}
+                    onChange={(e) => handleChange(field, e.target.value)}
+                    required
+                    style={{
+                      width: '100%',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: 10,
+                      padding: '11px 12px',
+                      fontSize: 13,
+                      color: '#0f172a',
+                    }}
+                  />
+                ))}
+                <textarea
+                  aria-label="Message"
+                  placeholder="Message"
+                  rows={4}
+                  value={formData['message'] || ''}
+                  onChange={(e) => handleChange('message', e.target.value)}
+                  required
+                  style={{
+                    width: '100%',
+                    border: '1px solid #e2e8f0',
+                    borderRadius: 10,
+                    padding: '11px 12px',
+                    fontSize: 13,
+                    color: '#0f172a',
+                    resize: 'vertical',
+                  }}
+                />
+                {error && <p style={{ color: '#dc2626', fontSize: 12, margin: 0 }}>{error}</p>}
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  style={{
+                    width: '100%',
+                    textAlign: 'center',
+                    background: accentColor,
+                    color: '#ffffff',
+                    cursor: 'pointer',
+                    border: 'none',
+                    padding: '12px 16px',
+                    borderRadius: 10,
+                    fontWeight: 900,
+                    opacity: submitting ? 0.7 : 1,
+                  }}
+                >
+                  {submitting ? 'Envoi en cours...' : resolveDynamicContent(buttonText)}
+                </button>
+              </div>
+            </form>
+          </div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit,minmax(210px,1fr))',
+              gap: 12,
+              marginTop: 22,
+            }}
+          >
+            {(departments || []).map((item: any, index: number) => (
+              <article
+                key={index}
+                style={{
+                  background: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: 14,
+                  padding: 16,
+                }}
+              >
+                <div style={{ fontSize: 24, marginBottom: 8 }}>{item.icon}</div>
+                <h4 style={{ margin: 0, color: '#0f172a', fontSize: 16, fontWeight: 900 }}>
+                  {resolveDynamicContent(item.title)}
+                </h4>
+                <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: 13, lineHeight: 1.55 }}>
+                  {resolveDynamicContent(item.description)}
+                </p>
+              </article>
             ))}
           </div>
-          <p style={{ color: accentColor, fontSize: 13, fontWeight: 900, margin: 0 }}>{resolveDynamicContent(responseTime)}</p>
-        </div>
-        <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 16, padding: 22, boxShadow: '0 20px 55px rgba(15,23,42,0.08)' }}>
-          <div style={{ display: 'grid', gap: 10 }}>
-            {(fields || []).map((field: string, index: number) => (
-              <input key={index} aria-label={field} placeholder={resolveDynamicContent(field)} style={{ width: '100%', border: '1px solid #e2e8f0', borderRadius: 10, padding: '11px 12px', fontSize: 13, color: '#0f172a' }} />
-            ))}
-            <textarea aria-label="Message" placeholder="Message" rows={4} style={{ width: '100%', border: '1px solid #e2e8f0', borderRadius: 10, padding: '11px 12px', fontSize: 13, color: '#0f172a', resize: 'vertical' }} />
-            <a href={buttonHref} style={{ display: 'block', textAlign: 'center', background: accentColor, color: '#ffffff', textDecoration: 'none', padding: '12px 16px', borderRadius: 10, fontWeight: 900 }}>{resolveDynamicContent(buttonText)}</a>
-          </div>
-        </div>
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(210px,1fr))', gap: 12, marginTop: 22 }}>
-        {(departments || []).map((item: any, index: number) => (
-          <article key={index} style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 14, padding: 16 }}>
-            <div style={{ fontSize: 24, marginBottom: 8 }}>{item.icon}</div>
-            <h4 style={{ margin: 0, color: '#0f172a', fontSize: 16, fontWeight: 900 }}>{resolveDynamicContent(item.title)}</h4>
-            <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: 13, lineHeight: 1.55 }}>{resolveDynamicContent(item.description)}</p>
-          </article>
-        ))}
-      </div>
+        </>
+      )}
     </section>
   );
 };
 const ContactPremiumSettings = () => {
-  const { actions: { setProp }, title, subtitle, phone, email, address, hours, responseTime, fields, departments, buttonText, buttonHref, accentColor, backgroundColor } = useNode((n: any) => ({ ...n.data.props }));
+  const {
+    actions: { setProp },
+    title,
+    subtitle,
+    phone,
+    email,
+    address,
+    hours,
+    responseTime,
+    fields,
+    departments,
+    buttonText,
+    buttonHref,
+    accentColor,
+    backgroundColor,
+  } = useNode((n: any) => ({ ...n.data.props }));
   return (
     <div className="space-y-3">
-      <Row><Label label="Titre" /><Input value={title} onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))} /></Row>
-      <Row><Label label="Sous-titre" /><Textarea rows={2} value={subtitle} onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))} /></Row>
+      <Row>
+        <Label label="Titre" />
+        <Input
+          value={title}
+          onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Sous-titre" />
+        <Textarea
+          rows={2}
+          value={subtitle}
+          onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))}
+        />
+      </Row>
       <Grid2>
-        <Row><Label label="Téléphone" /><Input value={phone} onChange={(e: any) => setProp((p: any) => (p.phone = e.target.value))} /></Row>
-        <Row><Label label="Email" /><Input value={email} onChange={(e: any) => setProp((p: any) => (p.email = e.target.value))} /></Row>
+        <Row>
+          <Label label="Téléphone" />
+          <Input
+            value={phone}
+            onChange={(e: any) => setProp((p: any) => (p.phone = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Email" />
+          <Input
+            value={email}
+            onChange={(e: any) => setProp((p: any) => (p.email = e.target.value))}
+          />
+        </Row>
       </Grid2>
-      <Row><Label label="Adresse" /><Textarea rows={2} value={address} onChange={(e: any) => setProp((p: any) => (p.address = e.target.value))} /></Row>
+      <Row>
+        <Label label="Adresse" />
+        <Textarea
+          rows={2}
+          value={address}
+          onChange={(e: any) => setProp((p: any) => (p.address = e.target.value))}
+        />
+      </Row>
       <Grid2>
-        <Row><Label label="Horaires" /><Input value={hours} onChange={(e: any) => setProp((p: any) => (p.hours = e.target.value))} /></Row>
-        <Row><Label label="Délai réponse" /><Input value={responseTime} onChange={(e: any) => setProp((p: any) => (p.responseTime = e.target.value))} /></Row>
+        <Row>
+          <Label label="Horaires" />
+          <Input
+            value={hours}
+            onChange={(e: any) => setProp((p: any) => (p.hours = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Délai réponse" />
+          <Input
+            value={responseTime}
+            onChange={(e: any) => setProp((p: any) => (p.responseTime = e.target.value))}
+          />
+        </Row>
       </Grid2>
-      <Row><Label label="Champs formulaire" /><Textarea rows={4} value={(fields || []).join('\n')} onChange={(e: any) => setProp((p: any) => (p.fields = splitLines(e.target.value)))} /></Row>
-      <Row><Label label="Services (icône|titre|description)" /><Textarea rows={5} value={(departments || []).map((d: any) => `${d.icon}|${d.title}|${d.description}`).join('\n')} onChange={(e: any) => setProp((p: any) => { p.departments = parsePipeItems(e.target.value, ([icon, title, ...description], raw) => ({ icon: icon || '•', title: title || raw, description: description.join('|') || '' })); })} /></Row>
+      <Row>
+        <Label label="Champs formulaire" />
+        <Textarea
+          rows={4}
+          value={(fields || []).join('\n')}
+          onChange={(e: any) => setProp((p: any) => (p.fields = splitLines(e.target.value)))}
+        />
+      </Row>
+      <Row>
+        <Label label="Services (icône|titre|description)" />
+        <Textarea
+          rows={5}
+          value={(departments || [])
+            .map((d: any) => `${d.icon}|${d.title}|${d.description}`)
+            .join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.departments = parsePipeItems(
+                e.target.value,
+                ([icon, title, ...description], raw) => ({
+                  icon: icon || '•',
+                  title: title || raw,
+                  description: description.join('|') || '',
+                }),
+              );
+            })
+          }
+        />
+      </Row>
       <Grid2>
-        <Row><Label label="Bouton" /><Input value={buttonText} onChange={(e: any) => setProp((p: any) => (p.buttonText = e.target.value))} /></Row>
-        <Row><Label label="Lien bouton" /><Input value={buttonHref} onChange={(e: any) => setProp((p: any) => (p.buttonHref = e.target.value))} /></Row>
-        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))} /></Row>
-        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))} /></Row>
+        <Row>
+          <Label label="Bouton" />
+          <Input
+            value={buttonText}
+            onChange={(e: any) => setProp((p: any) => (p.buttonText = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Lien bouton" />
+          <Input
+            value={buttonHref}
+            onChange={(e: any) => setProp((p: any) => (p.buttonHref = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Accent" />
+          <Color
+            value={accentColor}
+            onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Fond" />
+          <Color
+            value={backgroundColor}
+            onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))}
+          />
+        </Row>
       </Grid2>
     </div>
   );
@@ -4979,7 +5878,8 @@ ContactPremiumBlock.craft = {
   displayName: 'Contact premium',
   props: {
     title: 'Échangeons sur votre besoin',
-    subtitle: 'Centralisez les demandes de contrôle, formation, audit, certification ou assistance technique.',
+    subtitle:
+      'Centralisez les demandes de contrôle, formation, audit, certification ou assistance technique.',
     phone: '+221 33 848 68 55',
     email: 'proquelec@proquelec.sn',
     address: 'Immeuble Coumba Castel, 12 rue Saint-Michel, Dakar',
@@ -4988,8 +5888,16 @@ ContactPremiumBlock.craft = {
     fields: ['Nom complet', 'Téléphone', 'Email', 'Objet de la demande'],
     departments: [
       { icon: '⚡', title: 'Contrôle', description: 'Visite, réception ou levée de réserves.' },
-      { icon: '🎓', title: 'Formation', description: 'Inscription individuelle, groupe ou session sur site.' },
-      { icon: '🏅', title: 'Certification', description: 'Dossier, pièces et parcours de validation.' },
+      {
+        icon: '🎓',
+        title: 'Formation',
+        description: 'Inscription individuelle, groupe ou session sur site.',
+      },
+      {
+        icon: '🏅',
+        title: 'Certification',
+        description: 'Dossier, pièces et parcours de validation.',
+      },
     ],
     buttonText: 'Envoyer la demande',
     buttonHref: '/contact',
@@ -5005,86 +5913,331 @@ export const CertificationRequirementsPremiumBlock = (props: any) => {
     title = 'Dossier certification / agrément',
     subtitle = 'Présentez les pièces, critères et délais nécessaires pour constituer un dossier recevable.',
     requirements = [
-      { label: 'Formulaire renseigné', detail: 'Demande officielle complétée et signée.', required: true },
-      { label: 'Pièces administratives', detail: 'Identification de la structure et responsables.', required: true },
-      { label: 'Références techniques', detail: 'Expériences, qualifications ou projets réalisés.', required: true },
-      { label: 'Engagement qualité', detail: 'Respect des exigences de sécurité et conformité.', required: false },
+      {
+        label: 'Formulaire renseigné',
+        detail: 'Demande officielle complétée et signée.',
+        required: true,
+      },
+      {
+        label: 'Pièces administratives',
+        detail: 'Identification de la structure et responsables.',
+        required: true,
+      },
+      {
+        label: 'Références techniques',
+        detail: 'Expériences, qualifications ou projets réalisés.',
+        required: true,
+      },
+      {
+        label: 'Engagement qualité',
+        detail: 'Respect des exigences de sécurité et conformité.',
+        required: false,
+      },
     ],
     process = [
       { phase: '01', title: 'Dépôt', detail: 'Réception et contrôle de complétude.', delay: 'J0' },
-      { phase: '02', title: 'Instruction', detail: 'Analyse technique et demande de compléments si besoin.', delay: '5-10 j' },
-      { phase: '03', title: 'Décision', detail: 'Notification, recommandations et suivi.', delay: 'Final' },
+      {
+        phase: '02',
+        title: 'Instruction',
+        detail: 'Analyse technique et demande de compléments si besoin.',
+        delay: '5-10 j',
+      },
+      {
+        phase: '03',
+        title: 'Décision',
+        detail: 'Notification, recommandations et suivi.',
+        delay: 'Final',
+      },
     ],
-    documents = ['Formulaire de demande', 'Guide des critères', 'Liste des pièces', 'Contact assistance dossier'],
+    documents = [
+      'Formulaire de demande',
+      'Guide des critères',
+      'Liste des pièces',
+      'Contact assistance dossier',
+    ],
     ctaLabel = 'Demander un accompagnement',
     ctaHref = '/contact',
     accentColor = '#f59e0b',
     backgroundColor = '#fffbeb',
     cardColor = '#ffffff',
   } = props;
-  const { connectors: { connect, drag } } = useNode();
+  const {
+    connectors: { connect, drag },
+  } = useNode();
   const u = getUniversalStyles(props);
   return (
-    <section ref={(r: any) => { if (r) connect(drag(r)); }} style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }} className={'proquelec-builder-node ' + u.className}>
+    <section
+      ref={(r: any) => {
+        if (r) connect(drag(r));
+      }}
+      style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }}
+      className={'proquelec-builder-node ' + u.className}
+    >
       <div style={{ maxWidth: 780, marginBottom: 26 }}>
-        <p style={{ margin: '0 0 8px', color: '#92400e', fontSize: 12, fontWeight: 900, letterSpacing: 1.5, textTransform: 'uppercase' }}>Certification</p>
-        <h3 style={{ margin: 0, color: '#0f172a', fontSize: 32, lineHeight: 1.15, fontWeight: 900 }}>{resolveDynamicContent(title)}</h3>
-        <p style={{ margin: '10px 0 0', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>{resolveDynamicContent(subtitle)}</p>
+        <p
+          style={{
+            margin: '0 0 8px',
+            color: '#92400e',
+            fontSize: 12,
+            fontWeight: 900,
+            letterSpacing: 1.5,
+            textTransform: 'uppercase',
+          }}
+        >
+          Certification
+        </p>
+        <h3
+          style={{ margin: 0, color: '#0f172a', fontSize: 32, lineHeight: 1.15, fontWeight: 900 }}
+        >
+          {resolveDynamicContent(title)}
+        </h3>
+        <p style={{ margin: '10px 0 0', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>
+          {resolveDynamicContent(subtitle)}
+        </p>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 20 }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+          gap: 20,
+        }}
+      >
         <div style={{ display: 'grid', gap: 12 }}>
           {(requirements || []).map((item: any, index: number) => (
-            <article key={index} style={{ background: cardColor, border: '1px solid #fde68a', borderRadius: 14, padding: 16 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'start' }}>
-                <h4 style={{ margin: 0, color: '#0f172a', fontSize: 16, fontWeight: 900 }}>{resolveDynamicContent(item.label)}</h4>
-                <span style={{ background: item.required ? '#fef3c7' : '#f1f5f9', color: item.required ? '#92400e' : '#475569', borderRadius: 999, padding: '4px 8px', fontSize: 10, fontWeight: 900 }}>{item.required ? 'Requis' : 'Optionnel'}</span>
+            <article
+              key={index}
+              style={{
+                background: cardColor,
+                border: '1px solid #fde68a',
+                borderRadius: 14,
+                padding: 16,
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  gap: 10,
+                  alignItems: 'start',
+                }}
+              >
+                <h4 style={{ margin: 0, color: '#0f172a', fontSize: 16, fontWeight: 900 }}>
+                  {resolveDynamicContent(item.label)}
+                </h4>
+                <span
+                  style={{
+                    background: item.required ? '#fef3c7' : '#f1f5f9',
+                    color: item.required ? '#92400e' : '#475569',
+                    borderRadius: 999,
+                    padding: '4px 8px',
+                    fontSize: 10,
+                    fontWeight: 900,
+                  }}
+                >
+                  {item.required ? 'Requis' : 'Optionnel'}
+                </span>
               </div>
-              <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: 13, lineHeight: 1.55 }}>{resolveDynamicContent(item.detail)}</p>
+              <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: 13, lineHeight: 1.55 }}>
+                {resolveDynamicContent(item.detail)}
+              </p>
             </article>
           ))}
         </div>
-        <div style={{ background: cardColor, border: '1px solid #fde68a', borderRadius: 14, padding: 20 }}>
-          <h4 style={{ margin: '0 0 14px', color: '#0f172a', fontSize: 18, fontWeight: 900 }}>Parcours de validation</h4>
+        <div
+          style={{
+            background: cardColor,
+            border: '1px solid #fde68a',
+            borderRadius: 14,
+            padding: 20,
+          }}
+        >
+          <h4 style={{ margin: '0 0 14px', color: '#0f172a', fontSize: 18, fontWeight: 900 }}>
+            Parcours de validation
+          </h4>
           <div style={{ display: 'grid', gap: 12 }}>
             {(process || []).map((step: any, index: number) => (
-              <div key={index} style={{ display: 'grid', gridTemplateColumns: '42px 1fr auto', gap: 12, alignItems: 'start' }}>
-                <span style={{ width: 36, height: 36, borderRadius: 10, background: accentColor, color: '#111827', display: 'grid', placeItems: 'center', fontSize: 12, fontWeight: 900 }}>{resolveDynamicContent(step.phase)}</span>
+              <div
+                key={index}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '42px 1fr auto',
+                  gap: 12,
+                  alignItems: 'start',
+                }}
+              >
+                <span
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: 10,
+                    background: accentColor,
+                    color: '#111827',
+                    display: 'grid',
+                    placeItems: 'center',
+                    fontSize: 12,
+                    fontWeight: 900,
+                  }}
+                >
+                  {resolveDynamicContent(step.phase)}
+                </span>
                 <div>
-                  <p style={{ margin: 0, color: '#0f172a', fontSize: 14, fontWeight: 900 }}>{resolveDynamicContent(step.title)}</p>
-                  <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: 12, lineHeight: 1.5 }}>{resolveDynamicContent(step.detail)}</p>
+                  <p style={{ margin: 0, color: '#0f172a', fontSize: 14, fontWeight: 900 }}>
+                    {resolveDynamicContent(step.title)}
+                  </p>
+                  <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: 12, lineHeight: 1.5 }}>
+                    {resolveDynamicContent(step.detail)}
+                  </p>
                 </div>
-                <span style={{ color: '#92400e', fontSize: 11, fontWeight: 900 }}>{resolveDynamicContent(step.delay)}</span>
+                <span style={{ color: '#92400e', fontSize: 11, fontWeight: 900 }}>
+                  {resolveDynamicContent(step.delay)}
+                </span>
               </div>
             ))}
           </div>
-          <h4 style={{ margin: '22px 0 12px', color: '#0f172a', fontSize: 16, fontWeight: 900 }}>Documents utiles</h4>
+          <h4 style={{ margin: '22px 0 12px', color: '#0f172a', fontSize: 16, fontWeight: 900 }}>
+            Documents utiles
+          </h4>
           <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'grid', gap: 8 }}>
             {(documents || []).map((doc: string, index: number) => (
-              <li key={index} style={{ color: '#475569', fontSize: 13 }}><span style={{ color: accentColor, fontWeight: 900 }}>□</span> {resolveDynamicContent(doc)}</li>
+              <li key={index} style={{ color: '#475569', fontSize: 13 }}>
+                <span style={{ color: accentColor, fontWeight: 900 }}>□</span>{' '}
+                {resolveDynamicContent(doc)}
+              </li>
             ))}
           </ul>
-          <a href={ctaHref} style={{ display: 'inline-flex', marginTop: 18, background: '#1e3a5f', color: '#ffffff', textDecoration: 'none', padding: '10px 14px', borderRadius: 10, fontWeight: 850 }}>{resolveDynamicContent(ctaLabel)}</a>
+          <a
+            href={ctaHref}
+            style={{
+              display: 'inline-flex',
+              marginTop: 18,
+              background: '#1e3a5f',
+              color: '#ffffff',
+              textDecoration: 'none',
+              padding: '10px 14px',
+              borderRadius: 10,
+              fontWeight: 850,
+            }}
+          >
+            {resolveDynamicContent(ctaLabel)}
+          </a>
         </div>
       </div>
     </section>
   );
 };
 const CertificationRequirementsPremiumSettings = () => {
-  const { actions: { setProp }, title, subtitle, requirements, process, documents, ctaLabel, ctaHref, accentColor, backgroundColor, cardColor } = useNode((n: any) => ({ ...n.data.props }));
+  const {
+    actions: { setProp },
+    title,
+    subtitle,
+    requirements,
+    process,
+    documents,
+    ctaLabel,
+    ctaHref,
+    accentColor,
+    backgroundColor,
+    cardColor,
+  } = useNode((n: any) => ({ ...n.data.props }));
   return (
     <div className="space-y-3">
-      <Row><Label label="Titre" /><Input value={title} onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))} /></Row>
-      <Row><Label label="Sous-titre" /><Textarea rows={2} value={subtitle} onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))} /></Row>
-      <Row><Label label="Exigences (titre|détail|required)" /><Textarea rows={6} value={(requirements || []).map((r: any) => `${r.label}|${r.detail}|${r.required ? 'true' : 'false'}`).join('\n')} onChange={(e: any) => setProp((p: any) => { p.requirements = parsePipeItems(e.target.value, ([label, detail, required], raw) => ({ label: label || raw, detail: detail || '', required: required !== 'false' && required !== 'non' && required !== '0' })); })} /></Row>
-      <Row><Label label="Processus (phase|titre|détail|délai)" /><Textarea rows={5} value={(process || []).map((s: any) => `${s.phase}|${s.title}|${s.detail}|${s.delay}`).join('\n')} onChange={(e: any) => setProp((p: any) => { p.process = parsePipeItems(e.target.value, ([phase, title, detail, delay], raw) => ({ phase: phase || '01', title: title || raw, detail: detail || '', delay: delay || '' })); })} /></Row>
-      <Row><Label label="Documents" /><Textarea rows={4} value={(documents || []).join('\n')} onChange={(e: any) => setProp((p: any) => (p.documents = splitLines(e.target.value)))} /></Row>
+      <Row>
+        <Label label="Titre" />
+        <Input
+          value={title}
+          onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Sous-titre" />
+        <Textarea
+          rows={2}
+          value={subtitle}
+          onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Exigences (titre|détail|required)" />
+        <Textarea
+          rows={6}
+          value={(requirements || [])
+            .map((r: any) => `${r.label}|${r.detail}|${r.required ? 'true' : 'false'}`)
+            .join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.requirements = parsePipeItems(e.target.value, ([label, detail, required], raw) => ({
+                label: label || raw,
+                detail: detail || '',
+                required: required !== 'false' && required !== 'non' && required !== '0',
+              }));
+            })
+          }
+        />
+      </Row>
+      <Row>
+        <Label label="Processus (phase|titre|détail|délai)" />
+        <Textarea
+          rows={5}
+          value={(process || [])
+            .map((s: any) => `${s.phase}|${s.title}|${s.detail}|${s.delay}`)
+            .join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.process = parsePipeItems(e.target.value, ([phase, title, detail, delay], raw) => ({
+                phase: phase || '01',
+                title: title || raw,
+                detail: detail || '',
+                delay: delay || '',
+              }));
+            })
+          }
+        />
+      </Row>
+      <Row>
+        <Label label="Documents" />
+        <Textarea
+          rows={4}
+          value={(documents || []).join('\n')}
+          onChange={(e: any) => setProp((p: any) => (p.documents = splitLines(e.target.value)))}
+        />
+      </Row>
       <Grid2>
-        <Row><Label label="CTA" /><Input value={ctaLabel} onChange={(e: any) => setProp((p: any) => (p.ctaLabel = e.target.value))} /></Row>
-        <Row><Label label="Lien CTA" /><Input value={ctaHref} onChange={(e: any) => setProp((p: any) => (p.ctaHref = e.target.value))} /></Row>
-        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))} /></Row>
-        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))} /></Row>
+        <Row>
+          <Label label="CTA" />
+          <Input
+            value={ctaLabel}
+            onChange={(e: any) => setProp((p: any) => (p.ctaLabel = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Lien CTA" />
+          <Input
+            value={ctaHref}
+            onChange={(e: any) => setProp((p: any) => (p.ctaHref = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Accent" />
+          <Color
+            value={accentColor}
+            onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Fond" />
+          <Color
+            value={backgroundColor}
+            onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))}
+          />
+        </Row>
       </Grid2>
-      <Row><Label label="Fond cartes" /><Color value={cardColor} onChange={(e: any) => setProp((p: any) => (p.cardColor = e.target.value))} /></Row>
+      <Row>
+        <Label label="Fond cartes" />
+        <Color
+          value={cardColor}
+          onChange={(e: any) => setProp((p: any) => (p.cardColor = e.target.value))}
+        />
+      </Row>
     </div>
   );
 };
@@ -5092,19 +6245,51 @@ CertificationRequirementsPremiumBlock.craft = {
   displayName: 'Certification premium',
   props: {
     title: 'Dossier certification / agrément',
-    subtitle: 'Présentez les pièces, critères et délais nécessaires pour constituer un dossier recevable.',
+    subtitle:
+      'Présentez les pièces, critères et délais nécessaires pour constituer un dossier recevable.',
     requirements: [
-      { label: 'Formulaire renseigné', detail: 'Demande officielle complétée et signée.', required: true },
-      { label: 'Pièces administratives', detail: 'Identification de la structure et responsables.', required: true },
-      { label: 'Références techniques', detail: 'Expériences, qualifications ou projets réalisés.', required: true },
-      { label: 'Engagement qualité', detail: 'Respect des exigences de sécurité et conformité.', required: false },
+      {
+        label: 'Formulaire renseigné',
+        detail: 'Demande officielle complétée et signée.',
+        required: true,
+      },
+      {
+        label: 'Pièces administratives',
+        detail: 'Identification de la structure et responsables.',
+        required: true,
+      },
+      {
+        label: 'Références techniques',
+        detail: 'Expériences, qualifications ou projets réalisés.',
+        required: true,
+      },
+      {
+        label: 'Engagement qualité',
+        detail: 'Respect des exigences de sécurité et conformité.',
+        required: false,
+      },
     ],
     process: [
       { phase: '01', title: 'Dépôt', detail: 'Réception et contrôle de complétude.', delay: 'J0' },
-      { phase: '02', title: 'Instruction', detail: 'Analyse technique et demande de compléments si besoin.', delay: '5-10 j' },
-      { phase: '03', title: 'Décision', detail: 'Notification, recommandations et suivi.', delay: 'Final' },
+      {
+        phase: '02',
+        title: 'Instruction',
+        detail: 'Analyse technique et demande de compléments si besoin.',
+        delay: '5-10 j',
+      },
+      {
+        phase: '03',
+        title: 'Décision',
+        detail: 'Notification, recommandations et suivi.',
+        delay: 'Final',
+      },
     ],
-    documents: ['Formulaire de demande', 'Guide des critères', 'Liste des pièces', 'Contact assistance dossier'],
+    documents: [
+      'Formulaire de demande',
+      'Guide des critères',
+      'Liste des pièces',
+      'Contact assistance dossier',
+    ],
     ctaLabel: 'Demander un accompagnement',
     ctaHref: '/contact',
     accentColor: '#f59e0b',
@@ -5121,39 +6306,125 @@ export const FAQPremiumBlock = (props: any) => {
     subtitle = 'Réponses claires pour réduire les frictions avant contact ou inscription.',
     categories = ['Contrôle', 'Formation', 'Documents', 'Délais'],
     items = [
-      { category: 'Contrôle', question: 'Comment préparer une demande de contrôle ?', answer: 'Rassemblez les informations sur l’installation, les plans disponibles et les coordonnées du responsable technique.' },
-      { category: 'Formation', question: 'Les formations sont-elles adaptées aux entreprises ?', answer: 'Oui, les parcours peuvent être proposés en session dédiée ou adaptés au niveau des équipes.' },
-      { category: 'Documents', question: 'Puis-je demander une assistance avant dépôt ?', answer: 'Oui, PROQUELEC peut orienter vers les documents utiles et les points de vigilance.' },
+      {
+        category: 'Contrôle',
+        question: 'Comment préparer une demande de contrôle ?',
+        answer:
+          'Rassemblez les informations sur l’installation, les plans disponibles et les coordonnées du responsable technique.',
+      },
+      {
+        category: 'Formation',
+        question: 'Les formations sont-elles adaptées aux entreprises ?',
+        answer:
+          'Oui, les parcours peuvent être proposés en session dédiée ou adaptés au niveau des équipes.',
+      },
+      {
+        category: 'Documents',
+        question: 'Puis-je demander une assistance avant dépôt ?',
+        answer:
+          'Oui, PROQUELEC peut orienter vers les documents utiles et les points de vigilance.',
+      },
     ],
     accentColor = '#2563eb',
     backgroundColor = '#ffffff',
   } = props;
-  const { connectors: { connect, drag } } = useNode();
+  const {
+    connectors: { connect, drag },
+  } = useNode();
   const u = getUniversalStyles(props);
   const [activeCategory, setActiveCategory] = useState((categories || [])[0] || 'Toutes');
   const [open, setOpen] = useState<number | null>(0);
-  const filtered = (items || []).filter((item: any) => !activeCategory || activeCategory === 'Toutes' || item.category === activeCategory);
+  const filtered = (items || []).filter(
+    (item: any) =>
+      !activeCategory || activeCategory === 'Toutes' || item.category === activeCategory,
+  );
   return (
-    <section ref={(r: any) => { if (r) connect(drag(r)); }} style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }} className={'proquelec-builder-node ' + u.className}>
+    <section
+      ref={(r: any) => {
+        if (r) connect(drag(r));
+      }}
+      style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }}
+      className={'proquelec-builder-node ' + u.className}
+    >
       <div style={{ maxWidth: 760, marginBottom: 22 }}>
-        <p style={{ margin: '0 0 8px', color: accentColor, fontSize: 12, fontWeight: 900, letterSpacing: 1.5, textTransform: 'uppercase' }}>FAQ</p>
-        <h3 style={{ margin: 0, color: '#0f172a', fontSize: 32, lineHeight: 1.15, fontWeight: 900 }}>{resolveDynamicContent(title)}</h3>
-        <p style={{ margin: '10px 0 0', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>{resolveDynamicContent(subtitle)}</p>
+        <p
+          style={{
+            margin: '0 0 8px',
+            color: accentColor,
+            fontSize: 12,
+            fontWeight: 900,
+            letterSpacing: 1.5,
+            textTransform: 'uppercase',
+          }}
+        >
+          FAQ
+        </p>
+        <h3
+          style={{ margin: 0, color: '#0f172a', fontSize: 32, lineHeight: 1.15, fontWeight: 900 }}
+        >
+          {resolveDynamicContent(title)}
+        </h3>
+        <p style={{ margin: '10px 0 0', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>
+          {resolveDynamicContent(subtitle)}
+        </p>
       </div>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
         {['Toutes', ...(categories || [])].map((cat, index) => (
-          <button key={index} type="button" onClick={() => { setActiveCategory(cat); setOpen(0); }} style={{ border: 'none', borderRadius: 999, padding: '8px 12px', cursor: 'pointer', fontWeight: 850, fontSize: 12, background: activeCategory === cat ? accentColor : '#f1f5f9', color: activeCategory === cat ? '#ffffff' : '#334155' }}>
+          <button
+            key={index}
+            type="button"
+            onClick={() => {
+              setActiveCategory(cat);
+              setOpen(0);
+            }}
+            style={{
+              border: 'none',
+              borderRadius: 999,
+              padding: '8px 12px',
+              cursor: 'pointer',
+              fontWeight: 850,
+              fontSize: 12,
+              background: activeCategory === cat ? accentColor : '#f1f5f9',
+              color: activeCategory === cat ? '#ffffff' : '#334155',
+            }}
+          >
             {resolveDynamicContent(cat)}
           </button>
         ))}
       </div>
       <div style={{ border: '1px solid #e2e8f0', borderRadius: 14, overflow: 'hidden' }}>
         {filtered.map((item: any, index: number) => (
-          <div key={index} style={{ borderTop: index ? '1px solid #e2e8f0' : 'none', background: '#ffffff' }}>
-            <button type="button" onClick={() => setOpen(open === index ? null : index)} style={{ width: '100%', border: 'none', background: open === index ? '#f8fafc' : '#ffffff', color: open === index ? accentColor : '#0f172a', padding: '16px 18px', textAlign: 'left', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', gap: 12, fontWeight: 900 }}>
-              <span>{resolveDynamicContent(item.question)}</span><span>{open === index ? '−' : '+'}</span>
+          <div
+            key={index}
+            style={{ borderTop: index ? '1px solid #e2e8f0' : 'none', background: '#ffffff' }}
+          >
+            <button
+              type="button"
+              onClick={() => setOpen(open === index ? null : index)}
+              style={{
+                width: '100%',
+                border: 'none',
+                background: open === index ? '#f8fafc' : '#ffffff',
+                color: open === index ? accentColor : '#0f172a',
+                padding: '16px 18px',
+                textAlign: 'left',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: 12,
+                fontWeight: 900,
+              }}
+            >
+              <span>{resolveDynamicContent(item.question)}</span>
+              <span>{open === index ? '−' : '+'}</span>
             </button>
-            {open === index && <div style={{ padding: '0 18px 16px', color: '#64748b', fontSize: 14, lineHeight: 1.7 }}>{resolveDynamicContent(item.answer)}</div>}
+            {open === index && (
+              <div
+                style={{ padding: '0 18px 16px', color: '#64748b', fontSize: 14, lineHeight: 1.7 }}
+              >
+                {resolveDynamicContent(item.answer)}
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -5161,16 +6432,73 @@ export const FAQPremiumBlock = (props: any) => {
   );
 };
 const FAQPremiumSettings = () => {
-  const { actions: { setProp }, title, subtitle, categories, items, accentColor, backgroundColor } = useNode((n: any) => ({ ...n.data.props }));
+  const {
+    actions: { setProp },
+    title,
+    subtitle,
+    categories,
+    items,
+    accentColor,
+    backgroundColor,
+  } = useNode((n: any) => ({ ...n.data.props }));
   return (
     <div className="space-y-3">
-      <Row><Label label="Titre" /><Input value={title} onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))} /></Row>
-      <Row><Label label="Sous-titre" /><Textarea rows={2} value={subtitle} onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))} /></Row>
-      <Row><Label label="Catégories" /><Textarea rows={3} value={(categories || []).join('\n')} onChange={(e: any) => setProp((p: any) => (p.categories = splitLines(e.target.value)))} /></Row>
-      <Row><Label label="Questions (catégorie|question|réponse)" /><Textarea rows={7} value={(items || []).map((i: any) => `${i.category}|${i.question}|${i.answer}`).join('\n')} onChange={(e: any) => setProp((p: any) => { p.items = parsePipeItems(e.target.value, ([category, question, ...answer], raw) => ({ category: category || 'Général', question: question || raw, answer: answer.join('|') || '' })); })} /></Row>
+      <Row>
+        <Label label="Titre" />
+        <Input
+          value={title}
+          onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Sous-titre" />
+        <Textarea
+          rows={2}
+          value={subtitle}
+          onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Catégories" />
+        <Textarea
+          rows={3}
+          value={(categories || []).join('\n')}
+          onChange={(e: any) => setProp((p: any) => (p.categories = splitLines(e.target.value)))}
+        />
+      </Row>
+      <Row>
+        <Label label="Questions (catégorie|question|réponse)" />
+        <Textarea
+          rows={7}
+          value={(items || [])
+            .map((i: any) => `${i.category}|${i.question}|${i.answer}`)
+            .join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.items = parsePipeItems(e.target.value, ([category, question, ...answer], raw) => ({
+                category: category || 'Général',
+                question: question || raw,
+                answer: answer.join('|') || '',
+              }));
+            })
+          }
+        />
+      </Row>
       <Grid2>
-        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))} /></Row>
-        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))} /></Row>
+        <Row>
+          <Label label="Accent" />
+          <Color
+            value={accentColor}
+            onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Fond" />
+          <Color
+            value={backgroundColor}
+            onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))}
+          />
+        </Row>
       </Grid2>
     </div>
   );
@@ -5182,9 +6510,24 @@ FAQPremiumBlock.craft = {
     subtitle: 'Réponses claires pour réduire les frictions avant contact ou inscription.',
     categories: ['Contrôle', 'Formation', 'Documents', 'Délais'],
     items: [
-      { category: 'Contrôle', question: 'Comment préparer une demande de contrôle ?', answer: 'Rassemblez les informations sur l’installation, les plans disponibles et les coordonnées du responsable technique.' },
-      { category: 'Formation', question: 'Les formations sont-elles adaptées aux entreprises ?', answer: 'Oui, les parcours peuvent être proposés en session dédiée ou adaptés au niveau des équipes.' },
-      { category: 'Documents', question: 'Puis-je demander une assistance avant dépôt ?', answer: 'Oui, PROQUELEC peut orienter vers les documents utiles et les points de vigilance.' },
+      {
+        category: 'Contrôle',
+        question: 'Comment préparer une demande de contrôle ?',
+        answer:
+          'Rassemblez les informations sur l’installation, les plans disponibles et les coordonnées du responsable technique.',
+      },
+      {
+        category: 'Formation',
+        question: 'Les formations sont-elles adaptées aux entreprises ?',
+        answer:
+          'Oui, les parcours peuvent être proposés en session dédiée ou adaptés au niveau des équipes.',
+      },
+      {
+        category: 'Documents',
+        question: 'Puis-je demander une assistance avant dépôt ?',
+        answer:
+          'Oui, PROQUELEC peut orienter vers les documents utiles et les points de vigilance.',
+      },
     ],
     accentColor: '#2563eb',
     backgroundColor: '#ffffff',
@@ -5199,9 +6542,21 @@ export const TestimonialsPremiumBlock = (props: any) => {
     subtitle = 'Des retours d’expérience pour valoriser la qualité de l’accompagnement PROQUELEC.',
     rating = 4.8,
     testimonials = [
-      { quote: 'PROQUELEC nous a aidés à clarifier les priorités avant réception du chantier.', author: 'Responsable technique', role: 'Entreprise partenaire' },
-      { quote: 'La formation a rendu les exigences de conformité plus concrètes pour notre équipe.', author: 'Chef d’équipe', role: 'Installateur électricien' },
-      { quote: 'Le suivi documentaire a facilité la préparation du dossier.', author: 'Gestionnaire projet', role: 'Collectivité' },
+      {
+        quote: 'PROQUELEC nous a aidés à clarifier les priorités avant réception du chantier.',
+        author: 'Responsable technique',
+        role: 'Entreprise partenaire',
+      },
+      {
+        quote: 'La formation a rendu les exigences de conformité plus concrètes pour notre équipe.',
+        author: 'Chef d’équipe',
+        role: 'Installateur électricien',
+      },
+      {
+        quote: 'Le suivi documentaire a facilité la préparation du dossier.',
+        author: 'Gestionnaire projet',
+        role: 'Collectivité',
+      },
     ],
     metrics = [
       { value: '500+', label: 'Installations auditées' },
@@ -5212,42 +6567,135 @@ export const TestimonialsPremiumBlock = (props: any) => {
     backgroundColor = '#0f172a',
     textColor = '#ffffff',
   } = props;
-  const { connectors: { connect, drag } } = useNode();
+  const {
+    connectors: { connect, drag },
+  } = useNode();
   const u = getUniversalStyles(props);
   const [current, setCurrent] = useState(0);
   const testimonialItems = testimonials || [];
   const active = testimonialItems[current] || testimonialItems[0] || {};
   const visibleStars = Math.min(5, Math.max(0, Math.round(Number(rating) || 0)));
   return (
-    <section ref={(r: any) => { if (r) connect(drag(r)); }} style={{ background: backgroundColor, color: textColor, borderRadius: 16, padding: 34, ...u.style }} className={'proquelec-builder-node ' + u.className}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 28, alignItems: 'center' }}>
+    <section
+      ref={(r: any) => {
+        if (r) connect(drag(r));
+      }}
+      style={{
+        background: backgroundColor,
+        color: textColor,
+        borderRadius: 16,
+        padding: 34,
+        ...u.style,
+      }}
+      className={'proquelec-builder-node ' + u.className}
+    >
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+          gap: 28,
+          alignItems: 'center',
+        }}
+      >
         <div>
-          <p style={{ margin: '0 0 8px', color: accentColor, fontSize: 12, fontWeight: 900, letterSpacing: 1.5, textTransform: 'uppercase' }}>Confiance</p>
-          <h3 style={{ margin: 0, fontSize: 34, lineHeight: 1.12, fontWeight: 900 }}>{resolveDynamicContent(title)}</h3>
-          <p style={{ margin: '12px 0 20px', color: 'rgba(255,255,255,0.72)', fontSize: 15, lineHeight: 1.7 }}>{resolveDynamicContent(subtitle)}</p>
+          <p
+            style={{
+              margin: '0 0 8px',
+              color: accentColor,
+              fontSize: 12,
+              fontWeight: 900,
+              letterSpacing: 1.5,
+              textTransform: 'uppercase',
+            }}
+          >
+            Confiance
+          </p>
+          <h3 style={{ margin: 0, fontSize: 34, lineHeight: 1.12, fontWeight: 900 }}>
+            {resolveDynamicContent(title)}
+          </h3>
+          <p
+            style={{
+              margin: '12px 0 20px',
+              color: 'rgba(255,255,255,0.72)',
+              fontSize: 15,
+              lineHeight: 1.7,
+            }}
+          >
+            {resolveDynamicContent(subtitle)}
+          </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20 }}>
             <span style={{ color: accentColor, fontSize: 24 }}>{'★'.repeat(visibleStars)}</span>
-            <span style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 850 }}>{Number(rating).toFixed(1)}/5</span>
+            <span style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 850 }}>
+              {Number(rating).toFixed(1)}/5
+            </span>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(120px,1fr))', gap: 10 }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit,minmax(120px,1fr))',
+              gap: 10,
+            }}
+          >
             {(metrics || []).map((metric: any, index: number) => (
-              <div key={index} style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, padding: 12 }}>
-                <p style={{ margin: 0, color: accentColor, fontSize: 22, fontWeight: 900 }}>{resolveDynamicContent(metric.value)}</p>
-                <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.68)', fontSize: 12 }}>{resolveDynamicContent(metric.label)}</p>
+              <div
+                key={index}
+                style={{
+                  background: 'rgba(255,255,255,0.08)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  borderRadius: 12,
+                  padding: 12,
+                }}
+              >
+                <p style={{ margin: 0, color: accentColor, fontSize: 22, fontWeight: 900 }}>
+                  {resolveDynamicContent(metric.value)}
+                </p>
+                <p style={{ margin: '4px 0 0', color: 'rgba(255,255,255,0.68)', fontSize: 12 }}>
+                  {resolveDynamicContent(metric.label)}
+                </p>
               </div>
             ))}
           </div>
         </div>
-        <article style={{ background: '#ffffff', color: '#0f172a', borderRadius: 16, padding: 28, boxShadow: '0 30px 80px rgba(0,0,0,0.25)' }}>
-          <div style={{ color: accentColor, fontSize: 44, lineHeight: 0.8, marginBottom: 10 }}>“</div>
-          <p style={{ margin: 0, color: '#334155', fontSize: 17, lineHeight: 1.7 }}>{resolveDynamicContent(active.quote)}</p>
+        <article
+          style={{
+            background: '#ffffff',
+            color: '#0f172a',
+            borderRadius: 16,
+            padding: 28,
+            boxShadow: '0 30px 80px rgba(0,0,0,0.25)',
+          }}
+        >
+          <div style={{ color: accentColor, fontSize: 44, lineHeight: 0.8, marginBottom: 10 }}>
+            “
+          </div>
+          <p style={{ margin: 0, color: '#334155', fontSize: 17, lineHeight: 1.7 }}>
+            {resolveDynamicContent(active.quote)}
+          </p>
           <div style={{ marginTop: 22 }}>
-            <p style={{ margin: 0, color: '#0f172a', fontSize: 15, fontWeight: 900 }}>{resolveDynamicContent(active.author)}</p>
-            <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: 13 }}>{resolveDynamicContent(active.role)}</p>
+            <p style={{ margin: 0, color: '#0f172a', fontSize: 15, fontWeight: 900 }}>
+              {resolveDynamicContent(active.author)}
+            </p>
+            <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: 13 }}>
+              {resolveDynamicContent(active.role)}
+            </p>
           </div>
           <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
             {testimonialItems.map((_: any, index: number) => (
-              <button key={index} type="button" aria-label={`Témoignage ${index + 1}`} onClick={() => setCurrent(index)} style={{ width: 9, height: 9, borderRadius: 999, border: 'none', padding: 0, cursor: 'pointer', background: current === index ? accentColor : '#cbd5e1' }} />
+              <button
+                key={index}
+                type="button"
+                aria-label={`Témoignage ${index + 1}`}
+                onClick={() => setCurrent(index)}
+                style={{
+                  width: 9,
+                  height: 9,
+                  borderRadius: 999,
+                  border: 'none',
+                  padding: 0,
+                  cursor: 'pointer',
+                  background: current === index ? accentColor : '#cbd5e1',
+                }}
+              />
             ))}
           </div>
         </article>
@@ -5256,19 +6704,101 @@ export const TestimonialsPremiumBlock = (props: any) => {
   );
 };
 const TestimonialsPremiumSettings = () => {
-  const { actions: { setProp }, title, subtitle, rating, testimonials, metrics, accentColor, backgroundColor, textColor } = useNode((n: any) => ({ ...n.data.props }));
+  const {
+    actions: { setProp },
+    title,
+    subtitle,
+    rating,
+    testimonials,
+    metrics,
+    accentColor,
+    backgroundColor,
+    textColor,
+  } = useNode((n: any) => ({ ...n.data.props }));
   return (
     <div className="space-y-3">
-      <Row><Label label="Titre" /><Input value={title} onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))} /></Row>
-      <Row><Label label="Sous-titre" /><Textarea rows={2} value={subtitle} onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))} /></Row>
-      <Row><Label label="Note" /><Input type="number" step="0.1" min="0" max="5" value={rating} onChange={(e: any) => setProp((p: any) => (p.rating = Number(e.target.value)))} /></Row>
-      <Row><Label label="Témoignages (citation|auteur|rôle)" /><Textarea rows={6} value={(testimonials || []).map((t: any) => `${t.quote}|${t.author}|${t.role}`).join('\n')} onChange={(e: any) => setProp((p: any) => { p.testimonials = parsePipeItems(e.target.value, ([quote, author, ...role], raw) => ({ quote: quote || raw, author: author || '', role: role.join('|') || '' })); })} /></Row>
-      <Row><Label label="Stats (valeur|label)" /><Textarea rows={4} value={(metrics || []).map((m: any) => `${m.value}|${m.label}`).join('\n')} onChange={(e: any) => setProp((p: any) => { p.metrics = parsePipeItems(e.target.value, ([value, ...label], raw) => ({ value: value || raw, label: label.join('|') || '' })); })} /></Row>
+      <Row>
+        <Label label="Titre" />
+        <Input
+          value={title}
+          onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Sous-titre" />
+        <Textarea
+          rows={2}
+          value={subtitle}
+          onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Note" />
+        <Input
+          type="number"
+          step="0.1"
+          min="0"
+          max="5"
+          value={rating}
+          onChange={(e: any) => setProp((p: any) => (p.rating = Number(e.target.value)))}
+        />
+      </Row>
+      <Row>
+        <Label label="Témoignages (citation|auteur|rôle)" />
+        <Textarea
+          rows={6}
+          value={(testimonials || [])
+            .map((t: any) => `${t.quote}|${t.author}|${t.role}`)
+            .join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.testimonials = parsePipeItems(e.target.value, ([quote, author, ...role], raw) => ({
+                quote: quote || raw,
+                author: author || '',
+                role: role.join('|') || '',
+              }));
+            })
+          }
+        />
+      </Row>
+      <Row>
+        <Label label="Stats (valeur|label)" />
+        <Textarea
+          rows={4}
+          value={(metrics || []).map((m: any) => `${m.value}|${m.label}`).join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.metrics = parsePipeItems(e.target.value, ([value, ...label], raw) => ({
+                value: value || raw,
+                label: label.join('|') || '',
+              }));
+            })
+          }
+        />
+      </Row>
       <Grid2>
-        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))} /></Row>
-        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))} /></Row>
+        <Row>
+          <Label label="Accent" />
+          <Color
+            value={accentColor}
+            onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Fond" />
+          <Color
+            value={backgroundColor}
+            onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))}
+          />
+        </Row>
       </Grid2>
-      <Row><Label label="Texte" /><Color value={textColor} onChange={(e: any) => setProp((p: any) => (p.textColor = e.target.value))} /></Row>
+      <Row>
+        <Label label="Texte" />
+        <Color
+          value={textColor}
+          onChange={(e: any) => setProp((p: any) => (p.textColor = e.target.value))}
+        />
+      </Row>
     </div>
   );
 };
@@ -5279,9 +6809,21 @@ TestimonialsPremiumBlock.craft = {
     subtitle: 'Des retours d’expérience pour valoriser la qualité de l’accompagnement PROQUELEC.',
     rating: 4.8,
     testimonials: [
-      { quote: 'PROQUELEC nous a aidés à clarifier les priorités avant réception du chantier.', author: 'Responsable technique', role: 'Entreprise partenaire' },
-      { quote: 'La formation a rendu les exigences de conformité plus concrètes pour notre équipe.', author: 'Chef d’équipe', role: 'Installateur électricien' },
-      { quote: 'Le suivi documentaire a facilité la préparation du dossier.', author: 'Gestionnaire projet', role: 'Collectivité' },
+      {
+        quote: 'PROQUELEC nous a aidés à clarifier les priorités avant réception du chantier.',
+        author: 'Responsable technique',
+        role: 'Entreprise partenaire',
+      },
+      {
+        quote: 'La formation a rendu les exigences de conformité plus concrètes pour notre équipe.',
+        author: 'Chef d’équipe',
+        role: 'Installateur électricien',
+      },
+      {
+        quote: 'Le suivi documentaire a facilité la préparation du dossier.',
+        author: 'Gestionnaire projet',
+        role: 'Collectivité',
+      },
     ],
     metrics: [
       { value: '500+', label: 'Installations auditées' },
@@ -5302,10 +6844,22 @@ export const WhyProquelecPremiumBlock = (props: any) => {
     subtitle = 'Expliquez clairement la valeur institutionnelle de PROQUELEC.',
     promise = 'Faire progresser la qualité des installations électriques au Sénégal.',
     pillars = [
-      { icon: '🛡️', title: 'Sécurité', description: 'Approche centrée sur la prévention des risques.' },
+      {
+        icon: '🛡️',
+        title: 'Sécurité',
+        description: 'Approche centrée sur la prévention des risques.',
+      },
       { icon: '📐', title: 'Méthode', description: 'Contrôle documenté, lisible et exploitable.' },
-      { icon: '🤝', title: 'Accompagnement', description: 'Orientation des professionnels et collectivités.' },
-      { icon: '✅', title: 'Conformité', description: 'Lecture technique alignée sur les exigences applicables.' },
+      {
+        icon: '🤝',
+        title: 'Accompagnement',
+        description: 'Orientation des professionnels et collectivités.',
+      },
+      {
+        icon: '✅',
+        title: 'Conformité',
+        description: 'Lecture technique alignée sur les exigences applicables.',
+      },
     ],
     stats = [
       { value: '1995', label: 'Depuis' },
@@ -5317,32 +6871,123 @@ export const WhyProquelecPremiumBlock = (props: any) => {
     accentColor = '#2563eb',
     backgroundColor = '#ffffff',
   } = props;
-  const { connectors: { connect, drag } } = useNode();
+  const {
+    connectors: { connect, drag },
+  } = useNode();
   const u = getUniversalStyles(props);
   return (
-    <section ref={(r: any) => { if (r) connect(drag(r)); }} style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }} className={'proquelec-builder-node ' + u.className}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 28 }}>
+    <section
+      ref={(r: any) => {
+        if (r) connect(drag(r));
+      }}
+      style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }}
+      className={'proquelec-builder-node ' + u.className}
+    >
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
+          gap: 28,
+        }}
+      >
         <div style={{ background: '#1e3a5f', color: '#ffffff', borderRadius: 16, padding: 28 }}>
-          <p style={{ margin: '0 0 8px', color: '#fbbf24', fontSize: 12, fontWeight: 900, letterSpacing: 1.5, textTransform: 'uppercase' }}>Pourquoi PROQUELEC</p>
-          <h3 style={{ margin: 0, fontSize: 34, lineHeight: 1.12, fontWeight: 900 }}>{resolveDynamicContent(title)}</h3>
-          <p style={{ margin: '12px 0 20px', color: '#dbeafe', fontSize: 15, lineHeight: 1.7 }}>{resolveDynamicContent(subtitle)}</p>
-          <p style={{ margin: 0, fontSize: 22, lineHeight: 1.35, fontWeight: 900 }}>{resolveDynamicContent(promise)}</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(92px,1fr))', gap: 10, marginTop: 24 }}>
+          <p
+            style={{
+              margin: '0 0 8px',
+              color: '#fbbf24',
+              fontSize: 12,
+              fontWeight: 900,
+              letterSpacing: 1.5,
+              textTransform: 'uppercase',
+            }}
+          >
+            Pourquoi PROQUELEC
+          </p>
+          <h3 style={{ margin: 0, fontSize: 34, lineHeight: 1.12, fontWeight: 900 }}>
+            {resolveDynamicContent(title)}
+          </h3>
+          <p style={{ margin: '12px 0 20px', color: '#dbeafe', fontSize: 15, lineHeight: 1.7 }}>
+            {resolveDynamicContent(subtitle)}
+          </p>
+          <p style={{ margin: 0, fontSize: 22, lineHeight: 1.35, fontWeight: 900 }}>
+            {resolveDynamicContent(promise)}
+          </p>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit,minmax(92px,1fr))',
+              gap: 10,
+              marginTop: 24,
+            }}
+          >
             {(stats || []).map((stat: any, index: number) => (
-              <div key={index} style={{ background: 'rgba(255,255,255,0.09)', borderRadius: 12, padding: 12 }}>
-                <p style={{ margin: 0, color: '#fbbf24', fontSize: 22, fontWeight: 900 }}>{resolveDynamicContent(stat.value)}</p>
-                <p style={{ margin: '4px 0 0', color: '#dbeafe', fontSize: 11 }}>{resolveDynamicContent(stat.label)}</p>
+              <div
+                key={index}
+                style={{ background: 'rgba(255,255,255,0.09)', borderRadius: 12, padding: 12 }}
+              >
+                <p style={{ margin: 0, color: '#fbbf24', fontSize: 22, fontWeight: 900 }}>
+                  {resolveDynamicContent(stat.value)}
+                </p>
+                <p style={{ margin: '4px 0 0', color: '#dbeafe', fontSize: 11 }}>
+                  {resolveDynamicContent(stat.label)}
+                </p>
               </div>
             ))}
           </div>
-          <a href={ctaHref} style={{ display: 'inline-flex', marginTop: 22, background: '#fbbf24', color: '#111827', textDecoration: 'none', padding: '11px 15px', borderRadius: 10, fontWeight: 900 }}>{resolveDynamicContent(ctaLabel)}</a>
+          <a
+            href={ctaHref}
+            style={{
+              display: 'inline-flex',
+              marginTop: 22,
+              background: '#fbbf24',
+              color: '#111827',
+              textDecoration: 'none',
+              padding: '11px 15px',
+              borderRadius: 10,
+              fontWeight: 900,
+            }}
+          >
+            {resolveDynamicContent(ctaLabel)}
+          </a>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(190px,1fr))', gap: 14 }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit,minmax(190px,1fr))',
+            gap: 14,
+          }}
+        >
           {(pillars || []).map((pillar: any, index: number) => (
-            <article key={index} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 14, padding: 18 }}>
-              <div style={{ width: 42, height: 42, borderRadius: 12, display: 'grid', placeItems: 'center', background: '#eff6ff', color: accentColor, fontSize: 22, marginBottom: 12 }}>{pillar.icon}</div>
-              <h4 style={{ margin: 0, color: '#0f172a', fontSize: 17, fontWeight: 900 }}>{resolveDynamicContent(pillar.title)}</h4>
-              <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: 13, lineHeight: 1.6 }}>{resolveDynamicContent(pillar.description)}</p>
+            <article
+              key={index}
+              style={{
+                background: '#f8fafc',
+                border: '1px solid #e2e8f0',
+                borderRadius: 14,
+                padding: 18,
+              }}
+            >
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 12,
+                  display: 'grid',
+                  placeItems: 'center',
+                  background: '#eff6ff',
+                  color: accentColor,
+                  fontSize: 22,
+                  marginBottom: 12,
+                }}
+              >
+                {pillar.icon}
+              </div>
+              <h4 style={{ margin: 0, color: '#0f172a', fontSize: 17, fontWeight: 900 }}>
+                {resolveDynamicContent(pillar.title)}
+              </h4>
+              <p style={{ margin: '8px 0 0', color: '#64748b', fontSize: 13, lineHeight: 1.6 }}>
+                {resolveDynamicContent(pillar.description)}
+              </p>
             </article>
           ))}
         </div>
@@ -5351,19 +6996,106 @@ export const WhyProquelecPremiumBlock = (props: any) => {
   );
 };
 const WhyProquelecPremiumSettings = () => {
-  const { actions: { setProp }, title, subtitle, promise, pillars, stats, ctaLabel, ctaHref, accentColor, backgroundColor } = useNode((n: any) => ({ ...n.data.props }));
+  const {
+    actions: { setProp },
+    title,
+    subtitle,
+    promise,
+    pillars,
+    stats,
+    ctaLabel,
+    ctaHref,
+    accentColor,
+    backgroundColor,
+  } = useNode((n: any) => ({ ...n.data.props }));
   return (
     <div className="space-y-3">
-      <Row><Label label="Titre" /><Textarea rows={2} value={title} onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))} /></Row>
-      <Row><Label label="Sous-titre" /><Textarea rows={2} value={subtitle} onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))} /></Row>
-      <Row><Label label="Promesse" /><Textarea rows={2} value={promise} onChange={(e: any) => setProp((p: any) => (p.promise = e.target.value))} /></Row>
-      <Row><Label label="Piliers (icône|titre|description)" /><Textarea rows={6} value={(pillars || []).map((p: any) => `${p.icon}|${p.title}|${p.description}`).join('\n')} onChange={(e: any) => setProp((p: any) => { p.pillars = parsePipeItems(e.target.value, ([icon, title, ...description], raw) => ({ icon: icon || '•', title: title || raw, description: description.join('|') || '' })); })} /></Row>
-      <Row><Label label="Stats (valeur|label)" /><Textarea rows={4} value={(stats || []).map((s: any) => `${s.value}|${s.label}`).join('\n')} onChange={(e: any) => setProp((p: any) => { p.stats = parsePipeItems(e.target.value, ([value, ...label], raw) => ({ value: value || raw, label: label.join('|') || '' })); })} /></Row>
+      <Row>
+        <Label label="Titre" />
+        <Textarea
+          rows={2}
+          value={title}
+          onChange={(e: any) => setProp((p: any) => (p.title = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Sous-titre" />
+        <Textarea
+          rows={2}
+          value={subtitle}
+          onChange={(e: any) => setProp((p: any) => (p.subtitle = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Promesse" />
+        <Textarea
+          rows={2}
+          value={promise}
+          onChange={(e: any) => setProp((p: any) => (p.promise = e.target.value))}
+        />
+      </Row>
+      <Row>
+        <Label label="Piliers (icône|titre|description)" />
+        <Textarea
+          rows={6}
+          value={(pillars || [])
+            .map((p: any) => `${p.icon}|${p.title}|${p.description}`)
+            .join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.pillars = parsePipeItems(e.target.value, ([icon, title, ...description], raw) => ({
+                icon: icon || '•',
+                title: title || raw,
+                description: description.join('|') || '',
+              }));
+            })
+          }
+        />
+      </Row>
+      <Row>
+        <Label label="Stats (valeur|label)" />
+        <Textarea
+          rows={4}
+          value={(stats || []).map((s: any) => `${s.value}|${s.label}`).join('\n')}
+          onChange={(e: any) =>
+            setProp((p: any) => {
+              p.stats = parsePipeItems(e.target.value, ([value, ...label], raw) => ({
+                value: value || raw,
+                label: label.join('|') || '',
+              }));
+            })
+          }
+        />
+      </Row>
       <Grid2>
-        <Row><Label label="CTA" /><Input value={ctaLabel} onChange={(e: any) => setProp((p: any) => (p.ctaLabel = e.target.value))} /></Row>
-        <Row><Label label="Lien CTA" /><Input value={ctaHref} onChange={(e: any) => setProp((p: any) => (p.ctaHref = e.target.value))} /></Row>
-        <Row><Label label="Accent" /><Color value={accentColor} onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))} /></Row>
-        <Row><Label label="Fond" /><Color value={backgroundColor} onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))} /></Row>
+        <Row>
+          <Label label="CTA" />
+          <Input
+            value={ctaLabel}
+            onChange={(e: any) => setProp((p: any) => (p.ctaLabel = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Lien CTA" />
+          <Input
+            value={ctaHref}
+            onChange={(e: any) => setProp((p: any) => (p.ctaHref = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Accent" />
+          <Color
+            value={accentColor}
+            onChange={(e: any) => setProp((p: any) => (p.accentColor = e.target.value))}
+          />
+        </Row>
+        <Row>
+          <Label label="Fond" />
+          <Color
+            value={backgroundColor}
+            onChange={(e: any) => setProp((p: any) => (p.backgroundColor = e.target.value))}
+          />
+        </Row>
       </Grid2>
     </div>
   );
@@ -5375,10 +7107,22 @@ WhyProquelecPremiumBlock.craft = {
     subtitle: 'Expliquez clairement la valeur institutionnelle de PROQUELEC.',
     promise: 'Faire progresser la qualité des installations électriques au Sénégal.',
     pillars: [
-      { icon: '🛡️', title: 'Sécurité', description: 'Approche centrée sur la prévention des risques.' },
+      {
+        icon: '🛡️',
+        title: 'Sécurité',
+        description: 'Approche centrée sur la prévention des risques.',
+      },
       { icon: '📐', title: 'Méthode', description: 'Contrôle documenté, lisible et exploitable.' },
-      { icon: '🤝', title: 'Accompagnement', description: 'Orientation des professionnels et collectivités.' },
-      { icon: '✅', title: 'Conformité', description: 'Lecture technique alignée sur les exigences applicables.' },
+      {
+        icon: '🤝',
+        title: 'Accompagnement',
+        description: 'Orientation des professionnels et collectivités.',
+      },
+      {
+        icon: '✅',
+        title: 'Conformité',
+        description: 'Lecture technique alignée sur les exigences applicables.',
+      },
     ],
     stats: [
       { value: '1995', label: 'Depuis' },
