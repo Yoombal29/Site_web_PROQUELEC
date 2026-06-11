@@ -620,6 +620,111 @@ async function findAllThemes() {
   return rows;
 }
 
+// --- Partner Workflow: Notifications ---
+async function findPendingEvents() {
+  const result = await pool.query(
+    'SELECT * FROM public.events WHERE status = $1 ORDER BY created_at DESC',
+    ['pending_review'],
+  );
+  return result.rows;
+}
+
+async function createNotification(data) {
+  const { user_id, title, message, type } = data;
+  const result = await pool.query(
+    `INSERT INTO public.notifications (recipient_id, title, message, type)
+         VALUES ($1, $2, $3, $4)
+         RETURNING id, recipient_id as user_id, title, message, type, is_read as read, created_at`,
+    [user_id, title, message, type || 'info'],
+  );
+  return result.rows[0];
+}
+
+async function findNotificationsByUser(userId) {
+  const result = await pool.query(
+    `SELECT id, recipient_id as user_id, title, message, type, is_read as read, created_at, link
+     FROM public.notifications
+     WHERE recipient_id = $1
+     ORDER BY created_at DESC LIMIT 50`,
+    [userId],
+  );
+  return result.rows;
+}
+
+async function markNotificationRead(id) {
+  const result = await pool.query(
+    `UPDATE public.notifications SET is_read = true WHERE id = $1
+     RETURNING id, recipient_id as user_id, title, message, type, is_read as read, created_at`,
+    [id],
+  );
+  return result.rows[0];
+}
+
+async function markAllNotificationsRead(userId) {
+  const result = await pool.query(
+    `UPDATE public.notifications SET is_read = true
+     WHERE recipient_id = $1 AND is_read = false
+     RETURNING id, recipient_id as user_id, title, message, type, is_read as read, created_at`,
+    [userId],
+  );
+  return result.rows;
+}
+
+// --- Partner Workflow: Event Comments ---
+async function findEventComments(eventId) {
+  const result = await pool.query(
+    `SELECT c.*, u.name as user_name, u.email as user_email
+         FROM public.event_comments c
+         JOIN public.users u ON c.user_id = u.id
+         WHERE c.event_id = $1
+         ORDER BY c.created_at ASC`,
+    [eventId],
+  );
+  return result.rows;
+}
+
+async function createEventComment(data) {
+  const { event_id, user_id, content } = data;
+  const result = await pool.query(
+    `INSERT INTO public.event_comments (event_id, user_id, content)
+         VALUES ($1, $2, $3)
+         RETURNING *`,
+    [event_id, user_id, content],
+  );
+  return result.rows[0];
+}
+
+// --- Partner Workflow: Event Tags ---
+async function findAllEventTags() {
+  const result = await pool.query('SELECT * FROM public.event_tags ORDER BY name');
+  return result.rows;
+}
+
+// --- Partner Workflow: Stats ---
+async function getPartnerStats(userId) {
+  const result = await pool.query(
+    `SELECT
+         COUNT(*)::int AS total_events,
+         COUNT(*) FILTER (WHERE status = 'approved')::int AS approved,
+         COUNT(*) FILTER (WHERE status = 'rejected')::int AS rejected,
+         COUNT(*) FILTER (WHERE status = 'pending_review')::int AS pending,
+         COALESCE(SUM(
+           (SELECT COUNT(*)::int FROM public.event_registrations WHERE event_id = e.id)
+         ), 0)::int AS total_registrations
+         FROM public.events e
+         WHERE e.organizer_id = $1`,
+    [userId],
+  );
+  return result.rows[0];
+}
+
+async function countPendingEvents() {
+  const result = await pool.query('SELECT COUNT(*)::int FROM public.events WHERE status = $1', [
+    'pending_review',
+  ]);
+  return parseInt(result.rows[0].count, 10);
+}
+
 module.exports = {
   findAllEvents,
   createEvent,
@@ -679,4 +784,14 @@ module.exports = {
   submitForm,
   findAllPlugins,
   findAllThemes,
+  findPendingEvents,
+  createNotification,
+  findNotificationsByUser,
+  markNotificationRead,
+  markAllNotificationsRead,
+  findEventComments,
+  createEventComment,
+  findAllEventTags,
+  getPartnerStats,
+  countPendingEvents,
 };

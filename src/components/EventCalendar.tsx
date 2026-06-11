@@ -6,7 +6,9 @@ import {
   Clock,
   Edit,
   MapPin,
+  MessageSquare,
   Plus,
+  Send,
   Trash2,
   Users,
 } from 'lucide-react';
@@ -81,7 +83,9 @@ type EventForm = {
   date: string;
   time: string;
   endTime: string;
+  endDate: string;
   location: string;
+  imageUrl: string;
   maxAttendees: string;
   category: EventCategory;
   eventStatus: EventStatus;
@@ -92,13 +96,25 @@ type EventForm = {
   detailsUrl: string;
 };
 
+type Comment = {
+  id: string;
+  event_id: string;
+  user_id: string;
+  content: string;
+  created_at: string;
+  user_name?: string;
+  user_email?: string;
+};
+
 const emptyForm = (): EventForm => ({
   title: '',
   description: '',
   date: new Date().toISOString().slice(0, 10),
   time: '09:00',
   endTime: '10:00',
+  endDate: '',
   location: '',
+  imageUrl: '',
   maxAttendees: '',
   category: 'autre',
   eventStatus: 'planifie',
@@ -164,7 +180,9 @@ const toForm = (event: CalendarEvent): EventForm => ({
     : event.date.toISOString().slice(0, 10),
   time: event.time,
   endTime: event.endTime,
+  endDate: '',
   location: event.location,
+  imageUrl: '',
   maxAttendees: event.maxAttendees ? String(event.maxAttendees) : '',
   category: event.category,
   eventStatus: event.eventStatus,
@@ -194,7 +212,9 @@ const buildPayload = (form: EventForm) => {
   return {
     title: form.title,
     date: start.toISOString(),
+    end_date: form.endDate || undefined,
     location: form.location,
+    image_url: form.imageUrl || undefined,
     details: JSON.stringify(details),
     status: form.publicationStatus,
     organizer_type: form.organizerType,
@@ -242,6 +262,8 @@ export function EventCalendar({ role = 'admin' }: { role?: 'admin' | 'partner' }
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [commentInput, setCommentInput] = useState('');
   const { toast } = useToast();
 
   const sortedEvents = useMemo(
@@ -391,6 +413,38 @@ export function EventCalendar({ role = 'admin' }: { role?: 'admin' | 'partner' }
     }
   };
 
+  const loadComments = async (eventId: string) => {
+    try {
+      const res = await fetch(`/api/cms/events/${eventId}/comments`, { headers: getAuthHeaders() });
+      if (res.ok) setComments(await res.json());
+    } catch {
+      // Le chargement des commentaires n'est pas bloquant
+    }
+  };
+
+  const handleSendComment = async () => {
+    if (!commentInput.trim() || !selectedEvent) return;
+    try {
+      const res = await fetch(`/api/cms/events/${selectedEvent.id}/comments`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ content: commentInput.trim() }),
+      });
+      if (res.ok) {
+        const newComment = await res.json();
+        setComments((prev) => [...prev, newComment]);
+        setCommentInput('');
+      }
+    } catch {
+      // L'envoi du commentaire n'est pas bloquant
+    }
+  };
+
+  // Load comments when selected event changes
+  useEffect(() => {
+    if (selectedEvent) loadComments(selectedEvent.id);
+  }, [selectedEvent?.id]);
+
   const deleteEvent = async (eventId: string) => {
     setSaving(true);
     try {
@@ -475,6 +529,19 @@ export function EventCalendar({ role = 'admin' }: { role?: 'admin' | 'partner' }
           />
         </div>
         <div>
+          <Label htmlFor="event-end-date">Date de fin (optionnel)</Label>
+          <Input
+            id="event-end-date"
+            type="date"
+            value={eventForm.endDate}
+            onChange={(e) => setEventForm((prev) => ({ ...prev, endDate: e.target.value }))}
+          />
+          <p className="mt-1 text-xs text-muted-foreground">Pour les événements multi-jours</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
           <Label htmlFor="event-time">Heure début *</Label>
           <Input
             id="event-time"
@@ -483,9 +550,6 @@ export function EventCalendar({ role = 'admin' }: { role?: 'admin' | 'partner' }
             onChange={(event) => setEventForm((prev) => ({ ...prev, time: event.target.value }))}
           />
         </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
         <div>
           <Label htmlFor="event-end-time">Heure fin</Label>
           <Input
@@ -495,6 +559,9 @@ export function EventCalendar({ role = 'admin' }: { role?: 'admin' | 'partner' }
             onChange={(event) => setEventForm((prev) => ({ ...prev, endTime: event.target.value }))}
           />
         </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
         <div>
           <Label htmlFor="event-max">Nb max participants</Label>
           <Input
@@ -516,6 +583,16 @@ export function EventCalendar({ role = 'admin' }: { role?: 'admin' | 'partner' }
           value={eventForm.location}
           onChange={(event) => setEventForm((prev) => ({ ...prev, location: event.target.value }))}
           placeholder="Lieu de l'événement"
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="event-image">Image à la une (URL)</Label>
+        <Input
+          id="event-image"
+          value={eventForm.imageUrl}
+          onChange={(e) => setEventForm((prev) => ({ ...prev, imageUrl: e.target.value }))}
+          placeholder="https://images.unsplash.com/..."
         />
       </div>
 
@@ -863,6 +940,59 @@ export function EventCalendar({ role = 'admin' }: { role?: 'admin' | 'partner' }
                     {publicationLabels[selectedEvent.publicationStatus]}
                   </Badge>
                 </div>
+
+                {/* Commentaires (Admin ↔ Partenaire) */}
+                {selectedEvent.id && (
+                  <div className="mt-6 border-t pt-4">
+                    <h4 className="mb-3 text-sm font-bold flex items-center gap-2">
+                      <MessageSquare className="h-4 w-4" />
+                      Commentaires
+                    </h4>
+                    <div className="mb-3 max-h-40 space-y-2 overflow-y-auto">
+                      {comments.length === 0 && (
+                        <p className="text-xs text-muted-foreground">Aucun commentaire</p>
+                      )}
+                      {comments.map((c) => (
+                        <div key={c.id} className="rounded-lg bg-slate-50 p-3 text-sm">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-semibold text-xs">{c.user_name}</span>
+                            <span className="text-[10px] text-muted-foreground">
+                              {new Date(c.created_at).toLocaleDateString('fr-FR', {
+                                day: '2-digit',
+                                month: 'short',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </span>
+                          </div>
+                          <p className="text-xs text-slate-700">{c.content}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex gap-2">
+                      <Input
+                        className="text-sm h-9"
+                        placeholder="Écrire un commentaire..."
+                        value={commentInput}
+                        onChange={(e) => setCommentInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            handleSendComment();
+                          }
+                        }}
+                      />
+                      <Button
+                        size="sm"
+                        className="h-9"
+                        onClick={handleSendComment}
+                        disabled={!commentInput.trim()}
+                      >
+                        <Send className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           )}

@@ -168,6 +168,10 @@ const formSubmissionSchema = z.object({
   submitted_at: z.string().optional(),
 });
 
+const commentSchema = z.object({
+  content: z.string().min(1, 'Contenu requis').max(2000),
+});
+
 const emailSchema = z.object({
   email: z.string().email('Email invalide'),
   name: z.string().optional(),
@@ -202,5 +206,6 @@ module.exports = {
   testimonialSchema,
   testimonialUpdateSchema,
   formSubmissionSchema,
+  commentSchema,
   emailSchema,
 };

@@ -41,6 +41,21 @@ async function updateEvent(id, data) {
     } catch (emailError) {
       console.warn('[CMS] Email de validation non envoyé:', emailError.message);
     }
+
+    // Créer une notification in-app pour le partenaire
+    const isApproved = data.status === 'published';
+    try {
+      await repo.createNotification({
+        user_id: previous.organizer_id,
+        title: isApproved ? '✅ Événement approuvé' : '❌ Événement refusé',
+        message: isApproved
+          ? `Votre événement "${previous.title}" a été approuvé et est visible sur le calendrier.`
+          : `Votre événement "${previous.title}" a été refusé.${data.review_comment ? ` Motif: ${data.review_comment}` : ''}`,
+        type: isApproved ? 'success' : 'error',
+      });
+    } catch (notifError) {
+      console.warn('[CMS] Notification non créée:', notifError.message);
+    }
   }
 
   return result;
@@ -287,6 +302,43 @@ async function submitForm(data) {
   return repo.submitForm(data);
 }
 
+// --- Partner Workflow: Notifications ---
+async function listNotifications(userId) {
+  return repo.findNotificationsByUser(userId);
+}
+async function markNotificationRead(id) {
+  return repo.markNotificationRead(id);
+}
+async function markAllNotificationsRead(userId) {
+  return repo.markAllNotificationsRead(userId);
+}
+
+// --- Partner Workflow: Event Comments ---
+async function listEventComments(eventId) {
+  return repo.findEventComments(eventId);
+}
+async function createEventComment(data) {
+  return repo.createEventComment(data);
+}
+
+// --- Partner Workflow: Event Tags ---
+async function listEventTags() {
+  return repo.findAllEventTags();
+}
+
+// --- Partner Workflow: Stats ---
+async function getPartnerStats(userId) {
+  return repo.getPartnerStats(userId);
+}
+
+// --- Partner Workflow: Pending Review Queue ---
+async function listPendingEvents() {
+  return repo.findPendingEvents();
+}
+async function countPendingEvents() {
+  return repo.countPendingEvents();
+}
+
 // --- Plugins & Themes ---
 async function listPlugins() {
   return repo.findAllPlugins();
@@ -351,6 +403,15 @@ module.exports = {
   deleteTestimonial,
   listForms,
   submitForm,
+  listNotifications,
+  markNotificationRead,
+  markAllNotificationsRead,
+  listEventComments,
+  createEventComment,
+  listEventTags,
+  getPartnerStats,
+  listPendingEvents,
+  countPendingEvents,
   listPlugins,
   listThemes,
 };

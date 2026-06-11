@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useLayoutEffect, type ReactNode } from 'react';
+import { NotificationCenter } from '@/components/NotificationCenter';
 import {
   Menu,
   X,
@@ -979,17 +980,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
                         </div>
                       )}
                     </div>
-                    {/* Notification Bell */}
-                    <div className="relative">
-                      <button
-                        type="button"
-                        className="p-2 rounded-full hover:bg-white/10 transition-colors relative group"
-                        aria-label="Notifications"
-                      >
-                        <Bell className="h-5 w-5 text-white" />
-                        <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
-                      </button>
-                    </div>
+                    <NotificationCenter />
                   </div>
                 ) : (
                   <Link to="/connexion">

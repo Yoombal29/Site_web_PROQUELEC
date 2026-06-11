@@ -457,6 +457,77 @@ async function listThemes(req, res) {
   }
 }
 
+// --- Partner Workflow: Notifications ---
+async function listNotifications(req, res) {
+  try {
+    res.json(await service.listNotifications(req.user.id));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+async function markNotificationRead(req, res) {
+  try {
+    res.json(await service.markNotificationRead(req.params.id));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+async function markAllNotificationsRead(req, res) {
+  try {
+    res.json(await service.markAllNotificationsRead(req.user.id));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// --- Partner Workflow: Event Comments ---
+async function listEventComments(req, res) {
+  try {
+    res.json(await service.listEventComments(req.params.eventId));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+async function createEventComment(req, res) {
+  try {
+    const r = await service.createEventComment({
+      event_id: req.params.eventId,
+      user_id: req.user.id,
+      content: req.body.content,
+    });
+    res.status(201).json(r);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// --- Partner Workflow: Event Tags ---
+async function listEventTags(req, res) {
+  try {
+    res.json(await service.listEventTags());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// --- Partner Workflow: Stats ---
+async function getPartnerStats(req, res) {
+  try {
+    res.json(await service.getPartnerStats(req.user.id));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// --- Partner Workflow: Pending Review Queue ---
+async function listPendingEvents(req, res) {
+  try {
+    res.json(await service.listPendingEvents());
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 // --- Email ---
 const { sendEmail, emailTemplates } = require('../../email-service');
 
@@ -550,6 +621,14 @@ module.exports = {
   deleteTestimonial,
   listForms,
   submitForm,
+  listNotifications,
+  markNotificationRead,
+  markAllNotificationsRead,
+  listEventComments,
+  createEventComment,
+  listEventTags,
+  getPartnerStats,
+  listPendingEvents,
   listPlugins,
   listThemes,
   sendWelcomeEmail,

@@ -41,6 +41,7 @@ import {
   ImageIcon,
   CreditCard,
   Rocket,
+  ClipboardCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -74,6 +75,7 @@ import InfraDocs from './InfraDocs';
 import { DocumentManager } from '@/components/DocumentManager';
 import ProjectList from '@/pages/projects/ProjectList';
 import { EventCalendar } from '@/components/EventCalendar';
+import EventModerationPanel from './EventModerationPanel';
 import AdminAIControlPanel from './AdminAIControlPanel';
 import AdminAcademyPanel from './AdminAcademyPanel';
 import { AdminAutoRepair } from './AdminAutoRepair';
@@ -836,6 +838,12 @@ const AdminDashboard: React.FC = () => {
       icon: <CreditCard className="w-5 h-5" />,
       color: 'text-emerald-600',
     },
+    {
+      id: 'event-moderation',
+      label: 'Validations',
+      icon: <ClipboardCheck className="w-5 h-5" />,
+      color: 'text-amber-600',
+    },
   ];
 
   return (
@@ -1465,6 +1473,11 @@ const AdminDashboard: React.FC = () => {
                   <p className="text-muted-foreground">Gestion du calendrier et des événements</p>
                 </div>
                 <EventCalendar />
+              </div>
+            )}
+            {activeTab === 'event-moderation' && (
+              <div className="animate-fade-in">
+                <EventModerationPanel />
               </div>
             )}
             {activeTab === 'certifications' && (

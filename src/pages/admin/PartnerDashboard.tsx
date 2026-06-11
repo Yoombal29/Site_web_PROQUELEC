@@ -1,6 +1,6 @@
 import { useSession } from '@/hooks/useSession';
 import { useUserRole } from '@/hooks/useUserRole';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -12,12 +12,75 @@ import {
   Loader2,
   LayoutDashboard,
   Calendar,
+  CheckCircle,
+  Clock,
   Image as ImageIcon,
   LogOut,
   ChevronRight,
   User,
+  Users,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+function PartnerStatsDashboard() {
+  const [stats, setStats] = useState({
+    total: 0,
+    approved: 0,
+    rejected: 0,
+    pending: 0,
+    registrations: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const token = localStorage.getItem('token') || localStorage.getItem('access_token') || '';
+        const res = await fetch('/api/cms/partner/stats', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) setStats(await res.json());
+      } catch {
+        // Silencieux : les stats ne sont pas bloquantes
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading) return <Loader2 className="animate-spin w-10 h-10 text-blue-600" />;
+
+  const cards = [
+    { label: 'Événements soumis', value: stats.total, color: 'bg-blue-500', icon: Calendar },
+    { label: 'Approuvés', value: stats.approved, color: 'bg-green-500', icon: CheckCircle },
+    { label: 'En attente', value: stats.pending, color: 'bg-amber-500', icon: Clock },
+    { label: 'Inscriptions', value: stats.registrations, color: 'bg-purple-500', icon: Users },
+  ];
+
+  return (
+    <div className="grid grid-cols-2 gap-6">
+      {cards.map((card) => (
+        <motion.div
+          key={card.label}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-sm font-bold text-slate-500 uppercase tracking-wider">
+              {card.label}
+            </span>
+            <div className={`${card.color} p-2.5 rounded-xl text-white`}>
+              <card.icon className="w-5 h-5" />
+            </div>
+          </div>
+          <p className="text-4xl font-black text-slate-900">{card.value}</p>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
 import { cn } from '@/lib/utils';
 
 export default function PartnerDashboard() {
@@ -43,7 +106,7 @@ export default function PartnerDashboard() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'overview':
-        return <DashboardHome />;
+        return <PartnerStatsDashboard />;
       case 'events':
         return (
           <motion.section

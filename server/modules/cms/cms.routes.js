@@ -28,6 +28,7 @@ const {
   testimonialSchema,
   testimonialUpdateSchema,
   formSubmissionSchema,
+  commentSchema,
   emailSchema,
 } = require('./cms.validator');
 
@@ -160,6 +161,29 @@ router.put(
   ctrl.updateTestimonial,
 );
 router.delete('/testimonials/:id', authenticateToken, ctrl.deleteTestimonial);
+
+// --- Partner Workflow: Notifications ---
+router.get('/notifications', authenticateToken, ctrl.listNotifications);
+router.put('/notifications/:id/read', authenticateToken, ctrl.markNotificationRead);
+router.put('/notifications/read-all', authenticateToken, ctrl.markAllNotificationsRead);
+
+// --- Partner Workflow: Event Comments ---
+router.get('/events/:eventId/comments', authenticateToken, ctrl.listEventComments);
+router.post(
+  '/events/:eventId/comments',
+  authenticateToken,
+  validate(commentSchema),
+  ctrl.createEventComment,
+);
+
+// --- Partner Workflow: Event Tags ---
+router.get('/event-tags', ctrl.listEventTags);
+
+// --- Partner Workflow: Partner Stats ---
+router.get('/partner/stats', authenticateToken, ctrl.getPartnerStats);
+
+// --- Partner Workflow: Pending Review Queue ---
+router.get('/admin/events/pending', authenticateToken, ctrl.listPendingEvents);
 
 router.get('/forms', ctrl.listForms);
 router.post('/form-submissions', validate(formSubmissionSchema), ctrl.submitForm);
