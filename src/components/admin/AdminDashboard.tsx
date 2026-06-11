@@ -84,7 +84,6 @@ import AdminPartnersPanel from './AdminPartnersPanel';
 import { AdminDatabasePanel } from './AdminDatabasePanel';
 import AdminSiteSettingsPanel from './AdminSiteSettingsPanel';
 import { MenuManager } from './MenuManager';
-import CmsCapabilityCenter from './CmsCapabilityCenter';
 import AgentHub from './agents/AgentHub';
 import PageSectionsAdmin from '@/pages/admin/PageSectionsAdmin';
 import AdminThemePanel from './AdminThemePanel';
@@ -1404,7 +1403,10 @@ const AdminDashboard: React.FC = () => {
 
             {activeTab === 'cms-capabilities' && (
               <div className="animate-fade-in">
-                <CmsCapabilityCenter />
+                <div className="bg-card border border-border rounded-xl p-6 text-center text-muted-foreground">
+                  <h2 className="text-xl font-bold mb-2">Centre de Capacités CMS</h2>
+                  <p>Composant en cours de développement.</p>
+                </div>
               </div>
             )}
 
