@@ -351,6 +351,48 @@ mountContactRoutes(app, pool, {
 const { mountAiFeaturesRoutes } = require('./routes/inline/ai-features');
 mountAiFeaturesRoutes(app, pool);
 
+// AI Config API (save/load provider keys from DB)
+app.get('/api/ai/config', authenticateToken, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT key, value, updated_at FROM ai_config ORDER BY key');
+    const configs = {};
+    for (const row of result.rows) {
+      if (row.key.endsWith('_key') && row.value.length > 8) {
+        configs[row.key] = row.value.slice(-4).padStart(row.value.length, '\u2022');
+        configs[row.key + '_raw'] = row.value;
+      } else {
+        configs[row.key] = row.value;
+      }
+    }
+    res.json({ success: true, configs });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.post('/api/ai/config', authenticateToken, async (req, res) => {
+  try {
+    const { configs } = req.body;
+    if (!configs || typeof configs !== 'object') {
+      return res.status(400).json({ success: false, error: 'Body doit contenir un objet configs' });
+    }
+    let saved = 0;
+    for (const [key, value] of Object.entries(configs)) {
+      const allowedPrefixes = ['password', 'security_answer', 'admin_password', 'provider_'];
+      const isAllowed = allowedPrefixes.some((prefix) => key.startsWith(prefix));
+      if (!isAllowed) continue;
+      await pool.query(
+        'INSERT INTO ai_config (key, value, updated_at) VALUES ($1, $2, NOW()) ON CONFLICT (key) DO UPDATE SET value = $2, updated_at = NOW()',
+        [key, String(value)],
+      );
+      saved++;
+    }
+    res.json({ success: true, saved, message: saved + ' configuration(s) sauvegardee(s)' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // Observatoire
 const { mountObservatoireRoutes } = require('./routes/inline/observatoire');
 mountObservatoireRoutes(app, pool);
@@ -786,12 +828,217 @@ const upload = multer({ storage, limits: { fileSize: 500 * 1024 * 1024 } });
 // --- AI ROUTES (REMAINING) ---
 const axios = require('axios');
 
+// AI Provider ping endpoint (used by /expert/ai-providers to test connection)
+app.post('/api/ai/ping-provider', authenticateToken, async (req, res) => {
+  const { providerId, apiKey } = req.body;
+  if (!providerId || !apiKey) {
+    return res.status(400).json({ success: false, error: 'providerId et apiKey requis' });
+  }
+  try {
+    const endpoints = {
+      groq: {
+        url: 'https://api.groq.com/openai/v1/chat/completions',
+        model: 'llama-3.3-70b-versatile',
+      },
+      openai: { url: 'https://api.openai.com/v1/chat/completions', model: 'gpt-4o' },
+      anthropic: {
+        url: 'https://api.anthropic.com/v1/messages',
+        model: 'claude-sonnet-4-20250514',
+      },
+      gemini: {
+        url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+        model: 'gemini-pro',
+      },
+      deepseek: { url: 'https://api.deepseek.com/v1/chat/completions', model: 'deepseek-chat' },
+      mistral: { url: 'https://api.mistral.ai/v1/chat/completions', model: 'mistral-large-latest' },
+      openrouter: { url: 'https://openrouter.ai/api/v1/chat/completions', model: 'openai/gpt-4o' },
+      together: {
+        url: 'https://api.together.xyz/v1/chat/completions',
+        model: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
+      },
+      fireworks: {
+        url: 'https://api.fireworks.ai/inference/v1/chat/completions',
+        model: 'accounts/fireworks/models/mixtral-8x7b-instruct',
+      },
+      tavily: { url: 'https://api.tavily.com/search', model: '' },
+    };
+    const cfg = endpoints[providerId];
+    if (!cfg) return res.json({ success: false, error: 'Provider inconnu' });
+
+    const start = Date.now();
+    let response;
+
+    if (providerId === 'anthropic') {
+      response = await fetch(cfg.url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: cfg.model,
+          max_tokens: 10,
+          messages: [{ role: 'user', content: 'test' }],
+        }),
+      });
+    } else if (providerId === 'gemini') {
+      response = await fetch(`${cfg.url}?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: 'test' }] }] }),
+      });
+    } else if (providerId === 'tavily') {
+      response = await fetch(cfg.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ api_key: apiKey, query: 'test' }),
+      });
+    } else {
+      // OpenAI-compatible
+      response = await fetch(cfg.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+        body: JSON.stringify({
+          model: cfg.model,
+          max_tokens: 10,
+          messages: [{ role: 'user', content: 'test' }],
+        }),
+      });
+    }
+
+    const latency = Date.now() - start;
+    if (response.ok) {
+      return res.json({ success: true, latency });
+    }
+    const errBody = await response.text().catch(() => '');
+    return res.json({
+      success: false,
+      latency,
+      error: `${response.status}: ${errBody.slice(0, 100)}`,
+    });
+  } catch (err) {
+    res.json({ success: false, latency: 0, error: err.message });
+  }
+});
+
+async function getAiConfigFromDb() {
+  try {
+    const result = await pool.query('SELECT key, value FROM ai_config WHERE key LIKE $1', [
+      'provider_%',
+    ]);
+    const configs = {};
+    for (const row of result.rows) {
+      configs[row.key] = row.value;
+    }
+    return configs;
+  } catch {
+    return {};
+  }
+}
+
+function getEnabledProvider(configs) {
+  const providerMap = [
+    { id: 'groq', url: 'https://api.groq.com/openai/v1/chat/completions', keyPrefix: 'gsk_' },
+    { id: 'openai', url: 'https://api.openai.com/v1/chat/completions', keyPrefix: 'sk-' },
+    { id: 'anthropic', url: 'https://api.anthropic.com/v1/messages', keyPrefix: 'sk-ant-' },
+    {
+      id: 'gemini',
+      url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+      keyPrefix: 'AIza',
+    },
+    { id: 'deepseek', url: 'https://api.deepseek.com/v1/chat/completions', keyPrefix: 'sk-' },
+    { id: 'mistral', url: 'https://api.mistral.ai/v1/chat/completions', keyPrefix: 'MISTRAL_' },
+    { id: 'openrouter', url: 'https://openrouter.ai/api/v1/chat/completions', keyPrefix: 'sk-or-' },
+  ];
+  for (const p of providerMap) {
+    if (configs[`provider_${p.id}_enabled`] === 'true' && configs[`provider_${p.id}_key`]) {
+      return { ...p, key: configs[`provider_${p.id}_key`] };
+    }
+  }
+  return null;
+}
+
 app.post('/api/ai/chat', async (req, res) => {
   try {
-    if (REMOTE_AI_ENABLED) {
+    // Priorité 1 : REMOTE_AI activé via .env
+    if (REMOTE_AI_ENABLED && AI_API_KEY) {
       const data = await callRemoteAI(req.body);
       return res.json(data);
     }
+
+    // Priorité 2 : Provider configuré depuis l'interface /expert/ai-providers
+    const dbConfigs = await getAiConfigFromDb();
+    const provider = getEnabledProvider(dbConfigs);
+    if (provider) {
+      const payload = {
+        model:
+          req.body.model ||
+          (provider.id === 'groq'
+            ? 'llama-3.3-70b-versatile'
+            : provider.id === 'anthropic'
+              ? 'claude-sonnet-4-20250514'
+              : provider.id === 'gemini'
+                ? 'gemini-pro'
+                : provider.id === 'deepseek'
+                  ? 'deepseek-chat'
+                  : provider.id === 'mistral'
+                    ? 'mistral-large-latest'
+                    : provider.id === 'openrouter'
+                      ? 'openai/gpt-4o'
+                      : 'gpt-4o'),
+        messages: req.body.messages || [{ role: 'user', content: req.body.prompt || '' }],
+        max_tokens: req.body.max_tokens || 1024,
+      };
+
+      if (provider.id === 'anthropic') {
+        const response = await fetch(provider.url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': provider.key,
+            'anthropic-version': '2023-06-01',
+          },
+          body: JSON.stringify({ ...payload, messages: payload.messages }),
+        });
+        if (!response.ok) throw new Error(`Anthropic API error: ${response.status}`);
+        const data = await response.json();
+        return res.json(data);
+      }
+
+      if (provider.id === 'gemini') {
+        const response = await fetch(`${provider.url}?key=${provider.key}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: req.body.prompt || '' }] }] }),
+        });
+        if (!response.ok) throw new Error(`Gemini API error: ${response.status}`);
+        const data = await response.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || JSON.stringify(data);
+        return res.json({ response: text, model: 'gemini-pro' });
+      }
+
+      // OpenAI-compatible (Groq, DeepSeek, Mistral, OpenRouter, etc.)
+      const response = await fetch(provider.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${provider.key}` },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        const errBody = await response.text().catch(() => '');
+        throw new Error(`${provider.id} API error (${response.status}): ${errBody.slice(0, 200)}`);
+      }
+      const data = await response.json();
+      // Normaliser au format attendu par le frontend
+      const assistantReply =
+        data?.choices?.[0]?.message?.content ||
+        data?.response ||
+        data?.text ||
+        JSON.stringify(data);
+      return res.json({ response: assistantReply, model: data.model || payload.model });
+    }
+
+    // Priorité 3 : Fallback local (legacy, probablement indisponible)
     const { masterRoute } = await import('./modules/ai/master.agent.js');
     const adaptedReq = {
       body: {
@@ -818,7 +1065,7 @@ app.post('/api/ai/chat', async (req, res) => {
     res.status(500).json({
       error: 'AI Service Error',
       details: err.message,
-      hint: 'Configurez PROQUELEC_REMOTE_AI=1 pour utiliser une IA cloud',
+      hint: 'Configurez une clé API dans /expert/ai-providers ou ajoutez PROQUELEC_REMOTE_AI=1 dans .env',
     });
   }
 });
@@ -1361,7 +1608,9 @@ async function initDB() {
     );
     if (contactPage.rows.length > 0) {
       const page = contactPage.rows[0];
-      const hasFunctionalStructure = String(page.structure_json || '').includes('FunctionalPageBlock');
+      const hasFunctionalStructure = String(page.structure_json || '').includes(
+        'FunctionalPageBlock',
+      );
       const mustRepairContactPage = page.immutable !== true || !hasFunctionalStructure;
 
       if (mustRepairContactPage) {

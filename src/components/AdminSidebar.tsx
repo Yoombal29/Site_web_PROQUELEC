@@ -90,8 +90,8 @@ export const menuItems: MenuItem[] = [
 
   // --- 2. CORTEX IA (SOUVERAIN) ---
   {
-    id: 'expert_lab',
-    label: 'CORTEX SOUVERAIN (QG)',
+    id: 'ai',
+    label: 'IA Central',
     icon: Brain,
     category: 'ia',
     roles: ['superadmin', 'admin', 'secondary_admin'],
@@ -114,8 +114,8 @@ export const menuItems: MenuItem[] = [
     permission: 'inspections.view',
   },
   {
-    id: 'agents',
-    label: 'Agents Autonomes',
+    id: 'ai',
+    label: 'Agents (Centralisé)',
     icon: Terminal,
     category: 'ia',
     roles: ['superadmin', 'admin', 'secondary_admin'],
@@ -130,16 +130,16 @@ export const menuItems: MenuItem[] = [
     permission: 'inspections.view',
   },
   {
-    id: 'auto_repair',
-    label: 'Maintenance IA (Auto-Repair)',
+    id: 'ai',
+    label: 'Auto-Repair (Centralisé)',
     icon: Wrench,
     category: 'ia',
     roles: ['superadmin', 'admin', 'secondary_admin'],
     permission: 'admin.settings',
   },
   {
-    id: 'monitoring',
-    label: 'Surveillance Temps Réel (IA)',
+    id: 'ai',
+    label: 'Monitoring (Centralisé)',
     icon: Activity,
     category: 'ia',
     roles: ['superadmin', 'admin', 'secondary_admin'],

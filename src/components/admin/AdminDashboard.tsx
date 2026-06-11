@@ -28,7 +28,6 @@ import {
   Brain,
   Save,
   X,
-  RefreshCw,
   TrendingUp,
   Search,
   Share2,
@@ -37,7 +36,6 @@ import {
   Wrench,
   MessageSquare,
   FileText,
-  Menu,
   ImageIcon,
   CreditCard,
   Rocket,
@@ -76,17 +74,15 @@ import { DocumentManager } from '@/components/DocumentManager';
 import ProjectList from '@/pages/projects/ProjectList';
 import { EventCalendar } from '@/components/EventCalendar';
 import EventModerationPanel from './EventModerationPanel';
-import AdminAIControlPanel from './AdminAIControlPanel';
+import AdminAICentral from './AdminAICentral';
 import AdminAcademyPanel from './AdminAcademyPanel';
-import { AdminAutoRepair } from './AdminAutoRepair';
-import { AdminMonitoringDashboard } from './AdminMonitoringDashboard';
 import AdminAnalyticsPanel from './AdminAnalyticsPanel';
 import { AdminConstructionModePanel } from './AdminConstructionModePanel';
 import AdminPartnersPanel from './AdminPartnersPanel';
 import { AdminDatabasePanel } from './AdminDatabasePanel';
 import AdminSiteSettingsPanel from './AdminSiteSettingsPanel';
 import { MenuManager } from './MenuManager';
-import AgentHub from './agents/AgentHub';
+
 import PageSectionsAdmin from '@/pages/admin/PageSectionsAdmin';
 import AdminThemePanel from './AdminThemePanel';
 import AdminLogsPanel from './AdminLogsPanel';
@@ -122,8 +118,6 @@ const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [editingParams, setEditingParams] = useState<Record<string, unknown>>({});
-  const [aiPrompt, setAiPrompt] = useState<string>('');
-  const [aiLoading, setAiLoading] = useState<boolean>(false);
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(['general', 'display']),
   );
@@ -622,49 +616,6 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleAiGenerate = async () => {
-    if (!aiPrompt.trim()) {
-      toast({
-        title: 'Erreur',
-        description: 'Veuillez entrer une description',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    setAiLoading(true);
-    try {
-      const data: any = await apiFetch('/api/ai/chat', {
-        method: 'POST',
-        body: JSON.stringify({
-          prompt: aiPrompt,
-          task: 'text', // Spécifiez la tâche pour le Master Agent
-          context: { type: 'general_content_generation' },
-        }),
-      });
-
-      if (data && (data.code || data.text)) {
-        toast({
-          title: 'Succès',
-          description: "Contenu généré avec l'IA",
-          variant: 'default',
-        });
-        setAiPrompt('');
-      } else {
-        throw new Error("Pas de réponse de l'IA");
-      }
-    } catch (error: any) {
-      console.error('AI Error:', error);
-      toast({
-        title: 'Erreur',
-        description: error?.message || 'Erreur',
-        variant: 'destructive',
-      });
-    } finally {
-      setAiLoading(false);
-    }
-  };
-
   const toggleCategory = (category: string) => {
     setExpandedCategories((prev) => {
       const newSet = new Set(prev);
@@ -792,15 +743,9 @@ const AdminDashboard: React.FC = () => {
     },
     {
       id: 'ai',
-      label: 'Assistant IA',
+      label: 'IA Central',
       icon: <Brain className="w-5 h-5" />,
       color: 'text-orange-600',
-    },
-    {
-      id: 'expert_lab',
-      label: 'Lab Expert IA',
-      icon: <Cpu className="w-5 h-5" />,
-      color: 'text-rose-600',
     },
     {
       id: 'users',
@@ -1313,63 +1258,8 @@ const AdminDashboard: React.FC = () => {
               </div>
             )}
 
-            {/* SECTION : ASSISTANT IA */}
-            {activeTab === 'ai' && (
-              <div className="space-y-6 animate-fade-in">
-                <div>
-                  <h2 className="text-3xl font-bold text-foreground mb-2">
-                    Assistant IA Stratégique
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Générez vos contenus pro et métadonnées SEO
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  <div className="lg:col-span-2 bg-card border border-border rounded-xl shadow p-6">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">
-                      Prompt de Génération
-                    </h3>
-                    <div className="space-y-4">
-                      <textarea
-                        value={aiPrompt}
-                        onChange={(e) => setAiPrompt(e.target.value)}
-                        placeholder="Ex: Écris un résumé technique sur la norme NFC 15-100..."
-                        rows={6}
-                        className="w-full px-4 py-3 border border-border bg-background text-foreground rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-                      />
-                      <Button
-                        onClick={handleAiGenerate}
-                        disabled={aiLoading}
-                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg gap-2"
-                      >
-                        {aiLoading ? (
-                          <RefreshCw className="w-4 h-4 animate-spin" />
-                        ) : (
-                          <Brain className="w-4 h-4" />
-                        )}
-                        Lancer la génération
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="bg-card border border-border rounded-xl shadow p-6">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">Quick Templates</h3>
-                    <div className="space-y-2">
-                      <button className="w-full text-left px-4 py-3 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg transition text-sm font-medium text-blue-900 dark:text-blue-200">
-                        📝 Fiche Technique
-                      </button>
-                      <button className="w-full text-left px-4 py-3 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-lg transition text-sm font-medium text-green-900 dark:text-green-200">
-                        🎯 Titre SEO Pro
-                      </button>
-                      <button className="w-full text-left px-4 py-3 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/30 rounded-lg transition text-sm font-medium text-purple-900 dark:text-purple-200">
-                        📄 Meta Description
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+            {/* SECTION : IA CENTRAL */}
+            {activeTab === 'ai' && <AdminAICentral />}
 
             {/* SECTION : UTILISATEURS */}
             {activeTab === 'users' && (
@@ -1552,16 +1442,7 @@ const AdminDashboard: React.FC = () => {
               </div>
             )}
 
-            {/* ========== ONGLETS CORTEX IA ========== */}
-            {activeTab === 'expert_lab' && (
-              <div className="animate-fade-in">
-                <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-foreground">CORTEX SOUVERAIN</h2>
-                  <p className="text-muted-foreground">Plateforme IA souveraine et pipeline RAG</p>
-                </div>
-                <AdminAIControlPanel />
-              </div>
-            )}
+            {/* ========== ONGLETS CORTEX IA (LEGACY — removed) ========== */}
             {activeTab === 'ai_providers' && (
               <div className="animate-fade-in">
                 <div className="mb-6">
@@ -1580,15 +1461,7 @@ const AdminDashboard: React.FC = () => {
                 <InfraDocs />
               </div>
             )}
-            {activeTab === 'agents' && (
-              <div className="animate-fade-in">
-                <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-foreground">Agents Autonomes</h2>
-                  <p className="text-muted-foreground">Gestion et supervision des agents IA</p>
-                </div>
-                <AgentHub />
-              </div>
-            )}
+
             {activeTab === 'academy_ai' && (
               <div className="animate-fade-in">
                 <div className="mb-6">
@@ -1596,28 +1469,6 @@ const AdminDashboard: React.FC = () => {
                   <p className="text-muted-foreground">Formations et ressources IA</p>
                 </div>
                 <AdminAcademyPanel />
-              </div>
-            )}
-            {activeTab === 'auto_repair' && (
-              <div className="animate-fade-in">
-                <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-foreground">
-                    Maintenance IA — Auto-Repair
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Détection et correction automatique des anomalies
-                  </p>
-                </div>
-                <AdminAutoRepair />
-              </div>
-            )}
-            {activeTab === 'monitoring' && (
-              <div className="animate-fade-in">
-                <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-foreground">Surveillance Temps Réel</h2>
-                  <p className="text-muted-foreground">Monitoring IA et services système</p>
-                </div>
-                <AdminMonitoringDashboard />
               </div>
             )}
 
@@ -1747,7 +1598,7 @@ const AdminDashboard: React.FC = () => {
                     Optimisation et monitoring des performances
                   </p>
                 </div>
-                <AdminMonitoringDashboard />
+                <InfraDocs />
               </div>
             )}
             {activeTab === 'design' && (

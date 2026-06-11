@@ -33,7 +33,7 @@ async function deleteEvent(req, res) {
 }
 
 // Event Registrations
-async function listRegistrations(req, res) {
+async function listEventRegistrations(req, res) {
   try {
     res.json(await service.listRegistrationsByEvent(req.params.eventId));
   } catch (err) {
@@ -570,7 +570,7 @@ module.exports = {
   createEvent,
   updateEvent,
   deleteEvent,
-  listRegistrations,
+  listEventRegistrations,
   register,
   updateRegistration,
   listDocuments,

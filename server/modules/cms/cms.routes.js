@@ -39,7 +39,7 @@ router.post('/events', authenticateToken, validate(eventSchema), ctrl.createEven
 router.put('/events/:id', authenticateToken, validate(eventUpdateSchema), ctrl.updateEvent);
 router.delete('/events/:id', authenticateToken, ctrl.deleteEvent);
 
-router.get('/events/:eventId/registrations', authenticateToken, ctrl.listRegistrations);
+router.get('/events/:eventId/registrations', authenticateToken, ctrl.listEventRegistrations);
 router.post('/events/:eventId/register', validate(registrationSchema), ctrl.register);
 router.put(
   '/registrations/:id/status',
