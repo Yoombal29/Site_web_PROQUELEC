@@ -1,15 +1,24 @@
 # PROQUELEC - Deploiement CODE vers le VPS
 # Usage:
 #   .\deploy.ps1
+#      Mode assistant: explique les choix, pose les questions, puis execute.
+#
 #   .\deploy.ps1 -Message "Correction builder"
-#   .\deploy.ps1 -Message "Correction builder" -CommitAll
+#      Mode direct: git add securise, commit, push, pull VPS, migrations,
+#      build Vite, build Docker, restart conteneur, verification HTTP.
+#
 #   .\deploy.ps1 -SkipCommit
+#      Deploie un commit deja pret sans creer de nouveau commit local.
+#
 #   .\deploy.ps1 -SkipCommit -SkipBuild
+#      Deploie sans build Vite de validation hors Docker.
+#
 #   .\deploy.ps1 -SkipCommit -SkipDockerBuild
+#      Redemarre avec l'image Docker deja presente sur le VPS.
 #
 # Fonction:
 #   Ce script deploie le CODE applicatif uniquement:
-#   1. commit/push GitHub depuis le poste local,
+#   1. git add securise + commit/push GitHub depuis le poste local,
 #   2. verification que le workspace VPS n'a pas de fichiers suivis modifies,
 #   3. pull Git sur le VPS,
 #   4. installation des dependances et migrations sur le VPS,
@@ -23,10 +32,9 @@
 #   - Pour un alignement complet de donnees, faire une procedure DB explicite.
 #   - Le script refuse de pull si le VPS a des fichiers suivis modifies.
 #     Les fichiers non suivis du VPS, comme uploads/backups, sont ignores.
-#   - Par defaut, le script commit seulement les fichiers deja stages.
-#     Utiliser -CommitAll pour faire git add -A avant commit.
-#   - Attention: -CommitAll peut embarquer des fichiers locaux indesirables si
-#     le .gitignore n'est pas strict. Preferer git add cible.
+#   - Les modes avec commit font un git add filtre: les volumes DB, backups,
+#     logs, rapports de test et fichiers temporaires ne sont pas stages.
+#   - -CommitAll reste accepte par compatibilite, mais le add reste filtre.
 
 param(
     [string]$Message = "",
@@ -48,6 +56,33 @@ $SSH_HOST = "root@proquelec.sn"
 $REMOTE_PATH = "/var/www/proquelec/www.proquelec.sn"
 $SITE_URL = "https://www.proquelec.sn"
 $REMOTE_CHANGED_MIGRATIONS = "/tmp/proquelec_changed_migrations.txt"
+$SCRIPT_STARTED_WITH_OPTIONS = $PSBoundParameters.Count -gt 0
+
+$BLOCKED_STAGED_PATTERNS = @(
+    "^docker/postgres/data/",
+    "^docker/postgres/data-fresh/",
+    "^docker/.*/pgdata/",
+    "^db/",
+    "^backups/",
+    "^logs/",
+    "^coverage/",
+    "^\.playwright/",
+    "^playwright-report/",
+    "^test-results/",
+    "^tmp/",
+    "^temp/",
+    "(^|/)nul$",
+    "(^|/)test-output\.txt$",
+    "\.dump$",
+    "\.backup$",
+    "\.sql\.gz$",
+    "\.psql$",
+    "\.sqlite3?$",
+    "\.tmp$",
+    "\.bak$",
+    "\.orig$",
+    "\.rej$"
+)
 
 function Stop-Step {
     param([string]$Message)
@@ -75,6 +110,173 @@ function Invoke-Remote {
     ssh -i $SSH_KEY $SSH_HOST $Command
 }
 
+function Invoke-SafeGitAdd {
+    Write-Host "  Git add securise: staging du code en excluant DB, backups, logs et temporaires." -ForegroundColor Yellow
+    $changedFiles = @(git ls-files --modified --deleted --others --exclude-standard)
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Step "Impossible de lister les fichiers Git a ajouter."
+    }
+
+    $allowedFiles = @()
+    $skippedFiles = @()
+    foreach ($file in $changedFiles) {
+        $isBlocked = $false
+        foreach ($pattern in $BLOCKED_STAGED_PATTERNS) {
+            if ($file -match $pattern) {
+                $isBlocked = $true
+                break
+            }
+        }
+
+        if ($isBlocked) {
+            $skippedFiles += $file
+        }
+        else {
+            $allowedFiles += $file
+        }
+    }
+
+    if ($skippedFiles.Count -gt 0) {
+        Write-Host "  Fichiers ignores par le git add securise: $($skippedFiles.Count)" -ForegroundColor DarkYellow
+        $skippedFiles | Select-Object -First 8 | ForEach-Object { Write-Host "   - $_" -ForegroundColor DarkYellow }
+        if ($skippedFiles.Count -gt 8) {
+            Write-Host "   - ... $($skippedFiles.Count - 8) autre(s)" -ForegroundColor DarkYellow
+        }
+    }
+
+    if ($allowedFiles.Count -eq 0) {
+        Write-Host "  Aucun fichier autorise a ajouter." -ForegroundColor DarkYellow
+        return
+    }
+
+    & git add -- @allowedFiles
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Step "git add securise a echoue."
+    }
+}
+
+function Test-BlockedStagedFiles {
+    $stagedEntries = @(git diff --cached --name-status)
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Step "Impossible de verifier les fichiers stages."
+    }
+
+    $blocked = @()
+    foreach ($entry in $stagedEntries) {
+        $parts = $entry -split "`t"
+        if ($parts.Count -lt 2) {
+            continue
+        }
+
+        $status = $parts[0]
+        $file = $parts[-1]
+
+        if ($status -eq "D") {
+            continue
+        }
+
+        foreach ($pattern in $BLOCKED_STAGED_PATTERNS) {
+            if ($file -match $pattern) {
+                $blocked += $file
+                break
+            }
+        }
+    }
+
+    if ($blocked.Count -gt 0) {
+        Write-Host ""
+        Write-Host "  Fichiers interdits deja stages:" -ForegroundColor Red
+        $blocked | Sort-Object -Unique | ForEach-Object { Write-Host "   - $_" -ForegroundColor Red }
+        Write-Host ""
+        Write-Host "  Retirer ces fichiers avant de relancer, par exemple:" -ForegroundColor DarkYellow
+        Write-Host "  git restore --staged <fichier>" -ForegroundColor DarkYellow
+        Stop-Step "Commit bloque pour eviter d'envoyer des donnees locales/runtime."
+    }
+}
+
+function Show-DeployChoices {
+    Write-Host ""
+    Write-Host "  Choisir le type de deploiement" -ForegroundColor Cyan
+    Write-Host ""
+    Write-Host "  1) Deploiement complet recommande" -ForegroundColor Green
+    Write-Host "     Equivalent: .\deploy.ps1 -Message `"Votre message`""
+    Write-Host "     Fait un git add securise, cree un commit, push GitHub, pull VPS,"
+    Write-Host "     lance migrations, build Vite, rebuild Docker, restart et verification HTTP."
+    Write-Host ""
+    Write-Host "  2) Deployer sans nouveau commit"
+    Write-Host "     Equivalent: .\deploy.ps1 -SkipCommit"
+    Write-Host "     N'ajoute rien et ne commit rien. Utile si le commit est deja fait."
+    Write-Host "     Le script push, pull VPS, migre, build, rebuild Docker et verifie."
+    Write-Host ""
+    Write-Host "  3) Deploiement rapide sans build Vite de validation"
+    Write-Host "     Equivalent: .\deploy.ps1 -Message `"Votre message`" -SkipBuild"
+    Write-Host "     Fait git add securise + commit + push, mais saute le build Vite hors Docker."
+    Write-Host "     Le Docker build reste fait, donc le code applicatif est reconstruit."
+    Write-Host ""
+    Write-Host "  4) Redemarrer avec l'image Docker existante"
+    Write-Host "     Equivalent: .\deploy.ps1 -SkipCommit -SkipBuild -SkipDockerBuild"
+    Write-Host "     Ne cree pas de commit et ne rebuild pas Docker. Utile pour relancer le"
+    Write-Host "     conteneur avec l'image deja presente, pas pour deployer du nouveau code."
+    Write-Host ""
+    Write-Host "  5) Annuler"
+    Write-Host ""
+
+    $choice = Read-Host "  Votre choix (1-5)"
+    switch ($choice) {
+        "1" {
+            $script:SkipCommit = $false
+            $script:SkipBuild = $false
+            $script:SkipDockerBuild = $false
+        }
+        "2" {
+            $script:SkipCommit = $true
+            $script:SkipBuild = $false
+            $script:SkipDockerBuild = $false
+        }
+        "3" {
+            $script:SkipCommit = $false
+            $script:SkipBuild = $true
+            $script:SkipDockerBuild = $false
+        }
+        "4" {
+            $script:SkipCommit = $true
+            $script:SkipBuild = $true
+            $script:SkipDockerBuild = $true
+        }
+        "5" {
+            Stop-Step "Deploiement annule par l'utilisateur."
+        }
+        default {
+            Stop-Step "Choix invalide."
+        }
+    }
+
+    if (-not $script:SkipCommit -and -not $script:Message) {
+        $script:Message = Read-Host "  Message de commit"
+        if (-not $script:Message) {
+            $script:Message = "Mise a jour $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+        }
+    }
+
+    Write-Host ""
+    Write-Host "  Resume avant execution" -ForegroundColor Cyan
+    Write-Host "  - Branche: $script:Branch"
+    Write-Host "  - Commit local: $(-not $script:SkipCommit)"
+    if (-not $script:SkipCommit) {
+        Write-Host "  - Message: $script:Message"
+        Write-Host "  - Git add: securise avec exclusions runtime"
+    }
+    Write-Host "  - Build Vite: $(-not $script:SkipBuild)"
+    Write-Host "  - Build Docker: $(-not $script:SkipDockerBuild)"
+    Write-Host "  - Conteneur: $script:DockerApp"
+    Write-Host ""
+
+    $confirm = Read-Host "  Executer ce plan ? (oui/non)"
+    if ($confirm -notmatch "^(o|oui|y|yes)$") {
+        Stop-Step "Deploiement annule par l'utilisateur."
+    }
+}
+
 Write-Host ""
 Write-Host "  === PROQUELEC DEPLOY CODE / DOCKER ===" -ForegroundColor Cyan
 Write-Host "  Branche: $Branch"
@@ -86,23 +288,17 @@ if (-not (Test-Path $SSH_KEY)) {
     Stop-Step "Cle SSH introuvable: $SSH_KEY"
 }
 
+if (-not $SCRIPT_STARTED_WITH_OPTIONS) {
+    Show-DeployChoices
+}
+
 if (-not $SkipCommit) {
     if ($CommitAll) {
-        Write-Host "  CommitAll actif: git add -A sera execute." -ForegroundColor DarkYellow
-        git add -A
-        if ($LASTEXITCODE -ne 0) {
-            Stop-Step "git add -A a echoue."
-        }
+        Write-Host "  CommitAll actif: le git add reste filtre par securite." -ForegroundColor DarkYellow
     }
-    else {
-        git diff --cached --quiet
-        if ($LASTEXITCODE -eq 0) {
-            Write-Host "  Aucun fichier stage pour le commit." -ForegroundColor DarkYellow
-            Write-Host "  Utiliser d'abord: git add <fichiers>" -ForegroundColor DarkYellow
-            Write-Host "  Ou lancer: .\deploy.ps1 -CommitAll" -ForegroundColor DarkYellow
-            Stop-Step "Commit local impossible sans fichiers stages."
-        }
-    }
+
+    Invoke-SafeGitAdd
+    Test-BlockedStagedFiles
 
     if (-not $Message) {
         $Message = Read-Host "  Message de commit"

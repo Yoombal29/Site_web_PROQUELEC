@@ -28,22 +28,46 @@ dist-ssr
 
 # --- Environment & Secrets ---
 .env
+.env.*
+!.env.example
 .env.local
 .env.*.local
 
-# --- Docker ---
-docker/postgres/data/
-docker/postgres/data-fresh/
+# --- Docker runtime data ---
+docker/**/data/
+docker/**/data-fresh/
+docker/**/pgdata/
+docker/.env
+docker/.env.*
 
 # --- Test artifacts ---
 coverage/
 .playwright/
+playwright-report/
+test-results/
 
-# --- Database exports ---
+# --- Database exports & backups ---
 db/
+backups/
+*.dump
+*.backup
+*.sql.gz
+*.psql
+*.sqlite
+*.sqlite3
 
 # --- RAG cache ---
 server/knowledge_base/.chunks_cache.json
+
+# --- Temporary local files ---
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig
+*.rej
+nul
+test-output.txt
 
 # --- OS ---
 Thumbs.db
