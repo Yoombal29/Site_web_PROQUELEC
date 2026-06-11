@@ -23,9 +23,8 @@ FROM node:20-alpine AS backend-builder
 
 WORKDIR /app
 
-# Copy server package files
-COPY server/package.json server/package-lock.json* ./server/
-RUN cd server && npm install --only=production && npm cache clean --force
+# Copy node_modules from frontend (already has all packages)
+COPY --from=frontend-builder /app/node_modules ./node_modules
 
 # Copy source
 COPY server/ ./server/
