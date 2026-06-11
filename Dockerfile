@@ -25,7 +25,7 @@ WORKDIR /app
 
 # Copy server package files
 COPY server/package.json server/package-lock.json* ./server/
-RUN cd server && npm ci --only=production && npm cache clean --force
+RUN cd server && npm install --only=production && npm cache clean --force
 
 # Copy source
 COPY server/ ./server/
