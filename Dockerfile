@@ -25,7 +25,7 @@ WORKDIR /app
 
 # Copy server package file and install deps
 COPY server/package.json ./server/
-RUN cd server && npm install --legacy-peer-deps --omit=dev --no-optional --network-timeout 100000 && npm cache clean --force
+RUN cd server && npm install --legacy-peer-deps --omit=dev --no-optional && npm cache clean --force
 
 # Copy source
 COPY server/ ./server/
