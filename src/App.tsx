@@ -27,7 +27,6 @@ const Sitemap = lazy(() => import('./pages/Sitemap'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Auth = lazy(() => import('./pages/Auth'));
 const PartnerDashboard = lazy(() => import('./pages/admin/PartnerDashboard'));
-const AdminSecondaryDashboard = lazy(() => import('./pages/admin/AdminSecondaryDashboard'));
 const PageSectionsAdmin = lazy(() => import('./pages/admin/PageSectionsAdmin'));
 const SchemaBuilder = lazy(() => import('./pages/SchemaBuilder'));
 const RubriqueSelectorPage = lazy(() => import('./pages/RubriqueSelectorPage'));
@@ -128,7 +127,6 @@ const AppContent = () => {
             </RoleProtectedRoute>
           ),
         },
-
       ];
 
       if (showConstructionPage) {

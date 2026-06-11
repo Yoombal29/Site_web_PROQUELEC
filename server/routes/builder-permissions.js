@@ -69,7 +69,6 @@ router.get('/', authenticateToken, requireAdmin, async (req, res) => {
       permissions: permsResult.rows,
       matrix: matrixOut,
       roles,
-      superadmin_email: SUPERADMIN_EMAIL,
     });
   } catch (err) {
     console.error('[Builder Perms] GET error:', err);

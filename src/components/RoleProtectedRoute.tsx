@@ -90,7 +90,7 @@ export const RoleProtectedRoute: React.FC<RoleProtectedRouteProps> = ({
 
   const hasAccess =
     allowedRoles.includes(role) ||
-    (allowedRoles.includes('admin' as any) && (role as string) === 'superadmin');
+    ((allowedRoles as readonly string[]).includes('admin') && role === 'superadmin');
 
   if (!hasAccess) {
     return (

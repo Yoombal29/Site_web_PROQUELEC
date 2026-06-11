@@ -98,9 +98,9 @@ export default function Dashboard() {
       navigate('/dashboard/entreprise');
     } else if (role === 'membre') {
       navigate('/dashboard/membre');
-    } else if (role === 'admin' || (role as string) === 'superadmin') {
+    } else if (role === 'admin' || role === 'superadmin') {
       if (window.location.pathname === '/dashboard') {
-        navigate('/admin');
+        navigate('/admin' + window.location.search);
       }
     }
   }, [user, isLoading, isLoadingRole, role, navigate]);

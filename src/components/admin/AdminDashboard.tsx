@@ -84,6 +84,12 @@ import AdminPartnersPanel from './AdminPartnersPanel';
 import { AdminDatabasePanel } from './AdminDatabasePanel';
 import AdminSiteSettingsPanel from './AdminSiteSettingsPanel';
 import { MenuManager } from './MenuManager';
+import CmsCapabilityCenter from './CmsCapabilityCenter';
+import AgentHub from './agents/AgentHub';
+import PageSectionsAdmin from '@/pages/admin/PageSectionsAdmin';
+import AdminThemePanel from './AdminThemePanel';
+import AdminLogsPanel from './AdminLogsPanel';
+import AdminHelpPanel from './AdminHelpPanel';
 
 interface TabConfig {
   id: string;
@@ -108,7 +114,7 @@ const AdminDashboard: React.FC = () => {
   const { toast } = useToast();
   const { settings } = useSiteSettings();
   const { data: analytics, isLoading: analyticsLoading, error: analyticsError } = useAnalytics();
-  const { role } = useUserRole();
+  const { role, isAdmin } = useUserRole();
   const isSecondaryAdmin = role === 'secondary_admin';
 
   const [activeTab, setActiveTab] = useState<string>('overview');
@@ -878,7 +884,7 @@ const AdminDashboard: React.FC = () => {
                   <BarChart3 className="w-4 h-4 text-blue-500" />
                   Tableau de bord
                 </a>
-                {!isSecondaryAdmin && (
+                {isAdmin && (
                   <a
                     href="/admin/builder"
                     className="flex items-center gap-3 px-4 py-2.5 text-sm text-foreground hover:bg-accent rounded-lg transition-colors"
@@ -938,20 +944,36 @@ const AdminDashboard: React.FC = () => {
                     </p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {quickActions.map((action) => (
-                      <button
-                        key={action.id}
-                        onClick={() => navigateAdminSection(action.route)}
-                        className="flex items-center gap-3 rounded-xl border border-border p-4 bg-background hover:bg-accent/10 transition"
-                      >
-                        <div className="w-10 h-10 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
-                          {action.icon}
-                        </div>
-                        <div className="text-left">
-                          <p className="text-sm font-semibold text-foreground">{action.label}</p>
-                        </div>
-                      </button>
-                    ))}
+                    {quickActions
+                      .filter((action) => {
+                        // Restreindre certains ongles aux admin/superadmin
+                        if (
+                          [
+                            'users',
+                            'permissions',
+                            'tools-manager',
+                            'builder-release',
+                            'tools-stats',
+                          ].includes(action.id)
+                        ) {
+                          return isAdmin;
+                        }
+                        return true;
+                      })
+                      .map((action) => (
+                        <button
+                          key={action.id}
+                          onClick={() => navigateAdminSection(action.route)}
+                          className="flex items-center gap-3 rounded-xl border border-border p-4 bg-background hover:bg-accent/10 transition"
+                        >
+                          <div className="w-10 h-10 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+                            {action.icon}
+                          </div>
+                          <div className="text-left">
+                            <p className="text-sm font-semibold text-foreground">{action.label}</p>
+                          </div>
+                        </button>
+                      ))}
                   </div>
                 </div>
 
@@ -1380,6 +1402,12 @@ const AdminDashboard: React.FC = () => {
               </div>
             )}
 
+            {activeTab === 'cms-capabilities' && (
+              <div className="animate-fade-in">
+                <CmsCapabilityCenter />
+              </div>
+            )}
+
             {activeTab === 'media' && (
               <div className="animate-fade-in">
                 <div className="mb-6">
@@ -1497,7 +1525,7 @@ const AdminDashboard: React.FC = () => {
                   <h2 className="text-3xl font-bold text-foreground">Aide &amp; Support</h2>
                   <p className="text-muted-foreground">Documentation et assistance technique</p>
                 </div>
-                <InfraDocs />
+                <AdminHelpPanel />
               </div>
             )}
             {/* Documents (tab documents - DocumentManager) */}
@@ -1545,7 +1573,7 @@ const AdminDashboard: React.FC = () => {
                   <h2 className="text-3xl font-bold text-foreground">Agents Autonomes</h2>
                   <p className="text-muted-foreground">Gestion et supervision des agents IA</p>
                 </div>
-                <AdminAIControlPanel />
+                <AgentHub />
               </div>
             )}
             {activeTab === 'academy_ai' && (
@@ -1613,7 +1641,7 @@ const AdminDashboard: React.FC = () => {
                   <h2 className="text-3xl font-bold text-foreground">Sections &amp; Contenus</h2>
                   <p className="text-muted-foreground">Gestion des sections de pages</p>
                 </div>
-                <AdminFormSubmissionsPanel />
+                <PageSectionsAdmin />
               </div>
             )}
             {activeTab === 'menu' && (
@@ -1695,7 +1723,7 @@ const AdminDashboard: React.FC = () => {
                     Journaux d'audit et paramètres de sécurité
                   </p>
                 </div>
-                <AdminPermissionsPanel />
+                <AdminLogsPanel />
               </div>
             )}
             {activeTab === 'performance' && (
@@ -1715,7 +1743,7 @@ const AdminDashboard: React.FC = () => {
                   <h2 className="text-3xl font-bold text-foreground">Apparence &amp; Thème</h2>
                   <p className="text-muted-foreground">Personnalisation visuelle du site</p>
                 </div>
-                <AdminBrandingPanel />
+                <AdminThemePanel />
               </div>
             )}
           </div>

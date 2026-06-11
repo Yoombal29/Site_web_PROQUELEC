@@ -1,9 +1,16 @@
-
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { apiFetch } from "@/lib/api-client";
+import { apiFetch } from '@/lib/api-client';
 
-export type AppRole = 'admin' | 'secondary_admin' | 'partner' | 'user';
+export type AppRole =
+  | 'superadmin'
+  | 'admin'
+  | 'secondary_admin'
+  | 'partner'
+  | 'electricien'
+  | 'entreprise'
+  | 'membre'
+  | 'user';
 export type UserStatus = 'pending' | 'active' | 'rejected';
 
 export interface UserRoleData {
@@ -18,7 +25,7 @@ export interface UserRoleData {
  */
 export function useAllUserRoles() {
   return useQuery({
-    queryKey: ["all-user-roles"],
+    queryKey: ['all-user-roles'],
     queryFn: async (): Promise<UserRoleData[]> => {
       try {
         const data = await apiFetch<UserRoleData[]>('/api/user-roles');
@@ -27,7 +34,7 @@ export function useAllUserRoles() {
         console.error(error);
         return [];
       }
-    }
+    },
   });
 }
 
@@ -37,16 +44,24 @@ export function useAllUserRoles() {
 export function useUpdateUserStatus() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ userId, role, status }: { userId: string, role: AppRole, status: UserStatus }) => {
+    mutationFn: async ({
+      userId,
+      role,
+      status,
+    }: {
+      userId: string;
+      role: AppRole;
+      status: UserStatus;
+    }) => {
       await apiFetch(`/api/user-roles/${userId}`, {
         method: 'PUT',
-        body: JSON.stringify({ role, status })
+        body: JSON.stringify({ role, status }),
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["all-user-roles"] });
-      toast.success("Statut utilisateur mis à jour.");
-    }
+      queryClient.invalidateQueries({ queryKey: ['all-user-roles'] });
+      toast.success('Statut utilisateur mis à jour.');
+    },
   });
 }
 
@@ -58,12 +73,12 @@ export function useRemoveUserRole() {
   return useMutation({
     mutationFn: async (userId: string) => {
       await apiFetch(`/api/user-roles/${userId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["all-user-roles"] });
-      toast.success("Rôle retiré.");
-    }
+      queryClient.invalidateQueries({ queryKey: ['all-user-roles'] });
+      toast.success('Rôle retiré.');
+    },
   });
 }
