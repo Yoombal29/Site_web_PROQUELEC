@@ -23,10 +23,9 @@ FROM node:20-alpine AS backend-builder
 
 WORKDIR /app
 
-# Copy ALL package files (server needs root deps like form-data, axios)
-COPY package.json package-lock.json* ./
+# Copy server package files
 COPY server/package.json server/package-lock.json* ./server/
-RUN npm ci --only=production && npm cache clean --force
+RUN cd server && npm ci --only=production && npm cache clean --force
 
 # Copy source
 COPY server/ ./server/
