@@ -30,7 +30,6 @@ RUN cd server && npm install --legacy-peer-deps --omit=dev --no-optional && npm 
 # Copy source
 COPY server/ ./server/
 COPY --from=frontend-builder /app/dist ./dist
-COPY --from=frontend-builder /app/.env ./
 
 # ---- Stage 3: Runtime ----
 FROM node:20-alpine
