@@ -23,8 +23,9 @@ FROM node:20-alpine AS backend-builder
 
 WORKDIR /app
 
-# Copy node_modules from frontend (already has all packages)
-COPY --from=frontend-builder /app/node_modules ./node_modules
+# Copy server package file and install deps
+COPY server/package.json ./server/
+RUN cd server && npm install --legacy-peer-deps --omit=dev --no-optional --network-timeout 100000 && npm cache clean --force
 
 # Copy source
 COPY server/ ./server/
