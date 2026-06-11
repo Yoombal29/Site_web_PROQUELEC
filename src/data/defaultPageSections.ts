@@ -637,12 +637,133 @@ export const DEFAULT_PAGE_SECTIONS = {
         hero_subtitle: "Découvrez les organisations qui nous font confiance.",
         label: "Partenaires",
         sections: [
-            { id: "hero", label: "Bannière", icon: "Handshake" },
-            { id: "partners", label: "Partenaires", icon: "Globe" }
+            { id: "hero", label: "Bannière", icon: "Handshake", type: "hero" },
+            { id: "institutionnels", label: "Institutionnels", icon: "Landmark", type: "text-image" },
+            { id: "techniques", label: "Techniques", icon: "Settings", type: "text-image" },
+            { id: "financiers", label: "Financiers", icon: "Banknote", type: "text-image" },
+            { id: "prives", label: "Privés", icon: "Building", type: "text-image" }
         ],
         content: {
             hero: { title: "Nos Partenaires", subtitle: "Ensemble pour la sécurité électrique", badge: "RÉSEAU" },
-            partners: { title: "Nos Collaborateurs", subtitle: "Les acteurs de notre succès" }
+            institutionnels: {
+                title: "Partenaires Institutionnels",
+                subtitle: "L'appui de l'État et des organismes publics.",
+                features: ["Ministère de l'Énergie et du Pétrole", "SENELEC", "ANARE", "Collectivités territoriales"],
+                image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=800&q=80"
+            },
+            techniques: {
+                title: "Partenaires Techniques",
+                subtitle: "L'excellence au service de la sécurité.",
+                features: ["Organismes de normalisation", "Fabricants certifiés", "Bureaux de contrôle", "Instituts techniques"],
+                image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"
+            },
+            financiers: {
+                title: "Partenaires Financiers",
+                subtitle: "Soutenir la croissance et l'investissement.",
+                features: ["Banques de développement", "Fonds verts", "Coopération internationale", "Assurances"],
+                image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80"
+            },
+            prives: {
+                title: "Partenaires Privés",
+                subtitle: "Un réseau de confiance pour le secteur.",
+                features: ["Entreprises BTP", "Syndicats professionnels", "Promoteurs immobiliers", "Distributeurs"],
+                image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80"
+            }
+        }
+    },
+    espace_partenaires: {
+        badge: "ESPACE PARTENAIRES",
+        hero_title: "Espace|Partenaires",
+        hero_subtitle: "Un espace dédié aux organisations, institutions et entreprises qui collaborent avec PROQUELEC.",
+        label: "Espace Partenaires",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Handshake", type: "hero" },
+            { id: "collaboration", label: "Collaborer", icon: "Users2", type: "features-list" },
+            { id: "process", label: "Processus", icon: "Settings", type: "text-image" },
+            { id: "cta", label: "Contact partenaire", icon: "Mail", type: "text-image" }
+        ],
+        content: {
+            hero: {
+                title: "Espace Partenaires",
+                subtitle: "Coordonnez vos initiatives, événements et ressources avec l’écosystème PROQUELEC.",
+                badge: "RÉSEAU"
+            },
+            collaboration: {
+                title: "Axes de collaboration",
+                subtitle: "Des partenariats structurés pour la sécurité et la qualité électrique.",
+                layout: "grid-3",
+                features: [
+                    { title: "Événements communs", description: "Conférences, ateliers et campagnes de sensibilisation.", icon: "Calendar" },
+                    { title: "Ressources techniques", description: "Guides, supports et contenus co-produits.", icon: "BookOpen" },
+                    { title: "Projets terrain", description: "Actions de contrôle, formation ou appui institutionnel.", icon: "MapPin" }
+                ]
+            },
+            process: {
+                title: "Devenir partenaire",
+                subtitle: "Un parcours clair pour qualifier le besoin et cadrer la collaboration.",
+                features: [
+                    "Qualification du profil",
+                    "Validation des objectifs",
+                    "Convention ou plan d’action",
+                    "Suivi des résultats"
+                ],
+                image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80"
+            },
+            cta: {
+                title: "Proposer une collaboration",
+                subtitle: "Présentez votre organisation, votre projet et les publics concernés.",
+                features: ["Contact partenariat", "Dossier de présentation", "Réponse sous 5 jours ouvrés"],
+                image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80"
+            }
+        }
+    },
+    marches: {
+        badge: "MARCHÉS SÉCURISÉS",
+        hero_title: "Marchés|Sécurisés",
+        hero_subtitle: "Repères, procédures et ressources pour sécuriser les marchés et projets électriques.",
+        label: "Marchés Sécurisés",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "Briefcase", type: "hero" },
+            { id: "risques", label: "Risques", icon: "ShieldCheck", type: "features-list" },
+            { id: "process", label: "Processus", icon: "FileBarChart", type: "text-image" },
+            { id: "resources", label: "Ressources", icon: "Download", type: "features-list" }
+        ],
+        content: {
+            hero: {
+                title: "Marchés Sécurisés",
+                subtitle: "Aidez les maîtres d’ouvrage, entreprises et contrôleurs à réduire les risques techniques et contractuels.",
+                badge: "CONFORMITÉ"
+            },
+            risques: {
+                title: "Points de vigilance",
+                subtitle: "Les contrôles essentiels avant attribution, exécution et réception.",
+                layout: "grid-3",
+                features: [
+                    { title: "Exigences techniques", description: "CCTP, normes applicables et critères de conformité.", icon: "FileText" },
+                    { title: "Traçabilité", description: "Documents, visas, réserves et décisions conservés.", icon: "ClipboardCheck" },
+                    { title: "Réception sécurisée", description: "Contrôles finaux avant mise en service.", icon: "ShieldCheck" }
+                ]
+            },
+            process: {
+                title: "Parcours de sécurisation",
+                subtitle: "Une méthode progressive pour limiter les litiges et défauts de conformité.",
+                features: [
+                    "Analyse du dossier marché",
+                    "Contrôle des exigences électriques",
+                    "Suivi des réserves",
+                    "Rapport de réception"
+                ],
+                image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
+            },
+            resources: {
+                title: "Ressources utiles",
+                subtitle: "Documents et modèles pour préparer un marché électrique fiable.",
+                layout: "grid-2",
+                features: [
+                    { title: "Checklist marché", description: "Points à vérifier avant publication ou attribution.", icon: "CheckCircle" },
+                    { title: "Modèle de réception", description: "Structure de rapport et réserves types.", icon: "FileText" }
+                ]
+            }
         }
     },
     contact: {
@@ -727,6 +848,54 @@ export const DEFAULT_PAGE_SECTIONS = {
         content: {
             hero: { title: "Notre Catalogue Formations", subtitle: "Mises à jour continues et certifications", badge: "APPRENTISSAGE" },
             catalog: { title: "Formations Disponibles", subtitle: "Parcours professionnels complets" }
+        }
+    },
+    trainings: {
+        badge: "FORMATIONS",
+        hero_title: "Espace|Formations",
+        hero_subtitle: "Programmes, sessions et parcours certifiants pour les professionnels et partenaires.",
+        label: "Espace Formations",
+        sections: [
+            { id: "hero", label: "Bannière", icon: "GraduationCap", type: "hero" },
+            { id: "catalog", label: "Catalogue", icon: "BookOpen", type: "features-list" },
+            { id: "certification", label: "Certification", icon: "Award", type: "text-image" },
+            { id: "stats", label: "Indicateurs", icon: "BarChart", type: "stats" }
+        ],
+        content: {
+            hero: {
+                title: "Espace Formations",
+                subtitle: "Développez les compétences terrain et préparez les contrôles de conformité.",
+                badge: "APPRENTISSAGE"
+            },
+            catalog: {
+                title: "Catalogue de formation",
+                subtitle: "Des modules adaptés aux techniciens, installateurs, entreprises et autorités.",
+                layout: "grid-3",
+                features: [
+                    { title: "Habilitation électrique", description: "Parcours sécurité et bonnes pratiques.", icon: "ShieldCheck" },
+                    { title: "Contrôle conformité", description: "Méthodes, checklists et rapports.", icon: "ClipboardCheck" },
+                    { title: "Énergies renouvelables", description: "Solaire, stockage et exigences techniques.", icon: "Zap" }
+                ]
+            },
+            certification: {
+                title: "Parcours certifiants",
+                subtitle: "Des formations structurées avec supports, exercices et attestation.",
+                features: [
+                    "Sessions inter ou intra-entreprise",
+                    "Supports pédagogiques",
+                    "Évaluation des acquis",
+                    "Attestation PROQUELEC"
+                ],
+                image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&q=80"
+            },
+            stats: {
+                stats: [
+                    { value: "3", label: "Niveaux" },
+                    { value: "5", suffix: "j", label: "Format moyen" },
+                    { value: "14", label: "Régions ciblées" },
+                    { value: "24", suffix: "h", label: "Réponse inscription" }
+                ]
+            }
         }
     },
     actualites: {

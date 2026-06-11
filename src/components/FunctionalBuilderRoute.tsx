@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import {
   getFunctionalStructureForPage,
-  isDesignLockedFunctionalPage,
 } from '@/lib/functional-page-structure';
 import { getFunctionalPageDefinition } from '@/lib/functional-pages';
 
@@ -17,6 +16,10 @@ type PageLike = {
   title?: string;
   slug?: string;
   immutable?: boolean;
+  is_published?: boolean;
+  status?: string;
+  workflow_status?: string;
+  design_options?: unknown;
   structure_json?: unknown;
   draft_json?: unknown;
 };
@@ -26,6 +29,67 @@ const LoadingFallback = () => (
     <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
   </div>
 );
+
+const normalizePagesResponse = (responseData: unknown): PageLike[] => {
+  const rows = Array.isArray(responseData)
+    ? responseData
+    : (responseData as { rows?: unknown[]; data?: unknown[] })?.rows ||
+      (responseData as { rows?: unknown[]; data?: unknown[] })?.data ||
+      [];
+
+  return rows.filter((page): page is PageLike => {
+    if (!page || typeof page !== 'object') return false;
+    const candidate = page as Partial<PageLike>;
+    return typeof candidate.slug === 'string';
+  });
+};
+
+const isPublishedPage = (page: PageLike) => {
+  if (page.status) return page.status === 'published';
+  if (page.workflow_status) return page.workflow_status === 'published';
+  return page.is_published !== false;
+};
+
+const parseJsonField = (value: unknown) => {
+  if (typeof value !== 'string') return value;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
+};
+
+async function fetchFunctionalPage(slug: string): Promise<PageLike | null> {
+  const encodedSlug = encodeURIComponent(slug);
+  const directEndpoints = slug.includes('/')
+    ? []
+    : [`/api/public/pages/slug/${encodedSlug}`, `/api/pages/slug/${encodedSlug}`];
+
+  for (const endpoint of directEndpoints) {
+    try {
+      const response = await fetch(endpoint);
+      if (!response.ok) throw new Error(`Page ${slug} introuvable`);
+      const page = normalizePagesResponse([await response.json()])[0];
+      if (page && isPublishedPage(page)) return page;
+    } catch (error) {
+      console.warn(`[FunctionalBuilderRoute] Chargement direct impossible depuis ${endpoint}:`, error);
+    }
+  }
+
+  const listEndpoints = ['/api/public/pages', '/api/pages'];
+  for (const endpoint of listEndpoints) {
+    try {
+      const response = await fetch(endpoint);
+      if (!response.ok) throw new Error(`Liste pages indisponible`);
+      const pages = normalizePagesResponse(await response.json()).filter(isPublishedPage);
+      return pages.find((page) => page.slug?.replace(/^\//, '') === slug) || null;
+    } catch (error) {
+      console.warn(`[FunctionalBuilderRoute] Liste pages impossible depuis ${endpoint}:`, error);
+    }
+  }
+
+  return null;
+}
 
 export const FunctionalBuilderRoute: React.FC<FunctionalBuilderRouteProps> = ({
   slug,
@@ -45,9 +109,8 @@ export const FunctionalBuilderRoute: React.FC<FunctionalBuilderRouteProps> = ({
       setFailed(false);
 
       try {
-        const response = await fetch(`/api/pages/slug/${encodeURIComponent(slug)}`);
-        if (!response.ok) throw new Error(`Page ${slug} introuvable`);
-        const data = (await response.json()) as PageLike;
+        const data = await fetchFunctionalPage(slug);
+        if (!data) throw new Error(`Page ${slug} introuvable`);
         if (!cancelled) setPage(data);
       } catch (error) {
         // Pages fonctionnelles sans entrée DB : comportement normal, fallback React utilisé
@@ -68,10 +131,16 @@ export const FunctionalBuilderRoute: React.FC<FunctionalBuilderRouteProps> = ({
   }, [slug]);
 
   const structure = useMemo(() => {
-    if (!isDesignLockedFunctionalPage(page)) return null;
+    if (!page?.immutable) return null;
 
-    return getFunctionalStructureForPage(page, definition?.slug || slug, definition?.title || title)
-      .structure;
+    const designOptions = parseJsonField(page.design_options) || {};
+    const normalizedPage = { ...page, design_options: designOptions };
+
+    return getFunctionalStructureForPage(
+      normalizedPage,
+      definition?.slug || slug,
+      definition?.title || title,
+    ).structure;
   }, [definition?.slug, definition?.title, page, slug, title]);
 
   if (loading) return <LoadingFallback />;
@@ -79,7 +148,7 @@ export const FunctionalBuilderRoute: React.FC<FunctionalBuilderRouteProps> = ({
 
   return (
     <Suspense fallback={<LoadingFallback />}>
-      <CraftPageRenderer structureJson={structure} fallback={fallback} />
+      <CraftPageRenderer structureJson={structure as any} fallback={fallback} />
     </Suspense>
   );
 };

@@ -143,7 +143,7 @@ export function MenuManager() {
           <option key={page.id} value={page.id}>/{page.slug} — {page.title}</option>
           )}
           </select>
-          <select title="Sélectionner une option"
+          <select
           value={newItem.menu_type}
           onChange={(e) => setNewItem({ ...newItem, menu_type: e.target.value as unknown })}
           className="p-2 border rounded"

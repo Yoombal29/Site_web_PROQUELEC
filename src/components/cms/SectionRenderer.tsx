@@ -28,6 +28,7 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
   if (!section || section.visible === false) return null;
 
   const { type, layout = 'left-right', title, subtitle, description, badge, media, features, stats, styles, customHTML } = section;
+  const isHeroSection = type === 'hero';
 
   // Rendu dynamique de l'icône
   const renderIcon = (iconName: string, className?: string) => {
@@ -37,14 +38,19 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
 
   // Styles de section dynamiques
   const sectionStyles = {
-    backgroundColor: styles?.gradient ? undefined : styles?.backgroundColor,
-    backgroundImage: styles?.gradient,
+    backgroundColor: (styles?.gradient || isHeroSection) ? undefined : styles?.backgroundColor,
+    backgroundImage:
+      styles?.gradient ||
+      (isHeroSection
+        ? 'linear-gradient(135deg, #252553 0%, #20224f 45%, #241c49 100%)'
+        : undefined),
     color: styles?.textColor,
-    padding: styles?.padding || '80px 0',
+    padding: styles?.padding || (isHeroSection ? 'clamp(96px, 12vw, 150px) 0 clamp(88px, 11vw, 145px)' : '80px 0'),
     margin: styles?.margin,
     borderRadius: styles?.borderRadius,
     border: styles?.borderColor ? `${styles.borderWidth || '1px'} solid ${styles.borderColor}` : undefined,
     boxShadow: styles?.shadow,
+    overflow: isHeroSection ? 'hidden' : undefined,
     textAlign: styles?.textAlign as React.CSSProperties['textAlign'],
     maxWidth: styles?.maxWidth,
     fontSize: styles?.fontSize,
@@ -57,6 +63,47 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true },
     transition: { duration: 0.6, delay: 0.1 }
+  };
+
+  const renderHeroTitle = (value: unknown) => {
+    const rawTitle = String(value || '');
+    const explicitParts = rawTitle
+      .split('|')
+      .map((part) => part.trim())
+      .filter(Boolean);
+
+    if (explicitParts.length > 1) {
+      return explicitParts.map((part, idx) => (
+        <React.Fragment key={`${part}-${idx}`}>
+          {idx > 0 && ' '}
+          <span
+            className={cn(
+              idx === 1 &&
+                'bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent',
+            )}
+          >
+            {part}
+          </span>
+        </React.Fragment>
+      ));
+    }
+
+    const words = rawTitle.split(/\s+/).filter(Boolean);
+    const highlightIndex = words.length > 1 ? 1 : -1;
+
+    return words.map((word, idx) => (
+      <React.Fragment key={`${word}-${idx}`}>
+        {idx > 0 && ' '}
+        <span
+          className={cn(
+            idx === highlightIndex &&
+              'bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent',
+          )}
+        >
+          {word}
+        </span>
+      </React.Fragment>
+    ));
   };
 
   const renderContent = () => {
@@ -72,23 +119,23 @@ export const SectionRenderer: React.FC<SectionRendererProps> = ({
     switch (type) {
       case 'hero':
         return (
-          <div className="text-center space-y-8 py-12">
+          <div className="relative flex min-h-[360px] flex-col items-center justify-center text-center">
                         {badge &&
             <motion.span
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               className={cn(
-                "inline-block px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase border",
-                `bg-blue-500/10 border-blue-500/20 text-blue-600`
+                "mb-8 inline-flex max-w-[calc(100vw-2rem)] flex-wrap items-center justify-center gap-2 rounded-full border border-cyan-300/10 bg-cyan-400/10 px-5 py-3 text-center text-xs font-black uppercase text-cyan-300 shadow-[0_18px_50px_rgba(15,23,42,0.18)] md:mb-12 md:px-7",
               )}>
               
-                                {badge}
+                                {renderIcon((section.icon as string) || 'Zap', 'h-4 w-4')}
+                                <span className="tracking-[0.24em]">{badge}</span>
                             </motion.span>
             }
-                        <h1 className="text-5xl md:text-7xl font-black text-slate-900 uppercase tracking-tighter leading-none">
-                            {title}
+                        <h1 className="max-w-full break-words px-2 text-4xl font-black leading-[1.08] text-white sm:text-5xl md:text-7xl lg:text-7xl">
+                            {renderHeroTitle(title)}
                         </h1>
-                        <p className="text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed">
+                        <p className="mx-auto mt-8 max-w-4xl text-lg font-light leading-relaxed text-white/80 sm:text-xl md:mt-10 md:text-2xl">
                             {subtitle}
                         </p>
                     </div>);

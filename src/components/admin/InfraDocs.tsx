@@ -40,10 +40,9 @@ docker compose up -d</pre>
 
                     <div>
                         <h3 className="font-bold">Éviter les conflits de ports</h3>
-                        <p className="text-sm text-slate-700 mt-2">Si un port local est déjà utilisé (ex: <span className="font-mono">:3000</span> ou <span className="font-mono">:5432</span>), modifiez le mappage hôte:container dans <strong>docker/docker-compose.yml</strong> avant de démarrer la stack. Exemple :
-                            <pre className="mt-2 p-2 bg-white rounded border border-slate-100 font-mono">ports:
+                        <p className="text-sm text-slate-700 mt-2">Si un port local est déjà utilisé (ex: <span className="font-mono">:3000</span> ou <span className="font-mono">:5432</span>), modifiez le mappage hôte:container dans <strong>docker/docker-compose.yml</strong> avant de démarrer la stack. Exemple :</p>
+                        <pre className="mt-2 p-2 bg-white rounded border border-slate-100 font-mono text-sm">ports:
   - "5437:5432"  # hôte:container</pre>
-                        </p>
                     </div>
 
                     <div>

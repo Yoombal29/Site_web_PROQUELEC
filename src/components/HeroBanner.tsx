@@ -161,9 +161,10 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 <div className="absolute inset-0 overflow-hidden">
                   {slide.background_url && (
                     <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-[10000ms] ease-out"
+                      className="absolute inset-0 bg-cover bg-center transition-transform ease-out"
                       style={{
                         backgroundImage: `url(${slide.background_url})`,
+                        transitionDuration: '10000ms',
                         transform: isActive ? "scale(1.04)" : "scale(1.12)",
                       }}
                     />

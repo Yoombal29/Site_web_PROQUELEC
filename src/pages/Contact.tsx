@@ -21,6 +21,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { toast } from 'sonner';
 
+/**
+ * @deprecated La route /contact est rendue par DynamicPage + ContactPremiumBlock
+ * via une page CMS fonctionnelle verrouillée. Ce composant reste uniquement pour
+ * compatibilité temporaire pendant la suppression progressive de l'ancienne page.
+ */
 const iconMap: Record<string, unknown> = {
   Phone,
   Mail,
@@ -54,9 +59,23 @@ const Contact = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      if (!res.ok) throw new Error("Erreur lors de l'envoi");
+      const responseText = await res.text();
+      let responsePayload: any = {};
+      try {
+        responsePayload = responseText ? JSON.parse(responseText) : {};
+      } catch {
+        responsePayload = { message: responseText };
+      }
+      const savedDespiteNotificationIssue = Boolean(
+        responsePayload?.saved || responsePayload?.contact_request || responsePayload?.warning === 'EMAIL_SEND_FAILED',
+      );
+      if (!res.ok && !savedDespiteNotificationIssue) throw new Error("Erreur lors de l'envoi");
       setFormStatus('sent');
-      toast.success('Message envoyé avec succès !');
+      if (responsePayload?.warning === 'EMAIL_SEND_FAILED') {
+        toast.warning('Demande enregistrée. La notification email doit être vérifiée côté admin.');
+      } else {
+        toast.success('Message envoyé avec succès !');
+      }
     } catch (err) {
       console.error('[Contact] Erreur:', err);
       setFormStatus('error');
@@ -202,6 +221,24 @@ const Contact = () => {
                             className="h-12 bg-slate-50 border-slate-100 focus:bg-white rounded-xl"
                           />
                         </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label
+                          className="text-sm font-bold text-slate-700 uppercase tracking-wider"
+                          htmlFor="contact-telephone"
+                        >
+                          Téléphone (optionnel)
+                        </label>
+                        <Input
+                          id="contact-telephone"
+                          type="tel"
+                          autoComplete="tel"
+                          placeholder="+221 77 000 00 00"
+                          value={formData.telephone}
+                          onChange={(e) => handleChange('telephone', e.target.value)}
+                          className="h-12 bg-slate-50 border-slate-100 focus:bg-white rounded-xl"
+                        />
                       </div>
 
                       <div className="space-y-2">

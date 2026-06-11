@@ -263,6 +263,95 @@ function contactTemplate(nom, email, sujet, message) {
   return { subject, html, text };
 }
 
+// Envoyer une confirmation d'inscription à un événement
+async function sendEventRegistrationConfirmation({
+  name,
+  email,
+  eventTitle,
+  eventDate,
+  eventTime,
+  eventLocation,
+}) {
+  const content = `
+    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:12px;padding:24px;margin-bottom:20px;text-align:center">
+      <div style="font-size:40px;margin-bottom:12px">🎉</div>
+      <h3 style="color:#166534;margin:0 0 8px;font-size:18px">Inscription confirmée !</h3>
+      <p style="color:#374151;font-size:14px;margin:0">Vous êtes bien inscrit à l'événement ci-dessous.</p>
+    </div>
+    <table style="width:100%;border-collapse:collapse;background:#f9fafb;border-radius:12px;overflow:hidden">
+      ${fieldRow('Événement', eventTitle)}
+      ${fieldRow('Date', eventDate)}
+      ${fieldRow('Horaire', eventTime)}
+      ${fieldRow('Lieu', eventLocation)}
+    </table>
+    <p style="color:#6b7280;font-size:13px;margin-top:20px;padding-top:16px;border-top:1px solid #e5e7eb">
+      Un membre de l'équipe PROQUELEC pourra vous contacter pour finaliser votre participation.
+    </p>
+  `;
+  const html = emailLayout("Confirmation d'inscription", content);
+  const text = `Confirmation d'inscription à : ${eventTitle}\nDate: ${eventDate}\nLieu: ${eventLocation}`;
+  return sendEmail({
+    to: email,
+    subject: `[PROQUELEC] Confirmation - ${eventTitle}`,
+    html,
+    text,
+    replyTo: 'proquelec@proquelec.sn',
+  });
+}
+
+// Notifier l'admin PROQUELEC d'une nouvelle inscription
+async function sendEventRegistrationNotification({
+  name,
+  email,
+  phone,
+  company,
+  message,
+  eventTitle,
+}) {
+  const content = `
+    <table style="width:100%;border-collapse:collapse;background:#f9fafb;border-radius:12px;overflow:hidden">
+      ${fieldRow('Événement', eventTitle)}
+      ${fieldRow('Participant', name)}
+      ${fieldRow('Email', email)}
+      ${fieldRow('Téléphone', phone || 'Non renseigné')}
+      ${fieldRow('Entreprise', company || 'Non renseigné')}
+      ${fieldRow('Message', message || 'Non renseigné')}
+    </table>
+  `;
+  const html = emailLayout('Nouvelle inscription à un événement', content);
+  const text = `Nouvelle inscription de ${name} à ${eventTitle}`;
+  return sendEmail({
+    subject: `[PROQUELEC] Nouvelle inscription : ${name} → ${eventTitle}`,
+    html,
+    text,
+  });
+}
+
+// Notifier le partenaire que son événement a été validé ou refusé
+async function sendEventReviewNotification({ name, email, eventTitle, status, comment }) {
+  const isApproved = status === 'published';
+  const emoji = isApproved ? '✅' : '❌';
+  const title = isApproved ? 'Événement approuvé' : 'Événement refusé';
+  const message = isApproved
+    ? `Votre événement <strong>${eventTitle}</strong> a été approuvé et est désormais visible sur le calendrier public.`
+    : `Votre événement <strong>${eventTitle}</strong> n'a pas été retenu. ${comment ? `Motif : ${comment}` : ''}`;
+
+  const content = `
+    <div style="background:${isApproved ? '#f0fdf4' : '#fef2f2'};border:2px solid ${isApproved ? '#86efac' : '#fca5a5'};border-radius:12px;padding:24px;margin-bottom:20px;text-align:center">
+      <div style="font-size:40px;margin-bottom:12px">${emoji}</div>
+      <h3 style="color:${isApproved ? '#166534' : '#991b1b'};margin:0 0 8px;font-size:18px">${title}</h3>
+      <p style="color:#374151;font-size:14px;margin:0">${message}</p>
+    </div>
+  `;
+  const html = emailLayout(title, content);
+  return sendEmail({
+    to: email,
+    subject: `[PROQUELEC] ${title} : ${eventTitle}`,
+    html,
+    text: message.replace(/<[^>]*>/g, ''),
+  });
+}
+
 const emailTemplates = {
   welcome: welcomeTemplate,
   formationConfirmation: formationConfirmationTemplate,
@@ -275,6 +364,9 @@ module.exports = {
   sendContactNotification,
   sendNewUserNotification,
   sendGroupNotification,
+  sendEventRegistrationConfirmation,
+  sendEventRegistrationNotification,
+  sendEventReviewNotification,
   getEmailConfig: getPublicEmailConfig,
   emailTemplates,
 };

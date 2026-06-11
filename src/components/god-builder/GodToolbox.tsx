@@ -132,7 +132,6 @@ import {
   TrainingHeroPremiumBlock,
   TrainingProgramPremiumBlock,
   PricingComparisonPremiumBlock,
-  ContactPremiumBlock,
   CertificationRequirementsPremiumBlock,
   FAQPremiumBlock,
   TestimonialsPremiumBlock,
@@ -719,10 +718,10 @@ const BLOCK_GROUPS = [
       },
       {
         icon: MapPin,
-        label: 'Contact premium',
+        label: 'Contact officiel verrouillé',
         color: 'text-indigo-400',
-        tags: ['contact', 'coordonnees', 'formulaire', 'demande'],
-        factory: () => <ContactPremiumBlock />,
+        tags: ['contact', 'coordonnees', 'formulaire', 'demande', 'locked', 'fonctionnel'],
+        factory: () => <FunctionalPageBlock slug="contact" pageTitle="Contact officiel" />,
       },
       {
         icon: ShieldCheck,

@@ -61,6 +61,10 @@ function isHybrid(page) {
   return page.design_options?.page_type === 'hybrid';
 }
 
+function isSectionDriven(page) {
+  return page.design_options?.page_type === 'section_driven' || page.design_options?.section_driven === true;
+}
+
 function createFunctionalStructure(page) {
   return {
     ROOT: {
@@ -93,6 +97,7 @@ async function main() {
     content: 0,
     functional: 0,
     hybrid: 0,
+    sectionDriven: 0,
     invalidCraft: [],
     functionalNeedsHeal: [],
     missingStructure: [],
@@ -112,10 +117,16 @@ async function main() {
       page.design_options = parseJson(page.design_options) || {};
       const structure = parseJson(page.structure_json);
       const functional = page.immutable === true && !isHybrid(page);
+      const sectionDriven = isSectionDriven(page);
 
-      if (page.immutable === true && isHybrid(page)) report.hybrid++;
+      if (sectionDriven) report.sectionDriven++;
+      else if (page.immutable === true && isHybrid(page)) report.hybrid++;
       else if (functional) report.functional++;
       else report.content++;
+
+      if (sectionDriven) {
+        continue;
+      }
 
       if (!structure) {
         report.missingStructure.push(page.slug);

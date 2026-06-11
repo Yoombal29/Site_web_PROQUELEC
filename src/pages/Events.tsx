@@ -1,232 +1,767 @@
-
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { HeroSection } from "@/components/HeroSection";
-import { SEO } from "@/components/SEO";
-import { ScrollToTopButton } from "@/components/ScrollToTopButton";
+import { useEffect, useMemo, useState } from 'react';
 import {
-
-  MapPin,
-  Clock,
   ArrowRight,
-  Monitor,
-  ShieldCheck,
-  Handshake,
   CalendarCheck,
-  Plus } from
-"lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+  Clock,
+  Handshake,
+  MapPin,
+  Monitor,
+  Plus,
+  ShieldCheck,
+} from 'lucide-react';
+
+import { Footer } from '@/components/Footer';
+import { Header } from '@/components/Header';
+import { HeroSection } from '@/components/HeroSection';
+import { ScrollToTopButton } from '@/components/ScrollToTopButton';
+import { SEO } from '@/components/SEO';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { useLiveSettings } from '@/hooks/useLiveSettings';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+
+type EventApiRow = {
+  id: string;
+  title: string;
+  date: string;
+  location?: string | null;
+  details?: string | null;
+  image_url?: string | null;
+  status?: string | null;
+  organizer_type?: string | null;
+};
+
+type EventDetails = {
+  description?: string;
+  time?: string;
+  endTime?: string;
+  category?: string;
+  type?: string;
+  organizer?: string;
+  registrationUrl?: string;
+  detailsUrl?: string;
+};
+
+type DisplayEvent = {
+  id: string;
+  title: string;
+  date: Date;
+  location: string;
+  description: string;
+  time: string;
+  category: string;
+  type: string;
+  organizer: string;
+  organizerType: 'proquelec' | 'partner';
+  status: string;
+  registrationUrl: string;
+  detailsUrl: string;
+};
+
+type EventsPageContent = {
+  hero: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    primaryLabel: string;
+    primaryHref: string;
+    secondaryLabel: string;
+    secondaryHref: string;
+  };
+  official: {
+    badge: string;
+    title: string;
+    subtitle: string;
+  };
+  partners: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    buttonLabel: string;
+    buttonHref: string;
+  };
+  cta: {
+    title: string;
+    description: string;
+    primaryLabel: string;
+    primaryHref: string;
+    secondaryLabel: string;
+    secondaryHref: string;
+  };
+};
+
+const DEFAULT_CONTENT: EventsPageContent = {
+  hero: {
+    badge: 'Calendrier Expert',
+    title: 'Événements & Agenda',
+    subtitle: "Le carrefour de l'expertise électrique",
+    description:
+      'Participez aux moments forts du secteur : conférences institutionnelles PROQUELEC, ateliers techniques et initiatives partenaires.',
+    primaryLabel: 'Voir les événements officiels',
+    primaryHref: '#official',
+    secondaryLabel: 'Événements partenaires',
+    secondaryHref: '#partners',
+  },
+  official: {
+    badge: 'Institutionnel',
+    title: 'Événements PROQUELEC',
+    subtitle:
+      'Nos rendez-vous officiels pour la promotion de la sécurité et de la qualité électrique au Sénégal.',
+  },
+  partners: {
+    badge: 'Écosystème',
+    title: 'Événements Partenaires',
+    subtitle:
+      "Des initiatives portées par nos partenaires agréés et certifiés, validées par l'expertise PROQUELEC.",
+    buttonLabel: 'Devenir Partenaire',
+    buttonHref: '/partner',
+  },
+  cta: {
+    title: 'Diffusez votre expertise via le réseau PROQUELEC',
+    description:
+      "Partenaires, proposez vos ateliers et conférences sur notre plateforme pour toucher l'ensemble des professionnels du secteur.",
+    primaryLabel: 'Soumettre un événement',
+    primaryHref: '/contact',
+    secondaryLabel: 'En savoir plus',
+    secondaryHref: '/partenaires',
+  },
+};
+
+const asRecord = (value: unknown): Record<string, unknown> =>
+  value && typeof value === 'object' && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
+
+const text = (value: unknown, fallback: string) => {
+  const candidate = typeof value === 'string' ? value.trim() : '';
+  return candidate || fallback;
+};
+
+const parseDetails = (value: string | null | undefined): EventDetails => {
+  if (!value) return {};
+  try {
+    const parsed = JSON.parse(value) as unknown;
+    if (parsed && typeof parsed === 'object') return parsed as EventDetails;
+  } catch {
+    return { description: value };
+  }
+  return {};
+};
+
+const formatEventDateParts = (date: Date) => {
+  const day = new Intl.DateTimeFormat('fr-FR', { day: '2-digit' }).format(date);
+  const month = new Intl.DateTimeFormat('fr-FR', { month: 'short' }).format(date).replace('.', '');
+  const year = new Intl.DateTimeFormat('fr-FR', { year: 'numeric' }).format(date);
+  return { day, month, year };
+};
+
+const normalizeEvent = (row: EventApiRow): DisplayEvent => {
+  const details = parseDetails(row.details);
+  const date = new Date(row.date);
+  const dateLabel = Number.isNaN(date.getTime())
+    ? ''
+    : new Intl.DateTimeFormat('fr-FR', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(date);
+  const timeRange = details.time
+    ? `${details.time}${details.endTime ? ` - ${details.endTime}` : ''}`
+    : dateLabel;
+  const organizerType = row.organizer_type === 'partner' ? 'partner' : 'proquelec';
+
+  return {
+    id: row.id,
+    title: row.title,
+    date,
+    location: text(row.location, 'Lieu à confirmer'),
+    description: text(details.description, 'Informations complémentaires à venir.'),
+    time: timeRange || 'Horaire à confirmer',
+    category: text(details.category, organizerType === 'partner' ? 'Partenaire' : 'Institutionnel'),
+    type: text(details.type, organizerType === 'partner' ? 'Partenaire' : 'Officiel'),
+    organizer: text(
+      details.organizer,
+      organizerType === 'partner' ? 'Partenaire PROQUELEC' : 'PROQUELEC',
+    ),
+    organizerType,
+    status: text(row.status, 'published'),
+    registrationUrl: text(details.registrationUrl, '/contact'),
+    detailsUrl: text(details.detailsUrl, `/events#event-${row.id}`),
+  };
+};
+
+const buildPageContent = (pageSections: Record<string, unknown> | undefined): EventsPageContent => {
+  const eventsPage = asRecord(pageSections?.events);
+  const content = asRecord(eventsPage.content);
+
+  // ---- Dual-format support ----
+  // 1) Specific format (rich fields: badge, primaryLabel, buttonLabel, etc.)
+  // 2) Generic PageSectionsAdmin format (sections[] + content[].{title,subtitle,features,image})
+
+  const fromSection = (sectionId: string, field: string, fallback: string): string => {
+    const section = asRecord(content[sectionId]);
+    const features = Array.isArray(section.features) ? section.features : [];
+    // Try exact field first, then pull from features array if present
+    const direct = text((section as Record<string, unknown>)[field], '');
+    if (direct) return direct;
+    // For generic format, features are pipe-delimited: "label | value"
+    const match = features.find((f: unknown) => typeof f === 'string' && f.startsWith(field + '|'));
+    if (match) return (match as string).split('|')[1]?.trim() || fallback;
+    // Fallback: use section.subtitle or section.title as generic content
+    if (field === 'badge') return text(section.subtitle, fallback);
+    if (field === 'description') return text(section.subtitle, fallback);
+    if (field === 'primaryLabel' || field === 'secondaryLabel' || field === 'buttonLabel') {
+      // Buttons: grab first two features as button labels
+      const idx = field === 'primaryLabel' || field === 'buttonLabel' ? 0 : 1;
+      const btnFeature = features[idx];
+      if (typeof btnFeature === 'string') {
+        return btnFeature.split('|')[0]?.trim() || fallback;
+      }
+      return fallback;
+    }
+    if (field === 'primaryHref' || field === 'secondaryHref' || field === 'buttonHref') {
+      const idx = field === 'primaryHref' || field === 'buttonHref' ? 0 : 1;
+      const btnFeature = features[idx];
+      if (typeof btnFeature === 'string') {
+        const parts = btnFeature.split('|');
+        return parts[1]?.trim() || parts[0]?.trim() || fallback;
+      }
+      return fallback;
+    }
+    return text((section as Record<string, unknown>)[field], fallback);
+  };
+
+  // Detect format:
+  // - Specific: content.hero has fields like 'badge' or 'primaryLabel'
+  // - Generic (PageSectionsAdmin): content.{id} has {title, subtitle, features, image}
+  const heroKeys = Object.keys(asRecord(content.hero));
+  const hasSpecific = heroKeys.includes('badge') || heroKeys.includes('primaryLabel');
+
+  if (hasSpecific) {
+    const hero = asRecord(content.hero);
+    const official = asRecord(content.official);
+    const partners = asRecord(content.partners);
+    const cta = asRecord(content.cta);
+
+    return {
+      hero: {
+        badge: text(hero.badge, DEFAULT_CONTENT.hero.badge),
+        title: text(hero.title, DEFAULT_CONTENT.hero.title),
+        subtitle: text(hero.subtitle, DEFAULT_CONTENT.hero.subtitle),
+        description: text(hero.description, DEFAULT_CONTENT.hero.description),
+        primaryLabel: text(hero.primaryLabel, DEFAULT_CONTENT.hero.primaryLabel),
+        primaryHref: text(hero.primaryHref, DEFAULT_CONTENT.hero.primaryHref),
+        secondaryLabel: text(hero.secondaryLabel, DEFAULT_CONTENT.hero.secondaryLabel),
+        secondaryHref: text(hero.secondaryHref, DEFAULT_CONTENT.hero.secondaryHref),
+      },
+      official: {
+        badge: text(official.badge, DEFAULT_CONTENT.official.badge),
+        title: text(official.title, DEFAULT_CONTENT.official.title),
+        subtitle: text(official.subtitle, DEFAULT_CONTENT.official.subtitle),
+      },
+      partners: {
+        badge: text(partners.badge, DEFAULT_CONTENT.partners.badge),
+        title: text(partners.title, DEFAULT_CONTENT.partners.title),
+        subtitle: text(partners.subtitle, DEFAULT_CONTENT.partners.subtitle),
+        buttonLabel: text(partners.buttonLabel, DEFAULT_CONTENT.partners.buttonLabel),
+        buttonHref: text(partners.buttonHref, DEFAULT_CONTENT.partners.buttonHref),
+      },
+      cta: {
+        title: text(cta.title, DEFAULT_CONTENT.cta.title),
+        description: text(cta.description, DEFAULT_CONTENT.cta.description),
+        primaryLabel: text(cta.primaryLabel, DEFAULT_CONTENT.cta.primaryLabel),
+        primaryHref: text(cta.primaryHref, DEFAULT_CONTENT.cta.primaryHref),
+        secondaryLabel: text(cta.secondaryLabel, DEFAULT_CONTENT.cta.secondaryLabel),
+        secondaryHref: text(cta.secondaryHref, DEFAULT_CONTENT.cta.secondaryHref),
+      },
+    };
+  }
+
+  // ---- Generic PageSectionsAdmin format ----
+  const heroSection = asRecord(content.hero || content['en-tete'] || {});
+  const officialSection = asRecord(
+    content.official || content.institutionnel || content.officiel || {},
+  );
+  const partnersSection = asRecord(content.partners || content.partenaires || {});
+  const ctaSection = asRecord(content.cta || content.appel || {});
+
+  return {
+    hero: {
+      badge: fromSection('hero', 'badge', DEFAULT_CONTENT.hero.badge),
+      title: text(heroSection.title, DEFAULT_CONTENT.hero.title),
+      subtitle: text(heroSection.subtitle, DEFAULT_CONTENT.hero.subtitle),
+      description: fromSection('hero', 'description', DEFAULT_CONTENT.hero.description),
+      primaryLabel: fromSection('hero', 'primaryLabel', DEFAULT_CONTENT.hero.primaryLabel),
+      primaryHref: fromSection('hero', 'primaryHref', DEFAULT_CONTENT.hero.primaryHref),
+      secondaryLabel: fromSection('hero', 'secondaryLabel', DEFAULT_CONTENT.hero.secondaryLabel),
+      secondaryHref: fromSection('hero', 'secondaryHref', DEFAULT_CONTENT.hero.secondaryHref),
+    },
+    official: {
+      badge: fromSection('official', 'badge', DEFAULT_CONTENT.official.badge),
+      title: text(officialSection.title, DEFAULT_CONTENT.official.title),
+      subtitle: text(officialSection.subtitle, DEFAULT_CONTENT.official.subtitle),
+    },
+    partners: {
+      badge: fromSection('partners', 'badge', DEFAULT_CONTENT.partners.badge),
+      title: text(partnersSection.title, DEFAULT_CONTENT.partners.title),
+      subtitle: text(partnersSection.subtitle, DEFAULT_CONTENT.partners.subtitle),
+      buttonLabel: fromSection('partners', 'buttonLabel', DEFAULT_CONTENT.partners.buttonLabel),
+      buttonHref: fromSection('partners', 'buttonHref', DEFAULT_CONTENT.partners.buttonHref),
+    },
+    cta: {
+      title: text(ctaSection.title, DEFAULT_CONTENT.cta.title),
+      description: text(ctaSection.description, DEFAULT_CONTENT.cta.description),
+      primaryLabel: fromSection('cta', 'primaryLabel', DEFAULT_CONTENT.cta.primaryLabel),
+      primaryHref: fromSection('cta', 'primaryHref', DEFAULT_CONTENT.cta.primaryHref),
+      secondaryLabel: fromSection('cta', 'secondaryLabel', DEFAULT_CONTENT.cta.secondaryLabel),
+      secondaryHref: fromSection('cta', 'secondaryHref', DEFAULT_CONTENT.cta.secondaryHref),
+    },
+  };
+};
+
+const EmptyState = ({ label }: { label: string }) => (
+  <div className="rounded-3xl border border-dashed border-slate-200 bg-white p-10 text-center">
+    <CalendarCheck className="mx-auto mb-4 h-10 w-10 text-slate-300" />
+    <p className="text-lg font-bold text-slate-800">{label}</p>
+    <p className="mt-2 text-sm text-slate-500">
+      Les prochains rendez-vous seront affichés automatiquement après publication depuis le
+      dashboard.
+    </p>
+  </div>
+);
+
+const EventCard = ({ event }: { event: DisplayEvent }) => {
+  const [showRegistration, setShowRegistration] = useState(false);
+  const isOfficial = event.organizerType === 'proquelec';
+  const dateParts = formatEventDateParts(event.date);
+
+  return (
+    <>
+      <article
+        id={`event-${event.id}`}
+        className={`group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-2xl md:flex-row ${
+          isOfficial ? 'border-l-8 border-l-blue-600' : 'border-l-8 border-l-indigo-400'
+        }`}
+      >
+        <div
+          className={`flex flex-col items-center justify-center p-8 text-center text-white md:w-48 ${
+            isOfficial ? 'bg-slate-900' : 'bg-slate-800'
+          }`}
+        >
+          <span className="mb-1 text-sm font-bold uppercase opacity-60">{dateParts.year}</span>
+          <span className="mb-1 text-4xl font-black">{dateParts.day}</span>
+          <span className="text-lg font-bold text-blue-400">{dateParts.month}</span>
+        </div>
+
+        <div className="flex flex-1 flex-col p-8 md:p-10">
+          <div className="mb-4 flex flex-wrap items-center gap-3">
+            <Badge
+              variant="secondary"
+              className={`border-none font-bold hover:bg-opacity-80 ${
+                isOfficial ? 'bg-blue-50 text-blue-700' : 'bg-indigo-50 text-indigo-700'
+              }`}
+            >
+              {event.category}
+            </Badge>
+            <div
+              className={`flex items-center gap-1 rounded-full px-3 py-1 text-sm font-bold ${
+                isOfficial ? 'bg-blue-50 text-blue-600' : 'bg-indigo-50 text-indigo-600'
+              }`}
+            >
+              {isOfficial ? <ShieldCheck className="h-4 w-4" /> : <Handshake className="h-4 w-4" />}
+              {isOfficial ? 'Officiel PROQUELEC' : event.organizer}
+            </div>
+          </div>
+
+          <h3 className="mb-4 text-2xl font-bold text-slate-900 transition-colors group-hover:text-blue-600 md:text-3xl">
+            {event.title}
+          </h3>
+          <p className="mb-8 text-lg leading-relaxed text-slate-600">{event.description}</p>
+
+          <div className="mt-auto grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex items-center gap-3 text-slate-500">
+              <Clock className="h-5 w-5 text-blue-600" />
+              <span className="font-semibold">{event.time}</span>
+            </div>
+            <div className="flex items-center gap-3 text-slate-500">
+              <MapPin className="h-5 w-5 text-blue-600" />
+              <span className="font-semibold">{event.location}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col justify-center gap-4 border-l border-slate-100 bg-slate-50 p-8 md:w-64 md:p-10">
+          <Button
+            className={`h-12 w-full font-bold shadow-md transition-all ${
+              isOfficial ? 'bg-blue-600 hover:bg-blue-700' : 'bg-slate-900 hover:bg-slate-800'
+            }`}
+            onClick={() => setShowRegistration(true)}
+          >
+            M'inscrire
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="h-12 w-full border-slate-200 font-bold text-slate-600 hover:bg-white"
+          >
+            <a href={event.detailsUrl}>
+              Détails <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
+        </div>
+      </article>
+      <RegistrationModal event={event} open={showRegistration} onOpenChange={setShowRegistration} />
+    </>
+  );
+};
+
+type RegistrationForm = {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  message: string;
+};
+
+type RegistrationModalProps = {
+  event: DisplayEvent;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
+
+const RegistrationModal = ({ event, open, onOpenChange }: RegistrationModalProps) => {
+  const [form, setForm] = useState<RegistrationForm>({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    message: '',
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.email) {
+      toast({
+        title: 'Erreur',
+        description: 'Veuillez remplir votre nom et votre email.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const response = await fetch(`/api/cms/events/${event.id}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!response.ok) throw new Error(`Erreur ${response.status}`);
+      setSuccess(true);
+      toast({
+        title: 'Inscription confirmée 🎉',
+        description: `Vous êtes inscrit à : ${event.title}`,
+      });
+    } catch {
+      toast({
+        title: 'Erreur',
+        description: "Impossible de s'inscrire pour le moment.",
+        variant: 'destructive',
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const resetAndClose = () => {
+    setForm({ name: '', email: '', phone: '', company: '', message: '' });
+    setSuccess(false);
+    onOpenChange(false);
+  };
+
+  return (
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        if (!open) resetAndClose();
+      }}
+    >
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-xl">
+            {success ? '✅ Inscription confirmée' : `Inscription — ${event.title}`}
+          </DialogTitle>
+        </DialogHeader>
+        {success ? (
+          <div className="space-y-4 py-4 text-center">
+            <p className="text-lg font-semibold text-green-700">Vous êtes bien inscrit !</p>
+            <p className="text-muted-foreground">
+              Un email de confirmation vous sera envoyé prochainement.
+            </p>
+            <button onClick={resetAndClose} className="text-sm text-blue-600 underline">
+              Fermer
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="reg-name">Nom *</Label>
+                <Input
+                  id="reg-name"
+                  value={form.name}
+                  onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
+                  placeholder="Votre nom"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="reg-email">Email *</Label>
+                <Input
+                  id="reg-email"
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
+                  placeholder="votre@email.com"
+                  required
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="reg-phone">Téléphone</Label>
+                <Input
+                  id="reg-phone"
+                  value={form.phone}
+                  onChange={(e) => setForm((p) => ({ ...p, phone: e.target.value }))}
+                  placeholder="+221 XX XXX XX XX"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="reg-company">Entreprise</Label>
+                <Input
+                  id="reg-company"
+                  value={form.company}
+                  onChange={(e) => setForm((p) => ({ ...p, company: e.target.value }))}
+                  placeholder="Votre société"
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="reg-message">Message (optionnel)</Label>
+              <Textarea
+                id="reg-message"
+                value={form.message}
+                onChange={(e) => setForm((p) => ({ ...p, message: e.target.value }))}
+                placeholder="Questions ou remarques..."
+                rows={3}
+              />
+            </div>
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={resetAndClose}
+                className="flex-1 rounded-md border px-4 py-2 text-sm font-medium hover:bg-slate-50"
+              >
+                Annuler
+              </button>
+              <button
+                type="submit"
+                disabled={submitting}
+                className="flex-1 rounded-md bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50"
+              >
+                {submitting ? 'Inscription...' : "M'inscrire"}
+              </button>
+            </div>
+          </form>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 const Events = () => {
-  const officialEvents = [
-  {
-    title: "Conférence Technique : Normes 2025",
-    type: "Présentiel",
-    date: "15 Février 2026",
-    time: "09:00 - 13:00",
-    location: "Siège PROQUELEC, Dakar",
-    category: "Conférence",
-    featured: true,
-    description: "Une session exclusive pour décrypter les évolutions majeures des normes d'installation électrique au Sénégal."
-  },
-  {
-    title: "Atelier Pratique : Solaire & Stockage",
-    type: "Présentiel",
-    date: "5 Mars 2026",
-    time: "08:30 - 17:30",
-    location: "Centre de Formation PROQUELEC",
-    category: "Atelier",
-    description: "Mise en œuvre concrète de systèmes photovoltaïques avec gestion intelligente de l'énergie."
-  }];
+  const { settings } = useLiveSettings();
+  const [events, setEvents] = useState<DisplayEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
+  const content = useMemo(
+    () => buildPageContent(settings?.page_sections),
+    [settings?.page_sections],
+  );
 
-  const partnerEvents = [
-  {
-    title: "Salon de l'Énergie Renouvelable",
-    organizer: "EnergiTech Sénégal",
-    type: "Exposition",
-    date: "20 Mars 2026",
-    time: "10:00 - 18:00",
-    location: "Place du Souvenir, Dakar",
-    category: "Salon",
-    description: "Le rendez-vous incontournable des acteurs locaux du renouvelable avec démonstrations en direct."
-  },
-  {
-    title: "Webinaire : Domotique & Sécurité",
-    organizer: "SmartHome Africa",
-    type: "En ligne",
-    date: "28 Mars 2026",
-    time: "14:00 - 15:30",
-    location: "Lien envoyé par email",
-    category: "Webinaire",
-    description: "Comment intégrer des solutions connectées tout en respectant les fondamentaux de la sécurité électrique."
-  }];
+  useEffect(() => {
+    let cancelled = false;
 
-
-  const EventCard = ({ event, isOfficial = false }: {event: unknown;isOfficial?: boolean;}) =>
-  <div
-    className={`group bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 flex flex-col md:flex-row transition-all duration-300 hover:shadow-2xl ${isOfficial ? "border-l-8 border-l-blue-600" : "border-l-8 border-l-indigo-400"}`}>
-    
-      {/* Date Sidebar */}
-      <div className={`${isOfficial ? 'bg-slate-900' : 'bg-slate-800'} text-white p-8 md:w-48 flex flex-col items-center justify-center text-center`}>
-        <span className="text-sm font-bold opacity-60 uppercase mb-1">{event.date.split(' ')[2]}</span>
-        <span className="text-4xl font-black mb-1">{event.date.split(' ')[0]}</span>
-        <span className="text-lg font-bold text-blue-400">{event.date.split(' ')[1]}</span>
-      </div>
-
-      {/* Content */}
-      <div className="p-8 md:p-10 flex-1 flex flex-col">
-        <div className="flex flex-wrap items-center gap-3 mb-4">
-          <Badge variant="secondary" className={`${isOfficial ? 'bg-blue-50 text-blue-700' : 'bg-indigo-50 text-indigo-700'} hover:bg-opacity-80 border-none font-bold`}>
-            {event.category}
-          </Badge>
-          {!isOfficial &&
-        <div className="flex items-center gap-1 text-indigo-600 text-sm font-bold bg-indigo-50 px-3 py-1 rounded-full">
-              <Handshake className="w-4 h-4" />
-              {event.organizer}
-            </div>
+    const loadEvents = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const response = await fetch('/api/cms/events');
+        if (!response.ok) throw new Error(`API events ${response.status}`);
+        const rows = (await response.json()) as EventApiRow[];
+        const normalized = rows
+          .map(normalizeEvent)
+          .filter(
+            (event) => !['draft', 'deleted', 'annule', 'pending_review'].includes(event.status),
+          )
+          .sort((a, b) => a.date.getTime() - b.date.getTime());
+        if (!cancelled) setEvents(normalized);
+      } catch (err) {
+        if (!cancelled) {
+          setError("Impossible de charger l'agenda pour le moment.");
+          setEvents([]);
         }
-          {isOfficial &&
-        <div className="flex items-center gap-1 text-blue-600 text-sm font-bold bg-blue-50 px-3 py-1 rounded-full">
-              <ShieldCheck className="w-4 h-4" />
-              Officiel PROQUELEC
-            </div>
-        }
-        </div>
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
 
-        <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">
-          {event.title}
-        </h3>
+    loadEvents();
 
-        <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-          {event.description}
-        </p>
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-        <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="flex items-center gap-3 text-slate-500">
-            <Clock className="w-5 h-5 text-blue-600" />
-            <span className="font-semibold">{event.time}</span>
-          </div>
-          <div className="flex items-center gap-3 text-slate-500">
-            <MapPin className="w-5 h-5 text-blue-600" />
-            <span className="font-semibold">{event.location}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Actions */}
-      <div className="p-8 md:p-10 bg-slate-50 md:w-64 flex flex-col justify-center gap-4 border-l border-slate-100">
-        <Button className={`${isOfficial ? 'bg-blue-600 hover:bg-blue-700' : 'bg-slate-900 hover:bg-slate-800'} w-full font-bold h-12 shadow-md transition-all`}>
-          M'inscrire
-        </Button>
-        <Button variant="outline" className="w-full border-slate-200 text-slate-600 hover:bg-white font-bold h-12">
-          Détails <ArrowRight className="w-4 h-4 ml-2" />
-        </Button>
-      </div>
-    </div>;
-
+  const officialEvents = events.filter((event) => event.organizerType === 'proquelec');
+  const partnerEvents = events.filter((event) => event.organizerType === 'partner');
 
   return (
     <div className="min-h-screen bg-slate-50 font-roboto">
-      <SEO
-        title="Événements & Agenda - PROQUELEC"
-        description="Découvrez les événements officiels de PROQUELEC et les initiatives de nos partenaires pour l'expertise électrique au Sénégal." />
-      
+      <SEO title={`${content.hero.title} - PROQUELEC`} description={content.hero.description} />
 
       <Header />
 
       <main>
         <HeroSection
-          badge="Calendrier Expert"
-          title="Événements & Agenda"
-          subtitle="Le carrefour de l'expertise électrique"
-          description="Participez aux moments forts du secteur : des conférences institutionnelles PROQUELEC aux initiatives innovantes de nos partenaires."
+          badge={content.hero.badge}
+          title={content.hero.title}
+          subtitle={content.hero.subtitle}
+          description={content.hero.description}
           gradient="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900"
           buttons={[
-          { label: "Voir les événements officiels", href: "#official", variant: "primary" },
-          { label: "Événements partenaires", href: "#partners", variant: "secondary" }]
-          } />
-        
+            {
+              label: content.hero.primaryLabel,
+              href: content.hero.primaryHref,
+              variant: 'primary',
+            },
+            {
+              label: content.hero.secondaryLabel,
+              href: content.hero.secondaryHref,
+              variant: 'secondary',
+            },
+          ]}
+        />
 
-        {/* Official Events Section */}
-        <section id="official" className="py-24 px-4 bg-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-50 opacity-20 pointer-events-none -skew-x-12 transform translate-x-24" />
-          <div className="max-w-7xl mx-auto relative">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <section id="official" className="relative overflow-hidden bg-white px-4 py-24">
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-1/3 translate-x-24 -skew-x-12 bg-blue-50 opacity-20" />
+          <div className="relative mx-auto max-w-7xl">
+            <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div className="max-w-2xl">
-                <Badge className="bg-blue-600 text-white mb-4 px-4 py-1.5 text-sm uppercase tracking-widest font-bold border-none">
-                  Institutionnel
+                <Badge className="mb-4 border-none bg-blue-600 px-4 py-1.5 text-sm font-bold uppercase tracking-widest text-white">
+                  {content.official.badge}
                 </Badge>
-                <h2 className="text-4xl md:text-5xl font-black text-slate-900 flex items-center gap-4">
-                  <CalendarCheck className="w-10 h-10 text-blue-600" />
-                  Événements PROQUELEC
+                <h2 className="flex items-center gap-4 text-4xl font-black text-slate-900 md:text-5xl">
+                  <CalendarCheck className="h-10 w-10 text-blue-600" />
+                  {content.official.title}
                 </h2>
-                <p className="mt-4 text-xl text-slate-600 leading-relaxed italic">
-                  Nos rendez-vous officiels pour la promotion de la sécurité et de la qualité électrique au Sénégal.
+                <p className="mt-4 text-xl italic leading-relaxed text-slate-600">
+                  {content.official.subtitle}
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-12">
-              {officialEvents.map((event, idx) =>
-              <EventCard key={idx} event={event} isOfficial={true} />
+              {loading ? (
+                <EmptyState label="Chargement des événements..." />
+              ) : error ? (
+                <EmptyState label={error} />
+              ) : officialEvents.length > 0 ? (
+                officialEvents.map((event) => <EventCard key={event.id} event={event} />)
+              ) : (
+                <EmptyState label="Aucun événement PROQUELEC publié" />
               )}
             </div>
           </div>
         </section>
 
-        {/* Partner Events Section */}
-        <section id="partners" className="py-24 px-4 bg-slate-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <section id="partners" className="bg-slate-50 px-4 py-24">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
               <div className="max-w-2xl">
-                <Badge className="bg-indigo-600 text-white mb-4 px-4 py-1.5 text-sm uppercase tracking-widest font-bold border-none">
-                  Écosystème
+                <Badge className="mb-4 border-none bg-indigo-600 px-4 py-1.5 text-sm font-bold uppercase tracking-widest text-white">
+                  {content.partners.badge}
                 </Badge>
-                <h2 className="text-4xl md:text-5xl font-black text-slate-900 flex items-center gap-4">
-                  <Handshake className="w-10 h-10 text-indigo-600" />
-                  Événements Partenaires
+                <h2 className="flex items-center gap-4 text-4xl font-black text-slate-900 md:text-5xl">
+                  <Handshake className="h-10 w-10 text-indigo-600" />
+                  {content.partners.title}
                 </h2>
-                <p className="mt-4 text-xl text-slate-600 leading-relaxed">
-                  Des initiatives portées par nos partenaires agréés et certifiés, validées par l'expertise PROQUELEC.
+                <p className="mt-4 text-xl leading-relaxed text-slate-600">
+                  {content.partners.subtitle}
                 </p>
               </div>
-              <Button size="lg" variant="outline" className="border-indigo-200 text-indigo-600 hover:bg-white h-14 px-8 rounded-xl font-bold italic">
-                Devenir Partenaire <Plus className="w-5 h-5 ml-2" />
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="h-14 rounded-xl border-indigo-200 px-8 font-bold italic text-indigo-600 hover:bg-white"
+              >
+                <a href={content.partners.buttonHref}>
+                  {content.partners.buttonLabel} <Plus className="ml-2 h-5 w-5" />
+                </a>
               </Button>
             </div>
 
             <div className="grid grid-cols-1 gap-12">
-              {partnerEvents.map((event, idx) =>
-              <EventCard key={idx} event={event} isOfficial={false} />
+              {loading ? (
+                <EmptyState label="Chargement des événements partenaires..." />
+              ) : partnerEvents.length > 0 ? (
+                partnerEvents.map((event) => <EventCard key={event.id} event={event} />)
+              ) : (
+                <EmptyState label="Aucun événement partenaire publié" />
               )}
             </div>
           </div>
         </section>
 
-        {/* Propose Event CTA */}
-        <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10 pointer-events-none">
-            <div className="absolute h-96 w-96 rounded-full bg-blue-500 blur-3xl -top-24 -left-24" />
-            <div className="absolute h-96 w-96 rounded-full bg-indigo-500 blur-3xl -bottom-24 -right-24" />
+        <section className="relative overflow-hidden bg-slate-900 py-24 text-white">
+          <div className="pointer-events-none absolute inset-0 opacity-10">
+            <div className="absolute -left-24 -top-24 h-96 w-96 rounded-full bg-blue-500 blur-3xl" />
+            <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-indigo-500 blur-3xl" />
           </div>
-          <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-            <div className="w-24 h-24 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mx-auto mb-10 transform -rotate-6 transition-transform hover:rotate-0 duration-500">
-              <Monitor className="w-12 h-12 text-blue-400" />
+          <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
+            <div className="mx-auto mb-10 flex h-24 w-24 -rotate-6 transform items-center justify-center rounded-2xl bg-white/10 backdrop-blur-md transition-transform duration-500 hover:rotate-0">
+              <Monitor className="h-12 w-12 text-blue-400" />
             </div>
-            <h2 className="text-4xl md:text-5xl font-black mb-8 leading-tight italic">
-              Diffusez votre expertise <br /> via le réseau PROQUELEC
+            <h2 className="mb-8 text-4xl font-black italic leading-tight md:text-5xl">
+              {content.cta.title}
             </h2>
-            <p className="text-xl md:text-2xl text-slate-400 mb-12 leading-relaxed">
-              Partenaires, proposez vos ateliers et conférences sur notre plateforme pour toucher l'ensemble des professionnels du secteur.
+            <p className="mb-12 text-xl leading-relaxed text-slate-400 md:text-2xl">
+              {content.cta.description}
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-16 px-12 text-lg rounded-2xl shadow-xl shadow-blue-900/40">
-                Soumettre un événement
+            <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
+              <Button
+                asChild
+                size="lg"
+                className="h-16 rounded-2xl bg-blue-600 px-12 text-lg font-bold text-white shadow-xl shadow-blue-900/40 hover:bg-blue-700"
+              >
+                <a href={content.cta.primaryHref}>{content.cta.primaryLabel}</a>
               </Button>
-              <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 h-16 px-12 text-lg rounded-2xl backdrop-blur-sm">
-                En savoir plus
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="h-16 rounded-2xl border-white/20 px-12 text-lg text-white backdrop-blur-sm hover:bg-white/10"
+              >
+                <a href={content.cta.secondaryHref}>{content.cta.secondaryLabel}</a>
               </Button>
             </div>
           </div>
@@ -234,9 +769,9 @@ const Events = () => {
       </main>
 
       <Footer />
-      <ScrollToTopButton aria-label="Action" />
-    </div>);
-
+      <ScrollToTopButton aria-label="Retour en haut" />
+    </div>
+  );
 };
 
 export default Events;

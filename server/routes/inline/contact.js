@@ -19,8 +19,8 @@ function mountContactRoutes(app, pool, deps) {
       const emailNotification = buildEmailNotificationPayload(emailResult);
       if (!emailResult.success) {
         console.warn('[CONTACT] Email notification failed:', emailResult.error);
-        return res.status(502).json({
-          error: 'EMAIL_SEND_FAILED',
+        return res.status(201).json({
+          warning: 'EMAIL_SEND_FAILED',
           message: 'Votre demande a été enregistrée, mais la notification email PROQUELEC n\'a pas pu être envoyée.',
           saved: true, contact_request: result.rows[0],
           email_notification: { ...emailNotification, error: emailResult.error || 'Erreur SMTP inconnue' },

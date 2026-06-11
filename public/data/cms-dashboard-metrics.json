@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-06-11T11:34:47.657Z",
+  "tools": {
+    "total": 60,
+    "free": 18,
+    "premium": 29,
+    "internal": 13,
+    "active": 60,
+    "coming": 0,
+    "development": 0
+  },
+  "capabilities": {
+    "total": 13,
+    "operational": 4,
+    "strengthen": 7,
+    "connect": 2,
+    "highPriority": 9
+  },
+  "templates": {
+    "total": 25,
+    "pqModelReferences": 25
+  }
+}

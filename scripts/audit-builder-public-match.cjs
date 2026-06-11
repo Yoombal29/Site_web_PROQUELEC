@@ -2,9 +2,10 @@
 /**
  * Audit des ecarts entre le Builder et les pages publiques.
  *
- * Le public rend `structure_json`.
- * `draft_json` est un brouillon non publie et ne doit pas etre confondu
- * avec la version visible sur le site.
+ * Le public rend `structure_json`, sauf pour les pages section_driven qui
+ * utilisent `site_settings.page_sections`.
+ * `draft_json` est un brouillon non publie et ne doit pas etre confondu avec
+ * la version visible sur le site.
  *
  * Usage:
  *   node scripts/audit-builder-public-match.cjs
@@ -40,6 +41,9 @@ function parseJson(value) {
 
 function pageType(page) {
   const designOptions = parseJson(page.design_options) || {};
+  if (designOptions.page_type === 'section_driven' || designOptions.section_driven === true) {
+    return 'sectionDriven';
+  }
   if (page.immutable === true && designOptions.page_type === 'hybrid') return 'hybrid';
   if (page.immutable === true) return 'functional';
   return 'content';
@@ -64,6 +68,7 @@ async function main() {
       content: 0,
       functional: 0,
       hybrid: 0,
+      sectionDriven: 0,
       draftDiffersFromPublic: [],
       missingStructure: [],
     };
@@ -75,11 +80,11 @@ async function main() {
       const structureJson = stableJson(page.structure_json);
       const draftJson = stableJson(page.draft_json);
 
-      if (!structureJson) {
+      if (type !== 'sectionDriven' && !structureJson) {
         report.missingStructure.push({ slug: page.slug, title: page.title, type });
       }
 
-      if (structureJson && draftJson && structureJson !== draftJson) {
+      if (type !== 'sectionDriven' && structureJson && draftJson && structureJson !== draftJson) {
         report.draftDiffersFromPublic.push({ slug: page.slug, title: page.title, type });
       }
     }

@@ -44,33 +44,61 @@ const PAGE_ALIASES: Record<string, string> = {
   'formation-certification': 'formation_certification',
   'normes-ressources': 'normes_ressources',
   'projets-realisations': 'projets_realisations',
+  projets: 'projets_realisations',
   actualites: 'actualites_evenements',
   'actualites-evenements': 'actualites_evenements',
   'contact-premium': 'contact_premium',
+  formations: 'trainings',
   'formations-proquelec': 'formations_proquelec',
   'expertises-techniques': 'expertises_techniques',
+  expertises: 'expertises_techniques',
   'expert-lab': 'expert_lab',
   'espace-menages': 'menages',
   'espace-professionnels': 'professionnels',
   'espace-autorites': 'autorites',
   avantages: 'advantages',
   // Nouveaux slugs du menu BD
-  'nos-actions': 'nos_actions',
-  projets: 'projets',
-  galerie: 'galerie',
+  'nos-actions': 'activities',
+  galerie: 'projets_realisations',
   marches: 'marches',
-  collectivites: 'collectivites',
-  publications: 'publications',
+  collectivites: 'public_utility',
+  publications: 'normes_ressources',
   faq: 'faq',
-  'normative-corpus': 'normative_corpus',
-  'conseils-menages': 'conseils_menages',
-  'ressources-pedagogiques': 'ressources_pedagogiques',
-  'partenaires-liste': 'partenaires_liste',
+  'normative-corpus': 'normes_ressources',
+  'conseils-menages': 'menages',
+  'ressources-pedagogiques': 'trainings',
+  'partenaires-liste': 'partenaires',
   partenaires: 'partenaires',
-  'partenariat-senelec': 'partenariat_senelec',
-  temoignages: 'temoignages',
+  'partenariat-senelec': 'partenaires',
+  temoignages: 'avis_clients',
   'espace-partenaires': 'espace_partenaires',
+  'actions/diagnostics': 'activities',
+  'actions/collectivites': 'public_utility',
+  'evenements/anniversaire': 'actualites_evenements',
+  'evenements/seminaires': 'actualites_evenements',
 };
+
+const SECTION_DRIVEN_PAGE_KEYS = new Set([
+  'home_page',
+  'public_utility',
+  'formation_certification',
+  'normes_ressources',
+  'projets_realisations',
+  'actualites_evenements',
+  'autorites',
+  'menages',
+  'professionnels',
+  'presse',
+  'social',
+  'marches',
+  'partenaires',
+  'espace_partenaires',
+  'trainings',
+  'activities',
+  'expert_lab',
+  'blog',
+  'avis_clients',
+]);
 
 const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
   outils: ToolsPlatform,
@@ -79,6 +107,13 @@ const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
   events: Events,
   labels: Labels,
 };
+
+const normalizeRouteSlug = (slug: string) =>
+  slug
+    .replace(/^\//, '')
+    .replace(/\/$/, '')
+    .replace(/^(fr|en)\//, '')
+    .replace(/^portal\//, '');
 
 type ApiPageRecord = PageRecord & {
   content_raw?: string;
@@ -176,10 +211,7 @@ const DynamicPageComponent: React.FC = () => {
   const navigate = useNavigate();
   const rawSlug =
     paramSlug ||
-    location.pathname
-      .replace(/^\//, '')
-      .replace(/\/$/, '')
-      .replace(/^(fr|en)\//, '');
+    normalizeRouteSlug(location.pathname);
   const effectiveSlug = rawSlug === '' || rawSlug === 'fr' || rawSlug === 'en' ? 'home' : rawSlug;
   const resolvedPageKey = PAGE_ALIASES[effectiveSlug] || effectiveSlug;
   const [page, setPage] = useState<PageRecord | null>(null);
@@ -222,7 +254,7 @@ const DynamicPageComponent: React.FC = () => {
     const fetchPage = async () => {
       // Toujours utiliser le pathname complet comme slug (sans le leading slash)
       // Cela gère correctement /actions/conformite, /evenements/ateliers, etc.
-      let effectiveSlug = location.pathname.replace(/^\/|\/$/g, '').replace(/^(fr|en)\//, '');
+      let effectiveSlug = normalizeRouteSlug(location.pathname);
 
       if (!effectiveSlug || effectiveSlug === '') {
         effectiveSlug = 'home';
@@ -235,6 +267,13 @@ const DynamicPageComponent: React.FC = () => {
       const settingsKey = resolvedPageKey;
 
       try {
+        if (SECTION_DRIVEN_PAGE_KEYS.has(resolvedPageKey)) {
+          setPage(null);
+          setFallbackPageKey(settingsKey);
+          setLoading(false);
+          return;
+        }
+
         const data =
           (await fetchPublishedPageBySlug(effectiveSlug)) ||
           (PAGE_ALIASES[effectiveSlug]
@@ -498,38 +537,6 @@ const DynamicPageComponent: React.FC = () => {
       )}
 
       <Header />
-
-      {/* 🔒 Badge pour pages fonctionnelles (non modifiables via le Builder) */}
-      {(page as any).immutable === true && (
-        <div className="bg-amber-50 border-b border-amber-200">
-          <div className="max-w-7xl mx-auto px-4 py-2 flex items-center gap-2 text-sm text-amber-700">
-            <svg
-              className="w-4 h-4 flex-shrink-0"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-              />
-            </svg>
-            <span className="font-medium">Page fonctionnelle</span>
-            <span className="text-amber-500">·</span>
-            <span>
-              Cette page contient de la logique métier et ne peut pas être modifiée via le Builder.
-            </span>
-            {(page as any).security_level === 'authenticated' && (
-              <>
-                <span className="text-amber-500">·</span>
-                <span className="font-medium">Accès réservé aux utilisateurs connectés</span>
-              </>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* 🔵 Badge pour pages hybrides */}
       {(page as any).immutable === true && (page as any).design_options?.page_type === 'hybrid' && (

@@ -89,6 +89,7 @@ import PageSectionsAdmin from '@/pages/admin/PageSectionsAdmin';
 import AdminThemePanel from './AdminThemePanel';
 import AdminLogsPanel from './AdminLogsPanel';
 import AdminHelpPanel from './AdminHelpPanel';
+import CmsCapabilityCenter from './CmsCapabilityCenter';
 
 interface TabConfig {
   id: string;
@@ -1403,10 +1404,7 @@ const AdminDashboard: React.FC = () => {
 
             {activeTab === 'cms-capabilities' && (
               <div className="animate-fade-in">
-                <div className="bg-card border border-border rounded-xl p-6 text-center text-muted-foreground">
-                  <h2 className="text-xl font-bold mb-2">Centre de Capacités CMS</h2>
-                  <p>Composant en cours de développement.</p>
-                </div>
+                <CmsCapabilityCenter />
               </div>
             )}
 

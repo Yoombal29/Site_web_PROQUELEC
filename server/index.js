@@ -187,6 +187,18 @@ const authLimiter = rateLimit({
 });
 app.use('/api/auth/', authLimiter);
 
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: { error: 'Trop de demandes de contact, réessayez plus tard' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/api/contact-requests', (req, res, next) => {
+  if (req.method !== 'POST') return next();
+  return contactLimiter(req, res, next);
+});
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // --- AUTH MIDDLEWARE ---
@@ -1047,6 +1059,10 @@ app.use('/api/academy', academyRouter);
 const builderPermsRouter = require('./routes/builder-permissions');
 app.use('/api/admin/builder-permissions', builderPermsRouter);
 
+// CMS public/admin APIs mounted under /api/cms to avoid conflict with /api/events SSE.
+const cmsModule = require('./modules/cms/cms.routes');
+app.use('/api/cms', cmsModule.router);
+
 // Pages module (must be BEFORE projects to avoid router-level auth interception)
 const pagesModule = require('./modules/pages/pages.routes');
 app.use(pagesModule.basePath || '/api', pagesModule.router);
@@ -1305,39 +1321,101 @@ async function initDB() {
 
   // Auto-migrate contact page to functional (immutable) CMS page
   try {
+    const functionalStructure = JSON.stringify({
+      ROOT: {
+        type: 'div',
+        nodes: ['func_page_block'],
+        props: { style: {} },
+        linkedNodes: {},
+      },
+      func_page_block: {
+        type: { resolvedName: 'FunctionalPageBlock' },
+        nodes: [],
+        props: { slug: 'contact', pageTitle: 'Contact' },
+        parent: 'ROOT',
+        linkedNodes: {},
+        isCanvas: false,
+        displayName: 'FunctionalPageBlock',
+      },
+    });
+    const designOptions = JSON.stringify({ locked: true, functional: true });
+    const setImmutableTrigger = async (client, enabled) => {
+      const action = enabled ? 'ENABLE' : 'DISABLE';
+      await client.query(`
+        DO $$
+        BEGIN
+          IF EXISTS (
+            SELECT 1
+            FROM pg_trigger
+            WHERE tgname = 'trg_immutable_prevent'
+              AND tgrelid = 'public.pages'::regclass
+          ) THEN
+            EXECUTE 'ALTER TABLE public.pages ${action} TRIGGER trg_immutable_prevent';
+          END IF;
+        END $$;
+      `);
+    };
     const contactPage = await pool.query(
-      'SELECT id, immutable FROM public.pages WHERE slug = $1 LIMIT 1',
+      'SELECT id, immutable, structure_json::text AS structure_json FROM public.pages WHERE slug = $1 LIMIT 1',
       ['contact'],
     );
-    if (contactPage.rows.length > 0 && contactPage.rows[0].immutable !== true) {
-      const functionalStructure = JSON.stringify({
-        ROOT: {
-          type: 'div',
-          nodes: ['func_page_block'],
-          props: { style: {} },
-          linkedNodes: {},
-        },
-        func_page_block: {
-          type: { resolvedName: 'FunctionalPageBlock' },
-          nodes: [],
-          props: { slug: 'contact', pageTitle: 'Contact' },
-          parent: 'ROOT',
-          linkedNodes: {},
-          isCanvas: false,
-          displayName: 'FunctionalPageBlock',
-        },
-      });
+    if (contactPage.rows.length > 0) {
+      const page = contactPage.rows[0];
+      const hasFunctionalStructure = String(page.structure_json || '').includes('FunctionalPageBlock');
+      const mustRepairContactPage = page.immutable !== true || !hasFunctionalStructure;
+
+      if (mustRepairContactPage) {
+        const client = await pool.connect();
+        try {
+          await client.query('BEGIN');
+          await setImmutableTrigger(client, false);
+          await client.query(
+            `UPDATE public.pages
+             SET immutable = true,
+                 is_published = true,
+                 status = 'published',
+                 workflow_status = 'published',
+                 content = '',
+                 content_raw = '',
+                 structure_json = $1,
+                 draft_json = $1,
+                 design_options = COALESCE(design_options, '{}'::jsonb) || $2::jsonb,
+                 meta_description = 'Contactez PROQUELEC — formulaire de contact, téléphone, email et adresse.',
+                 hero_title = 'Contact',
+                 hero_subtitle = 'Parlons de votre projet',
+                 updated_at = NOW()
+             WHERE slug = 'contact'`,
+            [functionalStructure, designOptions],
+          );
+          await setImmutableTrigger(client, true);
+          await client.query('COMMIT');
+        } catch (repairErr) {
+          await client.query('ROLLBACK');
+          throw repairErr;
+        } finally {
+          client.release();
+        }
+        console.log('[DB] Contact page migrated to immutable functional page.');
+      }
+    } else {
       await pool.query(
-        `UPDATE public.pages
-         SET immutable = true, is_published = true, status = 'published',
-             structure_json = $1, updated_at = NOW()
-         WHERE slug = 'contact'`,
-        [functionalStructure],
+        `INSERT INTO public.pages
+         (title, slug, content, content_raw, structure_json, draft_json, design_options, immutable,
+          is_published, status, workflow_status, menu_order, meta_description, hero_title, hero_subtitle,
+          created_at, updated_at)
+         VALUES ($1, $2, '', '', $3, $3, $4, true, true, 'published', 'published', $5, $6, $7, $8, NOW(), NOW())`,
+        [
+          'Contact',
+          'contact',
+          functionalStructure,
+          designOptions,
+          5,
+          'Contactez PROQUELEC — formulaire de contact, téléphone, email et adresse.',
+          'Contact',
+          'Parlons de votre projet',
+        ],
       );
-      console.log('[DB] Contact page migrated to immutable functional page.');
-    }
-    if (contactPage.rows.length === 0) {
-      console.log('[DB] Contact page not found — will be created by init.');
+      console.log('[DB] Contact functional page created.');
     }
   } catch (migrateErr) {
     console.warn('[DB] Contact page migration skipped:', migrateErr.message);

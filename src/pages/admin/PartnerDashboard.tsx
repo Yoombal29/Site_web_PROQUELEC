@@ -70,7 +70,7 @@ export default function PartnerDashboard() {
                 d'être publiés sur le calendrier national.
               </p>
             </div>
-            <EventCalendar />
+            <EventCalendar role="partner" />
           </motion.section>
         );
 

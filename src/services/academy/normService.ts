@@ -6,7 +6,42 @@
  * sans dépendance à l'IA.
  */
 
+const NORM_RULES_URLS = [
+  '/data/NS01001_v2_core.json',
+  new URL('../../docs/NS01001/FINAL_DATA/NS01001_v2_core.json', import.meta.url).href,
+];
 
+const NORM_SOMMAIRE_URLS = [
+  '/data/sommaire_gold.json',
+  new URL('../../docs/NS01001/FINAL_DATA/sommaire_gold.json', import.meta.url).href,
+];
+
+async function fetchJsonWithFallback<T>(urls: string[], label: string): Promise<T> {
+  let lastError: unknown = null;
+
+  for (const url of urls) {
+    try {
+      const response = await fetch(url);
+      const text = await response.text();
+      const contentType = response.headers.get('content-type') || '';
+
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+
+      if (contentType.includes('text/html') || text.trimStart().startsWith('<')) {
+        throw new Error(`Réponse HTML reçue au lieu de JSON depuis ${url}`);
+      }
+
+      return JSON.parse(text) as T;
+    } catch (error) {
+      lastError = error;
+      console.warn(`[NormService] ${label} indisponible depuis ${url}:`, error);
+    }
+  }
+
+  throw new Error(`Impossible de charger ${label}. Dernière erreur: ${String(lastError)}`);
+}
 
 class NormService {
   private static instance: NormService;
@@ -43,19 +78,13 @@ class NormService {
 
   private async performLoad(): Promise<void> {
     try {
-
-
-      const [rulesResponse, sommaireResponse] = await Promise.all([
-      fetch('/data/NS01001_v2_core.json'),
-      fetch('/data/sommaire_gold.json')]
-      );
-
-      if (!rulesResponse.ok || !sommaireResponse.ok) {
-        throw new Error('Erreur lors du chargement des fichiers normatifs');
-      }
-
-      const rules: NormRule[] = await rulesResponse.json();
-      const sommaire: SommaireNode[] = await sommaireResponse.json();
+      const [rules, sommaire] = await Promise.all([
+        fetchJsonWithFallback<NormRule[]>(NORM_RULES_URLS, 'les règles normatives NS 01-001'),
+        fetchJsonWithFallback<SommaireNode[]>(
+          NORM_SOMMAIRE_URLS,
+          'le sommaire normatif NS 01-001',
+        ),
+      ]);
 
       this.database = {
         rules,

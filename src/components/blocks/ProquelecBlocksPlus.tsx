@@ -2,7 +2,7 @@
  * ProquelecBlocksPlus.tsx
  * Extension premium : 60+ nouveaux blocs pour atteindre ~85 blocs au total.
  */
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { useNode } from '@craftjs/core';
 import { getUniversalStyles } from './universalStyles';
 import { resolveDynamicContent } from '@/lib/dynamic-data/resolver';
@@ -18,12 +18,31 @@ import {
 import { AutoSettingsPanel } from './AutoSettingsPanel';
 import { toast } from 'sonner';
 
-const Input = (p: any) => <SettingsInput {...p} />;
-const Textarea = (p: any) => <SettingsTextarea {...p} />;
-const Select = (p: any) => <SettingsSelect {...p} />;
-const Color = (p: any) => <SettingsColor {...p} />;
-const Row = (p: any) => <SettingsRow {...p} />;
-const Label = (p: any) => <SettingsLabel {...p} />;
+type SettingsInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  value?: string | number;
+};
+type SettingsTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  value?: string | number;
+};
+type SettingsSelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
+  value?: string | number;
+  options: { value: string | number; label: string }[];
+};
+type SettingsColorProps = SettingsInputProps;
+
+const Input = (p: SettingsInputProps) => <SettingsInput {...p} />;
+const Textarea = (p: SettingsTextareaProps) => <SettingsTextarea {...p} />;
+const Select = ({ value, options, onChange, ...props }: SettingsSelectProps) => (
+  <SettingsSelect
+    {...props}
+    value={String(value ?? '')}
+    onChange={onChange}
+    options={options.map((option) => ({ value: String(option.value), label: option.label }))}
+  />
+);
+const Color = (p: SettingsColorProps) => <SettingsColor {...p} />;
+const Row = (p: { children: React.ReactNode }) => <SettingsRow {...p} />;
+const Label = (p: { label: string }) => <SettingsLabel {...p} />;
 const Flex = ({ children, className }: any) => (
   <div className={'flex items-center gap-2 ' + (className || '')}>{children}</div>
 );
@@ -42,6 +61,25 @@ const parsePipeItems = <T,>(value: string, mapper: (parts: string[], raw: string
       line,
     ),
   );
+
+export const useCraftRef = <T extends HTMLElement = HTMLElement>() => {
+  const {
+    connectors: { connect, drag },
+  } = useNode();
+
+  return useCallback(
+    (ref: T | null) => {
+      if (ref) connect(drag(ref));
+    },
+    [connect, drag],
+  );
+};
+
+const DEFAULT_CAROUSEL_IMAGES = [
+  'https://placehold.co/800x400/2563eb/ffffff?text=Image+1',
+  'https://placehold.co/800x400/1e293b/ffffff?text=Image+2',
+  'https://placehold.co/800x400/475569/ffffff?text=Image+3',
+];
 
 // ── 1. HeadingBlock ──
 export const HeadingBlock = (props: any) => {
@@ -872,11 +910,8 @@ AddressBlock.craft = {
 // ── 12. ImageCarouselBlock ──
 export const ImageCarouselBlock = (props: any) => {
   const {
-    images = [
-      'https://placehold.co/800x400/2563eb/ffffff?text=Image+1',
-      'https://placehold.co/800x400/1e293b/ffffff?text=Image+2',
-      'https://placehold.co/800x400/475569/ffffff?text=Image+3',
-    ],
+    images = DEFAULT_CAROUSEL_IMAGES,
+    altText = 'Image du carrousel',
     autoPlay = true,
     interval = 3000,
     showDots = true,
@@ -884,49 +919,88 @@ export const ImageCarouselBlock = (props: any) => {
     aspectRatio = '16/9',
     objectFit = 'cover',
   } = props;
-  const {
-    connectors: { connect, drag },
-  } = useNode();
+  const craftRef = useCraftRef<HTMLDivElement>();
   const u = getUniversalStyles(props);
+  const safeImages = useMemo(
+    () => (Array.isArray(images) ? images.filter((src: string) => Boolean(src?.trim())) : []),
+    [images],
+  );
   const [current, setCurrent] = useState(0);
+
   useEffect(() => {
-    let t: any;
-    if (autoPlay) {
-      t = setInterval(() => setCurrent((c) => (c + 1) % images.length), interval);
+    if (current >= safeImages.length) {
+      setCurrent(0);
     }
-    return () => clearInterval(t);
-  }, [autoPlay, interval, images.length]);
+  }, [current, safeImages.length]);
+
+  useEffect(() => {
+    if (!autoPlay || safeImages.length <= 1) return undefined;
+
+    const timer = window.setInterval(
+      () => setCurrent((index) => (index + 1) % safeImages.length),
+      Math.max(1000, Number(interval) || 3000),
+    );
+
+    return () => window.clearInterval(timer);
+  }, [autoPlay, interval, safeImages.length]);
+
+  const goPrevious = useCallback(() => {
+    if (safeImages.length > 1) {
+      setCurrent((index) => (index - 1 + safeImages.length) % safeImages.length);
+    }
+  }, [safeImages.length]);
+
+  const goNext = useCallback(() => {
+    if (safeImages.length > 1) {
+      setCurrent((index) => (index + 1) % safeImages.length);
+    }
+  }, [safeImages.length]);
+
+  const currentImage = safeImages[current] || safeImages[0];
+
   return (
     <div
-      ref={(r: any) => {
-        if (r) connect(drag(r));
-      }}
+      ref={craftRef}
       style={{ position: 'relative', aspectRatio, overflow: 'hidden', borderRadius: 8, ...u.style }}
       className={'proquelec-builder-node group ' + u.className}
     >
-      {images.map((src: string, i: number) => (
+      {currentImage ? (
         <img
-          key={i}
-          src={src}
-          alt={''}
+          key={currentImage}
+          src={currentImage}
+          alt={`${altText} ${current + 1}`}
           style={{
             position: 'absolute',
             inset: 0,
             width: '100%',
             height: '100%',
             objectFit: objectFit as any,
-            opacity: i === current ? 1 : 0,
+            opacity: 1,
             transition: 'opacity 0.5s',
             borderRadius: 8,
           }}
         />
-      ))}
-      {showArrows && (
+      ) : (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'grid',
+            placeItems: 'center',
+            background: '#f8fafc',
+            color: '#64748b',
+            fontSize: 13,
+          }}
+        >
+          Aucune image
+        </div>
+      )}
+      {showArrows && safeImages.length > 1 && (
         <>
           <button
             type="button"
             aria-label="Image précédente"
-            onClick={() => setCurrent((c) => (c - 1 + images.length) % images.length)}
+            onClick={goPrevious}
             style={{
               position: 'absolute',
               left: 8,
@@ -952,7 +1026,7 @@ export const ImageCarouselBlock = (props: any) => {
           <button
             type="button"
             aria-label="Image suivante"
-            onClick={() => setCurrent((c) => (c + 1) % images.length)}
+            onClick={goNext}
             style={{
               position: 'absolute',
               right: 8,
@@ -977,7 +1051,7 @@ export const ImageCarouselBlock = (props: any) => {
           </button>
         </>
       )}
-      {showDots && (
+      {showDots && safeImages.length > 1 && (
         <div
           style={{
             position: 'absolute',
@@ -988,7 +1062,7 @@ export const ImageCarouselBlock = (props: any) => {
             gap: 6,
           }}
         >
-          {images.map((_: string, i: number) => (
+          {safeImages.map((_: string, i: number) => (
             <button
               key={i}
               type="button"
@@ -1014,6 +1088,7 @@ const ImageCarouselSettings = () => {
   const {
     actions: { setProp },
     images,
+    altText,
     autoPlay,
     interval,
     showDots,
@@ -1031,6 +1106,13 @@ const ImageCarouselSettings = () => {
               (p: any) => (p.images = e.target.value.split('\n').filter((s: string) => s.trim())),
             )
           }
+        />
+      </Row>
+      <Row>
+        <Label label="Texte alternatif" />
+        <Input
+          value={altText}
+          onChange={(e: any) => setProp((p: any) => (p.altText = e.target.value))}
         />
       </Row>
       <Flex>
@@ -1076,10 +1158,8 @@ const ImageCarouselSettings = () => {
 ImageCarouselBlock.craft = {
   displayName: 'Carrousel Images',
   props: {
-    images: [
-      'https://placehold.co/800x400/2563eb/ffffff?text=Image+1',
-      'https://placehold.co/800x400/1e293b/ffffff?text=Image+2',
-    ],
+    images: DEFAULT_CAROUSEL_IMAGES.slice(0, 2),
+    altText: 'Image du carrousel',
     autoPlay: true,
     interval: 3000,
     showDots: true,
@@ -1798,13 +1878,11 @@ export const CountdownBlock = (props: any) => {
     labels = { days: 'Jours', hours: 'Heures', minutes: 'Minutes', seconds: 'Secondes' },
     boxBg = '#1e293b',
     boxTextColor = '#ffffff',
-    accentColor = '#2563eb',
   } = props;
-  const {
-    connectors: { connect, drag },
-  } = useNode();
+  const craftRef = useCraftRef<HTMLDivElement>();
   const u = getUniversalStyles(props);
-  const calc = () => {
+
+  const calc = useCallback(() => {
     const d = new Date(targetDate).getTime() - Date.now();
     return d > 0
       ? {
@@ -1814,34 +1892,46 @@ export const CountdownBlock = (props: any) => {
           s: Math.floor((d % 60000) / 1000),
         }
       : { d: 0, h: 0, m: 0, s: 0 };
-  };
-  const [t, setT] = useState(calc);
+  }, [targetDate]);
+
+  const [t, setT] = useState(() => calc());
+
   useEffect(() => {
-    const i = setInterval(() => setT(calc), 1000);
-    return () => clearInterval(i);
-  });
-  const box = {
-    background: boxBg,
-    color: boxTextColor,
-    borderRadius: 8,
-    padding: '12px 16px',
-    minWidth: 60,
-    textAlign: 'center' as const,
-  };
+    setT(calc());
+    const timer = window.setInterval(() => setT(calc()), 1000);
+
+    return () => window.clearInterval(timer);
+  }, [calc]);
+
+  const box = useMemo(
+    () => ({
+      background: boxBg,
+      color: boxTextColor,
+      borderRadius: 8,
+      padding: '12px 16px',
+      minWidth: 60,
+      textAlign: 'center' as const,
+    }),
+    [boxBg, boxTextColor],
+  );
+
+  const timeParts = useMemo(
+    () => [
+      { l: labels.days, v: t.d },
+      { l: labels.hours, v: t.h },
+      { l: labels.minutes, v: t.m },
+      { l: labels.seconds, v: t.s },
+    ],
+    [labels.days, labels.hours, labels.minutes, labels.seconds, t.d, t.h, t.m, t.s],
+  );
+
   return (
     <div
-      ref={(r: any) => {
-        if (r) connect(drag(r));
-      }}
+      ref={craftRef}
       style={{ display: 'flex', gap: 12, justifyContent: 'center', ...u.style }}
       className={'proquelec-builder-node ' + u.className}
     >
-      {[
-        { l: labels.days, v: t.d },
-        { l: labels.hours, v: t.h },
-        { l: labels.minutes, v: t.m },
-        { l: labels.seconds, v: t.s },
-      ].map((o: any, i: number) => (
+      {timeParts.map((o, i: number) => (
         <div key={i}>
           <div style={box}>
             <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1.2 }}>
@@ -2662,7 +2752,7 @@ export const PriceListBlock = (props: any) => {
       }}
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill,minmax(280px,1fr))',
+        gridTemplateColumns: `repeat(auto-fill,minmax(${columns > 3 ? 250 : 280}px,1fr))`,
         gap: 20,
         ...u.style,
       }}
@@ -3193,7 +3283,7 @@ export const LogoGridBlock = (props: any) => {
       }}
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill,minmax(120px,1fr))',
+        gridTemplateColumns: `repeat(auto-fill,minmax(${columns > 4 ? 100 : 120}px,1fr))`,
         gap,
         alignItems: 'center',
         justifyItems: 'center',
@@ -3566,7 +3656,6 @@ export const ShapeDividerBlock = (props: any) => {
     height = 100,
     color = '#2563eb',
     flip = false,
-    position = 'bottom',
   } = props;
   const {
     connectors: { connect, drag },
@@ -3672,7 +3761,6 @@ export const AnimatedHeadlineBlock = (props: any) => {
     beforeText = 'Nous',
     animatedWords = ['innovons', 'créons', 'transformons'],
     afterText = 'pour vous',
-    animation = 'rotate',
     fontSize = 36,
     color = '#0f172a',
     accentColor = '#2563eb',
@@ -5474,20 +5562,116 @@ PricingComparisonPremiumBlock.craft = {
   related: { settings: PricingComparisonPremiumSettings },
 };
 
+const CONTACT_FIELD_NAMES = {
+  name: 'Nom complet',
+  phone: 'Téléphone',
+  email: 'Email',
+  subject: 'Objet de la demande',
+  message: 'message',
+} as const;
+
+const CONTACT_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const CONTACT_PHONE_RE = /^\+?[0-9\s().-]{7,24}$/;
+
+const normalizeContactFieldName = (field: string) =>
+  String(field || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
+const getContactFieldMeta = (field: string) => {
+  const normalized = normalizeContactFieldName(field);
+  const compact = normalized.replace(/[^a-z0-9]+/g, '');
+  const isName = normalized.includes('nom') || normalized.includes('name');
+  const isPhone =
+    normalized.includes('telephone') ||
+    normalized.includes('phone') ||
+    normalized === 'tel' ||
+    compact.includes('tlphone');
+  const isEmail = normalized.includes('email') || normalized.includes('courriel');
+  const isSubject = normalized.includes('objet') || normalized.includes('sujet');
+
+  return {
+    isName,
+    isPhone,
+    isEmail,
+    isSubject,
+    type: isPhone ? 'tel' : isEmail ? 'email' : 'text',
+    autoComplete: isPhone ? 'tel' : isEmail ? 'email' : isName ? 'name' : 'off',
+    required: !isPhone,
+  };
+};
+
+type ContactFieldMeta = ReturnType<typeof getContactFieldMeta>;
+
+type ContactFieldConfig = {
+  field: string;
+  index: number;
+  meta: ContactFieldMeta;
+};
+
+const contactInputId = (field: string, index: number) =>
+  `contact-premium-${index}-${normalizeContactFieldName(field).replace(/[^a-z0-9]+/g, '-') || 'field'}`;
+
+const toContactPhoneHref = (phone: string) => {
+  const normalized = String(phone || '').replace(/[^\d+]/g, '');
+  return normalized ? `tel:${normalized}` : undefined;
+};
+
+const contactDisplayText = (value: any) => {
+  let text = String(resolveDynamicContent(value) || '');
+  const replacements: Array<[RegExp, string]> = [
+    [/\?changeons/g, '\u00C9changeons'],
+    [/contr\?le/g, 'contr\u00F4le'],
+    [/Contr\?le/g, 'Contr\u00F4le'],
+    [/T\?l\?phone/g, 'T\u00E9l\u00E9phone'],
+    [/t\?l\?phone/g, 't\u00E9l\u00E9phone'],
+    [/R\?ponse/g, 'R\u00E9ponse'],
+    [/r\?ponse/g, 'r\u00E9ponse'],
+    [/ouvr\?es/g, 'ouvr\u00E9es'],
+    [/r\?ception/g, 'r\u00E9ception'],
+    [/lev\?e/g, 'lev\u00E9e'],
+    [/r\?serves/g, 'r\u00E9serves'],
+    [/pi\?ces/g, 'pi\u00E8ces'],
+    [/conformit\?/g, 'conformit\u00E9'],
+  ];
+
+  replacements.forEach(([pattern, replacement]) => {
+    text = text.replace(pattern, replacement);
+  });
+
+  return text;
+};
+
+const contactFieldLabel = (field: string, meta: ReturnType<typeof getContactFieldMeta>) => {
+  if (meta.isPhone) return 'T\u00E9l\u00E9phone';
+  if (meta.isEmail) return 'Email';
+  if (meta.isSubject) return 'Objet de la demande';
+  if (meta.isName) return 'Nom complet';
+  return contactDisplayText(field);
+};
+
+const contactFieldPlaceholder = (field: string, meta: ReturnType<typeof getContactFieldMeta>) => {
+  if (meta.isPhone) return '+221 77 000 00 00';
+  if (meta.isEmail) return 'nom@organisation.sn';
+  if (meta.isName) return 'Votre nom complet';
+  return contactDisplayText(field);
+};
+
 // ── 53. ContactPremiumBlock (with form submission) ──
 export const ContactPremiumBlock = (props: any) => {
   const {
-    title = 'Échangeons sur votre besoin',
-    subtitle = 'Centralisez les demandes de contrôle, formation, audit, certification ou assistance technique.',
+    title = '\u00C9changeons sur votre besoin',
+    subtitle = 'Centralisez les demandes de contr\u00F4le, formation, audit, certification ou assistance technique.',
     phone = '+221 33 848 68 55',
     email = 'proquelec@proquelec.sn',
     address = 'Immeuble Coumba Castel, 12 rue Saint-Michel, Dakar',
     hours = 'Lun - Ven · 8h30 - 17h30',
-    responseTime = 'Réponse sous 24 h ouvrées',
-    fields = ['Nom complet', 'Téléphone', 'Email', 'Objet de la demande'],
-    subjectOptions = ['Audit de conformité', 'Certification professionnelle', 'Formation technique', 'Autre demande'],
+    responseTime = 'R\u00E9ponse sous 24 h ouvr\u00E9es',
+    fields = ['Nom complet', 'T\u00E9l\u00E9phone', 'Email', 'Objet de la demande'],
+    subjectOptions = ['Audit de conformit\u00E9', 'Certification professionnelle', 'Formation technique', 'Autre demande'],
     departments = [
-      { icon: '⚡', title: 'Contrôle', description: 'Visite, réception ou levée de réserves.' },
+      { icon: '⚡', title: 'Contr\u00F4le', description: 'Visite, r\u00E9ception ou lev\u00E9e de r\u00E9serves.' },
       {
         icon: '🎓',
         title: 'Formation',
@@ -5496,7 +5680,7 @@ export const ContactPremiumBlock = (props: any) => {
       {
         icon: '🏅',
         title: 'Certification',
-        description: 'Dossier, pièces et parcours de validation.',
+        description: 'Dossier, pi\u00E8ces et parcours de validation.',
       },
     ],
     buttonText = 'Envoyer',
@@ -5507,40 +5691,119 @@ export const ContactPremiumBlock = (props: any) => {
     connectors: { connect, drag },
   } = useNode();
   const u = getUniversalStyles(props);
-  const [formData, setFormData] = React.useState<Record<string, string>>({});
+  const defaultSubject = String(subjectOptions?.[0] || 'Demande depuis le site');
+  const contactFields: ContactFieldConfig[] = (Array.isArray(fields) ? fields : []).map(
+    (field: string, index: number) => ({
+      field,
+      index,
+      meta: getContactFieldMeta(field),
+    }),
+  );
+  const subjectField =
+    contactFields.find((item: ContactFieldConfig) => item.meta.isSubject)?.field ||
+    CONTACT_FIELD_NAMES.subject;
+  const initialContactFormData = () => ({ [subjectField]: defaultSubject });
+  const [formData, setFormData] = React.useState<Record<string, string>>(initialContactFormData);
+  const [fieldErrors, setFieldErrors] = React.useState<Record<string, string>>({});
   const [submitting, setSubmitting] = React.useState(false);
   const [submitted, setSubmitted] = React.useState(false);
   const [error, setError] = React.useState('');
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
   };
 
   const handleReset = () => {
     setSubmitted(false);
-    setFormData({});
+    setFormData(initialContactFormData());
+    setFieldErrors({});
     setError('');
+  };
+
+  const resolveField = (matcher: (meta: ContactFieldMeta) => boolean, fallback: string) =>
+    contactFields.find((item: ContactFieldConfig) => matcher(item.meta))?.field || fallback;
+
+  const buildPayload = () => {
+    const nameField = resolveField((meta) => meta.isName, CONTACT_FIELD_NAMES.name);
+    const emailField = resolveField((meta) => meta.isEmail, CONTACT_FIELD_NAMES.email);
+    const phoneField = resolveField((meta) => meta.isPhone, CONTACT_FIELD_NAMES.phone);
+
+    return {
+      nom: String(formData[nameField] || '').trim(),
+      email: String(formData[emailField] || '').trim(),
+      telephone: String(formData[phoneField] || '').trim(),
+      sujet: String(formData[subjectField] || defaultSubject).trim() || defaultSubject,
+      message: String(formData[CONTACT_FIELD_NAMES.message] || '').trim(),
+      fields: { nameField, emailField, phoneField, subjectField },
+    };
+  };
+
+  const validatePayload = (payload: ReturnType<typeof buildPayload>) => {
+    const nextErrors: Record<string, string> = {};
+
+    if (!payload.nom) nextErrors[payload.fields.nameField] = 'Le nom est requis.';
+    if (!CONTACT_EMAIL_RE.test(payload.email)) nextErrors[payload.fields.emailField] = 'Adresse email invalide.';
+    if (payload.telephone && !CONTACT_PHONE_RE.test(payload.telephone)) {
+      nextErrors[payload.fields.phoneField] = 'Numéro de téléphone invalide.';
+    }
+    if (!payload.message) nextErrors[CONTACT_FIELD_NAMES.message] = 'Le message est requis.';
+
+    return nextErrors;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    const payload = buildPayload();
+    const nextErrors = validatePayload(payload);
+    setFieldErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      return;
+    }
+
     setSubmitting(true);
     try {
       const res = await fetch('/api/contact-requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nom: formData['Nom complet'] || '',
-          email: formData['Email'] || '',
-          telephone: formData['Téléphone'] || '',
-          sujet: formData['Objet de la demande'] || '',
-          message: formData['message'] || '',
+          nom: payload.nom,
+          email: payload.email,
+          telephone: payload.telephone,
+          sujet: payload.sujet,
+          message: payload.message,
         }),
       });
-      if (!res.ok) throw new Error(await res.text());
+
+      const responseText = await res.text();
+      let responsePayload: any = {};
+      try {
+        responsePayload = responseText ? JSON.parse(responseText) : {};
+      } catch {
+        responsePayload = { message: responseText };
+      }
+
+      const savedDespiteNotificationIssue = Boolean(
+        responsePayload?.saved || responsePayload?.contact_request || responsePayload?.error === 'EMAIL_SEND_FAILED',
+      );
+
+      if (!res.ok && !savedDespiteNotificationIssue) {
+        throw new Error(responsePayload?.message || responsePayload?.error || responseText);
+      }
+
       setSubmitted(true);
-      toast.success('Message envoyé avec succès !');
+      if (responsePayload?.warning || responsePayload?.error === 'EMAIL_SEND_FAILED') {
+        toast.warning('Demande enregistrée. La notification email doit être vérifiée côté admin.');
+      } else {
+        toast.success('Message envoyé avec succès !');
+      }
     } catch (err) {
       setError("Erreur lors de l'envoi. Veuillez réessayer ou nous contacter par téléphone.");
     } finally {
@@ -5553,28 +5816,63 @@ export const ContactPremiumBlock = (props: any) => {
       ref={(r: any) => {
         if (r) connect(drag(r));
       }}
-      style={{ background: backgroundColor, borderRadius: 16, padding: 34, ...u.style }}
+      style={{
+        background: `linear-gradient(180deg, ${backgroundColor} 0%, #ffffff 100%)`,
+        borderRadius: 0,
+        padding: '58px 42px',
+        borderTop: '1px solid #e5edf7',
+        borderBottom: '1px solid #e5edf7',
+        ...u.style,
+      }}
       className={'proquelec-builder-node ' + u.className}
     >
       {submitted ? (
-        <div style={{ textAlign: 'center', padding: 40 }}>
-          <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
-          <h3 style={{ color: '#059669', fontSize: 24, fontWeight: 900, margin: '0 0 8px' }}>
+        <div
+          style={{
+            margin: '0 auto',
+            maxWidth: 560,
+            textAlign: 'center',
+            padding: 44,
+            background: '#ffffff',
+            border: '1px solid #dbe6f3',
+            borderRadius: 24,
+            boxShadow: '0 24px 70px rgba(15, 23, 42, 0.08)',
+          }}
+        >
+          <div
+            style={{
+              width: 58,
+              height: 58,
+              margin: '0 auto 18px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 999,
+              background: '#dcfce7',
+              color: '#047857',
+              fontSize: 28,
+              fontWeight: 900,
+            }}
+          >
+            ✓
+          </div>
+          <h3 style={{ color: '#0f172a', fontSize: 26, fontWeight: 900, margin: '0 0 8px' }}>
             Message envoyé !
           </h3>
-          <p style={{ color: '#64748b' }}>Merci, nous vous répondrons sous 24h ouvrées.</p>
+          <p style={{ color: '#64748b', lineHeight: 1.7 }}>Merci, nous vous répondrons sous 24h ouvrées.</p>
           <button
             type="button"
             onClick={handleReset}
             style={{
-              marginTop: 16,
-              background: accentColor,
+              marginTop: 18,
+              background: `linear-gradient(135deg, ${accentColor}, #1d4ed8)`,
               color: '#ffffff',
               border: 'none',
-              padding: '10px 20px',
-              borderRadius: 10,
+              padding: '12px 22px',
+              borderRadius: 14,
               fontWeight: 900,
               cursor: 'pointer',
+              boxShadow: '0 16px 36px rgba(37, 99, 235, 0.18)',
             }}
           >
             Envoyer un autre message
@@ -5585,8 +5883,11 @@ export const ContactPremiumBlock = (props: any) => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))',
-              gap: 24,
+              gridTemplateColumns: 'repeat(auto-fit,minmax(340px,1fr))',
+              gap: 32,
+              alignItems: 'start',
+              maxWidth: 1480,
+              margin: '0 auto',
             }}
           >
             <div>
@@ -5596,7 +5897,7 @@ export const ContactPremiumBlock = (props: any) => {
                   color: accentColor,
                   fontSize: 12,
                   fontWeight: 900,
-                  letterSpacing: 1.5,
+                  letterSpacing: 1.8,
                   textTransform: 'uppercase',
                 }}
               >
@@ -5606,19 +5907,20 @@ export const ContactPremiumBlock = (props: any) => {
                 style={{
                   margin: 0,
                   color: '#0f172a',
-                  fontSize: 34,
-                  lineHeight: 1.12,
+                  fontSize: 42,
+                  lineHeight: 1.06,
                   fontWeight: 900,
+                  letterSpacing: '-0.02em',
                 }}
               >
-                {resolveDynamicContent(title)}
+                {contactDisplayText(title)}
               </h3>
-              <p style={{ margin: '12px 0 22px', color: '#64748b', fontSize: 15, lineHeight: 1.7 }}>
-                {resolveDynamicContent(subtitle)}
+              <p style={{ margin: '16px 0 28px', color: '#64748b', fontSize: 17, lineHeight: 1.75, maxWidth: 680 }}>
+                {contactDisplayText(subtitle)}
               </p>
-              <div style={{ display: 'grid', gap: 10, marginBottom: 20 }}>
+              <div style={{ display: 'grid', gap: 12, marginBottom: 22 }}>
                 {[
-                  { label: 'Téléphone', value: phone, href: 'tel:' + phone },
+                  { label: 'T\u00E9l\u00E9phone', value: phone, href: toContactPhoneHref(phone) },
                   { label: 'Email', value: email, href: 'mailto:' + email },
                   { label: 'Adresse', value: address },
                   { label: 'Horaires', value: hours },
@@ -5627,9 +5929,10 @@ export const ContactPremiumBlock = (props: any) => {
                     key={index}
                     style={{
                       background: '#ffffff',
-                      borderRadius: 12,
-                      padding: 14,
-                      border: '1px solid #e2e8f0',
+                      borderRadius: 18,
+                      padding: '16px 18px',
+                      border: '1px solid #dbe6f3',
+                      boxShadow: '0 12px 38px rgba(15, 23, 42, 0.04)',
                     }}
                   >
                     <p
@@ -5638,100 +5941,174 @@ export const ContactPremiumBlock = (props: any) => {
                         color: '#94a3b8',
                         fontSize: 11,
                         fontWeight: 900,
+                        letterSpacing: 0.8,
                         textTransform: 'uppercase',
                       }}
                     >
-                      {item.label}
+                      {contactDisplayText(item.label)}
                     </p>
                     {item.href ? (
                       <a
                         href={item.href}
                         style={{ color: accentColor, fontWeight: 850, textDecoration: 'none' }}
                       >
-                        {resolveDynamicContent(item.value)}
+                        {contactDisplayText(item.value)}
                       </a>
                     ) : (
                       <p style={{ margin: 0, color: '#0f172a', fontWeight: 800 }}>
-                        {resolveDynamicContent(item.value)}
+                        {contactDisplayText(item.value)}
                       </p>
                     )}
                   </div>
                 ))}
               </div>
               <p style={{ color: accentColor, fontSize: 13, fontWeight: 900, margin: 0 }}>
-                {resolveDynamicContent(responseTime)}
+                {contactDisplayText(responseTime)}
               </p>
             </div>
             <form
               onSubmit={handleSubmit}
               style={{
                 background: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: 16,
-                padding: 22,
-                boxShadow: '0 20px 55px rgba(15,23,42,0.08)',
+                border: '1px solid #dbe6f3',
+                borderRadius: 26,
+                padding: 30,
+                boxShadow: '0 30px 90px rgba(15,23,42,0.10)',
               }}
             >
-              <div style={{ display: 'grid', gap: 10 }}>
-                {(fields || []).map((field: string, index: number) => {
-                  const isSubjectField = field.toLowerCase().includes('objet');
-                  return isSubjectField ? (
-                    <select
-                      key={index}
-                      aria-label={field}
-                      title={field}
-                      value={formData[field] || (subjectOptions[0] || '')}
-                      onChange={(e) => handleChange(field, e.target.value)}
-                      style={{
-                        width: '100%',
-                        border: '1px solid #e2e8f0',
-                        borderRadius: 10,
-                        padding: '11px 12px',
-                        fontSize: 13,
-                        color: '#0f172a',
-                        background: '#ffffff',
-                      }}
-                    >
-                      {(subjectOptions || []).map((opt: string, i: number) => (
-                        <option key={i} value={opt}>{resolveDynamicContent(opt)}</option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      key={index}
-                      aria-label={field}
-                      placeholder={resolveDynamicContent(field)}
-                      value={formData[field] || ''}
-                      onChange={(e) => handleChange(field, e.target.value)}
-                      required
-                      style={{
-                        width: '100%',
-                        border: '1px solid #e2e8f0',
-                        borderRadius: 10,
-                        padding: '11px 12px',
-                        fontSize: 13,
-                        color: '#0f172a',
-                      }}
-                    />
+              <div style={{ marginBottom: 22 }}>
+                <p
+                  style={{
+                    margin: '0 0 7px',
+                    color: accentColor,
+                    fontSize: 12,
+                    fontWeight: 900,
+                    letterSpacing: 1.4,
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {'Formulaire s\u00E9curis\u00E9'}
+                </p>
+                <h4 style={{ margin: 0, color: '#0f172a', fontSize: 24, fontWeight: 900 }}>
+                  Qualifier votre demande
+                </h4>
+              </div>
+              <div style={{ display: 'grid', gap: 14 }}>
+                {contactFields.map(({ field, index, meta }: ContactFieldConfig) => {
+                  const fieldId = contactInputId(field, index);
+                  const errorId = `${fieldId}-error`;
+                  const fieldError = fieldErrors[field];
+                  const borderColor = fieldError ? '#dc2626' : '#e2e8f0';
+                  const cleanLabel = contactFieldLabel(field, meta);
+                  const labelText = meta.required ? cleanLabel : `${cleanLabel} (optionnel)`;
+
+                  return (
+                    <div key={fieldId} style={{ display: 'grid', gap: 7 }}>
+                      <label
+                        htmlFor={fieldId}
+                        style={{
+                          color: '#334155',
+                          fontSize: 12,
+                          fontWeight: 900,
+                          letterSpacing: 0.2,
+                        }}
+                      >
+                        {contactDisplayText(labelText)}
+                      </label>
+                      {meta.isSubject ? (
+                        <select
+                          id={fieldId}
+                          aria-invalid={fieldError ? 'true' : 'false'}
+                          aria-describedby={fieldError ? errorId : undefined}
+                          title={field}
+                          value={formData[field] || defaultSubject}
+                          onChange={(e) => handleChange(field, e.target.value)}
+                          style={{
+                            width: '100%',
+                            border: `1px solid ${borderColor}`,
+                            borderRadius: 14,
+                            padding: '13px 14px',
+                            minHeight: 52,
+                            fontSize: 14,
+                            color: '#0f172a',
+                            background: '#ffffff',
+                            outline: 'none',
+                            boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)',
+                          }}
+                        >
+                          {(subjectOptions || []).map((opt: string, i: number) => (
+                            <option key={i} value={opt}>{contactDisplayText(opt)}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          id={fieldId}
+                          type={meta.type}
+                          autoComplete={meta.autoComplete}
+                          aria-invalid={fieldError ? 'true' : 'false'}
+                          aria-describedby={fieldError ? errorId : undefined}
+                          placeholder={contactFieldPlaceholder(field, meta)}
+                          value={formData[field] || ''}
+                          onChange={(e) => handleChange(field, e.target.value)}
+                          required={meta.required}
+                          style={{
+                            width: '100%',
+                            border: `1px solid ${borderColor}`,
+                            borderRadius: 14,
+                            padding: '13px 14px',
+                            minHeight: 52,
+                            fontSize: 14,
+                            color: '#0f172a',
+                            background: '#ffffff',
+                            outline: 'none',
+                            boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)',
+                          }}
+                        />
+                      )}
+                      {fieldError && (
+                        <p id={errorId} style={{ color: '#dc2626', fontSize: 12, margin: 0 }}>
+                          {fieldError}
+                        </p>
+                      )}
+                    </div>
                   );
                 })}
-                <textarea
-                  aria-label="Message"
-                  placeholder="Message"
-                  rows={4}
-                  value={formData['message'] || ''}
-                  onChange={(e) => handleChange('message', e.target.value)}
-                  required
-                  style={{
-                    width: '100%',
-                    border: '1px solid #e2e8f0',
-                    borderRadius: 10,
-                    padding: '11px 12px',
-                    fontSize: 13,
-                    color: '#0f172a',
-                    resize: 'vertical',
-                  }}
-                />
+                <div style={{ display: 'grid', gap: 7 }}>
+                  <label
+                    htmlFor="contact-premium-message"
+                    style={{ color: '#334155', fontSize: 12, fontWeight: 900, letterSpacing: 0.2 }}
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    id="contact-premium-message"
+                    aria-invalid={fieldErrors[CONTACT_FIELD_NAMES.message] ? 'true' : 'false'}
+                    aria-describedby={fieldErrors[CONTACT_FIELD_NAMES.message] ? 'contact-premium-message-error' : undefined}
+                    placeholder="Message"
+                    rows={4}
+                    value={formData[CONTACT_FIELD_NAMES.message] || ''}
+                    onChange={(e) => handleChange(CONTACT_FIELD_NAMES.message, e.target.value)}
+                    required
+                    style={{
+                      width: '100%',
+                      border: `1px solid ${fieldErrors[CONTACT_FIELD_NAMES.message] ? '#dc2626' : '#e2e8f0'}`,
+                      borderRadius: 14,
+                      padding: '13px 14px',
+                      minHeight: 138,
+                      fontSize: 14,
+                      color: '#0f172a',
+                      background: '#ffffff',
+                      outline: 'none',
+                      resize: 'vertical',
+                      boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)',
+                    }}
+                  />
+                  {fieldErrors[CONTACT_FIELD_NAMES.message] && (
+                    <p id="contact-premium-message-error" style={{ color: '#dc2626', fontSize: 12, margin: 0 }}>
+                      {fieldErrors[CONTACT_FIELD_NAMES.message]}
+                    </p>
+                  )}
+                </div>
                 {error && <p style={{ color: '#dc2626', fontSize: 12, margin: 0 }}>{error}</p>}
                 <button
                   type="submit"
@@ -5739,17 +6116,19 @@ export const ContactPremiumBlock = (props: any) => {
                   style={{
                     width: '100%',
                     textAlign: 'center',
-                    background: accentColor,
+                    background: `linear-gradient(135deg, ${accentColor}, #1d4ed8)`,
                     color: '#ffffff',
                     cursor: 'pointer',
                     border: 'none',
-                    padding: '12px 16px',
-                    borderRadius: 10,
+                    padding: '15px 18px',
+                    borderRadius: 16,
                     fontWeight: 900,
+                    fontSize: 15,
                     opacity: submitting ? 0.7 : 1,
+                    boxShadow: '0 18px 42px rgba(37, 99, 235, 0.20)',
                   }}
                 >
-                  {submitting ? 'Envoi en cours...' : resolveDynamicContent(buttonText)}
+                  {submitting ? 'Envoi en cours...' : contactDisplayText(buttonText)}
                 </button>
               </div>
             </form>
@@ -5758,8 +6137,9 @@ export const ContactPremiumBlock = (props: any) => {
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit,minmax(210px,1fr))',
-              gap: 12,
-              marginTop: 22,
+              gap: 16,
+              maxWidth: 1480,
+              margin: '28px auto 0',
             }}
           >
             {(departments || []).map((item: any, index: number) => (
@@ -5767,17 +6147,33 @@ export const ContactPremiumBlock = (props: any) => {
                 key={index}
                 style={{
                   background: '#ffffff',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: 14,
-                  padding: 16,
+                  border: '1px solid #dbe6f3',
+                  borderRadius: 20,
+                  padding: 20,
+                  boxShadow: '0 16px 46px rgba(15, 23, 42, 0.05)',
                 }}
               >
-                <div style={{ fontSize: 24, marginBottom: 8 }}>{item.icon}</div>
+                <div
+                  style={{
+                    width: 38,
+                    height: 38,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 12,
+                    marginBottom: 12,
+                    background: '#eff6ff',
+                    color: accentColor,
+                    fontSize: 20,
+                  }}
+                >
+                  {item.icon}
+                </div>
                 <h4 style={{ margin: 0, color: '#0f172a', fontSize: 16, fontWeight: 900 }}>
-                  {resolveDynamicContent(item.title)}
+                  {contactDisplayText(item.title)}
                 </h4>
                 <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: 13, lineHeight: 1.55 }}>
-                  {resolveDynamicContent(item.description)}
+                  {contactDisplayText(item.description)}
                 </p>
               </article>
             ))}
@@ -5937,18 +6333,18 @@ const ContactPremiumSettings = () => {
 ContactPremiumBlock.craft = {
   displayName: 'Contact premium',
   props: {
-    title: 'Échangeons sur votre besoin',
+    title: '\u00C9changeons sur votre besoin',
     subtitle:
-      'Centralisez les demandes de contrôle, formation, audit, certification ou assistance technique.',
+      'Centralisez les demandes de contr\u00F4le, formation, audit, certification ou assistance technique.',
     phone: '+221 33 848 68 55',
     email: 'proquelec@proquelec.sn',
     address: 'Immeuble Coumba Castel, 12 rue Saint-Michel, Dakar',
     hours: 'Lun - Ven · 8h30 - 17h30',
-    responseTime: 'Réponse sous 24 h ouvrées',
-    fields: ['Nom complet', 'Téléphone', 'Email', 'Objet de la demande'],
-    subjectOptions: ['Audit de conformité', 'Certification professionnelle', 'Formation technique', 'Autre demande'],
+    responseTime: 'R\u00E9ponse sous 24 h ouvr\u00E9es',
+    fields: ['Nom complet', 'T\u00E9l\u00E9phone', 'Email', 'Objet de la demande'],
+    subjectOptions: ['Audit de conformit\u00E9', 'Certification professionnelle', 'Formation technique', 'Autre demande'],
     departments: [
-      { icon: '⚡', title: 'Contrôle', description: 'Visite, réception ou levée de réserves.' },
+      { icon: '⚡', title: 'Contr\u00F4le', description: 'Visite, r\u00E9ception ou lev\u00E9e de r\u00E9serves.' },
       {
         icon: '🎓',
         title: 'Formation',
@@ -5957,7 +6353,7 @@ ContactPremiumBlock.craft = {
       {
         icon: '🏅',
         title: 'Certification',
-        description: 'Dossier, pièces et parcours de validation.',
+        description: 'Dossier, pi\u00E8ces et parcours de validation.',
       },
     ],
     buttonText: 'Envoyer la demande',
@@ -7491,6 +7887,25 @@ export const ParticlesBlock = (props: any) => {
     let id: number;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (connectLines) {
+        for (let i = 0; i < particles.length; i += 1) {
+          for (let j = i + 1; j < particles.length; j += 1) {
+            const a = particles[i];
+            const b = particles[j];
+            const distance = Math.hypot(a.x - b.x, a.y - b.y);
+
+            if (distance < 120) {
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.strokeStyle = color;
+              ctx.globalAlpha = Math.max(0, 0.22 - distance / 600);
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
+        }
+      }
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -7506,7 +7921,7 @@ export const ParticlesBlock = (props: any) => {
     };
     animate();
     return () => cancelAnimationFrame(id);
-  }, [count, color, speed, sizeRange]);
+  }, [connectLines, count, color, speed, sizeRange]);
   return (
     <div
       ref={(r: any) => {
@@ -7667,6 +8082,8 @@ const TableOfContentsSettings = () => {
         <Label label="Numérotation" />
         <input
           type="checkbox"
+          aria-label="Activer la numérotation"
+          title="Numérotation"
           checked={numbered}
           onChange={(e: any) => setProp((p: any) => (p.numbered = e.target.checked))}
           className="rounded"
@@ -7676,6 +8093,8 @@ const TableOfContentsSettings = () => {
         <Label label="Sticky" />
         <input
           type="checkbox"
+          aria-label="Activer le mode sticky"
+          title="Sticky"
           checked={sticky}
           onChange={(e: any) => setProp((p: any) => (p.sticky = e.target.checked))}
           className="rounded"

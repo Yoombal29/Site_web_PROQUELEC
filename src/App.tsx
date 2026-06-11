@@ -21,6 +21,9 @@ import { RoleProtectedRoute } from '@/components/RoleProtectedRoute';
 // Lazy-loaded pages
 const DynamicPage = lazy(() => import('./pages/DynamicPage'));
 const BlogPost = lazy(() => import('./pages/BlogPost'));
+const Documents = lazy(() => import('./pages/Documents'));
+const Events = lazy(() => import('./pages/Events'));
+const Labels = lazy(() => import('./pages/Labels'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 const Sitemap = lazy(() => import('./pages/Sitemap'));
@@ -30,6 +33,8 @@ const PartnerDashboard = lazy(() => import('./pages/admin/PartnerDashboard'));
 const PageSectionsAdmin = lazy(() => import('./pages/admin/PageSectionsAdmin'));
 const SchemaBuilder = lazy(() => import('./pages/SchemaBuilder'));
 const RubriqueSelectorPage = lazy(() => import('./pages/RubriqueSelectorPage'));
+const Showroom = lazy(() => import('./pages/Showroom'));
+const ToolsPlatform = lazy(() => import('./pages/ToolsPlatform'));
 const ObservatoirePage = lazy(() => import('./pages/observatoire/ObservatoirePage'));
 const GEDPage = lazy(() => import('./pages/GEDPage'));
 const SubscriptionPage = lazy(() => import('./pages/SubscriptionPage'));
@@ -79,6 +84,8 @@ const RBACDemo = lazy(() => import('./pages/examples/RBACDemo'));
 const BuilderReleaseManagerPage = lazy(() => import('./pages/admin/BuilderReleaseManagerPage'));
 const BuilderPage = lazy(() => import('./pages/admin/BuilderPage'));
 const BuilderConfigPage = lazy(() => import('./pages/admin/BuilderConfigPage'));
+const CraftBuilderPage = lazy(() => import('./pages/admin/CraftBuilderPage'));
+const SchematicEditorPage = lazy(() => import('./pages/admin/SchematicEditorPage'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -141,6 +148,7 @@ const AppContent = () => {
           { path: '/documents', element: <ConstructionPage /> },
           { path: '/events', element: <ConstructionPage /> },
           { path: '/certifications', element: <ConstructionPage /> },
+          { path: '/expertises', element: <ConstructionPage /> },
           { path: '/formations', element: <ConstructionPage /> },
           { path: '/trainings', element: <ConstructionPage /> },
           { path: '/blog', element: <ConstructionPage /> },
@@ -169,7 +177,16 @@ const AppContent = () => {
           { path: '/contact', element: <DynamicPage /> },
           { path: '/contact-premium', element: <DynamicPage /> },
           { path: '/activities', element: <DynamicPage /> },
-          { path: '/labels', element: <DynamicPage /> },
+          {
+            path: '/labels',
+            element: (
+              <FunctionalBuilderRoute
+                slug="labels"
+                title="Labels & Qualité"
+                fallback={<Labels />}
+              />
+            ),
+          },
           { path: '/legal', element: <DynamicPage /> },
           { path: '/certifications', element: <DynamicPage /> },
           { path: '/formations', element: <DynamicPage /> },
@@ -185,16 +202,62 @@ const AppContent = () => {
           { path: '/espace-autorites', element: <DynamicPage /> },
 
           // --- PAGES CMS DYNAMIQUES ---
-          { path: '/documents', element: <DynamicPage /> },
-          { path: '/events', element: <DynamicPage /> },
+          {
+            path: '/documents',
+            element: (
+              <FunctionalBuilderRoute
+                slug="documents"
+                title="Documents & Ressources"
+                fallback={<Documents />}
+              />
+            ),
+          },
+          {
+            path: '/events',
+            element: (
+              <FunctionalBuilderRoute
+                slug="events"
+                title="Évènements"
+                fallback={<Events />}
+              />
+            ),
+          },
 
           { path: '/expertises-techniques', element: <DynamicPage /> },
+          { path: '/expertises', element: <DynamicPage /> },
           { path: '/expert-lab', element: <DynamicPage /> },
           { path: '/formations-proquelec', element: <DynamicPage /> },
           { path: '/blog', element: <DynamicPage /> },
-          { path: '/blog/:slug', element: <BlogPost /> },
-          { path: '/outils', element: <DynamicPage /> },
-          { path: '/showroom', element: <DynamicPage /> },
+          {
+            path: '/blog/:slug',
+            element: (
+              <FunctionalBuilderRoute
+                slug="blog/{slug}"
+                title="Blog {slug}"
+                fallback={<BlogPost />}
+              />
+            ),
+          },
+          {
+            path: '/outils',
+            element: (
+              <FunctionalBuilderRoute
+                slug="outils"
+                title="Outils"
+                fallback={<ToolsPlatform />}
+              />
+            ),
+          },
+          {
+            path: '/showroom',
+            element: (
+              <FunctionalBuilderRoute
+                slug="showroom"
+                title="Showroom Technique"
+                fallback={<Showroom />}
+              />
+            ),
+          },
           {
             path: '/rubrique-selector',
             element: (
@@ -296,7 +359,16 @@ const AppContent = () => {
               </RoleProtectedRoute>
             ),
           },
-          { path: '/expert-kebe', element: <InspecteurKEBE /> },
+          {
+            path: '/expert-kebe',
+            element: (
+              <FunctionalBuilderRoute
+                slug="expert-kebe"
+                title="Inspecteur KEBE"
+                fallback={<InspecteurKEBE />}
+              />
+            ),
+          },
           { path: '/expert/calculators', element: <ExpertCalculatorsPage /> },
           { path: '/expert/schemas', element: <ExpertSchemasPage /> },
           { path: '/expert/docs', element: <ExpertDocsPage /> },
@@ -499,6 +571,22 @@ const AppContent = () => {
             ),
           },
           {
+            path: '/admin/builder/config',
+            element: (
+              <RoleProtectedRoute allowedRoles={['admin']}>
+                <BuilderConfigPage />
+              </RoleProtectedRoute>
+            ),
+          },
+          {
+            path: '/admin/builder/legacy',
+            element: (
+              <RoleProtectedRoute allowedRoles={['admin']}>
+                <BuilderPage />
+              </RoleProtectedRoute>
+            ),
+          },
+          {
             path: '/admin/builder/:pageId',
             element: (
               <RoleProtectedRoute allowedRoles={['admin']}>
@@ -507,10 +595,18 @@ const AppContent = () => {
             ),
           },
           {
-            path: '/admin/builder/config',
+            path: '/admin/craft-builder/:pageId',
             element: (
               <RoleProtectedRoute allowedRoles={['admin']}>
-                <BuilderConfigPage />
+                <CraftBuilderPage />
+              </RoleProtectedRoute>
+            ),
+          },
+          {
+            path: '/admin/schematic-editor/:pageId',
+            element: (
+              <RoleProtectedRoute allowedRoles={['admin']}>
+                <SchematicEditorPage />
               </RoleProtectedRoute>
             ),
           },
