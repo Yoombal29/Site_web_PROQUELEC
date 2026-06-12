@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo } from 'react';
+import { lazy, Suspense, useEffect, useMemo } from 'react';
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -17,6 +17,7 @@ import { useIsAdmin } from '@/hooks/useIsAdmin';
 import { useDynamicRoutes, type DynamicRoute } from '@/hooks/useDynamicRoutes';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import { RoleProtectedRoute } from '@/components/RoleProtectedRoute';
+import { useEcommerceStore } from '@/stores/ecommerce.store';
 
 // Lazy-loaded pages
 const DynamicPage = lazy(() => import('./pages/DynamicPage'));
@@ -38,6 +39,7 @@ const ToolsPlatform = lazy(() => import('./pages/ToolsPlatform'));
 const ObservatoirePage = lazy(() => import('./pages/observatoire/ObservatoirePage'));
 const GEDPage = lazy(() => import('./pages/GEDPage'));
 const SubscriptionPage = lazy(() => import('./pages/SubscriptionPage'));
+const BoutiquePremium = lazy(() => import('./pages/BoutiquePremium'));
 
 // Expert Lab
 const ExpertDashboard = lazy(() => import('./expert-lab/pages/Dashboard'));
@@ -102,6 +104,10 @@ const AppContent = () => {
   const { isAdmin } = useIsAdmin();
   const { data: dynamicRoutes, isLoading: isLoadingRoutes } = useDynamicRoutes();
 
+  useEffect(() => {
+    void useEcommerceStore.getState().bootstrapCommerce();
+  }, []);
+
   // Si le mode construction est activé ET l'utilisateur n'est pas admin
   // Afficher la page de construction (sauf pour /dashboard et /connexion)
   const showConstructionPage = isConstructionMode && !isAdmin;
@@ -146,6 +152,8 @@ const AppContent = () => {
           { path: '/activities', element: <ConstructionPage /> },
           { path: '/labels', element: <ConstructionPage /> },
           { path: '/documents', element: <ConstructionPage /> },
+          { path: '/boutique', element: <ConstructionPage /> },
+          { path: '/boutique-premium', element: <ConstructionPage /> },
           { path: '/events', element: <ConstructionPage /> },
           { path: '/certifications', element: <ConstructionPage /> },
           { path: '/expertises', element: <ConstructionPage /> },
@@ -209,6 +217,26 @@ const AppContent = () => {
                 slug="documents"
                 title="Documents & Ressources"
                 fallback={<Documents />}
+              />
+            ),
+          },
+          {
+            path: '/boutique-premium',
+            element: (
+              <FunctionalBuilderRoute
+                slug="boutique-premium"
+                title="Boutique premium"
+                fallback={<BoutiquePremium />}
+              />
+            ),
+          },
+          {
+            path: '/boutique',
+            element: (
+              <FunctionalBuilderRoute
+                slug="boutique-premium"
+                title="Boutique premium"
+                fallback={<BoutiquePremium />}
               />
             ),
           },

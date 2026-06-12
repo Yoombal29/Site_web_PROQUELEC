@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useEcommerceStore } from '@/stores/ecommerce.store';
+import { normalizePaymentGateway } from '@/lib/commerce-sync';
 import {
   CreditCard,
   Smartphone,
@@ -355,6 +357,13 @@ export default function AdminPaymentPanel() {
   const [loading, setLoading] = useState(true);
   const [testingProvider, setTestingProvider] = useState<string | null>(null);
 
+  const syncCommerceStore = (gateway: string) => {
+    useEcommerceStore.getState().updatePaymentSettings({
+      paymentGateway: gateway,
+      paymentProvider: normalizePaymentGateway(gateway) as any,
+    });
+  };
+
   useEffect(() => {
     loadSettings();
     loadTransactions();
@@ -366,8 +375,10 @@ export default function AdminPaymentPanel() {
       if (res.ok) {
         const data = await res.json();
         setProviders(data.providers || {});
-        setDefaultProvider(data.default_provider || 'paydunya');
+        const nextDefault = data.default_provider || 'paydunya';
+        setDefaultProvider(nextDefault);
         setApiKeys(data.api_keys || {});
+        syncCommerceStore(nextDefault);
       } else {
         // Initialize defaults
         const defaults: Record<string, boolean> = {};
@@ -376,9 +387,11 @@ export default function AdminPaymentPanel() {
         });
         defaults.paydunya = true; // PayDunya enabled by default
         setProviders(defaults);
+        syncCommerceStore('paydunya');
       }
     } catch (err) {
       console.error('Failed to load payment settings:', err);
+      syncCommerceStore('paydunya');
     }
     setLoading(false);
   };
@@ -407,6 +420,7 @@ export default function AdminPaymentPanel() {
           api_keys: updatedKeys || apiKeys,
         }),
       });
+      syncCommerceStore(updatedDefault || defaultProvider);
       toast({ title: '✅ Paramètres de paiement enregistrés' });
     } catch (err) {
       toast({ title: 'Erreur', description: 'Impossible de sauvegarder', variant: 'destructive' });

@@ -26,6 +26,9 @@ export function EcommerceAdminPanel() {
   const currency = useEcommerceStore((s) => s.currency);
   const shippingCost = useEcommerceStore((s) => s.shippingCost);
   const taxRate = useEcommerceStore((s) => s.taxRate);
+  const paymentProvider = useEcommerceStore((s) => s.paymentProvider);
+  const paymentGateway = useEcommerceStore((s) => s.paymentGateway);
+  const paydunyaSandbox = useEcommerceStore((s) => s.paydunyaSandbox);
   const clearCart = useEcommerceStore((s) => s.clearCart);
   const updateOrderStatus = useEcommerceStore((s) => s.updateOrderStatus);
 
@@ -135,7 +138,11 @@ export function EcommerceAdminPanel() {
                   <td className="p-3 flex items-center gap-3">
                     {p.image ? <img src={p.image} alt="" className="w-10 h-10 rounded-lg object-cover" /> : <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-300 text-lg">📦</div>}
                     <div><p className="font-semibold text-slate-900">{p.name || '(sans nom)'}</p>
-                      {p.description && <p className="text-[10px] text-slate-400 line-clamp-1">{p.description}</p>}</div>
+                      {p.description && <p className="text-[10px] text-slate-400 line-clamp-1">{p.description}</p>}
+                      {p.source === 'document' && (
+                        <p className="text-[10px] font-semibold text-blue-600">Document centralisé</p>
+                      )}
+                    </div>
                   </td>
                   <td className="p-3 font-mono text-xs">
                     {p.price.toFixed(2)} {currency}
@@ -271,21 +278,30 @@ export function EcommerceAdminPanel() {
           <div className="border-t border-slate-200 pt-4 space-y-4">
             <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Paiement PayDunya</h4>
             <SettingsRow label="Fournisseur de paiement">
-              <select value={useEcommerceStore.getState().paymentProvider}
-                onChange={(e) => useEcommerceStore.setState({ paymentProvider: e.target.value as any })}
+              <select value={paymentProvider}
+                onChange={(e) =>
+                  useEcommerceStore.setState({
+                    paymentProvider: e.target.value as any,
+                    paymentGateway: e.target.value,
+                  })
+                }
                 className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-sm">
                 <option value="paydunya">PayDunya (Orange Money, Wave, Carte)</option>
+                <option value="stripe">Stripe</option>
                 <option value="mock">Mode mock (pas de vrai paiement)</option>
               </select>
             </SettingsRow>
             <SettingsRow label="Mode sandbox">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" checked={useEcommerceStore.getState().paydunyaSandbox}
+                <input type="checkbox" checked={paydunyaSandbox}
                   onChange={(e) => useEcommerceStore.setState({ paydunyaSandbox: e.target.checked })}
                   className="rounded" />
                 <span className="text-sm text-slate-600">Environnement de test</span>
               </label>
             </SettingsRow>
+            <div className="text-[11px] text-slate-500">
+              Gateway centralisée: <span className="font-semibold capitalize">{paymentGateway}</span>
+            </div>
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-700">
               <strong>⚠️ Clés API PayDunya</strong>
               <p className="mt-1 text-amber-600">Les clés PayDunya se configurent via le fichier <code className="bg-amber-100 px-1 rounded">.env</code> du serveur :</p>

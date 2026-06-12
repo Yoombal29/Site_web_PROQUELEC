@@ -151,6 +151,13 @@ async function listAssets(req, res) {
     res.status(500).json({ error: err.message });
   }
 }
+async function listEcommerceCatalog(req, res) {
+  try {
+    res.json({ products: await service.listEcommerceCatalog() });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
 async function createAsset(req, res) {
   try {
     res.status(201).json(await service.createAsset(req.body));
@@ -585,6 +592,7 @@ module.exports = {
   updateQuickLink,
   deleteQuickLink,
   listAssets,
+  listEcommerceCatalog,
   createAsset,
   updateAsset,
   deleteAsset,

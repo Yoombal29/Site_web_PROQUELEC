@@ -2,12 +2,16 @@ import { useState, useEffect, useRef } from 'react';
 import {
   Send,
   Brain,
-  Sparkles,
   Bot,
   Loader2,
   Activity,
   RefreshCw,
   AlertCircle,
+  Settings,
+  ExternalLink,
+  Calendar,
+  Home,
+  Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -390,6 +394,43 @@ export default function AdminAICentral() {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      {/* ─── Navigation links ─── */}
+      <div className="flex flex-wrap items-center gap-3 p-4 bg-card border border-border rounded-lg">
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider mr-2">
+          Navigation rapide
+        </span>
+        <a
+          href="/expert"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/30 dark:hover:bg-purple-900/50 text-xs font-medium text-purple-700 dark:text-purple-300 transition-colors"
+        >
+          <Sparkles className="w-3.5 h-3.5" />
+          Hub IA (15 modules)
+        </a>
+        <a
+          href="/expert/ai-providers"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 hover:bg-slate-200 text-xs font-medium text-slate-700 transition-colors"
+        >
+          <Settings className="w-3.5 h-3.5" />
+          Configurer les API
+          <ExternalLink className="w-3 h-3 opacity-50" />
+        </a>
+        <a
+          href="/admin"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 hover:bg-slate-200 text-xs font-medium text-slate-700 transition-colors"
+        >
+          <Home className="w-3.5 h-3.5" />
+          Dashboard Admin
+        </a>
+        <a
+          href="/events"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 hover:bg-slate-200 text-xs font-medium text-slate-700 transition-colors"
+        >
+          <Calendar className="w-3.5 h-3.5" />
+          Calendrier public
+          <ExternalLink className="w-3 h-3 opacity-50" />
+        </a>
       </div>
     </div>
   );

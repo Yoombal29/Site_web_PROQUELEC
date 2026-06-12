@@ -298,6 +298,43 @@ function stripHtml(value) {
     .trim();
 }
 
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function sanitizeInlineHtml(value) {
+  return String(value || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<iframe[\s\S]*?<\/iframe>/gi, '')
+    .replace(/<object[\s\S]*?<\/object>/gi, '')
+    .replace(/<embed[\s\S]*?>/gi, '')
+    .replace(/<link[\s\S]*?>/gi, '')
+    .replace(/<meta[\s\S]*?>/gi, '')
+    .replace(/\son\w+\s*=\s*(".*?"|'.*?'|[^\s>]+)/gi, '')
+    .replace(/\s(href|src)\s*=\s*(['"]?)javascript:[\s\S]*?\2/gi, ' $1="#"');
+}
+
+function truncateHtml(html, maxLength = 180000) {
+  const value = String(html || '');
+  return value.length > maxLength
+    ? `${value.slice(0, maxLength)}<div class="preview-truncated">Apercu tronque pour rester lisible.</div>`
+    : value;
+}
+
+function renderRichText(value) {
+  const text = String(value || '');
+  if (!text) return '';
+  return /<\/?[a-z][\s\S]*>/i.test(text)
+    ? sanitizeInlineHtml(text)
+    : escapeHtml(text).replace(/\n/g, '<br />');
+}
+
 function collectText(value, parts = []) {
   if (typeof value === 'string') {
     const clean = stripHtml(value);
@@ -331,6 +368,131 @@ function findFirstHtml(value) {
   return '';
 }
 
+function getNodeName(node) {
+  const type = node?.type;
+  if (typeof type === 'string') return type;
+  return type?.resolvedName || node?.displayName || '';
+}
+
+function cssStyle(input = {}) {
+  if (!isPlainObject(input)) return '';
+  return Object.entries(input)
+    .filter(([, value]) => value !== undefined && value !== null && value !== '')
+    .map(([key, value]) => {
+      const cssKey = key.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
+      return `${cssKey}:${String(value).replace(/[;"<>]/g, '')}`;
+    })
+    .join(';');
+}
+
+function renderCraftChildren(structure, nodeIds = [], depth = 0) {
+  if (!Array.isArray(nodeIds) || depth > 80) return '';
+  return nodeIds.map((nodeId) => renderCraftNode(structure, nodeId, depth + 1)).join('');
+}
+
+function renderList(items = []) {
+  if (!Array.isArray(items) || items.length === 0) return '';
+  return `<ul class="preview-list">${items
+    .map((item) => {
+      if (typeof item === 'string') return `<li>${renderRichText(item)}</li>`;
+      const label = item.label || item.title || item.name || item.text || '';
+      const detail = item.detail || item.description || item.desc || '';
+      return `<li><strong>${renderRichText(label)}</strong>${detail ? `<span>${renderRichText(detail)}</span>` : ''}</li>`;
+    })
+    .join('')}</ul>`;
+}
+
+function renderCraftNode(structure, nodeId, depth = 0) {
+  const node = structure?.[nodeId];
+  if (!node || depth > 80) return '';
+
+  const props = normalizeValue(node.props || {});
+  const name = getNodeName(node).toLowerCase();
+  const children = renderCraftChildren(structure, node.nodes, depth);
+  const style = cssStyle(props.style || {});
+
+  if (nodeId === 'ROOT' || name === 'root' || name.includes('container')) {
+    return `<section class="preview-section" style="${style}">${children}</section>`;
+  }
+
+  if (name.includes('columns')) {
+    return `<div class="preview-columns" style="${style}">${children}</div>`;
+  }
+
+  if (name.includes('hero')) {
+    const badge = props.badgeText || props.badge || '';
+    const title = props.headline || props.title || props.hero_title || '';
+    const subtitle = props.subheadline || props.subtitle || props.hero_subtitle || '';
+    const image = props.backgroundImage || props.background_image || props.imageUrl || '';
+    return `<section class="preview-hero" style="${image ? `background-image:linear-gradient(135deg,rgba(15,23,42,.72),rgba(30,58,95,.72)),url('${escapeHtml(image)}')` : ''}">
+      ${badge ? `<p class="preview-badge">${renderRichText(badge)}</p>` : ''}
+      ${title ? `<h1>${renderRichText(title)}</h1>` : ''}
+      ${subtitle ? `<p>${renderRichText(subtitle)}</p>` : ''}
+      ${children}
+    </section>`;
+  }
+
+  if (name.includes('heading') || node.displayName === 'Titre') {
+    const level = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(props.level) ? props.level : 'h2';
+    return `<${level} class="preview-heading" style="${style}">${renderRichText(props.text || props.title || '')}</${level}>`;
+  }
+
+  if (name.includes('text') || node.displayName === 'Texte') {
+    return `<div class="preview-text" style="${style}">${renderRichText(props.text || props.content || '')}</div>`;
+  }
+
+  if (name.includes('image') && (props.src || props.image || props.imageUrl)) {
+    const src = props.src || props.image || props.imageUrl;
+    return `<figure class="preview-image"><img src="${escapeHtml(src)}" alt="${escapeHtml(props.alt || props.title || '')}" /></figure>`;
+  }
+
+  if (name.includes('card') || node.displayName === 'Carte') {
+    return `<article class="preview-card" style="${style}">
+      ${props.icon ? `<span class="preview-icon">${renderRichText(props.icon)}</span>` : ''}
+      ${props.title ? `<h3>${renderRichText(props.title)}</h3>` : ''}
+      ${props.subtitle ? `<p class="preview-muted">${renderRichText(props.subtitle)}</p>` : ''}
+      ${props.text || props.description ? `<p>${renderRichText(props.text || props.description)}</p>` : ''}
+      ${children}
+    </article>`;
+  }
+
+  if (name.includes('feature') || name.includes('list') || Array.isArray(props.items)) {
+    return `<div class="preview-list-wrap">${props.title ? `<h3>${renderRichText(props.title)}</h3>` : ''}${renderList(props.items)}${children}</div>`;
+  }
+
+  if (name.includes('cta') || name.includes('button')) {
+    const label = props.buttonText || props.ctaLabel || props.label || props.text || props.title || 'Action';
+    const description = props.description || props.subtitle || '';
+    return `<div class="preview-cta">${props.title ? `<h3>${renderRichText(props.title)}</h3>` : ''}${description ? `<p>${renderRichText(description)}</p>` : ''}<span>${renderRichText(label)}</span>${children}</div>`;
+  }
+
+  const fallbackPieces = [
+    props.title,
+    props.label,
+    props.name,
+    props.text,
+    props.description,
+    props.subtitle,
+  ].filter(Boolean);
+
+  if (fallbackPieces.length > 0 || children) {
+    return `<div class="preview-block" style="${style}">${fallbackPieces
+      .map((piece, index) => (index === 0 ? `<h3>${renderRichText(piece)}</h3>` : `<p>${renderRichText(piece)}</p>`))
+      .join('')}${children}</div>`;
+  }
+
+  return '';
+}
+
+function renderCraftStructure(structure) {
+  const parsed = parseJsonIfNeeded(structure);
+  if (!isPlainObject(parsed)) return '';
+  if (parsed.ROOT) return renderCraftNode(parsed, 'ROOT');
+
+  const firstKey = Object.keys(parsed)[0];
+  return firstKey ? renderCraftNode(parsed, firstKey) : '';
+}
+
 function buildPreviewFromFields(fields = {}) {
   const text = collectText({
     title: fields.title,
@@ -341,15 +503,27 @@ function buildPreviewFromFields(fields = {}) {
     structure_json: fields.structure_json,
     content_blocks: fields.content_blocks,
   }).join(' ');
+  const craftHtml = renderCraftStructure(fields.structure_json);
+  const contentHtml = sanitizeInlineHtml(
+    fields.content_compiled || fields.content_raw || fields.content || findFirstHtml(fields.content_blocks || ''),
+  );
+  const fallbackHtml = text
+    ? `<section class="preview-section"><h1>${renderRichText(fields.title || 'Page sans titre')}</h1><p>${renderRichText(text.slice(0, 1600))}</p></section>`
+    : '';
+  const previewHtml = craftHtml || contentHtml || fallbackHtml;
+  const renderMode = craftHtml ? 'craft' : contentHtml ? 'html' : 'text';
 
   return {
     title: fields.title || 'Page sans titre',
     slug: fields.slug || '',
     meta_description: fields.meta_description || '',
     text_excerpt: text.slice(0, 900),
-    html_excerpt: findFirstHtml(fields.structure_json || fields.content_blocks || fields.content || ''),
+    html_excerpt: truncateHtml(previewHtml),
+    preview_html: truncateHtml(previewHtml),
+    render_mode: renderMode,
     node_count: countCraftNodes(fields.structure_json) || countCraftNodes(fields.content_blocks),
     character_count: text.length,
+    warnings: previewHtml ? [] : ['Aucun contenu visuel exploitable dans cette version.'],
   };
 }
 

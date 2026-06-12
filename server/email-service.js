@@ -126,36 +126,32 @@ async function sendEmail({ subject, html, text, replyTo, to: recipient }) {
 function emailLayout(title, content) {
   const safeTitle = escapeHtml(title);
   return `
-    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(30,58,95,0.08),0 1px 4px rgba(30,58,95,0.04)">
-      <!-- Header avec logo PROQUELEC -->
-      <div style="background:linear-gradient(135deg,#0f2a4a 0%,#1e3a5f 40%,#2563eb 100%);padding:36px 24px;text-align:center;position:relative">
-        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right,#f59e0b,#2563eb)"></div>
-        <img src="https://proquelec.sn/logo.png" alt="PROQUELEC" style="width:auto;height:48px;margin-bottom:10px" onerror="this.style.display='none'">
-        <h1 style="color:#ffffff;margin:0;font-size:20px;font-weight:700;letter-spacing:-0.3px">PROQUELEC</h1>
-        <p style="color:rgba(255,255,255,0.6);margin:4px 0 0;font-size:12px;font-weight:500;letter-spacing:0.5px;text-transform:uppercase">Sécurité &middot; Qualité &middot; Formation</p>
-      </div>
+    <div style="font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background-color:#fafafa;padding:40px 20px;color:#333333;line-height:1.6;">
+      <div style="max-width:600px;margin:0 auto;background-color:#ffffff;border:1px solid #eaeaea;border-radius:8px;overflow:hidden;">
+        <!-- Header minimaliste -->
+        <div style="padding:40px 40px 20px;text-align:center;border-bottom:1px solid #f5f5f5;">
+          <img src="https://proquelec.sn/logo.png" alt="PROQUELEC" width="180" style="width:180px; max-width:100%; height:auto; display:block; margin:0 auto 20px;" onerror="this.style.display='none'">
+          <h1 style="margin:0;font-size:24px;font-weight:400;color:#111111;letter-spacing:-0.5px;">${safeTitle}</h1>
+        </div>
 
-      <!-- Corps du message -->
-      <div style="padding:36px 28px">
-        <div style="width:40px;height:4px;background:linear-gradient(to right,#2563eb,#f59e0b);border-radius:2px;margin-bottom:20px"></div>
-        <h2 style="color:#0f2a4a;font-size:20px;font-weight:700;margin:0 0 4px;line-height:1.3">${safeTitle}</h2>
-        <p style="color:#6b7280;font-size:13px;margin:0 0 24px;padding-bottom:16px;border-bottom:1px solid #e5e7eb">Notification du site proquelec.sn</p>
-        ${content}
-      </div>
+        <!-- Corps du message -->
+        <div style="padding:40px;">
+          ${content}
+        </div>
 
-      <!-- Footer -->
-      <div style="background:#f8fafc;padding:24px 28px;text-align:center;border-top:1px solid #e5e7eb">
-        <p style="color:#94a3b8;font-size:11px;margin:0 0 8px;line-height:1.5">
-          <strong style="color:#1e3a5f">PROQUELEC</strong><br>
-          Promotion de la Qualité des Installations Électriques au Sénégal
-        </p>
-        <p style="color:#cbd5e1;font-size:10px;margin:0">
-          Route de l'Aéroport, Lotissement Mermoz &bull; BP 1234 Dakar<br>
-          <a href="tel:+221330000000" style="color:#2563eb;text-decoration:none">+221 33 000 00 00</a>
-          &nbsp;&bull;&nbsp;
-          <a href="mailto:proquelec@proquelec.sn" style="color:#2563eb;text-decoration:none">proquelec@proquelec.sn</a>
-        </p>
-        <p style="color:#e2e8f0;font-size:9px;margin:12px 0 0;padding-top:12px;border-top:1px solid #e2e8f0">&copy; ${new Date().getFullYear()} PROQUELEC &mdash; Tous droits réservés</p>
+        <!-- Footer épuré -->
+        <div style="padding:30px 40px;background-color:#fafafa;border-top:1px solid #eaeaea;text-align:center;">
+          <p style="margin:0;font-size:12px;color:#888888;text-transform:uppercase;letter-spacing:1px;font-weight:600;">PROQUELEC</p>
+          <p style="margin:8px 0 0;font-size:12px;color:#999999;">Promotion de la Qualité des Installations Électriques au Sénégal</p>
+          <div style="margin-top:16px;padding-top:16px;border-top:1px solid #eeeeee;">
+            <a href="mailto:proquelec@proquelec.sn" style="color:#666666;text-decoration:none;font-size:11px;">proquelec@proquelec.sn</a>
+            <span style="color:#cccccc;margin:0 8px;">|</span>
+            <a href="tel:+221330000000" style="color:#666666;text-decoration:none;font-size:11px;">+221 33 000 00 00</a>
+          </div>
+        </div>
+      </div>
+      <div style="max-width:600px;margin:20px auto 0;text-align:center;">
+         <p style="font-size:11px;color:#aaaaaa;">Ceci est une notification automatique. Merci de ne pas répondre directement à cet email sauf indication contraire.</p>
       </div>
     </div>
   `;
@@ -163,20 +159,25 @@ function emailLayout(title, content) {
 
 function fieldRow(label, value) {
   const safeLabel = escapeHtml(label);
-  const safeValue = value ? escapeHtml(value) : '<span style="color:#9ca3af">Non renseigné</span>';
-  return `<tr><td style="padding:10px 12px;font-weight:600;color:#374151;font-size:13px;width:100px;vertical-align:top;white-space:nowrap">${safeLabel}</td><td style="padding:10px 12px;color:#111827;font-size:14px;word-break:break-word">${safeValue}</td></tr>`;
+  const safeValue = value ? escapeHtml(value) : '<span style="color:#bbbbbb;font-style:italic;">Non renseigné</span>';
+  return `
+    <div style="margin-bottom:24px;">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888888;font-weight:600;margin-bottom:6px;">${safeLabel}</div>
+      <div style="font-size:15px;color:#222222;white-space:pre-wrap;">${safeValue}</div>
+    </div>
+  `;
 }
 
 // Envoyer une notification pour un nouveau contact
 async function sendContactNotification({ nom, email, telephone, sujet, message }) {
   const content = `
-    <table style="width:100%;border-collapse:collapse;background:#f9fafb;border-radius:12px;overflow:hidden">
+    <div style="padding-top:10px;">
       ${fieldRow('Nom', nom)}
       ${fieldRow('Email', email)}
       ${fieldRow('Téléphone', telephone)}
       ${fieldRow('Sujet', sujet)}
       ${fieldRow('Message', message)}
-    </table>
+    </div>
   `;
   return sendEmail({
     subject: `[PROQUELEC] Nouveau message de ${nom || 'visiteur'}`,
@@ -189,12 +190,12 @@ async function sendContactNotification({ nom, email, telephone, sujet, message }
 // Notification pour un nouvel utilisateur inscrit
 async function sendNewUserNotification({ email, nom, telephone, role }) {
   const content = `
-    <table style="width:100%;border-collapse:collapse;background:#f9fafb;border-radius:12px;overflow:hidden">
+    <div style="padding-top:10px;">
       ${fieldRow('Nom', nom)}
       ${fieldRow('Email', email)}
       ${fieldRow('Téléphone', telephone)}
       ${fieldRow('Rôle', role)}
-    </table>
+    </div>
   `;
   return sendEmail({
     subject: `[PROQUELEC] Nouvel inscrit : ${email}`,
@@ -205,7 +206,7 @@ async function sendNewUserNotification({ email, nom, telephone, role }) {
 
 // Notification email groupée (utilisé par le système de notifications)
 async function sendGroupNotification({ to, title, message }) {
-  const content = `<div style="background:#f9fafb;border-radius:12px;padding:16px;font-size:14px;color:#374151;line-height:1.6">${escapeHtml(message)}</div>`;
+  const content = `<div style="padding:24px;background:#fafafa;border:1px solid #eaeaea;border-radius:8px;font-size:15px;color:#333333;line-height:1.6">${escapeHtml(message)}</div>`;
   return sendEmail({
     to,
     subject: `[PROQUELEC] ${title}`,
@@ -251,12 +252,12 @@ function certificationNotificationTemplate(certificationName, name) {
 function contactTemplate(nom, email, sujet, message) {
   const subject = `[PROQUELEC] Nouveau message : ${sujet}`;
   const content = `
-    <table style="width:100%;border-collapse:collapse;background:#f9fafb;border-radius:12px;overflow:hidden">
+    <div style="padding-top:10px;">
       ${fieldRow('Nom', nom)}
       ${fieldRow('Email', email)}
       ${fieldRow('Sujet', sujet)}
       ${fieldRow('Message', message)}
-    </table>
+    </div>
   `;
   const html = emailLayout('Nouveau contact', content);
   const text = `Nouveau message de contact\nNom: ${nom}\nEmail: ${email}\nSujet: ${sujet}\nMessage: ${message}`;
@@ -273,18 +274,18 @@ async function sendEventRegistrationConfirmation({
   eventLocation,
 }) {
   const content = `
-    <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:12px;padding:24px;margin-bottom:20px;text-align:center">
-      <div style="font-size:40px;margin-bottom:12px">🎉</div>
-      <h3 style="color:#166534;margin:0 0 8px;font-size:18px">Inscription confirmée !</h3>
-      <p style="color:#374151;font-size:14px;margin:0">Vous êtes bien inscrit à l'événement ci-dessous.</p>
+    <div style="background:#fafafa;border:1px solid #eaeaea;border-radius:8px;padding:24px;margin-bottom:30px;text-align:center">
+      <div style="font-size:32px;margin-bottom:12px">🎉</div>
+      <h3 style="color:#111111;margin:0 0 8px;font-size:18px;font-weight:400">Inscription confirmée !</h3>
+      <p style="color:#666666;font-size:14px;margin:0">Vous êtes bien inscrit à l'événement ci-dessous.</p>
     </div>
-    <table style="width:100%;border-collapse:collapse;background:#f9fafb;border-radius:12px;overflow:hidden">
+    <div style="padding-top:10px;">
       ${fieldRow('Événement', eventTitle)}
       ${fieldRow('Date', eventDate)}
       ${fieldRow('Horaire', eventTime)}
       ${fieldRow('Lieu', eventLocation)}
-    </table>
-    <p style="color:#6b7280;font-size:13px;margin-top:20px;padding-top:16px;border-top:1px solid #e5e7eb">
+    </div>
+    <p style="color:#888888;font-size:13px;margin-top:20px;padding-top:20px;border-top:1px solid #eaeaea;font-style:italic;">
       Un membre de l'équipe PROQUELEC pourra vous contacter pour finaliser votre participation.
     </p>
   `;
@@ -309,14 +310,14 @@ async function sendEventRegistrationNotification({
   eventTitle,
 }) {
   const content = `
-    <table style="width:100%;border-collapse:collapse;background:#f9fafb;border-radius:12px;overflow:hidden">
+    <div style="padding-top:10px;">
       ${fieldRow('Événement', eventTitle)}
       ${fieldRow('Participant', name)}
       ${fieldRow('Email', email)}
       ${fieldRow('Téléphone', phone || 'Non renseigné')}
       ${fieldRow('Entreprise', company || 'Non renseigné')}
       ${fieldRow('Message', message || 'Non renseigné')}
-    </table>
+    </div>
   `;
   const html = emailLayout('Nouvelle inscription à un événement', content);
   const text = `Nouvelle inscription de ${name} à ${eventTitle}`;

@@ -1,52 +1,82 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import { useState, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 import {
   Key,
-  Plus,
   Search,
-  Copy,
-  Trash2,
-  Eye,
-  EyeOff,
-
-
   ShieldCheck,
-  Binary } from
-"lucide-react";
-import { useToast } from "@/hooks/use-toast";
+  Binary,
+  ExternalLink,
+  CheckCircle2,
+  XCircle,
+  Loader2,
+  Settings,
+} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
+interface AiConfigResponse {
+  success: boolean;
+  configs: Record<string, string>;
+}
+
+const KNOWN_PROVIDERS: Record<string, string> = {
+  provider_openai_key: 'OpenAI',
+  provider_anthropic_key: 'Anthropic',
+  provider_mistral_key: 'Mistral AI',
+  provider_groq_key: 'Groq',
+  provider_huggingface_key: 'HuggingFace',
+  provider_ollama_key: 'Ollama',
+  provider_azure_key: 'Azure OpenAI',
+  provider_deepseek_key: 'DeepSeek',
+  provider_google_key: 'Google AI',
+};
 
 export default function ApiKeysPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [showKeys, setShowKeys] = useState<{[key: string]: boolean;}>({});
-  const { toast } = useToast();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [configuredProviders, setConfiguredProviders] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  const apiKeys = [
-  {
-    id: "YEAI_CORE_01",
-    name: "Application Mobile Lab",
-    key: "YEAI-PRO-4fX9mK8nQ2vR7wP1sL6tY3uE9bN5cZ8j",
-    status: "active" as const,
-    createdAt: "2024-01-15",
-    lastUsed: "2 min",
-    requests: 1247
-  },
-  {
-    id: "YEAI_CORE_02",
-    name: "Dashboard Ingénierie",
-    key: "YEAI-PRO-8kL2nM5pQ9vR3wX6sY1tU4eZ7bN0cF5j",
-    status: "active" as const,
-    createdAt: "2024-01-10",
-    lastUsed: "15 min",
-    requests: 892
-  }];
+  useEffect(() => {
+    loadConfig();
+  }, []);
 
+  const loadConfig = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token') || localStorage.getItem('access_token') || '';
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  const filteredKeys = apiKeys.filter((key) =>
-  key.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  key.id.toLowerCase().includes(searchTerm.toLowerCase())
+      const response = await fetch('/api/ai/config', { headers });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data: AiConfigResponse = await response.json();
+
+      if (data.success && data.configs) {
+        const configured = Object.keys(data.configs).filter(
+          (key) => KNOWN_PROVIDERS[key] && data.configs[key]?.trim().length > 0,
+        );
+        setConfiguredProviders(configured);
+        setError(null);
+      } else {
+        setError('Aucune configuration trouvée.');
+      }
+    } catch (err) {
+      console.error('Failed to load AI config:', err);
+      setError('Impossible de contacter le serveur de configuration.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const allProviderKeys = Object.keys(KNOWN_PROVIDERS);
+  const filteredProviderKeys = allProviderKeys.filter(
+    (key) =>
+      key.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      KNOWN_PROVIDERS[key].toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -61,16 +91,21 @@ export default function ApiKeysPage() {
           </div>
           <div>
             <h1 className="text-3xl font-black uppercase italic tracking-tighter text-foreground">
-              Access <span className="text-primary tracking-normal">Tokens</span>
+              Accès <span className="text-primary tracking-normal">Fournisseurs</span>
             </h1>
             <div className="flex items-center gap-2 mt-1">
               <ShieldCheck className="w-3 h-3 text-primary/50" />
-              <span className="text-[10px] uppercase font-black tracking-widest text-muted-foreground opacity-50">Secure System Authentication</span>
+              <span className="text-[10px] uppercase font-black tracking-widest text-muted-foreground opacity-50">
+                Gestion des Clés API
+              </span>
             </div>
           </div>
         </div>
-        <Button className="bg-primary text-black font-black uppercase tracking-widest h-12 px-8 glow-emerald border-0">
-          <Plus className="w-4 h-4 mr-2" /> New Token
+        <Button
+          className="bg-primary text-black font-black uppercase tracking-widest h-12 px-8 glow-emerald border-0"
+          onClick={() => navigate('/expert/ai-providers')}
+        >
+          <Settings className="w-4 h-4 mr-2" /> Gérer les fournisseurs
         </Button>
       </div>
 
@@ -79,70 +114,121 @@ export default function ApiKeysPage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/40" />
           <Input
             className="glass pl-10 h-12 border-primary/20 bg-black/20 font-mono text-xs"
-            placeholder="Scanner les tokens actifs..."
+            placeholder="Rechercher un fournisseur..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} />
-          
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
       </div>
 
-      <div className="space-y-4 relative z-10">
-        {filteredKeys.map((apiKey) =>
-        <Card key={apiKey.id} className="glass border-primary/10 hover:border-primary/30 transition-all group">
-            <CardContent className="p-6">
-              <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:glow-emerald transition-all border border-primary/20">
-                    <Binary className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-black italic uppercase tracking-tighter">{apiKey.name}</h3>
-                    <p className="text-[10px] font-mono opacity-40">{apiKey.id}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Badge className="text-[9px] uppercase font-black tracking-widest border-primary/30 text-primary">Status_Authorized</Badge>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="icon" className="h-10 w-10 glass border-primary/10 hover:border-primary/50"><Copy className="w-4 h-4" /></Button>
-                    <Button variant="outline" size="icon" className="h-10 w-10 glass border-primary/10 hover:border-red-500/50 text-red-500"><Trash2 className="w-4 h-4" /></Button>
-                  </div>
-                </div>
-              </div>
+      {/* LOADING STATE */}
+      {loading && (
+        <div className="flex flex-col items-center justify-center py-20 relative z-10">
+          <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
+          <p className="text-sm font-mono text-muted-foreground">
+            Chargement des configurations...
+          </p>
+        </div>
+      )}
 
-              <div className="bg-black/40 rounded-xl p-4 border border-white/5 font-mono text-xs text-primary/80 mb-6 flex items-center justify-between">
-                <span>{showKeys[apiKey.id] ? apiKey.key : "••••••••••••••••••••••••••••••••"}</span>
-                <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowKeys((prev) => ({ ...prev, [apiKey.id]: !prev[apiKey.id] }))}
-                className="hover:bg-primary/10 text-primary">
-                
-                  {showKeys[apiKey.id] ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </Button>
-              </div>
+      {/* ERROR STATE */}
+      {error && !loading && (
+        <div className="flex flex-col items-center justify-center py-20 relative z-10">
+          <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mb-4 border border-red-500/20">
+            <XCircle className="w-8 h-8 text-red-400" />
+          </div>
+          <p className="text-sm font-mono text-red-400 mb-2">{error}</p>
+          <p className="text-[10px] uppercase font-black tracking-widest text-muted-foreground mb-6">
+            Configurez vos clés d'accès aux fournisseurs IA
+          </p>
+          <Button
+            variant="outline"
+            className="glass border-primary/20 hover:border-primary/50 h-12 px-6"
+            onClick={() => navigate('/expert/ai-providers')}
+          >
+            <ExternalLink className="w-4 h-4 mr-2" /> Accéder aux fournisseurs
+          </Button>
+        </div>
+      )}
 
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                <div>
-                  <p className="text-[9px] uppercase font-black tracking-widest opacity-40 mb-1">Date Émission</p>
-                  <p className="text-xs font-mono font-black">{apiKey.createdAt}</p>
-                </div>
-                <div>
-                  <p className="text-[9px] uppercase font-black tracking-widest opacity-40 mb-1">Dernière Utilisation</p>
-                  <p className="text-xs font-mono font-black">{apiKey.lastUsed}</p>
-                </div>
-                <div>
-                  <p className="text-[9px] uppercase font-black tracking-widest opacity-40 mb-1">Volume Requêtes</p>
-                  <p className="text-xs font-mono font-black">{apiKey.requests} cycles</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+      {/* PROVIDER LIST */}
+      {!loading && !error && (
+        <div className="space-y-4 relative z-10">
+          {filteredProviderKeys.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16">
+              <p className="text-sm font-mono text-muted-foreground">Aucun fournisseur trouvé.</p>
+            </div>
+          ) : (
+            filteredProviderKeys.map((providerKey) => {
+              const isConfigured = configuredProviders.includes(providerKey);
+              const providerName = KNOWN_PROVIDERS[providerKey];
+
+              return (
+                <Card
+                  key={providerKey}
+                  className="glass border-primary/10 hover:border-primary/30 transition-all group"
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:glow-emerald transition-all border border-primary/20">
+                          <Binary className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-black italic uppercase tracking-tighter">
+                            {providerName}
+                          </h3>
+                          <p className="text-[10px] font-mono opacity-40 mt-0.5">{providerKey}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        {isConfigured ? (
+                          <Badge className="text-[9px] uppercase font-black tracking-widest bg-emerald-950/30 border-emerald-500/20 text-emerald-400">
+                            <CheckCircle2 className="w-3 h-3 mr-1" /> Configuré
+                          </Badge>
+                        ) : (
+                          <Badge
+                            variant="outline"
+                            className="text-[9px] uppercase font-black tracking-widest border-amber-500/20 text-amber-400 bg-amber-950/30"
+                          >
+                            <XCircle className="w-3 h-3 mr-1" /> Non configuré
+                          </Badge>
+                        )}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="glass border-primary/10 hover:border-primary/50 h-10"
+                          onClick={() => navigate('/expert/ai-providers')}
+                        >
+                          <Settings className="w-4 h-4 mr-2" /> Configurer
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })
+          )}
+
+          <div className="pt-4 text-center">
+            <p className="text-[10px] uppercase font-black tracking-widest text-muted-foreground opacity-50 mb-2">
+              Les clés API sont gérées depuis la page des fournisseurs
+            </p>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-primary/60 hover:text-primary"
+              onClick={() => navigate('/expert/ai-providers')}
+            >
+              <ExternalLink className="w-3 h-3 mr-1" /> Ouvrir la configuration
+            </Button>
+          </div>
+        </div>
+      )}
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[9px] uppercase font-black tracking-[0.3em] opacity-30">
-        Yeai Security Layer - Access Control Protocol v4.3.0
+        Yeai Security Layer - Provider Access Control
       </div>
-    </div>);
-
+    </div>
+  );
 }

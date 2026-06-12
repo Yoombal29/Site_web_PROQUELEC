@@ -167,6 +167,25 @@ async function deleteQuickLink(id) {
 async function listAssets(category) {
   return repo.findAllAssets(category);
 }
+async function listEcommerceCatalog() {
+  const assets = await repo.findMonetizedAssets();
+  return assets.map((asset) => ({
+    id: `asset:${asset.id}`,
+    assetId: asset.id,
+    name: asset.title || 'Document',
+    price: Number(asset.price_fcfy || 0),
+    description: [asset.description, asset.asset_type, asset.file_size ? String(asset.file_size) : '']
+      .map((part) => String(part || '').trim())
+      .filter(Boolean)
+      .join(' • ') || undefined,
+    image: asset.preview_url || undefined,
+    category: asset.category || 'Documents',
+    inStock: true,
+    featured: Boolean(asset.is_premium),
+    source: 'document',
+    downloadUrl: asset.file_url || undefined,
+  }));
+}
 async function createAsset(data) {
   return repo.createAsset(data);
 }
@@ -368,6 +387,7 @@ module.exports = {
   updateQuickLink,
   deleteQuickLink,
   listAssets,
+  listEcommerceCatalog,
   createAsset,
   updateAsset,
   deleteAsset,

@@ -22,8 +22,37 @@ const pool = new Pool({
   password: process.env.DB_PASS,
 });
 
+router.get('/payment-settings', async (_req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM public.site_settings WHERE key LIKE $1',
+      ['payment_%'],
+    );
+
+    const settings = {};
+    result.rows.forEach((row) => {
+      try {
+        settings[row.key] = JSON.parse(row.value);
+      } catch {
+        settings[row.key] = row.value;
+      }
+    });
+
+    res.json({
+      providers: settings.payment_providers || {},
+      default_provider: settings.payment_default_provider || 'paydunya',
+    });
+  } catch (err) {
+    console.error('[PAYMENT] Public settings error:', err.message);
+    res.json({
+      providers: {},
+      default_provider: 'paydunya',
+    });
+  }
+});
+
 // ── Créer un paiement pour un abonnement ──
-router.post('/api/payments/create', authenticateToken, async (req, res) => {
+router.post('/payments/create', authenticateToken, async (req, res) => {
   try {
     const { planId, userId, email, name, phone } = req.body;
     if (!planId || !userId) return res.status(400).json({ error: 'Plan et utilisateur requis' });
@@ -69,7 +98,7 @@ router.post('/api/payments/create', authenticateToken, async (req, res) => {
 });
 
 // ── Webhook PayDunya (appelé après paiement) ──
-router.post('/api/payments/webhook', async (req, res) => {
+router.post('/payments/webhook', async (req, res) => {
   try {
     const { token, status, custom_data } = req.body;
     console.log('[WEBHOOK] PayDunya notification:', { token, status, custom_data });
@@ -105,7 +134,7 @@ router.post('/api/payments/webhook', async (req, res) => {
 });
 
 // ── Vérifier le statut d'un paiement ──
-router.get('/api/payments/status/:token', authenticateToken, async (req, res) => {
+router.get('/payments/status/:token', authenticateToken, async (req, res) => {
   try {
     const result = await confirmPaydunyaPayment(req.params.token);
     res.json(result || { status: 'unknown' });
@@ -114,4 +143,4 @@ router.get('/api/payments/status/:token', authenticateToken, async (req, res) =>
   }
 });
 
-module.exports = router;
+module.exports = { router, basePath: '/api' };

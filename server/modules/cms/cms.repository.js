@@ -197,6 +197,16 @@ async function findAllAssets(category) {
   return result.rows;
 }
 
+async function findMonetizedAssets() {
+  const result = await pool.query(
+    `SELECT * FROM public.site_assets
+     WHERE monetization_active = true
+       AND file_url IS NOT NULL
+     ORDER BY updated_at DESC, created_at DESC`,
+  );
+  return result.rows;
+}
+
 async function createAsset(data) {
   const {
     title,
@@ -747,6 +757,7 @@ module.exports = {
   updateQuickLink,
   deleteQuickLink,
   findAllAssets,
+  findMonetizedAssets,
   createAsset,
   updateAsset,
   deleteAsset,

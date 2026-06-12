@@ -25,6 +25,9 @@ import {
   ShieldCheck,
   Search,
   Database,
+  Brain,
+  Home,
+  Calendar,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
@@ -285,8 +288,11 @@ export default function AIProvidersPage() {
     try {
       await fetch('/api/ai/config', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorage.getItem('token') },
-        body: JSON.stringify({ configs })
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+        body: JSON.stringify({ configs }),
       });
       addLog('Configuration sauvegardee sur le serveur', 'success');
     } catch (err) {
@@ -295,7 +301,10 @@ export default function AIProvidersPage() {
   };
 
   const unlockKeys = () => {
-    if (password === expertPass && securityAnswer.toLowerCase() === expectedSecurityAnswer.toLowerCase()) {
+    if (
+      password === expertPass &&
+      securityAnswer.toLowerCase() === expectedSecurityAnswer.toLowerCase()
+    ) {
       setIsUnlocked(true);
       toast({ title: 'Acces ROOT autorise' });
       addLog('Authentification ROOT réussie', 'success');
@@ -304,7 +313,7 @@ export default function AIProvidersPage() {
       addLog("Échec d'authentification ROOT", 'err');
     } else {
       toast({ title: 'Réponse de vérification incorrecte', variant: 'destructive' });
-      addLog("Échec de la vérification", 'err');
+      addLog('Échec de la vérification', 'err');
     }
   };
 
@@ -406,6 +415,8 @@ export default function AIProvidersPage() {
       if (result.success) {
         syncToStorage(next);
         addLog(`Liaison établie avec ${pId} (${result.latency}ms)`, 'success');
+        // Vider tempKeys pour que l'input affiche la clé depuis p.key
+        setTempKeys((s) => ({ ...s, [pId]: '' }));
       } else {
         addLog(`Échec de liaison avec ${pId}`, 'err');
       }
@@ -1067,6 +1078,34 @@ export default function AIProvidersPage() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Navigation links */}
+      <div className="flex flex-wrap items-center gap-3 p-4 bg-slate-900/60 border border-slate-800 rounded-2xl backdrop-blur-sm">
+        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mr-2">
+          Navigation
+        </span>
+        <a
+          href="/admin?tab=ai"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 hover:text-white transition-colors"
+        >
+          <Brain className="w-3.5 h-3.5 text-cyan-400" />
+          IA Central
+        </a>
+        <a
+          href="/admin"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 hover:text-white transition-colors"
+        >
+          <Home className="w-3.5 h-3.5 text-blue-400" />
+          Dashboard Admin
+        </a>
+        <a
+          href="/events"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 hover:text-white transition-colors"
+        >
+          <Calendar className="w-3.5 h-3.5 text-green-400" />
+          Calendrier public
+        </a>
+      </div>
     </div>
   );
 }
@@ -1174,8 +1213,18 @@ function ProviderCard({
             <div className="relative group/input">
               <Input
                 type={showKeys[p.id] || !p.isCommitted ? 'text' : 'password'}
-                value={tempKeys[p.id] || ''}
-                placeholder="Clé API Satellite..."
+                value={
+                  p.isCommitted && p.connectionStatus === 'connected' && !tempKeys[p.id]
+                    ? p.key || ''
+                    : tempKeys[p.id] || ''
+                }
+                placeholder={
+                  p.isCommitted
+                    ? p.connectionStatus === 'connected'
+                      ? '🔐 Clé enregistrée'
+                      : 'Clé API Satellite...'
+                    : 'Clé API Satellite...'
+                }
                 onChange={(e) => setTempKeys((s: unknown) => ({ ...s, [p.id]: e.target.value }))}
                 className="bg-slate-950/40 border-slate-800 h-14 pl-4 pr-24 rounded-2xl text-xs font-mono"
                 disabled={(p.isCommitted && p.connectionStatus === 'connected') || !isUnlocked}

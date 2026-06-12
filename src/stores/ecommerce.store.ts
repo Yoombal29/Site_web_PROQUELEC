@@ -1,6 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { apiFetch } from '@/lib/api-client';
+import {
+  buildDocumentCommerceCatalog,
+  mergeDocumentCommerceCatalog,
+  normalizePaymentGateway,
+  type CommerceAssetLike,
+  type CommerceProductLike,
+} from '@/lib/commerce-sync';
 
 export interface ProductVariant {
   name: string;
@@ -24,6 +31,9 @@ export interface Product {
   featured?: boolean;
   variants?: ProductVariant[];
   variantLabels?: string[];
+  source?: 'manual' | 'document';
+  assetId?: string;
+  downloadUrl?: string;
 }
 
 export interface CartItem {
@@ -48,6 +58,7 @@ export interface Order {
   paymentStatus?: 'pending' | 'paid' | 'failed' | 'cancelled';
   paymentToken?: string;
   paymentProvider?: string;
+  paymentGateway?: string;
   createdAt: string;
 }
 
@@ -61,6 +72,7 @@ interface EcommerceState {
   shippingCost: number;
   taxRate: number;
   paymentProvider: PaymentProvider;
+  paymentGateway: string;
   paydunyaMasterKey: string;
   paydunyaPrivateKey: string;
   paydunyaToken: string;
@@ -70,13 +82,30 @@ interface EcommerceState {
   checkoutError: string | null;
 
   setProducts: (products: Product[]) => void;
+  syncDocumentCatalog: (assets: CommerceAssetLike[]) => void;
   addToCart: (product: Product, quantity?: number, variantKey?: string) => void;
   removeFromCart: (productId: string, variantKey?: string) => void;
   updateQuantity: (productId: string, quantity: number, variantKey?: string) => void;
   clearCart: () => void;
   checkout: (customer: Order['customer']) => Promise<string | null>;
   updateOrderStatus: (orderId: string, status: Order['status']) => void;
-  updatePaymentSettings: (settings: Partial<Pick<EcommerceState, 'paymentProvider' | 'paydunyaMasterKey' | 'paydunyaPrivateKey' | 'paydunyaToken' | 'paydunyaSandbox' | 'currency' | 'shippingCost' | 'taxRate'>>) => void;
+  updatePaymentSettings: (
+    settings: Partial<
+      Pick<
+        EcommerceState,
+        | 'paymentProvider'
+        | 'paymentGateway'
+        | 'paydunyaMasterKey'
+        | 'paydunyaPrivateKey'
+        | 'paydunyaToken'
+        | 'paydunyaSandbox'
+        | 'currency'
+        | 'shippingCost'
+        | 'taxRate'
+      >
+    >,
+  ) => void;
+  bootstrapCommerce: () => Promise<void>;
   resetCheckoutState: () => void;
   getCartCount: () => number;
   getCartTotal: () => number;
@@ -97,6 +126,7 @@ export const useEcommerceStore = create<EcommerceState>()(
       shippingCost: 0,
       taxRate: 0,
       paymentProvider: 'paydunya',
+      paymentGateway: 'paydunya',
       paydunyaMasterKey: '',
       paydunyaPrivateKey: '',
       paydunyaToken: '',
@@ -106,6 +136,13 @@ export const useEcommerceStore = create<EcommerceState>()(
       checkoutError: null,
 
       setProducts: (products) => set({ products }),
+
+      syncDocumentCatalog: (assets) => set((state) => ({
+        products: mergeDocumentCommerceCatalog(
+          state.products,
+          buildDocumentCommerceCatalog(assets),
+        ) as Product[],
+      })),
 
       addToCart: (product, quantity = 1, variantKey) => set((state) => {
         const key = cartItemKey(product.id, variantKey);
@@ -161,6 +198,7 @@ export const useEcommerceStore = create<EcommerceState>()(
           status: 'pending',
           paymentStatus: 'pending',
           paymentProvider: state.paymentProvider,
+          paymentGateway: state.paymentGateway,
           createdAt: new Date().toISOString(),
         };
 
@@ -231,6 +269,38 @@ export const useEcommerceStore = create<EcommerceState>()(
         ...settings,
       })),
 
+      bootstrapCommerce: async () => {
+        try {
+          const [catalogResponse, paymentResponse] = await Promise.allSettled([
+            apiFetch<{ products?: CommerceProductLike[] }>('/api/ecommerce/catalog'),
+            apiFetch<{ providers?: Record<string, boolean>; default_provider?: string }>(
+              '/api/payment-settings',
+            ),
+          ]);
+
+          if (catalogResponse.status === 'fulfilled') {
+            const documentProducts = catalogResponse.value?.products || [];
+            set((state) => ({
+              products: mergeDocumentCommerceCatalog(
+                state.products,
+                documentProducts as Product[],
+              ) as Product[],
+            }));
+          }
+
+          if (paymentResponse.status === 'fulfilled') {
+            const gateway = normalizePaymentGateway(paymentResponse.value?.default_provider);
+            set((state) => ({
+              ...state,
+              paymentGateway: String(paymentResponse.value?.default_provider || 'paydunya'),
+              paymentProvider: gateway as PaymentProvider,
+            }));
+          }
+        } catch (err) {
+          console.warn('[ECOMMERCE] Bootstrap sync failed:', err);
+        }
+      },
+
       resetCheckoutState: () => set({ checkoutLoading: false, checkoutUrl: null, checkoutError: null }),
 
       getCartCount: () => get().cart.reduce((sum, item) => sum + item.quantity, 0),
@@ -247,6 +317,7 @@ export const useEcommerceStore = create<EcommerceState>()(
         cart: state.cart, products: state.products, orders: state.orders,
         currency: state.currency, shippingCost: state.shippingCost, taxRate: state.taxRate,
         paymentProvider: state.paymentProvider,
+        paymentGateway: state.paymentGateway,
         paydunyaMasterKey: state.paydunyaMasterKey, paydunyaPrivateKey: state.paydunyaPrivateKey,
         paydunyaToken: state.paydunyaToken, paydunyaSandbox: state.paydunyaSandbox,
       }),

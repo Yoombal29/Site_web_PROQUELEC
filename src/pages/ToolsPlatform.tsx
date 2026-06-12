@@ -15,7 +15,6 @@ import {
   Globe,
   Search,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -30,7 +29,6 @@ import QuoteGenerator from '@/components/tools/QuoteGenerator';
 import LabelRequestForm from '@/components/tools/LabelRequestForm';
 import GroundingGuide from '@/components/tools/GroundingGuide';
 import NormativeDatabase from '@/components/tools/NormativeDatabase';
-import DocumentsLibrary from '@/components/tools/DocumentsLibrary';
 import FAQNormes from '@/components/tools/FAQNormes';
 import GlossaireElectrique from '@/components/tools/GlossaireElectrique';
 import PremiumPaywall from '@/components/tools/PremiumPaywall';
@@ -41,6 +39,7 @@ import EarthResistanceChecker from '@/components/tools/EarthResistanceChecker';
 import ElectricalUnitConverter from '@/components/tools/ElectricalUnitConverter';
 import LightingCalculator from '@/components/tools/LightingCalculator';
 import OperationalToolSuite, { hasOperationalTool } from '@/components/tools/OperationalToolSuite';
+import SauvegardeToolsExperience from '@/components/tools/SauvegardeToolsExperience';
 import {
   freeApps,
   premiumApps,
@@ -235,7 +234,7 @@ export default function ToolsPlatform() {
         setActiveTool('label-qualite');
         break;
       case 'bibliotheque-documents':
-        setActiveTool('bibliotheque-documents');
+        navigate('/documents');
         break;
       case 'guide-terre-differentiel':
         setActiveTool('guide-terre-differentiel');
@@ -287,7 +286,7 @@ export default function ToolsPlatform() {
   };
 
   return (
-    <div className="min-h-screen bg-[#071914] text-slate-100 selection:bg-emerald-500/30">
+    <div className="min-h-screen bg-[#111827] text-slate-100 selection:bg-blue-500/30">
       <SEO
         title={heroData?.seo_title || "Plateforme d'Ingénierie Électrotechnique - PROQUELEC"}
         description={
@@ -299,50 +298,19 @@ export default function ToolsPlatform() {
       <Header />
 
       <main className="pt-20 md:pt-24">
-        {/* HERO SECTION TYPE YOOMBAL */}
-        <section className="relative overflow-hidden pt-8 pb-12 md:pt-16 md:pb-24 border-b border-emerald-900/50">
-          <div className="absolute top-0 right-0 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-emerald-600/10 blur-[100px] md:blur-[150px] -mr-48 md:-mr-96 -mt-48 md:-mt-96 rounded-full pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-blue-600/5 blur-[80px] md:blur-[120px] -ml-24 md:-ml-48 -mb-24 md:-mb-48 rounded-full pointer-events-none" />
-
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="max-w-4xl">
-              <Badge className="mb-4 md:mb-6 bg-emerald-500/10 text-emerald-400 border-emerald-500/20 px-3 md:px-4 py-1 md:py-1.5 rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.15em] md:tracking-[0.2em]">
-                {heroData?.features?.[0] || `${visibleToolCount} Applications • Ingénierie Souveraine`}
+        <section className="relative overflow-hidden border-b border-white/10 bg-[#111827] py-8 md:py-12">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-4xl text-center">
+              <Badge className="mb-4 border-blue-500/30 bg-blue-600/15 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-blue-200">
+                {heroData?.features?.[0] || `${visibleToolCount} outils PROQUELEC`}
               </Badge>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black mb-4 md:mb-8 leading-[1.1] md:leading-[1.05] tracking-tight">
-                {heroData?.title?.split('Outils')?.[0]}Outils <br className="hidden sm:block" />
-                <span className="text-emerald-400 italic">
-                  {heroData?.title?.split('Outils')?.[1]?.trim() || 'Électriques.'}
-                </span>
+              <h1 className="text-3xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">
+                {heroData?.title || 'Outils Techniques Avancés PROQUELEC'}
               </h1>
-              <p className="text-base md:text-xl text-slate-400 max-w-2xl leading-relaxed mb-6 md:mb-10 font-medium">
+              <p className="mx-auto mt-5 max-w-3xl text-base font-semibold leading-relaxed text-slate-300 md:text-xl">
                 {heroData?.subtitle ||
-                  'Accédez au Catalogue Complet PROQUELEC : outils gratuits, solutions premium et IA normative.'}
+                  "Découvrez nos outils professionnels pour optimiser vos installations électriques, réaliser des économies d'énergie et garantir la sécurité."}
               </p>
-
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-                <Button
-                  onClick={() => {
-                    setActiveCategory('free');
-                    setActiveGroup(null);
-                  }}
-                  className="h-12 md:h-14 px-6 md:px-10 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-xl md:rounded-2xl shadow-2xl shadow-emerald-500/20 transition-all active:scale-95 text-base md:text-lg w-full sm:w-auto"
-                >
-                  <Globe className="mr-2 h-4 w-4 md:h-5 md:w-5" />
-                  Outils Gratuits
-                </Button>
-                <Button
-                  onClick={() => {
-                    setActiveCategory('premium');
-                    setActiveGroup(null);
-                  }}
-                  variant="outline"
-                  className="h-12 md:h-14 px-6 md:px-10 border-amber-500/50 bg-amber-900/20 text-amber-400 hover:bg-amber-800/40 rounded-xl md:rounded-2xl font-bold text-base md:text-lg w-full sm:w-auto"
-                >
-                  <Crown className="mr-2 h-4 w-4 md:h-5 md:w-5" />
-                  Premium Pro
-                </Button>
-              </div>
             </div>
           </div>
         </section>
@@ -489,16 +457,6 @@ export default function ToolsPlatform() {
               </button>
               <LabelRequestForm />
             </div>
-          ) : activeTool === 'bibliotheque-documents' ? (
-            <div className="space-y-8">
-              <button
-                onClick={() => setActiveTool(null)}
-                className="flex items-center gap-2 text-emerald-500 font-black uppercase text-xs tracking-widest hover:text-white transition-colors"
-              >
-                <RotateCcw className="w-4 h-4" /> Retour au Hub
-              </button>
-              <DocumentsLibrary />
-            </div>
           ) : activeTool === 'guide-terre-differentiel' ? (
             <div className="space-y-8">
               <button
@@ -569,8 +527,13 @@ export default function ToolsPlatform() {
             </div>
           ) : (
             <>
+              <SauvegardeToolsExperience
+                onOpenTool={setActiveTool}
+                onOpenDocuments={() => navigate('/documents')}
+              />
+
               {/* Header avec onglets */}
-              <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-12">
+              <div className="mt-16 flex flex-col gap-4 md:gap-8 mb-8 md:mb-12">
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 md:gap-8">
                   <div className="max-w-xl">
                     <h2 className="text-2xl md:text-3xl font-black mb-2 md:mb-4">

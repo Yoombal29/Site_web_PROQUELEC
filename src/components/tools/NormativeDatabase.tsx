@@ -98,7 +98,7 @@ const NORMES_DATA: NormeEntry[] = [
     code: 'NS 01-001',
     detail: 'Installations Électriques BT - Règles',
     desc: 'Norme de référence pour toute installation électrique basse tension au Sénégal. Elle définit les exigences de sécurité, de dimensionnement, de pose et de conformité. Inspirée de la NF C 15-100 française.',
-    pdf: '',
+    pdf: 'https://proquelec.sn/documents/NS-01-001.pdf',
   },
   {
     type: 'Normes NF',
@@ -155,9 +155,51 @@ const REGLEMENTS_DATA: ReglementEntry[] = [
   {
     type: 'Loi',
     code: 'Loi n°2021-31',
-    detail: "Code de l'Électricité",
+    detail: "Code de l'Électricité du 09 juillet 2021",
     pdf: '',
-    desc: 'Réforme globale du cadre électrique sénégalais : production, distribution, transport, droits des clients, réglementation sectorielle.',
+    desc: "Unifie les procédures pour les concessions, licences et activités électriques réglementées, précise les rôles de la CRSE, introduit un cadre transparent pour les appels d'offres et couvre les activités électriques supérieures à 500 kW.",
+  },
+  {
+    type: 'Décret',
+    code: 'Décret n°2023-444',
+    detail: "Passation des titres d'exercice dans le secteur électrique",
+    pdf: '',
+    desc: "Fixe les procédures pour la passation des titres d'exercice dans le secteur électrique, détaille les mécanismes et principes de passation des marchés et la composition des commissions d'appel d'offres.",
+  },
+  {
+    type: 'Décret',
+    code: 'Décret n°98-333 du 21 avril 1998',
+    detail: "Organisation de la Commission de Régulation du Secteur de l'Électricité",
+    pdf: '',
+    desc: "Organise la Commission de Régulation du Secteur de l'Électricité, son fonctionnement et ses attributions.",
+  },
+  {
+    type: 'Loi',
+    code: 'Loi n°98-29 du 14 avril 1998',
+    detail: 'Cadre légal historique du secteur électrique',
+    pdf: '',
+    desc: "Cadre légal sur le monopole de SENELEC et les règles de production et distribution d'électricité au Sénégal.",
+  },
+  {
+    type: 'Décret',
+    code: 'Décret n°2017-1333 du 08 juin 2017',
+    detail: 'Contrôle de conformité des installations électriques intérieures',
+    pdf: '',
+    desc: 'Cadre le contrôle de conformité aux normes des installations électriques intérieures avant mise en service.',
+  },
+  {
+    type: 'Décret',
+    code: 'Décret n°2023-285',
+    detail: "Électrification rurale décentralisée",
+    pdf: '',
+    desc: "Fixe les modalités et caractéristiques des délégations pour les projets d'électrification rurale décentralisée.",
+  },
+  {
+    type: 'Arrêté',
+    code: 'Arrêté ministériel n°010158 du 28 mai 2020',
+    detail: 'Matériels ENR exonérés de TVA',
+    pdf: '',
+    desc: "Liste des matériels destinés à la production d'énergies renouvelables exonérés de TVA.",
   },
   {
     type: 'Loi',
@@ -330,6 +372,15 @@ export default function NormativeDatabase() {
       '',
       'Type | Usage | Norme',
       PROTECTION_DEVICES.map((d) => `${d.type} | ${d.usage} | ${d.norme}`).join('\n'),
+      '',
+      '--- PROCÉDURE COSSUEL ---',
+      '',
+      '1. Installation réalisée selon la NS 01 001',
+      '2. Demande de contrôle auprès du COSSUEL',
+      '3. Visite et vérification par un inspecteur',
+      "4. Délivrance de l'attestation de conformité",
+      '',
+      "Sans attestation COSSUEL, aucun branchement au réseau SENELEC n'est possible.",
     ].join('\n');
 
     const blob = new Blob([allData], { type: 'text/plain;charset=utf-8' });
@@ -364,7 +415,7 @@ export default function NormativeDatabase() {
 
       {/* ── Tabs ──────────────────────────────────────── */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="w-full grid grid-cols-3 bg-[#071914] border border-emerald-800/30 rounded-xl p-1">
+        <TabsList className="w-full grid grid-cols-2 md:grid-cols-4 bg-[#071914] border border-emerald-800/30 rounded-xl p-1">
           <TabsTrigger
             value="normes"
             className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white text-slate-400 rounded-lg"
@@ -385,6 +436,13 @@ export default function NormativeDatabase() {
           >
             <Shield className="mr-2 h-4 w-4" />
             Protection
+          </TabsTrigger>
+          <TabsTrigger
+            value="cossuel"
+            className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white text-slate-400 rounded-lg"
+          >
+            <FileText className="mr-2 h-4 w-4" />
+            COSSUEL
           </TabsTrigger>
         </TabsList>
 
@@ -481,9 +539,24 @@ export default function NormativeDatabase() {
                             )}
                           </div>
                         </button>
-                        {isExpanded && norme.desc && (
+                        {isExpanded && (
                           <div className="border-t border-emerald-800/20 px-3 pb-3 pt-2">
-                            <p className="text-xs leading-relaxed text-slate-400">{norme.desc}</p>
+                            {norme.desc && (
+                              <p className="text-xs leading-relaxed text-slate-400">
+                                {norme.desc}
+                              </p>
+                            )}
+                            {norme.pdf && (
+                              <a
+                                href={norme.pdf}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-3 inline-flex items-center rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white hover:bg-blue-500"
+                              >
+                                <Download className="mr-2 h-3.5 w-3.5" />
+                                Télécharger
+                              </a>
+                            )}
                           </div>
                         )}
                       </div>
@@ -601,9 +674,24 @@ export default function NormativeDatabase() {
                             )}
                           </div>
                         </button>
-                        {isExpanded && reg.desc && (
+                        {isExpanded && (
                           <div className="border-t border-emerald-800/20 px-3 pb-3 pt-2">
-                            <p className="text-xs leading-relaxed text-slate-400">{reg.desc}</p>
+                            {reg.desc && (
+                              <p className="text-xs leading-relaxed text-slate-400">
+                                {reg.desc}
+                              </p>
+                            )}
+                            {reg.pdf && (
+                              <a
+                                href={reg.pdf}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-3 inline-flex items-center rounded-lg bg-blue-600 px-3 py-2 text-xs font-bold text-white hover:bg-blue-500"
+                              >
+                                <Download className="mr-2 h-3.5 w-3.5" />
+                                Télécharger
+                              </a>
+                            )}
                           </div>
                         )}
                       </div>
@@ -743,6 +831,71 @@ export default function NormativeDatabase() {
               terminaux des bâtiments résidentiels (prises, éclairage, cuisine, salle de bains).
             </p>
           </div>
+        </TabsContent>
+
+        {/* ═══════════════════════════════════════════════
+            TAB 4 — Procédure COSSUEL
+        ════════════════════════════════════════════════ */}
+        <TabsContent value="cossuel" className="space-y-6 pt-6">
+          <Card className="border-blue-200 bg-white text-slate-950">
+            <CardHeader className="flex flex-row items-center gap-3 border-b border-blue-100 pb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 text-white">
+                <FileText className="h-5 w-5" />
+              </div>
+              <div>
+                <CardTitle className="text-lg text-blue-900">
+                  Contrôle obligatoire par le COSSUEL
+                </CardTitle>
+                <p className="text-xs text-slate-500">
+                  Procédure reprise de la sauvegarde pour garder la règle métier visible.
+                </p>
+              </div>
+            </CardHeader>
+            <CardContent className="grid gap-6 pt-5 md:grid-cols-[1.2fr_0.8fr]">
+              <div className="rounded-2xl bg-blue-50 p-5">
+                <h4 className="mb-4 text-base font-black text-blue-900">
+                  Procédure de conformité
+                </h4>
+                <ol className="space-y-3 text-sm font-medium text-slate-700">
+                  <li className="flex gap-3">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-black text-white">
+                      1
+                    </span>
+                    Installation réalisée selon la NS 01 001.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-black text-white">
+                      2
+                    </span>
+                    Demande de contrôle auprès du COSSUEL.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-black text-white">
+                      3
+                    </span>
+                    Visite et vérification par un inspecteur.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-black text-white">
+                      4
+                    </span>
+                    Délivrance de l'attestation de conformité.
+                  </li>
+                </ol>
+                <p className="mt-5 rounded-xl bg-white p-4 text-sm font-black text-blue-800">
+                  Sans attestation COSSUEL, aucun branchement au réseau SENELEC n'est possible.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-yellow-200 bg-yellow-50 p-5">
+                <h4 className="mb-3 text-base font-black text-yellow-900">À retenir</h4>
+                <ul className="space-y-3 text-sm font-semibold text-yellow-800">
+                  <li>Respectez toujours la NS 01 001 pour la sécurité de tous.</li>
+                  <li>Faites appel à un professionnel certifié et assuré.</li>
+                  <li>Demandez systématiquement le contrôle COSSUEL avant toute mise sous tension.</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
 

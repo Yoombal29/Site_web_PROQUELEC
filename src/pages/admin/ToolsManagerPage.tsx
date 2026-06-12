@@ -36,6 +36,7 @@ import {
   type AppCategory,
   type AppStatus,
 } from '@/data/applications-catalog';
+import AdminCommerceHubPanel from '@/components/admin/AdminCommerceHubPanel';
 
 // ---------------------------------------------------------------------------
 // Types & constants
@@ -519,6 +520,17 @@ export default function ToolsManagerPage() {
           )}
         </AlertDescription>
       </Alert>
+
+      <div className="space-y-4">
+        <div className="space-y-1">
+          <h2 className="text-xl font-bold tracking-tight">Boutique document centralisée</h2>
+          <p className="text-sm text-muted-foreground">
+            Les documents monétisés, les réglages de paiement et la boutique partagent la même
+            source de vérité.
+          </p>
+        </div>
+        <AdminCommerceHubPanel />
+      </div>
     </div>
   );
 }

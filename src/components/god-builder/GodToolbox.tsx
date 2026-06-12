@@ -144,6 +144,7 @@ import {
   TargetAudienceTabsBlock,
   OrganizationStructureBlock,
   ReferenceStatsBlock,
+  ProquelecSubdomainsBlock,
 } from '../blocks/ProquelecBlocksExtra';
 import { FunctionalPageBlock, getFunctionalPageToolboxItems } from '../blocks/FunctionalPageBlock';
 import { HeaderBuilderBlock, FooterBuilderBlock } from '../blocks/HeaderFooterBlocks';
@@ -792,6 +793,13 @@ const BLOCK_GROUPS = [
         color: 'text-rose-400',
         tags: ['stats', 'references', 'impact', 'chiffres'],
         factory: () => <ReferenceStatsBlock />,
+      },
+      {
+        icon: ShieldCheck,
+        label: 'Annuaire Sous-Domaines',
+        color: 'text-blue-400',
+        tags: ['subdomains', 'domaines', 'annuaire', 'liens', 'academie', 'ged', 'cossuel'],
+        factory: () => <ProquelecSubdomainsBlock />,
       },
     ],
   },

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ProquelecBlocksPlus.tsx
  * Extension premium : 60+ nouveaux blocs pour atteindre ~85 blocs au total.
  */
@@ -17,6 +17,8 @@ import {
 } from './ProquelecBlocks';
 import { AutoSettingsPanel } from './AutoSettingsPanel';
 import { toast } from 'sonner';
+import { Phone, Mail, MapPin, Clock, Sparkles, Check, ArrowRight, ShieldCheck, Zap, User, Star, Send } from 'lucide-react';
+
 
 type SettingsInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   value?: string | number;
@@ -5816,369 +5818,244 @@ export const ContactPremiumBlock = (props: any) => {
       ref={(r: any) => {
         if (r) connect(drag(r));
       }}
+      className={`proquelec-builder-node py-24 bg-gradient-to-b from-slate-50 to-white border-y border-slate-100 font-sans ${u.className || ''}`}
       style={{
-        background: `linear-gradient(180deg, ${backgroundColor} 0%, #ffffff 100%)`,
-        borderRadius: 0,
-        padding: '58px 42px',
-        borderTop: '1px solid #e5edf7',
-        borderBottom: '1px solid #e5edf7',
         ...u.style,
       }}
-      className={'proquelec-builder-node ' + u.className}
     >
       {submitted ? (
-        <div
-          style={{
-            margin: '0 auto',
-            maxWidth: 560,
-            textAlign: 'center',
-            padding: 44,
-            background: '#ffffff',
-            border: '1px solid #dbe6f3',
-            borderRadius: 24,
-            boxShadow: '0 24px 70px rgba(15, 23, 42, 0.08)',
-          }}
-        >
-          <div
-            style={{
-              width: 58,
-              height: 58,
-              margin: '0 auto 18px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 999,
-              background: '#dcfce7',
-              color: '#047857',
-              fontSize: 28,
-              fontWeight: 900,
-            }}
-          >
-            ✓
+        <div className="max-w-xl mx-auto text-center px-8 py-16 bg-white border border-slate-100 rounded-[2rem] shadow-2xl space-y-6 animate-in fade-in slide-in-from-bottom-6 duration-500">
+          <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner animate-bounce">
+            <Check className="w-10 h-10 stroke-[3]" />
           </div>
-          <h3 style={{ color: '#0f172a', fontSize: 26, fontWeight: 900, margin: '0 0 8px' }}>
+          <h3 className="text-3xl font-black text-slate-900 uppercase tracking-tight">
             Message envoyé !
           </h3>
-          <p style={{ color: '#64748b', lineHeight: 1.7 }}>Merci, nous vous répondrons sous 24h ouvrées.</p>
+          <p className="text-slate-500 leading-relaxed text-sm max-w-md mx-auto">
+            Merci pour votre demande. Nos experts et inspecteurs qualifiés traiteront votre message sous 24 heures ouvrées.
+          </p>
           <button
             type="button"
             onClick={handleReset}
-            style={{
-              marginTop: 18,
-              background: `linear-gradient(135deg, ${accentColor}, #1d4ed8)`,
-              color: '#ffffff',
-              border: 'none',
-              padding: '12px 22px',
-              borderRadius: 14,
-              fontWeight: 900,
-              cursor: 'pointer',
-              boxShadow: '0 16px 36px rgba(37, 99, 235, 0.18)',
-            }}
+            className="inline-flex items-center justify-center px-10 py-5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-blue-500/10 hover:shadow-blue-500/20 transition-all hover:scale-102"
           >
             Envoyer un autre message
           </button>
         </div>
       ) : (
-        <>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit,minmax(340px,1fr))',
-              gap: 32,
-              alignItems: 'start',
-              maxWidth: 1480,
-              margin: '0 auto',
-            }}
-          >
-            <div>
-              <p
-                style={{
-                  margin: '0 0 8px',
-                  color: accentColor,
-                  fontSize: 12,
-                  fontWeight: 900,
-                  letterSpacing: 1.8,
-                  textTransform: 'uppercase',
-                }}
-              >
-                Contact
-              </p>
-              <h3
-                style={{
-                  margin: 0,
-                  color: '#0f172a',
-                  fontSize: 42,
-                  lineHeight: 1.06,
-                  fontWeight: 900,
-                  letterSpacing: '-0.02em',
-                }}
-              >
-                {contactDisplayText(title)}
-              </h3>
-              <p style={{ margin: '16px 0 28px', color: '#64748b', fontSize: 17, lineHeight: 1.75, maxWidth: 680 }}>
-                {contactDisplayText(subtitle)}
-              </p>
-              <div style={{ display: 'grid', gap: 12, marginBottom: 22 }}>
-                {[
-                  { label: 'T\u00E9l\u00E9phone', value: phone, href: toContactPhoneHref(phone) },
-                  { label: 'Email', value: email, href: 'mailto:' + email },
-                  { label: 'Adresse', value: address },
-                  { label: 'Horaires', value: hours },
-                ].map((item: any, index: number) => (
-                  <div
-                    key={index}
-                    style={{
-                      background: '#ffffff',
-                      borderRadius: 18,
-                      padding: '16px 18px',
-                      border: '1px solid #dbe6f3',
-                      boxShadow: '0 12px 38px rgba(15, 23, 42, 0.04)',
-                    }}
-                  >
-                    <p
-                      style={{
-                        margin: '0 0 4px',
-                        color: '#94a3b8',
-                        fontSize: 11,
-                        fontWeight: 900,
-                        letterSpacing: 0.8,
-                        textTransform: 'uppercase',
-                      }}
-                    >
-                      {contactDisplayText(item.label)}
-                    </p>
-                    {item.href ? (
-                      <a
-                        href={item.href}
-                        style={{ color: accentColor, fontWeight: 850, textDecoration: 'none' }}
-                      >
-                        {contactDisplayText(item.value)}
-                      </a>
-                    ) : (
-                      <p style={{ margin: 0, color: '#0f172a', fontWeight: 800 }}>
-                        {contactDisplayText(item.value)}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <p style={{ color: accentColor, fontSize: 13, fontWeight: 900, margin: 0 }}>
-                {contactDisplayText(responseTime)}
-              </p>
-            </div>
-            <form
-              onSubmit={handleSubmit}
-              style={{
-                background: '#ffffff',
-                border: '1px solid #dbe6f3',
-                borderRadius: 26,
-                padding: 30,
-                boxShadow: '0 30px 90px rgba(15,23,42,0.10)',
-              }}
-            >
-              <div style={{ marginBottom: 22 }}>
-                <p
-                  style={{
-                    margin: '0 0 7px',
-                    color: accentColor,
-                    fontSize: 12,
-                    fontWeight: 900,
-                    letterSpacing: 1.4,
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  {'Formulaire s\u00E9curis\u00E9'}
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+            
+            {/* Colonne Gauche - Informations */}
+            <div className="lg:col-span-5 space-y-10">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-wider">
+                  <Sparkles className="w-3 h-3 text-blue-500" /> Service de mise en relation
+                </div>
+                <h3 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-none uppercase">
+                  {contactDisplayText(title)}
+                </h3>
+                <p className="text-lg text-slate-500 font-medium leading-relaxed">
+                  {contactDisplayText(subtitle)}
                 </p>
-                <h4 style={{ margin: 0, color: '#0f172a', fontSize: 24, fontWeight: 900 }}>
-                  Qualifier votre demande
-                </h4>
               </div>
-              <div style={{ display: 'grid', gap: 14 }}>
-                {contactFields.map(({ field, index, meta }: ContactFieldConfig) => {
-                  const fieldId = contactInputId(field, index);
-                  const errorId = `${fieldId}-error`;
-                  const fieldError = fieldErrors[field];
-                  const borderColor = fieldError ? '#dc2626' : '#e2e8f0';
-                  const cleanLabel = contactFieldLabel(field, meta);
-                  const labelText = meta.required ? cleanLabel : `${cleanLabel} (optionnel)`;
 
+              {/* Grille d'Informations */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                {[
+                  { label: 'Téléphone', value: phone, href: toContactPhoneHref(phone), icon: Phone, colorClass: 'bg-blue-50 text-blue-600 group-hover:bg-blue-600' },
+                  { label: 'Email', value: email, href: 'mailto:' + email, icon: Mail, colorClass: 'bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600' },
+                  { label: 'Adresse', value: address, icon: MapPin, colorClass: 'bg-amber-50 text-amber-600 group-hover:bg-amber-600' },
+                  { label: 'Horaires', value: hours, icon: Clock, colorClass: 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600' },
+                ].map((item: any, index: number) => {
+                  const IconComponent = item.icon;
                   return (
-                    <div key={fieldId} style={{ display: 'grid', gap: 7 }}>
-                      <label
-                        htmlFor={fieldId}
-                        style={{
-                          color: '#334155',
-                          fontSize: 12,
-                          fontWeight: 900,
-                          letterSpacing: 0.2,
-                        }}
-                      >
-                        {contactDisplayText(labelText)}
-                      </label>
-                      {meta.isSubject ? (
-                        <select
-                          id={fieldId}
-                          aria-invalid={fieldError ? 'true' : 'false'}
-                          aria-describedby={fieldError ? errorId : undefined}
-                          title={field}
-                          value={formData[field] || defaultSubject}
-                          onChange={(e) => handleChange(field, e.target.value)}
-                          style={{
-                            width: '100%',
-                            border: `1px solid ${borderColor}`,
-                            borderRadius: 14,
-                            padding: '13px 14px',
-                            minHeight: 52,
-                            fontSize: 14,
-                            color: '#0f172a',
-                            background: '#ffffff',
-                            outline: 'none',
-                            boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)',
-                          }}
-                        >
-                          {(subjectOptions || []).map((opt: string, i: number) => (
-                            <option key={i} value={opt}>{contactDisplayText(opt)}</option>
-                          ))}
-                        </select>
-                      ) : (
-                        <input
-                          id={fieldId}
-                          type={meta.type}
-                          autoComplete={meta.autoComplete}
-                          aria-invalid={fieldError ? 'true' : 'false'}
-                          aria-describedby={fieldError ? errorId : undefined}
-                          placeholder={contactFieldPlaceholder(field, meta)}
-                          value={formData[field] || ''}
-                          onChange={(e) => handleChange(field, e.target.value)}
-                          required={meta.required}
-                          style={{
-                            width: '100%',
-                            border: `1px solid ${borderColor}`,
-                            borderRadius: 14,
-                            padding: '13px 14px',
-                            minHeight: 52,
-                            fontSize: 14,
-                            color: '#0f172a',
-                            background: '#ffffff',
-                            outline: 'none',
-                            boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)',
-                          }}
-                        />
-                      )}
-                      {fieldError && (
-                        <p id={errorId} style={{ color: '#dc2626', fontSize: 12, margin: 0 }}>
-                          {fieldError}
+                    <div
+                      key={index}
+                      className="bg-white border border-slate-100 hover:border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col items-start gap-4"
+                    >
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:text-white ${item.colorClass}`}>
+                        <IconComponent className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 mb-1">
+                          {contactDisplayText(item.label)}
                         </p>
-                      )}
+                        {item.href ? (
+                          <a
+                            href={item.href}
+                            className="font-bold text-slate-800 hover:text-blue-600 transition-colors text-sm break-all leading-normal"
+                          >
+                            {contactDisplayText(item.value)}
+                          </a>
+                        ) : (
+                          <p className="font-bold text-slate-800 text-sm leading-normal">
+                            {contactDisplayText(item.value)}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
-                <div style={{ display: 'grid', gap: 7 }}>
-                  <label
-                    htmlFor="contact-premium-message"
-                    style={{ color: '#334155', fontSize: 12, fontWeight: 900, letterSpacing: 0.2 }}
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="contact-premium-message"
-                    aria-invalid={fieldErrors[CONTACT_FIELD_NAMES.message] ? 'true' : 'false'}
-                    aria-describedby={fieldErrors[CONTACT_FIELD_NAMES.message] ? 'contact-premium-message-error' : undefined}
-                    placeholder="Message"
-                    rows={4}
-                    value={formData[CONTACT_FIELD_NAMES.message] || ''}
-                    onChange={(e) => handleChange(CONTACT_FIELD_NAMES.message, e.target.value)}
-                    required
-                    style={{
-                      width: '100%',
-                      border: `1px solid ${fieldErrors[CONTACT_FIELD_NAMES.message] ? '#dc2626' : '#e2e8f0'}`,
-                      borderRadius: 14,
-                      padding: '13px 14px',
-                      minHeight: 138,
-                      fontSize: 14,
-                      color: '#0f172a',
-                      background: '#ffffff',
-                      outline: 'none',
-                      resize: 'vertical',
-                      boxShadow: '0 1px 2px rgba(15, 23, 42, 0.04)',
-                    }}
-                  />
-                  {fieldErrors[CONTACT_FIELD_NAMES.message] && (
-                    <p id="contact-premium-message-error" style={{ color: '#dc2626', fontSize: 12, margin: 0 }}>
-                      {fieldErrors[CONTACT_FIELD_NAMES.message]}
+              </div>
+
+              {/* Temps de réponse */}
+              <div className="flex items-center gap-3 bg-emerald-50 text-emerald-800 p-5 rounded-2xl border border-emerald-100/30">
+                <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                  <Clock className="w-4 h-4" />
+                </div>
+                <p className="text-xs font-black uppercase tracking-wide">
+                  {contactDisplayText(responseTime)}
+                </p>
+              </div>
+            </div>
+
+            {/* Colonne Droite - Formulaire */}
+            <div className="lg:col-span-7 relative">
+              <div className="absolute -inset-2 bg-blue-600 rounded-[2rem] rotate-1 opacity-5 blur-sm"></div>
+              <form
+                onSubmit={handleSubmit}
+                className="relative bg-white border border-slate-100 shadow-2xl rounded-3xl overflow-hidden"
+              >
+                {/* Form Header */}
+                <div className="bg-slate-900 p-8 text-white relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-blue-400 mb-1">
+                    Formulaire sécurisé
+                  </p>
+                  <h4 className="text-2xl font-black uppercase tracking-tight">
+                    Envoyer une demande
+                  </h4>
+                </div>
+
+                <div className="p-8 md:p-10 space-y-6">
+                  {contactFields.map(({ field, index, meta }: ContactFieldConfig) => {
+                    const fieldId = contactInputId(field, index);
+                    const errorId = `${fieldId}-error`;
+                    const fieldError = fieldErrors[field];
+                    const cleanLabel = contactFieldLabel(field, meta);
+                    const labelText = meta.required ? cleanLabel : `${cleanLabel} (optionnel)`;
+
+                    return (
+                      <div key={fieldId} className="space-y-1.5">
+                        <label
+                          htmlFor={fieldId}
+                          className="text-[11px] font-black text-slate-500 uppercase tracking-wider block"
+                        >
+                          {contactDisplayText(labelText)}
+                        </label>
+                        {meta.isSubject ? (
+                          <div className="relative">
+                            <select
+                              id={fieldId}
+                              aria-invalid={fieldError ? 'true' : 'false'}
+                              aria-describedby={fieldError ? errorId : undefined}
+                              title={field}
+                              value={formData[field] || defaultSubject}
+                              onChange={(e) => handleChange(field, e.target.value)}
+                              className="w-full h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-slate-900 text-sm cursor-pointer appearance-none"
+                            >
+                              {(subjectOptions || []).map((opt: string, i: number) => (
+                                <option key={i} value={opt}>{contactDisplayText(opt)}</option>
+                              ))}
+                            </select>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                              </svg>
+                            </div>
+                          </div>
+                        ) : (
+                          <input
+                            id={fieldId}
+                            type={meta.type}
+                            autoComplete={meta.autoComplete}
+                            aria-invalid={fieldError ? 'true' : 'false'}
+                            aria-describedby={fieldError ? errorId : undefined}
+                            placeholder={contactFieldPlaceholder(field, meta)}
+                            value={formData[field] || ''}
+                            onChange={(e) => handleChange(field, e.target.value)}
+                            required={meta.required}
+                            className={`w-full h-12 px-4 bg-slate-50 border rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-slate-900 text-sm ${fieldError ? 'border-red-500' : 'border-slate-200'}`}
+                          />
+                        )}
+                        {fieldError && (
+                          <p id={errorId} className="text-red-600 text-xs font-bold mt-1">
+                            {fieldError}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
+
+                  {/* Champ Message */}
+                  <div className="space-y-1.5">
+                    <label
+                      htmlFor="contact-premium-message"
+                      className="text-[11px] font-black text-slate-500 uppercase tracking-wider block"
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="contact-premium-message"
+                      aria-invalid={fieldErrors[CONTACT_FIELD_NAMES.message] ? 'true' : 'false'}
+                      aria-describedby={fieldErrors[CONTACT_FIELD_NAMES.message] ? 'contact-premium-message-error' : undefined}
+                      placeholder="Décrivez votre projet ou votre demande d'intervention..."
+                      rows={4}
+                      value={formData[CONTACT_FIELD_NAMES.message] || ''}
+                      onChange={(e) => handleChange(CONTACT_FIELD_NAMES.message, e.target.value)}
+                      required
+                      className={`w-full min-h-[120px] p-4 bg-slate-50 border rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-slate-900 text-sm resize-none ${fieldErrors[CONTACT_FIELD_NAMES.message] ? 'border-red-500' : 'border-slate-200'}`}
+                    />
+                    {fieldErrors[CONTACT_FIELD_NAMES.message] && (
+                      <p id="contact-premium-message-error" className="text-red-600 text-xs font-bold mt-1">
+                        {fieldErrors[CONTACT_FIELD_NAMES.message]}
+                      </p>
+                    )}
+                  </div>
+
+                  {error && (
+                    <p className="text-red-600 text-xs font-bold bg-red-50 border border-red-100 p-3.5 rounded-xl">
+                      {error}
                     </p>
                   )}
+
+                  {/* Bouton de soumission */}
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full h-14 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-blue-600/10 hover:shadow-blue-600/20 transition-all flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-101 duration-300"
+                  >
+                    {submitting ? 'Envoi en cours...' : contactDisplayText(buttonText)}
+                    <Send className="w-4 h-4 text-blue-200" />
+                  </button>
                 </div>
-                {error && <p style={{ color: '#dc2626', fontSize: 12, margin: 0 }}>{error}</p>}
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    background: `linear-gradient(135deg, ${accentColor}, #1d4ed8)`,
-                    color: '#ffffff',
-                    cursor: 'pointer',
-                    border: 'none',
-                    padding: '15px 18px',
-                    borderRadius: 16,
-                    fontWeight: 900,
-                    fontSize: 15,
-                    opacity: submitting ? 0.7 : 1,
-                    boxShadow: '0 18px 42px rgba(37, 99, 235, 0.20)',
-                  }}
-                >
-                  {submitting ? 'Envoi en cours...' : contactDisplayText(buttonText)}
-                </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit,minmax(210px,1fr))',
-              gap: 16,
-              maxWidth: 1480,
-              margin: '28px auto 0',
-            }}
-          >
+
+          {/* Grille des services en bas */}
+          <div className="mt-20 pt-16 border-t border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-6">
             {(departments || []).map((item: any, index: number) => (
               <article
                 key={index}
-                style={{
-                  background: '#ffffff',
-                  border: '1px solid #dbe6f3',
-                  borderRadius: 20,
-                  padding: 20,
-                  boxShadow: '0 16px 46px rgba(15, 23, 42, 0.05)',
-                }}
+                className="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all flex items-start gap-4 hover:-translate-y-1 duration-300"
               >
-                <div
-                  style={{
-                    width: 38,
-                    height: 38,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 12,
-                    marginBottom: 12,
-                    background: '#eff6ff',
-                    color: accentColor,
-                    fontSize: 20,
-                  }}
-                >
+                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl shrink-0">
                   {item.icon}
                 </div>
-                <h4 style={{ margin: 0, color: '#0f172a', fontSize: 16, fontWeight: 900 }}>
-                  {contactDisplayText(item.title)}
-                </h4>
-                <p style={{ margin: '6px 0 0', color: '#64748b', fontSize: 13, lineHeight: 1.55 }}>
-                  {contactDisplayText(item.description)}
-                </p>
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-1">
+                    {contactDisplayText(item.title)}
+                  </h4>
+                  <p className="text-slate-500 text-xs leading-relaxed">
+                    {contactDisplayText(item.description)}
+                  </p>
+                </div>
               </article>
             ))}
           </div>
-        </>
+        </div>
       )}
     </section>
   );

@@ -21,6 +21,8 @@ import Showroom from './Showroom';
 import Documents from './Documents';
 import Events from './Events';
 import Labels from './Labels';
+import AboutPage from './About';
+
 
 import { useLiveSettings } from '@/hooks/useLiveSettings';
 
@@ -101,6 +103,7 @@ const SECTION_DRIVEN_PAGE_KEYS = new Set([
 ]);
 
 const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
+  about: AboutPage,
   outils: ToolsPlatform,
   showroom: Showroom,
   documents: Documents,

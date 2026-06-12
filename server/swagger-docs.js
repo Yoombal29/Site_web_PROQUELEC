@@ -541,7 +541,7 @@ Cette API fournit l'accès à toutes les fonctionnalités backend de la platefor
       { name: 'Partenaires', description: 'Gestion des partenaires et témoignages' },
       { name: 'Analytics', description: 'Statistiques et métriques de performance' },
       { name: 'Santé', description: 'État du serveur et diagnostics' },
-      { name: 'Observatoire', description: 'Observatoire COSSUEL - Données régionales' },
+      { name: 'Observatoire', description: 'Suivi et traitement Inspection Cossuel (ST) - Données régionales' },
       { name: 'Email', description: 'Envoi demails templates' },
       { name: 'CMS', description: 'Plugins et thèmes CMS' },
       { name: 'GED', description: 'Gestion Électronique de Documents - Workflow' },

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FileText,
   Plus,
@@ -42,6 +42,7 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { useAssets, useCreateAsset, useUpdateAsset, useDeleteAsset, Asset } from '@/hooks/useAssets';
+import { useEcommerceStore } from '@/stores/ecommerce.store';
 import { toast } from 'sonner';
 
 const AdminAssetsPanel = () => {
@@ -49,12 +50,19 @@ const AdminAssetsPanel = () => {
   const createAsset = useCreateAsset();
   const updateAsset = useUpdateAsset();
   const deleteAsset = useDeleteAsset();
+  const syncDocumentCatalog = useEcommerceStore((s) => s.syncDocumentCatalog);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAsset, setSelectedAsset] = useState<Partial<Asset> | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
   const [newTitle, setNewTitle] = useState("");
+
+  useEffect(() => {
+    if (!isLoading) {
+      syncDocumentCatalog((assets || []) as Asset[]);
+    }
+  }, [assets, isLoading, syncDocumentCatalog]);
 
   const handleRenameAsset = async () => {
     if (!selectedAsset?.id || !newTitle.trim()) return;

@@ -59,7 +59,7 @@ export default function ObservatoirePage() {
                                 Observatoire National
                             </h1>
                             <p className="text-sm text-slate-500 font-medium">
-                                Supervision de la Conformité Électrique (Connecté COSSUEL)
+                                Supervision et suivi des inspecteurs (PROQUELEC/ COSSUEL)
                             </p>
                         </div>
                     </div>

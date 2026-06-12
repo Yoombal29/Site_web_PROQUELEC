@@ -10,10 +10,11 @@ function mountContactRoutes(app, pool, deps) {
       return res.status(400).json({ error: 'Validation échouée', details: errors });
     }
     const { nom, email, telephone, sujet, message } = payload;
+    const fullMessage = `Sujet : ${sujet}\nTéléphone : ${telephone}\n\nMessage :\n${message}`;
     try {
       const result = await pool.query(
-        'INSERT INTO public.contact_requests (nom, email, telephone, sujet, message, submitted_at, status) VALUES ($1, $2, $3, $4, $5, NOW(), $6) RETURNING *',
-        [nom, email, telephone, sujet, message, 'nouveau'],
+        'INSERT INTO public.contact_requests (name, email, message, submitted_at) VALUES ($1, $2, $3, NOW()) RETURNING *',
+        [nom, email, fullMessage],
       );
       const emailResult = await sendContactNotification({ nom, email, telephone, sujet, message });
       const emailNotification = buildEmailNotificationPayload(emailResult);

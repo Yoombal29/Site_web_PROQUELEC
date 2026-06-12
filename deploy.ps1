@@ -1,4 +1,26 @@
 # PROQUELEC - Deploiement CODE vers le VPS
+#
+# Resume en clair:
+#   .\deploy.ps1 sert a publier les modifications du SITE, pas les donnees.
+#   Il envoie le code vers GitHub, met a jour le VPS, rebuild Docker,
+#   redemarre l'application et verifie que les pages publiques repondent.
+#
+# Ce que ce script deploie:
+#   - fichiers de code: src/, server/, scripts/, composants, routes, styles,
+#   - migrations SQL versionnees dans corpus-db/migrations ou server/migrations,
+#   - configuration projet versionnee, documentation et assets suivis par Git,
+#   - image Docker applicative reconstruite a partir du code.
+#
+# Ce que ce script NE deploie PAS:
+#   - base de donnees locale vers le VPS,
+#   - contenus CMS/builder stockes en base,
+#   - utilisateurs, evenements, pages, demandes contact stockes en base,
+#   - uploads ou medias non versionnes,
+#   - secrets .env.
+#
+# Pour transferer ou ecraser les contenus CMS, il faut une procedure DB separee
+# et explicite: dump local, sauvegarde VPS, restore VPS, puis verification.
+#
 # Usage:
 #   .\deploy.ps1
 #      Mode assistant: explique les choix, pose les questions, puis execute.
@@ -58,6 +80,18 @@ $SITE_URL = "https://www.proquelec.sn"
 $REMOTE_CHANGED_MIGRATIONS = "/tmp/proquelec_changed_migrations.txt"
 $SCRIPT_STARTED_WITH_OPTIONS = $PSBoundParameters.Count -gt 0
 
+# Ces patterns protegent le depot contre les fichiers runtime ou sensibles.
+# Ils sont ignores par le git add automatique du script et bloquent le commit
+# s'ils sont stages manuellement, sauf suppression de l'index Git.
+#
+# Raison par chemin:
+#   docker/postgres/data : fichiers internes PostgreSQL local Docker.
+#   .env                 : secrets et variables privees, couvert par .gitignore.
+#   db/                  : exports/dumps SQL locaux, potentiellement sensibles.
+#   backups/             : sauvegardes locales ou serveur.
+#   logs/                : traces d'execution et debug.
+#   nul                  : fichier parasite Windows.
+#   test-output.txt      : sortie temporaire de tests/commandes.
 $BLOCKED_STAGED_PATTERNS = @(
     "^docker/postgres/data/",
     "^docker/postgres/data-fresh/",

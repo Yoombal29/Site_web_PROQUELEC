@@ -113,6 +113,7 @@ import {
   TargetAudienceTabsBlock,
   OrganizationStructureBlock,
   ReferenceStatsBlock,
+  ProquelecSubdomainsBlock,
 } from './ProquelecBlocksExtra';
 
 import { RichTextBlock } from './RichTextEditorBlock';
@@ -275,6 +276,7 @@ export const CRAFT_RESOLVER = {
   TargetAudienceTabsBlock,
   OrganizationStructureBlock,
   ReferenceStatsBlock,
+  ProquelecSubdomainsBlock,
 
   // Rich text & popup
   RichTextBlock,

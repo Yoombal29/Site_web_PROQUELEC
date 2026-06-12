@@ -134,6 +134,31 @@ const AdminDashboard: React.FC = () => {
     }
   }, [location.search, activeTab]);
 
+  useEffect(() => {
+    const restrictedTabs = [
+      'settings',
+      'ai',
+      'users',
+      'permissions',
+      'plans',
+      'rag',
+      'cms-capabilities',
+      'ai_providers',
+      'ia_docs',
+      'academy_ai',
+      'dynamic_content',
+      'menu',
+      'site_settings',
+      'database',
+      'security',
+      'performance',
+      'infrastructure',
+    ];
+    if (isSecondaryAdmin && restrictedTabs.includes(activeTab)) {
+      setActiveTab('overview');
+    }
+  }, [activeTab, isSecondaryAdmin]);
+
   // Utilisation des données réelles du backend ou d'un tableau vide si non disponible
   const analyticsData = useMemo(() => {
     return (

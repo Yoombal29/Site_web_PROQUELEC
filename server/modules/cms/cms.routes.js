@@ -68,6 +68,7 @@ router.put(
 router.delete('/quick-links/:id', authenticateToken, ctrl.deleteQuickLink);
 
 router.get('/site-assets', ctrl.listAssets);
+router.get('/ecommerce/catalog', ctrl.listEcommerceCatalog);
 router.post('/site-assets', authenticateToken, validate(siteAssetSchema), ctrl.createAsset);
 router.put(
   '/site-assets/:id',

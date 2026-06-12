@@ -229,3 +229,80 @@ ReferenceStatsBlock.craft = {
   props: { title: "Notre Impact", stats: "+10 000 | Artisans formés\n+250 | Sites contrôlés\n100% | Taux de satisfaction" },
   related: { settings: AutoSettingsPanel },
 };
+
+// 7. ProquelecSubdomainsBlock
+export const ProquelecSubdomainsBlock = (props: any) => {
+  const {
+    title = "Écosystème Numérique PROQUELEC",
+    subtitle = "Accédez aux plateformes et sous-domaines officiels de PROQUELEC pour la sécurité et la conformité électrique au Sénégal.",
+    subdomains = "Site Principal | https://www.proquelec.sn | Portail officiel d'information, simulateurs et administration | 🌐 | Portail Principal\nGED OS | https://ged.proquelec.sn | Plateforme intelligente multidomaine (Système d'Exploitation Métier) pour créer, piloter et automatiser des écosystèmes | 📂 | Système d'Exploitation\nSuivi et traitement Inspection Cossuel (ST) | https://cossuel.proquelec.sn | Supervision de la conformité électrique nationale et statistiques | 📊 | Supervision & Stats\nAcadémie PROQUELEC | https://academie.proquelec.sn | Centre de formation numérique, e-learning et habilitations | 🎓 | E-Learning & Habilitation"
+  } = props;
+  
+  const { connectors: { connect, drag } } = useNode();
+  const u = getUniversalStyles(props);
+  const parsed = parsePipeItems(subdomains, (parts) => ({
+    name: parts[0],
+    url: parts[1],
+    desc: parts[2],
+    icon: parts[3] || '⚡',
+    role: parts[4] || 'Plateforme'
+  }));
+
+  return (
+    <div ref={(r: any) => { if (r) connect(drag(r)); }} style={u.style} className={`proquelec-builder-node py-16 bg-slate-900 text-white ${u.className || ''}`}>
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-4xl font-extrabold tracking-tight text-white mb-4">
+            {resolveDynamicContent(title)}
+          </h2>
+          <p className="text-lg text-slate-300">
+            {resolveDynamicContent(subtitle)}
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {parsed.map((s, i) => (
+            <div key={i} className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-700/60 p-8 rounded-2xl hover:bg-slate-800 hover:border-slate-600 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
+                    {resolveDynamicContent(s.icon)}
+                  </div>
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                    {resolveDynamicContent(s.role)}
+                  </span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                  {resolveDynamicContent(s.name)}
+                </h3>
+                <p className="text-slate-400 leading-relaxed mb-6">
+                  {resolveDynamicContent(s.desc)}
+                </p>
+              </div>
+              <div>
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full px-5 py-3 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/10 hover:shadow-blue-500/20 transition-all duration-300"
+                >
+                  Accéder au site ({s.url.replace('https://', '')})
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+ProquelecSubdomainsBlock.craft = {
+  displayName: 'Annuaire Sous-Domaines',
+  props: {
+    title: "Écosystème Numérique PROQUELEC",
+    subtitle: "Accédez aux plateformes et sous-domaines officiels de PROQUELEC pour la sécurité et la conformité électrique au Sénégal.",
+    subdomains: "Site Principal | https://www.proquelec.sn | Portail officiel d'information, simulateurs et administration | 🌐 | Portail Principal\nGED OS | https://ged.proquelec.sn | Plateforme intelligente multidomaine (Système d'Exploitation Métier) pour créer, piloter et automatiser des écosystèmes | 📂 | Système d'Exploitation\nSuivi et traitement Inspection Cossuel (ST) | https://cossuel.proquelec.sn | Supervision de la conformité électrique nationale et statistiques | 📊 | Supervision & Stats\nAcadémie PROQUELEC | https://academie.proquelec.sn | Centre de formation numérique, e-learning et habilitations | 🎓 | E-Learning & Habilitation"
+  },
+  related: { settings: AutoSettingsPanel },
+};

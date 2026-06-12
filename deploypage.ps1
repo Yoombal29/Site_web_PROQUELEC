@@ -1,9 +1,15 @@
 # PROQUELEC - Deploiement PAGES Builder vers le VPS
 # Usage:
-#   .\deploypage.ps1 -Page "formations"              # Une seule page
-#   .\deploypage.ps1 -AllPages                        # Toutes les pages
-#   .\deploypage.ps1 -Page "formations" -StageOnly    # Sans publier
-#   .\deploypage.ps1 -AllPages -Yes                   # Auto sans confirmation si dry-run OK
+#   .\deploypage.ps1 -Page "formations"                # Cree un candidat, sans publier
+#   .\deploypage.ps1 -AllPages                          # Cree des candidats, sans publier
+#   .\deploypage.ps1 -Page "formations" -PublishSafe    # Peut publier si dry-run OK
+#   .\deploypage.ps1 -AllPages -PublishSafe -Yes         # Auto si dry-run OK
+#
+# Regle de robustesse:
+#   Par defaut, ce script ne publie plus directement. Il cree un candidat dans
+#   /admin/builder-release-manager pour comparer visuellement la version VPS et
+#   la version locale avant de choisir. Cela evite d'ecraser le travail d'un
+#   admin qui aurait modifie la meme page directement sur le VPS.
 
 param(
     [string]$Page = "",
@@ -17,6 +23,7 @@ param(
     [string]$LocalToken = "",
     [string]$ProdToken = "",
     [switch]$StageOnly,
+    [switch]$PublishSafe,
     [switch]$Yes
 )
 
@@ -87,14 +94,20 @@ function Publish-OnePage {
     }
 
     $mode = "stage"
-    if ($analysis -and -not $StageOnly -and $analysis.can_publish -eq $true) {
+    if ($StageOnly -and $PublishSafe) {
+        Write-Host "  StageOnly prioritaire: publication directe ignoree" -ForegroundColor DarkYellow
+    }
+
+    if ($analysis -and -not $StageOnly -and $PublishSafe -and $analysis.can_publish -eq $true) {
         if ($Yes) { $mode = "safe-apply" }
         else {
-            $confirm = Read-Host "  Publier directement ? [O/n]"
-            if (-not $confirm -or $confirm.ToLowerInvariant() -eq "o" -or $confirm.ToLowerInvariant() -eq "oui") { $mode = "safe-apply" }
+            $confirm = Read-Host "  Publier directement sans inspection visuelle ? [o/N]"
+            if ($confirm.ToLowerInvariant() -eq "o" -or $confirm.ToLowerInvariant() -eq "oui" -or $confirm.ToLowerInvariant() -eq "y" -or $confirm.ToLowerInvariant() -eq "yes") { $mode = "safe-apply" }
         }
     } elseif ($StageOnly) {
         Write-Host "  StageOnly actif: creation candidat sans publication" -ForegroundColor DarkYellow
+    } elseif (-not $PublishSafe) {
+        Write-Host "  Mode robuste par defaut: creation candidat pour comparaison visuelle" -ForegroundColor DarkYellow
     } else {
         Write-Host "  Publication directe bloquee: creation candidat" -ForegroundColor DarkYellow
     }

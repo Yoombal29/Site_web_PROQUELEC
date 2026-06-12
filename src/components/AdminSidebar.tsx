@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
@@ -22,12 +21,11 @@ import {
   HardHat,
   Construction,
   Award,
-  GraduationCap,
-  Wrench,
   BookOpen,
+  Wrench,
+  Terminal,
   Sliders,
   Layout,
-  Terminal,
   HelpCircle,
   Newspaper,
   Share2,
@@ -76,7 +74,7 @@ export const menuItems: MenuItem[] = [
     label: 'Analytics & Trafic',
     icon: BarChart3,
     category: 'pilotage',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'audit.view',
   },
   {
@@ -84,66 +82,18 @@ export const menuItems: MenuItem[] = [
     label: 'Mode Construction',
     icon: Construction,
     category: 'pilotage',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'admin.settings',
   },
 
-  // --- 2. CORTEX IA (SOUVERAIN) ---
+  // --- 2. CORTEX IA (SOUVERAIN) — Hub unique ---
   {
-    id: 'ai',
-    label: 'IA Central',
+    id: 'expert_hub',
+    label: '🧠 Hub IA Central',
     icon: Brain,
     category: 'ia',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
-    permission: 'inspections.view',
-  },
-  {
-    id: 'ai_providers',
-    label: 'Gestion API modèle',
-    icon: Brain,
-    category: 'ia',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
-    permission: 'admin.settings',
-  },
-  {
-    id: 'ia_docs',
-    label: '📚 Documentation IA',
-    icon: BookOpen,
-    category: 'ia',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
-    permission: 'inspections.view',
-  },
-  {
-    id: 'ai',
-    label: 'Agents (Centralisé)',
-    icon: Terminal,
-    category: 'ia',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
-    permission: 'admin.settings',
-  },
-  {
-    id: 'academy_ai',
-    label: 'Académie IA (KEBE)',
-    icon: GraduationCap,
-    category: 'ia',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
-    permission: 'inspections.view',
-  },
-  {
-    id: 'ai',
-    label: 'Auto-Repair (Centralisé)',
-    icon: Wrench,
-    category: 'ia',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
-    permission: 'admin.settings',
-  },
-  {
-    id: 'ai',
-    label: 'Monitoring (Centralisé)',
-    icon: Activity,
-    category: 'ia',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
-    permission: 'admin.settings',
+    roles: ['superadmin', 'admin'],
+    href: '/expert',
   },
 
   // --- 3. MÉTIER & ÉLECTRICITÉ (CORE BUSINESS) ---
@@ -186,7 +136,7 @@ export const menuItems: MenuItem[] = [
     label: 'Sections & Contenus',
     icon: FileText,
     category: 'cms',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'admin.settings',
   },
   {
@@ -194,7 +144,7 @@ export const menuItems: MenuItem[] = [
     label: 'Studio de Création',
     icon: Layout,
     category: 'cms',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'builder.access',
     href: '/admin/builder',
   },
@@ -219,7 +169,7 @@ export const menuItems: MenuItem[] = [
     label: 'Menus & Navigation',
     icon: Menu,
     category: 'cms',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'admin.settings',
   },
   {
@@ -243,7 +193,7 @@ export const menuItems: MenuItem[] = [
     label: 'Centre Capacités CMS',
     icon: Shield,
     category: 'cms',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'admin.settings',
   },
   {
@@ -269,7 +219,7 @@ export const menuItems: MenuItem[] = [
     label: 'Utilisateurs & Accès',
     icon: Users,
     category: 'communaute',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'admin.users',
   },
   {
@@ -311,7 +261,7 @@ export const menuItems: MenuItem[] = [
     label: 'Configuration Globale',
     icon: Sliders,
     category: 'systeme',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'admin.settings',
   },
   {
@@ -319,7 +269,7 @@ export const menuItems: MenuItem[] = [
     label: 'Infrastructure Docker',
     icon: Terminal,
     category: 'systeme',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'admin.settings',
   },
   {
@@ -351,7 +301,7 @@ export const menuItems: MenuItem[] = [
     label: 'Base de Données',
     icon: Database,
     category: 'systeme',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'admin.settings',
   },
   {
@@ -359,7 +309,7 @@ export const menuItems: MenuItem[] = [
     label: 'Sécurité & Logs',
     icon: Shield,
     category: 'systeme',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'admin.permissions',
   },
   {
@@ -367,7 +317,7 @@ export const menuItems: MenuItem[] = [
     label: 'Performance Système',
     icon: Activity,
     category: 'systeme',
-    roles: ['superadmin', 'admin', 'secondary_admin'],
+    roles: ['superadmin', 'admin'],
     permission: 'admin.settings',
   },
   {

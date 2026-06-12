@@ -137,8 +137,11 @@ type CandidatePreview = {
   meta_description?: string;
   text_excerpt: string;
   html_excerpt?: string;
+  preview_html?: string;
+  render_mode?: 'craft' | 'html' | 'text';
   node_count: number;
   character_count: number;
+  warnings?: string[];
 };
 
 type ReleaseEvent = {
@@ -292,14 +295,49 @@ const healthLabel = (health?: PackageHealth) => {
 const canPublishCandidate = (candidate: ReleaseCandidate) =>
   ACTIVE_STATUSES.includes(candidate.status) && candidate.package_health?.is_publishable !== false;
 
+const escapeHtml = (value: string) =>
+  String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
 const previewDocument = (html: string, title: string) => `<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${title}</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>body{margin:0;font-family:Inter,Arial,sans-serif;background:#fff;color:#0f172a}</style>
+  <title>${escapeHtml(title)}</title>
+  <style>
+    :root{color-scheme:light}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Arial,sans-serif;background:#fff;color:#0f172a}
+    a{color:inherit}
+    img{max-width:100%;height:auto;display:block}
+    .preview-section{padding:36px;max-width:1180px;margin:0 auto}
+    .preview-hero{min-height:360px;padding:56px 36px;display:flex;flex-direction:column;justify-content:center;background:#1e3a5f;background-size:cover;background-position:center;color:#fff}
+    .preview-hero h1{margin:12px 0 0;font-size:clamp(2.3rem,6vw,4.8rem);line-height:1.03;font-weight:900;letter-spacing:0}
+    .preview-hero p{max-width:760px;font-size:clamp(1rem,2vw,1.35rem);line-height:1.7;color:rgba(255,255,255,.82)}
+    .preview-badge{display:inline-flex;width:max-content;border-radius:999px;background:rgba(37,99,235,.22);padding:8px 14px;color:#38bdf8;font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+    .preview-heading{margin:0 0 16px;color:#0f172a;font-weight:900;line-height:1.15}
+    .preview-text{color:#475569;line-height:1.75;font-size:16px}
+    .preview-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;padding:24px}
+    .preview-card,.preview-block,.preview-list-wrap{border:1px solid #e2e8f0;border-radius:14px;padding:18px;background:#fff;box-shadow:0 14px 36px rgba(15,23,42,.06)}
+    .preview-card h3,.preview-block h3,.preview-list-wrap h3{margin:0 0 8px;font-size:20px;color:#0f172a}
+    .preview-card p,.preview-block p{margin:6px 0 0;color:#64748b;line-height:1.65}
+    .preview-muted{color:#94a3b8!important;font-size:13px}
+    .preview-icon{display:inline-flex;margin-bottom:10px;font-size:28px}
+    .preview-list{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+    .preview-list li{padding:12px;border:1px solid #e2e8f0;border-radius:10px;background:#f8fafc;color:#334155}
+    .preview-list li span{display:block;margin-top:4px;color:#64748b;font-size:13px;line-height:1.55}
+    .preview-cta{margin:24px;padding:24px;border-radius:16px;background:#0f172a;color:#fff}
+    .preview-cta h3{margin:0 0 8px;font-size:26px}
+    .preview-cta p{color:#cbd5e1;line-height:1.7}
+    .preview-cta span{display:inline-flex;margin-top:12px;border-radius:10px;background:#fbbf24;color:#111827;padding:10px 14px;font-weight:900}
+    .preview-image{margin:0;padding:20px}
+    .preview-truncated{margin:24px;padding:12px;border-radius:10px;background:#fff7ed;color:#92400e;font-weight:700}
+  </style>
 </head>
 <body>${html || '<div style="padding:24px;color:#64748b">Aucun HTML detecte dans le paquet.</div>'}</body>
 </html>`;
@@ -320,6 +358,7 @@ export default function BuilderReleaseManagerPage() {
   const [pageFilter, setPageFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [inspectedCandidate, setInspectedCandidate] = useState<ReleaseCandidate | null>(null);
+  const [reviewedCandidateIds, setReviewedCandidateIds] = useState<Set<string>>(() => new Set());
   const [forceCandidate, setForceCandidate] = useState<ReleaseCandidate | null>(null);
   const [forceText, setForceText] = useState('');
   const [forceReason, setForceReason] = useState('');
@@ -532,6 +571,12 @@ export default function BuilderReleaseManagerPage() {
       toast.error('Permission builder.release.publish requise pour publier automatiquement');
       return;
     }
+    if (deployMode === 'safe-apply') {
+      const confirmed = window.confirm(
+        'Le mode "Publier si sans conflit" peut modifier la page VPS sans inspection visuelle. Le mode recommande est StageOnly. Continuer ?',
+      );
+      if (!confirmed) return;
+    }
 
     setLoading(true);
     try {
@@ -594,6 +639,7 @@ export default function BuilderReleaseManagerPage() {
         `/api/admin/pages/release/candidates/${candidate.id}`,
       );
       setInspectedCandidate(detail);
+      setReviewedCandidateIds((current) => new Set(current).add(candidate.id));
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Inspection impossible');
     } finally {
@@ -602,6 +648,10 @@ export default function BuilderReleaseManagerPage() {
   };
 
   const publishCandidateSafe = async (candidate: ReleaseCandidate) => {
+    if (!reviewedCandidateIds.has(candidate.id)) {
+      toast.error('Inspectez visuellement le candidat avant de publier.');
+      return;
+    }
     setBusyId(candidate.id);
     try {
       await apiFetch(`/api/admin/pages/release/candidates/${candidate.id}/publish`, {
@@ -619,6 +669,10 @@ export default function BuilderReleaseManagerPage() {
 
   const confirmForcePublish = async () => {
     if (!forceCandidate) return;
+    if (!reviewedCandidateIds.has(forceCandidate.id)) {
+      toast.error('Inspectez visuellement le candidat avant de forcer.');
+      return;
+    }
     const expected = `FORCER ${forceCandidate.target_slug}`;
     if (forceText.trim() !== expected) {
       toast.error(`Tapez exactement: ${expected}`);
@@ -997,6 +1051,7 @@ export default function BuilderReleaseManagerPage() {
                     key={candidate.id}
                     candidate={candidate}
                     busy={busyId === candidate.id}
+                    reviewed={reviewedCandidateIds.has(candidate.id)}
                     canPublish={canPublishCandidate(candidate)}
                     canPublishSafe={hasPermission('builder.release.publish')}
                     canForce={hasPermission('builder.release.force')}
@@ -1213,6 +1268,24 @@ export default function BuilderReleaseManagerPage() {
 
       <CandidateInspectDialog
         candidate={inspectedCandidate}
+        busy={Boolean(inspectedCandidate && busyId === inspectedCandidate.id)}
+        canPublish={inspectedCandidate ? canPublishCandidate(inspectedCandidate) : false}
+        canPublishSafe={hasPermission('builder.release.publish')}
+        canForce={hasPermission('builder.release.force')}
+        canCreate={hasPermission('builder.release.create')}
+        onPublishSafe={() => {
+          if (inspectedCandidate) void publishCandidateSafe(inspectedCandidate);
+        }}
+        onForce={() => {
+          if (!inspectedCandidate) return;
+          setForceCandidate(inspectedCandidate);
+          setForceText('');
+          setForceReason('');
+          setInspectedCandidate(null);
+        }}
+        onReject={() => {
+          if (inspectedCandidate) void rejectCandidate(inspectedCandidate);
+        }}
         onOpenChange={(open) => {
           if (!open) setInspectedCandidate(null);
         }}
@@ -1432,6 +1505,7 @@ function DeployJobsPanel({
 function CandidateRow({
   candidate,
   busy,
+  reviewed,
   canPublish,
   canPublishSafe,
   canForce,
@@ -1445,6 +1519,7 @@ function CandidateRow({
 }: {
   candidate: ReleaseCandidate;
   busy: boolean;
+  reviewed: boolean;
   canPublish: boolean;
   canPublishSafe: boolean;
   canForce: boolean;
@@ -1467,6 +1542,7 @@ function CandidateRow({
             <Badge variant={statusVariant(candidate.status)}>{statusLabel[candidate.status]}</Badge>
             <Badge variant={health.variant}>{health.label}</Badge>
             <Badge variant="outline">rev {candidate.current_revision || 'new'}</Badge>
+            {reviewed && <Badge variant="outline">vu</Badge>}
             {candidate.forced && <Badge variant="destructive">force</Badge>}
           </div>
           <p className="mt-1 truncate text-sm text-slate-500">
@@ -1495,16 +1571,16 @@ function CandidateRow({
             <>
               <Button
                 size="sm"
-                disabled={busy || candidate.status === 'conflict' || !canPublish || !canPublishSafe}
+                disabled={busy || !reviewed || candidate.status === 'conflict' || !canPublish || !canPublishSafe}
                 onClick={onPublishSafe}
               >
                 <CheckCircle2 className="mr-2 h-4 w-4" />
-                Publier safe
+                {reviewed ? 'Publier safe' : 'Voir avant choix'}
               </Button>
               <Button
                 size="sm"
                 variant="destructive"
-                disabled={busy || !canPublish || !canForce}
+                disabled={busy || !reviewed || !canPublish || !canForce}
                 onClick={onForce}
               >
                 <ShieldAlert className="mr-2 h-4 w-4" />
@@ -1674,12 +1750,29 @@ function ChangedFieldsPanel({ diff }: { diff: ReleaseAnalysis['diff_summary'] })
 
 function CandidateInspectDialog({
   candidate,
+  busy,
+  canPublish,
+  canPublishSafe,
+  canForce,
+  canCreate,
+  onPublishSafe,
+  onForce,
+  onReject,
   onOpenChange,
 }: {
   candidate: ReleaseCandidate | null;
+  busy: boolean;
+  canPublish: boolean;
+  canPublishSafe: boolean;
+  canForce: boolean;
+  canCreate: boolean;
+  onPublishSafe: () => void;
+  onForce: () => void;
+  onReject: () => void;
   onOpenChange: (open: boolean) => void;
 }) {
   const open = Boolean(candidate);
+  const active = Boolean(candidate && ACTIVE_STATUSES.includes(candidate.status));
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[92vh] max-w-6xl overflow-auto">
@@ -1691,6 +1784,18 @@ function CandidateInspectDialog({
         </DialogHeader>
         {candidate && (
           <div className="space-y-6">
+            <div
+              className={`rounded-md border p-4 text-sm leading-6 ${
+                candidate.status === 'conflict'
+                  ? 'border-red-200 bg-red-50 text-red-900'
+                  : 'border-emerald-200 bg-emerald-50 text-emerald-900'
+              }`}
+            >
+              {candidate.status === 'conflict'
+                ? 'Conflit detecte: la page VPS a change depuis la base du package local. Comparez visuellement, puis fusionnez ou forcez uniquement avec une raison explicite.'
+                : 'Inspection visuelle chargee. Vous pouvez publier safe seulement si le candidat est sain et sans conflit.'}
+            </div>
+
             <div className="grid gap-4 lg:grid-cols-3">
               <HealthCard health={candidate.package_health} />
               <PreviewSummary title="Version VPS actuelle" preview={candidate.live_preview} />
@@ -1726,6 +1831,29 @@ function CandidateInspectDialog({
                 </div>
               )}
             </div>
+
+            {active && (
+              <DialogFooter className="sticky bottom-0 z-10 rounded-md border border-slate-200 bg-white/95 p-3 backdrop-blur">
+                <Button variant="outline" onClick={() => onOpenChange(false)}>
+                  Fermer
+                </Button>
+                <Button variant="outline" disabled={busy || !canCreate} onClick={onReject}>
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Rejeter
+                </Button>
+                <Button
+                  disabled={busy || candidate.status === 'conflict' || !canPublish || !canPublishSafe}
+                  onClick={onPublishSafe}
+                >
+                  <CheckCircle2 className="mr-2 h-4 w-4" />
+                  Publier safe
+                </Button>
+                <Button variant="destructive" disabled={busy || !canPublish || !canForce} onClick={onForce}>
+                  <ShieldAlert className="mr-2 h-4 w-4" />
+                  Forcer avec raison
+                </Button>
+              </DialogFooter>
+            )}
           </div>
         )}
       </DialogContent>
@@ -1741,7 +1869,14 @@ function PreviewSummary({ title, preview }: { title: string; preview?: Candidate
         <div className="mt-3 space-y-2 text-slate-600">
           <p className="font-semibold text-slate-900">{preview.title}</p>
           <p>/{preview.slug}</p>
-          <p>{preview.node_count} noeuds · {preview.character_count} caracteres</p>
+          <p>
+            {preview.node_count} noeuds · {preview.character_count} caracteres · rendu {preview.render_mode || 'n/a'}
+          </p>
+          {(preview.warnings || []).map((warning) => (
+            <p key={warning} className="rounded bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-800">
+              {warning}
+            </p>
+          ))}
           <p className="line-clamp-4 text-xs leading-5">{preview.text_excerpt || 'Aucun extrait texte.'}</p>
         </div>
       ) : (
@@ -1758,7 +1893,7 @@ function PreviewFrame({ title, preview }: { title: string; preview?: CandidatePr
       <iframe
         title={title}
         sandbox=""
-        srcDoc={previewDocument(preview?.html_excerpt || '', preview?.title || title)}
+        srcDoc={previewDocument(preview?.preview_html || preview?.html_excerpt || '', preview?.title || title)}
         className="h-[360px] w-full rounded-md border border-slate-200 bg-white"
       />
     </div>

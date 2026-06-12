@@ -1,200 +1,374 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  FileText,
   BookOpen,
+  ChevronDown,
+  ChevronRight,
   Download,
-  Search,
-  FileSpreadsheet,
   File,
+  FileText,
   FolderOpen,
+  Search,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
-// ─── Types ─────────────────────────────────────────────────────────────────────
+type DocumentCategory = 'referentiel' | 'guide' | 'memento' | 'feuillet' | 'depliant';
+type CategoryFilter = 'tous' | DocumentCategory;
 
-interface Document {
+interface DocumentEntry {
   filename: string;
   title: string;
   description: string;
-  category: 'guide' | 'memento';
+  category: DocumentCategory;
 }
 
 interface DownloadCounts {
   [key: string]: number;
 }
 
-type CategoryFilter = 'tous' | 'guide' | 'memento';
+interface DocumentsLibraryProps {
+  externalSearchQuery?: string;
+}
 
-// ─── Data ──────────────────────────────────────────────────────────────────────
-
-const DOCUMENTS: Document[] = [
-  // Guides (8)
+const DOCUMENTS: DocumentEntry[] = [
+  {
+    filename: 'Referentiel-PROQUELEC.doc',
+    title: 'Référentiel PROQUELEC',
+    description: 'Document de référence pour les critères, démarches et exigences du label PROQUELEC.',
+    category: 'referentiel',
+  },
   {
     filename: 'guide-choix-materiels-mise-en-oeuvre.doc',
     title: 'Choix des matériels et mise en œuvre',
-    description:
-      'Guide pour le choix des matériels électriques et leur mise en œuvre conforme aux normes.',
+    description: 'Guide : Choix des matériels et mise en œuvre.',
     category: 'guide',
   },
   {
     filename: 'guide-economie-energie-consommation.doc',
     title: "Économie d'énergie et consommation",
-    description:
-      'Guide sur les bonnes pratiques pour réduire la consommation énergétique des installations.',
+    description: "Guide : Économie d'énergie et consommation.",
     category: 'guide',
   },
   {
     filename: 'guide-gestion-risques-prevention-incendie.doc',
     title: 'Gestion des risques et prévention incendie',
-    description:
-      'Guide de gestion des risques électriques et de prévention des incendies domestiques et professionnels.',
+    description: 'Guide : Gestion des risques et prévention incendie.',
     category: 'guide',
   },
   {
     filename: 'guide-installation-menages-faible-revenu.doc',
     title: 'Installation pour ménages à faible revenu',
-    description:
-      "Guide dédié aux solutions d'installation électrique adaptées aux ménages à faible revenu.",
+    description: 'Guide : Installation pour ménages à faible revenu.',
     category: 'guide',
   },
   {
     filename: 'guide-installation-residentielle.doc',
     title: 'Installation résidentielle',
-    description:
-      "Guide complet pour l'installation électrique résidentielle conforme à la norme NS 01 001.",
+    description: 'Guide : Installation résidentielle.',
     category: 'guide',
   },
   {
     filename: 'guide-installations-emplacements-specifiques.doc',
     title: 'Installations emplacements spécifiques',
-    description:
-      "Guide pour les installations électriques dans les emplacements spécifiques (salles d'eau, locaux professionnels…).",
+    description: 'Guide : Installations emplacements spécifiques.',
     category: 'guide',
   },
   {
     filename: 'guide-securite-conformite-marches.doc',
     title: 'Sécurité et conformité marchés',
-    description:
-      'Guide sur la sécurité électrique et la conformité requise pour les marchés publics et privés.',
+    description: 'Guide : Sécurité et conformité marchés.',
     category: 'guide',
   },
   {
     filename: 'guide-verifications-entretien-installations.doc',
     title: 'Vérifications et entretien installations',
-    description:
-      "Guide des vérifications périodiques et de l'entretien des installations électriques.",
+    description: 'Guide : Vérifications et entretien installations.',
     category: 'guide',
   },
-  // Mémentos (8)
   {
     filename: 'memento-caracteristiques-generales.doc',
     title: 'Caractéristiques générales',
-    description: 'Aide-mémoire sur les caractéristiques générales des installations électriques.',
+    description: 'Mémento : Caractéristiques générales.',
     category: 'memento',
   },
   {
     filename: 'memento-conformite-mise-sous-tension.doc',
     title: 'Conformité mise sous tension',
-    description:
-      "Mémento sur les procédures de conformité avant la mise sous tension d'une installation.",
+    description: 'Mémento : Conformité mise sous tension.',
     category: 'memento',
   },
   {
     filename: 'memento-couleurs-conducteurs.doc',
     title: 'Couleurs des conducteurs',
-    description: 'Aide-mémoire sur le code couleurs des conducteurs électriques selon la norme.',
+    description: 'Mémento : Couleurs des conducteurs.',
     category: 'memento',
   },
   {
     filename: 'memento-glossaire-electricite.doc',
     title: 'Glossaire électricité',
-    description:
-      'Lexique et glossaire des termes techniques utilisés en électricité bâtiment et industrie.',
+    description: 'Mémento : Glossaire électricité.',
     category: 'memento',
   },
   {
     filename: 'memento-norme-ns01-001.doc',
     title: 'Norme NS01-001',
-    description: 'Mémento récapitulatif des exigences essentielles de la norme NS01-001.',
+    description: 'Mémento : Norme NS01-001.',
     category: 'memento',
   },
   {
     filename: 'memento-protections-electriques.doc',
     title: 'Protections électriques',
-    description:
-      'Aide-mémoire sur les dispositifs de protection électrique (disjoncteurs, fusibles, différentiels).',
+    description: 'Mémento : Protections électriques.',
+    category: 'memento',
+  },
+  {
+    filename: 'memento-protections.doc',
+    title: 'Protections',
+    description: 'Mémento : Protections.',
+    category: 'memento',
+  },
+  {
+    filename: 'memento-schemas-electricite.doc',
+    title: 'Schémas électricité',
+    description: 'Mémento : Schémas électricité.',
     category: 'memento',
   },
   {
     filename: 'memento-sections-cables.doc',
     title: 'Sections de câbles',
-    description:
-      "Mémento sur le choix des sections de câbles en fonction de l'intensité et de la distance.",
+    description: 'Mémento : Sections de câbles.',
     category: 'memento',
   },
   {
     filename: 'memento-symboles-electriques.doc',
     title: 'Symboles électriques',
-    description:
-      "Aide-mémoire des symboles électriques normalisés pour schémas et plans d'installation.",
+    description: 'Mémento : Symboles électriques.',
     category: 'memento',
+  },
+  {
+    filename: 'feuillet-alimentation-maison-individuelle.doc',
+    title: 'Alimentation maison individuelle',
+    description: 'Feuillet : Alimentation maison individuelle.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-appareils-salle-eau.doc',
+    title: "Appareils salle d'eau",
+    description: "Feuillet : Appareils salle d'eau.",
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-canalisations-enterrees.doc',
+    title: 'Canalisations enterrées',
+    description: 'Feuillet : Canalisations enterrées.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-colonnes-montantes-parties-communes.doc',
+    title: 'Colonnes montantes parties communes',
+    description: 'Feuillet : Colonnes montantes parties communes.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-compteur.doc',
+    title: 'Compteur',
+    description: 'Feuillet : Compteur.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-disjoncteur-differentiel.doc',
+    title: 'Disjoncteur différentiel',
+    description: 'Feuillet : Disjoncteur différentiel.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-installation-triphasée.doc',
+    title: 'Installation triphasée',
+    description: 'Feuillet : Installation triphasée.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-liaison-equipotentielle-salle-eau.doc',
+    title: "Liaison équipotentielle salle d'eau",
+    description: "Feuillet : Liaison équipotentielle salle d'eau.",
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-mise-a-la-terre.doc',
+    title: 'Mise à la terre',
+    description: 'Feuillet : Mise à la terre.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-parafoudre.doc',
+    title: 'Parafoudre',
+    description: 'Feuillet : Parafoudre.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-prise-16a.doc',
+    title: 'Prise 16A',
+    description: 'Feuillet : Prise 16A.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-prise-de-terre.doc',
+    title: 'Prise de terre',
+    description: 'Feuillet : Prise de terre.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-prise-rj45.doc',
+    title: 'Prise RJ45',
+    description: 'Feuillet : Prise RJ45.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-protection-installation-electrique.doc',
+    title: 'Protection installation électrique',
+    description: 'Feuillet : Protection installation électrique.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'feuillet-vmc.doc',
+    title: 'VMC',
+    description: 'Feuillet : VMC.',
+    category: 'feuillet',
+  },
+  {
+    filename: 'depliant-choisir-electricien-agree.doc',
+    title: 'Choisir un électricien agréé',
+    description: 'Dépliant : Choisir un électricien agréé.',
+    category: 'depliant',
+  },
+  {
+    filename: 'depliant-economisez-energie-quotidien.doc',
+    title: "Économisez l'énergie au quotidien",
+    description: "Dépliant : Économisez l'énergie au quotidien.",
+    category: 'depliant',
+  },
+  {
+    filename: 'depliant-electricite-chez-vous.doc',
+    title: "L'électricité chez vous",
+    description: "Dépliant : L'électricité chez vous.",
+    category: 'depliant',
+  },
+  {
+    filename: 'depliant-informations-proquelec.doc',
+    title: 'Informations PROQUELEC',
+    description: 'Dépliant : Informations PROQUELEC.',
+    category: 'depliant',
+  },
+  {
+    filename: 'depliant-installation-vieillit-securite.doc',
+    title: 'Installation vieillissante et sécurité',
+    description: 'Dépliant : Installation vieillissante et sécurité.',
+    category: 'depliant',
+  },
+  {
+    filename: 'depliant-prevention-accidents-domestiques.doc',
+    title: 'Prévention des accidents domestiques',
+    description: 'Dépliant : Prévention des accidents domestiques.',
+    category: 'depliant',
   },
 ];
 
-const CATEGORY_OPTIONS: { value: CategoryFilter; label: string }[] = [
+const CATEGORY_META: Record<
+  DocumentCategory,
+  { label: string; shortLabel: string; color: string; muted: string; icon: React.ComponentType<{ className?: string }> }
+> = {
+  referentiel: {
+    label: 'Référentiel',
+    shortLabel: 'Référentiel',
+    color: 'bg-slate-900 text-white',
+    muted: 'bg-slate-100 text-slate-700 border-slate-200',
+    icon: FileText,
+  },
+  guide: {
+    label: 'Guides techniques',
+    shortLabel: 'Guide technique',
+    color: 'bg-blue-600 text-white',
+    muted: 'bg-blue-50 text-blue-700 border-blue-100',
+    icon: BookOpen,
+  },
+  memento: {
+    label: 'Mémentos',
+    shortLabel: 'Mémento',
+    color: 'bg-red-500 text-white',
+    muted: 'bg-red-50 text-red-700 border-red-100',
+    icon: FileText,
+  },
+  feuillet: {
+    label: 'Feuillets techniques',
+    shortLabel: 'Feuillet technique',
+    color: 'bg-yellow-400 text-slate-950',
+    muted: 'bg-yellow-50 text-yellow-800 border-yellow-100',
+    icon: FileText,
+  },
+  depliant: {
+    label: 'Dépliants',
+    shortLabel: 'Dépliant',
+    color: 'bg-green-500 text-white',
+    muted: 'bg-green-50 text-green-700 border-green-100',
+    icon: FileText,
+  },
+};
+
+const CATEGORY_OPTIONS: Array<{ value: CategoryFilter; label: string }> = [
   { value: 'tous', label: 'Tous' },
-  { value: 'guide', label: 'Guides' },
-  { value: 'memento', label: 'Mémentos' },
+  { value: 'referentiel', label: CATEGORY_META.referentiel.label },
+  { value: 'guide', label: CATEGORY_META.guide.label },
+  { value: 'memento', label: CATEGORY_META.memento.label },
+  { value: 'feuillet', label: CATEGORY_META.feuillet.label },
+  { value: 'depliant', label: CATEGORY_META.depliant.label },
 ];
 
+const CATEGORY_ORDER: DocumentCategory[] = ['referentiel', 'guide', 'memento', 'feuillet', 'depliant'];
 const STORAGE_KEY = 'proquelec-doc-downloads';
 
-// ─── Helpers ───────────────────────────────────────────────────────────────────
+const getDownloadUrl = (filename: string) => `/word/${filename}`;
 
 function getCategoryCounts() {
-  const guides = DOCUMENTS.filter((d) => d.category === 'guide').length;
-  const mementos = DOCUMENTS.filter((d) => d.category === 'memento').length;
-  return { tous: DOCUMENTS.length, guides, mementos };
+  return DOCUMENTS.reduce<Record<CategoryFilter, number>>(
+    (acc, doc) => {
+      acc.tous += 1;
+      acc[doc.category] += 1;
+      return acc;
+    },
+    { tous: 0, referentiel: 0, guide: 0, memento: 0, feuillet: 0, depliant: 0 },
+  );
 }
 
-// ─── Component ─────────────────────────────────────────────────────────────────
-
-const DocumentsLibrary: React.FC = () => {
+export default function DocumentsLibrary({ externalSearchQuery = '' }: DocumentsLibraryProps = {}) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('tous');
   const [downloadCounts, setDownloadCounts] = useState<DownloadCounts>({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [openCategories, setOpenCategories] = useState<Record<DocumentCategory, boolean>>({
+    referentiel: false,
+    guide: true,
+    memento: false,
+    feuillet: false,
+    depliant: false,
+  });
 
-  // Load persisted download counts from localStorage on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        setDownloadCounts(JSON.parse(saved));
-      }
+      if (saved) setDownloadCounts(JSON.parse(saved));
     } catch {
-      // Silently ignore parse errors
+      setDownloadCounts({});
     }
     setIsLoaded(true);
   }, []);
 
-  // Persist to localStorage whenever counts change (skip initial load)
   useEffect(() => {
     if (isLoaded) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(downloadCounts));
     }
   }, [downloadCounts, isLoaded]);
+
+  useEffect(() => {
+    setSearchQuery(externalSearchQuery);
+  }, [externalSearchQuery]);
 
   const handleDownload = useCallback((filename: string) => {
     setDownloadCounts((prev) => ({
@@ -203,288 +377,255 @@ const DocumentsLibrary: React.FC = () => {
     }));
   }, []);
 
-  const totalCounts = useMemo(() => getCategoryCounts(), []);
+  const counts = useMemo(() => getCategoryCounts(), []);
 
   const filteredDocuments = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
     return DOCUMENTS.filter((doc) => {
-      const matchesSearch =
-        searchQuery === '' ||
-        doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        doc.description.toLowerCase().includes(searchQuery.toLowerCase());
-
       const matchesCategory = activeCategory === 'tous' || doc.category === activeCategory;
+      const matchesSearch =
+        !query ||
+        doc.filename.toLowerCase().includes(query) ||
+        doc.title.toLowerCase().includes(query) ||
+        doc.description.toLowerCase().includes(query);
 
-      return matchesSearch && matchesCategory;
+      return matchesCategory && matchesSearch;
     });
-  }, [searchQuery, activeCategory]);
+  }, [activeCategory, searchQuery]);
 
-  const totalDownloads = useMemo(() => {
-    return Object.values(downloadCounts).reduce((sum, count) => sum + count, 0);
-  }, [downloadCounts]);
+  const totalDownloads = useMemo(
+    () => Object.values(downloadCounts).reduce((total, count) => total + count, 0),
+    [downloadCounts],
+  );
+
+  const handleCategoryFilter = (value: CategoryFilter) => {
+    setActiveCategory(value);
+    if (value !== 'tous') {
+      setOpenCategories((prev) => ({ ...prev, [value]: true }));
+    }
+  };
+
+  const toggleCategory = (category: DocumentCategory) => {
+    setOpenCategories((prev) => ({ ...prev, [category]: !prev[category] }));
+  };
 
   return (
-    <div className="w-full space-y-6">
-      {/* ── Header ─────────────────────────────────────────── */}
-      <div className="space-y-1">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-emerald-900/40 flex items-center justify-center">
-            <FolderOpen className="h-5 w-5 text-emerald-400" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-slate-100 tracking-tight">
-              Bibliothèque de documents techniques
-            </h2>
-            <p className="text-slate-400 text-sm">
-              Accédez à l'ensemble des guides et mémentos techniques PROQUELEC.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Search & Filters ───────────────────────────────── */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        {/* Search */}
-        <div className="relative flex-1">
-          <Label htmlFor="doc-search" className="sr-only">
-            Rechercher un document
-          </Label>
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none" />
-          <Input
-            id="doc-search"
-            type="text"
-            placeholder="Rechercher un document…"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 bg-[#0a2a21] border-emerald-900/50 text-slate-100 placeholder:text-slate-500 focus-visible:ring-emerald-500 focus-visible:border-emerald-500"
-          />
-        </div>
-
-        {/* Category filter */}
-        <Select
-          value={activeCategory}
-          onValueChange={(val: CategoryFilter) => setActiveCategory(val)}
-        >
-          <SelectTrigger className="w-full sm:w-[180px] bg-[#0a2a21] border-emerald-900/50 text-slate-100 focus-visible:ring-emerald-500 focus-visible:border-emerald-500">
-            <SelectValue placeholder="Catégorie" />
-          </SelectTrigger>
-          <SelectContent className="bg-[#0a2a21] border-emerald-900/50 text-slate-100">
-            {CATEGORY_OPTIONS.map((opt) => (
-              <SelectItem
-                key={opt.value}
-                value={opt.value}
-                className="focus:bg-emerald-900/40 focus:text-slate-100 cursor-pointer"
+    <div className="w-full space-y-6 text-[#071225] md:space-y-8">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <div className="flex flex-wrap gap-2 md:gap-3">
+            {(['guide', 'memento', 'feuillet', 'depliant'] as DocumentCategory[]).map((category) => (
+              <span
+                key={category}
+                className={`inline-flex rounded-full px-3 py-2 text-xs font-black shadow md:px-4 md:text-sm ${CATEGORY_META[category].color}`}
               >
-                <span className="flex items-center justify-between w-full gap-3">
-                  {opt.label}
-                  <Badge
-                    variant="secondary"
-                    className="text-[10px] px-1.5 py-0 bg-emerald-900/40 text-slate-400 font-normal"
-                  >
-                    {totalCounts[opt.value]}
-                  </Badge>
-                </span>
-              </SelectItem>
+                {CATEGORY_META[category].label}
+              </span>
             ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* ── Quick category pills (alternative to Select) ──── */}
-      <div className="flex flex-wrap gap-2 -mt-2">
-        {CATEGORY_OPTIONS.map(({ value, label }) => (
-          <button
-            key={value}
-            onClick={() => setActiveCategory(value)}
-            className={`
-              inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium
-              transition-all duration-200 border
-              ${
-                activeCategory === value
-                  ? 'bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-900/30'
-                  : 'bg-[#0a2a21] text-slate-300 border-emerald-900/30 hover:border-emerald-600/50 hover:text-slate-100'
-              }
-            `}
-          >
-            {label}
-            <span
-              className={`
-                text-xs px-2 py-0.5 rounded-full
-                ${
-                  activeCategory === value
-                    ? 'bg-emerald-700/60 text-emerald-100'
-                    : 'bg-emerald-900/40 text-slate-400'
-                }
-              `}
-            >
-              {totalCounts[value]}
-            </span>
-          </button>
-        ))}
-      </div>
-
-      {/* ── Stats bar ─────────────────────────────────────── */}
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-500">
-          {filteredDocuments.length} document
-          {filteredDocuments.length !== 1 ? 's' : ''} trouvé
-          {filteredDocuments.length !== 1 ? 's' : ''}
-        </p>
-        {totalDownloads > 0 && (
-          <Badge
-            variant="outline"
-            className="gap-1.5 border-emerald-800/50 text-emerald-400 bg-emerald-950/20 text-xs"
-          >
-            <Download className="h-3 w-3" />
-            {totalDownloads} téléchargement{totalDownloads !== 1 ? 's' : ''}
-          </Badge>
-        )}
-      </div>
-
-      {/* ── Document grid ─────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredDocuments.map((doc) => (
-          <DocumentCard
-            key={doc.filename}
-            document={doc}
-            downloadCount={downloadCounts[doc.filename] || 0}
-            onDownload={handleDownload}
-          />
-        ))}
-      </div>
-
-      {/* ── Empty state ───────────────────────────────────── */}
-      {filteredDocuments.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-16">
-          <div className="h-16 w-16 rounded-2xl bg-[#0a2a21] border border-emerald-900/30 flex items-center justify-center mb-4">
-            <FolderOpen className="h-8 w-8 text-slate-600" />
           </div>
-          <p className="text-slate-400 text-lg font-medium">Aucun document trouvé</p>
-          <p className="text-slate-500 text-sm mt-1 max-w-sm text-center">
-            Essayez de modifier votre recherche ou votre filtre de catégorie.
+          <h2 className="mt-5 text-2xl font-black text-blue-900 md:mt-6 md:text-3xl">
+            Bibliothèque documentaire
+          </h2>
+          <p className="mt-3 max-w-5xl text-sm leading-relaxed text-slate-700 md:text-base">
+            <strong>Quelle différence ?</strong>
+            <span className="mt-4 block">
+              <strong>Guide technique</strong> : document complet qui détaille une thématique, une
+              méthode ou une procédure.
+            </span>
+            <span className="mt-4 block">
+              <strong>Mémento</strong> : aide-mémoire synthétique pour retrouver rapidement les
+              données essentielles sur le terrain.
+            </span>
+            <span className="mt-4 block">
+              <strong>Feuillet technique</strong> : fiche courte centrée sur un produit, un matériel
+              ou une opération précise.
+            </span>
           </p>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              setSearchQuery('');
-              setActiveCategory('tous');
-            }}
-            className="mt-4 border-emerald-700/50 text-emerald-400 hover:bg-emerald-600 hover:text-white"
-          >
-            Réinitialiser les filtres
-          </Button>
+        </div>
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm shadow-sm lg:min-w-[220px]">
+          <div className="flex items-center gap-2 font-black text-blue-900">
+            <FolderOpen className="h-4 w-4" />
+            {counts.tous} documents importés
+          </div>
+          {totalDownloads > 0 && (
+            <p className="mt-1 text-xs font-semibold text-slate-500">
+              {totalDownloads} téléchargement{totalDownloads > 1 ? 's' : ''} enregistré
+              {totalDownloads > 1 ? 's' : ''}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm md:p-4 lg:grid-cols-[1fr_auto]">
+        <label className="relative block">
+          <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Rechercher un document, un guide, une fiche..."
+            className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 pl-12 pr-4 text-sm font-semibold text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white"
+          />
+        </label>
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+          {CATEGORY_OPTIONS.map((option) => {
+            const active = activeCategory === option.value;
+            const activeClass =
+              option.value === 'tous'
+                ? 'bg-blue-600 text-white'
+                : CATEGORY_META[option.value].color;
+            const inactiveClass =
+              option.value === 'tous'
+                ? 'border-slate-200 bg-slate-100 text-slate-700'
+                : CATEGORY_META[option.value].muted;
+
+            return (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => handleCategoryFilter(option.value)}
+                className={`min-h-11 rounded-full border px-3 py-2 text-xs font-black transition hover:-translate-y-0.5 md:px-4 md:text-sm ${
+                  active ? activeClass : inactiveClass
+                }`}
+              >
+                {option.label}
+                <span className="ml-2 opacity-80">{counts[option.value]}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {filteredDocuments.length === 0 ? (
+        <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm">
+          <FolderOpen className="mx-auto h-10 w-10 text-slate-300" />
+          <p className="mt-4 text-lg font-black text-slate-700">Aucun document trouvé</p>
+          <p className="mt-1 text-sm text-slate-500">Modifiez votre recherche ou le filtre actif.</p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {CATEGORY_ORDER.map((category) => {
+              const docs = filteredDocuments.filter((doc) => doc.category === category);
+              if (docs.length === 0) return null;
+              const shouldForceOpen = searchQuery.trim().length > 0;
+              const isOpen = shouldForceOpen || openCategories[category];
+              const PanelIcon = CATEGORY_META[category].icon;
+
+              return (
+                <section
+                  key={category}
+                  className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleCategory(category)}
+                    className="flex w-full flex-col gap-4 p-4 text-left transition hover:bg-slate-50 sm:flex-row sm:items-center sm:justify-between md:p-5"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="flex min-w-0 items-center gap-3">
+                      <span
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${CATEGORY_META[category].muted}`}
+                      >
+                        <PanelIcon className="h-5 w-5" />
+                      </span>
+                      <span className="min-w-0">
+                        <span
+                          className={`inline-flex rounded-full px-3 py-1.5 text-xs font-black shadow ${CATEGORY_META[category].color}`}
+                        >
+                          {CATEGORY_META[category].label}
+                        </span>
+                        <span className="mt-2 block text-sm font-semibold text-slate-500">
+                          {docs.length} document{docs.length > 1 ? 's' : ''}
+                        </span>
+                      </span>
+                    </span>
+                    <span className="flex items-center justify-between gap-3 text-sm font-black text-blue-800 sm:justify-end">
+                      {isOpen ? 'Replier' : 'Afficher'}
+                      {isOpen ? (
+                        <ChevronDown className="h-5 w-5" />
+                      ) : (
+                        <ChevronRight className="h-5 w-5" />
+                      )}
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="border-t border-slate-100 p-4 md:p-5">
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                        {docs.map((doc) => (
+                          <DocumentCard
+                            key={doc.filename}
+                            document={doc}
+                            downloadCount={downloadCounts[doc.filename] || 0}
+                            onDownload={handleDownload}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </section>
+              );
+            })}
         </div>
       )}
+
+      <div className="text-center">
+        <a
+          href="https://proquelec.sn/documents/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex rounded-2xl bg-blue-700 px-6 py-3 text-base font-black text-white shadow-lg shadow-blue-900/20"
+        >
+          <FolderOpen className="mr-2 h-5 w-5" />
+          Voir tous les documents et guides PROQUELEC
+        </a>
+      </div>
     </div>
   );
-};
-
-// ─── Document Card ─────────────────────────────────────────────────────────────
+}
 
 interface DocumentCardProps {
-  document: Document;
+  document: DocumentEntry;
   downloadCount: number;
   onDownload: (filename: string) => void;
 }
 
-const DocumentCard: React.FC<DocumentCardProps> = ({
-  document: doc,
-  downloadCount,
-  onDownload,
-}) => {
-  const { filename, title, description, category } = doc;
-
-  const IconComponent = category === 'guide' ? BookOpen : FileText;
-  const categoryLabel = category === 'guide' ? 'Guide technique' : 'Mémento';
-  const downloadUrl = `/public/word/${filename}`;
-
-  const handleClick = useCallback(() => {
-    onDownload(filename);
-    // Programmatically trigger the hidden download link
-    const link = window.document.getElementById(`dl-${filename}`);
-    if (link) {
-      link.click();
-    }
-  }, [filename, onDownload]);
+function DocumentCard({ document, downloadCount, onDownload }: DocumentCardProps) {
+  const meta = CATEGORY_META[document.category];
+  const Icon = meta.icon;
+  const downloadUrl = getDownloadUrl(document.filename);
 
   return (
-    <Card className="bg-[#0a2a21] border-emerald-900/40 hover:border-emerald-700/60 transition-all duration-200 group flex flex-col">
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
-            {/* Category icon */}
-            <div
-              className={`
-                shrink-0 w-10 h-10 rounded-lg flex items-center justify-center
-                ${
-                  category === 'guide'
-                    ? 'bg-blue-900/40 text-blue-400'
-                    : 'bg-amber-900/40 text-amber-400'
-                }
-              `}
-            >
-              <IconComponent className="h-5 w-5" />
-            </div>
-            <div className="min-w-0">
-              <CardTitle className="text-sm font-semibold text-slate-100 truncate">
-                {title}
-              </CardTitle>
-              <Badge
-                variant="outline"
-                className={`
-                  mt-1 text-[10px] px-1.5 py-0 font-medium border
-                  ${
-                    category === 'guide'
-                      ? 'text-blue-400 border-blue-800/50 bg-blue-950/30'
-                      : 'text-amber-400 border-amber-800/50 bg-amber-950/30'
-                  }
-                `}
-              >
-                {categoryLabel}
-              </Badge>
-            </div>
+    <article className="flex min-h-[220px] flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-xl md:min-h-[230px] md:p-5">
+      <div>
+        <div className="mb-4 flex items-start justify-between gap-3">
+          <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${meta.muted}`}>
+            <Icon className="h-5 w-5" />
           </div>
-          {/* Download count badge */}
           {downloadCount > 0 && (
-            <Badge
-              variant="secondary"
-              className="shrink-0 flex items-center gap-1 text-[10px] px-1.5 py-0.5 bg-emerald-900/30 text-emerald-400 border border-emerald-800/30"
-            >
-              <File className="h-2.5 w-2.5" />
+            <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-1 text-xs font-black text-slate-500">
+              <File className="mr-1 h-3 w-3" />
               {downloadCount}
-            </Badge>
+            </span>
           )}
         </div>
-      </CardHeader>
-      <CardContent className="pt-0 flex flex-col flex-1">
-        <p className="text-xs text-slate-400 leading-relaxed mb-4 line-clamp-2 flex-1">
-          {description}
-        </p>
-        <Button
-          size="sm"
-          onClick={handleClick}
-          className="
-            w-full gap-2 text-xs font-medium
-            bg-emerald-700/20 border border-emerald-700/50 text-emerald-400
-            hover:bg-emerald-600 hover:text-white hover:border-emerald-500
-            transition-all duration-200
-          "
-        >
-          <Download className="h-3.5 w-3.5" />
-          Télécharger (.doc)
-        </Button>
-        {/* Hidden anchor for actual download */}
-        <a
-          href={downloadUrl}
-          download
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden"
-          id={`dl-${filename}`}
-        />
-      </CardContent>
-    </Card>
+        <p className="text-xs font-black uppercase tracking-wide text-blue-700">{meta.shortLabel}</p>
+        <h3 className="mt-2 text-base font-black leading-tight text-slate-950 md:text-lg">
+          {document.title}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-slate-600">{document.description}</p>
+        <p className="mt-3 break-all text-xs font-semibold text-slate-400">{document.filename}</p>
+      </div>
+      <a
+        href={downloadUrl}
+        download
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => onDownload(document.filename)}
+        className="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-blue-700 px-4 py-3 text-sm font-black text-white shadow-lg shadow-blue-900/15 transition hover:bg-blue-800"
+      >
+        <Download className="mr-2 h-4 w-4" />
+        Télécharger
+      </a>
+    </article>
   );
-};
-
-export default DocumentsLibrary;
+}
