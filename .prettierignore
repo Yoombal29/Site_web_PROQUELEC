@@ -1,5 +1,14 @@
-# Documents RAG volumineux — pas de formatage Prettier au commit
+# RAG & corpus volumineux — pas de formatage Prettier au commit
 server/knowledge_base/**
+public/docs/**
+public/data/**
+src/docs/**
+KEBE/**
+model-page/**
+
+# Documentation projet & données
+docs/**
+*.jsonl
 
 # Build & dépendances
 dist/

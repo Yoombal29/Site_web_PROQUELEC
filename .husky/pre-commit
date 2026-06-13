@@ -1,13 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# Vérification automatique des migrations
-echo "🔍 Vérification des migrations avant commit..."
-if npm run migrate:auto > /dev/null 2>&1; then
-    echo "✅ Migrations à jour"
-else
-    echo "⚠️ Impossible d'appliquer les migrations automatiquement"
-    echo "💡 Vous pouvez les appliquer manuellement avec: npm run migrate:auto"
-fi
-
+# Migrations : au demarrage dev (npm run dev) et au deploy (deploy.ps1), pas a chaque commit.
 npx lint-staged

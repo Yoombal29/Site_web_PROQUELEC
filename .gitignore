@@ -59,6 +59,12 @@ backups/
 # --- RAG cache ---
 server/knowledge_base/.chunks_cache.json
 
+# --- Runtime / artefacts locaux ---
+ai_cache.db
+yolov8n.pt
+vps_pages.json
+desktop.ini
+
 # --- Temporary local files ---
 tmp/
 temp/
