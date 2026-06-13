@@ -39,6 +39,7 @@ import {
   History,
   Eye,
   MapPin,
+  MessageCircle,
   Network,
   TrendingUp,
   Cpu,
@@ -581,10 +582,20 @@ export const premiumApps: ProquelecApp[] = [
     group: 'IA & Outils',
     route: '/expert/ai-providers',
   },
+  {
+    id: 'inspecteur-kebe',
+    title: 'Assistant PROQUELEC',
+    description: 'Guide intelligent du site : calculs électriques, schémas, normes NF C 15-100 et NS 01-001. Alimenté par Groq.',
+    icon: MessageCircle,
+    category: 'premium',
+    status: 'active',
+    group: 'Électriciens',
+    route: '/expert-kebe',
+  },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════════
-  
+
 
 // 🏛️ USAGE INTERNE PROQUELEC (12 Applications - Dashboard/GED)
 // ═══════════════════════════════════════════════════════════════════════════════

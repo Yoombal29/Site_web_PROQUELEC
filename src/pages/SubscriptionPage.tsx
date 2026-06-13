@@ -3,7 +3,7 @@
  * Glassmorphism · Animations · Tarifs FCFA XOF
  */
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -12,8 +12,6 @@ import {
   Crown,
   Star,
   Zap,
-  Infinity,
-  CreditCard,
   Check,
   Shield,
   Sparkles,
@@ -158,6 +156,8 @@ const FAQ_ITEMS = [
 
 export default function SubscriptionPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isWelcome = searchParams.get('welcome') === 'true';
   const [plans, setPlans] = useState<Plan[]>([]);
   const [mySub, setMySub] = useState<Subscription | null>(null);
   const [loading, setLoading] = useState(true);
@@ -276,6 +276,29 @@ export default function SubscriptionPage() {
           )}
         </div>
       </section>
+
+      {/* ─── WELCOME BANNER (after registration) ─── */}
+      {isWelcome && (
+        <section className="max-w-3xl mx-auto px-4 -mt-6 mb-10 w-full">
+          <div className="rounded-3xl p-8 text-center space-y-4 relative overflow-hidden border border-emerald-500/30"
+            style={{ background: 'linear-gradient(135deg, rgba(5,150,105,0.15) 0%, rgba(16,185,129,0.08) 100%)' }}>
+            <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto">
+              <BadgeCheck className="w-8 h-8 text-emerald-400" />
+            </div>
+            <h2 className="text-2xl font-black text-white">
+              Félicitations, votre compte a été créé avec succès ! 🎉
+            </h2>
+            <p className="text-emerald-300/80 text-sm max-w-lg mx-auto">
+              Votre inscription est en attente de validation par un administrateur.
+              Vous recevrez un email dès que votre compte sera activé.
+            </p>
+            <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/25 rounded-xl px-5 py-3 text-amber-200 text-sm">
+              <Shield className="w-4 h-4 shrink-0" />
+              En attendant, choisissez votre abonnement pour être prêt dès l'activation.
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ─── PLANS ─── */}
       <section className="max-w-6xl mx-auto px-4 pb-20 w-full">

@@ -4,17 +4,9 @@ import { PhotoVideoGallery } from "@/components/PhotoVideoGallery";
 import { SEO } from "@/components/SEO";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { Zap, Camera, Play, Sparkles, ArrowRight } from "lucide-react";
-import { useLiveSettings } from "@/hooks/useLiveSettings";
 import { motion } from "framer-motion";
 
 export default function Showroom() {
-  const { settings } = useLiveSettings();
-  const pageData = settings?.page_sections?.showroom;
-
-  if (!pageData) return null;
-
-  const heroData = pageData.content?.hero;
-
   return (
     <div className="min-h-screen bg-slate-50/50 flex flex-col font-sans">
             <SEO

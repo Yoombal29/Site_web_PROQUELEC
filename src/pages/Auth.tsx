@@ -1,5 +1,5 @@
-import { type FormEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { type FormEvent, useEffect, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useSession } from '@/hooks/useSession';
 import { toast } from 'sonner';
 import {
@@ -93,7 +93,16 @@ function getDashboardForRole(role: string): string {
 }
 
 export default function Auth() {
-  const [step, setStep] = useState<StepType>('login');
+  const [searchParams] = useSearchParams();
+  const [step, setStep] = useState<StepType>(
+    searchParams.get('mode') === 'inscription' ? 'signup' : 'login'
+  );
+
+  useEffect(() => {
+    if (searchParams.get('mode') === 'inscription') {
+      setStep('signup');
+    }
+  }, [searchParams]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
@@ -165,7 +174,7 @@ export default function Auth() {
         setError(data.error || "Erreur lors de l'inscription");
       } else {
         login(data.access_token, data.user);
-        navigate(getDashboardForRole(data.user.role));
+        navigate('/abonnements?welcome=true');
         toast.success('Compte créé avec succès !');
       }
     } catch {

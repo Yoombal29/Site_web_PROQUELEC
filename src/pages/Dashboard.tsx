@@ -50,7 +50,6 @@ import AgentHub from '@/components/admin/agents/AgentHub';
 import { AdminHeaderPanel } from '@/components/admin/AdminHeaderPanel';
 import AdminPartnersPanel from '@/components/admin/AdminPartnersPanel';
 import { AdminSEOPanel } from '@/components/admin/AdminSEOPanel';
-import PageSectionsAdmin from './admin/PageSectionsAdmin';
 import { menuItems } from '@/components/AdminSidebar';
 import AdminAcademyPanel from '@/components/admin/AdminAcademyPanel';
 import AdminHelpPanel from '@/components/admin/AdminHelpPanel';
@@ -246,7 +245,11 @@ export default function Dashboard() {
         );
 
       case 'dynamic_content':
-        return <PageSectionsAdmin standalone={false} />;
+        return (
+          <section className="bg-card p-6 rounded-lg shadow-md animate-fade-in border border-border">
+            <p className="text-muted-foreground">Le contenu des pages est maintenant géré via le Builder. <a href="/admin/builder" className="text-blue-500 hover:underline">Accéder au Builder</a></p>
+          </section>
+        );
       case 'menu':
         return (
           <section className="bg-card p-6 rounded-lg shadow-md animate-fade-in border border-border">
@@ -394,16 +397,6 @@ export default function Dashboard() {
           </section>
         );
 
-      case 'espace_presse':
-        return <PageSectionsAdmin standalone={false} defaultPage="presse" />;
-      case 'espace_social':
-        return <PageSectionsAdmin standalone={false} defaultPage="social" />;
-      case 'autorites':
-        return <PageSectionsAdmin standalone={false} defaultPage="autorites" />;
-      case 'menages':
-        return <PageSectionsAdmin standalone={false} defaultPage="menages" />;
-      case 'professionnels':
-        return <PageSectionsAdmin standalone={false} defaultPage="professionnels" />;
       case 'seo':
         return (
           <section className="bg-card p-6 rounded-lg shadow-md animate-fade-in border border-border">

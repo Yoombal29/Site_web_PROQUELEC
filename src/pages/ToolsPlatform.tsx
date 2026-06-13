@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { SEO } from '@/components/SEO';
-import { useLiveSettings } from '@/hooks/useLiveSettings';
 import {
   ArrowRight,
   BadgeCheck,
@@ -60,7 +59,6 @@ const fullCatalogApps = [...freeApps, ...premiumApps, ...internalApps];
  */
 export default function ToolsPlatform() {
   const navigate = useNavigate();
-  const { settings } = useLiveSettings();
   const { hasPremium, isLoading: isLoadingPremium } = usePremiumAccess();
   const { trackEvent, getEvents } = useToolAnalytics();
   const { role } = useUserRole();
@@ -97,9 +95,6 @@ export default function ToolsPlatform() {
       .map((id) => all.find((a) => a.id === id))
       .filter(Boolean) as ProquelecApp[];
   }, [canViewInternalTools, recentToolIds]);
-
-  const pageData = settings?.page_sections?.outils;
-  const heroData = pageData?.content?.hero;
 
   // Appliquer les surcharges admin (localStorage) à une app
   function applyOverrides(app: ProquelecApp): ProquelecApp {

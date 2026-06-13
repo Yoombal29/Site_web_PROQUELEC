@@ -274,8 +274,11 @@ async function callRemoteAI(body) {
   // Default: OpenAI-compatible
   const payload = {
     model: REMOTE_AI_MODEL || 'gpt-4o',
-    messages: body.messages || [{ role: 'user', content: body.prompt || '' }],
-    max_tokens: body.max_tokens || 1024,
+    messages: [
+      { role: 'system', content: SITE_KNOWLEDGE },
+      ...(body.messages || [{ role: 'user', content: body.prompt || '' }]),
+    ],
+    max_tokens: body.max_tokens || 2048,
     temperature: body.temperature || 0.2,
   };
   const response = await fetch(CUSTOM_AI_API_URL || 'https://api.openai.com/v1/chat/completions', {
@@ -828,97 +831,71 @@ const upload = multer({ storage, limits: { fileSize: 500 * 1024 * 1024 } });
 // --- AI ROUTES (REMAINING) ---
 const axios = require('axios');
 
-// AI Provider ping endpoint (used by /expert/ai-providers to test connection)
-app.post('/api/ai/ping-provider', authenticateToken, async (req, res) => {
-  const { providerId, apiKey } = req.body;
-  if (!providerId || !apiKey) {
-    return res.status(400).json({ success: false, error: 'providerId et apiKey requis' });
-  }
+// ─── Système de Connaissances PROQUELEC pour l'IA ───
+const SITE_KNOWLEDGE =
+`Tu es l'assistant officiel de PROQUELEC, l'organisme national de référence pour la qualité et la sécurité des installations électriques au Sénégal.
+
+## GUIDE DU SITE
+
+### Pages publiques
+- / → Accueil
+- /about → Présentation, historique, équipe, gouvernance
+- /events → Calendrier des événements PROQUELEC et partenaires
+- /outils → Catalogue de 40+ applications (gratuites + premium)
+- /expert → Hub IA central (15 modules)
+- /expert/chat → Chat Expert YEAI
+- /expert/ai-providers → Configuration des providers IA
+- /expert-kebe → Assistant PROQUELEC (chat public gratuit)
+- /formations → Formations professionnelles
+- /certifications → Certifications électriques
+- /blog → Actualités et articles techniques
+- /contact → Formulaire de contact
+- /documents → Documents et ressources
+
+### Profils utilisateurs
+- **Grand Public** : diagnostics, simulateurs, guides gratuits
+- **Électriciens Pros** : calculs avancés, schémas, normes (premium)
+- **Partenaires** : soumettent des événements (modérés par admin)
+- **Admin** : dashboard complet, gestion du site, modération
+
+### Dashboard Admin (/admin)
+- IA Central (chat, outils rapides)
+- Utilisateurs & permissions
+- Pages & Builder
+- Événements & Agenda
+- Validations partenaires
+- Médiathèque, Blog, Formations
+- Paiements, Newsletter, Notifications
+- Configuration site, Sections & Contenus
+
+### Règles de conduite
+1. Réponds toujours en français.
+2. Adapte le niveau technique au profil de l'utilisateur.
+3. Pour les calculs électriques, donne la formule ET un exemple.
+4. Pour les normes, cite les articles exacts (NF C 15-100, NS 01-001).
+5. Si l'utilisateur cherche une page, guide-le avec le chemin exact.
+6. Sois pédagogique et professionnel.
+7. Ne donne JAMAIS de conseils dangereux en électricité.`;
+
+// Admin stats endpoint (used by Expert Dashboard)
+app.get('/api/admin/stats', async (req, res) => {
   try {
-    const endpoints = {
-      groq: {
-        url: 'https://api.groq.com/openai/v1/chat/completions',
-        model: 'llama-3.3-70b-versatile',
-      },
-      openai: { url: 'https://api.openai.com/v1/chat/completions', model: 'gpt-4o' },
-      anthropic: {
-        url: 'https://api.anthropic.com/v1/messages',
-        model: 'claude-sonnet-4-20250514',
-      },
-      gemini: {
-        url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
-        model: 'gemini-pro',
-      },
-      deepseek: { url: 'https://api.deepseek.com/v1/chat/completions', model: 'deepseek-chat' },
-      mistral: { url: 'https://api.mistral.ai/v1/chat/completions', model: 'mistral-large-latest' },
-      openrouter: { url: 'https://openrouter.ai/api/v1/chat/completions', model: 'openai/gpt-4o' },
-      together: {
-        url: 'https://api.together.xyz/v1/chat/completions',
-        model: 'mistralai/Mixtral-8x7B-Instruct-v0.1',
-      },
-      fireworks: {
-        url: 'https://api.fireworks.ai/inference/v1/chat/completions',
-        model: 'accounts/fireworks/models/mixtral-8x7b-instruct',
-      },
-      tavily: { url: 'https://api.tavily.com/search', model: '' },
-    };
-    const cfg = endpoints[providerId];
-    if (!cfg) return res.json({ success: false, error: 'Provider inconnu' });
-
-    const start = Date.now();
-    let response;
-
-    if (providerId === 'anthropic') {
-      response = await fetch(cfg.url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-        },
-        body: JSON.stringify({
-          model: cfg.model,
-          max_tokens: 10,
-          messages: [{ role: 'user', content: 'test' }],
-        }),
-      });
-    } else if (providerId === 'gemini') {
-      response = await fetch(`${cfg.url}?key=${apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: 'test' }] }] }),
-      });
-    } else if (providerId === 'tavily') {
-      response = await fetch(cfg.url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ api_key: apiKey, query: 'test' }),
-      });
-    } else {
-      // OpenAI-compatible
-      response = await fetch(cfg.url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-        body: JSON.stringify({
-          model: cfg.model,
-          max_tokens: 10,
-          messages: [{ role: 'user', content: 'test' }],
-        }),
-      });
-    }
-
-    const latency = Date.now() - start;
-    if (response.ok) {
-      return res.json({ success: true, latency });
-    }
-    const errBody = await response.text().catch(() => '');
-    return res.json({
-      success: false,
-      latency,
-      error: `${response.status}: ${errBody.slice(0, 100)}`,
+    const aiReqCount = await pool.query(
+      'SELECT COUNT(*)::int as count FROM public.ai_requests_log',
+    );
+    const docCount = await pool.query('SELECT COUNT(*)::int as count FROM public.media_files');
+    const eventCount = await pool.query('SELECT COUNT(*)::int as count FROM public.events');
+    const userCount = await pool.query(
+      'SELECT COUNT(*)::int as count FROM public.users WHERE is_active = true',
+    );
+    res.json({
+      totalAiRequests: aiReqCount.rows[0]?.count || 0,
+      totalDocuments: docCount.rows[0]?.count || 0,
+      totalEvents: eventCount.rows[0]?.count || 0,
+      totalUsers: userCount.rows[0]?.count || 0,
     });
   } catch (err) {
-    res.json({ success: false, latency: 0, error: err.message });
+    res.json({ totalAiRequests: 0, totalDocuments: 0, totalEvents: 0, totalUsers: 0 });
   }
 });
 
@@ -967,99 +944,19 @@ app.post('/api/ai/chat', async (req, res) => {
       return res.json(data);
     }
 
-    // Priorité 2 : Provider configuré depuis l'interface /expert/ai-providers
-    const dbConfigs = await getAiConfigFromDb();
-    const provider = getEnabledProvider(dbConfigs);
-    if (provider) {
-      const payload = {
-        model:
-          req.body.model ||
-          (provider.id === 'groq'
-            ? 'llama-3.3-70b-versatile'
-            : provider.id === 'anthropic'
-              ? 'claude-sonnet-4-20250514'
-              : provider.id === 'gemini'
-                ? 'gemini-pro'
-                : provider.id === 'deepseek'
-                  ? 'deepseek-chat'
-                  : provider.id === 'mistral'
-                    ? 'mistral-large-latest'
-                    : provider.id === 'openrouter'
-                      ? 'openai/gpt-4o'
-                      : 'gpt-4o'),
-        messages: req.body.messages || [{ role: 'user', content: req.body.prompt || '' }],
-        max_tokens: req.body.max_tokens || 1024,
-      };
-
-      if (provider.id === 'anthropic') {
-        const response = await fetch(provider.url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': provider.key,
-            'anthropic-version': '2023-06-01',
-          },
-          body: JSON.stringify({ ...payload, messages: payload.messages }),
-        });
-        if (!response.ok) throw new Error(`Anthropic API error: ${response.status}`);
-        const data = await response.json();
-        return res.json(data);
-      }
-
-      if (provider.id === 'gemini') {
-        const response = await fetch(`${provider.url}?key=${provider.key}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts: [{ text: req.body.prompt || '' }] }] }),
-        });
-        if (!response.ok) throw new Error(`Gemini API error: ${response.status}`);
-        const data = await response.json();
-        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || JSON.stringify(data);
-        return res.json({ response: text, model: 'gemini-pro' });
-      }
-
-      // OpenAI-compatible (Groq, DeepSeek, Mistral, OpenRouter, etc.)
-      const response = await fetch(provider.url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${provider.key}` },
-        body: JSON.stringify(payload),
-      });
-      if (!response.ok) {
-        const errBody = await response.text().catch(() => '');
-        throw new Error(`${provider.id} API error (${response.status}): ${errBody.slice(0, 200)}`);
-      }
-      const data = await response.json();
-      // Normaliser au format attendu par le frontend
-      const assistantReply =
-        data?.choices?.[0]?.message?.content ||
-        data?.response ||
-        data?.text ||
-        JSON.stringify(data);
-      return res.json({ response: assistantReply, model: data.model || payload.model });
-    }
-
-    // Priorité 3 : Fallback local (legacy, probablement indisponible)
+    // Priorité 2 : Assistant PRO — Master Agent avec RAG (source unique : MASTER_CONSOLIDE.md)
     const { masterRoute } = await import('./modules/ai/master.agent.js');
-    const adaptedReq = {
+    const result = await masterRoute({
       body: {
-        task: 'chat',
-        prompt: req.body.prompt || req.body.messages?.[0]?.content || '',
+        task: 'expert',
+        prompt: req.body.prompt || req.body.messages?.map(m => m.content).join('\n') || '',
         context: null,
-        sessionId: null,
-        useRag: false,
+        provider: req.body.provider || null,
+        model: req.body.model || null,
+        useRag: true,
       },
-    };
-    const response = await fetch('http://127.0.0.1:8002/query', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: adaptedReq.body.prompt }),
     });
-    if (response.ok) {
-      const data = await response.json();
-      return res.json({ response: data.response || data.answer || JSON.stringify(data) });
-    }
-    const result = await masterRoute(adaptedReq);
-    res.json(result);
+    return res.json(result);
   } catch (err) {
     console.error('[AI-CHAT] Error:', err);
     res.status(500).json({
@@ -1232,18 +1129,6 @@ app.get('/api/ai/status', async (req, res) => {
   res.json(statuses);
 });
 
-app.post('/api/admin/ai/start', authenticateToken, requireAdmin, async (_req, res) => {
-  return res
-    .status(501)
-    .json({ error: 'Local AI service unavailable', message: LOCAL_AI_REMOVED_MESSAGE });
-});
-
-app.post('/api/admin/ai/stop', authenticateToken, requireAdmin, async (_req, res) => {
-  return res
-    .status(501)
-    .json({ error: 'Local AI service unavailable', message: LOCAL_AI_REMOVED_MESSAGE });
-});
-
 // --- CREWAI ORCHESTRATOR ---
 app.post('/api/ai/orchestrate', authenticateToken, requireAdmin, orchestrate);
 
@@ -1309,6 +1194,36 @@ app.use('/api/admin/builder-permissions', builderPermsRouter);
 // CMS public/admin APIs mounted under /api/cms to avoid conflict with /api/events SSE.
 const cmsModule = require('./modules/cms/cms.routes');
 app.use('/api/cms', cmsModule.router);
+
+// Public endpoints exposed directly under /api (outside /api/cms) for frontend compatibility
+app.get('/api/ecommerce/catalog', async (req, res) => {
+  try {
+    const cmsService = require('./modules/cms/cms.service');
+    res.json({ products: await cmsService.listEcommerceCatalog() });
+  } catch (err) {
+    console.error('[ECOMMERCE] Catalog error:', err.message);
+    res.json({ products: [] });
+  }
+});
+
+app.get('/api/payment-settings', async (_req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM public.site_settings WHERE key LIKE 'payment_%'",
+    );
+    const settings = {};
+    result.rows.forEach((row) => {
+      try { settings[row.key] = JSON.parse(row.value); } catch { settings[row.key] = row.value; }
+    });
+    res.json({
+      providers: settings.payment_providers || {},
+      default_provider: settings.payment_default_provider || 'paydunya',
+    });
+  } catch (err) {
+    console.error('[PAYMENT] Public settings error:', err.message);
+    res.json({ providers: {}, default_provider: 'paydunya' });
+  }
+});
 
 // Pages module (must be BEFORE projects to avoid router-level auth interception)
 const pagesModule = require('./modules/pages/pages.routes');

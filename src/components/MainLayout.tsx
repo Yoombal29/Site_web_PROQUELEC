@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { CommandPalette } from './CommandPalette';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { RuntimeBanner } from '@/engine/runtime';
+import { MessageCircle, Zap } from 'lucide-react';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 declare global {
   interface Window {
     __LAST_REDIRECT_REASON?: string;
@@ -46,6 +47,7 @@ function useNavDebug() {
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   useNavDebug();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   useEffect(() => {
     let es: EventSource | null = null;
@@ -124,6 +126,19 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="fixed top-4 right-4 z-40">
         <LanguageSwitcher />
       </div>
+
+      {/* Floating KEBE assistant button */}
+      <button
+        onClick={() => navigate('/expert-kebe')}
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-2xl shadow-blue-900/40 hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300 flex items-center justify-center group"
+        title="Posez votre question à l'Assistant PROQUELEC"
+      >
+        <MessageCircle className="w-6 h-6 group-hover:scale-110 transition-transform" />
+        <span className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center text-[9px] font-bold shadow-lg animate-pulse">
+          <Zap className="w-3 h-3" />
+        </span>
+      </button>
+
       {children}
     </>
   );

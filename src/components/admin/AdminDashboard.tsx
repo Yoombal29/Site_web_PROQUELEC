@@ -83,7 +83,6 @@ import { AdminDatabasePanel } from './AdminDatabasePanel';
 import AdminSiteSettingsPanel from './AdminSiteSettingsPanel';
 import { MenuManager } from './MenuManager';
 
-import PageSectionsAdmin from '@/pages/admin/PageSectionsAdmin';
 import AdminThemePanel from './AdminThemePanel';
 import AdminLogsPanel from './AdminLogsPanel';
 import AdminHelpPanel from './AdminHelpPanel';
@@ -1467,26 +1466,6 @@ const AdminDashboard: React.FC = () => {
               </div>
             )}
 
-            {/* ========== ONGLETS CORTEX IA (LEGACY — removed) ========== */}
-            {activeTab === 'ai_providers' && (
-              <div className="animate-fade-in">
-                <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-foreground">Gestion des modèles IA</h2>
-                  <p className="text-muted-foreground">Configuration des API et modèles</p>
-                </div>
-                <AdminRagDashboard />
-              </div>
-            )}
-            {activeTab === 'ia_docs' && (
-              <div className="animate-fade-in">
-                <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-foreground">Documentation IA</h2>
-                  <p className="text-muted-foreground">Guides et références techniques IA</p>
-                </div>
-                <InfraDocs />
-              </div>
-            )}
-
             {activeTab === 'academy_ai' && (
               <div className="animate-fade-in">
                 <div className="mb-6">
@@ -1523,16 +1502,6 @@ const AdminDashboard: React.FC = () => {
               </div>
             )}
 
-            {/* ========== ONGLETS CMS SUPPLÉMENTAIRES ========== */}
-            {activeTab === 'dynamic_content' && (
-              <div className="animate-fade-in">
-                <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-foreground">Sections &amp; Contenus</h2>
-                  <p className="text-muted-foreground">Gestion des sections de pages</p>
-                </div>
-                <PageSectionsAdmin />
-              </div>
-            )}
             {activeTab === 'menu' && (
               <div className="animate-fade-in">
                 <div className="mb-6">

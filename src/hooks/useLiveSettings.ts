@@ -36,7 +36,6 @@ export interface LiveSettings {
   cta_primary_url?: string;
   cta_secondary_text?: string;
   cta_secondary_url?: string;
-  page_sections?: Record<string, unknown>;
 }
 
 const fetchLiveSettings = async (): Promise<LiveSettings> => {
@@ -123,7 +122,6 @@ const fetchLiveSettings = async (): Promise<LiveSettings> => {
       siteData?.audience_desc_member,
       "Participez à la vie de l'institution, bénéficiez d'un support prioritaire et de la veille normative en avant-première.",
     ),
-    page_sections: (siteData?.page_sections as Record<string, unknown>) || {},
   };
 
   return settings;

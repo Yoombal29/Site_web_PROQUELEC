@@ -502,53 +502,6 @@ export type Database = {
         }
         Relationships: []
       }
-      page_sections: {
-        Row: {
-          content: string | null
-          created_at: string | null
-          id: string
-          image_url: string | null
-          is_visible: boolean | null
-          page_id: string | null
-          section_order: number | null
-          section_type: string
-          settings: Json | null
-          title: string | null
-        }
-        Insert: {
-          content?: string | null
-          created_at?: string | null
-          id?: string
-          image_url?: string | null
-          is_visible?: boolean | null
-          page_id?: string | null
-          section_order?: number | null
-          section_type: string
-          settings?: Json | null
-          title?: string | null
-        }
-        Update: {
-          content?: string | null
-          created_at?: string | null
-          id?: string
-          image_url?: string | null
-          is_visible?: boolean | null
-          page_id?: string | null
-          section_order?: number | null
-          section_type?: string
-          settings?: Json | null
-          title?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "page_sections_page_id_fkey"
-            columns: ["page_id"]
-            isOneToOne: false
-            referencedRelation: "pages"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       pages: {
         Row: {
           content: string | null

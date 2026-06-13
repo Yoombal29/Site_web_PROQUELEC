@@ -33,6 +33,14 @@ import { BuilderErrorBoundary } from '@/components/god-builder/BuilderErrorBound
 import { useBrandingStore } from '@/stores/branding.store';
 
 import { CRAFT_RESOLVER as RESOLVER } from '@/components/blocks/craftResolver';
+import { PageArchitectureGuide } from '@/components/god-builder/PageArchitectureGuide';
+import { PageStrategyBanner } from '@/components/god-builder/PageStrategyBanner';
+import {
+  resolvePageArchitecture,
+  getArchitectureBadgeClass,
+  PAGE_ARCHITECTURE_LABELS,
+  type PageArchitectureCategory,
+} from '@/lib/page-architecture';
 
 import { GodEditorProvider, useGodEditor } from '@/components/god-builder/GodEditorContext';
 import { DynamicContextProvider } from '@/components/blocks/DynamicDataBlocks';
@@ -80,10 +88,6 @@ type CreatePagePayload = {
 const getErrorMessage = (error: unknown, fallback: string) =>
   error instanceof Error ? error.message : fallback;
 
-const getPageType = (page: Pick<BuilderListPage, 'design_options'>) =>
-  page.design_options && typeof page.design_options === 'object'
-    ? page.design_options.page_type
-    : undefined;
 
 // ─────────────────────────────────────────────────────────
 // PAGE SELECTOR SCREEN (shown when no pageId in URL)
@@ -203,18 +207,15 @@ const PageSelectorScreen = () => {
   };
 
   const filtered = pages.filter((p) => {
-    // Search filter
     const matchesSearch =
       (p.title || '').toLowerCase().includes(search.toLowerCase()) ||
       (p.slug || '').toLowerCase().includes(search.toLowerCase());
     if (!matchesSearch) return false;
 
-    // Type filter
     if (pageTypeFilter === 'all') return true;
-    if (pageTypeFilter === 'content') return !p.immutable;
-    if (pageTypeFilter === 'functional') return p.immutable === true && getPageType(p) !== 'hybrid';
-    if (pageTypeFilter === 'hybrid') return getPageType(p) === 'hybrid';
-    return true;
+    const arch = resolvePageArchitecture(p.slug || '', p);
+    const cat = arch?.category ?? (p.immutable ? 'functional' : 'content');
+    return cat === pageTypeFilter;
   });
 
   const statusColors: Record<string, string> = {
@@ -290,22 +291,15 @@ const PageSelectorScreen = () => {
               </div>
 
               {/* Type Filter */}
-              <div className="px-4 py-3 border-b border-[#252538] flex gap-1">
-                {[
-                  { key: 'all', label: 'Tous' },
-                  { key: 'content', label: '🟢 Contenu', check: (p) => !p.immutable },
-                  {
-                    key: 'functional',
-                    label: '🔒 Fonctionnel',
-                    check: (p: BuilderListPage) =>
-                      p.immutable === true && getPageType(p) !== 'hybrid',
-                  },
-                  {
-                    key: 'hybrid',
-                    label: '🔵 Hybride',
-                    check: (p: BuilderListPage) => getPageType(p) === 'hybrid',
-                  },
-                ].map(({ key, label }) => (
+              <div className="px-4 py-3 border-b border-[#252538] flex flex-wrap gap-1">
+                {(
+                  [
+                    { key: 'all', label: 'Tous' },
+                    { key: 'content', label: '🟢 Contenu' },
+                    { key: 'hybrid', label: '🔵 Hybride' },
+                    { key: 'functional', label: '🔒 Fonctionnel' },
+                  ] as { key: PageArchitectureCategory | 'all'; label: string }[]
+                ).map(({ key, label }) => (
                   <button
                     key={key}
                     onClick={() => setPageTypeFilter(key)}
@@ -389,16 +383,19 @@ const PageSelectorScreen = () => {
                             <Copy size={12} />
                           </button>
                         </div>
-                        {getPageType(page) === 'hybrid' && (
-                          <span className="text-xs px-2 py-1 rounded-full whitespace-nowrap bg-blue-500/15 text-blue-400 border border-blue-500/20">
-                            🔵 Hybride
-                          </span>
-                        )}
-                        {page.immutable === true && getPageType(page) !== 'hybrid' && (
-                          <span className="text-xs px-2 py-1 rounded-full whitespace-nowrap bg-amber-500/15 text-amber-400 border border-amber-500/20">
-                            🔒 Fonctionnel
-                          </span>
-                        )}
+                        {(() => {
+                          const arch = resolvePageArchitecture(page.slug || '', page);
+                          const cat = arch?.category ?? (page.immutable ? 'functional' : 'content');
+                          const meta = PAGE_ARCHITECTURE_LABELS[cat];
+                          return (
+                            <span
+                              className={`text-xs px-2 py-1 rounded-full whitespace-nowrap border ${getArchitectureBadgeClass(cat)}`}
+                              title={arch?.hint}
+                            >
+                              {meta.emoji} {meta.label}
+                            </span>
+                          );
+                        })()}
                         {page.status && (
                           <span
                             className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${statusColors[page.status] || ''}`}
@@ -424,29 +421,11 @@ const PageSelectorScreen = () => {
             </div>
           )}
 
-          {/* Main Content Area */}
-          <div className="flex-1 bg-[#12121f] border border-[#252538] rounded-xl p-8 flex flex-col items-center justify-center">
-            <div className="text-center max-w-2xl">
-              <div className="mb-6">
-                <FileText size={48} className="mx-auto opacity-40 text-slate-500" />
-              </div>
-              <h2 className="text-3xl font-black text-white mb-3">Sélectionnez une page</h2>
-              <p className="text-slate-400 mb-8">
-                {filtered.length === 0
-                  ? search
-                    ? `Aucune page ne correspond à "${search}"`
-                    : 'Aucune page disponible. Créez-en une pour commencer!'
-                  : `Sélectionnez une page dans la liste pour l'éditer`}
-              </p>
-              <button
-                onClick={() => setShowNewDialog(true)}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-lg transition-all shadow-lg shadow-indigo-900/20"
-              >
-                <Plus size={18} />
-                Créer une nouvelle page
-              </button>
-            </div>
-          </div>
+          {/* Guide architecture + matrice URLs */}
+          <PageArchitectureGuide
+            dbPages={pages}
+            onOpenPage={(id) => navigate(`/admin/builder/${id}`)}
+          />
         </div>
       </div>
 
@@ -544,7 +523,8 @@ const PageSelectorScreen = () => {
 // BUILDER CONTENT (with loading state handling)
 // ─────────────────────────────────────────────────────────
 const BuilderPageContent = () => {
-  const { isLoading, error } = useGodEditor();
+  const { isLoading, error, pageData } = useGodEditor();
+  const [bannerDismissed, setBannerDismissed] = React.useState(false);
 
   if (isLoading) {
     return (
@@ -577,6 +557,14 @@ const BuilderPageContent = () => {
   return (
     <>
       <GodToolbar />
+      <PageStrategyBanner
+        slug={pageData?.slug}
+        title={pageData?.title}
+        immutable={pageData?.immutable}
+        designOptions={pageData?.designOptions as { page_type?: string } | null}
+        dismissed={bannerDismissed}
+        onDismiss={() => setBannerDismissed(true)}
+      />
       <div className="flex-1 flex overflow-hidden">
         <div className="flex flex-col h-full overflow-hidden bg-[#1a1a2a]">
           <div className="flex flex-1 overflow-hidden">

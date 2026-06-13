@@ -62,14 +62,6 @@ export const FUNCTIONAL_PAGE_DEFINITIONS: FunctionalPageDefinition[] = [
     component: lazyDefault(() => import('@/components/admin/AdminDashboard')),
   },
   {
-    slug: 'admin/page-sections',
-    title: 'Sections de page',
-    description: 'Gestion des sections admin',
-    route: '/admin/page-sections',
-    securityLevel: 'admin',
-    component: lazyDefault(() => import('@/pages/admin/PageSectionsAdmin')),
-  },
-  {
     slug: 'admin/builder',
     title: 'God Mode Builder',
     description: 'Editeur de pages visuel',

@@ -6,8 +6,6 @@ import type { PageRecord } from '@/types/PageSystem';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
-import { DEFAULT_PAGE_SECTIONS } from '@/data/defaultPageSections';
-import UniversalSectionsPage from '@/pages/UniversalSectionsPage';
 // @ts-expect-error - BuilderPageRenderer may not have full type definitions in build step
 import BuilderPageRenderer from '@/components/builder/BuilderPageRenderer';
 import { Block } from '@/types/builder';
@@ -22,9 +20,6 @@ import Documents from './Documents';
 import Events from './Events';
 import Labels from './Labels';
 import AboutPage from './About';
-
-
-import { useLiveSettings } from '@/hooks/useLiveSettings';
 
 // Craft.js read-only rendering — import lazy pour éviter d'alourdir le bundle public
 const CraftPageRenderer = React.lazy(() => import('@/components/CraftPageRenderer'));
@@ -79,28 +74,6 @@ const PAGE_ALIASES: Record<string, string> = {
   'evenements/anniversaire': 'actualites_evenements',
   'evenements/seminaires': 'actualites_evenements',
 };
-
-const SECTION_DRIVEN_PAGE_KEYS = new Set([
-  'home_page',
-  'public_utility',
-  'formation_certification',
-  'normes_ressources',
-  'projets_realisations',
-  'actualites_evenements',
-  'autorites',
-  'menages',
-  'professionnels',
-  'presse',
-  'social',
-  'marches',
-  'partenaires',
-  'espace_partenaires',
-  'trainings',
-  'activities',
-  'expert_lab',
-  'blog',
-  'avis_clients',
-]);
 
 const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
   about: AboutPage,
@@ -216,12 +189,10 @@ const DynamicPageComponent: React.FC = () => {
     paramSlug ||
     normalizeRouteSlug(location.pathname);
   const effectiveSlug = rawSlug === '' || rawSlug === 'fr' || rawSlug === 'en' ? 'home' : rawSlug;
-  const resolvedPageKey = PAGE_ALIASES[effectiveSlug] || effectiveSlug;
   const [page, setPage] = useState<PageRecord | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [fallbackPageKey, setFallbackPageKey] = useState<string | null>(null);
-  const { settings } = useLiveSettings();
 
   useEffect(() => {
     const match = location.pathname.match(/^\/(fr|en)(\/.*)?$/);
@@ -266,42 +237,14 @@ const DynamicPageComponent: React.FC = () => {
       // Supprimer les query strings et hash du slug
       effectiveSlug = effectiveSlug.split('?')[0].split('#')[0];
 
-      const resolvedPageKey = PAGE_ALIASES[effectiveSlug] || effectiveSlug;
-      const settingsKey = resolvedPageKey;
+      const resolvedSlug = PAGE_ALIASES[effectiveSlug] || effectiveSlug;
 
       try {
-        if (SECTION_DRIVEN_PAGE_KEYS.has(resolvedPageKey)) {
-          setPage(null);
-          setFallbackPageKey(settingsKey);
-          setLoading(false);
-          return;
-        }
-
         const data =
           (await fetchPublishedPageBySlug(effectiveSlug)) ||
-          (PAGE_ALIASES[effectiveSlug]
-            ? await fetchPublishedPageBySlug(PAGE_ALIASES[effectiveSlug])
-            : null);
+          (effectiveSlug !== resolvedSlug ? await fetchPublishedPageBySlug(resolvedSlug) : null);
 
         if (!data) {
-          // FALLBACK 1: site_settings.page_sections (Database settings)
-          // FALLBACK 2: DEFAULT_PAGE_SECTIONS (Hardcoded defaults)
-          const liveSection =
-            (settings as any)?.page_sections?.[effectiveSlug] ||
-            (settings as any)?.page_sections?.[resolvedPageKey];
-          const defaultData =
-            (DEFAULT_PAGE_SECTIONS as unknown)[effectiveSlug] ||
-            (DEFAULT_PAGE_SECTIONS as unknown)[resolvedPageKey];
-
-          const sourceData = liveSection || defaultData;
-
-          if (sourceData) {
-            setPage(null);
-            setFallbackPageKey(settingsKey);
-            setLoading(false);
-            return;
-          }
-
           const fallbackPageComponent = SPECIAL_FALLBACK_PAGES[effectiveSlug];
           if (fallbackPageComponent) {
             setFallbackPageKey(effectiveSlug);
@@ -402,10 +345,6 @@ const DynamicPageComponent: React.FC = () => {
         </div>
       </>
     );
-  }
-
-  if (fallbackPageKey) {
-    return <UniversalSectionsPage pageKey={fallbackPageKey} />;
   }
 
   if (error || !page) {

@@ -28,6 +28,7 @@ import {
   Globe,
   Sparkles,
   CreditCard,
+  ShoppingBag,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -51,6 +52,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   GraduationCap,
   Globe,
   Sparkles,
+  ShoppingBag,
 };
 
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -108,6 +110,49 @@ type CombinedNavItem =
   | (NavLinkItem & { type: 'nav' })
   | (MegaMenuSection & { type: 'mega' })
   | { id?: string; label: string; path: string; type: 'extra' };
+
+const boutiquePremiumItem = { label: 'Boutique premium', path: '/boutique-premium' };
+
+const hasBoutiquePremium = (sections: MegaMenuSection[]) =>
+  sections.some((section) =>
+    section.columns.some((column) =>
+      column.items.some((item) => item.path === boutiquePremiumItem.path || item.path === '/boutique'),
+    ),
+  );
+
+const appendBoutiquePremiumToMenu = (sections: MegaMenuSection[]): MegaMenuSection[] => {
+  if (hasBoutiquePremium(sections)) return sections;
+
+  return sections.map((section, sectionIndex) => {
+    if (sectionIndex !== 0) return section;
+
+    const resourceColumnIndex = section.columns.findIndex((column) =>
+      column.title.toLowerCase().includes('ressource'),
+    );
+
+    if (resourceColumnIndex >= 0) {
+      return {
+        ...section,
+        columns: section.columns.map((column, columnIndex) =>
+          columnIndex === resourceColumnIndex
+            ? { ...column, items: [...column.items, boutiquePremiumItem] }
+            : column,
+        ),
+      };
+    }
+
+    return {
+      ...section,
+      columns: [
+        ...section.columns,
+        {
+          title: 'Boutique',
+          items: [boutiquePremiumItem],
+        },
+      ],
+    };
+  });
+};
 
 export const Header = ({ solid = false }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -247,7 +292,7 @@ export const Header = ({ solid = false }: HeaderProps) => {
   // Mega menu groupé par sections (Dynamique depuis DB si possible)
   const dbMegaItems = mi?.filter((item) => item.is_active && item.menu_type === 'mega') || [];
 
-  const megaMenuSections =
+  const rawMegaMenuSections =
     dbMegaItems.length > 0
       ? dbMegaItems
           .filter((item) => !item.parent_id)
@@ -310,6 +355,8 @@ export const Header = ({ solid = false }: HeaderProps) => {
           },
         ];
 
+  const megaMenuSections = appendBoutiquePremiumToMenu(rawMegaMenuSections);
+
   // Rest of active items (not in main nav and not excluded)
   const excludedUrls = [
     '/',
@@ -317,6 +364,8 @@ export const Header = ({ solid = false }: HeaderProps) => {
     '/activities',
     '/labels',
     '/documents',
+    '/boutique',
+    '/boutique-premium',
     '/events',
     '/certifications',
     '/formations',

@@ -18,6 +18,7 @@ import {
   Globe,
   Home,
   GraduationCap,
+  MessageCircle,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -200,6 +201,17 @@ const MODULES: Module[] = [
     bg: 'bg-emerald-500/10',
     path: '/admin?tab=academy_ai',
     category: 'ia',
+  },
+  {
+    title: 'Assistant PROQUELEC',
+    description:
+      'Guide intelligent du site : calculs électriques, schémas, normes NF C 15-100, orientation dans le site. Gratuit pour tous.',
+    icon: MessageCircle,
+    color: 'text-blue-500',
+    bg: 'bg-blue-500/10',
+    path: '/expert-kebe',
+    category: 'tools',
+    badge: 'Gratuit',
   },
 ];
 

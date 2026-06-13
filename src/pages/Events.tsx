@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ArrowRight,
   CalendarCheck,
@@ -17,7 +17,6 @@ import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { SEO } from '@/components/SEO';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useLiveSettings } from '@/hooks/useLiveSettings';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -132,11 +131,6 @@ const DEFAULT_CONTENT: EventsPageContent = {
   },
 };
 
-const asRecord = (value: unknown): Record<string, unknown> =>
-  value && typeof value === 'object' && !Array.isArray(value)
-    ? (value as Record<string, unknown>)
-    : {};
-
 const text = (value: unknown, fallback: string) => {
   const candidate = typeof value === 'string' ? value.trim() : '';
   return candidate || fallback;
@@ -191,135 +185,6 @@ const normalizeEvent = (row: EventApiRow): DisplayEvent => {
     status: text(row.status, 'published'),
     registrationUrl: text(details.registrationUrl, '/contact'),
     detailsUrl: text(details.detailsUrl, `/events#event-${row.id}`),
-  };
-};
-
-const buildPageContent = (pageSections: Record<string, unknown> | undefined): EventsPageContent => {
-  const eventsPage = asRecord(pageSections?.events);
-  const content = asRecord(eventsPage.content);
-
-  // ---- Dual-format support ----
-  // 1) Specific format (rich fields: badge, primaryLabel, buttonLabel, etc.)
-  // 2) Generic PageSectionsAdmin format (sections[] + content[].{title,subtitle,features,image})
-
-  const fromSection = (sectionId: string, field: string, fallback: string): string => {
-    const section = asRecord(content[sectionId]);
-    const features = Array.isArray(section.features) ? section.features : [];
-    // Try exact field first, then pull from features array if present
-    const direct = text((section as Record<string, unknown>)[field], '');
-    if (direct) return direct;
-    // For generic format, features are pipe-delimited: "label | value"
-    const match = features.find((f: unknown) => typeof f === 'string' && f.startsWith(field + '|'));
-    if (match) return (match as string).split('|')[1]?.trim() || fallback;
-    // Fallback: use section.subtitle or section.title as generic content
-    if (field === 'badge') return text(section.subtitle, fallback);
-    if (field === 'description') return text(section.subtitle, fallback);
-    if (field === 'primaryLabel' || field === 'secondaryLabel' || field === 'buttonLabel') {
-      // Buttons: grab first two features as button labels
-      const idx = field === 'primaryLabel' || field === 'buttonLabel' ? 0 : 1;
-      const btnFeature = features[idx];
-      if (typeof btnFeature === 'string') {
-        return btnFeature.split('|')[0]?.trim() || fallback;
-      }
-      return fallback;
-    }
-    if (field === 'primaryHref' || field === 'secondaryHref' || field === 'buttonHref') {
-      const idx = field === 'primaryHref' || field === 'buttonHref' ? 0 : 1;
-      const btnFeature = features[idx];
-      if (typeof btnFeature === 'string') {
-        const parts = btnFeature.split('|');
-        return parts[1]?.trim() || parts[0]?.trim() || fallback;
-      }
-      return fallback;
-    }
-    return text((section as Record<string, unknown>)[field], fallback);
-  };
-
-  // Detect format:
-  // - Specific: content.hero has fields like 'badge' or 'primaryLabel'
-  // - Generic (PageSectionsAdmin): content.{id} has {title, subtitle, features, image}
-  const heroKeys = Object.keys(asRecord(content.hero));
-  const hasSpecific = heroKeys.includes('badge') || heroKeys.includes('primaryLabel');
-
-  if (hasSpecific) {
-    const hero = asRecord(content.hero);
-    const official = asRecord(content.official);
-    const partners = asRecord(content.partners);
-    const cta = asRecord(content.cta);
-
-    return {
-      hero: {
-        badge: text(hero.badge, DEFAULT_CONTENT.hero.badge),
-        title: text(hero.title, DEFAULT_CONTENT.hero.title),
-        subtitle: text(hero.subtitle, DEFAULT_CONTENT.hero.subtitle),
-        description: text(hero.description, DEFAULT_CONTENT.hero.description),
-        primaryLabel: text(hero.primaryLabel, DEFAULT_CONTENT.hero.primaryLabel),
-        primaryHref: text(hero.primaryHref, DEFAULT_CONTENT.hero.primaryHref),
-        secondaryLabel: text(hero.secondaryLabel, DEFAULT_CONTENT.hero.secondaryLabel),
-        secondaryHref: text(hero.secondaryHref, DEFAULT_CONTENT.hero.secondaryHref),
-      },
-      official: {
-        badge: text(official.badge, DEFAULT_CONTENT.official.badge),
-        title: text(official.title, DEFAULT_CONTENT.official.title),
-        subtitle: text(official.subtitle, DEFAULT_CONTENT.official.subtitle),
-      },
-      partners: {
-        badge: text(partners.badge, DEFAULT_CONTENT.partners.badge),
-        title: text(partners.title, DEFAULT_CONTENT.partners.title),
-        subtitle: text(partners.subtitle, DEFAULT_CONTENT.partners.subtitle),
-        buttonLabel: text(partners.buttonLabel, DEFAULT_CONTENT.partners.buttonLabel),
-        buttonHref: text(partners.buttonHref, DEFAULT_CONTENT.partners.buttonHref),
-      },
-      cta: {
-        title: text(cta.title, DEFAULT_CONTENT.cta.title),
-        description: text(cta.description, DEFAULT_CONTENT.cta.description),
-        primaryLabel: text(cta.primaryLabel, DEFAULT_CONTENT.cta.primaryLabel),
-        primaryHref: text(cta.primaryHref, DEFAULT_CONTENT.cta.primaryHref),
-        secondaryLabel: text(cta.secondaryLabel, DEFAULT_CONTENT.cta.secondaryLabel),
-        secondaryHref: text(cta.secondaryHref, DEFAULT_CONTENT.cta.secondaryHref),
-      },
-    };
-  }
-
-  // ---- Generic PageSectionsAdmin format ----
-  const heroSection = asRecord(content.hero || content['en-tete'] || {});
-  const officialSection = asRecord(
-    content.official || content.institutionnel || content.officiel || {},
-  );
-  const partnersSection = asRecord(content.partners || content.partenaires || {});
-  const ctaSection = asRecord(content.cta || content.appel || {});
-
-  return {
-    hero: {
-      badge: fromSection('hero', 'badge', DEFAULT_CONTENT.hero.badge),
-      title: text(heroSection.title, DEFAULT_CONTENT.hero.title),
-      subtitle: text(heroSection.subtitle, DEFAULT_CONTENT.hero.subtitle),
-      description: fromSection('hero', 'description', DEFAULT_CONTENT.hero.description),
-      primaryLabel: fromSection('hero', 'primaryLabel', DEFAULT_CONTENT.hero.primaryLabel),
-      primaryHref: fromSection('hero', 'primaryHref', DEFAULT_CONTENT.hero.primaryHref),
-      secondaryLabel: fromSection('hero', 'secondaryLabel', DEFAULT_CONTENT.hero.secondaryLabel),
-      secondaryHref: fromSection('hero', 'secondaryHref', DEFAULT_CONTENT.hero.secondaryHref),
-    },
-    official: {
-      badge: fromSection('official', 'badge', DEFAULT_CONTENT.official.badge),
-      title: text(officialSection.title, DEFAULT_CONTENT.official.title),
-      subtitle: text(officialSection.subtitle, DEFAULT_CONTENT.official.subtitle),
-    },
-    partners: {
-      badge: fromSection('partners', 'badge', DEFAULT_CONTENT.partners.badge),
-      title: text(partnersSection.title, DEFAULT_CONTENT.partners.title),
-      subtitle: text(partnersSection.subtitle, DEFAULT_CONTENT.partners.subtitle),
-      buttonLabel: fromSection('partners', 'buttonLabel', DEFAULT_CONTENT.partners.buttonLabel),
-      buttonHref: fromSection('partners', 'buttonHref', DEFAULT_CONTENT.partners.buttonHref),
-    },
-    cta: {
-      title: text(ctaSection.title, DEFAULT_CONTENT.cta.title),
-      description: text(ctaSection.description, DEFAULT_CONTENT.cta.description),
-      primaryLabel: fromSection('cta', 'primaryLabel', DEFAULT_CONTENT.cta.primaryLabel),
-      primaryHref: fromSection('cta', 'primaryHref', DEFAULT_CONTENT.cta.primaryHref),
-      secondaryLabel: fromSection('cta', 'secondaryLabel', DEFAULT_CONTENT.cta.secondaryLabel),
-      secondaryHref: fromSection('cta', 'secondaryHref', DEFAULT_CONTENT.cta.secondaryHref),
-    },
   };
 };
 
@@ -587,15 +452,11 @@ const RegistrationModal = ({ event, open, onOpenChange }: RegistrationModalProps
 };
 
 const Events = () => {
-  const { settings } = useLiveSettings();
   const [events, setEvents] = useState<DisplayEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const content = useMemo(
-    () => buildPageContent(settings?.page_sections),
-    [settings?.page_sections],
-  );
+  const content = DEFAULT_CONTENT;
 
   useEffect(() => {
     let cancelled = false;

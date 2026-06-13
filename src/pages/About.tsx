@@ -13,7 +13,7 @@ import { SEO } from "@/components/SEO";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { cn } from "@/lib/utils";
 
-type AboutSection = 'presentation' | 'governance' | 'activities' | 'information' | 'formation' | 'international';
+type AboutSection = 'presentation' | 'governance' | 'activities' | 'information' | 'formation' | 'international' | 'edito' | 'association';
 
 interface SectionConfig {
   id: AboutSection;
@@ -22,7 +22,9 @@ interface SectionConfig {
 }
 
 const sections: SectionConfig[] = [
+  { id: 'edito', label: 'Édito', icon: FileText },
   { id: 'presentation', label: 'Présentation', icon: Building2 },
+  { id: 'association', label: 'L\'Association', icon: History },
   { id: 'governance', label: 'Gouvernance', icon: Scale },
   { id: 'activities', label: 'Nos Activités', icon: Zap },
   { id: 'information', label: 'L\'Information', icon: BookOpen },
@@ -513,6 +515,87 @@ const SectionInternational = () => {
 };
 
 
+const SectionEdito = () => {
+  return (
+    <div className="max-w-4xl mx-auto">
+      <div className="bg-slate-900 text-white rounded-[2.5rem] p-12 md:p-16 relative overflow-hidden">
+        <div className="absolute -top-10 left-8 text-8xl font-serif opacity-10 text-blue-500 select-none">"</div>
+        <div className="relative z-10 space-y-8">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold tracking-wider uppercase bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400">
+            <FileText className="w-3.5 h-3.5" /> Édito
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight">Message du Directeur Général</h2>
+          <div className="space-y-6 text-lg text-slate-300 leading-relaxed">
+            <p>L'information et la communication en direction des usagers et des professionnels de l'électricité constituent les actions fondamentales de PROQUELEC.</p>
+            <p>La <strong className="text-white">vulgarisation des normes et des dispositions sécuritaires</strong> en matière d'installations électriques intérieures sont la raison d'être de notre organisme.</p>
+            <p>Eu égard au rôle de service public qui nous est dévolu dans la préservation des personnes et des biens contre les risques d'origine électrique, l'outil Internet est irremplaçable dans le contexte actuel des Technologies de l'Information et de la Communication.</p>
+            <p className="text-white font-semibold text-xl">Ce site est le vôtre ; profitez-en pour bénéficier de conseils, consulter notre agenda, nous écrire et prendre toute information utile pour faire bon ménage avec l'électricité.</p>
+          </div>
+          <div className="pt-8 border-t border-slate-700 flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-blue-700"></div>
+            <div>
+              <p className="text-white font-bold text-lg">Le Directeur Général</p>
+              <p className="text-sm text-slate-400">PROQUELEC Sénégal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SectionAssociation = () => {
+  return (
+    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="space-y-6">
+          <h3 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">L'Association</h3>
+          <p className="text-lg text-slate-500">Pour la Promotion de la Qualité des Installations Électriques Intérieures</p>
+          <div className="h-1 w-20 rounded-full bg-gradient-to-r from-blue-600 to-blue-800"></div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50 text-center">
+            <div className="text-3xl font-bold text-blue-600">1995</div>
+            <div className="text-sm text-slate-500 mt-1">Fondée le 12 octobre</div>
+          </div>
+          <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50 text-center">
+            <div className="text-3xl font-bold text-blue-600">60-08</div>
+            <div className="text-sm text-slate-500 mt-1">Loi sénégalaise</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="p-8 rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-slate-50">
+          <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-xl bg-blue-100 text-blue-600">
+            <Scale className="w-6 h-6" />
+          </div>
+          <h3 className="text-lg font-bold text-slate-900 mb-3">Statut Légal</h3>
+          <p className="text-slate-600 text-sm leading-relaxed">Association de service public régie par la loi sénégalaise n° 60-08 du 26 mars 1968. Récépissé n° 8470 MINT/DAGAT du 12 octobre 1995.</p>
+        </div>
+        <div className="p-8 rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-slate-50">
+          <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-xl bg-emerald-100 text-emerald-600">
+            <Globe className="w-6 h-6" />
+          </div>
+          <h3 className="text-lg font-bold text-slate-900 mb-3">Rayonnement International</h3>
+          <p className="text-slate-600 text-sm leading-relaxed">Membre fondateur de la <strong>FISUEL</strong> (Fédération Internationale pour la Sécurité des Usagers de l'Électricité), créée le 1er février 2002 à Beyrouth.</p>
+        </div>
+        <div className="p-8 rounded-2xl border border-slate-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-slate-50">
+          <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4 text-xl bg-amber-100 text-amber-600">
+            <Target className="w-6 h-6" />
+          </div>
+          <h3 className="text-lg font-bold text-slate-900 mb-3">Mission</h3>
+          <p className="text-slate-600 text-sm leading-relaxed">Promotion de la qualité du matériel et des installations électriques dans les bâtiments neufs et anciens par la vulgarisation des normes.</p>
+        </div>
+      </div>
+
+      <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <p className="text-slate-300 text-center text-lg leading-relaxed">"Une installation électrique de qualité se caractérise par son aptitude à assurer le fonctionnement des appareils, sa capacité à garantir la sécurité des personnes et la conservation des biens, et sa conception économique."</p>
+      </div>
+    </div>
+  );
+};
+
 // --- Main Page ---
 
 export default function AboutPage() {
@@ -560,7 +643,9 @@ export default function AboutPage() {
 
   const renderContent = () => {
     switch (activeSection) {
+      case 'edito': return <SectionEdito />;
       case 'presentation': return <SectionPresentation />;
+      case 'association': return <SectionAssociation />;
       case 'governance': return <SectionGovernance />;
       case 'activities': return <SectionActivities />;
       case 'information': return <SectionInformation />;

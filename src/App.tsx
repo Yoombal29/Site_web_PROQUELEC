@@ -31,7 +31,6 @@ const Sitemap = lazy(() => import('./pages/Sitemap'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Auth = lazy(() => import('./pages/Auth'));
 const PartnerDashboard = lazy(() => import('./pages/admin/PartnerDashboard'));
-const PageSectionsAdmin = lazy(() => import('./pages/admin/PageSectionsAdmin'));
 const SchemaBuilder = lazy(() => import('./pages/SchemaBuilder'));
 const RubriqueSelectorPage = lazy(() => import('./pages/RubriqueSelectorPage'));
 const Showroom = lazy(() => import('./pages/Showroom'));
@@ -334,14 +333,6 @@ const AppContent = () => {
           },
 
           // Backoffices sécurisés avec RBAC
-          {
-            path: '/admin/page-sections',
-            element: (
-              <RoleProtectedRoute allowedRoles={['admin']}>
-                <PageSectionsAdmin />
-              </RoleProtectedRoute>
-            ),
-          },
           {
             path: '/admin/builder-release-manager',
             element: (

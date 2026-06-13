@@ -185,8 +185,9 @@ const PROVIDERS = {
       'llama3.1:8b': { context: 8192, cost: 'local', speed: 'varies' },
       'mistral:7b': { context: 8192, cost: 'local', speed: 'varies' },
       'qwen2.5:7b': { context: 32768, cost: 'local', speed: 'varies' },
+      'gemma2:2b': { context: 8192, cost: 'local', speed: 'varies' },
     },
-    defaultModel: 'llama3.1:8b',
+    defaultModel: 'gemma2:2b',
     envKey: null,
     apiKeyRequired: false,
     headers: () => ({ 'Content-Type': 'application/json' }),
@@ -446,6 +447,14 @@ async function callLLM(prompt, task, context, options = {}) {
 
   return await tryProviders(providers, preferredModel, messages, signal);
 }
+
+// ═══════════════════════════════════════════════════════════════
+//  INITIALISATION DU RAG AU DÉMARRAGE
+// ═══════════════════════════════════════════════════════════════
+
+ragService.initialize().catch((err) => {
+  console.warn('[RAG] Échec initialisation:', err.message);
+});
 
 // ═══════════════════════════════════════════════════════════════
 //  ROUTE PRINCIPALE

@@ -17,7 +17,7 @@ import {
 } from './ProquelecBlocks';
 import { AutoSettingsPanel } from './AutoSettingsPanel';
 import { toast } from 'sonner';
-import { Phone, Mail, MapPin, Clock, Sparkles, Check, ArrowRight, ShieldCheck, Zap, User, Star, Send } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Sparkles, Check, Send } from 'lucide-react';
 
 
 type SettingsInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -64,7 +64,7 @@ const parsePipeItems = <T,>(value: string, mapper: (parts: string[], raw: string
     ),
   );
 
-export const useCraftRef = <T extends HTMLElement = HTMLElement>() => {
+const useCraftRef = <T extends HTMLElement = HTMLElement>() => {
   const {
     connectors: { connect, drag },
   } = useNode();
@@ -2188,7 +2188,10 @@ export const ModalBlock = (props: any) => {
             style={{
               background: 'white',
               borderRadius: 12,
-              width: Math.min(width, window.innerWidth - 32),
+              width: Math.min(
+                Number(width) || 480,
+                typeof window !== 'undefined' ? window.innerWidth - 32 : Number(width) || 480,
+              ),
               maxHeight: '80vh',
               overflow: 'auto',
               padding: 24,
@@ -3498,7 +3501,7 @@ export const SearchBlock = (props: any) => {
   const [query, setQuery] = useState('');
   const handleSearch = (e: any) => {
     e.preventDefault();
-    if (query.trim()) alert('Recherche : ' + query);
+    if (query.trim()) toast.info('Recherche : ' + query.trim());
   };
   return (
     <form
@@ -5933,6 +5936,9 @@ export const ContactPremiumBlock = (props: any) => {
                     const fieldId = contactInputId(field, index);
                     const errorId = `${fieldId}-error`;
                     const fieldError = fieldErrors[field];
+                    const errorAriaProps = fieldError
+                      ? { 'aria-invalid': true, 'aria-describedby': errorId }
+                      : {};
                     const cleanLabel = contactFieldLabel(field, meta);
                     const labelText = meta.required ? cleanLabel : `${cleanLabel} (optionnel)`;
 
@@ -5948,8 +5954,7 @@ export const ContactPremiumBlock = (props: any) => {
                           <div className="relative">
                             <select
                               id={fieldId}
-                              aria-invalid={fieldError ? 'true' : 'false'}
-                              aria-describedby={fieldError ? errorId : undefined}
+                              {...errorAriaProps}
                               title={field}
                               value={formData[field] || defaultSubject}
                               onChange={(e) => handleChange(field, e.target.value)}
@@ -5970,8 +5975,7 @@ export const ContactPremiumBlock = (props: any) => {
                             id={fieldId}
                             type={meta.type}
                             autoComplete={meta.autoComplete}
-                            aria-invalid={fieldError ? 'true' : 'false'}
-                            aria-describedby={fieldError ? errorId : undefined}
+                            {...errorAriaProps}
                             placeholder={contactFieldPlaceholder(field, meta)}
                             value={formData[field] || ''}
                             onChange={(e) => handleChange(field, e.target.value)}
@@ -5990,6 +5994,17 @@ export const ContactPremiumBlock = (props: any) => {
 
                   {/* Champ Message */}
                   <div className="space-y-1.5">
+                    {(() => {
+                      const messageError = fieldErrors[CONTACT_FIELD_NAMES.message];
+                      const messageAriaProps = messageError
+                        ? {
+                            'aria-invalid': true,
+                            'aria-describedby': 'contact-premium-message-error',
+                          }
+                        : {};
+
+                      return (
+                        <>
                     <label
                       htmlFor="contact-premium-message"
                       className="text-[11px] font-black text-slate-500 uppercase tracking-wider block"
@@ -5998,8 +6013,7 @@ export const ContactPremiumBlock = (props: any) => {
                     </label>
                     <textarea
                       id="contact-premium-message"
-                      aria-invalid={fieldErrors[CONTACT_FIELD_NAMES.message] ? 'true' : 'false'}
-                      aria-describedby={fieldErrors[CONTACT_FIELD_NAMES.message] ? 'contact-premium-message-error' : undefined}
+                      {...messageAriaProps}
                       placeholder="Décrivez votre projet ou votre demande d'intervention..."
                       rows={4}
                       value={formData[CONTACT_FIELD_NAMES.message] || ''}
@@ -6007,11 +6021,14 @@ export const ContactPremiumBlock = (props: any) => {
                       required
                       className={`w-full min-h-[120px] p-4 bg-slate-50 border rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-slate-900 text-sm resize-none ${fieldErrors[CONTACT_FIELD_NAMES.message] ? 'border-red-500' : 'border-slate-200'}`}
                     />
-                    {fieldErrors[CONTACT_FIELD_NAMES.message] && (
+                    {messageError && (
                       <p id="contact-premium-message-error" className="text-red-600 text-xs font-bold mt-1">
-                        {fieldErrors[CONTACT_FIELD_NAMES.message]}
+                        {messageError}
                       </p>
                     )}
+                        </>
+                      );
+                    })()}
                   </div>
 
                   {error && (
@@ -7490,19 +7507,29 @@ export const ParallaxContainerBlock = (props: any) => {
   } = useNode();
   const u = getUniversalStyles(props);
   const [offset, setOffset] = useState(0);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const craftRef = useCallback(
+    (ref: HTMLDivElement | null) => {
+      containerRef.current = ref;
+      if (ref) connect(drag(ref));
+    },
+    [connect, drag],
+  );
+
   useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+
     const h = () => {
-      const rect = document.querySelector('.proquelec-builder-node')?.getBoundingClientRect();
+      const rect = containerRef.current?.getBoundingClientRect();
       if (rect) setOffset(rect.top * speed);
     };
+    h();
     window.addEventListener('scroll', h);
     return () => window.removeEventListener('scroll', h);
   }, [speed]);
   return (
     <div
-      ref={(r: any) => {
-        if (r) connect(drag(r));
-      }}
+      ref={craftRef}
       style={{ position: 'relative', overflow: 'hidden', minHeight, ...u.style }}
       className={'proquelec-builder-node ' + u.className}
     >
@@ -7545,11 +7572,14 @@ export const ScrollProgressBlock = (props: any) => {
   const u = getUniversalStyles(props);
   const [progress, setProgress] = useState(0);
   useEffect(() => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return undefined;
+
     const h = () => {
       const s = window.scrollY,
         d = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(d > 0 ? (s / d) * 100 : 0);
     };
+    h();
     window.addEventListener('scroll', h, { passive: true });
     return () => window.removeEventListener('scroll', h);
   }, []);
@@ -7835,23 +7865,34 @@ export const TableOfContentsBlock = (props: any) => {
   const [headings, setHeadings] = useState<{ level: number; text: string; id: string }[]>([]);
 
   useEffect(() => {
+    if (typeof document === 'undefined') return undefined;
+
     // Scan the canvas for heading elements (h1-h6)
     const timeout = setTimeout(() => {
       const allHeadings: { level: number; text: string; id: string }[] = [];
+      const usedIds = new Set<string>();
       // In builder mode, scan inside the frame
       const frame = document.querySelector('.craftjs-renderer');
       const root = frame || document;
-      root.querySelectorAll('h1,h2,h3,h4,h5,h6').forEach((el) => {
+      root.querySelectorAll('h1,h2,h3,h4,h5,h6').forEach((el, index) => {
         const level = parseInt(el.tagName[1]);
         if (level <= maxLevel) {
           const text = el.textContent || '';
-          const id =
-            el.id ||
-            'heading-' +
-              text
-                .toLowerCase()
-                .replace(/\s+/g, '-')
-                .replace(/[^a-z0-9-]/g, '');
+          const generatedId = text
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '');
+          const baseId =
+            el.id || (generatedId ? `heading-${generatedId}` : `heading-${index + 1}`);
+          let id = baseId;
+          let suffix = 2;
+          while (usedIds.has(id)) {
+            id = `${baseId}-${suffix}`;
+            suffix += 1;
+          }
+          usedIds.add(id);
           if (!el.id) el.id = id;
           if (text) allHeadings.push({ level, text, id });
         }
