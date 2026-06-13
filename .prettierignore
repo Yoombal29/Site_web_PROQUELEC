@@ -1,0 +1,7 @@
+# Documents RAG volumineux — pas de formatage Prettier au commit
+server/knowledge_base/**
+
+# Build & dépendances
+dist/
+node_modules/
+coverage/

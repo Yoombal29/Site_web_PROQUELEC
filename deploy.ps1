@@ -38,6 +38,17 @@
 #   .\deploy.ps1 -SkipCommit -SkipDockerBuild
 #      Redemarre avec l'image Docker deja presente sur le VPS.
 #
+#   .\deploy.ps1 -Message "..." -IncludeKnowledgeBase
+#      Inclut server/knowledge_base/ dans le commit sans poser la question.
+#
+#   .\deploy.ps1 -Message "..." -ExcludeKnowledgeBase
+#      Deploie le code sans committer la knowledge base (defaut si aucun changement KB).
+#
+# Knowledge base (server/knowledge_base/):
+#   Fichiers volumineux (~11 Mo) exclus de Prettier via .prettierignore.
+#   En mode interactif, le script demande si vous voulez les inclure dans le
+#   deploiement Git (commit + pull VPS) lorsqu'ils ont ete modifies localement.
+#
 # Fonction:
 #   Ce script deploie le CODE applicatif uniquement:
 #   1. git add securise + commit/push GitHub depuis le poste local,
@@ -65,6 +76,8 @@ param(
     [switch]$CommitAll,
     [switch]$SkipBuild,
     [switch]$SkipDockerBuild,
+    [switch]$IncludeKnowledgeBase,
+    [switch]$ExcludeKnowledgeBase,
     [string]$DockerApp = "proquelec-app",
     [string]$DockerImage = "wwwproquelecsn_app-backend:latest",
     [string]$DockerNetwork = "host",
@@ -78,7 +91,9 @@ $SSH_HOST = "root@proquelec.sn"
 $REMOTE_PATH = "/var/www/proquelec/www.proquelec.sn"
 $SITE_URL = "https://www.proquelec.sn"
 $REMOTE_CHANGED_MIGRATIONS = "/tmp/proquelec_changed_migrations.txt"
+$KNOWLEDGE_BASE_PREFIX = "server/knowledge_base/"
 $SCRIPT_STARTED_WITH_OPTIONS = $PSBoundParameters.Count -gt 0
+$script:IncludeKnowledgeBaseInDeploy = $false
 
 # Ces patterns protegent le depot contre les fichiers runtime ou sensibles.
 # Ils sont ignores par le git add automatique du script et bloquent le commit
@@ -144,8 +159,78 @@ function Invoke-Remote {
     ssh -i $SSH_KEY $SSH_HOST $Command
 }
 
+function Get-KnowledgeBaseChanges {
+    $lines = @(git status --porcelain -- "$KNOWLEDGE_BASE_PREFIX" 2>$null)
+    if ($LASTEXITCODE -ne 0) {
+        return @()
+    }
+    return $lines | Where-Object { $_ -and $_.Trim() }
+}
+
+function Resolve-KnowledgeBaseInclusion {
+    if ($IncludeKnowledgeBase -and $ExcludeKnowledgeBase) {
+        Stop-Step "Utilisez soit -IncludeKnowledgeBase soit -ExcludeKnowledgeBase, pas les deux."
+    }
+
+    if ($IncludeKnowledgeBase) {
+        Write-Host "  Knowledge base: incluse (-IncludeKnowledgeBase)." -ForegroundColor DarkYellow
+        return $true
+    }
+    if ($ExcludeKnowledgeBase) {
+        Write-Host "  Knowledge base: exclue (-ExcludeKnowledgeBase)." -ForegroundColor DarkYellow
+        return $false
+    }
+
+    $kbChanges = @(Get-KnowledgeBaseChanges)
+    if ($kbChanges.Count -eq 0) {
+        return $false
+    }
+
+    Write-Host ""
+    Write-Host "  === Base de connaissances (server/knowledge_base/) ===" -ForegroundColor Cyan
+    Write-Host "  Fichiers volumineux, exclus de Prettier (.prettierignore)." -ForegroundColor DarkYellow
+    Write-Host "  Modifications locales detectees:" -ForegroundColor Yellow
+    $kbChanges | Select-Object -First 10 | ForEach-Object { Write-Host "   $_" -ForegroundColor DarkYellow }
+    if ($kbChanges.Count -gt 10) {
+        Write-Host "   - ... $($kbChanges.Count - 10) autre(s)" -ForegroundColor DarkYellow
+    }
+    Write-Host ""
+    Write-Host "  Inclure la knowledge base dans CE deploiement ?" -ForegroundColor Cyan
+    Write-Host "    oui : commit Git + pull VPS (recommande si MASTER_CONSOLIDE.md a change)"
+    Write-Host "    non : deployer le reste du code sans toucher a server/knowledge_base/"
+    Write-Host ""
+
+    $answer = Read-Host "  Inclure la knowledge base ? (oui/non)"
+    if ($answer -match "^(o|oui|y|yes)$") {
+        return $true
+    }
+    if ($answer -match "^(n|non|no)$") {
+        return $false
+    }
+
+    Stop-Step "Reponse invalide. Utilisez oui ou non."
+}
+
+function Unstage-KnowledgeBase {
+    $stagedKb = @(git diff --cached --name-only -- "$KNOWLEDGE_BASE_PREFIX" 2>$null)
+    if ($stagedKb.Count -eq 0) {
+        return
+    }
+
+    Write-Host "  Retrait de la knowledge base du staging Git ($($stagedKb.Count) fichier(s))." -ForegroundColor DarkYellow
+    & git restore --staged -- "$KNOWLEDGE_BASE_PREFIX"
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Step "Impossible de retirer server/knowledge_base/ du staging."
+    }
+}
+
 function Invoke-SafeGitAdd {
+    param([bool]$IncludeKnowledgeBaseFiles = $false)
+
     Write-Host "  Git add securise: staging du code en excluant DB, backups, logs et temporaires." -ForegroundColor Yellow
+    if (-not $IncludeKnowledgeBaseFiles) {
+        Write-Host "  Knowledge base: exclue de ce git add." -ForegroundColor DarkYellow
+    }
     $changedFiles = @(git ls-files --modified --deleted --others --exclude-standard)
     if ($LASTEXITCODE -ne 0) {
         Stop-Step "Impossible de lister les fichiers Git a ajouter."
@@ -163,6 +248,9 @@ function Invoke-SafeGitAdd {
         }
 
         if ($isBlocked) {
+            $skippedFiles += $file
+        }
+        elseif (-not $IncludeKnowledgeBaseFiles -and $file -like "$KNOWLEDGE_BASE_PREFIX*") {
             $skippedFiles += $file
         }
         else {
@@ -292,6 +380,10 @@ function Show-DeployChoices {
         }
     }
 
+    if (-not $script:SkipCommit) {
+        $script:IncludeKnowledgeBaseInDeploy = Resolve-KnowledgeBaseInclusion
+    }
+
     Write-Host ""
     Write-Host "  Resume avant execution" -ForegroundColor Cyan
     Write-Host "  - Branche: $script:Branch"
@@ -299,6 +391,7 @@ function Show-DeployChoices {
     if (-not $script:SkipCommit) {
         Write-Host "  - Message: $script:Message"
         Write-Host "  - Git add: securise avec exclusions runtime"
+        Write-Host "  - Knowledge base: $(if ($script:IncludeKnowledgeBaseInDeploy) { 'incluse' } else { 'exclue' })"
     }
     Write-Host "  - Build Vite: $(-not $script:SkipBuild)"
     Write-Host "  - Build Docker: $(-not $script:SkipDockerBuild)"
@@ -331,7 +424,16 @@ if (-not $SkipCommit) {
         Write-Host "  CommitAll actif: le git add reste filtre par securite." -ForegroundColor DarkYellow
     }
 
-    Invoke-SafeGitAdd
+    # Mode direct (-Message, etc.) : question KB ici. Mode assistant : deja resolu dans Show-DeployChoices.
+    if ($SCRIPT_STARTED_WITH_OPTIONS) {
+        $script:IncludeKnowledgeBaseInDeploy = Resolve-KnowledgeBaseInclusion
+    }
+
+    if (-not $script:IncludeKnowledgeBaseInDeploy) {
+        Unstage-KnowledgeBase
+    }
+
+    Invoke-SafeGitAdd -IncludeKnowledgeBaseFiles $script:IncludeKnowledgeBaseInDeploy
     Test-BlockedStagedFiles
 
     if (-not $Message) {
