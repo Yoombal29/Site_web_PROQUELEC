@@ -67,13 +67,9 @@ export class SitemapGenerator {
       { loc: '/events', changefreq: 'weekly', priority: 0.8 },
       
       // Expert Lab (IA)
-      { loc: '/expert', changefreq: 'weekly', priority: 0.7 },
       { loc: '/expert-lab', changefreq: 'monthly', priority: 0.7 },
-      { loc: '/expert/chat', changefreq: 'weekly', priority: 0.6 },
-      { loc: '/expert/calculators', changefreq: 'weekly', priority: 0.6 },
-      { loc: '/expert/scanner', changefreq: 'weekly', priority: 0.6 },
-      { loc: '/expert/history', changefreq: 'monthly', priority: 0.5 },
-      { loc: '/expert/logs', changefreq: 'daily', priority: 0.4 }
+      { loc: '/expert-lab/chat', changefreq: 'weekly', priority: 0.6 },
+      { loc: '/expert-lab/calculators', changefreq: 'weekly', priority: 0.6 }
     );
 
     try {

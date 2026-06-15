@@ -44,7 +44,7 @@
   <h2>4. Ressources utiles</h2>
   <ul>
     <li>Guide PROQUELEC sur les protections électriques</li>
-    <li>Tableaux de sélectivité et de calibres (NF C 15-100)</li>
+    <li>Tableaux de sélectivité et de calibres (NS 01-001)</li>
     <li>Formations PROQUELEC</li>
   </ul>
   <footer style="margin-top:2em;font-size:0.9em;color:#555;">© PROQUELEC – Mémento Protections électriques. Version 2025.</footer>
@@ -59,7 +59,7 @@
   <h1>MÉMENTO TECHNIQUE<br>Protections électriques (différentiels, disjoncteurs, fusibles)</h1>
   <h2>1. Objet du mémento</h2>
   <p>Rappel des dispositifs de protection essentiels pour la sécurité des installations électriques.</p>
-  <h2>2. Principes essentiels (NS 01-001 & NF C 15-100)</h2>
+  <h2>2. Principes essentiels (NS 01-001 & NS 01-001)</h2>
   <ul>
     <li>Protection contre les surintensités et les défauts d’isolement</li>
     <li>Installation de dispositifs adaptés à chaque circuit</li>
@@ -106,7 +106,7 @@
   <h2>8. Ressources utiles</h2>
   <ul>
     <li><a href="https://www.promotelec.com/protections-electriques/" target="_blank">Guide Promotelec : Protections électriques</a></li>
-    <li><a href="https://www.afnor.org/" target="_blank">Norme NF C 15-100 (AFNOR)</a></li>
+    <li><a href="https://www.afnor.org/" target="_blank">Norme NS 01-001 (AFNOR)</a></li>
     <li><a href="https://www.legrand.fr/pro/actualites/protections-electriques" target="_blank">Legrand : Protections et calibres</a></li>
   </ul>
   <div class="encadre">

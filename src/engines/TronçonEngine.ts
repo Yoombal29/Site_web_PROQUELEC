@@ -8,7 +8,7 @@
  * - Matériau (Cu/Al)
  * - Courant (A)
  * 
- * Norme : NF C 15-100 Articles 523, 525
+ * Norme : NS 01-001 Articles 523, 525
  * 
  * Formules :
  * - Chute tension : ΔU = (2 × L × I × ρ) / S
@@ -52,7 +52,7 @@ export class TronçonEngine {
 
   /**
    * Calculer les paramètres d'un tronçon
-   * Applique les normes NF C 15-100 Article 523 & 525
+   * Applique les normes NS 01-001 Article 523 & 525
    */
   static calculate(tronçon: Tronçon): Tronçon {
     const { longueur, section, materiau, courant } = tronçon;
@@ -71,7 +71,7 @@ export class TronçonEngine {
     // Température limite selon norme (exemple: 70°C pour plastique PVC)
     const tempLimiteAdmissible = 70;
 
-    // ========== VÉRIFICATION CONFORMITÉ NF C 15-100 ==========
+    // ========== VÉRIFICATION CONFORMITÉ NS 01-001 ==========
     // Article 523 : Chute tension ≤ 3% entre source et tableau principal
     //              ≤ 5% entre tableau principal et point d'utilisation
     const conformiteChute = chuteTensionPercent <= 3; // On applique 3% (strict)

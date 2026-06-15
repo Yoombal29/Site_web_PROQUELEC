@@ -303,7 +303,7 @@ const TOOL_CONFIGS: Record<string, ToolConfig> = {
     mode: 'checklist',
     icon: ClipboardCheck,
     accent: 'amber',
-    norme: 'NF C 15-100',
+    norme: 'NS 01-001',
     checklist: [
       'Plans et schémas disponibles.',
       'Protection différentielle identifiée.',
@@ -335,7 +335,7 @@ const TOOL_CONFIGS: Record<string, ToolConfig> = {
     mode: 'calculator',
     icon: Calculator,
     accent: 'amber',
-    norme: 'NF C 15-100',
+    norme: 'NS 01-001',
     metrics: [
       { id: 'circuits', label: 'Nombre de circuits', unit: '', value: 12 },
       { id: 'load', label: 'Puissance totale estimée', unit: 'kW', value: 8.5 },
@@ -1285,3 +1285,4 @@ export default function OperationalToolSuite({
     </div>
   );
 }
+

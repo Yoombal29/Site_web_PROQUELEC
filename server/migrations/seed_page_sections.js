@@ -86,7 +86,7 @@ const pageSectionsData = {
             "catalogue": {
                 "title": "Catalogue des Formations",
                 "subtitle": "Des modules experts pour maîtriser les normes et la sécurité.",
-                "features": ["Module 1: Maîtrise de la norme NF C 15-100 (Niveaux 1 & 2).", "Module 2: Sécurité électrique en milieu industriel.", "Module 3: Audit et Contrôle des installations.", "Module 4: Efficacité énergétique et solaire photovoltaïque."],
+                "features": ["Module 1: Maîtrise de la norme NS 01-001 (Niveaux 1 & 2).", "Module 2: Sécurité électrique en milieu industriel.", "Module 3: Audit et Contrôle des installations.", "Module 4: Efficacité énergétique et solaire photovoltaïque."],
                 "image": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&q=80"
             },
             "calendrier": {
@@ -142,7 +142,7 @@ const pageSectionsData = {
             "normes": {
                 "title": "Normes Électriques",
                 "subtitle": "La référence technique pour la sécurité des installations.",
-                "features": ["Norme NF C 15-100 : Principes fondamentaux.", "Réglementation locale et décrets d'application.", "Normes spécifiques aux Établissements Recevant du Public (ERP).", "Mise à la terre et protection contre la foudre."],
+                "features": ["Norme NS 01-001 : Principes fondamentaux.", "Réglementation locale et décrets d'application.", "Normes spécifiques aux Établissements Recevant du Public (ERP).", "Mise à la terre et protection contre la foudre."],
                 "image": "https://images.unsplash.com/photo-1581093588402-4fc06a3504ac?w=800&q=80"
             },
             "guides": {
@@ -323,7 +323,7 @@ const pageSectionsData = {
                 "subtitle": "Près de trois décennies au service de la sécurité électrique.",
                 "features": [
                     "1995 | L'Étincelle | Création de PROQUELEC pour sécuriser le secteur électrique au Sénégal.",
-                    "2005 | Expansion Normative | Adoption officielle de la norme NF C 15-100 comme base de contrôle.",
+                    "2005 | Expansion Normative | Adoption officielle de la norme NS 01-001 comme base de contrôle.",
                     "2015 | Modernisation | Numérisation des processus de certification et déploiement national.",
                     "2023 | Expert Lab | Lancement de la plateforme digitale d'intelligence."
                 ],
@@ -477,7 +477,7 @@ const pageSectionsData = {
                 "title": "Électriciens Indépendants",
                 "subtitle": "Élevez votre expertise et sécurisez vos chantiers.",
                 "features": [
-                    "Accès aux Normes | BookOpen | Consultation illimitée NF C 15-100.",
+                    "Accès aux Normes | BookOpen | Consultation illimitée NS 01-001.",
                     "Calculateurs Pro | Calculator | Chute de tension et section de câbles.",
                     "Générateur de Schémas | PenTool | Éditeur intuitif de conformité."
                 ]
@@ -587,7 +587,7 @@ const pageSectionsData = {
                 "title": "Critères d'obtention",
                 "subtitle": "La rigueur de nos audits garantit la valeur de notre label.",
                 "features": [
-                    "Conformité Normative | CheckCircle | Respect rigoureux des normes NFC 15-100.",
+                    "Conformité Normative | CheckCircle | Respect rigoureux des normes NS 01-001.",
                     "Expertise Technique | Zap | Validation des compétences des intervenants.",
                     "Contrôle & Audit | Search | Acceptation d'audits réguliers."
                 ]
@@ -611,7 +611,7 @@ const pageSectionsData = {
                 "title": "Explorez nos parcours",
                 "subtitle": "Nos formations sont structurées par domaines d'expertise.",
                 "features": [
-                    "Installations & Normes | Layers | Maîtrise NFC 15-100, Solaire, Mise à la terre.",
+                    "Installations & Normes | Layers | Maîtrise NS 01-001, Solaire, Mise à la terre.",
                     "Sécurité & Habilitation | ShieldCheck | Habilitation B1/B2/BR/BC, Prévention risques.",
                     "Expertise & Audit | Zap | Audit énergétique, Conformité réglementaire."
                 ]

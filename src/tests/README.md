@@ -4,7 +4,7 @@
 
 Suite complète de tests automatisés pour valider le système électrique PROQUELEC :
 
-- **Tests unitaires** : Logique métier et calculs NF C 15-100
+- **Tests unitaires** : Logique métier et calculs NS 01-001
 - **Tests d'intégration** : Composants et interactions
 - **Tests de performance** : Schémas complexes et optimisation
 - **Tests de validation** : Conformité et sécurité
@@ -24,12 +24,14 @@ src/tests/
 ## Exécution des Tests
 
 ### Tests Rapides (Recommandé)
+
 ```bash
 # Tests essentiels pour le développement quotidien
 ./scripts/quick-test.sh
 ```
 
 ### Tests Complets
+
 ```bash
 # Suite complète avec couverture
 npm run test:coverage
@@ -42,6 +44,7 @@ npm run test:ci
 ```
 
 ### Tests Spécifiques
+
 ```bash
 # Tests de base seulement
 npx jest src/tests/BasicTests.test.ts
@@ -53,12 +56,14 @@ npx jest --coverage --coverageDirectory=coverage
 ## Métriques de Qualité
 
 ### Couverture Cible
+
 - **Lignes** : 75% minimum
 - **Fonctions** : 80% minimum
 - **Branches** : 70% minimum
 - **Déclarations** : 75% minimum
 
 ### Seuils de Performance
+
 - **Calculs électriques** : < 100ms par test
 - **Rendu composants** : < 500ms pour 50 nœuds
 - **Validation complète** : < 2s pour schémas complexes
@@ -66,13 +71,15 @@ npx jest --coverage --coverageDirectory=coverage
 ## Tests Implémentés
 
 ### ✅ Tests de Base (Fonctionnels)
+
 - Calculs de chute de tension (Cuivre/Aluminium)
-- Conformité NF C 15-100
+- Conformité NS 01-001
 - Résistance aux données invalides
 - Calculs multiples et agrégation
 - Différents matériaux conducteurs
 
 ### 🔄 Tests Avancés (En développement)
+
 - Validation temps réel
 - Bibliothèque de composants
 - Export multi-format
@@ -86,12 +93,15 @@ npx jest --coverage --coverageDirectory=coverage
 module.exports = {
   testEnvironment: 'jsdom',
   transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', {
-      tsconfig: { jsx: 'react-jsx' }
-    }]
+    '^.+\\.(ts|tsx)$': [
+      'ts-jest',
+      {
+        tsconfig: { jsx: 'react-jsx' },
+      },
+    ],
   },
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
   setupFilesAfterEnv: ['<rootDir>/src/tests/setup.ts'],
   coverageThreshold: {
@@ -99,15 +109,16 @@ module.exports = {
       branches: 70,
       functions: 80,
       lines: 75,
-      statements: 75
-    }
-  }
+      statements: 75,
+    },
+  },
 };
 ```
 
 ## Utilitaires de Test
 
 ### Création de données de test
+
 ```typescript
 import { createTestGraphStore, createSimpleTestSchema } from '@/tests/setup';
 
@@ -119,6 +130,7 @@ const schema = createSimpleTestSchema();
 ```
 
 ### Assertions personnalisées
+
 ```typescript
 expect.extend({
   toBeValidCalculation(received) {
@@ -129,23 +141,26 @@ expect.extend({
   },
   toBeValidComponent(received) {
     // Validation composant
-  }
+  },
 });
 ```
 
 ## Scripts Disponibles
 
 ### Linux/macOS
+
 - `scripts/quick-test.sh` : Tests rapides
 - `scripts/run-tests.sh` : Tests complets
 
 ### Windows
+
 - `scripts/quick-test.ps1` : Tests rapides
 - `scripts/run-tests.ps1` : Tests complets
 
 ## Intégration CI/CD
 
 ### GitHub Actions
+
 ```yaml
 - name: Run Tests
   run: npm run test:ci
@@ -157,6 +172,7 @@ expect.extend({
 ```
 
 ### Validation Pré-commit
+
 ```bash
 # Dans package.json
 "lint-staged": {
@@ -172,24 +188,28 @@ expect.extend({
 ### Erreurs Courantes
 
 **"Cannot find module"**
+
 ```bash
 # Vérifier les mappings de modules dans jest.config.cjs
 npm install  # Réinstaller les dépendances
 ```
 
 **"JSX not configured"**
+
 ```bash
 # Vérifier la configuration ts-jest
 # jsx: 'react-jsx' doit être défini
 ```
 
 **"Timeout"**
+
 ```bash
 # Augmenter le timeout dans jest.config.cjs
 testTimeout: 10000
 ```
 
 ### Debug des Tests
+
 ```bash
 # Mode debug
 npx jest --inspect-brk
@@ -204,6 +224,7 @@ npx jest --verbose
 ## Évolution
 
 ### Tests à Implémenter
+
 - [ ] Tests de performance complets
 - [ ] Tests d'accessibilité (a11y)
 - [ ] Tests de sécurité
@@ -211,6 +232,7 @@ npx jest --verbose
 - [ ] Tests end-to-end (Playwright/Cypress)
 
 ### Améliorations
+
 - [ ] Snapshots pour composants UI
 - [ ] Tests de régression visuelle
 - [ ] Mocking avancé des APIs

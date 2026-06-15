@@ -2,7 +2,7 @@
  * 🏠 ElectricalSymbols — Symboles et icônes réalistes
  * 
  * Représentation visuelle des appareils électriques
- * Inspiration : Cedreo.com, normes NF C 15-100
+ * Inspiration : Cedreo.com, normes NS 01-001
  * 
  * Types d'appareils :
  * - Maison (habitation)

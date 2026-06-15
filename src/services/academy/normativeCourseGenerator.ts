@@ -225,7 +225,7 @@ export class NormativeCourseGenerator {
       examples: rules.slice(0, 3).map((r) => `Article ${r.article} : ${r.content.substring(0, 100)}...`),
       warnings: [
       'Les règles NS 01-001 sont obligatoires pour toute installation électrique BT',
-      'Le non-respect peut entraîner le refus de mise en service par le Consuel']
+      'Le non-respect peut entraîner le refus de mise en service par le COSSUEL']
 
     });
 
@@ -372,7 +372,7 @@ Les règles étudiées imposent les obligations suivantes :
 
 ## Hiérarchie des documents
 
-- **Norme NS 01-001** : Document principal (équivalent NF C 15-100)
+- **Norme NS 01-001** : Document principal (équivalent NS 01-001)
 - **Guides UTE** : Compléments d'application
 - **Réglementations** : ERP, Code du travail, etc.`;
   }
@@ -574,7 +574,7 @@ Les règles étudiées imposent de respecter les principes suivants :
 ### 4. Documentation
 - [ ] Schémas électriques à jour
 - [ ] Rapport de vérification établi
-- [ ] Attestation de conformité (Consuel si applicable)
+- [ ] Attestation de conformité (COSSUEL si applicable)
 
 ---
 

@@ -257,7 +257,7 @@ export function PhotoVideoGallery() {
                       <h4 className="text-2xl font-black italic">Focus Éducatif</h4>
                     </div>
                     <p className="text-blue-50/80 font-medium leading-relaxed">
-                      Cette installation illustre parfaitement la norme NFC 15-100. Cliquez sur les points éclair pour en savoir plus.
+                      Cette installation illustre parfaitement la norme NS 01-001. Cliquez sur les points éclair pour en savoir plus.
                     </p>
                   </div>
               }

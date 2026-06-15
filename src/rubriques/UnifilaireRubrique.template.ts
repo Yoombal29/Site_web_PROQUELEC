@@ -67,7 +67,7 @@ class UnifilareDiagramEngine implements CalculationEngine {
 export const RUBRIQUE_UNIFILAIRE: RubriqueSchema = {
   id: 'UNIFILAIRE',
   name: '📋 Schémas unifilaires BT',
-  description: 'Représentation normalisée NF C 15-100 pour DOE et contrôle',
+  description: 'Représentation normalisée NS 01-001 pour DOE et contrôle',
   version: '0.9.0',
   displayPriority: 2,
   maturity: 'BETA',
@@ -115,7 +115,7 @@ export const RUBRIQUE_UNIFILAIRE: RubriqueSchema = {
 
   normativeReferences: [
     {
-      standard: 'NF C 15-100',
+      standard: 'NS 01-001',
       articles: ['521', '522'],
       description: 'Symboles et représentation normalisée',
     },

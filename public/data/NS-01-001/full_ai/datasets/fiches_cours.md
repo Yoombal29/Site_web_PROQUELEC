@@ -7428,7 +7428,7 @@ requises dans certains cas.
 
  relatives à la protection complémentaire par
 
-Cette nouvelle partie remplace le chapitre 41 de la norme NF C 15-100 : 1991, ainsi que
+Cette nouvelle partie remplace le chapitre 41 de la norme NS 01-001 : 1991, ainsi que
 partiellement les anciennes sections 471 et 481.
 
 ## 410.2 (disponible)
@@ -8013,7 +8013,7 @@ En pratique, le schéma TT n’est pas utilisé en courant continu.
 ## 411.5.2 En schéma TT, les dispositifs de protection sont des dispositifs différentiels
 Le conducteur neutre ne doit pas être relié à la terre en aval d'un dispositif différentiel.
 
-La précédente édition de la norme NF C 15-100 prévoyait la possibilité d’utiliser des
+La précédente édition de la norme NS 01-001 prévoyait la possibilité d’utiliser des
 dispositifs de protection contre les surintensités, tout en expliquant dans les commentaires
 que ce mode de protection ne convenait généralement pas. L’introduction dans la présente
 norme de temps de coupure maximaux pour le schéma TT (voir 411.3.2.2) a rendu
@@ -9726,7 +9726,7 @@ X
 
 X
 
-NF C 15-100
+NS 01-001
 
 LEP
 
@@ -9787,7 +9787,7 @@ PE
 
 NF C 14-100
 
-NF C 15-100
+NS 01-001
 
 AUTRES CANALISATIONS
 
@@ -17393,7 +17393,7 @@ de mise à la terre dans les installations fixes
 
 1. - La double coloration vert-et-jaune est destinée au repérage d'un conducteur de protection
 assurant une fonction de sécurité.
-Par définition (241.1 de la NF C 15-100) un conducteur de protection est un conducteur utilisé dans
+Par définition (241.1 de la NS 01-001) un conducteur de protection est un conducteur utilisé dans
 certaines mesures de protection contre les contacts indirects et reliant des masses :
 
 -
@@ -26872,14 +26872,14 @@ RB
 
 /
 
-NF C 15-100
+NS 01-001
 
 442.2.4.1
 
 NF C 13-100
 
 ## Annexe 4.1
-NF C 15-100
+NS 01-001
 
 /
 
@@ -26897,7 +26897,7 @@ RA
 
 /
 
-NF C 15-100
+NS 01-001
 
 411.5.3
 
@@ -26927,13 +26927,13 @@ ITN
 
 NFC 15-100
 
-NF C 15-100
+NS 01-001
 
 442.2.6.1
 
 411.5.3
 
-NF C 15-100
+NS 01-001
 
 442.2.4.3
 
@@ -26946,7 +26946,7 @@ NF C 13-100
 
 /
 
-NF C 15-100
+NS 01-001
 
 411.6.2
 
@@ -26972,9 +26972,9 @@ NF C 13-100
 
 /
 
-NF C 15-100
+NS 01-001
 
-NF C 15-100
+NS 01-001
 
 442.1
 
@@ -32248,7 +32248,7 @@ Annexe – (informative) Liaison équipotentielle ..............................
 .351
 
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-701 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -33431,7 +33431,7 @@ Partie 7-702 – Piscines et autres bassins
 
 ## 702.55 Autres matériels............................................................................................................ 359
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-702 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -34234,7 +34234,7 @@ Partie 7-703 – Locaux contenant des radiateurs pour saunas
 
 ## 703.53 Appareillage ............................................................................................................369
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-703 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -34330,7 +34330,7 @@ Partie 7-704 – Installations de chantier
 
 ## 704.536 Dispositifs de commande et de sectionnement.......................................................377
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-704 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -34749,7 +34749,7 @@ Partie 7-705 – Installations électriques dans les établissements agricoles
 
 ## 705.55 Autres matériels ......................................................................................................380
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-705 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -34852,7 +34852,7 @@ Partie 7-706 – Enceintes conductrices exiguës
 ______________
 
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-706 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -34971,7 +34971,7 @@ Annexe - (informative) - Exemple d'instruction pour le branchement de la caravan
 l'alimentation du parc de caravanes....................................................................................391
 
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 Les numéros suivant le numéro particulier de la partie 7-708 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
 L'absence de référence à une partie, à un article ou à un paragraphe signifie que les
@@ -35291,7 +35291,7 @@ Annexe - (informative) - Exemple d'instruction pour le branchement du bateau
 de plaisance sur l'alimentation du port ................................................................................396
 
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-709 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -35375,7 +35375,7 @@ IK08
 H
 
 ## 709.52.1 Canalisations des marinas
-Les règles générales de la partie 52 de la NF C 15-100 sont applicables en prenant en
+Les règles générales de la partie 52 de la NS 01-001 sont applicables en prenant en
 compte les conditions d’influences
 
  externes (709.51).
@@ -35605,7 +35605,7 @@ loisirs, des cirques et des lieux d'expositions ou de spectacle
 
 ## 711.6 Vérification ................................................................................................................401
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-711 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -35794,7 +35794,7 @@ Partie 7-717 – Unités mobiles ou transportables
 
 ## 717.555 Matériels d’installation............................................................................................406
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 Les numéros suivant le numéro particulier de la partie 7-717 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
 L'absence de référence à une partie, à un article ou à un paragraphe signifie que les
@@ -36610,7 +36610,7 @@ Partie 7-752 – Aires de distribution de carburants liquides
 
 ## 752.55 Autres matériels ......................................................................................................416
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-752 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -36710,7 +36710,7 @@ plafond.........................................423
 émetteurs à accumulation) ............................................................................................424
 
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 - 419 -
 
@@ -37213,7 +37213,7 @@ distributeur ...................................................................
 ____________
 
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-771 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -39814,11 +39814,11 @@ cette exigence.
 Seules les alimentations de tensions maximales de 48 V en courant continu, sont autorisées
 pour ce type de câbles.
 
-D1.2 Cheminement et séparation des domaines NF C 14-100 et NF C 15-100
+D1.2 Cheminement et séparation des domaines NF C 14-100 et NS 01-001
 
 Il est impératif de toujours préserver une séparation électrique entre les parties des câbles
 des circuits d’asservissement ou les parties des circuits de télé-information installées dans
-les domaines NF C 14-100 et NF C 15-100. Le respect ce cette exigence devra faire l’objet
+les domaines NF C 14-100 et NS 01-001. Le respect ce cette exigence devra faire l’objet
 d’une attention particulière lorsque l’installation envisagée prévoit qu’un de ces circuits
 (asservissement ou télé information) chemine dans une partie d'installation du domaine de la
 NF C 14-100.
@@ -39826,7 +39826,7 @@ NF C 14-100.
 D2 Cas du comptage installé à l'intérieur du logement
 
 Le tableau de comptage pour compteur électronique présente un volume compartimenté
-séparant les domaines des normes NF C 14-100 et NF C 15-100.
+séparant les domaines des normes NF C 14-100 et NS 01-001.
 
 Compteur
 électronique
@@ -39844,7 +39844,7 @@ Bornes de
 
 NF C 14-100
 
-NF C 15-100
+NS 01-001
 
 
 
@@ -39862,7 +39862,7 @@ le circuit chemine avec le câble d'alimentation (dans un même fourreau) : dans
 l'accord du service local de distribution est nécessaire et il faut alors installer un appareil
 de découplage spécifique pour réaliser une séparation électrique entre la partie du câble
 du circuit d’asservissement ou de téléinformation installée dans le domaine de la
-NF C 14-100 et la partie de ce câble installée dans le domaine de la NF C 15-100.
+NF C 14-100 et la partie de ce câble installée dans le domaine de la NS 01-001.
 
 D3.1 Raccordement :
 Le conducteur de drain doit être relié à la terre de l'installation en un seul point dans tableau
@@ -39891,13 +39891,13 @@ chemine(nt) sans séparation physique avec les câbles d'alimentation.
  - Fourreau unique.
  - La (ou les) liaisons d'asservissements débouche(nt) directement sur un ou des appareils de découplage qui réalise(nt) la
 
-séparation et matérialise(nt) entre les domaines de la NF C 14-100 et la NF C 15-100.
+séparation et matérialise(nt) entre les domaines de la NF C 14-100 et la NS 01-001.
 
 5
 
  - Le circuit téléinformation débouche directement sur un appareil de découplage appelé “Découpleur Téléinformation Client” (DTC)
 
-qui réalise la séparation et matérialise la limite entre les domaines de la NF C 14-100 et la NF C 15-100.
+qui réalise la séparation et matérialise la limite entre les domaines de la NF C 14-100 et la NS 01-001.
 
 Domaine public
 
@@ -39992,13 +39992,13 @@ er
 
  - Fourreau unique ou non avec câbles de liaison : ils sont considérés comme faisant partie de l'installation électrique intérieure du
 
-client (domaine de la NF C 15-100).
+client (domaine de la NS 01-001).
 
 4
 
  - La (ou les) liaison(s) d'asservissements et le circuit de téléinformation débouchent directement sur un ou des des relais de
 
-découplage et sur le découpleur Téléinformation Client (DTC) qui réalisent la séparation entre la NF C 14-100 et la NF C 15-100.
+découplage et sur le découpleur Téléinformation Client (DTC) qui réalisent la séparation entre la NF C 14-100 et la NS 01-001.
 
 5
 6
@@ -40027,7 +40027,7 @@ asservissement
 
 NF C 14-100
 
-NF C 15-100
+NS 01-001
 
 D4 Cas particulier de la transformation du comptage
 E n cas de transformation du comptage (rénovation ou autre raison), l’ensemble des règles
@@ -40076,7 +40076,7 @@ ascenseurs, chaufferies, surpresseurs, etc. ....................................
 Anne xe – (normative ) – Installation de mise à la terre.........................................................466
 
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-772 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
@@ -40779,7 +40779,7 @@ en aluminium (voir NF C 15 -100, 542.3.1),
 
 b) conducteur principal de protection :
 
-sa section est donnée dans le tableau 54C de la NF C 15-100 :
+sa section est donnée dans le tableau 54C de la NS 01-001 :
 Si Sph ≤ 16 mm
 
 , SPE = Sph
@@ -40823,7 +40823,7 @@ ____________
 
 Partie 7-773 – Protection d’installations non surveillées
 Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions
-générales des autres parties de la NF C 15-100.
+générales des autres parties de la NS 01-001.
 Les numéros suivant le numéro particulier de la partie 7-773 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.
 L'absence de référence à une partie, à un article ou à un paragraphe signifie que les
@@ -40915,7 +40915,7 @@ Partie 7-781 – Locaux ou emplacements de service électrique
 
 ## 781.5 Dispositions concernant les locaux de service électrique............................................474
 Les prescriptions de la présente partie complètent les prescriptions générales des autres parties
-de la NF C 15-100.
+de la NS 01-001.
 
 Les numéros suivant le numéro particulier de la partie 7-781 sont ceux des parties, articles ou
 paragraphes correspondants de la présente norme.

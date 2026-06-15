@@ -22,6 +22,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { useGlobalHeader } from '@/components/MainLayout';
 
 type EventApiRow = {
   id: string;
@@ -452,6 +453,7 @@ const RegistrationModal = ({ event, open, onOpenChange }: RegistrationModalProps
 };
 
 const Events = () => {
+  useGlobalHeader().setHide(true);
   const [events, setEvents] = useState<DisplayEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

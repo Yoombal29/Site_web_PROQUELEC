@@ -66,8 +66,18 @@ export function GEDAnalyticsDashboard() {
   const loadAnalytics = async () => {
     try {
       const response = await fetch('/api/analytics/ged');
+      if (!response.ok) throw new Error('API error');
       const data = await response.json();
-      setStats(data);
+      setStats({
+        totalDocuments: data?.totalDocuments ?? 0,
+        activeUsers: data?.activeUsers ?? 0,
+        storageUsed: data?.storageUsed ?? 0,
+        approvalRate: data?.approvalRate ?? 0,
+        documentsByCategory: data?.documentsByCategory ?? [],
+        activityTimeline: data?.activityTimeline ?? [],
+        topUsers: data?.topUsers ?? [],
+        recentDocuments: data?.recentDocuments ?? [],
+      });
     } catch (error) {
       console.error('Error loading analytics:', error);
       // Mock data for demo
@@ -274,7 +284,7 @@ export function GEDAnalyticsDashboard() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {stats.recentDocuments.map((doc) =>
+                            {stats.recentDocuments?.map((doc) =>
               <TableRow key={doc.id}>
                                     <TableCell className="font-medium">{doc.title}</TableCell>
                                     <TableCell>{doc.user}</TableCell>

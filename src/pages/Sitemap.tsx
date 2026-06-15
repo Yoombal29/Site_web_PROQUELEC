@@ -139,13 +139,10 @@ const Sitemap = () => {
       icon: Cpu,
       description: "L'intelligence artificielle au service de la conformité normative.",
       items: [
-        { label: 'Console Expert', href: '/expert' },
         { label: 'Expert Lab', href: '/expert-lab' },
-        { label: 'Assistant Chat IA', href: '/expert/chat' },
-        { label: 'Calculatrices Normatives', href: '/expert/calculators' },
-        { label: 'Scanner de Conformité', href: '/expert/scanner' },
-        { label: 'Archives & Historique', href: '/expert/history' },
-        { label: 'Logs Système', href: '/expert/logs' },
+        { label: 'Assistant Chat IA', href: '/expert-lab/chat' },
+        { label: 'Calculatrices Normatives', href: '/expert-lab/calculators' },
+        { label: 'Base Normative', href: '/expert-lab/docs' },
       ],
     },
   ];
@@ -170,6 +167,7 @@ const Sitemap = () => {
     description: 'Gestion centralisée du contenu et du système PROQUELEC.',
     items: [
       { label: 'Dashboard Admin', href: '/admin' },
+      { label: 'Outils Admin', href: '/admin/outils' },
       { label: 'Studio de création', href: '/admin/builder' },
       { label: 'Paramètres Système', href: '/expert/config' },
       { label: 'Fournisseurs IA', href: '/expert/ai-providers' },

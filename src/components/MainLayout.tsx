@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, createContext, useContext } from 'react';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { CommandPalette } from './CommandPalette';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { RuntimeBanner } from '@/engine/runtime';
@@ -6,6 +8,9 @@ import { MessageCircle, Zap } from 'lucide-react';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+const GlobalHeaderCtx = createContext<{ hide: boolean; setHide: (v: boolean) => void }>({ hide: false, setHide: () => {} });
+export const useGlobalHeader = () => useContext(GlobalHeaderCtx);
 declare global {
   interface Window {
     __LAST_REDIRECT_REASON?: string;
@@ -48,6 +53,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   useNavDebug();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const [hideGlobalHeader, setHideGlobalHeader] = useState(false);
 
   useEffect(() => {
     let es: EventSource | null = null;
@@ -120,8 +126,9 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   }, [queryClient]);
 
   return (
-    <>
+    <GlobalHeaderCtx.Provider value={{ hide: hideGlobalHeader, setHide: setHideGlobalHeader }}>
       <RuntimeBanner />
+      {!hideGlobalHeader && <Header />}
       <CommandPalette />
       <div className="fixed top-4 right-4 z-40">
         <LanguageSwitcher />
@@ -135,11 +142,12 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <MessageCircle className="w-6 h-6 group-hover:scale-110 transition-transform" />
         <span className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center text-[9px] font-bold shadow-lg animate-pulse">
-          <Zap className="w-3 h-3" />
+          <Zap className="w-3 w-3" />
         </span>
       </button>
 
       {children}
-    </>
+      {!hideGlobalHeader && <Footer />}
+    </GlobalHeaderCtx.Provider>
   );
 };

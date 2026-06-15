@@ -56,8 +56,10 @@ import AdminHelpPanel from '@/components/admin/AdminHelpPanel';
 import ProjectList from '@/pages/projects/ProjectList';
 import AIProvidersPage from '@/expert-lab/pages/AIProvidersPage';
 import IADocumentationPage from '@/expert-lab/pages/IADocumentationPage';
+import { useGlobalHeader } from '@/components/MainLayout';
 
 export default function Dashboard() {
+  useGlobalHeader().setHide(true);
   const { user, isLoading } = useSession();
   const { role, isLoading: isLoadingRole } = useUserRole();
   const navigate = useNavigate();
@@ -221,7 +223,7 @@ export default function Dashboard() {
                   📋 Références documentaires
                 </h4>
                 <ul className="text-sm text-amber-700 dark:text-amber-300 space-y-1">
-                  <li>• NFC 15-100 : Installations électriques basse tension</li>
+                  <li>• NS 01-001 : Installations électriques basse tension</li>
                   <li>• CEI 61008 : Disjoncteurs différentiels</li>
                   <li>• IEC 60364 : Protection contre les chocs électriques</li>
                 </ul>

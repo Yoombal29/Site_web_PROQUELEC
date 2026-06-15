@@ -1461,7 +1461,7 @@ Risques encourus<o:p></o:p></span></h2>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      mso-list:l6 level1 lfo3;tab-stops:list 36.0pt'><span style='font-family:
      "Arial",sans-serif;mso-fareast-font-family:"Times New Roman"'>Non-conformit�
-     r�glementaire (NF C 15-100)<o:p></o:p></span></li>
+     r�glementaire (NS 01-001)<o:p></o:p></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      mso-list:l6 level1 lfo3;tab-stops:list 36.0pt'><span style='font-family:
      "Arial",sans-serif;mso-fareast-font-family:"Times New Roman"'>Endommagement
@@ -1506,7 +1506,7 @@ Recommandations pratiques<o:p></o:p></span></h2>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      mso-list:l3 level1 lfo5;tab-stops:list 36.0pt'><span style='font-family:
      "Arial",sans-serif;mso-fareast-font-family:"Times New Roman"'>Mesurer la r�sistance
-     de terre (doit �tre &lt; 50 Ω selon la norme NF C 15-100).<o:p></o:p></span></li>
+     de terre (doit �tre &lt; 50 Ω selon la norme NS 01-001).<o:p></o:p></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      mso-list:l3 level1 lfo5;tab-stops:list 36.0pt'><span style='font-family:
      "Arial",sans-serif;mso-fareast-font-family:"Times New Roman"'>Consigner
@@ -1630,7 +1630,7 @@ Ressources utiles<o:p></o:p></span></h2>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      mso-list:l0 level1 lfo7;tab-stops:list 36.0pt'><span style='font-family:
      "Arial",sans-serif;mso-fareast-font-family:"Times New Roman"'><a
-     href="https://www.afnor.org/" target="_blank">Norme NF C 15-100 (AFNOR)</a><o:p></o:p></span></li>
+     href="https://www.afnor.org/" target="_blank">Norme NS 01-001 (AFNOR)</a><o:p></o:p></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      mso-list:l0 level1 lfo7;tab-stops:list 36.0pt'><span style='font-family:
      "Arial",sans-serif;mso-fareast-font-family:"Times New Roman"'><a
@@ -1704,3 +1704,4 @@ Fiche pratique pour syndics et g�rants. <o:p></o:p></span></p>
 </body>
 
 </html>
+

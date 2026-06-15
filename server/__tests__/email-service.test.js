@@ -8,8 +8,8 @@ describe('emailTemplates', () => {
     });
 
     test('formationConfirmation template', () => {
-        const result = emailTemplates.formationConfirmation('NF C 15-100', 'Bob');
-        expect(result.subject).toContain('NF C 15-100');
+        const result = emailTemplates.formationConfirmation('NS 01-001', 'Bob');
+        expect(result.subject).toContain('NS 01-001');
         expect(result.html).toContain('Bob');
     });
 

@@ -1,5 +1,20 @@
 
-import { Zap, MessageSquare, Calculator, BookOpen, Settings, BarChart3, FileText, Bot, Activity, Binary, History, GitBranch } from "lucide-react";
+import {
+  Zap,
+  MessageSquare,
+  Calculator,
+  BookOpen,
+  Settings,
+  BarChart3,
+  Activity,
+  Binary,
+  History,
+  GitBranch,
+  Camera,
+  ShieldCheck,
+  Terminal,
+  Key,
+} from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import {
@@ -16,19 +31,21 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 const adminItems = [
-{ title: "Tableau de Bord", url: "/expert", icon: BarChart3 },
-{ title: "Flux IA & API", url: "/expert/ai-providers", icon: Bot },
-{ title: "Historique d'Audit", url: "/expert/logs", icon: FileText },
-{ title: "Config Système", url: "/expert/config", icon: Settings }];
+{ title: "Outils Admin", url: "/admin/outils", icon: BarChart3 },
+{ title: "Configuration API", url: "/expert/ai-providers", icon: Key },
+{ title: "Dashboard Admin", url: "/admin", icon: BarChart3 },
+{ title: "Validations Partenaires", url: "/admin?tab=event-moderation", icon: ShieldCheck },
+{ title: "Historique Sessions", url: "/expert/history", icon: History },
+{ title: "Config Système", url: "/expert/config", icon: Settings },
+{ title: "Logs & Diagnostics", url: "/expert/logs", icon: Terminal },
+{ title: "Scanner Conformité", url: "/expert/scanner", icon: Camera }];
 
 
 const technicalItems = [
-{ title: "Terminal de Chat", url: "/expert/chat", icon: MessageSquare, badge: "YEAI_CORE" },
-{ title: "Calculateur BE", url: "/expert/calculators", icon: Calculator, badge: "UTE_15-105" },
-{ title: "Schéma Unifilaire", url: "/expert/schemas", icon: GitBranch, badge: "MERMAID" },
-{ title: "Base Normative", url: "/expert/docs", icon: BookOpen, badge: "NFC_15-100" },
-{ title: "Scanner Photo", url: "/expert/scanner", icon: Camera, badge: "SCAN_NFC" },
-{ title: "Historique IA", url: "/expert/history", icon: History, badge: "SESSIONS" }];
+{ title: "Terminal de Chat", url: "/expert-lab/chat", icon: MessageSquare, badge: "YEAI_CORE" },
+{ title: "Calculateur BE", url: "/expert-lab/calculators", icon: Calculator, badge: "UTE_15-105" },
+{ title: "Schéma Unifilaire", url: "/expert-lab/schemas", icon: GitBranch, badge: "MERMAID" },
+{ title: "Base Normative", url: "/expert-lab/docs", icon: BookOpen, badge: "NFC_15-100" }];
 
 
 export function AppSidebar() {
@@ -37,11 +54,11 @@ export function AppSidebar() {
   const collapsed = state === "collapsed";
 
   const getNavCls = ({ isActive }: {isActive: boolean;}) => {
-    const isChat = location.pathname === "/expert/chat";
-    const isCalc = location.pathname === "/expert/calculators";
-    const isDocs = location.pathname === "/expert/docs";
+    const isChat = location.pathname === "/expert-lab/chat";
+    const isCalc = location.pathname === "/expert-lab/calculators";
+    const isDocs = location.pathname === "/expert-lab/docs";
     const isHistory = location.pathname === "/expert/history";
-    const isSchemas = location.pathname === "/expert/schemas";
+    const isSchemas = location.pathname === "/expert-lab/schemas";
     const isScanner = location.pathname === "/expert/scanner";
 
     if (isActive) {
@@ -60,9 +77,7 @@ export function AppSidebar() {
     if (badge === "YEAI_CORE") return "bg-blue-500/20 text-blue-400 border-blue-500/30";
     if (badge === "UTE_15-105") return "bg-emerald-500/20 text-emerald-500 border-emerald-500/30";
     if (badge === "NFC_15-100") return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-    if (badge === "SESSIONS") return "bg-violet-500/20 text-violet-400 border-violet-500/30";
     if (badge === "MERMAID") return "bg-teal-500/20 text-teal-400 border-teal-500/30";
-    if (badge === "SCAN_NFC") return "bg-orange-500/20 text-orange-400 border-orange-500/30";
     return "bg-white/5 text-zinc-500 border-white/10";
   };
 
@@ -82,7 +97,7 @@ export function AppSidebar() {
             {!collapsed &&
             <div className="animate-in fade-in slide-in-from-left-4 duration-500">
                 <h2 className="font-black text-2xl uppercase italic leading-none tracking-tighter">
-                  YEAI <span className="text-primary tracking-normal">LAB</span>
+                  OUTILS <span className="text-primary tracking-normal">ADMIN</span>
                 </h2>
                 <div className="flex items-center gap-1 mt-1">
                   <Activity className="w-3 h-3 text-primary/60" />
@@ -93,10 +108,10 @@ export function AppSidebar() {
           </div>
         </div>
 
-        {/* SECTION: ADMINISTRATIVE (CŒUR_ADMIN) */}
+        {/* SECTION: ADMINISTRATION CENTRALISÉE */}
         <SidebarGroup>
           <SidebarGroupLabel className="px-6 py-4 text-[9px] font-black uppercase tracking-[0.4em] text-primary/40">
-            CŒUR_ADMIN
+            ADMINISTRATION
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="px-3 gap-1">
@@ -155,7 +170,7 @@ export function AppSidebar() {
               </div>
               <div className="space-y-1">
                 <p className="text-[9px] uppercase font-bold text-muted-foreground">Protocole</p>
-                <p className="text-[11px] font-black tracking-tighter italic">NF C 15-100 • IEC 60364</p>
+                <p className="text-[11px] font-black tracking-tighter italic">NS 01-001 • IEC 60364</p>
               </div>
             </div>
           </div>

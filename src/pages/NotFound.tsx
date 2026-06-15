@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
+import { useGlobalHeader } from '@/components/MainLayout';
 
 const NotFound = () => {
+  useGlobalHeader().setHide(true);
   const location = useLocation();
 
   useEffect(() => {

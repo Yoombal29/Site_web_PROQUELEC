@@ -355,7 +355,7 @@ describe('VoltageDropCalculator - Advanced Suite', () => {
       expect(screen.getByLabelText(/Section Normalisée/)).toBeInTheDocument();
     });
 
-    it('validates thermal compliance per NF C 15-100', async () => {
+    it('validates thermal compliance per NS 01-001', async () => {
       const user = userEvent.setup();
       render(<VoltageDropCalculator />);
 

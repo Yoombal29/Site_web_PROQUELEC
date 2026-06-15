@@ -64,21 +64,21 @@ const QUICK_PROMPTS: QuickPrompt[] = [
 {
   id: "norm_protection",
   label: "Protection 30mA",
-  prompt: "Explique les règles de la NF C 15-100 concernant la protection différentielle 30mA. Quels circuits doivent obligatoirement être protégés? Quelles sont les exceptions?",
+  prompt: "Explique les règles de la NS 01-001 concernant la protection différentielle 30mA. Quels circuits doivent obligatoirement être protégés? Quelles sont les exceptions?",
   category: "Normes",
   icon: <Shield className="w-4 h-4" />
 },
 {
   id: "norm_sections",
   label: "Sections imposées",
-  prompt: "Quelles sont les sections minimales imposées par la NF C 15-100 pour les différents circuits d'une installation domestique? Prises, éclairage, circuits spécialisés.",
+  prompt: "Quelles sont les sections minimales imposées par la NS 01-001 pour les différents circuits d'une installation domestique? Prises, éclairage, circuits spécialisés.",
   category: "Normes",
   icon: <FileText className="w-4 h-4" />
 },
 {
   id: "norm_sdb",
   label: "Volumes SDB",
-  prompt: "Détaille les 4 volumes de protection dans une salle de bain selon la NF C 15-100. Quels équipements sont autorisés dans chaque volume? Quelles protections sont requises?",
+  prompt: "Détaille les 4 volumes de protection dans une salle de bain selon la NS 01-001. Quels équipements sont autorisés dans chaque volume? Quelles protections sont requises?",
   category: "Normes",
   icon: <Shield className="w-4 h-4" />
 },
@@ -110,14 +110,14 @@ const QUICK_PROMPTS: QuickPrompt[] = [
 {
   id: "audit_tableau",
   label: "Audit tableau",
-  prompt: "Analyse cette photo de tableau électrique et identifie les non-conformités potentielles par rapport à la NF C 15-100: protection différentielle, repérage, réserve modulaire, serrage.",
+  prompt: "Analyse cette photo de tableau électrique et identifie les non-conformités potentielles par rapport à la NS 01-001: protection différentielle, repérage, réserve modulaire, serrage.",
   category: "Analyse",
   icon: <Shield className="w-4 h-4" />
 },
 {
   id: "audit_schema",
   label: "Vérif. schéma",
-  prompt: "Vérifie ce schéma unifilaire et indique s'il est conforme à la NF C 15-100. Points à vérifier: sélectivité, répartition équilibrée, sections, protections.",
+  prompt: "Vérifie ce schéma unifilaire et indique s'il est conforme à la NS 01-001. Points à vérifier: sélectivité, répartition équilibrée, sections, protections.",
   category: "Analyse",
   icon: <FileText className="w-4 h-4" />
 }];

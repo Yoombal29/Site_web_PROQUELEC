@@ -9,6 +9,7 @@ import {
   BarChart3, ThumbsUp, ArrowRight, Star } from
 "lucide-react";
 import { cn } from "@/lib/utils";
+import { useGlobalHeader } from '@/components/MainLayout';
 
 // --- Types ---
 
@@ -61,7 +62,7 @@ const SectionBenefits = () => {
 
 const SectionCriteria = () => {
   const criteria = [
-    { icon: CheckCircle, title: "Conformité aux Normes", desc: "Vos installations doivent respecter la norme NS 01-001, la NF C 15-100 et le décret n°1333 portant sur le contrôle de conformité électrique." },
+    { icon: CheckCircle, title: "Conformité aux Normes", desc: "Vos installations doivent respecter la norme NS 01-001 et le décret n°1333 portant sur le contrôle de conformité électrique." },
     { icon: Search, title: "Audit Terrain", desc: "Nos inspecteurs agréés réalisent une inspection sur site pour vérifier l'état des installations et valider leur conformité." },
     { icon: Zap, title: "Compétences Techniques", desc: "Le porteur du label doit justifier d'une formation ou d'une habilitation électrique reconnue, et d'une expérience professionnelle avérée." },
     { icon: ShieldCheck, title: "Engagement Continu", desc: "Le label est renouvelable tous les 2 ans sous condition de maintien des standards de qualité et de formation continue." },
@@ -115,6 +116,7 @@ const SectionCriteria = () => {
 // --- Main Page ---
 
 export default function Labels() {
+  useGlobalHeader().setHide(true);
   const sections: SectionConfig[] = [
     { id: 'benefits', label: 'Avantages du Label', icon: ThumbsUp },
     { id: 'criteria', label: 'Critères de Qualification', icon: Search },

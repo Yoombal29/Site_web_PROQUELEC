@@ -31,7 +31,7 @@ export default function MemberDashboard() {
           title: 'Commission normes',
           description: 'Accédez aux ressources techniques et aux supports de veille normative.',
           icon: ShieldCheck,
-          route: '/expert/docs',
+          route: '/expert-lab/docs',
           tone: 'blue',
         },
         {

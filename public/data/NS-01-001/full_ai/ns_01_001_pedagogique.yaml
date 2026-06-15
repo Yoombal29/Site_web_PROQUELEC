@@ -803,7 +803,7 @@ sections:
     titre: En schéma TT, les dispositifs de protection sont des dispositifs différentiels
     niveau: 3
     type: section
-    contenu_resume: "Le conducteur neutre ne doit pas être relié à la terre en aval d'un dispositif différentiel.  La précédente édition de la norme NF C 15-100 prévoyait la possibilité d’utiliser des dispositifs de prote"
+    contenu_resume: "Le conducteur neutre ne doit pas être relié à la terre en aval d'un dispositif différentiel.  La précédente édition de la norme NS 01-001 prévoyait la possibilité d’utiliser des dispositifs de prote"
 
   - numero: 411.5.3
     titre: "En courant alternatif, la condition suivante doit être satisfaite :"
@@ -3929,13 +3929,13 @@ sections:
     titre: ANNEXE 4 1
     niveau: 1
     type: annexe
-    contenu_resume: NF C 15-100  /  442.2.4.2  NF C 13-100  442.2.4.2  NF C 13-200  442.2  RA  /  NF C 15-100  411.5.3  /  /  TTS  NF C 13-100  442.1  NFC 13-200  442.3  ITR  ITN  /  /  /  NFC 15-100  NF C 15-100  442.2.
+    contenu_resume: NS 01-001  /  442.2.4.2  NF C 13-100  442.2.4.2  NF C 13-200  442.2  RA  /  NS 01-001  411.5.3  /  /  TTS  NF C 13-100  442.1  NFC 13-200  442.3  ITR  ITN  /  /  /  NFC 15-100  NS 01-001  442.2.
 
   - numero: 4
     titre: ANNEXE 4 1
     niveau: 1
     type: annexe
-    contenu_resume: "/  /  /  NF C 15-100  411.6.2  NF C15-100  /  442.2.4.3  NF C 13-100  442.2  NF C 13-200  442.2  ITS  NF C 13-100  /  /  NF C 15-100  NF C 15-100  442.1  NF C13-200  442.3  442.2.6.1  411.6.2  RA est "
+    contenu_resume: "/  /  /  NS 01-001  411.6.2  NF C15-100  /  442.2.4.3  NF C 13-100  442.2  NF C 13-200  442.2  ITS  NF C 13-100  /  /  NS 01-001  NS 01-001  442.1  NF C13-200  442.3  442.2.6.1  411.6.2  RA est "
 
   - numero: 542.2.1
     titre: Les matériaux et les dimensions des prises de terre doivent être choisis de manière à
@@ -5723,7 +5723,7 @@ sections:
     titre: Autres matériels............................................................................................................ 359
     niveau: 2
     type: section
-    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100.  Les numéros suivant le numéro particulier de la partie 7-
+    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NS 01-001.  Les numéros suivant le numéro particulier de la partie 7-
 
   - numero: 702.1
     titre: "Domaine d'application, objet et principes fondamentaux"
@@ -5975,7 +5975,7 @@ sections:
     titre: Appareillage ............................................................................................................369
     niveau: 2
     type: section
-    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100.  Les numéros suivant le numéro particulier de la partie 7-
+    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NS 01-001.  Les numéros suivant le numéro particulier de la partie 7-
 
   - numero: 703.1
     titre: "Domaine d'application"
@@ -6137,7 +6137,7 @@ sections:
     titre: Dispositifs de commande et de sectionnement.......................................................377
     niveau: 2
     type: section
-    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100.  Les numéros suivant le numéro particulier de la partie 7-
+    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NS 01-001.  Les numéros suivant le numéro particulier de la partie 7-
 
   - numero: 704.1
     titre: "Domaine d'application"
@@ -6359,7 +6359,7 @@ sections:
     titre: Autres matériels ......................................................................................................380
     niveau: 2
     type: section
-    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100.  Les numéros suivant le numéro particulier de la partie 7-
+    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NS 01-001.  Les numéros suivant le numéro particulier de la partie 7-
 
   - numero: 705.1
     titre: "Domaine d'application"
@@ -6461,7 +6461,7 @@ sections:
     titre: Protection pour assurer la sécurité ............................................................................383
     niveau: 2
     type: section
-    contenu_resume: ______________  Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100.  Les numéros suivant le numéro particulier
+    contenu_resume: ______________  Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NS 01-001.  Les numéros suivant le numéro particulier
 
   - numero: 706.1
     titre: "Domaine d'application"
@@ -6935,7 +6935,7 @@ sections:
     titre: Canalisations des marinas
     niveau: 3
     type: section
-    contenu_resume: Les règles générales de la partie 52 de la NF C 15-100 sont applicables en prenant en compte les conditions d’influences  externes (709.51).
+    contenu_resume: Les règles générales de la partie 52 de la NS 01-001 sont applicables en prenant en compte les conditions d’influences  externes (709.51).
 
   - numero: 709.52.1.1
     titre: "Les canalisations suivantes ne doivent pas être utilisées :"
@@ -7085,7 +7085,7 @@ sections:
     titre: Vérification ................................................................................................................401
     niveau: 2
     type: section
-    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100.  Les numéros suivant le numéro particulier de la partie 7-
+    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NS 01-001.  Les numéros suivant le numéro particulier de la partie 7-
 
   - numero: 711.1
     titre: "Domaine d'application"
@@ -7331,7 +7331,7 @@ sections:
     titre: Matériels d’installation............................................................................................406
     niveau: 2
     type: section
-    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100. Les numéros suivant le numéro particulier de la partie 7-7
+    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NS 01-001. Les numéros suivant le numéro particulier de la partie 7-7
 
   - numero: 717.1
     titre: Domaine d’application
@@ -7517,7 +7517,7 @@ sections:
     titre: Autres matériels ......................................................................................................416
     niveau: 2
     type: section
-    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NF C 15-100.  Les numéros suivant le numéro particulier de la partie 7-
+    contenu_resume: Les prescriptions de la présente partie complètent, modifient ou remplacent les prescriptions générales des autres parties de la NS 01-001.  Les numéros suivant le numéro particulier de la partie 7-
 
   - numero: 752.1
     titre: Domaine d’application
@@ -8417,7 +8417,7 @@ sections:
     titre: Dispositions concernant les locaux de service électrique............................................474
     niveau: 2
     type: section
-    contenu_resume: Les prescriptions de la présente partie complètent les prescriptions générales des autres parties de la NF C 15-100.  Les numéros suivant le numéro particulier de la partie 7-781 sont ceux des parties
+    contenu_resume: Les prescriptions de la présente partie complètent les prescriptions générales des autres parties de la NS 01-001.  Les numéros suivant le numéro particulier de la partie 7-781 sont ceux des parties
 
   - numero: 781.0
     titre: "Domaine d'application"
@@ -8490,4 +8490,5 @@ sections:
     niveau: 3
     type: section
     contenu_resume: "Les locaux de service électrique doivent : -  soit être ventilés sur l’extérieur soit directement soit par l’intermédiaire d’un conduit de manière naturelle ou mécanique ; la mise en oeuvre de la vent"
+
 

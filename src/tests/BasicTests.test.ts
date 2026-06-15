@@ -35,7 +35,7 @@ describe('Système Électrique - Tests de Base', () => {
     expect(result.resultats?.resistance).toBeGreaterThan(0);
   });
 
-  test('calculs conformes NF C 15-100', () => {
+  test('calculs conformes NS 01-001', () => {
     const tronçonConforme = {
       id: 'conforme',
       name: 'Conforme',

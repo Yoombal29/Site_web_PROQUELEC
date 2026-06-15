@@ -14,12 +14,14 @@ import {
   isDesignLockedFunctionalPage,
 } from '@/lib/functional-page-structure';
 import { createHtmlCraftStructure } from '@/lib/craft-html-structure';
+import HomePage from './HomePage';
 import ToolsPlatform from './ToolsPlatform';
 import Showroom from './Showroom';
 import Documents from './Documents';
 import Events from './Events';
 import Labels from './Labels';
 import AboutPage from './About';
+import { useGlobalHeader } from '@/components/MainLayout';
 
 // Craft.js read-only rendering — import lazy pour éviter d'alourdir le bundle public
 const CraftPageRenderer = React.lazy(() => import('@/components/CraftPageRenderer'));
@@ -35,47 +37,65 @@ const PageLoading = () => (
 );
 
 const PAGE_ALIASES: Record<string, string> = {
-  home: 'home_page',
+  home: 'home',
   about: 'about',
-  'utilite-publique': 'public_utility',
-  'formation-certification': 'formation_certification',
-  'normes-ressources': 'normes_ressources',
-  'projets-realisations': 'projets_realisations',
-  projets: 'projets_realisations',
-  actualites: 'actualites_evenements',
-  'actualites-evenements': 'actualites_evenements',
-  'contact-premium': 'contact_premium',
-  formations: 'trainings',
-  'formations-proquelec': 'formations_proquelec',
-  'expertises-techniques': 'expertises_techniques',
-  expertises: 'expertises_techniques',
-  'expert-lab': 'expert_lab',
+  'utilite-publique': 'utilite-publique',
+  'formation-certification': 'formation-certification',
+  'normes-ressources': 'normes-ressources',
+  'projets-realisations': 'projets-realisations',
+  // Redirections legacy
+  projets: 'projets-realisations',
+  galerie: 'projets-realisations',
+  actualites: 'actualites-evenements',
+  'actualites-evenements': 'actualites-evenements',
+  'contact-premium': 'contact-premium',
+  formations: 'formations',
+  trainings: 'formations',
+  'formations-proquelec': 'formations',
+  'expertises-techniques': 'expertises-techniques',
+  expertises: 'expertises-techniques',
+  'expert-lab': 'expert-lab',
+  // Espaces (vers slugs canoniques)
   'espace-menages': 'menages',
   'espace-professionnels': 'professionnels',
   'espace-autorites': 'autorites',
-  avantages: 'advantages',
-  // Nouveaux slugs du menu BD
+  'espace-partenaires': 'partenaires',
+  avantages: 'avantages',
+  // Slugs du menu BD
   'nos-actions': 'activities',
-  galerie: 'projets_realisations',
-  marches: 'marches',
-  collectivites: 'public_utility',
-  publications: 'normes_ressources',
+  marches: 'portal/marches',
+  collectivites: 'utilite-publique',
+  publications: 'normes-ressources',
   faq: 'faq',
-  'normative-corpus': 'normes_ressources',
+  'normative-corpus': 'normes-ressources',
   'conseils-menages': 'menages',
-  'ressources-pedagogiques': 'trainings',
+  'espace-clients': 'menages',
+  'ressources-pedagogiques': 'formations',
   'partenaires-liste': 'partenaires',
   partenaires: 'partenaires',
   'partenariat-senelec': 'partenaires',
-  temoignages: 'avis_clients',
-  'espace-partenaires': 'espace_partenaires',
+  temoignages: 'temoignages',
+  // Redirections précises pour purger les doublons et stubs du menu
+  'actions/sensibilisation': 'activities',
   'actions/diagnostics': 'activities',
-  'actions/collectivites': 'public_utility',
-  'evenements/anniversaire': 'actualites_evenements',
-  'evenements/seminaires': 'actualites_evenements',
+  'actions/conformite': 'activities',
+  'actions/securisation': 'activities',
+  'actions/collectivites': 'utilite-publique',
+  'evenements/anniversaire': 'actualites-evenements',
+  'evenements/ateliers': 'actualites-evenements',
+  'evenements/conferences': 'actualites-evenements',
+  'evenements/seminaires': 'actualites-evenements',
+  'presse/communiques': 'presse',
+  'presse/revue': 'presse',
+  'formations/collectivites': 'formations',
+  'formations/artisans': 'formations',
+  'portal/dashboard': 'dashboard',
+  'portal/formations': 'formations',
+  blog: 'actualites-evenements',
 };
 
 const SPECIAL_FALLBACK_PAGES: Record<string, ComponentType> = {
+  home: HomePage,
   about: AboutPage,
   outils: ToolsPlatform,
   showroom: Showroom,
@@ -88,8 +108,7 @@ const normalizeRouteSlug = (slug: string) =>
   slug
     .replace(/^\//, '')
     .replace(/\/$/, '')
-    .replace(/^(fr|en)\//, '')
-    .replace(/^portal\//, '');
+    .replace(/^(fr|en)\//, '');
 
 type ApiPageRecord = PageRecord & {
   content_raw?: string;
@@ -182,6 +201,7 @@ function isCraftJsStructure(data: unknown): data is Record<string, unknown> {
  */
 
 const DynamicPageComponent: React.FC = () => {
+  useGlobalHeader().setHide(true);
   const { slug: paramSlug } = useParams<{ slug: string }>();
   const location = useLocation();
   const navigate = useNavigate();

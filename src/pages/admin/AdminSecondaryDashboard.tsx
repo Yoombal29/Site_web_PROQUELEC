@@ -19,8 +19,10 @@ import { EcommerceAdminPanel } from "@/components/admin/EcommerceAdminPanel";
 import { CustomFontsPanel } from "@/components/admin/CustomFontsPanel";
 import { AdminBrandingPanel } from "@/components/admin/AdminBrandingPanel";
 import { Loader2 } from "lucide-react";
+import { useGlobalHeader } from '@/components/MainLayout';
 
 export default function AdminSecondaryDashboard() {
+    useGlobalHeader().setHide(true);
     const { user } = useSession();
     const { role, isLoading } = useUserRole();
     const [activeTab, setActiveTab] = useState("overview");

@@ -90,7 +90,7 @@ export function CommandPalette() {
               <span>Expert Lab (Nouveau)</span>
               <CommandShortcut>⌘E</CommandShortcut>
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => navigate('/expert/chat'))}>
+            <CommandItem onSelect={() => runCommand(() => navigate('/expert-lab/chat'))}>
               <Search className="mr-2 h-4 w-4" />
               <span>Assistant IA</span>
             </CommandItem>
@@ -98,7 +98,7 @@ export function CommandPalette() {
               <FileText className="mr-2 h-4 w-4" />
               <span>Bibliothèque GED</span>
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => navigate('/expert/calculators'))}>
+            <CommandItem onSelect={() => runCommand(() => navigate('/expert-lab/calculators'))}>
               <Calculator className="mr-2 h-4 w-4" />
               <span>Calculateurs Electriques</span>
             </CommandItem>

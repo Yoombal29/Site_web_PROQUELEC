@@ -1,7 +1,7 @@
 /**
  * CALCULATRICE DE CHUTE DE TENSION — PROQUELEC
  * 
- * Norme: NS 01-001 / NFC 15-100 (Articles 523, 524, 525)
+ * Norme: NS 01-001 (Articles 523, 524, 525)
  * Objectif: Calcul conforme de chute de tension en Basse Tension (≤ 1 kV)
  * 
  * Fonctionnalités:
@@ -47,7 +47,7 @@ import {
 
 /*
 INTERDICTIONS ABSOLUES:
-- Interdire toute information non issue de NS 01-001 / NFC 15-100
+- Interdire toute information non issue de NS 01-001
 - Interdire toute extrapolation ou simplification pédagogique
 - Interdire toute valeur "usuelle" ou "généralement admise"
 - Interdire toute réponse sans référence normative explicite
@@ -354,7 +354,7 @@ export default function VoltageDropCalculator({
   const [lastCalculationTime, setLastCalculationTime] = useState<number>(0);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
 
-  // Resistivity values according to NS 01-001 / NFC 15-100 Art 525
+  // Resistivity values according to NS 01-001 Art 525
   // At 20°C: Cuivre ρ = 0.0175, Aluminium ρ = 0.028 Ω·mm²/m
   // Service conditions (normal): ρ_service = 1.25 × ρ_20°C
   // (Now imported from normativeConstants.ts)
@@ -377,7 +377,7 @@ export default function VoltageDropCalculator({
   : string => {
     const canonicalData = {
       engine_version: "PROQUELEC-NS01001-v1.0",
-      norme: "NS 01-001 / NFC 15-100",
+      norme: "NS 01-001",
       articles: ["523", "524", "525"],
       timestamp_utc: new Date().toISOString(),
       alimentation: alimentationType,
@@ -482,7 +482,7 @@ export default function VoltageDropCalculator({
     log.push("────────────────────────────────");
     log.push("RÉFÉRENCES NORMATIVES");
     log.push("────────────────────────────────");
-    log.push("NS 01-001 / NFC 15-100");
+    log.push("NS 01-001");
     log.push("Articles 523, 524, 525");
     log.push("Tableau 52V");
 
@@ -510,7 +510,7 @@ export default function VoltageDropCalculator({
   const generateElectronicSignature = (calculationHash: string, auditHash: string): string => {
     const signatureData = {
       engine_version: "PROQUELEC-NS01001-v1.0",
-      norme: "NS 01-001 / NFC 15-100",
+      norme: "NS 01-001",
       articles: ["523", "524", "525"],
       timestamp_utc: new Date().toISOString(),
       signataire: "Moteur Normatif Automatisé PROQUELEC",
@@ -551,7 +551,7 @@ export default function VoltageDropCalculator({
     doc.text("RÉFÉRENCE NORMATIVE", 20, 75);
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
-    doc.text("NS 01-001 / NFC 15-100", 20, 85);
+    doc.text("NS 01-001", 20, 85);
     doc.text("Articles 523, 524, 525 - Tableau 52V", 20, 95);
 
     // Parameters
@@ -618,7 +618,7 @@ export default function VoltageDropCalculator({
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
     doc.text("EXTRAITS NORMATIFS", 20, 30);
-    doc.text("NS 01-001 / NFC 15-100", 20, 45);
+    doc.text("NS 01-001", 20, 45);
 
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
@@ -679,7 +679,7 @@ export default function VoltageDropCalculator({
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
     doc.text("Le présent document atteste que le calcul de chute de tension", 20, 75);
-    doc.text("effectué respecte les exigences de la norme NS 01-001 / NFC 15-100.", 20, 85);
+    doc.text("effectué respecte les exigences de la norme NS 01-001.", 20, 85);
 
     // Results summary
     doc.setFontSize(14);
@@ -716,7 +716,7 @@ export default function VoltageDropCalculator({
       ifcType: "IFCELECTRICALCIRCUIT",
       properties: {
         Pset_ElectricalCalculation: {
-          Norme: "NS 01-001 / NFC 15-100",
+          Norme: "NS 01-001",
           Article: "523-524-525",
           IB: current,
           U0: voltage,
@@ -745,7 +745,7 @@ export default function VoltageDropCalculator({
   const generateDOEData = (result: CalculationResult): unknown => {
     return {
       type: "calcul_electrique",
-      norme: "NS 01-001 / NFC 15-100",
+      norme: "NS 01-001",
       chapitre: 52,
       sections: [523, 524, 525],
       installation: "BT ≤ 1 kV",
@@ -915,7 +915,7 @@ export default function VoltageDropCalculator({
       const resistance = 2 * rho * L / S; // Résistance de ligne (aller-retour)
 
       // Référence normative complète
-      const normativeReference = `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`;
+      const normativeReference = `NS 01-001 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`;
 
       // Generate cryptographic hash
       const calculationHash = generateCalculationHash(
@@ -1103,8 +1103,8 @@ export default function VoltageDropCalculator({
           const signature = generateElectronicSignature(calculationHash, auditHash);
 
           // Generate BIM and DOE data
-          const bimData = {}; // generateBIMData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference: `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`, warnings, recommendedSection: S, thermalCheck: true, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
-          const doeData = {}; // generateDOEData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference: `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`, warnings, recommendedSection: S, thermalCheck: true, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
+          const bimData = {}; // generateBIMData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference: `NS 01-001 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`, warnings, recommendedSection: S, thermalCheck: true, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
+          const doeData = {}; // generateDOEData({ voltageDrop: u, voltageDropPercent: deltaUPercent, isCompliant, maxAllowedDrop: maxAllowedDrop * 100, resistivity: rho, reactance: LINEAR_REACTANCE, resistance, formula, phaseSystem: phaseSystemLabel, alimentationType, normativeReference: `NS 01-001 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`, warnings, recommendedSection: S, thermalCheck: true, izCorrected, modeOfInstallation, ambientTemperature: ambientTemp, insulationType, numberOfCircuits: numCircuits, calculationHash, auditLog, auditHash, signature });
 
           // Create new version
           const newVersion: CalculationVersion = {
@@ -1128,7 +1128,7 @@ export default function VoltageDropCalculator({
             formula,
             phaseSystem: phaseSystemLabel,
             alimentationType,
-            normativeReference: `NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`,
+            normativeReference: `NS 01-001 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V`,
             warnings,
             recommendedSection: S,
             thermalCheck: true,
@@ -1185,7 +1185,7 @@ export default function VoltageDropCalculator({
 ATTESTATION DE CONFORMITÉ — CALCUL DE CHUTE DE TENSION
 
 Organisme : PROQUELEC
-Norme de référence : NS 01-001 / NFC 15-100
+Norme de référence : NS 01-001
 Chapitre 52 — Sections 523, 524, 525
 Tableau 52V
 
@@ -1280,7 +1280,7 @@ Signature numérique : ✔
     // Also include text version for compatibility
     zip.file("01_CALCULS/calcul_chute_tension.txt", `
 CALCUL DE CHUTE DE TENSION
-Norme: NS 01-001 / NFC 15-100
+Norme: NS 01-001
 Articles: 523, 524, 525
 
 Paramètres:
@@ -1306,7 +1306,7 @@ Hash: ${result.calculationHash}
     // 02_JOURNAL_AUDIT/
     zip.file("02_JOURNAL_AUDIT/audit_normatif.txt", result.auditLog.join('\n'));
     zip.file("02_JOURNAL_AUDIT/audit_normatif.json", JSON.stringify({
-      norme: "NS 01-001 / NFC 15-100",
+      norme: "NS 01-001",
       articles: [523, 524, 525],
       timestamp: new Date().toISOString(),
       audit_log: result.auditLog,
@@ -1333,7 +1333,7 @@ Hash: ${result.calculationHash}
 ATTESTATION DE CONFORMITÉ ÉLECTRIQUE
 
 Organisme : PROQUELEC
-Norme : NS 01-001 / NFC 15-100
+Norme : NS 01-001
 Articles : 523 – 524 – 525
 Installation : BT ≤ 1 kV
 
@@ -1388,7 +1388,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                     <div>
                         <h2 className="text-3xl font-black text-white">Calculateur de Chute de Tension</h2>
                         <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20 px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest">
-                            NS 01-001 / NFC 15-100 - Chapitre 52
+                            NS 01-001 - Chapitre 52
                         </Badge>
                     </div>
                 </div>
@@ -2039,7 +2039,7 @@ Date : ${new Date().toLocaleDateString('fr-FR')}
                             <h4 className="font-black text-amber-400">Référence Normative Complète</h4>
                             <div className="space-y-2 text-sm text-slate-300">
                                 <p>
-                                    <strong>NS 01-001 / NFC 15-100 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V:</strong> La chute de tension
+                                    <strong>NS 01-001 — Chapitre 52 — Sections 523, 524, 525 — Tableau 52V:</strong> La chute de tension
                                     dans les installations doit être limitée pour assurer le bon fonctionnement des récepteurs.
                                 </p>
                                 <div className="bg-slate-800/50 p-3 rounded font-mono text-xs">

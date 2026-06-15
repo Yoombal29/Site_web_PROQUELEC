@@ -335,7 +335,7 @@ document. Pour les références datées, seule l'édition citée s'applique. Pou
 non datées, la dernière édition du document de référence s'applique (y compris les éventuels
 amendements).
 
-NF C 15-100 Installations électriques à basse tension
+NS 01-001 Installations électriques à basse tension
 
 NF C 17-200 Installations d'éclairage extérieur - Règles
 
@@ -3942,7 +3942,7 @@ information (signalisation optique, telesignalisation, etc.) doit être réalis�
 indiscutable par construction et assurer la sécurité fonctionnelle.
 
 En basse tension, la certitude de la SEPARATION est obtenue, notamment, par l'utilisation des
-dispositions prescrites pour les dispositifs de sectionnement dans la norme NF C 15-100.
+dispositions prescrites pour les dispositifs de sectionnement dans la norme NS 01-001.
 
 En haute tension, les points neutres des transformateurs relies directement ou indirectement
 à la terre ou les neutres compensés ou les neutres faiblement impedants, ne doivent pas être
@@ -15394,3 +15394,4 @@ SAMERA
 SER (SYNDICAT DES ENERGIES RENOUVELABLES)
 SERCE (SYNDICAT DES ENTREPRISES DE GENIE ELECTRIQUE ET CLIMATIQUE)
 SNCF (SOCIETE NATIONALE DES CHEMINS DE FER FRANCAIS)
+

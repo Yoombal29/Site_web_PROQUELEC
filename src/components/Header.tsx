@@ -311,82 +311,14 @@ export const Header = ({ solid = false }: HeaderProps) => {
                   .map((item) => ({ label: item.title, path: item.url })),
               })),
           }))
-      : [
-          {
-            label: 'Services & Expertise',
-            icon: BookOpen,
-            columns: [
-              {
-                title: 'Ingénierie',
-                items: [
-                  { label: 'Formations', path: '/formations' },
-                  { label: 'Certifications', path: '/certifications' },
-                  { label: 'Expertises', path: '/expertises-techniques' },
-                  { label: 'Expert Lab', path: '/expert-lab' },
-                ],
-              },
-              {
-                title: 'Labels & Activités',
-                items: [
-                  { label: 'Labels PROQUELEC', path: '/labels' },
-                  { label: 'Nos Activités', path: '/activities' },
-                  { label: 'Showroom', path: '/showroom' },
-                ],
-              },
-              {
-                title: 'Ressources',
-                items: [
-                  { label: 'Documents', path: '/documents' },
-                  { label: 'Événements', path: '/events' },
-                  { label: 'Outils métier', path: '/outils' },
-                ],
-              },
-              {
-                title: 'Espaces Métiers',
-                items: [
-                  { label: 'Espace Autorités', path: '/autorites' },
-                  { label: 'Espace Ménages', path: '/menages' },
-                  { label: 'Espace Professionnels', path: '/professionnels' },
-                  { label: 'Espace Presse', path: '/presse' },
-                  { label: 'Réseaux & Social', path: '/social' },
-                ],
-              },
-            ],
-          },
-        ];
+      : []; // Pas de fallback hardcodé — les liens sont dans les sous-menus main
 
   const megaMenuSections = appendBoutiquePremiumToMenu(rawMegaMenuSections);
 
-  // Rest of active items (not in main nav and not excluded)
-  const excludedUrls = [
-    '/',
-    '/about',
-    '/activities',
-    '/labels',
-    '/documents',
-    '/boutique',
-    '/boutique-premium',
-    '/events',
-    '/certifications',
-    '/formations',
-    '/blog',
-    '/contact',
-    '/actualites',
-    '/showroom',
-  ];
+  // activeMenuItems est désormais vide : tous les items sont en 'main'.
+  // La section "Autres" (overflow) ne doit plus apparaître.
+  const activeMenuItems: Array<{ id?: string; title: string; url: string; menu_order?: number }> = [];
 
-  const activeMenuItems =
-    mi
-      ?.filter(
-        (item) => item.is_active && item.menu_type !== 'main' && !excludedUrls.includes(item.url),
-      )
-      .map((item) => ({
-        id: item.id,
-        title: item.title,
-        url: item.url,
-        menu_order: item.menu_order,
-      }))
-      .sort((a, b) => (a.menu_order || 0) - (b.menu_order || 0)) || [];
 
   const NavLink = ({
     to,
@@ -1058,71 +990,94 @@ export const Header = ({ solid = false }: HeaderProps) => {
       {/* Menu mobile/tablet */}
       {isMenuOpen && (
         <div className="lg:hidden mt-0 pb-4 space-y-3 border-t border-slate-200 pt-4 animate-in fade-in slide-in-from-top-2 duration-200 max-h-[80vh] overflow-y-auto bg-white shadow-2xl">
-          <div className="px-4 space-y-4">
-            <div className="space-y-1">
-              <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                Navigation
-              </p>
-              {mainNavLinks.map((link) => (
-                <NavLink
-                  key={'id' in link ? link.id : link.path}
-                  to={link.path}
-                  icon={link.icon}
-                  isMobile
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-            </div>
+          <div className="px-4 space-y-1">
+            {/* Lien Accueil en mobile */}
+            <NavLink to="/" icon={Home} isMobile isActive={location.pathname === '/'}>
+              Accueil
+            </NavLink>
 
-            <div className="space-y-1">
-              <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                Espace Information
-              </p>
-              <NavLink to="/blog" icon={ChevronRight} isMobile>
-                Actualités
-              </NavLink>
-              <NavLink to="/documents" icon={ChevronRight} isMobile>
-                Documents
-              </NavLink>
-              <NavLink to="/showroom" icon={ChevronRight} isMobile>
-                Showroom
-              </NavLink>
-            </div>
+            {/* Items principaux avec sous-menus pliables */}
+            {mainNavLinks.map((link) => {
+              const hasSubmenu = link.submenu && link.submenu.length > 0;
+              const isExpanded = activeDropdown === `mobile-${link.label}`;
+              const linkPath = link.path || '#';
 
-            {megaMenuSections.map((section) => (
-              <div key={section.label} className="space-y-1">
-                <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                  {section.label}
-                </p>
-                {section.columns
-                  .flatMap((column) => column.items)
-                  .map((item) => (
-                    <NavLink
-                      key={`${section.label}-${item.path}`}
-                      to={item.path}
-                      icon={ChevronRight}
-                      isMobile
-                    >
-                      {item.label}
-                    </NavLink>
-                  ))}
-              </div>
-            ))}
-
-            {activeMenuItems.length > 0 && (
-              <div className="space-y-1">
-                <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                  Autres pages
-                </p>
-                {activeMenuItems.map((item) => (
-                  <NavLink key={item.id} to={item.url} icon={ChevronRight} isMobile>
-                    {item.title}
+              if (!hasSubmenu) {
+                return (
+                  <NavLink
+                    key={'id' in link ? link.id : linkPath}
+                    to={linkPath}
+                    icon={link.icon}
+                    isMobile
+                    isActive={location.pathname === linkPath}
+                  >
+                    {link.label}
                   </NavLink>
-                ))}
-              </div>
-            )}
+                );
+              }
 
+              return (
+                <div key={'id' in link ? link.id : link.label} className="space-y-0.5">
+                  <button
+                    className={cn(
+                      'group relative flex items-center justify-between w-full gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all duration-300',
+                      'text-slate-900 hover:text-slate-900 bg-slate-50 hover:bg-slate-100',
+                      isExpanded && 'bg-slate-200 text-slate-900',
+                    )}
+                    onClick={() => {
+                      if (linkPath !== '#') {
+                        navigate(linkPath);
+                        setIsMenuOpen(false);
+                      }
+                      setActiveDropdown(isExpanded ? null : `mobile-${link.label}`);
+                    }}
+                    aria-label={link.label}
+                  >
+                    <span className="flex items-center gap-2">
+                      {link.icon && <link.icon className="h-4 w-4" />}
+                      {link.label}
+                    </span>
+                    <ChevronDown
+                      className={cn(
+                        'h-3.5 w-3.5 transition-transform duration-300 text-slate-400',
+                        isExpanded && 'rotate-180',
+                      )}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveDropdown(isExpanded ? null : `mobile-${link.label}`);
+                      }}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-6 space-y-0.5 py-1">
+                          {link.submenu!.map((sub, idx) => (
+                            <Link
+                              key={sub.id || `sub-${idx}`}
+                              to={sub.path}
+                              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all"
+                              onClick={() => setIsMenuOpen(false)}
+                            >
+                              <ChevronRight className="h-3 w-3 text-slate-400" />
+                              {sub.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+
+            {/* Boutons d'action en bas */}
             <div className="pt-3 flex flex-col gap-2">
               {!isLoading && user ? (
                 <>

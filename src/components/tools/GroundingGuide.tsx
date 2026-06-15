@@ -144,7 +144,7 @@ export default function GroundingGuide() {
       resistance: r,
       compliant,
       message: `${color} Résistance ≈ ${r.toFixed(1)} Ω — ${
-        compliant ? 'Conforme NF C 15-100 (R ≤ 100 Ω)' : 'Non conforme — dépasse la limite de 100 Ω'
+        compliant ? 'Conforme NS 01-001 (R ≤ 100 Ω)' : 'Non conforme — dépasse la limite de 100 Ω'
       }`,
     });
   };
@@ -160,7 +160,7 @@ export default function GroundingGuide() {
         <p className="mx-auto max-w-2xl text-slate-400">
           Comprendre le couple terre + différentiel, les limites de tension de sécurité, les règles
           de sensibilité différentielle et calculer la résistance de votre prise de terre selon la
-          norme NF C 15-100.
+          norme NS 01-001.
         </p>
       </div>
 
@@ -255,7 +255,7 @@ export default function GroundingGuide() {
               Limites de tension de sécurité (U<sub>L</sub>) par zone
             </CardTitle>
             <p className="text-xs text-slate-400">
-              Selon la norme NF C 15-100 — la tension de contact ne doit jamais dépasser ces seuils.
+              Selon la norme NS 01-001 — la tension de contact ne doit jamais dépasser ces seuils.
             </p>
           </div>
         </CardHeader>
@@ -307,7 +307,7 @@ export default function GroundingGuide() {
               Règles de sensibilité différentielle
             </CardTitle>
             <p className="text-xs text-slate-400">
-              Tableau des seuils de déclenchement par usage — norme NF C 15-100
+              Tableau des seuils de déclenchement par usage — norme NS 01-001
             </p>
           </div>
         </CardHeader>
@@ -464,7 +464,7 @@ export default function GroundingGuide() {
                     </strong>
                   </p>
                   <p className="text-xs text-slate-500">
-                    Condition NF C 15-100 : R ≤ 100 Ω (pour DDR 30 mA)
+                    Condition NS 01-001 : R ≤ 100 Ω (pour DDR 30 mA)
                   </p>
                 </div>
               </div>
@@ -475,7 +475,7 @@ export default function GroundingGuide() {
           <div className="flex items-start gap-2 rounded-lg border border-blue-800/30 bg-blue-950/20 p-3">
             <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" />
             <p className="text-xs text-slate-400">
-              <strong className="text-slate-300">Rappel normatif :</strong> La norme NF C 15-100
+              <strong className="text-slate-300">Rappel normatif :</strong> La norme NS 01-001
               exige une résistance de terre <strong className="text-emerald-400">R ≤ 100 Ω</strong>{' '}
               pour garantir qu&apos;un différentiel 30 mA maintienne la tension de contact sous la
               limite de sécurité.
@@ -618,7 +618,7 @@ export default function GroundingGuide() {
           </div>
           <div>
             <CardTitle className="text-lg text-slate-100">
-              Vérification de conformité NF C 15-100
+              Vérification de conformité NS 01-001
             </CardTitle>
             <p className="text-xs text-slate-400">
               Critères combinés terre + différentiel pour une installation conforme.

@@ -223,7 +223,7 @@ export default function SchemasPage() {
               Schémas <span className="text-primary tracking-normal">Unifilaires</span>
             </h1>
             <Badge variant="outline" className="mt-1 border-border text-muted-foreground bg-secondary/30 text-[9px] font-bold uppercase tracking-wider">
-              Concepteur Graphique • NF C 15-100
+              Concepteur Graphique • NS 01-001
             </Badge>
           </div>
         </div>

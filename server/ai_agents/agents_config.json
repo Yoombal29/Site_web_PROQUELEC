@@ -1,121 +1,146 @@
 {
-    "AgentCalculNormatif": {
-        "id": "agent-calc-001",
-        "version": "1.2.0",
-        "roles": [
-            "admin",
-            "secondary_admin",
-            "partner",
-            "user"
-        ],
-        "engine": {
-            "primary": "gemini-pro",
-            "fallback": "openai-gpt-4o",
-            "weight": 0.8
-        },
-        "parameters": {
-            "temperature": 0.1,
-            "max_tokens": 1000,
-            "top_p": 0.9,
-            "context_window": 8192
-        },
-        "features": {
-            "rag_enabled": true,
-            "rag_collection": "norms_nf_c15_100",
-            "deterministic_tool": "voltage_drop_calc_v2",
-            "output_format": "json_structured"
-        }
+  "AgentCalculateurElectrique": {
+    "id": "agent-calc-001",
+    "version": "1.3.0",
+    "roles": ["admin", "secondary_admin", "partner", "user"],
+    "engine": {
+      "primary": "gemini-pro",
+      "fallback": "openai-gpt-4o",
+      "weight": 0.8
     },
-    "AgentNormatifExpert": {
-        "id": "agent-normes-001",
-        "version": "1.1.0",
-        "roles": [
-            "admin",
-            "secondary_admin",
-            "partner"
-        ],
-        "engine": {
-            "primary": "gemini-pro",
-            "fallback": "openai-gpt-4o"
-        },
-        "parameters": {
-            "temperature": 0.3,
-            "max_tokens": 2000
-        }
+    "parameters": {
+      "temperature": 0.1,
+      "max_tokens": 1000,
+      "top_p": 0.9,
+      "context_window": 8192
     },
-    "AgentSchemaUnifilaire": {
-        "id": "agent-schema-001",
-        "version": "1.0.5",
-        "roles": [
-            "admin",
-            "secondary_admin",
-            "partner"
-        ],
-        "engine": {
-            "primary": "openai-gpt-4o",
-            "fallback": "gemini-pro"
-        },
-        "parameters": {
-            "temperature": 0.2,
-            "max_tokens": 1500
-        }
-    },
-    "AgentRapportCertifie": {
-        "id": "agent-rapport-001",
-        "version": "1.0.0",
-        "roles": [
-            "admin",
-            "secondary_admin"
-        ],
-        "engine": {
-            "primary": "gemini-pro",
-            "fallback": "openai-gpt-4o"
-        }
-    },
-    "AgentFormation": {
-        "id": "agent-form-001",
-        "version": "1.0.2",
-        "roles": [
-            "admin",
-            "secondary_admin",
-            "partner",
-            "user"
-        ],
-        "engine": {
-            "primary": "gemini-pro"
-        },
-        "parameters": {
-            "temperature": 0.7
-        }
-    },
-    "AgentAdminProquelec": {
-        "id": "agent-admin-001",
-        "version": "0.9.5",
-        "roles": [
-            "admin",
-            "secondary_admin"
-        ],
-        "engine": {
-            "primary": "gemini-pro"
-        },
-        "parameters": {
-            "temperature": 0.5
-        }
-    },
-    "AgentStrategie": {
-        "id": "agent-strat-001",
-        "version": "0.9.0",
-        "roles": [
-            "admin"
-        ],
-        "engine": {
-            "primary": "gemini-pro"
-        },
-        "parameters": {
-            "temperature": 0.7,
-            "chaining": [
-                "AgentAdminProquelec"
-            ]
-        }
+    "features": {
+      "rag_enabled": true,
+      "rag_collection": "norms_nf_c15_100",
+      "deterministic_tool": "voltage_drop_calc_v2",
+      "output_format": "json_structured",
+      "cross_validation": "agent_normes",
+      "enhanced_capabilities": true
     }
+  },
+  "AgentAuditeurNormatif": {
+    "id": "agent-normes-001",
+    "version": "1.2.0",
+    "roles": ["admin", "secondary_admin", "partner"],
+    "engine": {
+      "primary": "gemini-pro",
+      "fallback": "openai-gpt-4o"
+    },
+    "parameters": {
+      "temperature": 0.3,
+      "max_tokens": 2000
+    },
+    "features": {
+      "rag_enabled": true,
+      "rag_collection": "norms_nf_c15_100",
+      "external_sources": false,
+      "audit_mode": true,
+      "checklist_nf_c15_100": true,
+      "normative_updates_integration": true
+    }
+  },
+  "AgentConcepteurSchemas": {
+    "id": "agent-schema-001",
+    "version": "1.1.0",
+    "roles": ["admin", "secondary_admin", "partner"],
+    "engine": {
+      "primary": "openai-gpt-4o",
+      "fallback": "gemini-pro"
+    },
+    "parameters": {
+      "temperature": 0.2,
+      "max_tokens": 1500
+    },
+    "features": {
+      "rag_enabled": true,
+      "rag_collection": "schematics_electrical",
+      "external_sources": false,
+      "export_formats": ["dwg", "pdf"],
+      "component_library": true,
+      "reusable_components": true
+    }
+  },
+  "AgentRedacteurCertification": {
+    "id": "agent-rapport-001",
+    "version": "1.1.0",
+    "roles": ["admin", "secondary_admin"],
+    "engine": {
+      "primary": "gemini-pro",
+      "fallback": "openai-gpt-4o"
+    },
+    "features": {
+      "rag_enabled": true,
+      "rag_collection": "reports_templates",
+      "external_sources": false,
+      "customizable_templates": true,
+      "digital_signature": true,
+      "certification_integration": true
+    }
+  },
+  "AgentFormateurTechnique": {
+    "id": "agent-form-001",
+    "version": "1.1.0",
+    "roles": ["admin", "secondary_admin", "partner", "user"],
+    "engine": {
+      "primary": "gemini-pro"
+    },
+    "parameters": {
+      "temperature": 0.7
+    },
+    "features": {
+      "rag_enabled": true,
+      "rag_collection": "educational_content",
+      "external_sources": false,
+      "interactive_quizzes": true,
+      "evaluations": true,
+      "personalized_learning_paths": true
+    }
+  },
+  "AgentGEDAdministratif": {
+    "id": "agent-admin-001",
+    "version": "1.0.0",
+    "roles": ["admin", "secondary_admin"],
+    "engine": {
+      "primary": "gemini-pro"
+    },
+    "parameters": {
+      "temperature": 0.5
+    },
+    "features": {
+      "rag_enabled": true,
+      "rag_collection": "document_management",
+      "external_sources": false,
+      "approval_workflow": true,
+      "versioning": true,
+      "ged_integration": true
+    }
+  },
+  "AgentOrchestrateurSite": {
+    "id": "agent-strat-001",
+    "version": "1.0.0",
+    "roles": ["admin"],
+    "engine": {
+      "primary": "gemini-pro"
+    },
+    "parameters": {
+      "temperature": 0.7,
+      "chaining": ["AgentGEDAdministratif", "AgentAuditeurNormatif", "AgentCalculateurElectrique"]
+    },
+    "features": {
+      "rag_enabled": false,
+      "site_guide": true,
+      "page_navigation": true,
+      "action_execution": true,
+      "voice_support": true,
+      "external_sources": true,
+      "analytics_dashboard": true,
+      "agent_integration": true,
+      "orchestration": true
+    }
+  }
 }

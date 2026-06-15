@@ -134,7 +134,7 @@ export default function SchemaBuilder() {
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
                   Éditeur Schéma Graphique
                 </h1>
-                <p className="text-xs text-slate-400 mt-0.5">Phase 1 • NF C 15-100 Conforme</p>
+                <p className="text-xs text-slate-400 mt-0.5">Phase 1 • NS 01-001 Conforme</p>
               </div>
             </div>
             
@@ -355,7 +355,7 @@ export default function SchemaBuilder() {
               </div>
               <div className="flex items-center gap-2 p-2 rounded bg-slate-800/30 border border-slate-700/30">
                 <span className="text-cyan-400">●</span>
-                <span>Norme <span className="text-cyan-300 font-semibold">NF C 15-100</span></span>
+                <span>Norme <span className="text-cyan-300 font-semibold">NS 01-001</span></span>
               </div>
             </div>
           </div>
@@ -448,7 +448,7 @@ export default function SchemaBuilder() {
                   opacity: rubrique ? 1 : 0.5
                 }}>
                 
-                <span className="group-hover:scale-125 transition-transform">📐</span> Calculer (NF C 15-100)
+                <span className="group-hover:scale-125 transition-transform">📐</span> Calculer (NS 01-001)
               </button>
             </div>
           </div>
@@ -510,7 +510,7 @@ export default function SchemaBuilder() {
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-2xl">⚡</span>
                 <div>
-                  <h3 className="font-semibold text-white">Analyse NF C 15-100 (Articles 523/525)</h3>
+                  <h3 className="font-semibold text-white">Analyse NS 01-001 (Articles 523/525)</h3>
                   <p className="text-xs text-slate-400">Calcul normé de chute de tension et thermique</p>
                 </div>
               </div>

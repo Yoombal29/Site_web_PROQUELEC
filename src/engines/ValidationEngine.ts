@@ -1,7 +1,7 @@
 /**
  * 🔍 ValidationEngine — Validation temps réel des schémas électriques
  *
- * Règles de validation automatique selon normes NF C 15-100 :
+ * Règles de validation automatique selon normes NS 01-001 :
  * - Compatibilité des sections et courants
  * - Conformité des chutes de tension
  * - Sécurité des installations
@@ -19,7 +19,7 @@ export interface ValidationRule {
   condition: (graph: unknown, node?: unknown, edge?: unknown) => boolean;
   message: (context?: unknown) => string;
   fix?: (graph: unknown, target: unknown) => void;
-  references?: string[]; // Articles NF C 15-100
+  references?: string[]; // Articles NS 01-001
 }
 
 export interface ValidationResult {
@@ -180,7 +180,7 @@ ValidationEngine.registerRule({
     return !hasGround;
   },
   message: () => 'Aucun point de terre détecté dans le schéma',
-  references: ['NF C 15-100 Article 411.1']
+  references: ['NS 01-001 Article 411.1']
 });
 
 // Règle 2: Compatibilité section/courant
@@ -226,7 +226,7 @@ ValidationEngine.registerRule({
 
     edge.properties.section = suggestedSection;
   },
-  references: ['NF C 15-100 Article 523.3']
+  references: ['NS 01-001 Article 523.3']
 });
 
 // Règle 3: Chute de tension excessive
@@ -264,9 +264,9 @@ ValidationEngine.registerRule({
     const chuteTension = courant * resistance;
     const chutePercent = chuteTension / 230 * 100;
 
-    return `Chute de tension ${chutePercent.toFixed(2)}% > 3% (limite NF C 15-100)`;
+    return `Chute de tension ${chutePercent.toFixed(2)}% > 3% (limite NS 01-001)`;
   },
-  references: ['NF C 15-100 Article 523.1']
+  references: ['NS 01-001 Article 523.1']
 });
 
 // Règle 4: Nœud isolé
@@ -290,7 +290,7 @@ ValidationEngine.registerRule({
     const node = context?.node;
     return `Le nœud "${node?.type || 'inconnu'}" n'est connecté à aucun câble`;
   },
-  references: ['NF C 15-100 Article 411.2']
+  references: ['NS 01-001 Article 411.2']
 });
 
 // Règle 5: Source sans protection
@@ -319,7 +319,7 @@ ValidationEngine.registerRule({
     return true; // Non protégé
   },
   message: () => 'Source électrique non protégée par un disjoncteur',
-  references: ['NF C 15-100 Article 411.3']
+  references: ['NS 01-001 Article 411.3']
 });
 
 export default ValidationEngine;

@@ -1,13 +1,13 @@
 /**
  * 🕸️ NetworkEngine — Calcul de Réseau Complet
  *
- * Moteur de calcul pour réseaux électriques complexes selon NF C 15-100
+ * Moteur de calcul pour réseaux électriques complexes selon NS 01-001
  * Implémente la méthodologie du cahier des câbles :
  * - Calcul des courants aval → amont
  * - Cumul des chutes de tension le long des chemins
  * - Identification du point le plus défavorisé
  *
- * Norme : NF C 15-100 Articles 523, 525
+ * Norme : NS 01-001 Articles 523, 525
  */
 
 
@@ -81,7 +81,7 @@ export class NetworkEngine {
   /**
    * Calculer l'équilibrage des phases triphasées
    * Répartit automatiquement les charges monophasées sur les 3 phases
-   * selon NF C 15-100 (équilibrage pour minimiser les courants de neutre)
+   * selon NS 01-001 (équilibrage pour minimiser les courants de neutre)
    */
   public static calculatePhaseBalance(charges: Charge[]): PhaseBalance {
     const phaseR: Charge[] = [];
@@ -180,7 +180,7 @@ export class NetworkEngine {
 
   /**
    * Générer des recommandations de sections de câbles
-   * Selon NF C 15-100 et normes de protection
+   * Selon NS 01-001 et normes de protection
    */
   public static generateCableRecommendations(
   graph: GraphStore,
@@ -204,7 +204,7 @@ export class NetworkEngine {
       conformite: 'CONFORME' | 'AVERTISSEMENT' | 'NON_CONFORME';
     }> = [];
 
-    // Table des sections selon NF C 15-100 (cuivre, installation C)
+    // Table des sections selon NS 01-001 (cuivre, installation C)
     const sectionsCu: Array<{section: number;ib: number;iz: number;}> = [
     { section: 1.5, ib: 13.5, iz: 16 },
     { section: 2.5, ib: 18, iz: 20 },

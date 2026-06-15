@@ -82,8 +82,10 @@ function PartnerStatsDashboard() {
   );
 }
 import { cn } from '@/lib/utils';
+import { useGlobalHeader } from '@/components/MainLayout';
 
 export default function PartnerDashboard() {
+  useGlobalHeader().setHide(true);
   const { user, signOut } = useSession();
   const { role, isLoading } = useUserRole();
   const navigate = useNavigate();

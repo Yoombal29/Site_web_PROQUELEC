@@ -5,9 +5,18 @@ import {
   FileText,
   Binary,
   BarChart3,
+  History,
+  Terminal,
+  Camera,
+  ArrowRight,
   RefreshCw,
   Bot,
+  Key,
   FileCode,
+  Calculator,
+  Layers,
+  GraduationCap,
+  Settings,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,24 +31,90 @@ interface DashboardStats {
   totalDocuments: number;
 }
 
-interface ServiceStatus {
-  service: string;
-  status: 'online' | 'offline';
-  url: string;
-}
+const ADMIN_MODULES = [
+  {
+    title: 'Configuration des API',
+    description:
+      'Gérez les clés et providers IA : Groq, OpenAI, Anthropic, Gemini, DeepSeek, Mistral et OpenRouter.',
+    icon: Key,
+    color: 'text-cyan-500',
+    bg: 'bg-cyan-500/10',
+    border: 'border-cyan-500/20',
+    path: '/expert/ai-providers',
+    badge: 'Admin',
+  },
+  {
+    title: 'Dashboard Admin',
+    description:
+      'Pilotage global du site : utilisateurs, médiathèque, pages, événements, paiements, statistiques.',
+    icon: BarChart3,
+    color: 'text-blue-500',
+    bg: 'bg-blue-500/10',
+    border: 'border-blue-500/20',
+    path: '/admin',
+  },
+  {
+    title: 'Validations Partenaires',
+    description:
+      'Modérez les événements soumis par les partenaires. Approuvez ou refusez avec motif.',
+    icon: ShieldCheck,
+    color: 'text-amber-500',
+    bg: 'bg-amber-500/10',
+    border: 'border-amber-500/20',
+    path: '/admin?tab=event-moderation',
+    badge: 'À traiter',
+  },
+  {
+    title: 'Historique des Sessions',
+    description:
+      'Retrouvez toutes vos conversations, calculs et analyses IA. Filtrez, recherchez et exportez.',
+    icon: History,
+    color: 'text-purple-500',
+    bg: 'bg-purple-500/10',
+    border: 'border-purple-500/20',
+    path: '/expert/history',
+  },
+  {
+    title: 'Config Système Expert',
+    description:
+      "Norme active, moteur de calcul, température ambiante, paramètres avancés de l'assistant YEAI.",
+    icon: Settings,
+    color: 'text-slate-500',
+    bg: 'bg-slate-500/10',
+    border: 'border-slate-500/20',
+    path: '/expert/config',
+  },
+  {
+    title: 'Logs & Diagnostics',
+    description:
+      'Console des événements IA, historique des requêtes, diagnostic des providers, audit de performance.',
+    icon: Terminal,
+    color: 'text-red-500',
+    bg: 'bg-red-500/10',
+    border: 'border-red-500/20',
+    path: '/expert/logs',
+  },
+  {
+    title: 'Scanner Photo — Conformité',
+    description:
+      "Audit visuel NS 01-001 en temps réel. Capturez une installation et l'IA détecte les non-conformités.",
+    icon: Camera,
+    color: 'text-orange-500',
+    bg: 'bg-orange-500/10',
+    border: 'border-orange-500/20',
+    path: '/expert/scanner',
+    badge: 'Mobile',
+  },
+];
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLaunching, setIsLaunching] = useState(false);
   const [stats, setStats] = useState<DashboardStats>({ totalAiRequests: 0, totalDocuments: 0 });
-  const [aiStatuses, setAiStatuses] = useState<ServiceStatus[]>([]);
 
   useEffect(() => {
     fetchStats();
-    checkAiStatus();
-    const interval = setInterval(checkAiStatus, 10000); // Poll every 10s
-    return () => clearInterval(interval);
   }, []);
 
   const fetchStats = async () => {
@@ -51,23 +126,6 @@ export default function Dashboard() {
     }
   };
 
-  const checkAiStatus = async () => {
-    try {
-      const response = await fetch('/api/ai/status');
-      if (response.ok) {
-        const data = await response.json();
-        setAiStatuses(data);
-      }
-    } catch (error) {
-      console.error('Failed to check AI status', error);
-    }
-  };
-
-  const isServiceOnline = (name: string) => {
-    const s = aiStatuses.find((s) => s.service.includes(name));
-    return s?.status === 'online';
-  };
-
   const handleLaunchTechnicalSuite = () => {
     setIsLaunching(true);
     toast({
@@ -76,40 +134,10 @@ export default function Dashboard() {
     });
 
     setTimeout(() => {
-      navigate('/expert/chat');
+      navigate('/expert-lab/chat');
     }, 800);
   };
 
-  const adminMetrics = [
-    {
-      title: 'Indice de Souveraineté',
-      value: '100%',
-      detail: 'Handshake Local OK',
-      icon: ShieldCheck,
-      color: 'text-primary',
-    },
-    {
-      title: 'Articles Normatifs',
-      value: '4.2k',
-      detail: 'Base NS 01-001 (Titres 4 & 5)',
-      icon: FileText,
-      color: 'text-primary',
-    },
-    {
-      title: 'Statut Serveur',
-      value: 'EN LIGNE',
-      detail: 'Proquelec-Core v7.4',
-      icon: Activity,
-      color: 'text-emerald-600',
-    },
-    {
-      title: 'Requêtes IA',
-      value: stats.totalAiRequests || '0',
-      detail: 'Moteur Hybride Actif',
-      icon: RefreshCw,
-      color: 'text-primary',
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden animate-in fade-in duration-700">
@@ -126,7 +154,7 @@ export default function Dashboard() {
             </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-foreground uppercase">
-                EXPERT_<span className="text-primary">LAB</span>{' '}
+                OUTILS_<span className="text-primary">ADMIN</span>{' '}
                 <span className="text-[10px] uppercase font-bold opacity-30 mt-1 ml-2 tracking-widest text-muted-foreground">
                   Console de Gestion Souveraine
                 </span>
@@ -149,7 +177,7 @@ export default function Dashboard() {
               className="px-8 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs uppercase shadow-md transition-all active:scale-95 disabled:opacity-70"
             >
               {isLaunching ? <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> : null}
-              {isLaunching ? 'Connexion...' : "Ouvrir l'Espace Expert"}
+              {isLaunching ? 'Connexion...' : 'Ouvrir les outils'}
             </Button>
           </div>
         </div>
@@ -159,7 +187,7 @@ export default function Dashboard() {
           {/* Custom Interactive Cards using Dashboard Data */}
           <Card
             className="hover:border-primary/40 transition-all group overflow-hidden border-border bg-card/50 cursor-pointer"
-            onClick={() => navigate('/expert/docs')}
+            onClick={() => navigate('/expert-lab/docs')}
           >
             <CardHeader className="p-4 pb-0">
               <CardDescription className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground flex items-center gap-2 group-hover:text-primary transition-colors">
@@ -216,7 +244,7 @@ export default function Dashboard() {
 
           <Card
             className="hover:border-primary/40 transition-all group overflow-hidden border-border bg-card/50 cursor-pointer"
-            onClick={() => navigate('/expert/chat')}
+            onClick={() => navigate('/expert-lab/chat')}
           >
             <CardHeader className="p-4 pb-0">
               <CardDescription className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground flex items-center gap-2 group-hover:text-primary transition-colors">
@@ -238,287 +266,215 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        {/* --- AI COMMAND CENTER (NOUVEAU TABLEAU CENTRAL) --- */}
-        <div className="space-y-4">
-          <div className="space-y-1">
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-cyan-500/80">
-              Centre de Commandement IA
-            </h2>
-            <p className="text-[11px] text-muted-foreground uppercase font-medium">
-              Accès direct aux modules du Cortex Souverain.
-            </p>
+        {/* ─── OUTILS ADMIN ─── */}
+        <div className="space-y-6">
+          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div className="space-y-1">
+              <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-500/80">
+                Outils Administration
+              </h2>
+              <p className="text-[11px] text-muted-foreground uppercase font-medium">
+                Les outils réservés aux administrateurs sont centralisés ici.
+              </p>
+            </div>
+            <Badge variant="outline" className="w-fit text-[9px] border-blue-500/30 text-blue-500 uppercase tracking-wider">
+              {ADMIN_MODULES.length} modules
+            </Badge>
           </div>
 
-          <Card className="border-border bg-card/40 overflow-hidden backdrop-blur-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-white/5 bg-white/5">
-                    <th className="p-4 font-bold text-[10px] uppercase tracking-wider text-muted-foreground">
-                      Module IA
-                    </th>
-                    <th className="p-4 font-bold text-[10px] uppercase tracking-wider text-muted-foreground">
-                      Rôle & Fonction
-                    </th>
-                    <th className="p-4 font-bold text-[10px] uppercase tracking-wider text-muted-foreground">
-                      Technologie
-                    </th>
-                    <th className="p-4 font-bold text-[10px] uppercase tracking-wider text-muted-foreground">
-                      État
-                    </th>
-                    <th className="p-4 font-bold text-[10px] uppercase tracking-wider text-muted-foreground text-right">
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {/* 1. EXPERT HYBRIDE */}
-                  <tr className="group hover:bg-white/5 transition-colors">
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20 group-hover:bg-cyan-500/20 group-hover:border-cyan-500/50 transition-all">
-                          <Bot className="w-5 h-5 text-cyan-400" />
-                        </div>
-                        <div>
-                          <div className="font-bold text-slate-200">Expert Hybride</div>
-                          <div className="text-[10px] text-cyan-500/60 uppercase font-bold tracking-wider">
-                            Phi-3.5 + RAG
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-4 text-slate-400 text-xs">
-                      Assistant généraliste, explications techniques, recherche normative.
-                    </td>
-                    <td className="p-4">
-                      <Badge
-                        variant="outline"
-                        className="bg-cyan-950/30 border-cyan-500/20 text-cyan-400 hover:bg-cyan-950/50"
-                      >
-                        LLM Local
-                      </Badge>
-                    </td>
-                    <td className="p-4">
-                      <div className="flex items-center gap-2">
-                        {isServiceOnline('Cerveau') ? (
-                          <>
-                            <span className="relative flex h-2 w-2">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                            </span>
-                            <span className="text-[10px] font-bold text-emerald-500 uppercase">
-                              En Ligne
-                            </span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="relative flex h-2 w-2">
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                            </span>
-                            <span className="text-[10px] font-bold text-red-500 uppercase">
-                              Hors Ligne
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    </td>
-                    <td className="p-4 text-right">
-                      <Button
-                        size="sm"
-                        onClick={() => navigate('/expert/chat')}
-                        className="bg-cyan-600 hover:bg-cyan-500 text-white h-8 text-xs font-bold uppercase tracking-wide"
-                      >
-                        Discuter <Activity className="w-3 h-3 ml-2" />
-                      </Button>
-                    </td>
-                  </tr>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {ADMIN_MODULES.map((module) => {
+              const ModuleIcon = module.icon;
 
-                  {/* 2. KEBE (NORMATIF) */}
-                  <tr className="group hover:bg-white/5 transition-colors">
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/50 transition-all">
-                          <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                        </div>
-                        <div>
-                          <div className="font-bold text-slate-200">KEBE (Le Rigoureux)</div>
-                          <div className="text-[10px] text-emerald-500/60 uppercase font-bold tracking-wider">
-                            Moteur Logique
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-4 text-slate-400 text-xs">
-                      Calculs certifiés (Chute de tension, câbles), validation binaire.
-                    </td>
-                    <td className="p-4">
-                      {(() => {
-                        const s = aiStatuses.find((ss) => ss.service.includes('KEBE'));
-                        return s?.status === 'online' ? (
-                          <Badge
-                            variant="outline"
-                            className="bg-emerald-950/30 border-emerald-500/20 text-emerald-400 hover:bg-emerald-950/50"
-                          >
-                            Distant Actif
-                          </Badge>
-                        ) : (
-                          <Badge
-                            variant="outline"
-                            className="bg-red-950/30 border-red-500/20 text-red-400 hover:bg-red-950/50"
-                          >
-                            {s?.status || 'Inconnu'}
-                          </Badge>
-                        );
-                      })()}
-                    </td>
-                    <td className="p-4">
-                      <div className="flex items-center gap-2">
-                        <span className="relative flex h-2 w-2">
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                        </span>
-                        <span className="text-[10px] font-bold text-emerald-500 uppercase">
-                          Actif
-                        </span>
-                      </div>
-                    </td>
-                    <td className="p-4 text-right">
-                      <Button
-                        size="sm"
-                        onClick={() => navigate('/expert/calculators')}
-                        className="bg-slate-700 hover:bg-slate-600 text-white h-8 text-xs font-bold uppercase tracking-wide border border-slate-600"
+              return (
+                <Card
+                  key={module.title}
+                  className={`group relative overflow-hidden cursor-pointer border ${module.border} bg-card/50 hover:border-primary/40 transition-all`}
+                  onClick={() => navigate(module.path)}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  {module.badge && (
+                    <Badge className="absolute right-4 top-4 bg-primary text-primary-foreground text-[8px] uppercase tracking-wider">
+                      {module.badge}
+                    </Badge>
+                  )}
+                  <CardHeader className="pb-2">
+                    <div className="flex items-start gap-3 pr-20">
+                      <div
+                        className={`w-11 h-11 rounded-xl ${module.bg} flex shrink-0 items-center justify-center group-hover:scale-110 transition-transform duration-300`}
                       >
-                        Calculer <Binary className="w-3 h-3 ml-2" />
-                      </Button>
-                    </td>
-                  </tr>
+                        <ModuleIcon className={`w-5 h-5 ${module.color}`} />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="text-sm font-bold uppercase tracking-tight text-foreground">
+                          {module.title}
+                        </h3>
+                        <p className="mt-1 text-[10px] font-semibold uppercase text-muted-foreground">
+                          Accès administration
+                        </p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-xs leading-relaxed text-muted-foreground line-clamp-3">
+                      {module.description}
+                    </p>
+                    <div className="flex items-center gap-1 text-[10px] font-bold uppercase text-primary group-hover:gap-2 transition-all">
+                      Ouvrir
+                      <ArrowRight className="w-3 h-3" />
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
 
-                  {/* 3. ARTISTE (MAGE) */}
-                  <tr className="group hover:bg-white/5 transition-colors">
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/20 group-hover:bg-purple-500/20 group-hover:border-purple-500/50 transition-all">
-                          <Zap className="w-5 h-5 text-purple-400" />
-                        </div>
-                        <div>
-                          <div className="font-bold text-slate-200">L'Artiste (Mage)</div>
-                          <div className="text-[10px] text-purple-500/60 uppercase font-bold tracking-wider">
-                            SDXL Turbo
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-4 text-slate-400 text-xs">
-                      Génération de schémas, visualisations 3D, concepts techniques.
-                    </td>
-                    <td className="p-4">
-                      <Badge
-                        variant="outline"
-                        className="bg-purple-950/30 border-purple-500/20 text-purple-400 hover:bg-purple-950/50"
-                      >
-                        Diffu. Stable
-                      </Badge>
-                    </td>
-                    <td className="p-4">
-                      <div className="flex items-center gap-2">
-                        {isServiceOnline('Image') ? (
-                          <>
-                            <span className="relative flex h-2 w-2">
-                              <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-                            </span>
-                            <span className="text-[10px] font-bold text-purple-500 uppercase">
-                              Prêt à Créer
-                            </span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="relative flex h-2 w-2">
-                              <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                            </span>
-                            <span className="text-[10px] font-bold text-amber-500 uppercase">
-                              Initialisation...
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    </td>
-                    <td className="p-4 text-right">
-                      <Button
-                        size="sm"
-                        onClick={() => navigate('/expert/chat')}
-                        disabled={!isServiceOnline('Image')}
-                        className="bg-purple-900/50 hover:bg-purple-800 border border-purple-500/30 text-purple-100 h-8 text-xs font-bold uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Générer <Zap className="w-3 h-3 ml-2" />
-                      </Button>
-                    </td>
-                  </tr>
-
-                  {/* 4. OBSERVATEUR (VISION) */}
-                  <tr className="group hover:bg-white/5 transition-colors">
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center border border-amber-500/20 group-hover:bg-amber-500/20 group-hover:border-amber-500/50 transition-all">
-                          <FileCode className="w-5 h-5 text-amber-400" />
-                        </div>
-                        <div>
-                          <div className="font-bold text-slate-200">Observateur</div>
-                          <div className="text-[10px] text-amber-500/60 uppercase font-bold tracking-wider">
-                            Moondream2
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-4 text-slate-400 text-xs">
-                      Analyse de photos chantier, détection automatique d'anomalies.
-                    </td>
-                    <td className="p-4">
-                      <Badge
-                        variant="outline"
-                        className="bg-amber-950/30 border-amber-500/20 text-amber-400 hover:bg-amber-950/50"
-                      >
-                        Vision IA
-                      </Badge>
-                    </td>
-                    <td className="p-4">
-                      <div className="flex items-center gap-2">
-                        {isServiceOnline('Vision') ? (
-                          <>
-                            <span className="relative flex h-2 w-2">
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                            </span>
-                            <span className="text-[10px] font-bold text-amber-500 uppercase">
-                              En Veille
-                            </span>
-                          </>
-                        ) : (
-                          <>
-                            <span className="relative flex h-2 w-2">
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-500"></span>
-                            </span>
-                            <span className="text-[10px] font-bold text-slate-500 uppercase">
-                              Hors Ligne (DL)
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    </td>
-                    <td className="p-4 text-right">
-                      <Button
-                        size="sm"
-                        onClick={() => navigate('/expert/scanner')}
-                        disabled={!isServiceOnline('Vision')}
-                        className="bg-slate-800 text-slate-200 hover:bg-slate-700 h-8 text-xs font-bold uppercase tracking-wide border border-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Scanner <Bot className="w-3 h-3 ml-2" />
-                      </Button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+        {/* ─── AGENTS IA SPÉCIALISÉS ─── */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="space-y-1">
+              <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-purple-500/80">
+                Agents IA Spécialisés
+              </h2>
+              <p className="text-[11px] text-muted-foreground uppercase font-medium">
+                Système multi-agents avec RAG interne souverain — remplace l'ancien Centre de Commandement IA.
+              </p>
             </div>
-          </Card>
+            <Badge variant="outline" className="text-[9px] border-purple-500/30 text-purple-400 uppercase tracking-wider">
+              v2.0 — Cortex
+            </Badge>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              {
+                name: 'Agent Calculateur Électrique Certifié',
+                role: 'Expert en Calculs Électriques Normatifs',
+                description: 'Effectue des calculs électriques précis (chute de tension, section, protection) selon la NS 01-001. Validation croisée avec Agent Auditeur Normatif.',
+                icon: Calculator,
+                color: 'text-green-500',
+                bg: 'bg-green-500/10',
+                border: 'border-green-500/20',
+                engine: 'Gemini Pro / GPT-4o',
+                access: 'admin, partner, user',
+                route: '/expert-lab/calculators',
+              },
+              {
+                name: 'Agent Concepteur Schémas',
+                role: 'Architecte de Schémas Électriques (Mermaid)',
+                description: 'Génère des schémas unifilaires au format Mermaid avec export vers DWG/PDF. Bibliothèque de composants réutilisables.',
+                icon: Layers,
+                color: 'text-orange-500',
+                bg: 'bg-orange-500/10',
+                border: 'border-orange-500/20',
+                engine: 'GPT-4o / Gemini Pro',
+                access: 'admin, partner',
+                route: '/expert-lab/schemas',
+              },
+              {
+                name: 'Agent Auditeur Normatif',
+                role: 'Expert en Interprétation Normative NS 01-001',
+                description: 'Mode d\'audit complet avec checklist NS 01-001. Interprétation normes, détection non-conformités. Intégration mises à jour normatives.',
+                icon: ShieldCheck,
+                color: 'text-blue-500',
+                bg: 'bg-blue-500/10',
+                border: 'border-blue-500/20',
+                engine: 'Gemini Pro / GPT-4o',
+                access: 'admin, partner',
+                route: '/expert-lab/docs',
+              },
+              {
+                name: 'Agent Rédacteur Certification',
+                role: 'Rédacteur de Rapports de Certification',
+                description: 'Génère des rapports certifiables avec templates personnalisables, signature numérique et certification.',
+                icon: FileText,
+                color: 'text-indigo-500',
+                bg: 'bg-indigo-500/10',
+                border: 'border-indigo-500/20',
+                engine: 'Gemini Pro / GPT-4o',
+                access: 'admin',
+                route: '/expert-lab/chat',
+              },
+              {
+                name: 'Agent Formateur Technique',
+                role: 'Consultant Pédagogique en Électricité',
+                description: 'Quiz interactifs et évaluations. Parcours personnalisés par niveau. Explications pédagogiques adaptées.',
+                icon: GraduationCap,
+                color: 'text-emerald-500',
+                bg: 'bg-emerald-500/10',
+                border: 'border-emerald-500/20',
+                engine: 'Gemini Pro',
+                access: 'admin, partner, user',
+                route: '/expert-lab/docs',
+              },
+              {
+                name: 'Agent GED Administratif',
+                role: 'Document Controller & Assistant Administratif',
+                description: 'Gère l\'intelligence documentaire avec workflow d\'approbation et versioning. Intégration GED.',
+                icon: Settings,
+                color: 'text-slate-500',
+                bg: 'bg-slate-500/10',
+                border: 'border-slate-500/20',
+                engine: 'Gemini Pro',
+                access: 'admin',
+                route: '/expert/config',
+              },
+              {
+                name: 'Agent Orchestrateur Site',
+                role: 'Guide & Accompagnant du Site PROQUELEC',
+                description: 'Orchestrateur général avec tableau de bord analytique. Intégration avec tous les agents. Navigation site, actions, support vocal.',
+                icon: BarChart3,
+                color: 'text-pink-500',
+                bg: 'bg-pink-500/10',
+                border: 'border-pink-500/20',
+                engine: 'Gemini Pro',
+                access: 'admin',
+                route: '/expert-lab/chat',
+              },
+            ].map((agent, index) => {
+              const AgentIcon = agent.icon;
+              return (
+                <Card
+                  key={index}
+                  className={`group hover:border-primary/50 transition-all border ${agent.border} bg-card/40 relative overflow-hidden cursor-pointer`}
+                  onClick={() => navigate(agent.route)}
+                >
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-white/[0.02] to-transparent pointer-events-none" />
+                  <CardHeader className="pb-2">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`w-10 h-10 rounded-xl ${agent.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <AgentIcon className={`w-5 h-5 ${agent.color}`} />
+                      </div>
+                      <div>
+                        <CardDescription className="text-xs font-bold text-foreground">
+                          {agent.name}
+                        </CardDescription>
+                        <p className="text-[9px] text-muted-foreground uppercase font-semibold">
+                          {agent.role}
+                        </p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <p className="text-[10px] text-muted-foreground leading-relaxed line-clamp-2">
+                      {agent.description}
+                    </p>
+                    <div className="flex items-center gap-2 pt-2">
+                      <Badge variant="outline" className="text-[8px] px-2 py-0">
+                        {agent.engine}
+                      </Badge>
+                      <Badge variant="secondary" className="text-[8px] px-2 py-0">
+                        {agent.access}
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -678,7 +634,7 @@ export default function Dashboard() {
 
         {/* PIED DE PAGE SYSTÈME */}
         <div className="flex flex-col md:flex-row justify-between items-center text-[9px] uppercase font-bold tracking-[0.2em] opacity-30 pt-10 border-t border-border">
-          <span>Expert Lab v7.5 // PROQUELEC INDUSTRIAL</span>
+          <span>Outils Admin v7.5 // PROQUELEC INDUSTRIAL</span>
           <div className="flex gap-6">
             <span>Environnement Sécurisé</span>
             <span>Uptime Stable</span>

@@ -21,8 +21,8 @@ test('welcome template', () => {
 });
 
 test('formationConfirmation template', () => {
-    const r = emailTemplates.formationConfirmation('NF C 15-100', 'Bob');
-    if (!r.subject.includes('NF C 15-100')) throw new Error('subject fail');
+    const r = emailTemplates.formationConfirmation('NS 01-001', 'Bob');
+    if (!r.subject.includes('NS 01-001')) throw new Error('subject fail');
     if (!r.html.includes('Bob')) throw new Error('html fail');
 });
 

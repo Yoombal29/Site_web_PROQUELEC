@@ -1,7 +1,7 @@
 /**
  * 🔴 RUBRIQUE 1 — CALCUL DE CHUTE DE TENSION
  * 
- * Moteur métier pour calcul normatif selon NF C 15-100 (Articles 523 / 525)
+ * Moteur métier pour calcul normatif selon NS 01-001 (Articles 523 / 525)
  * Responsable : Calcul indépendant, validations strictes, rapports précis
  */
 
@@ -120,7 +120,7 @@ class VoltageDropEngine implements CalculationEngine {
   }
 
   /**
-   * Effectuer les calculs selon méthodologie NF C 15-100 complète
+   * Effectuer les calculs selon méthodologie NS 01-001 complète
    */
   calculate(graph: Graph): CalculationResult {
     try {
@@ -144,7 +144,7 @@ class VoltageDropEngine implements CalculationEngine {
         value: networkResult.chuteMaxPercent,
         unit: '%',
         status: networkResult.chuteMaxPercent <= 3 ? 'OK' : networkResult.chuteMaxPercent <= 5 ? 'WARNING' : 'ERROR',
-        normative: 'NF C 15-100 Art. 523 : ≤ 3% (éclairage) / ≤ 5% (autres)'
+        normative: 'NS 01-001 Art. 523 : ≤ 3% (éclairage) / ≤ 5% (autres)'
       });
 
       metrics.push({
@@ -245,7 +245,7 @@ class VoltageDropEngine implements CalculationEngine {
       },
       {
         title: 'Résumé exécutif',
-        content: `Analyse complète du réseau selon NF C 15-100 (méthode du cahier des câbles).
+        content: `Analyse complète du réseau selon NS 01-001 (méthode du cahier des câbles).
 
 **Verdict Global:** ${networkResult.verdictGlobal === 'CONFORME' ? '✅ CONFORME' : networkResult.verdictGlobal === 'AVERTISSEMENT' ? '⚠️ AVERTISSEMENT' : '❌ NON CONFORME'}
 
@@ -277,10 +277,10 @@ class VoltageDropEngine implements CalculationEngine {
       },
       {
         title: 'Références normatives',
-        content: `- NF C 15-100 Article 523 : Chute de tension admissible
+        content: `- NS 01-001 Article 523 : Chute de tension admissible
   • ≤ 3% pour circuits d'éclairage (entre source et point d'utilisation)
   • ≤ 5% pour autres circuits (entre source et point d'utilisation)
-- NF C 15-100 Article 525 : Coordination des protections
+- NS 01-001 Article 525 : Coordination des protections
 - Méthodologie : Calcul aval → amont, cumul le long des chemins
 - Référence tension : 230V monophasé / 400V triphasé`
       }]
@@ -347,7 +347,7 @@ export const RUBRIQUE_VOLTAGE_DROP: RubriqueSchema = {
   id: 'VOLTAGE_DROP',
   name: '📐 Calcul de Chute de Tension',
   description:
-  'Calcul normatif de chute de tension selon NF C 15-100 Articles 523/525. Dimensionnement automatique des sections.',
+  'Calcul normatif de chute de tension selon NS 01-001 Articles 523/525. Dimensionnement automatique des sections.',
   version: '1.0.0',
   displayPriority: 1,
   maturity: 'STABLE',
@@ -492,7 +492,7 @@ export const RUBRIQUE_VOLTAGE_DROP: RubriqueSchema = {
   // Références normatives
   normativeReferences: [
   {
-    standard: 'NF C 15-100',
+    standard: 'NS 01-001',
     articles: ['523', '525'],
     description: 'Chute de tension admissible et coordination des protections'
   },

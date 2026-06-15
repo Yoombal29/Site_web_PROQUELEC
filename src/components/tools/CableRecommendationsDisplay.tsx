@@ -1,7 +1,7 @@
 /**
  * 🔌 CableRecommendationsDisplay — Affichage des recommandations de sections de câbles
  *
- * Affiche les recommandations automatiques de sections de câbles selon NF C 15-100
+ * Affiche les recommandations automatiques de sections de câbles selon NS 01-001
  * avec analyse de conformité et suggestions d'optimisation
  */
 
@@ -143,7 +143,7 @@ export const CableRecommendationsDisplay: React.FC<CableRecommendationsDisplayPr
             <div className="flex items-start gap-2">
                 <XCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong>{stats.nonConforme} tronçon{stats.nonConforme > 1 ? 's' : ''} non conforme{stats.nonConforme > 1 ? 's' : ''}:</strong> Les sections actuelles sont insuffisantes pour le courant transporté. Risque de surchauffe et non-conformité NF C 15-100.
+                  <strong>{stats.nonConforme} tronçon{stats.nonConforme > 1 ? 's' : ''} non conforme{stats.nonConforme > 1 ? 's' : ''}:</strong> Les sections actuelles sont insuffisantes pour le courant transporté. Risque de surchauffe et non-conformité NS 01-001.
                 </span>
               </div>
             }

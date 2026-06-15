@@ -34,7 +34,7 @@ const InspecteurKEBE = () => {
     const [messages, setMessages] = useState<Message[]>([
         {
             role: 'kebe',
-            text: "Salam 👋\n\nJe suis l'Assistant PROQUELEC, votre guide intelligent pour le site et l'électricité.\n\nJe peux vous aider à :\n\n• 🔧 **Calculs techniques** (chute de tension, section de câble, loi d'Ohm)\n• 📐 **Schémas électriques** (tableaux, unifilaires)\n• 📖 **Normes** NF C 15-100 / NS 01-001\n• 🗺️ **Vous guider** sur le site (pages, outils, services)\n• 🛡️ **Protection et sécurité** des installations\n\nQue puis-je pour vous ?",
+            text: "Salam 👋\n\nJe suis l'Assistant PROQUELEC, votre guide intelligent pour le site et l'électricité.\n\nJe peux vous aider à :\n\n• 🔧 **Calculs techniques** (chute de tension, section de câble, loi d'Ohm)\n• 📐 **Schémas électriques** (tableaux, unifilaires)\n• 📖 **Normes** NS 01-001\n• 🗺️ **Vous guider** sur le site (pages, outils, services)\n• 🛡️ **Protection et sécurité** des installations\n\nQue puis-je pour vous ?",
             tools_used: ['consultation_norme']
         }
     ]);
@@ -60,7 +60,7 @@ const InspecteurKEBE = () => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    prompt: `Tu es l'Inspecteur KEBE, expert en électricité et normes PROQUELEC (NF C 15-100, NS 01-001).
+                    prompt: `Tu es l'Inspecteur KEBE, expert en électricité et normes PROQUELEC (NS 01-001).
 Réponds de manière précise et professionnelle en français.
 Si la question concerne un calcul (chute de tension, section de câble, loi d'Ohm), donne la formule et un exemple chiffré.
 Si la question concerne un schéma électrique, réponds avec un diagramme en format mermaid (entre \`\`\`mermaid et \`\`\`).

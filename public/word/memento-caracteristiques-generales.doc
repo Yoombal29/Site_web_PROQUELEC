@@ -52,7 +52,7 @@
   <h2>5. Ressources utiles</h2>
   <ul>
     <li>Guide PROQUELEC sur le dimensionnement des installations</li>
-    <li>Tableaux de sections normalisées (NF C 15-100)</li>
+    <li>Tableaux de sections normalisées (NS 01-001)</li>
     <li>Formations PROQUELEC</li>
   </ul>
   <footer style="margin-top:2em;font-size:0.9em;color:#555;">© PROQUELEC – Mémento Caractéristiques générales. Version 2025.</footer>
@@ -67,7 +67,7 @@
   <h1>MÉMENTO TECHNIQUE<br>Détermination des caractéristiques générales (puissance, intensité, chute de tension)</h1>
   <h2>1. Objet du mémento</h2>
   <p>Guide rapide pour calculer et vérifier les caractéristiques électriques principales d’une installation.</p>
-  <h2>2. Principes essentiels (NS 01-001 & NF C 15-100)</h2>
+  <h2>2. Principes essentiels (NS 01-001 & NS 01-001)</h2>
   <ul>
     <li>Dimensionner les circuits selon la puissance et l’intensité</li>
     <li>Limiter la chute de tension</li>
@@ -113,7 +113,7 @@
   <h2>8. Ressources utiles</h2>
   <ul>
     <li><a href="https://www.promotelec.com/dimensionnement-installations/" target="_blank">Guide Promotelec : Dimensionnement</a></li>
-    <li><a href="https://www.afnor.org/" target="_blank">Norme NF C 15-100 (AFNOR)</a></li>
+    <li><a href="https://www.afnor.org/" target="_blank">Norme NS 01-001 (AFNOR)</a></li>
     <li><a href="https://www.legrand.fr/pro/actualites/dimensionnement-installations" target="_blank">Legrand : Tableaux de sections</a></li>
   </ul>
   <div class="encadre">

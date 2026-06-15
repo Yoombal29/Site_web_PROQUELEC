@@ -137,12 +137,23 @@ export const useEcommerceStore = create<EcommerceState>()(
 
       setProducts: (products) => set({ products }),
 
-      syncDocumentCatalog: (assets) => set((state) => ({
-        products: mergeDocumentCommerceCatalog(
-          state.products,
+syncDocumentCatalog: (assets) => {
+        const currentProducts = get().products;
+        const newProducts = mergeDocumentCommerceCatalog(
+          currentProducts,
           buildDocumentCommerceCatalog(assets),
-        ) as Product[],
-      })),
+        ) as Product[];
+        // Update only if the product list actually changed
+        const hasChanged =
+          newProducts.length !== currentProducts.length ||
+          newProducts.some((p, i) => {
+            const cp = currentProducts[i];
+            return cp.id !== p.id || cp.price !== p.price;
+          });
+        if (hasChanged) {
+          set({ products: newProducts });
+        }
+      },
 
       addToCart: (product, quantity = 1, variantKey) => set((state) => {
         const key = cartItemKey(product.id, variantKey);

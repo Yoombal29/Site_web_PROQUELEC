@@ -23,11 +23,13 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { freeApps, premiumApps } from '@/data/applications-catalog';
+import { useGlobalHeader } from '@/components/MainLayout';
 
 const allApps = [...freeApps, ...premiumApps];
 const appMap = new Map(allApps.map((a) => [a.id, a]));
 
 export default function AppDetailPage() {
+  useGlobalHeader().setHide(true);
   const { appId } = useParams<{ appId: string }>();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');

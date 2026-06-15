@@ -254,6 +254,29 @@ function normalizeProvider(provider) {
 
 async function callRemoteAI(body) {
   const provider = normalizeProvider(AI_PROVIDER);
+  
+  // Ollama local (pas besoin de clé API)
+  if (provider === 'ollama') {
+    const ollamaUrl = process.env.OLLAMA_URL || 'http://127.0.0.1:11434';
+    const payload = {
+      model: REMOTE_AI_MODEL || 'gemma2:2b',
+      messages: [
+        { role: 'system', content: SITE_KNOWLEDGE },
+        ...(body.messages || [{ role: 'user', content: body.prompt || '' }]),
+      ],
+      max_tokens: body.max_tokens || 2048,
+      temperature: body.temperature || 0.2,
+    };
+    const response = await fetch(`${ollamaUrl}/v1/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) throw new Error(`Ollama error: ${response.status}`);
+    const data = await response.json();
+    return { response: data.choices?.[0]?.message?.content || data.message?.content || '' };
+  }
+  
   if (provider === 'anthropic') {
     const response = await fetch(CUSTOM_AI_API_URL || 'https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -536,7 +559,7 @@ app.post('/api/inspections/suggest-checklist', authenticateToken, async (req, re
     const detectedType = installationType || project?.installation_type || 'résidentiel';
     const checklistTemplates = {
       Résidentiel: {
-        title: 'Checklist Résidentiel NF C 15-100',
+        title: 'Checklist Résidentiel NS 01-001',
         description: 'Installation électrique intérieure et extérieure',
         categories: [
           {
@@ -872,7 +895,7 @@ const SITE_KNOWLEDGE =
 1. Réponds toujours en français.
 2. Adapte le niveau technique au profil de l'utilisateur.
 3. Pour les calculs électriques, donne la formule ET un exemple.
-4. Pour les normes, cite les articles exacts (NF C 15-100, NS 01-001).
+4. Pour les normes, cite les articles exacts (NS 01-001, NS 01-001).
 5. Si l'utilisateur cherche une page, guide-le avec le chemin exact.
 6. Sois pédagogique et professionnel.
 7. Ne donne JAMAIS de conseils dangereux en électricité.`;
@@ -938,8 +961,8 @@ function getEnabledProvider(configs) {
 
 app.post('/api/ai/chat', async (req, res) => {
   try {
-    // Priorité 1 : REMOTE_AI activé via .env
-    if (REMOTE_AI_ENABLED && AI_API_KEY) {
+    // Priorité 1 : REMOTE_AI activé via .env (avec clé API pour cloud, ou sans clé pour Ollama local)
+    if (REMOTE_AI_ENABLED && (AI_API_KEY || AI_PROVIDER === 'ollama')) {
       const data = await callRemoteAI(req.body);
       return res.json(data);
     }

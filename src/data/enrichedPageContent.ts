@@ -398,11 +398,11 @@ export const ENRICHED_DEFAULT_PAGES: Record<string, PageDefinition> = {
         },
         {
           question: 'Comment savoir si mon tableau électrique est aux normes ?',
-          answer: 'Un tableau conforme doit comporter un disjoncteur différentiel 30mA, des protections adaptées pour chaque circuit, un repérage clair, et respecter la norme NF C 15-100 en vigueur.'
+          answer: 'Un tableau conforme doit comporter un disjoncteur différentiel 30mA, des protections adaptées pour chaque circuit, un repérage clair, et respecter la norme NS 01-001 en vigueur.'
         },
         {
           question: 'Puis-je réaliser des travaux électriques moi-même ?',
-          answer: 'La loi autorise les particuliers à réaliser des petits travaux simples. Cependant, toute modification importante nécessite l\'intervention d\'un électricien qualifié et une attestation de conformité CONSUEL.'
+          answer: 'La loi autorise les particuliers à réaliser des petits travaux simples. Cependant, toute modification importante nécessite l\'intervention d\'un électricien qualifié et une attestation de conformité COSSUEL.'
         },
         {
           question: 'Combien coûte une mise en conformité électrique ?',

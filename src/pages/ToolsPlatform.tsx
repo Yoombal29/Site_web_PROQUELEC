@@ -48,6 +48,7 @@ import {
   type ProquelecApp,
 } from '@/data/applications-catalog';
 import { getEffectiveCategory, getEffectiveStatus } from '@/lib/toolOverrides';
+import { useGlobalHeader } from '@/components/MainLayout';
 
 const publicCatalogApps = [...freeApps, ...premiumApps];
 const fullCatalogApps = [...freeApps, ...premiumApps, ...internalApps];
@@ -58,6 +59,7 @@ const fullCatalogApps = [...freeApps, ...premiumApps, ...internalApps];
  * Doctrine : Subordination Normative Totale
  */
 export default function ToolsPlatform() {
+  useGlobalHeader().setHide(true);
   const navigate = useNavigate();
   const { hasPremium, isLoading: isLoadingPremium } = usePremiumAccess();
   const { trackEvent, getEvents } = useToolAnalytics();
@@ -283,11 +285,8 @@ export default function ToolsPlatform() {
   return (
     <div className="min-h-screen bg-[#111827] text-slate-100 selection:bg-blue-500/30">
       <SEO
-        title={heroData?.seo_title || "Plateforme d'Ingénierie Électrotechnique - PROQUELEC"}
-        description={
-          heroData?.seo_description ||
-          'Référentiel officiel et corpus normatif central pour professionnels, grand public et équipes PROQUELEC.'
-        }
+        title="Plateforme d'Ingénierie Électrotechnique - PROQUELEC"
+        description="Référentiel officiel et corpus normatif central pour professionnels, grand public et équipes PROQUELEC."
       />
 
       <Header />
@@ -297,14 +296,13 @@ export default function ToolsPlatform() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-4xl text-center">
               <Badge className="mb-4 border-blue-500/30 bg-blue-600/15 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-blue-200">
-                {heroData?.features?.[0] || `${visibleToolCount} outils PROQUELEC`}
+                {`${visibleToolCount} outils PROQUELEC`}
               </Badge>
               <h1 className="text-3xl font-black tracking-tight text-white md:text-5xl lg:text-6xl">
-                {heroData?.title || 'Outils Techniques Avancés PROQUELEC'}
+                {'Outils Techniques Avancés PROQUELEC'}
               </h1>
               <p className="mx-auto mt-5 max-w-3xl text-base font-semibold leading-relaxed text-slate-300 md:text-xl">
-                {heroData?.subtitle ||
-                  "Découvrez nos outils professionnels pour optimiser vos installations électriques, réaliser des économies d'énergie et garantir la sécurité."}
+                {"Découvrez nos outils professionnels pour optimiser vos installations électriques, réaliser des économies d'énergie et garantir la sécurité."}
               </p>
             </div>
           </div>

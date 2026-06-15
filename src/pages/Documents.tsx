@@ -23,8 +23,10 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useGlobalHeader } from '@/components/MainLayout';
 
 const Documents = () => {
+  useGlobalHeader().setHide(true);
   const navigate = useNavigate();
   const { user } = useSession();
   const isAdmin = user?.role === 'admin';

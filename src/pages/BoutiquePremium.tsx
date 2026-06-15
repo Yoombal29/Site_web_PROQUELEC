@@ -31,6 +31,7 @@ import { Input } from '@/components/ui/input';
 import { premiumApps, type ProquelecApp } from '@/data/applications-catalog';
 import { useEcommerceStore, type Product } from '@/stores/ecommerce.store';
 import { cn } from '@/lib/utils';
+import { useGlobalHeader } from '@/components/MainLayout';
 
 type ProductCategory = 'documents' | 'applications' | 'subscriptions';
 
@@ -165,6 +166,7 @@ const EmptyState = ({ title, description }: { title: string; description: string
 );
 
 export default function BoutiquePremium() {
+  useGlobalHeader().setHide(true);
   const navigate = useNavigate();
   const products = useEcommerceStore((state) => state.products);
   const currency = useEcommerceStore((state) => state.currency);

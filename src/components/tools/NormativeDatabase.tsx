@@ -82,14 +82,14 @@ const CABLE_SECTIONS: CableSection[] = [
 ];
 
 const PROTECTION_DEVICES: ProtectionDevice[] = [
-  { type: 'Disjoncteur 10A', usage: 'Éclairage', norme: 'NF C 15-100' },
-  { type: 'Disjoncteur 16A', usage: 'Prises', norme: 'NF C 15-100' },
-  { type: 'Disjoncteur 20A', usage: 'Cuisinière', norme: 'NF C 15-100' },
-  { type: 'Disjoncteur 32A', usage: 'Table de cuisson', norme: 'NF C 15-100' },
-  { type: 'DDR 30mA type AC', usage: 'Prises générales', norme: 'NF C 15-100' },
-  { type: 'DDR 30mA type A', usage: 'Circuits spéciaux', norme: 'NF C 15-100' },
-  { type: 'DDR 300mA type S', usage: 'Incendie', norme: 'NF C 15-100' },
-  { type: 'Parafoudre', usage: 'Protection surtension', norme: 'NF C 15-100' },
+  { type: 'Disjoncteur 10A', usage: 'Éclairage', norme: 'NS 01-001' },
+  { type: 'Disjoncteur 16A', usage: 'Prises', norme: 'NS 01-001' },
+  { type: 'Disjoncteur 20A', usage: 'Cuisinière', norme: 'NS 01-001' },
+  { type: 'Disjoncteur 32A', usage: 'Table de cuisson', norme: 'NS 01-001' },
+  { type: 'DDR 30mA type AC', usage: 'Prises générales', norme: 'NS 01-001' },
+  { type: 'DDR 30mA type A', usage: 'Circuits spéciaux', norme: 'NS 01-001' },
+  { type: 'DDR 300mA type S', usage: 'Incendie', norme: 'NS 01-001' },
+  { type: 'Parafoudre', usage: 'Protection surtension', norme: 'NS 01-001' },
 ];
 
 const NORMES_DATA: NormeEntry[] = [
@@ -97,12 +97,12 @@ const NORMES_DATA: NormeEntry[] = [
     type: 'Normes NF',
     code: 'NS 01-001',
     detail: 'Installations Électriques BT - Règles',
-    desc: 'Norme de référence pour toute installation électrique basse tension au Sénégal. Elle définit les exigences de sécurité, de dimensionnement, de pose et de conformité. Inspirée de la NF C 15-100 française.',
+    desc: 'Norme de référence pour toute installation électrique basse tension au Sénégal. Elle définit les exigences de sécurité, de dimensionnement, de pose et de conformité. Inspirée de la NS 01-001 française.',
     pdf: 'https://proquelec.sn/documents/NS-01-001.pdf',
   },
   {
     type: 'Normes NF',
-    code: 'NF C 15-100',
+    code: 'NS 01-001',
     detail: 'Installations Électriques BT - France/Sénégal',
     desc: 'Norme fondamentale pour les installations électriques basse tension : protection des personnes, choix des conducteurs, section des câbles, dispositifs différentiels, etc.',
     pdf: '',
@@ -721,7 +721,7 @@ export default function NormativeDatabase() {
                   Sections de câbles — Référence rapide
                 </CardTitle>
                 <p className="text-xs text-slate-400">
-                  Tableau des sections normalisées et courants maximaux associés — NF C 15-100
+                  Tableau des sections normalisées et courants maximaux associés — NS 01-001
                 </p>
               </div>
             </CardHeader>
@@ -756,7 +756,7 @@ export default function NormativeDatabase() {
             <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" />
             <p className="text-xs text-slate-400">
               <strong className="text-slate-300">Rappel :</strong> Ces valeurs sont indicatives pour
-              du cuivre en pose normalisée (NF C 15-100). Pour des conditions spécifiques
+              du cuivre en pose normalisée (NS 01-001). Pour des conditions spécifiques
               (température, groupement de câbles, chute de tension), un calcul précis est
               nécessaire.
             </p>
@@ -826,7 +826,7 @@ export default function NormativeDatabase() {
           <div className="flex items-start gap-2 rounded-lg border border-blue-800/30 bg-blue-950/20 p-3">
             <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" />
             <p className="text-xs text-slate-400">
-              <strong className="text-slate-300">NF C 15-100 :</strong> Les dispositifs
+              <strong className="text-slate-300">NS 01-001 :</strong> Les dispositifs
               différentiels à haute sensibilité (30 mA) sont obligatoires sur tous les circuits
               terminaux des bâtiments résidentiels (prises, éclairage, cuisine, salle de bains).
             </p>

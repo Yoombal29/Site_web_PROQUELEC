@@ -27,6 +27,7 @@ import {
   X,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useGlobalHeader } from '@/components/MainLayout';
 
 const API = '/api';
 
@@ -155,6 +156,7 @@ const FAQ_ITEMS = [
 ];
 
 export default function SubscriptionPage() {
+  useGlobalHeader().setHide(true);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const isWelcome = searchParams.get('welcome') === 'true';

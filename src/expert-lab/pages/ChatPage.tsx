@@ -318,7 +318,7 @@ export default function ChatPage() {
   const createNewChat = async () => {
     setMessages([]);
     setActiveSessionId(null);
-    window.history.pushState({}, '', '/expert/chat');
+    window.history.pushState({}, '', '/expert-lab/chat');
   };
 
   const filteredSessions = sessions.filter((s) =>
@@ -420,7 +420,7 @@ Voici l'extrait pertinent de l'inspection vidéo du TGBT :
       { role: 'user', content: "Calcule la chute de tension pour l'atelier." },
       {
         role: 'assistant',
-        content: 'Calcul effectué selon la norme **NF C 15-100**.',
+        content: 'Calcul effectué selon la norme **NS 01-001**.',
         widget: {
           type: 'voltage_drop',
           result: {
@@ -510,7 +510,7 @@ Voici l'extrait pertinent de l'inspection vidéo du TGBT :
 
       // DYNAMIC RESPONSE HANDLING
       let content = '';
-      let metadata = {
+      const metadata = {
         mode: 'Souverain (NS 01-001)',
         method: 'Recherche Vectorielle (RAG)',
         explanation: 'Consultation directe du corpus normatif.',
@@ -760,7 +760,7 @@ Voici l'extrait pertinent de l'inspection vidéo du TGBT :
                 <Activity className="w-4 h-4 mr-3 text-cyan-500" /> Dashboard Expert
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => (window.location.href = '/expert/calculators')}
+                onClick={() => (window.location.href = '/expert-lab/calculators')}
                 className="focus:bg-emerald-900/20 focus:text-emerald-400 cursor-pointer"
               >
                 <Calculator className="w-4 h-4 mr-3 text-emerald-500" /> Calculateurs Normatifs
@@ -772,7 +772,7 @@ Voici l'extrait pertinent de l'inspection vidéo du TGBT :
                 <ScanSearch className="w-4 h-4 mr-3 text-amber-500" /> Scanner de Conformité Photo
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => (window.location.href = '/expert/schemas')}
+                onClick={() => (window.location.href = '/expert-lab/schemas')}
                 className="focus:bg-purple-900/20 focus:text-purple-400 cursor-pointer"
               >
                 <Box className="w-4 h-4 mr-3 text-purple-500" /> Schémas & Diagrammes
@@ -1039,7 +1039,7 @@ Voici l'extrait pertinent de l'inspection vidéo du TGBT :
                   </div>
                   <h4 className="font-bold text-slate-200">Mode Expert NS</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">
-                    Intelligence certifiée basée sur les référentiels NS 01-001 et NF C 15-100 pour
+                    Intelligence certifiée basée sur les référentiels NS 01-001 et NS 01-001 pour
                     des réponses normatives garanties.
                   </p>
                 </div>

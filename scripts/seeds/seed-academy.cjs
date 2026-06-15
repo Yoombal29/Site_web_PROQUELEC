@@ -12,7 +12,7 @@ async function seed() {
     { title: 'BTS Électrotechnique', level: 'BTS', duration: '1 200 heures', price: 0, description: 'Formation avancée en électrotechnique — conception et maintenance des systèmes électriques.' },
     { title: 'Installateur Solaire Photovoltaïque', level: 'Certification', duration: '80 heures', price: 250000, description: 'Formation spécialisée en installation de panneaux solaires et systèmes photovoltaïques.' },
     { title: 'Maintenance Électrique Industrielle', level: 'Certification', duration: '120 heures', price: 350000, description: 'Maintenance et dépannage des installations électriques industrielles.' },
-    { title: 'Normes NF C 15-100', level: 'Certification', duration: '40 heures', price: 150000, description: 'Maîtrise complète des normes électriques en vigueur pour les installations basse tension.' },
+    { title: 'Normes NS 01-001', level: 'Certification', duration: '40 heures', price: 150000, description: 'Maîtrise complète des normes électriques en vigueur pour les installations basse tension.' },
     { title: 'Habilitation Électrique B1/B2', level: 'Certification', duration: '35 heures', price: 180000, description: 'Habilitation électrique pour opérateurs et techniciens — recommandé pour tous les électriciens.' },
   ];
 
@@ -28,7 +28,7 @@ async function seed() {
 
   // ── Electrical Standards ──
   const standards = [
-    { code: 'NF C 15-100', title: 'Installations électriques basse tension', category: 'norme', description: 'Installations électriques basse tension — norme fondamentale pour tous les bâtiments', version: '2026' },
+    { code: 'NS 01-001', title: 'Installations électriques basse tension', category: 'norme', description: 'Installations électriques basse tension — norme fondamentale pour tous les bâtiments', version: '2026' },
     { code: 'NF C 14-100', title: 'Installations de branchement', category: 'norme', description: 'Installations de branchement raccordement au réseau public', version: '2025' },
     { code: 'UTE C 15-712', title: 'Installations photovoltaïques', category: 'guide', description: 'Guide pratique pour les installations photovoltaïques raccordées au réseau', version: '2024' },
     { code: 'NF EN 62305', title: 'Protection contre la foudre', category: 'norme', description: 'Protection des structures et des personnes contre la foudre', version: '2023' },

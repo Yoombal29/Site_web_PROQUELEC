@@ -2,7 +2,7 @@
  * 📚 ObjectLibrary — Catalogue d'objets normatifs
  * 
  * Bibliothèque complète des objets électriques normalisés
- * conforme à NF C 15-100, NS 01-001, NF C 14-100
+ * conforme à NS 01-001, NS 01-001, NF C 14-100
  * 
  * Catégories :
  * 1. SOURCES & ALIMENTATION
@@ -84,7 +84,7 @@ const SOURCES: Record<string, ObjectDefinition> = {
       regime: 'TN-S',
       maxCurrent: 125
     },
-    normativeRef: 'NF C 15-100 Art. 525 / Art. 523',
+    normativeRef: 'NS 01-001 Art. 525 / Art. 523',
     editableFields: [
     {
       name: 'voltage',
@@ -119,7 +119,7 @@ const PROTECTIONS: Record<string, ObjectDefinition> = {
       pdc: 4500,
       type: 'unipolaire'
     },
-    normativeRef: 'NF C 61-201 / NF C 15-100 Art. 533',
+    normativeRef: 'NF C 61-201 / NS 01-001 Art. 533',
     editableFields: [
     {
       name: 'calibre',
@@ -147,7 +147,7 @@ const PROTECTIONS: Record<string, ObjectDefinition> = {
       pdc: 4500,
       type: 'unipolaire'
     },
-    normativeRef: 'NF C 61-201 / NF C 15-100 Art. 533',
+    normativeRef: 'NF C 61-201 / NS 01-001 Art. 533',
     editableFields: [
     {
       name: 'calibre',
@@ -168,7 +168,7 @@ const PROTECTIONS: Record<string, ObjectDefinition> = {
       type: 'A',
       curve: 'B'
     },
-    normativeRef: 'NF C 61-202 / NF C 15-100 Art. 535',
+    normativeRef: 'NF C 61-202 / NS 01-001 Art. 535',
     editableFields: [
     {
       name: 'sensitivity',
@@ -195,7 +195,7 @@ const PROTECTIONS: Record<string, ObjectDefinition> = {
       type: 'gG',
       voltage: 400
     },
-    normativeRef: 'NF C 61-210 / NF C 15-100 Art. 533',
+    normativeRef: 'NF C 61-210 / NS 01-001 Art. 533',
     editableFields: [
     {
       name: 'calibre',
@@ -222,7 +222,7 @@ const DISTRIBUTIONS: Record<string, ObjectDefinition> = {
       amperage: 125,
       enclosureType: 'IP54'
     },
-    normativeRef: 'NF C 15-100 Art. 521-522',
+    normativeRef: 'NS 01-001 Art. 521-522',
     editableFields: [
     {
       name: 'label',
@@ -250,7 +250,7 @@ const DISTRIBUTIONS: Record<string, ObjectDefinition> = {
       amperage: 63,
       enclosureType: 'IP54'
     },
-    normativeRef: 'NF C 15-100 Art. 522',
+    normativeRef: 'NS 01-001 Art. 522',
     editableFields: [
     {
       name: 'label',
@@ -283,7 +283,7 @@ const DERIVATIONS: Record<string, ObjectDefinition> = {
       enclosureType: 'IP55',
       maxCurrent: 32
     },
-    normativeRef: 'NF C 15-100 Art. 522',
+    normativeRef: 'NS 01-001 Art. 522',
     editableFields: [
     {
       name: 'label',
@@ -310,7 +310,7 @@ const DERIVATIONS: Record<string, ObjectDefinition> = {
       enclosureType: 'IP55',
       conductorCount: 4
     },
-    normativeRef: 'NF C 15-100 Art. 522',
+    normativeRef: 'NS 01-001 Art. 522',
     editableFields: [
     {
       name: 'label',
@@ -343,7 +343,7 @@ const COUPURES: Record<string, ObjectDefinition> = {
       voltage: 400,
       maxCurrent: 125
     },
-    normativeRef: 'NF C 15-100 Art. 537',
+    normativeRef: 'NS 01-001 Art. 537',
     editableFields: [
     {
       name: 'label',
@@ -370,7 +370,7 @@ const COUPURES: Record<string, ObjectDefinition> = {
       voltage: 400,
       maxCurrent: 125
     },
-    normativeRef: 'NF C 15-100 Art. 537',
+    normativeRef: 'NS 01-001 Art. 537',
     editableFields: [
     {
       name: 'label',
@@ -404,7 +404,7 @@ const TRANSFORMATIONS: Record<string, ObjectDefinition> = {
       dT: 55,
       coolingType: 'AN'
     },
-    normativeRef: 'NF C 15-100 Art. 523 / CEI 60076',
+    normativeRef: 'NS 01-001 Art. 523 / CEI 60076',
     editableFields: [
     {
       name: 'power',
@@ -444,7 +444,7 @@ const TRANSFORMATIONS: Record<string, ObjectDefinition> = {
       power: 500,
       efficiency: 0.9
     },
-    normativeRef: 'NF C 15-100 Annexe G',
+    normativeRef: 'NS 01-001 Annexe G',
     editableFields: [
     {
       name: 'power',
@@ -481,7 +481,7 @@ const PRODUCTIONS: Record<string, ObjectDefinition> = {
       efficiency: 0.2,
       area: 1.6
     },
-    normativeRef: 'NF C 15-100 Annexe G / NFC 15-100-1',
+    normativeRef: 'NS 01-001 Annexe G / NFC 15-100-1',
     editableFields: [
     {
       name: 'power',
@@ -513,7 +513,7 @@ const PRODUCTIONS: Record<string, ObjectDefinition> = {
       fuelType: 'diesel',
       autonomy: 8
     },
-    normativeRef: 'NF C 15-100 Art. 551',
+    normativeRef: 'NS 01-001 Art. 551',
     editableFields: [
     {
       name: 'power',
@@ -548,7 +548,7 @@ const GROUNDS: Record<string, ObjectDefinition> = {
       length: 2.5,
       material: 'Cu'
     },
-    normativeRef: 'NF C 15-100 Art. 541-542',
+    normativeRef: 'NS 01-001 Art. 541-542',
     editableFields: [
     {
       name: 'resistance',
@@ -579,7 +579,7 @@ const GROUNDS: Record<string, ObjectDefinition> = {
       perimeter: 20,
       material: 'Cu'
     },
-    normativeRef: 'NF C 15-100 Art. 541-542',
+    normativeRef: 'NS 01-001 Art. 541-542',
     editableFields: [
     {
       name: 'resistance',
@@ -618,7 +618,7 @@ const CABLES: Record<string, ObjectDefinition> = {
       temperatureAmbient: 30,
       grouping: 1
     },
-    normativeRef: 'NF C 15-100 Art. 523-525 / Tableau 52C',
+    normativeRef: 'NS 01-001 Art. 523-525 / Tableau 52C',
     editableFields: [
     {
       name: 'modeOfInstallation',
@@ -655,7 +655,7 @@ const CABLES: Record<string, ObjectDefinition> = {
       temperatureAmbient: 30,
       grouping: 1
     },
-    normativeRef: 'NF C 15-100 Art. 523-525 / Tableau 52C',
+    normativeRef: 'NS 01-001 Art. 523-525 / Tableau 52C',
     editableFields: [
     {
       name: 'modeOfInstallation',
@@ -678,7 +678,7 @@ const CABLES: Record<string, ObjectDefinition> = {
       temperatureAmbient: 30,
       grouping: 1
     },
-    normativeRef: 'NF C 15-100 Art. 523-525 / Tableau 52C',
+    normativeRef: 'NS 01-001 Art. 523-525 / Tableau 52C',
     editableFields: [
     {
       name: 'modeOfInstallation',
@@ -706,7 +706,7 @@ const RECEPTORS: Record<string, ObjectDefinition> = {
       usageFactor: 1.0,
       voltage: 230
     },
-    normativeRef: 'NF C 15-100 Art. 525 / Tableau 52V',
+    normativeRef: 'NS 01-001 Art. 525 / Tableau 52V',
     editableFields: [
     {
       name: 'power',
@@ -738,7 +738,7 @@ const RECEPTORS: Record<string, ObjectDefinition> = {
       voltage: 230,
       socketCount: 2
     },
-    normativeRef: 'NF C 15-100 Art. 525 / Tableau 52V',
+    normativeRef: 'NS 01-001 Art. 525 / Tableau 52V',
     editableFields: [
     {
       name: 'socketCount',
@@ -761,7 +761,7 @@ const RECEPTORS: Record<string, ObjectDefinition> = {
       efficiency: 0.85,
       voltage: 400
     },
-    normativeRef: 'NF C 15-100 Art. 525 / CEI 60034',
+    normativeRef: 'NS 01-001 Art. 525 / CEI 60034',
     editableFields: [
     {
       name: 'power',
@@ -792,7 +792,7 @@ const RECEPTORS: Record<string, ObjectDefinition> = {
       voltage: 230,
       type: 'wallbox'
     },
-    normativeRef: 'NF C 15-100 Annexe G / NFC 15-100-1',
+    normativeRef: 'NS 01-001 Annexe G / NFC 15-100-1',
     editableFields: [
     {
       name: 'power',

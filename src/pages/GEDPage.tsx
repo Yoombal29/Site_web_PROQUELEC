@@ -19,6 +19,7 @@ import {
   PremiumFunctionalShell,
 } from '@/components/functional/PremiumFunctionalShell';
 import { useSession } from '@/hooks/useSession';
+import { useGlobalHeader } from '@/components/MainLayout';
 
 const roleLabels: Record<string, string> = {
   admin: 'Admin',
@@ -30,6 +31,7 @@ const roleLabels: Record<string, string> = {
 };
 
 export default function GEDPage() {
+  useGlobalHeader().setHide(true);
   const { user, isLoading } = useSession();
   const navigate = useNavigate();
   const location = useLocation();

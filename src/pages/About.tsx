@@ -12,6 +12,7 @@ import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { cn } from "@/lib/utils";
+import { useGlobalHeader } from '@/components/MainLayout';
 
 type AboutSection = 'presentation' | 'governance' | 'activities' | 'information' | 'formation' | 'international' | 'edito' | 'association';
 
@@ -599,6 +600,7 @@ const SectionAssociation = () => {
 // --- Main Page ---
 
 export default function AboutPage() {
+  useGlobalHeader().setHide(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeSection, setActiveSection] = useState<AboutSection>('presentation');
 

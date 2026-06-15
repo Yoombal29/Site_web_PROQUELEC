@@ -58,8 +58,12 @@ export function parseJsonField(value: unknown) {
   }
 }
 
+import { isFunctionalPageSlug } from './functional-pages';
+
 export function isDesignLockedFunctionalPage(page: FunctionalPageRecordLike | null | undefined) {
   if (!page || page.immutable !== true) return false;
+  const slug = page.slug ? page.slug.replace(/^\//, '') : '';
+  if (!isFunctionalPageSlug(slug)) return false;
   return (page.design_options as any)?.page_type !== 'hybrid';
 }
 

@@ -507,7 +507,7 @@ function premiumServices() {
       props: {
         icon: 'Shield',
         title: 'Conformité',
-        text: 'Mise aux normes selon NF C 15-100.',
+        text: 'Mise aux normes selon NS 01-001.',
         layout: 'card',
         accentColor: '#059669',
         backgroundColor: '#f0fdf4',

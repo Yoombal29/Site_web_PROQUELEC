@@ -19,7 +19,7 @@ export function PresentationEditorPage() {
       setPresentationTitle('Présentation Projet (Template)');
       setInitialSlides([
         { id: '1', content: '<h1>Projet [NOM]</h1><h3>Présentation Client</h3><p>Propulsé par PROQUELEC</p>', background: 'linear-gradient(to right, #4facfe 0%, #00f2fe 100%)' },
-        { id: '2', content: '<h2>Notre Proposition</h2><ul><li>Expertise Technique</li><li>Conformité NF C 15-100</li><li>Suivi Rigoureux</li></ul>' }]
+        { id: '2', content: '<h2>Notre Proposition</h2><ul><li>Expertise Technique</li><li>Conformité NS 01-001</li><li>Suivi Rigoureux</li></ul>' }]
       );
       toast.success("Modèle chargé avec succès !");
     }

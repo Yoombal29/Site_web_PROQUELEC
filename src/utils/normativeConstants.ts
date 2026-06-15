@@ -1,9 +1,9 @@
 /*
 NORMATIVE CONSTANTS & UTILITIES
-NS 01-001 / NFC 15-100 — Chapitre 52
+NS 01-001 — Chapitre 52
 */
 
-// Voltage drop limits according to NS 01-001 / NFC 15-100 Art 525 - Tableau 52V
+// Voltage drop limits according to NS 01-001 Art 525 - Tableau 52V
 export const VOLTAGE_DROP_LIMITS = {
   A: { lighting: 0.03, other: 0.05 }, // Type A: réseau public BT
   B: { lighting: 0.06, other: 0.08 }  // Type B: poste HT/BT ou TGBT
@@ -66,7 +66,7 @@ export const BASE_IZ_VALUES = {
   }
 };
 
-// Resistivity values according to NS 01-001 / NFC 15-100 Art 525
+// Resistivity values according to NS 01-001 Art 525
 export const RESISTIVITY_VALUES = {
   // At 20°C: Cuivre ρ = 0.0175, Aluminium ρ = 0.028 Ω·mm²/m
   at20C: {

@@ -1622,7 +1622,7 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
             <FileDownloadBlock />
             <ResourceCardsBlock
               title="Normes en vigueur"
-              subtitle="NS 01-001, NF C 15-100 et référentiels associés."
+              subtitle="NS 01-001, NS 01-001 et référentiels associés."
               accentColor={colors.blue}
             />
           </Grid>
@@ -2143,7 +2143,7 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
               <CardBlock
                 icon="🛡️"
                 title="Vérification Terre"
-                text="Contrôle de la prise de terre NF C 15-100."
+                text="Contrôle de la prise de terre NS 01-001."
                 {...cardPresets.green}
               />
               <CardBlock
@@ -2197,7 +2197,7 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
               <CardBlock
                 icon="🗄️"
                 title="Base Normative"
-                text="NS 01-001, NF C 15-100, IEC et tableaux de câbles."
+                text="NS 01-001, NS 01-001, IEC et tableaux de câbles."
                 {...cardPresets.purple}
               />
             </Grid>
@@ -2236,3 +2236,4 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     meta: { version: 2, estimatedRenderMs: 120, tags: ['catalogue', 'outils', 'complet'] },
   },
 ];
+

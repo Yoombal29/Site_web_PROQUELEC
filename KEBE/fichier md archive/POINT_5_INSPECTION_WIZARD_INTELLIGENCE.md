@@ -43,7 +43,7 @@ Doter le wizard d'inspection d'intelligence artificielle pour suggérer automati
 - **Exemples** :
   - ✅ BAES fonctionnels (CRITIQUE)
   - ✅ Résistance terre < 30 Ω (CRITIQUE)
-  - ✅ Attestation Consuel (CRITIQUE)
+  - ✅ Attestation COSSUEL (CRITIQUE)
 
 #### **Template Industriel** 🏭
 - **16 points de contrôle** répartis en 5 catégories

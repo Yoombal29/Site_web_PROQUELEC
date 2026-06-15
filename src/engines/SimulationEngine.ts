@@ -2,7 +2,7 @@
  * ⚡ SimulationEngine — Moteur de simulation avancée
  *
  * Simulations électriques spécialisées selon normes :
- * - Court-circuit : Calcul des courants de défaut (NF C 15-100)
+ * - Court-circuit : Calcul des courants de défaut (NS 01-001)
  * - Coordination des protections : Selectivité et discrimination
  * - Analyse harmonique : Perturbations non-linéaires
  * - Flux de puissance : Répartition des charges
@@ -374,7 +374,7 @@ export class HarmonicEngine {
       harmonics,
       sources: harmonicSources,
       mitigation,
-      compliance: thd <= 8 // Limite NF C 15-100
+      compliance: thd <= 8 // Limite NS 01-001
     };
   }
 

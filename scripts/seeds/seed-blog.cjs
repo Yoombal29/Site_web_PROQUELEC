@@ -33,10 +33,10 @@ async function seed() {
   // — Posts —
   const posts = [
     {
-      title: 'Nouvelle norme NF C 15-100 : ce qui change en 2026',
+      title: 'Nouvelle norme NS 01-001 : ce qui change en 2026',
       slug: 'nouvelle-norme-nf-c15-100-2026',
       excerpt: 'Découvrez les principales évolutions de la norme électrique pour 2026.',
-      content: '<p>La norme NF C 15-100 évolue en 2026 avec plusieurs changements majeurs concernant la sécurité des installations électriques. Cette mise à jour introduit de nouvelles exigences pour les installations photovoltaïques, les bornes de recharge pour véhicules électriques, et renforce les dispositifs de protection différentielle.</p><p>Les professionnels du secteur doivent se familiariser avec ces évolutions pour garantir la conformité de leurs installations.</p>',
+      content: '<p>La norme NS 01-001 évolue en 2026 avec plusieurs changements majeurs concernant la sécurité des installations électriques. Cette mise à jour introduit de nouvelles exigences pour les installations photovoltaïques, les bornes de recharge pour véhicules électriques, et renforce les dispositifs de protection différentielle.</p><p>Les professionnels du secteur doivent se familiariser avec ces évolutions pour garantir la conformité de leurs installations.</p>',
       category_name: 'Normes et Réglementation',
     },
     {
@@ -50,7 +50,7 @@ async function seed() {
       title: 'Formations aux certifications électriques obligatoires',
       slug: 'formations-certifications-electriques-obligatoires',
       excerpt: 'Guide complet des certifications requises pour exercer le métier d\'électricien au Sénégal.',
-      content: '<p>Pour exercer le métier d\'électricien au Sénégal, plusieurs certifications sont obligatoires : l\'habilitation électrique, la certification NF C 15-100, et l\'attestation de capacité. Cet article détaille chaque certification et les formations associées.</p>',
+      content: '<p>Pour exercer le métier d\'électricien au Sénégal, plusieurs certifications sont obligatoires : l\'habilitation électrique, la certification NS 01-001, et l\'attestation de capacité. Cet article détaille chaque certification et les formations associées.</p>',
       category_name: 'Formation',
     },
     {

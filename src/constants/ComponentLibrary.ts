@@ -1,7 +1,7 @@
 /**
  * 🧰 ComponentLibrary — Bibliothèque de composants électriques standardisés
  *
- * Catalogue complet de composants normalisés selon NF C 15-100 :
+ * Catalogue complet de composants normalisés selon NS 01-001 :
  * - Disjoncteurs et protections
  * - Câbles et sections
  * - Appareillages et récepteurs
@@ -17,7 +17,7 @@ export interface ComponentDefinition {
   type: string; // Type technique (breaker, cable, etc.)
   symbol: string; // Symbole électrique
   description: string;
-  nfReference?: string; // Référence NF C 15-100
+  nfReference?: string; // Référence NS 01-001
 
   // Propriétés électriques
   electrical: {
@@ -51,7 +51,7 @@ export const SOURCES: ComponentDefinition[] = [
     type: 'SOURCE',
     symbol: '⚡',
     description: 'Alimentation monophasée standard 230V',
-    nfReference: 'NF C 15-100 Article 411.1',
+    nfReference: 'NS 01-001 Article 411.1',
     electrical: {
       tension: 230,
       courant: 63, // Par défaut, extensible
@@ -68,7 +68,7 @@ export const SOURCES: ComponentDefinition[] = [
     type: 'SOURCE',
     symbol: '⚡⚡⚡',
     description: 'Alimentation triphasée 400V',
-    nfReference: 'NF C 15-100 Article 411.2',
+    nfReference: 'NS 01-001 Article 411.2',
     electrical: {
       tension: 400,
       courant: 125,
@@ -85,7 +85,7 @@ export const SOURCES: ComponentDefinition[] = [
     type: 'TRANSFORMER',
     symbol: '🔄',
     description: 'Transformateur de séparation 230V vers 24V',
-    nfReference: 'NF C 15-100 Article 551',
+    nfReference: 'NS 01-001 Article 551',
     electrical: {
       tension: 24,
       courant: 10,
@@ -107,7 +107,7 @@ export const BREAKERS: ComponentDefinition[] = [
     type: 'BREAKER',
     symbol: '🚨',
     description: 'Disjoncteur 6A courbe B - Éclairage',
-    nfReference: 'NF C 15-100 Article 534.2',
+    nfReference: 'NS 01-001 Article 534.2',
     electrical: {
       tension: 230,
       courant: 6,
@@ -122,7 +122,7 @@ export const BREAKERS: ComponentDefinition[] = [
     type: 'BREAKER',
     symbol: '🚨',
     description: 'Disjoncteur 10A courbe B - Prises',
-    nfReference: 'NF C 15-100 Article 534.2',
+    nfReference: 'NS 01-001 Article 534.2',
     electrical: {
       tension: 230,
       courant: 10,
@@ -137,7 +137,7 @@ export const BREAKERS: ComponentDefinition[] = [
     type: 'BREAKER',
     symbol: '🚨',
     description: 'Disjoncteur 16A courbe B - Circuits spécialisés',
-    nfReference: 'NF C 15-100 Article 534.2',
+    nfReference: 'NS 01-001 Article 534.2',
     electrical: {
       tension: 230,
       courant: 16,
@@ -152,7 +152,7 @@ export const BREAKERS: ComponentDefinition[] = [
     type: 'BREAKER',
     symbol: '🚨',
     description: 'Disjoncteur 20A courbe C - Moteurs',
-    nfReference: 'NF C 15-100 Article 534.2',
+    nfReference: 'NS 01-001 Article 534.2',
     electrical: {
       tension: 230,
       courant: 20,
@@ -167,7 +167,7 @@ export const BREAKERS: ComponentDefinition[] = [
     type: 'BREAKER',
     symbol: '🚨',
     description: 'Disjoncteur 32A courbe C - Équipements industriels',
-    nfReference: 'NF C 15-100 Article 534.2',
+    nfReference: 'NS 01-001 Article 534.2',
     electrical: {
       tension: 230,
       courant: 32,
@@ -182,7 +182,7 @@ export const BREAKERS: ComponentDefinition[] = [
     type: 'BREAKER',
     symbol: '🚨',
     description: 'Disjoncteur 63A courbe C - Tableau principal',
-    nfReference: 'NF C 15-100 Article 534.2',
+    nfReference: 'NS 01-001 Article 534.2',
     electrical: {
       tension: 230,
       courant: 63,
@@ -197,7 +197,7 @@ export const BREAKERS: ComponentDefinition[] = [
     type: 'BREAKER',
     symbol: '🚨',
     description: 'Disjoncteur 125A courbe C - Forte puissance',
-    nfReference: 'NF C 15-100 Article 534.2',
+    nfReference: 'NS 01-001 Article 534.2',
     electrical: {
       tension: 400,
       courant: 125,
@@ -217,7 +217,7 @@ export const CABLES: ComponentDefinition[] = [
     type: 'CABLE_CU',
     symbol: '🧵',
     description: 'Câble cuivre 1,5mm² - Éclairage et prises',
-    nfReference: 'NF C 15-100 Article 523.3',
+    nfReference: 'NS 01-001 Article 523.3',
     electrical: {
       section: 1.5,
       materiau: 'Cu',
@@ -231,7 +231,7 @@ export const CABLES: ComponentDefinition[] = [
     type: 'CABLE_CU',
     symbol: '🧵',
     description: 'Câble cuivre 2,5mm² - Circuits spécialisés',
-    nfReference: 'NF C 15-100 Article 523.3',
+    nfReference: 'NS 01-001 Article 523.3',
     electrical: {
       section: 2.5,
       materiau: 'Cu',
@@ -245,7 +245,7 @@ export const CABLES: ComponentDefinition[] = [
     type: 'CABLE_CU',
     symbol: '🧵',
     description: 'Câble cuivre 4mm² - Moteurs et équipements',
-    nfReference: 'NF C 15-100 Article 523.3',
+    nfReference: 'NS 01-001 Article 523.3',
     electrical: {
       section: 4,
       materiau: 'Cu',
@@ -259,7 +259,7 @@ export const CABLES: ComponentDefinition[] = [
     type: 'CABLE_CU',
     symbol: '🧵',
     description: 'Câble cuivre 6mm² - Forte puissance',
-    nfReference: 'NF C 15-100 Article 523.3',
+    nfReference: 'NS 01-001 Article 523.3',
     electrical: {
       section: 6,
       materiau: 'Cu',
@@ -273,7 +273,7 @@ export const CABLES: ComponentDefinition[] = [
     type: 'CABLE_CU',
     symbol: '🧵',
     description: 'Câble cuivre 10mm² - Distribution principale',
-    nfReference: 'NF C 15-100 Article 523.3',
+    nfReference: 'NS 01-001 Article 523.3',
     electrical: {
       section: 10,
       materiau: 'Cu',
@@ -287,7 +287,7 @@ export const CABLES: ComponentDefinition[] = [
     type: 'CABLE_AL',
     symbol: '🧶',
     description: 'Câble aluminium 16mm² - Distribution aérienne',
-    nfReference: 'NF C 15-100 Article 523.3',
+    nfReference: 'NS 01-001 Article 523.3',
     electrical: {
       section: 16,
       materiau: 'Al',
@@ -306,7 +306,7 @@ export const RECEPTEURS: ComponentDefinition[] = [
     type: 'RECEPTOR',
     symbol: '🔌',
     description: 'Prises de courant 16A - Circuits ordinaires',
-    nfReference: 'NF C 15-100 Article 522.3',
+    nfReference: 'NS 01-001 Article 522.3',
     electrical: {
       tension: 230,
       courant: 16,
@@ -324,7 +324,7 @@ export const RECEPTEURS: ComponentDefinition[] = [
     type: 'RECEPTOR',
     symbol: '💡',
     description: 'Circuit d\'éclairage - 6A maximum',
-    nfReference: 'NF C 15-100 Article 522.2',
+    nfReference: 'NS 01-001 Article 522.2',
     electrical: {
       tension: 230,
       courant: 6,
@@ -342,7 +342,7 @@ export const RECEPTEURS: ComponentDefinition[] = [
     type: 'RECEPTOR',
     symbol: '⚙️',
     description: 'Moteur électrique monophasé',
-    nfReference: 'NF C 15-100 Article 551.3',
+    nfReference: 'NS 01-001 Article 551.3',
     electrical: {
       tension: 230,
       courant: 20,
@@ -361,7 +361,7 @@ export const RECEPTEURS: ComponentDefinition[] = [
     type: 'RECEPTOR',
     symbol: '🔥',
     description: 'Appareil de chauffage électrique',
-    nfReference: 'NF C 15-100 Article 551.2',
+    nfReference: 'NS 01-001 Article 551.2',
     electrical: {
       tension: 230,
       courant: 32,
@@ -385,7 +385,7 @@ export const DISTRIBUTION: ComponentDefinition[] = [
     type: 'TABLEAU',
     symbol: '📦',
     description: 'Tableau de répartition principal',
-    nfReference: 'NF C 15-100 Article 536',
+    nfReference: 'NS 01-001 Article 536',
     electrical: {
       tension: 230,
       courant: 63
@@ -398,7 +398,7 @@ export const DISTRIBUTION: ComponentDefinition[] = [
     type: 'TABLEAU',
     symbol: '📦',
     description: 'Tableau divisionnaire secondaire',
-    nfReference: 'NF C 15-100 Article 537',
+    nfReference: 'NS 01-001 Article 537',
     electrical: {
       tension: 230,
       courant: 32
@@ -454,7 +454,7 @@ export class ComponentLibrary {
     const courant = recepteur.electrical.courant || 10;
     const puissance = recepteur.electrical.puissance || 0;
 
-    // Logique de recommandation basée sur NF C 15-100
+    // Logique de recommandation basée sur NS 01-001
     if (puissance > 2000 || courant > 10) {
       // Forte puissance → Courbe C
       return BREAKERS.find(b =>

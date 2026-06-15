@@ -21,7 +21,7 @@
   <h2>1. Contrôle de conformité obligatoire</h2>
   <ul>
     <li>Inspection réalisée par un organisme agréé (ex : COSSUEL)</li>
-    <li>Vérification du respect des normes (NF C 15-100, NS 01-001)</li>
+    <li>Vérification du respect des normes (NS 01-001, NS 01-001)</li>
     <li>Remise d’un certificat de conformité</li>
     <li>Obligation avant toute mise sous tension</li>
   </ul>
@@ -76,7 +76,7 @@
   <h1>MÉMENTO TECHNIQUE<br>Obligations de conformité avant mise sous tension</h1>
   <h2>1. Objet du mémento</h2>
   <p>Liste des vérifications à effectuer avant la mise sous tension d’une installation électrique.</p>
-  <h2>2. Principes essentiels (NS 01-001 & NF C 15-100)</h2>
+  <h2>2. Principes essentiels (NS 01-001 & NS 01-001)</h2>
   <ul>
     <li>Respecter toutes les étapes de contrôle</li>
     <li>Documenter les vérifications</li>

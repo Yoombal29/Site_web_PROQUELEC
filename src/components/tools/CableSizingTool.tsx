@@ -113,7 +113,7 @@ export default function CableSizingTool() {
         <div className="flex items-center justify-center gap-2 mb-2">
           <Cable className="w-6 h-6 text-emerald-400" />
           <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest">
-            NF C 15-100
+            NS 01-001
           </Badge>
         </div>
         <h2 className="text-2xl font-black text-white">Calculateur de Section de Câble</h2>
@@ -396,7 +396,7 @@ export default function CableSizingTool() {
           <div className="flex items-start gap-4">
             <Info className="w-6 h-6 text-amber-400 mt-0.5" />
             <div className="space-y-3">
-              <h4 className="font-black text-amber-400">Référence Normative NF C 15-100</h4>
+              <h4 className="font-black text-amber-400">Référence Normative NS 01-001</h4>
               <div className="space-y-2 text-sm text-slate-300">
                 <p>
                   <strong>Chapitre 52 — Sections 523, 524, 525 :</strong> La section minimale des conducteurs
@@ -425,3 +425,4 @@ export default function CableSizingTool() {
     </div>
   );
 }
+

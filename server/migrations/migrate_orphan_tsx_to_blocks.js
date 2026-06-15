@@ -354,7 +354,7 @@ PAGES.push(['formation-certification', 'Formation & Certification', buildPage('F
     { title: 'Habilitation Électrique', desc: 'Formation complète aux niveaux B0, H0, B1, B2, H1, H2, BR, BC, HC. Conforme aux normes NF C 18-510.', color: '#dbeafe', textColor: '#2563eb', icon: '⚡' },
     { title: 'Sécurité des Installations', desc: 'Maîtrisez les règles de sécurité IEC 60364. Protection des biens et des personnes contre les risques électriques.', color: '#d1fae5', textColor: '#059669', icon: '🛡️' },
     { title: 'Audit Énergétique', desc: 'Techniques de diagnostic et d\'optimisation des consommations électriques. Réduire les pertes et améliorer l\'efficacité.', color: '#fef3c7', textColor: '#d97706', icon: '⚡' },
-    { title: 'Normes & Réglementation', desc: 'Compréhension et application des normes NS 01-001, NF C 15-100, NF C 14-100 et décret n° 1333 de 2017.', color: '#f3e8ff', textColor: '#9333ea', icon: '📋' },
+    { title: 'Normes & Réglementation', desc: 'Compréhension et application des normes NS 01-001, NS 01-001, NF C 14-100 et décret n° 1333 de 2017.', color: '#f3e8ff', textColor: '#9333ea', icon: '📋' },
     { title: 'Formation des Formateurs', desc: 'Devenez formateur agréé PROQUELEC. Transmission des savoirs et pédagogie adaptée aux électriciens.', color: '#ccfbf1', textColor: '#0d9488', icon: '👥' },
     { title: 'QUALI-ELEC Premium', desc: 'Préparation à la certification nationale d\'excellence. Accès privilégié aux marchés publics et privés au Sénégal.', color: '#fce7f3', textColor: '#db2777', icon: '⭐' },
   ]),
@@ -459,7 +459,7 @@ PAGES.push(['actualites-evenements', 'Actualités & Événements', buildPage('Ac
 PAGES.push(['normes-ressources', 'Normes & Ressources', buildPage('Normes & Ressources', [
   heroBlock('Normes &<br/>Ressources.', 'L\'expertise technique et réglementaire à la portée de tous. Documentation, guides et outils pour des installations conformes.', 'Référence Technique'),
   sectionBlock('Centre de Ressources', `<div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">${[
-    { title: 'Normes Électriques', desc: 'Textes de référence et réglementation en vigueur au Sénégal (NS 01-001, NF C 15-100).' },
+    { title: 'Normes Électriques', desc: 'Textes de référence et réglementation en vigueur au Sénégal (NS 01-001, NS 01-001).' },
     { title: 'Guides Pratiques', desc: 'Guides complets pour l\'application des normes sur le terrain.' },
     { title: 'Mémentos', desc: 'Documents synthétiques pour le rappel rapide des bonnes pratiques.' },
     { title: 'Fiches Conseils', desc: 'Conseils pratiques pour les installations domestiques et professionnelles.' },

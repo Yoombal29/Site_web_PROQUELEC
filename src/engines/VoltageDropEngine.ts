@@ -2,7 +2,7 @@
 
 
 /**
- * VoltageDropEngine — Moteur de calcul de chute de tension NF C 15-100
+ * VoltageDropEngine — Moteur de calcul de chute de tension NS 01-001
  *
  * Implémente la méthode du cahier des câbles :
  * ΔU = Coef × ρ × (L/S × cosφ + X × L × sinφ) × I
@@ -87,7 +87,7 @@ export class VoltageDropEngine {
     // Réactance (négligeable pour basses fréquences)
     const X = 0; // Pour calcul simplifié
 
-    // Formule NF C 15-100 : ΔU = Coef × ρ × (L/S × cosφ + X × L × sinφ) × I
+    // Formule NS 01-001 : ΔU = Coef × ρ × (L/S × cosφ + X × L × sinφ) × I
     const deltaU = coef * rho * (length / section * cosPhi + X * length * sinPhi) * courant;
 
     return parseFloat(deltaU.toFixed(2));
@@ -145,7 +145,7 @@ export class VoltageDropEngine {
   }
 
   /**
-   * Valide la conformité réglementaire selon la norme NF C 15-100
+   * Valide la conformité réglementaire selon la norme NS 01-001
    * 
    * @param percentage - Pourcentage de chute de tension calculée
    * @param usage - Type d'utilisation ('lighting', 'power', 'motor', 'heating')
@@ -159,7 +159,7 @@ export class VoltageDropEngine {
    * - Chauffage : 5%
    */
   validateCompliance(percentage: number, usage: string): boolean {
-    // Limites selon NF C 15-100
+    // Limites selon NS 01-001
     const limits: Record<string, number> = {
       'lighting': 3, // Éclairage
       'power': 5, // Prises de courant

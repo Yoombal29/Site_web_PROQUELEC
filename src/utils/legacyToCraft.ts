@@ -59,7 +59,6 @@ const TYPE_MAP: Record<string, string> = {
   'faqblock': 'FAQBlock',
   'featurecards': 'FeatureListBlock',
   'feature-cards': 'FeatureListBlock',
-  'herobanner': 'HeroBannerBlock',
   'cta': 'CallToActionBlock',
   'calltoaction': 'CallToActionBlock',
   'call-to-action': 'CallToActionBlock',

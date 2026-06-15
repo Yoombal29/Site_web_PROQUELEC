@@ -2,7 +2,6 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { AstraEngine } from '../scanner/astra-engine.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,8 +9,6 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.DASHBOARD_PORT || 4000;
 
-// Instance du moteur pour le suivi live
-const engine = new AstraEngine({ isRepairMode: false });
 
 // Chemins de données
 const PROJECT_ROOT = path.join(__dirname, '..');

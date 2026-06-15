@@ -2,7 +2,7 @@
  * Interface d'import de normes multi-formats
  * 
  * Permet d'importer des normes au format JSON générique
- * Compatible avec NS 01-001, NF C 15-100, IEC 60364, etc.
+ * Compatible avec NS 01-001, NS 01-001, IEC 60364, etc.
  */
 
 import React, { useState, useCallback } from 'react';
@@ -113,7 +113,7 @@ export const NormImporter: React.FC<NormImporterProps> = ({ onImportSuccess }) =
   const exampleJson = `{
    "metadata": {
      "id": "nf-c-15-100",
-     "name": "NF C 15-100",
+     "name": "NS 01-001",
      "description": "Installation électrique à basse tension",
      "version": "2024",
      "country": "France",
@@ -162,7 +162,7 @@ export const NormImporter: React.FC<NormImporterProps> = ({ onImportSuccess }) =
                 Format d'import JSON
               </CardTitle>
               <CardDescription>
-                Importez des normes au format JSON générique (NF C 15-100, IEC 60364, etc.)
+                Importez des normes au format JSON générique (NS 01-001, IEC 60364, etc.)
               </CardDescription>
             </CardHeader>
             <CardContent>

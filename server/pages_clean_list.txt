@@ -1,0 +1,135 @@
+
+=== 129 PAGES EN BASE ===
+
+SLUG                               TITLE                                   STATUS      PUB   CONTENT   STRUCT
+--------------------------------------------------------------------------------------------------------------
+about                              about                                   published   YES   656       yes
+actions/collectivites              Collectivités locales                   published   YES   239       yes
+actions/conformite                 Mise en conformité                      published   YES   239       yes
+actions/diagnostics                Diagnostics électriques                 published   YES   0         no
+actions/securisation               Sécurisation Marchés                    published   YES   239       yes
+actions/sensibilisation            Sensibilisation                         published   YES   239       yes
+actions/{slug}                     Actions {slug}                          published   YES   0         yes
+activites                          Nos - Actions                           published   YES   0         yes
+activities                         Nos Activités                           published   YES   295       yes
+actualites                         Actualites                              published   YES   0         yes
+actualites-evenements              Actualités & - Événements               published   YES   0         yes
+admin                              Admin                                   published   YES   0         yes
+admin-secondary                    Admin Secondary                         published   YES   0         yes
+admin/builder                      Admin Builder                           published   YES   0         yes
+admin/builder/config               Admin Builder Config                    published   YES   0         yes
+admin/builder/legacy               Admin Builder Legacy                    published   YES   0         yes
+admin/builder/{pageId}             Admin Builder {pageId}                  published   YES   0         yes
+admin/craft-builder/{pageId}       Admin Craft Builder {pageId}            published   YES   0         yes
+admin/page-sections                Admin Page Sections                     published   YES   0         yes
+admin/permissions                  Admin Permissions                       published   YES   0         yes
+admin/schematic-editor/{pageId}    Admin Schematic Editor {pageId}         published   YES   0         yes
+analytics                          Analytics                               published   YES   0         yes
+apps/{appId}                       Apps {appId}                            published   YES   0         yes
+auth                               Auth                                    published   YES   0         yes
+autorites                          Espace Autorités                        published   YES   0         yes
+avantages                          advantages                              published   YES   0         yes
+avis-clients                       Témoignages - PROQUELEC                 published   YES   0         yes
+blog                               Blog - PROQUELEC                        published   YES   0         yes
+blog/{slug}                        Blog {slug}                             published   YES   104       yes
+certifications                     certifications                          published   YES   134       yes
+collectivites                      Collectivités locales                   published   YES   0         yes
+connexion                          Connexion                               published   YES   0         yes
+conseils-menages                   Conseils ménages                        published   YES   0         yes
+contact                            Contactez-nous                          published   YES   0         yes
+contact-premium                    contact_premium                         published   YES   0         yes
+dashboard                          Dashboard                               published   YES   0         yes
+dashboard/electricien              Dashboard Electricien                   published   YES   0         yes
+dashboard/entreprise               Dashboard Entreprise                    published   YES   0         yes
+dashboard/membre                   Dashboard Membre                        published   YES   0         yes
+demo/rbac                          Demo Rbac                               published   YES   0         yes
+diagnostics/{id}                   Diagnostics {id}                        published   YES   0         yes
+documents                          Documents & Ressources                  published   YES   129       yes
+espace-autorites                   Espace - Autorités                      published   YES   12858     yes
+espace-menages                     Espace - Ménages                        published   YES   13434     yes
+espace-partenaires                 Espace - Partenaires                    published   YES   0         yes
+espace-professionnels              Espace - Professionnels                 published   YES   13046     yes
+evenements                         Evenements                              published   YES   0         yes
+evenements/anniversaire            Anniversaire PROQUELEC                  published   YES   0         no
+evenements/ateliers                Ateliers                                published   YES   239       yes
+evenements/conferences             Conférences                             published   YES   239       yes
+evenements/seminaires              Séminaires                              published   YES   239       yes
+evenements/{slug}                  Evenements {slug}                       published   YES   0         yes
+events                             events                                  published   YES   124       yes
+expert-kebe                        Expert Kebe                             published   YES   101       yes
+expert-lab                         Expert Lab - PROQUELEC                  published   YES   0         yes
+expert/ai-providers                Expert Ai Providers                     published   YES   0         yes
+expert/calculators                 Expert Calculators                      published   YES   0         yes
+expert/chat                        Expert Chat                             published   YES   0         yes
+expert/config                      Expert Config                           published   YES   0         yes
+expert/docs                        Expert Docs                             published   YES   0         yes
+expert/history                     Expert History                          published   YES   0         yes
+expert/logs                        Expert Logs                             published   YES   0         yes
+expert/models                      Expert Models                           published   YES   0         yes
+expert/scanner                     Expert Scanner                          published   YES   0         yes
+expert/schemas                     Expert Schemas                          published   YES   0         yes
+expert/stats                       Expert Stats                            published   YES   0         yes
+expertises-techniques              Expertises Techniques                   published   YES   91        yes
+faq                                Faq                                     published   YES   0         yes
+formation-certification            Formation & - Certification             published   YES   0         yes
+formations                         Espace - Formations                     published   YES   99        yes
+formations-proquelec               Formations PROQUELEC                    published   YES   82        yes
+formations/artisans                Formation Artisans                      published   YES   239       yes
+formations/collectivites           Formation Collectivités                 published   YES   239       yes
+formations/{slug}                  Formations {slug}                       published   YES   0         yes
+galerie                            Galerie                                 published   YES   0         yes
+ged                                Ged                                     published   YES   0         yes
+home                               PROQUELEC - Sénégal                     published   YES   4295      yes
+lab                                PROQUELEC Lab                           published   YES   27        yes
+labels                             labels                                  published   YES   104       yes
+legal                              legal                                   published   YES   12781     yes
+login                              Login                                   published   YES   0         yes
+marches                            Marchés - Sécurisés                     published   YES   0         yes
+menages                            Espace Ménages                          published   YES   0         yes
+normative-corpus                   Normes électriques                      published   YES   0         yes
+normes                             Normes et Ressources                    published   YES   21        yes
+normes-ressources                  Normes & - Ressources                   published   YES   12842     yes
+nos-actions                        Nos Actions                             published   YES   12972     yes
+observatoire                       Observatoire                            published   YES   0         yes
+office/document/new                Office Document New                     published   YES   0         yes
+office/document/template/{templateId}Office Document Template {templateId}   published   YES   0         yes
+office/document/{id}               Office Document {id}                    published   YES   0         yes
+office/presentation/new            Office Presentation New                 published   YES   0         yes
+office/presentation/template/{templateId}Office Presentation Template {template  published   YES   0         yes
+office/presentation/{id}           Office Presentation {id}                published   YES   0         yes
+office/spreadsheet/new             Office Spreadsheet New                  published   YES   0         yes
+office/spreadsheet/template/{templateId}Office Spreadsheet Template {templateI  published   YES   0         yes
+office/spreadsheet/{id}            Office Spreadsheet {id}                 published   YES   0         yes
+outils                             outils                                  published   YES   119       yes
+partenaires                        Nos - Partenaires                       published   YES   0         yes
+partenaires-liste                  Partenaires                             published   YES   13914     yes
+partenariat-senelec                Partenariat SENELEC                     published   YES   0         yes
+partner                            Partner                                 published   YES   0         yes
+plan-du-site                       Plan Du Site                            published   YES   0         yes
+portal                             Portal                                  published   YES   0         yes
+portal/dashboard                   Tableau de Bord                         published   YES   239       yes
+portal/formations                  Espace Formations                       published   YES   239       yes
+portal/marches                     Suivi des Marchés                       published   YES   239       yes
+portal/{slug}                      Portal {slug}                           published   YES   0         yes
+presse                             Espace - Presse                         published   YES   0         yes
+presse/communiques                 Communiqués                             published   YES   239       yes
+presse/revue                       Revue de Presse                         published   YES   239       yes
+presse/{slug}                      Presse {slug}                           published   YES   0         yes
+professionnels                     Espace Professionnels                   published   YES   0         yes
+projects                           Projects                                published   YES   0         yes
+projects/{id}                      Projects {id}                           published   YES   0         yes
+projets                            Projets                                 published   YES   12993     yes
+projets-realisations               Projets & - Réalisations                published   YES   0         yes
+publications                       Publications                            published   YES   0         yes
+ressources-pedagogiques            Ressources pédagogiques                 published   YES   0         yes
+rubrique-selector                  Rubrique Selector                       published   YES   126       yes
+schema-builder                     Schema Builder                          published   YES   109       yes
+showroom                           showroom                                published   YES   124       yes
+sitemap                            Sitemap                                 published   YES   0         yes
+social                             Réseaux & - Social                      published   YES   0         yes
+temoignages                        Témoignages                             published   YES   0         yes
+test-builder                       Test Page Builder                       published   YES   0         yes
+teste                              TESTE                                   draft       NO    5         yes
+trainings                          Formations PROQUELEC                    draft       YES   9504      yes
+utilite-publique                   Utilité - Publique                      published   YES   12090     yes
+⚠️  TITRES DUPLIQUÉS: Collectivités locales, Formations PROQUELEC

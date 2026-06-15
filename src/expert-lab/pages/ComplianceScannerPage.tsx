@@ -82,7 +82,7 @@ export default function ComplianceScannerPage() {
     "Initialisation de l'analyseur satellite...",
     "Traitement de l'image (Filtrage HDR)...",
     "Identification des composants Proquelec...",
-    "Liaison avec le moteur de conformité NF C 15-100...",
+    "Liaison avec le moteur de conformité NS 01-001...",
     "Audit final par IA Expert..."];
 
 
@@ -131,7 +131,7 @@ export default function ComplianceScannerPage() {
                     <div>
                         <h1 className="text-3xl font-black text-white uppercase tracking-tighter">Scanner de <span className="text-cyan-400 italic">Conformité Expert</span></h1>
                         <p className="text-xs text-slate-500 font-mono flex items-center gap-2 tracking-widest uppercase">
-                            <Activity className="w-3 h-3 text-emerald-500" /> Liaison Satellite Active / NF C 15-100 v2026
+                            <Activity className="w-3 h-3 text-emerald-500" /> Liaison Satellite Active / NS 01-001 v2026
                         </p>
                     </div>
                 </div>

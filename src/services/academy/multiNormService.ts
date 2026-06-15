@@ -2,7 +2,7 @@
  * Service de gestion multi-normes
  *
  * Permet d'importer, gérer et rechercher dans plusieurs bases normatives
- * (NS 01-001, NF C 15-100, IEC 60364, etc.)
+ * (NS 01-001, NS 01-001, IEC 60364, etc.)
  */
 
 import type {

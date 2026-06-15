@@ -287,7 +287,7 @@ export function ReportExport({ messages, calculationResults }: ReportExportProps
     </div>
     
     <h2 style="font-size: 20px; margin-bottom: 8px;">${reportData.reportType === "inspection" ? "Rapport de Contrôle Technique" : reportData.reportType === "calculation" ? "Note de Calcul" : "Rapport d'Analyse"}</h2>
-    <p style="color: #64748b; font-size: 12px; margin-bottom: 20px;">Conformité NF C 15-100 / IEC 60364</p>
+    <p style="color: #64748b; font-size: 12px; margin-bottom: 20px;">Conformité NS 01-001 / IEC 60364</p>
     
     <div class="status-badge ${overallStatus === 'CONFORME' ? 'status-conforme' : overallStatus === 'AVEC RÉSERVES' ? 'status-reserves' : 'status-non-conforme'}">
       ${statusIcon} STATUT GLOBAL: ${overallStatus}
@@ -340,8 +340,8 @@ export function ReportExport({ messages, calculationResults }: ReportExportProps
     
     <div class="footer">
       <p>Document généré automatiquement par YEAI Industrial OS v7.3</p>
-      <p>Référentiels: NF C 15-100 (2024) • UTE C 15-105 • IEC 60364</p>
-      <p style="margin-top: 8px; color: #94a3b8;">Ce document est un rapport technique et ne se substitue pas à un contrôle officiel CONSUEL/COSSUEL.</p>
+      <p>Référentiels: NS 01-001 (2024) • UTE C 15-105 • IEC 60364</p>
+      <p style="margin-top: 8px; color: #94a3b8;">Ce document est un rapport technique et ne se substitue pas à un contrôle officiel COSSUEL/COSSUEL.</p>
     </div>
   </div>
 </body>
@@ -394,7 +394,7 @@ export function ReportExport({ messages, calculationResults }: ReportExportProps
             </div>
             <div>
               <span className="font-black uppercase">Générer Rapport PDF</span>
-              <p className="text-[10px] text-zinc-500 font-normal mt-0.5">Format professionnel NF C 15-100</p>
+              <p className="text-[10px] text-zinc-500 font-normal mt-0.5">Format professionnel NS 01-001</p>
             </div>
           </DialogTitle>
         </DialogHeader>

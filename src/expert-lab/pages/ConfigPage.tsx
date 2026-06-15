@@ -46,7 +46,7 @@ export default function ConfigPage() {
   const { toast } = useToast();
 
   const [config, setConfig] = useState({
-    activeNorm: "NF C 15-100",
+    activeNorm: "NS 01-001",
     calculationEngine: "UTE C 15-105",
     ambientTemp: "30",
     exportFormat: "IFC 4.0",
@@ -325,7 +325,7 @@ export default function ConfigPage() {
                 <Select value={config.activeNorm} onValueChange={(v) => handleConfigChange("activeNorm", v)}>
                   <SelectTrigger className="glass h-11"><SelectValue /></SelectTrigger>
                   <SelectContent className="glass">
-                    <SelectItem value="NF C 15-100">NF C 15-100 (FR)</SelectItem>
+                    <SelectItem value="NS 01-001">NS 01-001 (FR)</SelectItem>
                     <SelectItem value="RGIE">RGIE (BE)</SelectItem>
                   </SelectContent>
                 </Select>

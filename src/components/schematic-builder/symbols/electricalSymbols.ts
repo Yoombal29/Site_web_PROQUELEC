@@ -1,6 +1,6 @@
 /**
  * electricalSymbols.ts
- * Catalogue des symboles électriques disponibles (NF C 15-100 / IEC 60617).
+ * Catalogue des symboles électriques disponibles (NS 01-001 / IEC 60617).
  * Retourne null si aucun symbole SVG personnalisé n'est disponible pour ce type
  * (dans ce cas, DraggableShape affiche une icône générique).
  */
@@ -70,7 +70,7 @@ export const SYMBOL_CATALOG: SymbolCategory[] = [
       {
         type: 'switch',
         label: 'Interrupteur',
-        description: 'Section 771 NF C 15-100',
+        description: 'Section 771 NS 01-001',
         defaultWidth: 80,
         defaultHeight: 50,
         defaultProps: { reference: 'S1', courant: '16A' },
@@ -159,3 +159,4 @@ export const SYMBOL_CATALOG: SymbolCategory[] = [
     ],
   },
 ];
+

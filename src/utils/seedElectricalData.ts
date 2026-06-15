@@ -180,9 +180,9 @@ export const seedElectricalData = async () => {
     // Normes électriques
     const standards = [
     {
-      code: "NFC 15-100",
+      code: "NS 01-001",
       title: "Installations électriques à basse tension",
-      description: "Norme française définissant les règles de conception et de réalisation des installations électriques BT",
+      description: "Norme sénégalaise définissant les règles de conception et de réalisation des installations électriques BT",
       category: "installation",
       version: "2015 + A5:2019",
       // publication_date, effective_date, applicable_sectors not in my simple schema?

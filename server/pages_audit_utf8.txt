@@ -1,0 +1,179 @@
+[dotenv@17.2.3] injecting env (4) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+=== PAGES PUBLIÉES ===
+
+Slug                          Structure   Size      Content   Engine      Immutable
+------------------------------------------------------------------------------------------
+✅ about                        YES          10.4kb     YES        raw          
+✅ actions/collectivites        YES          1.0kb      YES        raw          
+✅ actions/conformite           YES          0.8kb      YES        raw          
+❌ actions/diagnostics          NO           0          NO         sections     
+✅ actions/securisation         YES          0.8kb      YES        raw          
+✅ actions/sensibilisation      YES          0.8kb      YES        raw          
+✅ actions/{slug}               YES          1.1kb      NO         raw          
+✅ activities                   YES          20.6kb     NO         raw          
+✅ actualites                   YES          5.5kb      NO         raw          
+✅ actualites-evenements        YES          3.1kb      NO         raw          
+✅ admin                        YES          0.3kb      NO         raw          🔒
+✅ admin-secondary              YES          0.3kb      NO         raw          🔒
+✅ admin/builder                YES          0.3kb      NO         raw          🔒
+✅ admin/builder/config         YES          0.3kb      NO         raw          🔒
+✅ admin/builder/legacy         YES          0.3kb      NO         raw          🔒
+✅ admin/builder/{pageId}       YES          0.4kb      NO         raw          🔒
+✅ admin/craft-builder/{pageId} YES          0.4kb      NO         raw          🔒
+✅ admin/page-sections          YES          0.3kb      NO         raw          🔒
+✅ admin/permissions            YES          0.3kb      NO         raw          🔒
+✅ admin/schematic-editor/{pageId} YES          0.4kb      NO         raw          🔒
+✅ analytics                    YES          0.3kb      NO         raw          🔒
+✅ apps/{appId}                 YES          1.1kb      NO         raw          
+✅ auth                         YES          0.3kb      NO         raw          🔒
+✅ autorites                    YES          19.5kb     NO         raw          
+✅ avantages                    YES          2.7kb      NO         raw          
+✅ blog                         YES          1.3kb      NO         raw          
+✅ blog/{slug}                  YES          0.3kb      YES        craft        🔒
+✅ certifications               YES          14.3kb     YES        raw          
+✅ collectivites                YES          1.1kb      NO         raw          
+✅ connexion                    YES          0.3kb      NO         raw          🔒
+✅ conseils-menages             YES          19.0kb     NO         raw          
+✅ contact                      YES          0.3kb      NO         raw          🔒
+✅ contact-premium              YES          4.6kb      NO         raw          
+✅ dashboard                    YES          0.3kb      NO         raw          🔒
+✅ dashboard/electricien        YES          0.3kb      NO         raw          🔒
+✅ dashboard/entreprise         YES          0.3kb      NO         raw          🔒
+✅ dashboard/membre             YES          0.3kb      NO         raw          🔒
+✅ demo/rbac                    YES          0.3kb      NO         raw          🔒
+✅ diagnostics/{id}             YES          0.3kb      NO         raw          🔒
+✅ documents                    YES          0.8kb      YES        craft        🔒
+✅ espace-partenaires           YES          15.1kb     NO         raw          
+✅ evenements                   YES          1.1kb      NO         raw          
+❌ evenements/anniversaire      NO           0          NO         sections     
+✅ evenements/ateliers          YES          0.8kb      YES        raw          
+✅ evenements/conferences       YES          0.8kb      YES        raw          
+✅ evenements/seminaires        YES          4.5kb      YES        raw          
+✅ evenements/{slug}            YES          1.1kb      NO         raw          
+✅ events                       YES          0.4kb      YES        craft        🔒
+✅ expert-kebe                  YES          0.3kb      YES        craft        🔒
+✅ expert-lab                   YES          13.3kb     NO         raw          
+✅ expert/ai-providers          YES          0.3kb      NO         raw          🔒
+✅ expert/calculators           YES          0.3kb      NO         raw          🔒
+✅ expert/chat                  YES          0.3kb      NO         raw          🔒
+✅ expert/config                YES          0.3kb      NO         raw          🔒
+✅ expert/docs                  YES          0.3kb      NO         raw          🔒
+✅ expert/history               YES          0.3kb      NO         raw          🔒
+✅ expert/logs                  YES          0.3kb      NO         raw          🔒
+✅ expert/models                YES          0.3kb      NO         raw          🔒
+✅ expert/scanner               YES          0.3kb      NO         raw          🔒
+✅ expert/schemas               YES          0.3kb      NO         raw          🔒
+✅ expert/stats                 YES          0.3kb      NO         raw          🔒
+✅ expertises-techniques        YES          10.1kb     YES        raw          
+✅ faq                          YES          12.0kb     NO         raw          
+✅ formation-certification      YES          20.7kb     NO         raw          
+✅ formations                   YES          13.0kb     NO         raw          
+✅ formations/artisans          YES          0.8kb      YES        raw          
+✅ formations/collectivites     YES          0.8kb      YES        raw          
+✅ formations/{slug}            YES          1.1kb      NO         raw          
+✅ galerie                      YES          1.1kb      NO         raw          
+✅ ged                          YES          0.3kb      NO         raw          🔒
+✅ home                         YES          12.3kb     YES        raw          
+✅ lab                          YES          0.5kb      NO         raw          
+✅ labels                       YES          0.5kb      YES        craft        🔒
+✅ legal                        YES          15.1kb     YES        raw          
+✅ login                        YES          0.3kb      NO         raw          🔒
+✅ marches                      YES          4.0kb      NO         raw          
+✅ menages                      YES          20.2kb     NO         raw          
+✅ normative-corpus             YES          1.1kb      NO         raw          
+✅ normes-ressources            YES          19.7kb     YES        raw          
+✅ observatoire                 YES          0.3kb      NO         raw          🔒
+✅ office/document/new          YES          0.3kb      NO         raw          🔒
+✅ office/document/template/{templateId} YES          0.4kb      NO         raw          🔒
+✅ office/document/{id}         YES          0.3kb      NO         raw          🔒
+✅ office/presentation/new      YES          0.4kb      NO         raw          🔒
+✅ office/presentation/template/{templateId} YES          0.4kb      NO         raw          🔒
+✅ office/presentation/{id}     YES          0.4kb      NO         raw          🔒
+✅ office/spreadsheet/new       YES          0.4kb      NO         raw          🔒
+✅ office/spreadsheet/template/{templateId} YES          0.4kb      NO         raw          🔒
+✅ office/spreadsheet/{id}      YES          0.4kb      NO         raw          🔒
+✅ outils                       YES          0.5kb      YES        craft        🔒
+✅ partenaires                  YES          19.9kb     NO         raw          
+✅ partenariat-senelec          YES          1.1kb      NO         raw          
+✅ partner                      YES          0.3kb      NO         raw          🔒
+✅ plan-du-site                 YES          1.1kb      NO         raw          
+✅ portal                       YES          14.0kb     NO         raw          
+✅ portal/dashboard             YES          0.8kb      YES        raw          
+✅ portal/formations            YES          0.8kb      YES        raw          
+✅ portal/marches               YES          19.0kb     YES        raw          
+✅ portal/{slug}                YES          1.1kb      NO         raw          
+✅ presse                       YES          8.7kb      NO         raw          
+✅ presse/communiques           YES          0.8kb      YES        raw          
+✅ presse/revue                 YES          0.8kb      YES        raw          
+✅ presse/{slug}                YES          1.1kb      NO         raw          
+✅ professionnels               YES          19.4kb     NO         raw          
+✅ projects                     YES          0.3kb      NO         raw          🔒
+✅ projects/{id}                YES          0.3kb      NO         raw          🔒
+✅ publications                 YES          1.1kb      NO         raw          
+✅ ressources-pedagogiques      YES          1.1kb      NO         raw          
+✅ rubrique-selector            YES          0.3kb      YES        craft        🔒
+✅ schema-builder               YES          0.3kb      YES        craft        🔒
+✅ showroom                     YES          0.5kb      YES        craft        🔒
+✅ sitemap                      YES          1.1kb      NO         raw          
+✅ social                       YES          12.7kb     NO         raw          
+✅ temoignages                  YES          3.6kb      NO         raw          
+✅ test-builder                 YES          0.9kb      NO         raw          
+✅ utilite-publique             YES          18.9kb     YES        raw          
+
+Total pages publiées: 116
+
+⚠️  PAGES NÉCESSITANT UNE AMÉLIORATION (54):
+  - actions/diagnostics ("Diagnostics électriques") — structure: 0b, contenu HTML: non
+  - admin ("Admin") — structure: 325b, contenu HTML: non
+  - admin-secondary ("Admin Secondary") — structure: 345b, contenu HTML: non
+  - admin/builder ("Admin Builder") — structure: 341b, contenu HTML: non
+  - admin/builder/config ("Admin Builder Config") — structure: 355b, contenu HTML: non
+  - admin/builder/legacy ("Admin Builder Legacy") — structure: 355b, contenu HTML: non
+  - admin/builder/{pageId} ("Admin Builder {pageId}") — structure: 359b, contenu HTML: non
+  - admin/craft-builder/{pageId} ("Admin Craft Builder {pageId}") — structure: 371b, contenu HTML: non
+  - admin/page-sections ("Admin Page Sections") — structure: 353b, contenu HTML: non
+  - admin/permissions ("Admin Permissions") — structure: 349b, contenu HTML: non
+  - admin/schematic-editor/{pageId} ("Admin Schematic Editor {pageId}") — structure: 377b, contenu HTML: non
+  - analytics ("Analytics") — structure: 333b, contenu HTML: non
+  - auth ("Auth") — structure: 323b, contenu HTML: non
+  - blog/{slug} ("Blog {slug}") — structure: 337b, contenu HTML: oui
+  - connexion ("Connexion") — structure: 333b, contenu HTML: non
+  - contact ("Contactez-nous") — structure: 329b, contenu HTML: non
+  - dashboard ("Dashboard") — structure: 333b, contenu HTML: non
+  - dashboard/electricien ("Dashboard Electricien") — structure: 357b, contenu HTML: non
+  - dashboard/entreprise ("Dashboard Entreprise") — structure: 355b, contenu HTML: non
+  - dashboard/membre ("Dashboard Membre") — structure: 347b, contenu HTML: non
+  - demo/rbac ("Demo Rbac") — structure: 333b, contenu HTML: non
+  - diagnostics/{id} ("Diagnostics {id}") — structure: 347b, contenu HTML: non
+  - evenements/anniversaire ("Anniversaire PROQUELEC") — structure: 0b, contenu HTML: non
+  - events ("events") — structure: 448b, contenu HTML: oui
+  - expert-kebe ("Expert Kebe") — structure: 337b, contenu HTML: oui
+  - expert/ai-providers ("Expert Ai Providers") — structure: 353b, contenu HTML: non
+  - expert/calculators ("Expert Calculators") — structure: 351b, contenu HTML: non
+  - expert/chat ("Expert Chat") — structure: 337b, contenu HTML: non
+  - expert/config ("Expert Config") — structure: 341b, contenu HTML: non
+  - expert/docs ("Expert Docs") — structure: 337b, contenu HTML: non
+  - expert/history ("Expert History") — structure: 343b, contenu HTML: non
+  - expert/logs ("Expert Logs") — structure: 337b, contenu HTML: non
+  - expert/models ("Expert Models") — structure: 341b, contenu HTML: non
+  - expert/scanner ("Expert Scanner") — structure: 343b, contenu HTML: non
+  - expert/schemas ("Expert Schemas") — structure: 343b, contenu HTML: non
+  - expert/stats ("Expert Stats") — structure: 339b, contenu HTML: non
+  - ged ("Ged") — structure: 321b, contenu HTML: non
+  - lab ("PROQUELEC Lab") — structure: 488b, contenu HTML: non
+  - login ("Login") — structure: 325b, contenu HTML: non
+  - observatoire ("Observatoire") — structure: 339b, contenu HTML: non
+  - office/document/new ("Office Document New") — structure: 353b, contenu HTML: non
+  - office/document/template/{templateId} ("Office Document Template {templateId}") — structure: 389b, contenu HTML: non
+  - office/document/{id} ("Office Document {id}") — structure: 355b, contenu HTML: non
+  - office/presentation/new ("Office Presentation New") — structure: 361b, contenu HTML: non
+  - office/presentation/template/{templateId} ("Office Presentation Template {templateId}") — structure: 397b, contenu HTML: non
+  - office/presentation/{id} ("Office Presentation {id}") — structure: 363b, contenu HTML: non
+  - office/spreadsheet/new ("Office Spreadsheet New") — structure: 359b, contenu HTML: non
+  - office/spreadsheet/template/{templateId} ("Office Spreadsheet Template {templateId}") — structure: 395b, contenu HTML: non
+  - office/spreadsheet/{id} ("Office Spreadsheet {id}") — structure: 361b, contenu HTML: non
+  - partner ("Partner") — structure: 329b, contenu HTML: non
+  - projects ("Projects") — structure: 331b, contenu HTML: non
+  - projects/{id} ("Projects {id}") — structure: 341b, contenu HTML: non
+  - rubrique-selector ("Rubrique Selector") — structure: 349b, contenu HTML: oui
+  - schema-builder ("Schema Builder") — structure: 343b, contenu HTML: oui

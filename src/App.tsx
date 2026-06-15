@@ -5,7 +5,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { ThemeProvider } from 'next-themes';
 import { ThemeSync } from '@/components/ThemeSync';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 import { MainLayout } from '@/components/MainLayout';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { NotificationContainer } from '@/components/NotificationContainer';
@@ -17,6 +17,7 @@ import { useIsAdmin } from '@/hooks/useIsAdmin';
 import { useDynamicRoutes, type DynamicRoute } from '@/hooks/useDynamicRoutes';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import { RoleProtectedRoute } from '@/components/RoleProtectedRoute';
+import { PlanProtectedRoute } from '@/components/PlanProtectedRoute';
 import { useEcommerceStore } from '@/stores/ecommerce.store';
 
 // Lazy-loaded pages
@@ -42,6 +43,8 @@ const BoutiquePremium = lazy(() => import('./pages/BoutiquePremium'));
 
 // Expert Lab
 const ExpertDashboard = lazy(() => import('./expert-lab/pages/Dashboard'));
+const ExpertLabIndex = lazy(() => import('./expert-lab/pages/Index'));
+const ToolViewer = lazy(() => import('./expert-lab/pages/ToolViewer'));
 const ExpertChatPage = lazy(() => import('./expert-lab/pages/ChatPage'));
 const InspecteurKEBE = lazy(() => import('./pages/InspecteurKEBE'));
 
@@ -252,7 +255,7 @@ const AppContent = () => {
 
           { path: '/expertises-techniques', element: <DynamicPage /> },
           { path: '/expertises', element: <DynamicPage /> },
-          { path: '/expert-lab', element: <DynamicPage /> },
+
           { path: '/formations-proquelec', element: <DynamicPage /> },
           { path: '/blog', element: <DynamicPage /> },
           {
@@ -267,13 +270,7 @@ const AppContent = () => {
           },
           {
             path: '/outils',
-            element: (
-              <FunctionalBuilderRoute
-                slug="outils"
-                title="Outils"
-                fallback={<ToolsPlatform />}
-              />
-            ),
+            element: <Navigate to="/expert-lab" replace />,
           },
           {
             path: '/showroom',
@@ -361,36 +358,23 @@ const AppContent = () => {
             ),
           },
 
-          // Expert Lab Routes (Souveraineté & Ingénierie)
+          // ─── ADMIN : Outils d'administration ───
           {
-            path: '/expert',
+            path: '/admin/outils',
             element: (
-              <RoleProtectedRoute allowedRoles={['admin', 'secondary_admin']}>
+              <RoleProtectedRoute allowedRoles={['admin']}>
                 <ExpertDashboard />
               </RoleProtectedRoute>
             ),
           },
           {
-            path: '/expert/chat',
+            path: '/expert',
             element: (
               <RoleProtectedRoute allowedRoles={['admin']}>
-                <ExpertChatPage />
+                <Navigate to="/admin/outils" replace />
               </RoleProtectedRoute>
             ),
           },
-          {
-            path: '/expert-kebe',
-            element: (
-              <FunctionalBuilderRoute
-                slug="expert-kebe"
-                title="Inspecteur KEBE"
-                fallback={<InspecteurKEBE />}
-              />
-            ),
-          },
-          { path: '/expert/calculators', element: <ExpertCalculatorsPage /> },
-          { path: '/expert/schemas', element: <ExpertSchemasPage /> },
-          { path: '/expert/docs', element: <ExpertDocsPage /> },
           {
             path: '/expert/history',
             element: (
@@ -447,6 +431,201 @@ const AppContent = () => {
               </RoleProtectedRoute>
             ),
           },
+
+          // ─── EXPERT LAB : Hub & Outils (abonnés Premium / Expert) ───
+          {
+            path: '/expert-lab',
+            element: <ExpertLabIndex />,
+          },
+          {
+            path: '/expert-lab/outils/:toolId',
+            element: (
+              <Suspense fallback={<div className="min-h-screen bg-[#111827] flex items-center justify-center"><div className="animate-spin w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full" /></div>}>
+                <ToolViewer />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/expert-lab/calculators',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Gratuit', 'Premium', 'Expert']}>
+                <ExpertCalculatorsPage />
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/schemas',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Premium', 'Expert']}>
+                <ExpertSchemasPage />
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/docs',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Gratuit', 'Premium', 'Expert']}>
+                <ExpertDocsPage />
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/chat',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Premium', 'Expert']}>
+                <ExpertChatPage />
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/kebe',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Gratuit', 'Premium', 'Expert']}>
+                <InspecteurKEBE />
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/ged',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Premium', 'Expert']}>
+                <FunctionalBuilderRoute slug="ged" title="GED" fallback={<GEDPage />} />
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/schema-builder',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Premium', 'Expert']}>
+                <SchemaBuilder />
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/rubriques',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Premium', 'Expert']}>
+                <RubriqueSelectorPage />
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/analytics',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Premium', 'Expert']}>
+                <Suspense fallback={<div className="p-8">Chargement...</div>}>
+                  <AnalyticsPageLazy />
+                </Suspense>
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/abonnement',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Gratuit', 'Premium', 'Expert']}>
+                <SubscriptionPage />
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/profil',
+            element: (
+              <PlanProtectedRoute requiredPlans={['Gratuit', 'Premium', 'Expert']}>
+                <Dashboard />
+              </PlanProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/electricien',
+            element: (
+              <RoleProtectedRoute allowedRoles={['admin', 'electricien']}>
+                <ElectricianDashboard />
+              </RoleProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/entreprise',
+            element: (
+              <RoleProtectedRoute allowedRoles={['admin', 'entreprise']}>
+                <CompanyDashboard />
+              </RoleProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/membre',
+            element: (
+              <RoleProtectedRoute allowedRoles={['admin', 'membre']}>
+                <MemberDashboard />
+              </RoleProtectedRoute>
+            ),
+          },
+          {
+            path: '/expert-lab/projects',
+            element: <ProjectList />,
+          },
+          {
+            path: '/expert-lab/projects/:id',
+            element: <ProjectDetail />,
+          },
+          {
+            path: '/expert-lab/diagnostics/:id',
+            element: <InspectionDetail />,
+          },
+          {
+            path: '/expert-lab/office/document/new',
+            element: (
+              <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement de l'éditeur…</div>}>
+                <DocumentEditorPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/expert-lab/office/document/:id',
+            element: (
+              <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement de l'éditeur…</div>}>
+                <DocumentEditorPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/expert-lab/office/document/template/:templateId',
+            element: (
+              <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-600">Chargement de l'éditeur…</div>}>
+                <DocumentEditorPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: '/expert-lab/office/spreadsheet/new',
+            element: <SpreadsheetEditorPage />,
+          },
+          {
+            path: '/expert-lab/office/spreadsheet/:id',
+            element: <SpreadsheetEditorPage />,
+          },
+          {
+            path: '/expert-lab/office/spreadsheet/template/:templateId',
+            element: <SpreadsheetEditorPage />,
+          },
+          {
+            path: '/expert-lab/office/presentation/new',
+            element: <PresentationEditorPage />,
+          },
+          {
+            path: '/expert-lab/office/presentation/:id',
+            element: <PresentationEditorPage />,
+          },
+          {
+            path: '/expert-lab/office/presentation/template/:templateId',
+            element: <PresentationEditorPage />,
+          },
+
+          // ─── REDIRECTS (anciennes routes → /expert-lab/) ───
+          { path: '/expert/chat', element: <Navigate to="/expert-lab/chat" replace /> },
+          { path: '/expert/calculators', element: <Navigate to="/expert-lab/calculators" replace /> },
+          { path: '/expert/schemas', element: <Navigate to="/expert-lab/schemas" replace /> },
+          { path: '/expert/docs', element: <Navigate to="/expert-lab/docs" replace /> },
+          { path: '/expert-kebe', element: <Navigate to="/expert-lab/kebe" replace /> },
 
           // GED Route (Document Management)
           {

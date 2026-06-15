@@ -2,7 +2,7 @@
  * 🧪 Tests Automatisés — Suite de tests complète
  *
  * Tests unitaires et d'intégration pour :
- * - Calculs électriques (NF C 15-100)
+ * - Calculs électriques (NS 01-001)
  * - Validation temps réel
  * - Gestion d'erreurs
  * - Export multi-format
@@ -37,7 +37,7 @@ describe('Système Électrique Complet', () => {
   });
   // ========== TESTS CALCULS ÉLECTRIQUES ==========
 
-  describe('Calculs NF C 15-100', () => {
+  describe('Calculs NS 01-001', () => {
     test('calcul chute de tension cuivre 1.5mm²', () => {
       const tronçon = {
         id: 'test-1',

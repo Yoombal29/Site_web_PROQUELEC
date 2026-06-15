@@ -89,11 +89,11 @@ export const menuItems: MenuItem[] = [
   // --- 2. CORTEX IA (SOUVERAIN) — Hub unique ---
   {
     id: 'expert_hub',
-    label: '🧠 Hub IA Central',
+    label: '🛠️ Outils Admin',
     icon: Brain,
     category: 'ia',
     roles: ['superadmin', 'admin'],
-    href: '/expert',
+    href: '/admin/outils',
   },
 
   // --- 3. MÉTIER & ÉLECTRICITÉ (CORE BUSINESS) ---

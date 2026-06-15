@@ -40,7 +40,7 @@
 	<h2>4. Ressources utiles</h2>
 	<ul>
 		<li>Guide PROQUELEC sur le repérage des conducteurs</li>
-		<li>Norme NF C 15-100</li>
+		<li>Norme NS 01-001</li>
 		<li>Formations PROQUELEC</li>
 	</ul>
 	<footer style="margin-top:2em;font-size:0.9em;color:#555;">© PROQUELEC – Mémento Couleurs des conducteurs. Version 2025.</footer>
@@ -81,7 +81,7 @@
 <h2 style="color:#2563eb;margin-top:2em;">Ressources utiles</h2>
 <ul class="small">
 	<li><a href="https://www.promotelec.com/repérage-conducteurs/" target="_blank">Guide Promotelec : Repérage des conducteurs</a></li>
-	<li><a href="https://www.afnor.org/" target="_blank">Norme NF C 15-100 (AFNOR)</a></li>
+	<li><a href="https://www.afnor.org/" target="_blank">Norme NS 01-001 (AFNOR)</a></li>
 	<li><a href="https://www.legrand.fr/pro/actualites/couleurs-conducteurs" target="_blank">Legrand : Couleurs et repérage</a></li>
 </ul>
 <div style="background:#fef9c3;padding:1em;border-radius:6px;margin-top:1em;">

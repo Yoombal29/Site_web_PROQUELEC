@@ -19,7 +19,7 @@ Informations essentielles sur la norme sénégalaise :
 - Numéro : NS 01-001
 - Titre : Règles des installations électriques à basse tension
 - Date de publication : JUIN 422
-- Équivalence avec la norme française NF C 15-100 (2002)
+- Équivalence avec la norme française NS 01-001 (2002)
 - Lois et règlements sénégalais référencés (Code du travail, Code de l'urbanisme, etc.)
 
 **Utilisation pour l'IA** : Classification de documents techniques, indexation par pays, identification des équivalences de normes
@@ -322,7 +322,7 @@ json.references_legales.senegal
 ## Contact et Références
 
 **Contexte de la Norme** :
-- Équivalence avec NF C 15-100 (France)
+- Équivalence avec NS 01-001 (France)
 - Adaptation par les autorités sénégalaises
 - Intégration du cadre juridique local
 
@@ -336,7 +336,7 @@ json.references_legales.senegal
 ## Informations sur la Version
 - **Version JSON** : 1.0 (Adaptation Sénégalaise)
 - **Norme Source** : NS 01-001 (JUIN 422)
-- **Équivalence** : NF C 15-100 (2002)
+- **Équivalence** : NS 01-001 (2002)
 - **Couverture** : Installations électriques basse tension
 - **Public** : Professionnels de l'électricité au Sénégal
 
@@ -482,7 +482,7 @@ Pour améliorer l'entraînement :
 ```
 Document complémentaire      | Bénéfice
 ----------------------------|-----------
-NF C 15-100 (version complète) | Élargir les exemples
+NS 01-001 (version complète) | Élargir les exemples
 Guides UTE C 15-xxx         | Explications détaillées
 Plans et schémas électriques| Contexte visuel
 Cas réels d'installation    | Applications pratiques

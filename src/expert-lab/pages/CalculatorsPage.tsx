@@ -102,7 +102,7 @@ export default function CalculatorsPage() {
           formula: phaseType === "mono" ?
           "ΔU = 2 × [ (ρ·L/S)·cosφ + (λ·L)·sinφ ] × Ib" :
           "ΔU = √3 × [ (ρ·L/S)·cosφ + (λ·L)·sinφ ] × Ib",
-          norm_reference: "NF C 15-100 § 523-525 / UTE C 15-105",
+          norm_reference: "NS 01-001 § 523-525 / UTE C 15-105",
           status,
           iz_required: I.toString(),
           iz_calculated: izCorrected.toFixed(1),
@@ -235,7 +235,7 @@ export default function CalculatorsPage() {
                       </div>
                     )}
                   </div>
-                  <p className="text-[8px] uppercase opacity-30 text-center font-mono">Valeurs normatives NF C 15-100 § 523. PR (90°C), Cuivre.</p>
+                  <p className="text-[8px] uppercase opacity-30 text-center font-mono">Valeurs normatives NS 01-001 § 523. PR (90°C), Cuivre.</p>
                 </div>
               </TabsContent>
             </Tabs>
@@ -245,7 +245,7 @@ export default function CalculatorsPage() {
             <div className="flex gap-4">
               <Info className="w-6 h-6 text-emerald-400 shrink-0 mt-1" />
               <div className="space-y-1">
-                <h4 className="text-emerald-400 font-black uppercase text-[10px] tracking-widest">Référence Normative NF C 15-100</h4>
+                <h4 className="text-emerald-400 font-black uppercase text-[10px] tracking-widest">Référence Normative NS 01-001</h4>
                 <p className="text-[9px] text-zinc-300 font-bold opacity-80">Sections 523 (Thermique) & 525 (Pertes). Résistivité Cu: 0.023 / Al: 0.037. Réactance λ: 0.08 mΩ/m.</p>
               </div>
             </div>
