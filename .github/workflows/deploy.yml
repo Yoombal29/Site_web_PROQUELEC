@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npx vitest run --reporter=basic
+        run: npx vitest run --reporter=default
 
       - name: Build application
         run: npm run build
