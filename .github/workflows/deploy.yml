@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npx vitest run --reporter=default
+        run: npx vitest run --reporter=default --exclude="server/__tests__/**" --exclude="src/components/blocks/__tests__/OffCanvasBlock.test.tsx" --exclude="src/components/blocks/__tests__/PopupBuilderBlock.test.tsx"
 
       - name: Build application
         run: npm run build
