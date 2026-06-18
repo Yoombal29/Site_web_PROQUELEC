@@ -13,11 +13,12 @@ import { vi } from 'vitest';
 
 // Ensure a DOM is available when running under Node (vitest environment fallback)
 if (typeof document === 'undefined' || typeof window === 'undefined') {
-  const { JSDOM } = await import('jsdom');
-  const dom = new JSDOM('<!doctype html><html><body></body></html>');
-  (global as unknown).window = dom.window;
-  (global as unknown).document = dom.window.document;
-  (global as unknown).navigator = dom.window.navigator;
+  import('jsdom').then(({ JSDOM }) => {
+    const dom = new JSDOM('<!doctype html><html><body></body></html>');
+    (global as unknown).window = dom.window;
+    (global as unknown).document = dom.window.document;
+    (global as unknown).navigator = dom.window.navigator;
+  });
 }
 
 // Make `jest` helpers available when running under Vitest
@@ -87,7 +88,7 @@ global.IntersectionObserver = (global as unknown).vi ? (global as unknown).vi.fn
 // ========== MOCKS GLOBAUX ==========
 
 // Mock Monaco Editor
-vi.mock('@monaco-editor/react', () => {
+vi.mock('@monaco-editor/react', async () => {
   const React = await import('react');
   return {
     default: (props: unknown) => {
@@ -128,7 +129,7 @@ vi.mock('@/hooks/useLiveSettings', () => ({
 }));
 
 // Mock Radix Tooltip component globally to render inline for reliable testing in JSDOM
-vi.mock('@/components/ui/tooltip', () => {
+vi.mock('@/components/ui/tooltip', async () => {
   const React = await import('react');
   return {
     TooltipProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -139,7 +140,7 @@ vi.mock('@/components/ui/tooltip', () => {
 });
 
 // Mock Radix Select component globally to render inline with context for robust testing in JSDOM
-vi.mock('@radix-ui/react-select', () => {
+vi.mock('@radix-ui/react-select', async () => {
   const React = await import('react');
   interface SelectContextProps {
     value?: unknown;
@@ -234,8 +235,8 @@ vi.mock('@radix-ui/react-select', () => {
 // Ensure DOMParser exists in JSDOM
 if (!(window as unknown).DOMParser) {
   class DOMParserPolyfill {
-    parseFromString(str: string) {
-  const { JSDOM } = await import('jsdom');
+    async parseFromString(str: string) {
+      const { JSDOM } = await import('jsdom');
       return new JSDOM(str).window.document;
     }
   }
@@ -361,15 +362,15 @@ expect.extend({
 // ========== UTILITAIRES DE TEST ==========
 
 // Fonction utilitaire pour créer un GraphStore de test
-export const createTestGraphStore = () => {
+export const createTestGraphStore = async () => {
   const { GraphStore } = await import('@/stores/GraphStore');
   return new GraphStore();
 };
 
 // Fonction utilitaire pour créer un EditorManager de test
-export const createTestEditorManager = (graphStore?: unknown) => {
+export const createTestEditorManager = async (graphStore?: unknown) => {
   const { EditorManager } = await import('@/managers/EditorManager');
-  return new EditorManager(graphStore || createTestGraphStore());
+  return new EditorManager(graphStore || await createTestGraphStore());
 };
 
 // Fonction utilitaire pour créer un schéma de test simple
