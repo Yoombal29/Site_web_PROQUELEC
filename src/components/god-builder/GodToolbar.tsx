@@ -26,8 +26,9 @@ import {
   FileJson,
 } from 'lucide-react';
 import { useGodEditor } from './GodEditorContext';
+import { getAuthToken } from '@/lib/api-client';
 import { useBrandingStore } from '@/stores/branding.store';
-import { TemplateManagerDialog } from './TemplateManagerDialog';
+const LazyTemplateManagerDialog = lazy(() => import('./TemplateManagerDialog').then(m => ({ default: m.TemplateManagerDialog })));
 import { useBuilderHistoryStore } from '@/stores/builder-history.store';
 import { useBuilderPermissions } from '@/hooks/useBuilderPermissions';
 import { createHtmlCraftStructure } from '@/lib/craft-html-structure';
@@ -296,10 +297,9 @@ export const GodToolbar = () => {
     const formData = new FormData();
     for (const f of Array.from(files)) formData.append('file', f);
     try {
-      const token = localStorage.getItem('token');
       await fetch('/api/storage/upload', {
         method: 'POST',
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        headers: { Authorization: `Bearer ${getAuthToken()}` },
         body: formData,
       });
       toast.success(`${files.length} fichier(s) uploadé(s)`);
@@ -831,7 +831,7 @@ export const GodToolbar = () => {
         <span className="hidden md:inline">{uploading ? 'Upload...' : 'Upload'}</span>
       </button>
 
-      <TemplateManagerDialog open={templateDialogOpen} onOpenChange={setTemplateDialogOpen} />
+      <Suspense fallback={null}><LazyTemplateManagerDialog open={templateDialogOpen} onOpenChange={setTemplateDialogOpen} /></Suspense>
     </div>
   );
 };

@@ -25,6 +25,10 @@ type ApiError = Error & {
   icon?: string;
 };
 
+export function getAuthToken(): string | null {
+  return localStorage.getItem('token');
+}
+
 export async function apiFetch<T>(url: string, options: RequestInit = {}, retries = 2): Promise<T> {
   const token = localStorage.getItem('token');
   const method = (options.method || 'GET').toUpperCase();

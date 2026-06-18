@@ -1,33 +1,37 @@
 import React, { useEffect } from 'react';
-import { useNode, useEditor } from '@craftjs/core';
+import { useEditor } from '@craftjs/core';
 import { cloneNodeTreeWithNewIds } from './cloneNodeTree';
-import type { SectionTemplate } from './builderTemplates';
+import { getTemplateFactory } from './builderTemplates';
 import { toast } from 'sonner';
 
 interface TemplateDropZoneProps {
   templateLabel?: string;
-  templateJson?: string;
   children?: React.ReactNode;
 }
 
 /**
  * Zone de dépôt pour les templates du God Builder.
  * Quand ce bloc est créé (via drag & drop ou double-clic),
- * il parse le template stocké dans templateJson et l'insère automatiquement,
- * puis se détruit.
+ * il cherche la factory dans le registre central via templateLabel,
+ * l'exécute pour obtenir le ReactElement, parse l'arbre Craft.js
+ * et insère les nœuds dans le canvas, puis se détruit.
  */
 export const TemplateDropZone: React.FC<TemplateDropZoneProps> & { craft?: unknown } = ({
   templateLabel,
-  templateJson,
   children,
 }) => {
   const { actions, query } = useEditor();
 
   useEffect(() => {
-    if (!templateJson) return;
+    if (!templateLabel) return;
+    const factory = getTemplateFactory(templateLabel);
+    if (!factory) {
+      console.warn(`[TemplateDropZone] Aucune factory trouvée pour "${templateLabel}"`);
+      toast.error(`Modèle "${templateLabel}" introuvable`);
+      return;
+    }
     try {
-      const templateData = JSON.parse(templateJson);
-      const element = templateData.factory();
+      const element = factory();
       if (!element?.type) throw new Error('Composant template invalide');
       const tree = query.parseReactElement(element).toNodeTree();
       actions.addNodeTree(cloneNodeTreeWithNewIds(tree, 'tpl'), 'ROOT');
@@ -39,7 +43,7 @@ export const TemplateDropZone: React.FC<TemplateDropZoneProps> & { craft?: unkno
           : "Impossible d'insérer le modèle",
       );
     }
-  }, [templateJson, actions, query]);
+  }, [templateLabel, actions, query]);
 
   return <>{children || null}</>;
 };
@@ -48,6 +52,5 @@ TemplateDropZone.craft = {
   displayName: 'Template Drop Zone',
   props: {
     templateLabel: '',
-    templateJson: '',
   },
 };

@@ -280,6 +280,83 @@ async function findNamedVersionById(versionId) {
     return result.rows[0] || null;
 }
 
+// --- Atomic Save (single transaction) ---
+async function atomicSave(pageId, { structure_json, draft_json, theme_config }) {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const updates = [];
+    const values = [pageId];
+    let idx = 2;
+
+    if (structure_json !== undefined) {
+      updates.push(`structure_json = $${idx++}`);
+      values.push(typeof structure_json === 'string' ? structure_json : JSON.stringify(structure_json));
+    }
+    if (draft_json !== undefined) {
+      updates.push(`draft_json = $${idx++}`);
+      values.push(typeof draft_json === 'string' ? draft_json : JSON.stringify(draft_json));
+    }
+    if (theme_config !== undefined) {
+      updates.push(`theme_config = $${idx++}`);
+      values.push(typeof theme_config === 'string' ? theme_config : JSON.stringify(theme_config));
+    }
+    if (updates.length === 0) {
+      await client.query('ROLLBACK');
+      client.release();
+      return null;
+    }
+    updates.push(`version = version + 1`, `builder_revision = COALESCE(builder_revision, 1) + 1`, `builder_content_hash = NULL`, `updated_at = NOW()`);
+    const sql = `UPDATE public.pages SET ${updates.join(', ')} WHERE id = $1 RETURNING *`;
+    const result = await client.query(sql, values);
+    await client.query('COMMIT');
+    return result.rows[0] || null;
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+
+// --- Purge Page Versions ---
+async function purgePageVersions(pageId, { keepLast = 50, olderThanDays, dryRun = false }) {
+  const conditions = ['page_id = $1'];
+  const params = [pageId];
+  let idx = 2;
+
+  if (olderThanDays !== undefined && olderThanDays > 0) {
+    conditions.push(`created_at < NOW() - $${idx}::interval`);
+    params.push(`${olderThanDays} days`);
+    idx++;
+  }
+
+  if (keepLast !== undefined && keepLast >= 0) {
+    conditions.push(`id NOT IN (
+      SELECT id FROM public.page_versions WHERE page_id = $1
+      ORDER BY created_at DESC LIMIT $${idx}
+    )`);
+    params.push(keepLast);
+    idx++;
+  }
+
+  const whereClause = conditions.join(' AND ');
+
+  if (dryRun) {
+    const countResult = await pool.query(
+      `SELECT COUNT(*) as count FROM public.page_versions WHERE ${whereClause}`,
+      params,
+    );
+    return { dryRun: true, deletedCount: parseInt(countResult.rows[0]?.count || '0', 10) };
+  }
+
+  const result = await pool.query(
+    `DELETE FROM public.page_versions WHERE ${whereClause} RETURNING id`,
+    params,
+  );
+  return { dryRun: false, deletedCount: result.rowCount || 0, deletedIds: result.rows.map(r => r.id) };
+}
+
 // --- Theme Config ---
 async function saveThemeConfig(pageId, themeConfig) {
     const jsonStr = typeof themeConfig === 'string' ? themeConfig : JSON.stringify(themeConfig);
@@ -294,7 +371,7 @@ module.exports = {
     findAllPages, findPublishedPages, findPageBySlug, findPublishedPageBySlug, findPageById, findPageBySlugOrId,
     createPage, updatePage, deletePage, adminUpdatePage,
     savePageVersion, findPageVersion,
-    saveDraft, createNamedVersion, listNamedVersions, findNamedVersionById, saveThemeConfig,
+    atomicSave, purgePageVersions, saveDraft, createNamedVersion, listNamedVersions, findNamedVersionById, saveThemeConfig,
     findAllMenuItems, createMenuItem, updateMenuItem, deleteMenuItem, syncMenuUrlByPageId,
     getConstructionMode, setConstructionMode,
 };

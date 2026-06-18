@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { useEditor } from '@craftjs/core';
 import type { SerializedNodes } from '@craftjs/core';
-import { apiFetch } from '@/lib/api-client';
+import { apiFetch, getAuthToken } from '@/lib/api-client';
 import { toast } from 'sonner';
 import { useBuilderThemeStore, DEFAULT_THEME } from '@/stores/builder-theme.store';
 import type { ThemeConfig } from '@/stores/builder-theme.store';
@@ -240,8 +240,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
         return;
       }
 
-      const token = localStorage.getItem('token');
-      if (!token) {
+      if (!getAuthToken()) {
         setError('Authentification requise. Connectez-vous pour accéder au builder.');
         setIsLoading(false);
         return;
@@ -501,9 +500,10 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
             if (jsonStr !== lastSerializedRef.current) {
               useBuilderHistoryStore.getState().setAutosaveStatus('saving');
 
-              await apiFetch(`/api/admin/pages/${pageId}/draft`, {
+              const themeConfig = useBuilderThemeStore.getState().themeConfig;
+              await apiFetch(`/api/admin/pages/${pageId}/atomic-save`, {
                 method: 'PUT',
-                body: JSON.stringify({ draft_json: validStructure }),
+                body: JSON.stringify({ draft_json: validStructure, theme_config: themeConfig ?? {} }),
               });
 
               lastSerializedRef.current = jsonStr;
@@ -525,6 +525,69 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
     };
   }, [store, pageId, pageData, query, isLoading]);
 
+  // beforeunload + visibilitychange + sendBeacon flush
+  useEffect(() => {
+    if (!pageId) return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      const status = useBuilderHistoryStore.getState().autosaveStatus;
+      if (status !== 'dirty' && status !== 'saving') return;
+
+      e.preventDefault();
+      e.returnValue = '';
+
+      try {
+        const structureJson = query.serialize();
+        const validStructure = ensureValidBuilderStructure(structureJson);
+        if (validStructure) {
+          const themeConfig = useBuilderThemeStore.getState().themeConfig;
+          const payload = JSON.stringify({ draft_json: validStructure, theme_config: themeConfig ?? {} });
+          navigator.sendBeacon(
+            `/api/admin/pages/${pageId}/atomic-save`,
+            new Blob([payload], { type: 'application/json' }),
+          );
+        }
+      } catch {
+        // Silent fail during unload
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState !== 'hidden') return;
+
+      const status = useBuilderHistoryStore.getState().autosaveStatus;
+      if (status !== 'dirty' && status !== 'saving') return;
+
+      try {
+        const structureJson = query.serialize();
+        const validStructure = ensureValidBuilderStructure(structureJson);
+        if (!validStructure) return;
+
+        const jsonStr = typeof structureJson === 'string' ? structureJson : JSON.stringify(structureJson);
+        if (jsonStr !== lastSerializedRef.current) {
+          localStorage.setItem(
+            `proquelec_builder_backup_${pageId}`,
+            JSON.stringify({
+              timestamp: Date.now(),
+              structure_json: validStructure,
+              pageData,
+            }),
+          );
+        }
+      } catch {
+        // Silent fail during visibility change
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [pageId, pageData, query]);
+
   // Save/Publish page data manually
   const savePage = useCallback(
     async (versionName?: string) => {
@@ -533,8 +596,7 @@ export const GodEditorProvider: React.FC<GodEditorProviderProps> = ({ pageId, ch
         return;
       }
 
-      const token = localStorage.getItem('token');
-      if (!token) {
+      if (!getAuthToken()) {
         toast.error('Authentification requise. Connectez-vous pour sauvegarder la page.');
         return;
       }

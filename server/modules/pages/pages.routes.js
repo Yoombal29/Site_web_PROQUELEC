@@ -3,7 +3,7 @@ const controller = require('./pages.controller');
 const { authenticateToken, requireAdmin, requirePermission, validate } = require('../../core/middleware');
 const {
     createPageSchema, updatePageSchema, adminUpdatePageSchema,
-    draftPageSchema, namedVersionSchema, themeConfigSchema,
+    draftPageSchema, namedVersionSchema, themeConfigSchema, atomicSaveSchema, purgeVersionsSchema,
     createMenuItemSchema, updateMenuItemSchema,
     constructionModeSchema,
     releaseAnalyzeSchema, releaseImportSchema, releasePublishSchema,
@@ -50,10 +50,14 @@ router.get('/admin/page-versions/:id/:version', authenticateToken, requireAdmin,
 router.post('/admin/seed-homepage', authenticateToken, requireAdmin, controller.seedHomepage);
 
 // --- Draft Autosave, Named Versions & Theme Config ---
+router.route('/admin/pages/:id/atomic-save')
+  .put(authenticateToken, requireAdmin, validate(atomicSaveSchema), controller.atomicSave)
+  .post(authenticateToken, requireAdmin, validate(atomicSaveSchema), controller.atomicSave);
 router.put('/admin/pages/:id/draft', authenticateToken, requireAdmin, validate(draftPageSchema), controller.saveDraft);
 router.post('/admin/pages/:id/versions', authenticateToken, requireAdmin, validate(namedVersionSchema), controller.createNamedVersion);
 router.get('/admin/pages/:id/versions', authenticateToken, requireAdmin, controller.listNamedVersions);
 router.get('/admin/pages/:id/versions/:versionId', authenticateToken, requireAdmin, controller.getNamedVersionById);
+router.post('/admin/pages/:id/purge-versions', authenticateToken, requireAdmin, validate(purgeVersionsSchema), controller.purgePageVersions);
 router.put('/admin/pages/:id/theme-config', authenticateToken, requireAdmin, validate(themeConfigSchema), controller.saveThemeConfig);
 
 router.get('/menu-items', controller.listMenuItems);

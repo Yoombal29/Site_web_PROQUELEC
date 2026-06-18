@@ -75,6 +75,17 @@ export interface SectionTemplate {
   meta?: SectionTemplateMeta;
 }
 
+/** Registre centralisé de factorys de templates, indexé par label */
+export const TEMPLATE_REGISTRY = new Map<string, () => React.ReactElement>();
+
+export function registerTemplate(label: string, factory: () => React.ReactElement): void {
+  TEMPLATE_REGISTRY.set(label, factory);
+}
+
+export function getTemplateFactory(label: string): (() => React.ReactElement) | undefined {
+  return TEMPLATE_REGISTRY.get(label);
+}
+
 export const TEMPLATE_CATEGORY_LABELS: Record<TemplateCategory, string> = {
   hero: 'Héros & bannières',
   pages: 'Pages premium',
@@ -2236,4 +2247,7 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
     meta: { version: 2, estimatedRenderMs: 120, tags: ['catalogue', 'outils', 'complet'] },
   },
 ];
+
+// Enregistrement automatique de tous les templates dans le registre central
+SECTION_TEMPLATES.forEach((t) => registerTemplate(t.label, t.factory));
 

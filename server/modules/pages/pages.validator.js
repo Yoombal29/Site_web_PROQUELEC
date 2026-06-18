@@ -20,14 +20,16 @@ const updatePageSchema = z.object({
     meta_keywords: z.string().optional(),
 });
 
+const themeConfigValuesSchema = z.object({
+    primaryColor: z.string().optional(),
+    secondaryColor: z.string().optional(),
+    fontFamily: z.string().optional(),
+    borderRadius: z.string().optional(),
+    spacingScale: z.string().optional(),
+}).passthrough();
+
 const themeConfigSchema = z.object({
-    theme_config: z.object({
-        primaryColor: z.string().optional(),
-        secondaryColor: z.string().optional(),
-        fontFamily: z.string().optional(),
-        borderRadius: z.string().optional(),
-        spacingScale: z.string().optional(),
-    }).passthrough(),
+    theme_config: themeConfigValuesSchema,
 });
 
 const adminUpdatePageSchema = z.object({
@@ -65,7 +67,7 @@ const adminUpdatePageSchema = z.object({
     publish_date: z.string().optional(),
     unpublish_date: z.string().optional(),
     reading_time: z.number().optional(),
-    theme_config: themeConfigSchema.shape.theme_config.optional(),
+    theme_config: themeConfigValuesSchema.optional(),
 });
 
 const draftPageSchema = z.object({
@@ -151,9 +153,24 @@ const deployCodeSchema = z.object({
     pm2_app: z.string().trim().regex(/^[A-Za-z0-9._-]{1,80}$/, 'Nom PM2 invalide').optional().default('proquelec-api'),
 });
 
+const atomicSaveSchema = z.object({
+    structure_json: jsonDataSchema.optional(),
+    draft_json: jsonDataSchema.optional(),
+    theme_config: themeConfigValuesSchema.optional(),
+}).refine(data => data.structure_json !== undefined || data.draft_json !== undefined || data.theme_config !== undefined, {
+    message: 'Au moins un champ (structure_json, draft_json, theme_config) requis',
+});
+
+const purgeVersionsSchema = z.object({
+    keep_last: z.number().int().min(0).optional(),
+    older_than_days: z.number().int().min(1).optional(),
+    dry_run: z.boolean().optional().default(false),
+});
+
 module.exports = {
     createPageSchema, updatePageSchema, adminUpdatePageSchema,
-    draftPageSchema, namedVersionSchema, themeConfigSchema,
+    atomicSaveSchema, purgeVersionsSchema,
+    draftPageSchema, namedVersionSchema, themeConfigSchema, themeConfigValuesSchema,
     createMenuItemSchema, updateMenuItemSchema,
     constructionModeSchema,
     releaseAnalyzeSchema, releaseImportSchema, releasePublishSchema,

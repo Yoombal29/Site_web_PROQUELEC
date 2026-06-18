@@ -17,7 +17,7 @@ import {
   Code2,
   ChevronDown,
 } from 'lucide-react';
-import { useGodEditor } from './GodEditorContext';
+import { useGodEditor, type PageDataState } from './GodEditorContext';
 import { useBuilderThemeStore } from '@/stores/builder-theme.store';
 import { useBuilderUiStore } from '@/stores/builder-ui.store';
 import { useFontsStore } from '@/stores/fonts.store';
@@ -30,10 +30,55 @@ import {
   getAnimationPresetOptions,
 } from '@/components/blocks/animationPresets';
 
+type NodePropSetter = (cb: (props: Record<string, unknown>) => void) => void;
+
+interface TabBtnProps {
+  label: string;
+  icon: React.ComponentType<{ size?: number }>;
+  active: boolean;
+  onClick: () => void;
+}
+
+interface SectionProps {
+  id: string;
+  title: string;
+  children: React.ReactNode;
+}
+
+interface FourSideInputProps {
+  label: string;
+  keys: string[];
+}
+
+interface ResponsiveInputProps {
+  label: string;
+  propKey: string;
+  min?: number;
+  max?: number;
+  step?: number;
+}
+
+interface ResponsiveSelectProps {
+  label: string;
+  propKey: string;
+  options: { value: string; label: string }[];
+}
+
+interface ResponsiveTextInputProps {
+  label: string;
+  propKey: string;
+  placeholder?: string;
+}
+
+interface HidableToggleProps {
+  propKey: string;
+  label: string;
+}
+
 // ─────────────────────────────────────────────────────────
 // TAB BUTTON
 // ─────────────────────────────────────────────────────────
-const TabBtn = ({ label, icon: Icon, active, onClick }: any) => (
+const TabBtn = ({ label, icon: Icon, active, onClick }: TabBtnProps) => (
   <button
     onClick={onClick}
     className={`flex-1 flex items-center justify-center gap-1 py-2 text-[11px] font-bold uppercase tracking-wider transition-all ${
@@ -50,19 +95,25 @@ const TabBtn = ({ label, icon: Icon, active, onClick }: any) => (
 // ─────────────────────────────────────────────────────────
 // SHARED STYLE SETTINGS (margin, padding, border, shadow)
 // ─────────────────────────────────────────────────────────
-export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setProp: any }) => {
+export const SharedStylePanel = React.memo(({
+  nodeProps,
+  setProp,
+}: {
+  nodeProps: Record<string, unknown>;
+  setProp: NodePropSetter;
+}) => {
   const [openSection, setOpenSection] = useState<string | null>('spacing');
   const [viewport, setViewport] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
 
   useEffect(() => {
-    const handler = (e: CustomEvent) => setViewport(e.detail as any);
-    window.addEventListener('god-viewport-change', handler as any);
-    return () => window.removeEventListener('god-viewport-change', handler as any);
+    const handler = (e: CustomEvent) => setViewport(e.detail as 'desktop' | 'tablet' | 'mobile');
+    window.addEventListener('god-viewport-change', handler as EventListener);
+    return () => window.removeEventListener('god-viewport-change', handler as EventListener);
   }, []);
 
   const toggle = (s: string) => setOpenSection((prev) => (prev === s ? null : s));
 
-  const Section = ({ id, title, children }: any) => (
+  const Section = ({ id, title, children }: SectionProps) => (
     <div className="border border-[#252538] rounded-lg overflow-hidden mb-2">
       <button
         onClick={() => toggle(id)}
@@ -80,7 +131,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
     </div>
   );
 
-  const FourSideInput = ({ label, keys }: { label: string; keys: string[] }) => {
+  const FourSideInput = ({ label, keys }: FourSideInputProps) => {
     const getValue = (key: string) => {
       const val = nodeProps[key];
       if (val && typeof val === 'object' && !Array.isArray(val)) {
@@ -93,11 +144,11 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
     };
 
     const setValue = (key: string, numValue: number) => {
-      setProp((p: any) => {
+      setProp((p: Record<string, unknown>) => {
         const current = p[key];
         if (current && typeof current === 'object' && !Array.isArray(current)) {
           p[key] = {
-            ...current,
+            ...(current as Record<string, unknown>),
             [viewport]: numValue,
           };
         } else {
@@ -147,19 +198,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
   };
 
   // ── Responsive single-value input ──
-  const ResponsiveNumberInput = ({
-    label,
-    propKey,
-    min,
-    max,
-    step,
-  }: {
-    label: string;
-    propKey: string;
-    min?: number;
-    max?: number;
-    step?: number;
-  }) => {
+  const ResponsiveNumberInput = ({ label, propKey, min, max, step }: ResponsiveInputProps) => {
     const getValue = () => {
       const val = nodeProps[propKey];
       if (val && typeof val === 'object' && !Array.isArray(val)) {
@@ -168,10 +207,10 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
       return viewport === 'desktop' ? (val ?? '') : '';
     };
     const setValue = (numValue: number) => {
-      setProp((p: any) => {
+      setProp((p: Record<string, unknown>) => {
         const current = p[propKey];
         if (current && typeof current === 'object' && !Array.isArray(current)) {
-          p[propKey] = { ...current, [viewport]: numValue };
+          p[propKey] = { ...(current as Record<string, unknown>), [viewport]: numValue };
         } else {
           p[propKey] = {
             desktop: viewport === 'desktop' ? numValue : (current ?? step === 1) ? 0 : '',
@@ -203,30 +242,22 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
     );
   };
 
-  const ResponsiveSelect = ({
-    label,
-    propKey,
-    options,
-  }: {
-    label: string;
-    propKey: string;
-    options: { value: string; label: string }[];
-  }) => {
+  const ResponsiveSelect = ({ label, propKey, options }: ResponsiveSelectProps) => {
     const getValue = () => {
       const val = nodeProps[propKey];
       if (val && typeof val === 'object' && !Array.isArray(val)) {
-        return val[viewport] ?? '';
+        return (val as Record<string, string>)[viewport] ?? '';
       }
-      return viewport === 'desktop' ? (val ?? '') : '';
+      return viewport === 'desktop' ? (val as string ?? '') : '';
     };
     const setValue = (newVal: string) => {
-      setProp((p: any) => {
+      setProp((p: Record<string, unknown>) => {
         const current = p[propKey];
         if (current && typeof current === 'object' && !Array.isArray(current)) {
-          p[propKey] = { ...current, [viewport]: newVal };
+          p[propKey] = { ...(current as Record<string, unknown>), [viewport]: newVal };
         } else {
           p[propKey] = {
-            desktop: viewport === 'desktop' ? newVal : (current ?? ''),
+            desktop: viewport === 'desktop' ? newVal : (current as string ?? ''),
             tablet: viewport === 'tablet' ? newVal : '',
             mobile: viewport === 'mobile' ? newVal : '',
             [viewport]: newVal,
@@ -257,30 +288,22 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
     );
   };
 
-  const ResponsiveTextInput = ({
-    label,
-    propKey,
-    placeholder,
-  }: {
-    label: string;
-    propKey: string;
-    placeholder?: string;
-  }) => {
+  const ResponsiveTextInput = ({ label, propKey, placeholder }: ResponsiveTextInputProps) => {
     const getValue = () => {
       const val = nodeProps[propKey];
       if (val && typeof val === 'object' && !Array.isArray(val)) {
-        return val[viewport] ?? '';
+        return (val as Record<string, string>)[viewport] ?? '';
       }
-      return viewport === 'desktop' ? (val ?? '') : '';
+      return viewport === 'desktop' ? (val as string ?? '') : '';
     };
     const setValue = (newVal: string) => {
-      setProp((p: any) => {
+      setProp((p: Record<string, unknown>) => {
         const current = p[propKey];
         if (current && typeof current === 'object' && !Array.isArray(current)) {
-          p[propKey] = { ...current, [viewport]: newVal };
+          p[propKey] = { ...(current as Record<string, unknown>), [viewport]: newVal };
         } else {
           p[propKey] = {
-            desktop: viewport === 'desktop' ? newVal : (current ?? ''),
+            desktop: viewport === 'desktop' ? newVal : (current as string ?? ''),
             tablet: viewport === 'tablet' ? newVal : '',
             mobile: viewport === 'mobile' ? newVal : '',
             [viewport]: newVal,
@@ -312,24 +335,24 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
     setProp,
     viewport,
   }: {
-    nodeProps: any;
-    setProp: any;
+    nodeProps: Record<string, unknown>;
+    setProp: NodePropSetter;
     viewport: string;
   }) => {
     const fonts = useFontsStore((s) => s.fonts);
     const getValue = () => {
       const val = nodeProps.fontFamily;
-      if (val && typeof val === 'object' && !Array.isArray(val)) return val[viewport] ?? '';
-      return viewport === 'desktop' ? (val ?? '') : '';
+      if (val && typeof val === 'object' && !Array.isArray(val)) return (val as Record<string, string>)[viewport] ?? '';
+      return viewport === 'desktop' ? (val as string ?? '') : '';
     };
     const setValue = (newVal: string) => {
-      setProp((p: any) => {
+      setProp((p: Record<string, unknown>) => {
         const current = p.fontFamily;
         if (current && typeof current === 'object' && !Array.isArray(current)) {
-          p.fontFamily = { ...current, [viewport]: newVal };
+          p.fontFamily = { ...(current as Record<string, unknown>), [viewport]: newVal };
         } else {
           p.fontFamily =
-            viewport === 'desktop' ? newVal : { desktop: current ?? '', [viewport]: newVal };
+            viewport === 'desktop' ? newVal : { desktop: current as string ?? '', [viewport]: newVal };
         }
       });
     };
@@ -497,7 +520,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
           </span>
           <button
             onClick={() =>
-              setProp((p: any) => {
+              setProp((p: Record<string, unknown>) => {
                 p.reverseMobile = !p.reverseMobile;
               })
             }
@@ -577,7 +600,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
               type="color"
               value={nodeProps.fontColor ?? '#0f172a'}
               onChange={(e) =>
-                setProp((p: any) => {
+                setProp((p: Record<string, unknown>) => {
                   p.fontColor = e.target.value;
                 })
               }
@@ -587,7 +610,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
               type="text"
               value={nodeProps.fontColor ?? '#0f172a'}
               onChange={(e) =>
-                setProp((p: any) => {
+                setProp((p: Record<string, unknown>) => {
                   p.fontColor = e.target.value;
                 })
               }
@@ -684,7 +707,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
             max={20}
             value={nodeProps.borderWidth ?? 0}
             onChange={(e) =>
-              setProp((p: any) => {
+              setProp((p: Record<string, unknown>) => {
                 p.borderWidth = parseInt(e.target.value) || 0;
               })
             }
@@ -700,7 +723,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
               type="color"
               value={nodeProps.borderColor ?? '#e2e8f0'}
               onChange={(e) =>
-                setProp((p: any) => {
+                setProp((p: Record<string, unknown>) => {
                   p.borderColor = e.target.value;
                 })
               }
@@ -710,7 +733,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
               type="text"
               value={nodeProps.borderColor ?? '#e2e8f0'}
               onChange={(e) =>
-                setProp((p: any) => {
+                setProp((p: Record<string, unknown>) => {
                   p.borderColor = e.target.value;
                 })
               }
@@ -725,7 +748,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
           <select
             value={nodeProps.borderStyle ?? 'solid'}
             onChange={(e) =>
-              setProp((p: any) => {
+              setProp((p: Record<string, unknown>) => {
                 p.borderStyle = e.target.value;
               })
             }
@@ -747,7 +770,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
             max={100}
             value={nodeProps.borderRadius ?? 0}
             onChange={(e) =>
-              setProp((p: any) => {
+              setProp((p: Record<string, unknown>) => {
                 p.borderRadius = parseInt(e.target.value) || 0;
               })
             }
@@ -790,7 +813,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
               type="color"
               value={nodeProps.hoverGlowColor ?? '#2563eb'}
               onChange={(e) =>
-                setProp((p: any) => {
+                setProp((p: Record<string, unknown>) => {
                   p.hoverGlowColor = e.target.value;
                 })
               }
@@ -800,7 +823,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
               type="text"
               value={nodeProps.hoverGlowColor ?? '#2563eb'}
               onChange={(e) =>
-                setProp((p: any) => {
+                setProp((p: Record<string, unknown>) => {
                   p.hoverGlowColor = e.target.value;
                 })
               }
@@ -832,7 +855,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
               max={100}
               value={Math.round((nodeProps.opacity ?? 1) * 100)}
               onChange={(e) =>
-                setProp((p: any) => {
+                setProp((p: Record<string, unknown>) => {
                   p.opacity = parseInt(e.target.value) / 100;
                 })
               }
@@ -850,7 +873,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
           <select
             value={nodeProps.boxShadow ?? 'none'}
             onChange={(e) =>
-              setProp((p: any) => {
+              setProp((p: Record<string, unknown>) => {
                 p.boxShadow = e.target.value;
               })
             }
@@ -882,7 +905,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
                 <button
                   key={key}
                   onClick={() =>
-                    setProp((p: any) => {
+                    setProp((p: Record<string, unknown>) => {
                       p[key] = !isHidden;
                     })
                   }
@@ -907,12 +930,12 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
           <p className="text-[10px] text-slate-500">
             Le bloc n'est affiché que si TOUTES les conditions sont vraies.
           </p>
-          {((nodeProps.conditions as any[]) || []).length === 0 && (
+          {((nodeProps.conditions as Array<Record<string, string>>) || []).length === 0 && (
             <p className="text-[10px] text-slate-600 italic">
               Aucune condition — toujours affiché.
             </p>
           )}
-          {((nodeProps.conditions as any[]) || []).map((c: any, i: number) => (
+          {((nodeProps.conditions as Array<Record<string, string>>) || []).map((c: Record<string, string>, i: number) => (
             <div key={i} className="bg-[#151521] rounded p-2 border border-[#252538] space-y-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] text-slate-400 font-semibold uppercase">
@@ -920,7 +943,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
                 </span>
                 <button
                   onClick={() =>
-                    setProp((p: any) => {
+                    setProp((p: Record<string, unknown>) => {
                       const arr = [...(p.conditions || [])];
                       arr.splice(i, 1);
                       p.conditions = arr;
@@ -934,7 +957,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
               <select
                 value={c.type}
                 onChange={(e) =>
-                  setProp((p: any) => {
+                  setProp((p: Record<string, unknown>) => {
                     const arr = [...(p.conditions || [])];
                     arr[i] = { ...arr[i], type: e.target.value };
                     p.conditions = arr;
@@ -955,7 +978,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
                   <select
                     value={c.operator}
                     onChange={(e) =>
-                      setProp((p: any) => {
+                      setProp((p: Record<string, unknown>) => {
                         const arr = [...(p.conditions || [])];
                         arr[i] = { ...arr[i], operator: e.target.value };
                         p.conditions = arr;
@@ -974,7 +997,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
                     type={c.type === 'date' ? 'datetime-local' : 'text'}
                     value={c.value || ''}
                     onChange={(e) =>
-                      setProp((p: any) => {
+                      setProp((p: Record<string, unknown>) => {
                         const arr = [...(p.conditions || [])];
                         arr[i] = { ...arr[i], value: e.target.value };
                         p.conditions = arr;
@@ -1001,7 +1024,7 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
           ))}
           <button
             onClick={() =>
-              setProp((p: any) => {
+              setProp((p: Record<string, unknown>) => {
                 const arr = [...(p.conditions || [])];
                 arr.push({ id: 'c_' + Date.now(), type: 'role', operator: 'equals', value: '' });
                 p.conditions = arr;
@@ -1015,12 +1038,12 @@ export const SharedStylePanel = ({ nodeProps, setProp }: { nodeProps: any; setPr
       </Section>
     </div>
   );
-};
+});
 
 // ─────────────────────────────────────────────────────────
 // ADVANCED PANEL (CSS class, ID, custom CSS)
 // ─────────────────────────────────────────────────────────
-const AdvancedPanel = ({ nodeProps, setProp }: { nodeProps: any; setProp: any }) => (
+const AdvancedPanel = React.memo(({ nodeProps, setProp }: { nodeProps: Record<string, unknown>; setProp: NodePropSetter }) => (
   <div className="space-y-3">
     <div>
       <label className="block text-[10px] text-slate-500 mb-1.5 uppercase tracking-wider">
@@ -1030,7 +1053,7 @@ const AdvancedPanel = ({ nodeProps, setProp }: { nodeProps: any; setProp: any })
         type="text"
         value={nodeProps.htmlId ?? ''}
         onChange={(e) =>
-          setProp((p: any) => {
+          setProp((p: Record<string, unknown>) => {
             p.htmlId = e.target.value;
           })
         }
@@ -1046,7 +1069,7 @@ const AdvancedPanel = ({ nodeProps, setProp }: { nodeProps: any; setProp: any })
         type="text"
         value={nodeProps.extraClasses ?? ''}
         onChange={(e) =>
-          setProp((p: any) => {
+          setProp((p: Record<string, unknown>) => {
             p.extraClasses = e.target.value;
           })
         }
@@ -1062,7 +1085,7 @@ const AdvancedPanel = ({ nodeProps, setProp }: { nodeProps: any; setProp: any })
         rows={5}
         value={nodeProps.customInlineCss ?? ''}
         onChange={(e) =>
-          setProp((p: any) => {
+          setProp((p: Record<string, unknown>) => {
             p.customInlineCss = e.target.value;
           })
         }
@@ -1078,7 +1101,7 @@ const AdvancedPanel = ({ nodeProps, setProp }: { nodeProps: any; setProp: any })
         type="number"
         value={nodeProps.zIndex ?? 'auto'}
         onChange={(e) =>
-          setProp((p: any) => {
+          setProp((p: Record<string, unknown>) => {
             p.zIndex = e.target.value === '' ? 'auto' : parseInt(e.target.value);
           })
         }
@@ -1086,17 +1109,17 @@ const AdvancedPanel = ({ nodeProps, setProp }: { nodeProps: any; setProp: any })
       />
     </div>
   </div>
-);
+));
 
 // ─────────────────────────────────────────────────────────
 // PAGE METADATA PANEL
 // ─────────────────────────────────────────────────────────
-const PageMetaPanel = () => {
+const PageMetaPanel = React.memo(() => {
   const { pageData, updateMetadata } = useGodEditor();
   if (!pageData)
     return <div className="text-sm text-slate-500 italic p-4 text-center">Chargement...</div>;
 
-  const Row = ({ label, children }: any) => (
+  const Row = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <div className="space-y-1.5">
       <label className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">
         {label}
@@ -1148,7 +1171,7 @@ const PageMetaPanel = () => {
       <Row label="Statut">
         <select
           value={pageData.workflowStatus}
-          onChange={(e) => updateMetadata({ workflowStatus: e.target.value as any })}
+          onChange={(e) => updateMetadata({ workflowStatus: e.target.value as PageDataState['workflowStatus'] })}
           className={inputCls}
         >
           <option value="draft">📝 Brouillon</option>
@@ -1223,15 +1246,15 @@ const PageMetaPanel = () => {
       </Row>
     </div>
   );
-};
+});
 
 // ─────────────────────────────────────────────────────────
 // THEME CONFIGURATION PANEL
 // ─────────────────────────────────────────────────────────
-const ThemeConfigPanel = () => {
+const ThemeConfigPanel = React.memo(() => {
   const { themeConfig, setThemeConfig } = useBuilderThemeStore();
 
-  const Row = ({ label, children }: any) => (
+  const Row = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <div className="space-y-1.5">
       <label className="block text-[10px] font-semibold uppercase tracking-wider text-slate-400">
         {label}
@@ -1327,7 +1350,7 @@ const ThemeConfigPanel = () => {
       </Row>
     </div>
   );
-};
+});
 
 // ─────────────────────────────────────────────────────────
 // MAIN COMPONENT
@@ -1336,7 +1359,14 @@ export const GodSettings = () => {
   const { actions, selected, isEnabled } = useEditor((state, query) => {
     const selectedSet = state.events.selected;
     const currentNodeId = selectedSet ? Array.from(selectedSet)[0] : null;
-    let selected: any;
+    let selected: {
+      id: string | null;
+      name: string;
+      settings: React.ComponentType | undefined;
+      nodeProps: Record<string, unknown>;
+      isDeletable: boolean;
+      setProp: NodePropSetter;
+    } | undefined;
 
     if (currentNodeId && state.nodes[currentNodeId as string]) {
       const node = state.nodes[currentNodeId as string];
@@ -1346,7 +1376,7 @@ export const GodSettings = () => {
         settings: node.related?.settings,
         nodeProps: node.data.props,
         isDeletable: query.node(currentNodeId as string).isDeletable(),
-        setProp: (cb: any) => actions.setProp(currentNodeId as string, cb),
+        setProp: (cb: (props: Record<string, unknown>) => void) => actions.setProp(currentNodeId as string, cb),
       };
     }
 
@@ -1382,7 +1412,7 @@ export const GodSettings = () => {
         {selected && (
           <div className="flex items-center gap-1">
             <button
-              onClick={() => actions.selectNode(undefined as any)}
+              onClick={() => actions.selectNode(undefined as unknown as string)}
               className="text-[10px] text-slate-500 hover:text-slate-300 px-2 py-1 rounded hover:bg-[#252538] transition-colors"
               title="Désélectionner (Escape)"
             >

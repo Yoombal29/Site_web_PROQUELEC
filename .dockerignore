@@ -1,46 +1,13 @@
-# Dependencies
 node_modules
-server/node_modules
-
-# Build output
-dist
-dist-ssr
-*.local
-
-# Environment
-.env
-.env.local
-.env.*.local
-
-# Logs
-*.log
-logs
-
-# Test
-coverage
-__tests__
-test-results
-playwright-report
-
-# Git
 .git
 .gitignore
-.gitattributes
-
-# IDE
+*.md
+.env
+.env.*
+__tests__
+tests
+docs
 .vscode
 .idea
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Docker
-docker/postgres/data
-
-# Temp
-tmp
-scratch
-.cache
+*.log
+dist

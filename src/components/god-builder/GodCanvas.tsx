@@ -28,6 +28,7 @@ import { useBuilderUiStore } from '@/stores/builder-ui.store';
 import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
 import { useAnimateOnScroll } from '@/hooks/useAnimateOnScroll';
 import { cloneNodeTreeWithNewIds } from './cloneNodeTree.ts';
+import { apiFetch } from '@/lib/api-client';
 import { useGodEditor } from './GodEditorContext';
 import { buildAnimationRuntimeCss } from '@/components/blocks/animationPresets';
 
@@ -866,14 +867,9 @@ export const GodCanvas = () => {
       if (!name) return;
 
       const tree = query.node(id).toNodeTree();
-      const token = localStorage.getItem('token');
 
-      const response = await fetch('/api/admin/page-components', {
+      await apiFetch('/api/admin/page-components', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token ? `Bearer ${token}` : '',
-        },
         body: JSON.stringify({
           name,
           category: 'Mes Modèles',
@@ -882,12 +878,6 @@ export const GodCanvas = () => {
           is_global: false,
         }),
       });
-
-      if (!response.ok) {
-        throw new Error('Erreur réseau lors de la sauvegarde');
-      }
-
-      await response.json();
       toast.success(`Modèle "${name}" enregistré avec succès !`);
       window.dispatchEvent(new CustomEvent('god-templates-updated'));
     } catch (err) {

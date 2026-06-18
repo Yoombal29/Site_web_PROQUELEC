@@ -226,6 +226,32 @@ async function getNamedVersionById(req, res) {
   }
 }
 
+// --- Purge Page Versions ---
+async function purgePageVersions(req, res) {
+  try {
+    const { keep_last, older_than_days, dry_run } = req.body;
+    const result = await service.purgePageVersions(req.params.id, {
+      keepLast: keep_last,
+      olderThanDays: older_than_days,
+      dryRun: dry_run === true,
+    });
+    res.json(result);
+  } catch (err) {
+    handleAppError(err, res);
+  }
+}
+
+// --- Atomic Save ---
+async function atomicSave(req, res) {
+  try {
+    const { structure_json, draft_json, theme_config } = req.body;
+    const result = await service.atomicSave(req.params.id, { structure_json, draft_json, theme_config });
+    res.json(result);
+  } catch (err) {
+    handleAppError(err, res);
+  }
+}
+
 // --- Theme Config ---
 async function saveThemeConfig(req, res) {
   try {
@@ -442,10 +468,12 @@ module.exports = {
   adminUpdatePage,
   getPageVersion,
   seedHomepage,
+  purgePageVersions,
   saveDraft,
   createNamedVersion,
   listNamedVersions,
   getNamedVersionById,
+  atomicSave,
   saveThemeConfig,
   exportPageRelease,
   analyzePageRelease,

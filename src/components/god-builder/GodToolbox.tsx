@@ -37,6 +37,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { apiFetch } from '@/lib/api-client';
 import { useGlobalBlocksStore } from '@/stores/global-blocks.store';
 import { cloneNodeTreeWithNewIds } from './cloneNodeTree';
 import { useBuilderPermissions } from '@/hooks/useBuilderPermissions';
@@ -1224,7 +1225,7 @@ const templateParseCache = new Map<string, { nodeTree: NodeTree; element: React.
 function parseTemplate(
   factory: () => React.ReactElement,
   label: string,
-  query: any,
+  query: { parseReactElement: (el: React.ReactElement) => { toNodeTree: () => NodeTree } },
 ): { nodeTree: NodeTree; element: React.ReactElement } | null {
   const cached = templateParseCache.get(label);
   if (cached) return cached;
@@ -1255,16 +1256,8 @@ export const GodToolbox = () => {
   const fetchTemplates = async () => {
     setLoadingTemplates(true);
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/api/admin/page-components', {
-        headers: {
-          Authorization: token ? `Bearer ${token}` : '',
-        },
-      });
-      if (response.ok) {
-        const data = (await response.json()) as DbTemplate[];
-        setDbTemplates(Array.isArray(data) ? data : []);
-      }
+      const data = await apiFetch<DbTemplate[]>('/api/admin/page-components');
+      setDbTemplates(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error('Failed to fetch templates:', err);
     } finally {
@@ -1288,19 +1281,9 @@ export const GodToolbox = () => {
     if (!window.confirm('Êtes-vous sûr de vouloir supprimer ce modèle ?')) return;
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`/api/admin/page-components/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: token ? `Bearer ${token}` : '',
-        },
-      });
-      if (response.ok) {
-        toast.success('Modèle supprimé');
-        fetchTemplates();
-      } else {
-        toast.error('Erreur lors de la suppression');
-      }
+      await apiFetch(`/api/admin/page-components/${id}`, { method: 'DELETE' });
+      toast.success('Modèle supprimé');
+      fetchTemplates();
     } catch (err) {
       console.error(err);
       toast.error('Impossible de supprimer le modèle');

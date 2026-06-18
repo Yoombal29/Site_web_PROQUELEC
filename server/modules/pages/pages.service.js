@@ -222,6 +222,23 @@ async function getNamedVersion(versionId) {
   return ver;
 }
 
+// --- Purge Page Versions ---
+async function purgePageVersions(pageId, options) {
+  return repo.purgePageVersions(pageId, options);
+}
+
+// --- Atomic Save ---
+async function atomicSave(pageId, data) {
+  const result = await repo.atomicSave(pageId, data);
+  if (!result) throw Object.assign(new Error('Page not found'), { status: 404 });
+  try {
+    sendSseEvent('page:updated', result);
+  } catch (e) {
+    console.warn('SSE failed (page:updated)', e);
+  }
+  return result;
+}
+
 // --- Theme Config ---
 async function saveThemeConfig(pageId, themeConfig) {
   const result = await repo.saveThemeConfig(pageId, themeConfig);
@@ -242,10 +259,12 @@ module.exports = {
   adminUpdatePage,
   getPageVersion,
   seedHomepage,
+  purgePageVersions,
   saveDraft,
   createNamedVersion,
   listNamedVersions,
   getNamedVersion,
+  atomicSave,
   saveThemeConfig,
   listMenuItems,
   createMenuItem,

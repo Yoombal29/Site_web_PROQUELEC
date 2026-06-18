@@ -1,10 +1,12 @@
 import { describe, it, expect } from 'vitest';
-const {
+import {
   adminUpdatePageSchema,
   draftPageSchema,
   namedVersionSchema,
   themeConfigSchema,
-} = await import('./pages.validator.js');
+  atomicSaveSchema,
+  purgeVersionsSchema,
+} from './pages.validator.js';
 
 describe('Pages validator schemas', () => {
   it('accepts admin page updates with safe builder JSON fields', () => {
@@ -54,5 +56,55 @@ describe('Pages validator schemas', () => {
       },
     };
     expect(() => themeConfigSchema.parse(payload)).toThrow();
+  });
+
+  // ── Atomic Save Schema ──
+  it('accepts atomic save with structure_json only', () => {
+    const payload = { structure_json: { ROOT: {} } };
+    expect(() => atomicSaveSchema.parse(payload)).not.toThrow();
+  });
+
+  it('accepts atomic save with draft_json only', () => {
+    const payload = { draft_json: '{"blocks":[]}' };
+    expect(() => atomicSaveSchema.parse(payload)).not.toThrow();
+  });
+
+  it('accepts atomic save with all fields', () => {
+    const payload = {
+      structure_json: { ROOT: {} },
+      draft_json: { blocks: [] },
+      theme_config: { primaryColor: '#2563eb' },
+    };
+    expect(() => atomicSaveSchema.parse(payload)).not.toThrow();
+  });
+
+  it('rejects atomic save with no fields', () => {
+    expect(() => atomicSaveSchema.parse({})).toThrow();
+  });
+
+  it('rejects atomic save with extra unknown fields', () => {
+    const payload = { structure_json: {}, invalid_field: true };
+    expect(() => atomicSaveSchema.parse(payload)).not.toThrow();
+  });
+
+  // ── Purge Versions Schema ──
+  it('accepts purge versions with keep_last', () => {
+    const payload = { keep_last: 10 };
+    expect(() => purgeVersionsSchema.parse(payload)).not.toThrow();
+  });
+
+  it('accepts purge versions with older_than_days', () => {
+    const payload = { older_than_days: 30 };
+    expect(() => purgeVersionsSchema.parse(payload)).not.toThrow();
+  });
+
+  it('accepts purge versions as dry run', () => {
+    const payload = { keep_last: 10, dry_run: true };
+    expect(() => purgeVersionsSchema.parse(payload)).not.toThrow();
+  });
+
+  it('rejects purge versions with negative keep_last', () => {
+    const payload = { keep_last: -1 };
+    expect(() => purgeVersionsSchema.parse(payload)).toThrow();
   });
 });

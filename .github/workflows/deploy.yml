@@ -47,6 +47,13 @@ jobs:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           VITE_APP_ENV: ${{ github.event.inputs.environment || 'production' }}
 
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -60,14 +67,11 @@ jobs:
             # Pull latest changes
             git pull origin main
 
-            # Install dependencies
-            npm ci --production
+            # Install production dependencies only
+            npm ci --omit=dev
 
             # Run database migrations
             npm run migrate:auto
-
-            # Build application
-            npm run build
 
             # Restart services
             pm2 restart proquelec-app || pm2 start server/index.js --name proquelec-app
@@ -75,9 +79,19 @@ jobs:
 
             # Verify deployment
             sleep 3
-            curl -f http://localhost:5175/api/health || exit 1
+            curl -f http://localhost:3000/health || exit 1
 
             echo "✅ Deployment completed successfully!"
+
+      - name: Download and deploy built frontend
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || '22' }}
+          source: 'dist/'
+          target: '/var/www/proquelec/'
 
       - name: Health Check
         run: |
